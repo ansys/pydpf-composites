@@ -90,7 +90,7 @@ jobs:
       - name: Install OS packages
         run: |
           sudo apt update
-          sudo apt-get install pandoc
+          sudo apt-get install pandoc xvfb
       - name: Login in Github Container registry
         uses: docker/login-action@v1
         with:
