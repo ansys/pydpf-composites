@@ -13,7 +13,7 @@ pyvista.OFF_SCREEN = True
 
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
-pymapdl.BUILDING_GALLERY = True
+# pymapdl.BUILDING_GALLERY = True
 
 # Project information
 project = "ansys-dpf-composites"
@@ -43,6 +43,7 @@ extensions = [
     "numpydoc",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
+    "sphinx_gallery.gen_gallery",
 ]
 
 # Intersphinx mapping
@@ -97,7 +98,7 @@ sphinx_gallery_conf = {
     # directory where function granular galleries are stored
     "backreferences_dir": None,
     # Modules for which function level galleries are created.  In
-    "doc_module": "ansys-assembly-core",
+    "doc_module": "ansys-pydpf-composites",
     "image_scrapers": ("pyvista", "matplotlib"),
     "ignore_pattern": r"__init__\.py",
     "thumbnail_size": (350, 350),

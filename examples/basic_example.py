@@ -1,7 +1,13 @@
 """
-Basic example.
+.. _basic_example:
 
 Basic example of dpf composites usage
+-------------------------------------
 
+Very basic!
 """
-print("Hello World")
+
+out = "Hello World"
+
+#####################
+out
