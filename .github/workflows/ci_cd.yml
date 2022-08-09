@@ -67,7 +67,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: pull and start dpf container
         run:  |
-          docker pull pull ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
+          docker pull ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
           docker run -d --restart always -p 21002:50052 pull ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
