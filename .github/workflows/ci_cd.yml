@@ -87,6 +87,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: docs-style
     steps:
+      - name: Login in Github Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: pull and start dpf container
+        run: |
+          docker pull ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
+          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
