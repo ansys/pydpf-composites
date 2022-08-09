@@ -87,6 +87,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: docs-style
     steps:
+      - name: Install OS packages
+        run: |
+        sudo apt update
+        sudo apt-get install pandoc
       - name: Login in Github Container registry
         uses: docker/login-action@v1
         with:
