@@ -4,11 +4,9 @@ ansys-sphinx-theme==0.4.2
 sphinx-copybutton==0.5
 pyvista
 sphinx_gallery
-#pypandoc==1.7.5
+pypandoc==1.7.5
 ## Todo: use correct version and remove mapdl
 ansys-mapdl-core
 ansys-dpf-core==0.4.1
 -i https://pypi.python.org/simple
 ansys-grpc-dpf==0.4.0
--i https://pypi.python.org/simple
-pypandoc
