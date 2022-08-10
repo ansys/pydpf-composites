@@ -99,8 +99,8 @@ jobs:
           password: ${{ secrets.PYANSYS_CI_BOT_PACKAGE_TOKEN }}
       - name: pull and start dpf container
         run: |
-          docker pull ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pyassembly-ui/dpf-core:latest
+          docker pull ghcr.io/dpf-core:231dev
+          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/dpf-core:231dev
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
