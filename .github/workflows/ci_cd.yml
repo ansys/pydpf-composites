@@ -111,6 +111,9 @@ jobs:
           python -m pip install --upgrade pip poetry tox
       - name: Generate the documentation with tox
         run: tox -e doc
+      - name: copy nojekyll file
+        run: |
+          - touch .tox/doc_out/.nojekyll
 
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2
