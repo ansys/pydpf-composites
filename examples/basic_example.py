@@ -44,7 +44,7 @@ dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
 rst_path = os.path.join(r"shell.rst")
 h5_path = os.path.join(r"ACPCompositeDefinitions.h5")
 material_path = os.path.join(r"material.engd")
-model = dpf.Model(path)
+model = dpf.Model(rst_path)
 
 rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
 h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
