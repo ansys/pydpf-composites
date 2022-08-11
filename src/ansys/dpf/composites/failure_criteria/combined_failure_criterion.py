@@ -23,6 +23,7 @@ class CombinedFailureCriterion:
                  name: str = "CombinedFailureCriterion"
                  ):
         self._failure_criteria = {}
+        self.name = name
 
     def _get_name(self) -> str:
         return self._name
