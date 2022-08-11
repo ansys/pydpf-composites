@@ -8,6 +8,8 @@ Very basic!
 """
 
 
+import os
+
 #####################
 import ansys.dpf.core as dpf
 
