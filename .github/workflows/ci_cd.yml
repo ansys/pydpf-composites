@@ -81,7 +81,6 @@ jobs:
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: tox
 
-
   docs:
     name: Documentation
     runs-on: ubuntu-latest
