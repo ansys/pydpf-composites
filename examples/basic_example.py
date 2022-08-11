@@ -51,19 +51,6 @@ h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
 material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
 model = dpf.Model(rst_server_path)
 
-displacement = model.operator("U")
-
-composite_failure_operator = dpf.Operator("composite::composite_failure_operator")
-
-disp_fc = displacement.outputs.fields_container.get_data()
-disp_field = disp_fc[0]
-
-norm_op = dpf.operators.math.norm_fc()
-norm_op.inputs.connect(disp_fc)
-
-norm_op.outputs.fields_container.get_data()[0].data
-
-model.metadata.meshed_region.plot(norm_op.outputs.fields_container.get_data()[0])
 
 pin_config = get_pin_config()
 out_pins = pin_config["output"]
