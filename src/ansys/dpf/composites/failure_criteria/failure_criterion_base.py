@@ -2,45 +2,62 @@
 Defines the base class of composite failure criterion
 """
 
-from typing import Any
 import json
 
 class FailureCriterionBase:
 
     def __init__(self,
                  name: str,
-                 active: bool = True):
+                 active: bool):
         self.active = active
         self._name = name
 
-    def _get_active(self):
+    def _get_active(self) -> bool:
         return self._active
-    def _set_active(self, value: bool = True):
+    def _set_active(self, value: bool):
         self._active = value
 
-    def _get_name(self):
+    def _get_name(self) -> str:
         return self._name
 
     active = property(_get_active, _set_active,
-                      doc="Whether the failure criterion is active or not")
+                      doc="The failure criterion is suppressed if active is False.")
     name = property(_get_name, doc="Name of the failure criterion. Read only.")
 
-    def to_json_dict(self) -> str:
+    def to_dict(self) -> dict:
         """
-        :return: a json dict which can be used for the result definition of a dpf composite failure operator
+        :return: a dict with all properties
         """
-        attrs = [attr for attr in dir(self) if not attr.startswith('__')
-                 and not attr.startswith('_')
-                 and not attr.startswith('name')
-                 and not callable(getattr(self, attr))]
-
-        print(attrs)
+        properties = self._get_properties(exclude = ["name"])
 
         attr_dict = {}
-        for attr in attrs:
-            attr_dict[attr] = getattr(self, attr)
+        for prop in properties:
+            attr_dict[prop] = getattr(self, prop)
 
         key = self.name.lower().replace(" ", "_")
         failure_dict = {key: attr_dict}
-        return json.dumps(failure_dict)
+        return failure_dict
+
+    def to_json_dict(self):
+        """
+        :return: the string representation of the dict (json.dumps) which can be used for the result definition
+        of the DPF Composites Failure Operator
+        """
+        return json.dumps(self.to_dict())
+
+    def _get_properties(self, exclude = []):
+        properties = [attr for attr in dir(self) if not attr.startswith('__')
+                 and not attr.startswith('_')
+                 and not callable(getattr(self, attr))
+                 and attr not in exclude]
+
+        return properties
+
+    def _short_descr(self):
+        return f"{self.__class__.__name__}(name='{self.name}', active={self.active})"
+
+    def __repr__(self):
+        s_attrs = ", ".join([f"{attr}={getattr(self, attr)}" for attr in self._get_properties()])
+        s = f"{self.__class__.__name__}({s_attrs})"
+        return s
 

@@ -10,7 +10,9 @@ ATTRS_MAX_STRAIN = ["e1_active", "e2_active", "e3_active", "e12_active", "e13_ac
                     "e1t", "e1c", "e2t", "e2c", "e3t", "e3c", "e12", "e23", "e13"]
 
 class MaxStrainCriterion(FailureCriterionBase):
-
+    """
+    Defines the Maximum Strain failure criterion for orthotropic reinforced materials.
+    """
 
     def __init__(self,
                  e1_active: bool = True,
@@ -184,7 +186,7 @@ class MaxStrainCriterion(FailureCriterionBase):
                           doc="Activates the failure evaluation regarding the interlaminar shear strain e23.")
 
     wf_e1 = property(_get_wf_e1, _set_wf_e1,
-                          doc="Weighting factor of the failure mode e1.")
+                     doc="Weighting factor of the failure mode e1.")
     wf_e2 = property(_get_wf_e2, _set_wf_e2,
                      doc="Weighting factor of the failure mode e2.")
     wf_e3 = property(_get_wf_e3, _set_wf_e3,
@@ -217,21 +219,3 @@ class MaxStrainCriterion(FailureCriterionBase):
                    doc="Global strain limit in material direction 13.")
     e23 = property(_get_e23, _set_e23,
                    doc="Global strain limit in material direction 23.")
-
-    #def to_json_dict(self):
-    #    """
-    #    :return: a json dict which can be used for the result definition of a dpf composite failure operator
-    #    """
-    #    attrs = [attr for attr in dir(self) if not attr.startswith('__')
-    #             and not attr.startswith('_')
-    #             and not callable(getattr(self, attr))]
-    #    attrs.pop("name")
-
-    #    attr_dict = {}
-    #    for attr in attrs:
-    #        attr_dict[attr] = getattr(self, attr)
-
-    #    key = self.name.lower().replace(" ", "_")
-    #    failure_dict = {key: attr_dict}
-    #    return json.dumps(failure_dict)
-
