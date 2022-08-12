@@ -7,5 +7,4 @@ sphinx_gallery
 pypandoc==1.7.5
 ## Todo: use correct version and remove mapdl
 ansys-mapdl-core
--i https://pypi.python.org/simple
-ansys-dpf-core==0.5.2
+ansys-dpf-core
