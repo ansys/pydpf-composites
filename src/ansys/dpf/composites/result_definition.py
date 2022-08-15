@@ -19,7 +19,7 @@ class ResultDefinition:
     _ACCUMULATOR = "max"
 
     #todo: TBD: measures, composite_definitions, material_files are list where we just support one file.
-    #should the this class work with lists or just single entries?
+    #should this class work with lists or just single entries?
     def __init__(self,
                  name: str,
                  expression: str = "composite_failure",
@@ -71,11 +71,12 @@ class ResultDefinition:
     def _get_measures(self) -> str:
         return self._meassures
     def _set_measures(self, value: str):
-        if value in _SUPPORTED_MEASURES:
-            self._meassures = value
+        for v in value:
+            if v not in _SUPPORTED_MEASURES:
+                values = ", ".join([v for v in _SUPPORTED_MEASURES])
+                raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
         else:
-            values = ", ".join([v for v in _SUPPORTED_MEASURES])
-            raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
+            self._meassures = value
 
     def _get_composite_definitions(self) -> Sequence[_PATH]:
         return self._composite_definitions
@@ -169,21 +170,6 @@ class ResultDefinition:
         """
         :return: a dict with all properties
         """
-        properties = self._get_properties(exclude = ["name"])
-
-        attr_dict = {}
-        for prop in properties:
-            attr_dict[prop] = getattr(self, prop)
-
-        key = self.name.lower().replace(" ", "_")
-        failure_dict = {key: attr_dict}
-        return failure_dict
-
-    def to_dpf_result_definition(self):
-        """
-        :return: the string representation (json.dumps) which can be used for the result definition
-        of the DPF Composites Failure Operator
-        """
         result_definition = {"version": self._VERSION,
                              "accumulator": "max",
                              "expression": f"{self.expression}",
@@ -192,24 +178,33 @@ class ResultDefinition:
                              "stress_strain_eval_mode": f"{self.stress_strain_eval_mode}",
                              "time": self.time,
                              "max_chunk_size": self.max_chunk_size,
-        }
+                             }
 
-        scopes = {"scopes": [ "datasources": {
-            "composite_definition": self.composite_definitions,
-            "assembly_mapping_files": self.assembly_mapping_files,
-            "rst_file": self.rst_files,
-            "material_file": self.material_files,
-            },
-            "write_data_for_full_element_scope": self.write_data_for_full_element_scope,
-            "elements": self.element_scope,
-            "ply_ids": self.ply_scope
+        scopes = {"scopes":
+            [
+                {"datasources": {
+                    "composite_definition": self.composite_definitions,
+                    "assembly_mapping_files": self.assembly_mapping_files,
+                    "rst_file": self.rst_files,
+                    "material_file": self.material_files,
+                },
+                    "write_data_for_full_element_scope": self.write_data_for_full_element_scope,
+                    "elements": self.element_scope,
+                    "ply_ids": self.ply_scope
+                }
             ]
+
         }
 
         result_definition.update(scopes)
+        return result_definition
 
-
-        return json.dumps(self.result_definition)
+    def to_json_dict(self):
+        """
+        :return: the string representation (json.dumps) which can be used for the result definition
+        of the DPF Composites Failure Operator
+        """
+        return json.dumps(self.to_dict())
 
     def _get_properties(self, exclude = []):
         properties = [attr for attr in dir(self) if not attr.startswith('__')
