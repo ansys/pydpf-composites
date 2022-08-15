@@ -53,7 +53,9 @@ class ProcessWrapper:
         stdout.close()
         stderr.close()
 
-    def __enter__(self) -> LocalAcpServer:
+    # Todo: This does not kill the docker process. We have to stop it with docker stop
+
+    def __enter__(self) -> ProcessWrapper:
         return self
 
     def __exit__(self, *exc: Any) -> None:
@@ -137,14 +139,14 @@ def dpf_server():
     port = _find_free_port()
     server_log_stdout = TEST_ROOT_DIR / "server_log_out.txt"
     server_log_stderr = TEST_ROOT_DIR / "server_log_err.txt"
-    process_wrapper = launch_dpf_docker(
+    with launch_dpf_docker(
         stdout_file=server_log_stdout, stderr_file=server_log_stderr, port=port
-    )
+    ) as process_wrapper:
 
-    import ansys.dpf.core as dpf
+        import ansys.dpf.core as dpf
 
-    server = dpf.server.connect_to_server("127.0.0.1", port=port)
+        server = dpf.server.connect_to_server("127.0.0.1", port=port)
 
-    dpf.load_library("libcomposite_operators.so", "composites", server=server)
-    dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
-    yield server
+        dpf.load_library("libcomposite_operators.so", "composites", server=server)
+        dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
+        yield server
