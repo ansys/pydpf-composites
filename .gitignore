@@ -157,4 +157,9 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 
+# Generated sphinx gallery
 doc/source/examples/gallery_examples
+
+# testing server logs
+tests/server_log_err.txt
+tests/server_log_out.txt

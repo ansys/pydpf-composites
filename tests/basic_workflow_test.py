@@ -1,0 +1,104 @@
+import json
+import os
+import pathlib
+
+import ansys.dpf.core as dpf
+import pytest
+
+from ansys.dpf.composites.failure_config import get_failure_criteria_definition
+from ansys.dpf.composites.pin_config import get_pin_config
+
+
+def test_fails(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
+
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+
+    rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+
+    h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
+    material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
+    model = dpf.Model(rst_server_path)
+
+    pin_config = get_pin_config()
+    out_pins = pin_config["output"]
+    in_pins = pin_config["input"]
+
+    rst_path = rst_server_path
+    eng_data_path = material_server_path
+    composite_definitions_path = h5_server_path
+
+    rst_data_source = dpf.DataSources(rst_path)
+
+    mesh_provider = dpf.Operator("MeshProvider")
+    mesh_provider.connect(in_pins["data_source"], rst_data_source)
+    mesh_provider.run()
+
+    eng_data_source = dpf.DataSources()
+    eng_data_source.add_file_path(eng_data_path, "EngineeringData")
+
+    composite_definitions_source = dpf.DataSources()
+    composite_definitions_source.add_file_path(composite_definitions_path, "CompositeDefinitions")
+
+    material_support_provider = dpf.Operator("support_provider")
+    material_support_provider.connect(in_pins["property"], "mat")
+    material_support_provider.connect(in_pins["data_source"], rst_data_source)
+    material_support_provider.run()
+
+    result_info_provider = dpf.Operator("ResultInfoProvider")
+    result_info_provider.connect(in_pins["data_source"], rst_data_source)
+
+    material_provider = dpf.Operator("eng_data::ans_mat_material_provider")
+    material_provider.connect(in_pins["data_source"], eng_data_source)
+    material_provider.connect(1, result_info_provider, 0)
+    material_provider.connect(0, material_support_provider, 0)
+    material_provider.run()
+
+    layup_provider = dpf.Operator("composite::layup_provider_operator")
+    mesh_provider = dpf.Operator("MeshProvider")
+    mesh_provider.connect(in_pins["data_source"], rst_data_source)
+    mesh_provider.run()
+
+    layup_provider.connect(in_pins["mesh_region"], mesh_provider, 0)
+    layup_provider.connect(in_pins["data_source"], composite_definitions_source)
+    layup_provider.connect(in_pins["material_support"], material_support_provider, 0)
+    layup_provider.connect(3, result_info_provider, 0)
+    layup_provider.run()
+
+    material_provider.connect(0, material_support_provider, 0)
+    material_provider.connect(in_pins["data_source"], eng_data_source)
+
+    material_provider.run()
+
+    failure_criteria_definition = get_failure_criteria_definition()
+
+    strain_operator = dpf.Operator("EPEL")
+    strain_operator.connect(in_pins["data_source"], rst_data_source)
+    strain_operator.connect(5, False)
+
+    stress_operator = dpf.Operator("S")
+    stress_operator.connect(in_pins["data_source"], rst_data_source)
+    stress_operator.connect(5, False)
+
+    failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
+    failure_evaluator.connect(in_pins["configuration"], json.dumps(failure_criteria_definition))
+    failure_evaluator.connect(in_pins["materials_container"], material_provider, 0)
+    failure_evaluator.connect(in_pins["strains"], strain_operator, 0)
+    failure_evaluator.connect(in_pins["stresses"], stress_operator, 0)
+    failure_evaluator.connect(in_pins["mesh_region"], mesh_provider, 0)
+
+    minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
+    minmax_per_element.connect(0, failure_evaluator, 0)
+    minmax_per_element.connect(in_pins["mesh_region"], mesh_provider, 0)
+    minmax_per_element.connect(in_pins["material_support"], material_support_provider, 0)
+
+    output = minmax_per_element.get_output(out_pins["max"], dpf.types.fields_container)
+
+    ######################################################################################
+    assert output[out_pins["value_index"]].data.size == 4
+    assert output[out_pins["value_index"]].data[0] == pytest.approx(1.6239472098214285)
+    assert output[out_pins["value_index"]].data[1] == pytest.approx(1.6239472098214285)
+    assert output[out_pins["value_index"]].data[2] == pytest.approx(2.248462289571762)
+    assert output[out_pins["value_index"]].data[3] == pytest.approx(2.248462289571762)
