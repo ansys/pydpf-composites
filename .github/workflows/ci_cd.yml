@@ -54,7 +54,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        # We can't test on windows because
+        # it is not possible to run
+        # linux docker images on the windows agents
+        # https://github.com/actions/runner-images/issues/1143
+        os: [ubuntu-latest]
         python-version: ['3.7', '3.8', '3.9', '3.10']
       fail-fast: false
 

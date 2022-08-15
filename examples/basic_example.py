@@ -10,6 +10,7 @@ Very basic!
 
 import json
 import os
+import pathlib
 
 #####################
 import ansys.dpf.core as dpf
