@@ -74,8 +74,12 @@ class CombinedFailureCriterion:
         """
         criteria = {}
         for k, fc in self.failure_criteria.items():
-            dict_repr = fc.to_dict()
-            criteria.update(dict_repr)
+            # returns a dict of all attributes
+            attr_dict = fc.to_dict()
+            # get the name and use it as key to add the attrs
+            key = fc.name.lower().replace(" ", "_")
+            failure_dict = {key: attr_dict}
+            criteria.update(failure_dict)
 
         combined_criteria = {self.JSON_DICT_KEY: criteria}
         return combined_criteria

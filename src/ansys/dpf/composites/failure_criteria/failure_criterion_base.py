@@ -34,9 +34,7 @@ class FailureCriterionBase:
         for prop in properties:
             attr_dict[prop] = getattr(self, prop)
 
-        key = self.name.lower().replace(" ", "_")
-        failure_dict = {key: attr_dict}
-        return failure_dict
+        return attr_dict
 
     def to_json_dict(self):
         """
