@@ -1,10 +1,9 @@
 """
 .. _basic_example:
 
-Basic example of dpf composites usage
--------------------------------------
+Basic example of setting up a composite failure workflow
+----------------------------------------------------------
 
-Very basic!
 """
 
 
@@ -12,105 +11,124 @@ import json
 import os
 import pathlib
 
-#####################
+#%%
+# Load ansys libraries
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.failure_config import get_failure_criteria_definition
-from ansys.dpf.composites.pin_config import get_pin_config
 
-# depending on your scenario you might also need to start the dpf server
-# for instance server = dpf.start_local_server()
+#%%
+# Load dpf plugin
 server = dpf.server.connect_to_server("127.0.0.1", port=21002)
 dpf.load_library("libcomposite_operators.so", "composites")
 dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
 
-TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data"
+#%%
+# Specify input files and upload them to the server
 
 # Todo make files available for users
+TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data"
 rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
 h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
 material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-
 rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
 h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
 material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
+
+#%%
+
 model = dpf.Model(rst_server_path)
-
-
-pin_config = get_pin_config()
-out_pins = pin_config["output"]
-in_pins = pin_config["input"]
-
-
-rst_path = rst_server_path
-eng_data_path = material_server_path
-composite_definitions_path = h5_server_path
-
-rst_data_source = dpf.DataSources(rst_path)
-
-mesh_provider = dpf.Operator("MeshProvider")
-mesh_provider.connect(in_pins["data_source"], rst_data_source)
-mesh_provider.run()
+rst_data_source = dpf.DataSources(rst_server_path)
 
 eng_data_source = dpf.DataSources()
-eng_data_source.add_file_path(eng_data_path, "EngineeringData")
+eng_data_source.add_file_path(material_server_path, "EngineeringData")
 
 composite_definitions_source = dpf.DataSources()
-composite_definitions_source.add_file_path(composite_definitions_path, "CompositeDefinitions")
+composite_definitions_source.add_file_path(h5_server_path, "CompositeDefinitions")
 
-material_support_provider = dpf.Operator("support_provider")
-material_support_provider.connect(in_pins["property"], "mat")
-material_support_provider.connect(in_pins["data_source"], rst_data_source)
-material_support_provider.run()
-
-result_info_provider = dpf.Operator("ResultInfoProvider")
-result_info_provider.connect(in_pins["data_source"], rst_data_source)
-
-material_provider = dpf.Operator("eng_data::ans_mat_material_provider")
-material_provider.connect(in_pins["data_source"], eng_data_source)
-material_provider.connect(1, result_info_provider, 0)
-material_provider.connect(0, material_support_provider, 0)
-material_provider.run()
-
-layup_provider = dpf.Operator("composite::layup_provider_operator")
+#%%
+# Setup Mesh Provider
 mesh_provider = dpf.Operator("MeshProvider")
-mesh_provider.connect(in_pins["data_source"], rst_data_source)
-mesh_provider.run()
+mesh_provider.inputs.data_sources(rst_data_source)
 
-layup_provider.connect(in_pins["mesh_region"], mesh_provider, 0)
-layup_provider.connect(in_pins["data_source"], composite_definitions_source)
-layup_provider.connect(in_pins["material_support"], material_support_provider, 0)
-layup_provider.connect(3, result_info_provider, 0)
+#%%
+# Setup Material Provider
+# The material support provider takes care of mapping the materials in the rst file to
+# the materials in the composite definitions.
+# The material support contains all the materials from the rst file.
+material_support_provider = dpf.Operator("support_provider")
+material_support_provider.inputs.property("mat")
+material_support_provider.inputs.data_sources(rst_data_source)
+
+#%%
+# Get Result Info
+# This is needed provides the unit system from the rst file
+result_info_provider = dpf.Operator("ResultInfoProvider")
+result_info_provider.inputs.data_sources(rst_data_source)
+
+#%%
+# Set up material provider
+# Combines the material support the engineering data xml file and the unit_system.
+# It's output can be used
+# to evaluate material properties
+material_provider = dpf.Operator("eng_data::ans_mat_material_provider")
+material_provider.inputs.data_sources = eng_data_source
+material_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
+material_provider.inputs.abstract_field_support(
+    material_support_provider.outputs.abstract_field_support
+)
+material_provider.inputs.Engineering_data_file(eng_data_source)
+#%%
+# Set up the layup provider
+# Read the composite definition file and enriches the mesh with the composite layup information.
+layup_provider = dpf.Operator("composite::layup_provider_operator")
+layup_provider.inputs.mesh(mesh_provider.outputs.mesh)
+layup_provider.inputs.data_sources(composite_definitions_source)
+layup_provider.inputs.abstract_field_support(
+    material_support_provider.outputs.abstract_field_support
+)
+layup_provider.connect(3, result_info_provider.outputs.result_info)
 layup_provider.run()
 
-material_provider.connect(0, material_support_provider, 0)
-material_provider.connect(in_pins["data_source"], eng_data_source)
-
-material_provider.run()
-
-failure_criteria_definition = get_failure_criteria_definition()
-
+#%%
+# Setup the result operators: strains and stresses
+# Rotate to global is False because the post-processing engine expects the results to be
+# in the element coordinate system ( material coordinate system)
+#
 strain_operator = dpf.Operator("EPEL")
-strain_operator.connect(in_pins["data_source"], rst_data_source)
-strain_operator.connect(5, False)
+strain_operator.inputs.data_sources(rst_data_source)
+strain_operator.inputs.bool_rotate_to_global(False)
 
 stress_operator = dpf.Operator("S")
-stress_operator.connect(in_pins["data_source"], rst_data_source)
-stress_operator.connect(5, False)
+stress_operator.inputs.data_sources(rst_data_source)
+stress_operator.inputs.bool_rotate_to_global(False)
+
+#%%
+# Setup the failure evaluator. Combines the results and evaluates all the failure criteria.
+# The output contains the maximum failure criteria for each integration point.
+#
+failure_criteria_definition = get_failure_criteria_definition()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-failure_evaluator.connect(in_pins["configuration"], json.dumps(failure_criteria_definition))
-failure_evaluator.connect(in_pins["materials_container"], material_provider, 0)
-failure_evaluator.connect(in_pins["strains"], strain_operator, 0)
-failure_evaluator.connect(in_pins["stresses"], stress_operator, 0)
-failure_evaluator.connect(in_pins["mesh_region"], mesh_provider, 0)
+failure_evaluator.inputs.string(json.dumps(failure_criteria_definition))
+failure_evaluator.connect(23, material_provider.outputs.materials_container)
+failure_evaluator.connect(0, strain_operator.outputs.fields_container)
+failure_evaluator.connect(1, stress_operator.outputs.fields_container)
+failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
+#%%
+# Uses the output of the multiple_failure_criteria_operator
+# to compute the min and max failure criteria for each element
+#
 minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
-minmax_per_element.connect(0, failure_evaluator, 0)
-minmax_per_element.connect(in_pins["mesh_region"], mesh_provider, 0)
-minmax_per_element.connect(in_pins["material_support"], material_support_provider, 0)
+minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
+minmax_per_element.connect(7, mesh_provider.outputs.mesh)
+minmax_per_element.connect(21, material_support_provider.outputs.abstract_field_support)
 
-output = minmax_per_element.get_output(out_pins["max"], dpf.types.fields_container)
+output = minmax_per_element.outputs.field_max()
 
-######################################################################################
-model.metadata.meshed_region.plot(output[out_pins["value_index"]])
+#%%
+# Plot the max and the minimum value for each value
+#
+value_index = 1
+model.metadata.meshed_region.plot(output[value_index])

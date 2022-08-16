@@ -13,7 +13,6 @@ pyvista.OFF_SCREEN = True
 
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
-# pymapdl.BUILDING_GALLERY = True
 
 # Project information
 project = "ansys-dpf-composites"
