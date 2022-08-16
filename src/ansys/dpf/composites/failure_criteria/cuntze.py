@@ -30,7 +30,7 @@ class CuntzeCriterion(FailureCriterionBase):
                  m: float = 2.6
                  ):
 
-        super().__init__(name="Puck", active=True)
+        super().__init__(name="Cuntze", active=True)
 
         for attr in ATTRS_CUNTZE:
             setattr(self, attr, eval(attr))

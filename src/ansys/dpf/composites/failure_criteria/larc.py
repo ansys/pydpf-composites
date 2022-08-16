@@ -22,7 +22,7 @@ class LaRCCriterion(FailureCriterionBase):
                  wf_lmt: float = 1.
                  ):
 
-        super().__init__(name="Puck", active=True)
+        super().__init__(name="LaRC", active=True)
 
         for attr in ATTRS_LARC:
             setattr(self, attr, eval(attr))
