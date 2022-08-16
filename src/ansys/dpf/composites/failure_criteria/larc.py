@@ -91,7 +91,7 @@ class LaRCCriterion(FailureCriterionBase):
     wf_lfc = property(_get_wf_lfc, _set_wf_lfc,
                           doc="Weighting factor of fiber failure due to compression (lfc).")
     wf_lft = property(_get_wf_lft, _set_wf_lft,
-                      doc="Weighting factor of fiber failure due to tension (lfc).")
+                      doc="Weighting factor of fiber failure due to tension (lft).")
     wf_lmc = property(_get_wf_lmc, _set_wf_lmc,
                       doc="Weighting factor of matrix failure due to compression (lmc).")
     wf_lmt = property(_get_wf_lmt, _set_wf_lmt,
