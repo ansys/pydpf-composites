@@ -88,17 +88,17 @@ class DockerWrapper:
         time.sleep(3)
         self.process_stdout.write(f"process poll {self.server_process.poll}\n")
         self.process_stdout.write(f"Output of docker ps after start\n")
-        out = subprocess.check_output("docker ps")
+        out = subprocess.check_output(["docker", "ps"])
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n\n")
 
     def stop(self):
-        out = subprocess.check_output(f"docker stop {self.name}")
+        out = subprocess.check_output(["docker", "stop", {self.name}])
         self.process_stdout.write(str(out))
 
         self.process_stdout.write(f"docker ps after stopping the container:\n")
         self.process_stdout.write(f"\n")
-        out = subprocess.check_output("docker ps")
+        out = subprocess.check_output(["docker", "ps"])
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n")
 
