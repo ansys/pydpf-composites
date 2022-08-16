@@ -76,7 +76,6 @@ jobs:
       - name: pull and start dpf container
         run:  |
           docker pull ghcr.io/pyansys/pydpf-composites:latest
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:latest
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -88,6 +87,12 @@ jobs:
       - name: Test with tox
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: tox
+      - name: Upload server output
+        uses: actions/upload-artifact@v2
+        with:
+          name: server_output
+          path: tests/server_log_*.txt
+          retention-days: 7
 
   docs:
     name: Documentation
