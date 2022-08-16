@@ -68,7 +68,7 @@ class HashinCriterion(FailureCriterionBase):
     hd = property(_get_hd, _set_hd,
                          doc="Activates the failure evaluation regarding delamination if dim is equal to 3.")
     dim = property(_get_dim, _set_dim,
-                         doc="Whether the 2D or 3D formulation of the critioner is used. The latter one also "
+                         doc="Whether the 2D or 3D formulation of the criterion is used. The latter one also "
                              "supports the failure mode delamination.")
     wf_hf = property(_get_wf_hf, _set_wf_hf,
                           doc="Weighting factor of the fiber failure (hf) mode.")
