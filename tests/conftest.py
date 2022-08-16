@@ -86,7 +86,6 @@ class DockerWrapper:
         import time
 
         time.sleep(3)
-        self.process_stdout.write(f"process poll {self.server_process.poll}\n")
         self.process_stdout.write(f"Output of docker ps after start\n")
         out = subprocess.check_output(["docker", "ps"])
         self.process_stdout.write(str(out))
