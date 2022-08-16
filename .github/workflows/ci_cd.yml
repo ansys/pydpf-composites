@@ -59,8 +59,7 @@ jobs:
         # linux docker images on the windows agents
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        # Use only 3.7 todo: remove
-        python-version: ['3.7']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
       fail-fast: false
 
     steps:
