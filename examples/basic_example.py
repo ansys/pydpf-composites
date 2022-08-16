@@ -24,7 +24,7 @@ server = dpf.server.connect_to_server("127.0.0.1", port=21002)
 dpf.load_library("libcomposite_operators.so", "composites")
 dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
 
-TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent.parent / "tests" / "data"
+TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data"
 
 # Todo make files available for users
 rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")

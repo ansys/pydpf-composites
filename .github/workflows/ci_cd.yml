@@ -59,7 +59,8 @@ jobs:
         # linux docker images on the windows agents
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        # Use only 3.7 todo: remove
+        python-version: ['3.7']
       fail-fast: false
 
     steps:
@@ -88,6 +89,7 @@ jobs:
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: tox
       - name: Upload server output
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: server_output
