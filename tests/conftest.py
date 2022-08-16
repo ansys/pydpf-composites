@@ -7,59 +7,9 @@ import socket
 import subprocess
 import sys
 from types import MappingProxyType
-from typing import Any, Mapping, Optional, TextIO
-import weakref
+from typing import Mapping, Optional
 
 import pytest
-
-
-class ProcessWrapper:
-    """Manages a process running on the local machine.
-
-    Wrapper for a process.
-    This class takes care of terminating the process when the object is
-    either destroyed, or before Python exits (unless it is a hard crash
-    / kill).
-    Can be used as a context manager, to terminate the process when
-    exiting the context.
-
-    Parameters
-    ----------
-    process :
-        The wrapped process
-    stdout :
-        Open file handle to which the process output is being written.
-    stderr :
-        Open file handle to which the process error is being written.
-    """
-
-    def __init__(self, process: subprocess.Popen[str], stdout: TextIO, stderr: TextIO):
-        self._process = process
-        self._stdout = stdout
-        self._stderr = stderr
-
-        self._finalizer = weakref.finalize(
-            self,
-            self._finalize_impl,
-            process=self._process,
-            stdout=self._stdout,
-            stderr=self._stderr,
-        )
-
-    @staticmethod
-    def _finalize_impl(process: subprocess.Popen[str], stdout: TextIO, stderr: TextIO) -> None:
-        process.terminate()
-        process.wait()
-        stdout.close()
-        stderr.close()
-
-    # Todo: This does not kill the docker process. We have to stop it with docker stop
-
-    def __enter__(self) -> ProcessWrapper:
-        return self
-
-    def __exit__(self, *exc: Any) -> None:
-        self._finalizer()
 
 
 def launch_dpf_docker(
@@ -67,8 +17,10 @@ def launch_dpf_docker(
     image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
     mount_directories: Mapping[str, str] = MappingProxyType({}),
     port: Optional[int] = None,
-    stdout_file: _PATH = os.devnull,
-    stderr_file: _PATH = os.devnull,
+    server_out_file: _PATH = os.devnull,
+    server_err_file: _PATH = os.devnull,
+    process_out_file: _PATH = os.devnull,
+    process_err_file: _PATH = os.devnull,
 ) -> ServerProtocol:
     """Launch an ACP server locally in a Docker container.
 
@@ -95,8 +47,12 @@ def launch_dpf_docker(
     """
     if port is None:
         port = _find_free_port()
-    stdout = open(stdout_file, mode="w", encoding="utf-8")
-    stderr = open(stderr_file, mode="w", encoding="utf-8")
+    server_stdout = open(server_out_file, mode="w", encoding="utf-8")
+    server_stderr = open(server_err_file, mode="w", encoding="utf-8")
+
+    process_stdout = open(process_out_file, mode="w", encoding="utf-8")
+    process_stderr = open(process_err_file, mode="w", encoding="utf-8")
+
     cmd = ["docker", "run"]
     for source_dir, target_dir in mount_directories.items():
         cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
@@ -109,13 +65,25 @@ def launch_dpf_docker(
         "HOME=/home/container",
         image_name,
     ]
+    process_stdout.write(f"Starting docker container: {cmd}\n")
     process = subprocess.Popen(
         cmd,
-        stdout=stdout,
-        stderr=stderr,
+        stdout=server_stdout,
+        stderr=server_stderr,
         text=True,
     )
-    return ProcessWrapper(process=process, stdout=stdout, stderr=stderr)
+    import time
+
+    time.sleep(3)
+    process_stdout.write(f"process poll {process.poll}\n")
+
+    process = subprocess.Popen(
+        ["docker", "ps"],
+        stdout=process_stdout,
+        stderr=process_stderr,
+        text=True,
+    )
+    return None
 
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
@@ -139,14 +107,22 @@ def dpf_server():
     port = _find_free_port()
     server_log_stdout = TEST_ROOT_DIR / "server_log_out.txt"
     server_log_stderr = TEST_ROOT_DIR / "server_log_err.txt"
-    with launch_dpf_docker(
-        stdout_file=server_log_stdout, stderr_file=server_log_stderr, port=port
-    ) as process_wrapper:
 
-        import ansys.dpf.core as dpf
+    process_log_stdout = TEST_ROOT_DIR / "process_log_out.txt"
+    process_log_stderr = TEST_ROOT_DIR / "process_log_err.txt"
 
-        server = dpf.server.connect_to_server("127.0.0.1", port=port)
+    launch_dpf_docker(
+        server_out_file=server_log_stdout,
+        server_err_file=server_log_stderr,
+        process_out_file=process_log_stdout,
+        process_err_file=process_log_stderr,
+        port=port,
+    )
 
-        dpf.load_library("libcomposite_operators.so", "composites", server=server)
-        dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
-        yield server
+    import ansys.dpf.core as dpf
+
+    server = dpf.server.connect_to_server("127.0.0.1", port=port)
+
+    dpf.load_library("libcomposite_operators.so", "composites", server=server)
+    dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
+    yield server

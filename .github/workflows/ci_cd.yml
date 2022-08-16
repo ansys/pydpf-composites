@@ -93,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: server_output
-          path: tests/server_log_*.txt
+          path: tests/*_log_*.txt
           retention-days: 7
 
   docs:
