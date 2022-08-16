@@ -5,7 +5,7 @@ ATTRS_WRINKLING = ["homogeneous_core_coeff", "honeycomb_core_coeff", "wf"]
 
 class FaceSheetWrinklingCriterion(FailureCriterionBase):
     """
-    Defines the wrinkling failure criterion for sandwich structures (laminate with cores)
+    Defines the face sheet wrinkling failure criterion for sandwich structures (laminate with cores)
     """
 
     def __init__(self,
