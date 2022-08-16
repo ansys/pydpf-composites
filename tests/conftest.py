@@ -93,7 +93,7 @@ class DockerWrapper:
         self.process_stdout.write(f"\n\n")
 
     def stop(self):
-        out = subprocess.check_output(["docker", "stop", {self.name}])
+        out = subprocess.check_output(["docker", "stop", self.name])
         self.process_stdout.write(str(out))
 
         self.process_stdout.write(f"docker ps after stopping the container:\n")
