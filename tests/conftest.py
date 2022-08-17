@@ -84,10 +84,6 @@ class DockerWrapper:
             text=True,
         )
 
-        # Todo: Use more sophisticated way to check if server is up
-        import time
-
-        time.sleep(3)
         self.process_stdout.write(f"Output of docker ps after start\n")
         out = subprocess.check_output(["docker", "ps"])
         self.process_stdout.write(str(out))
@@ -143,6 +139,23 @@ def dpf_server():
         )
 
         server = dpf.server.connect_to_server("127.0.0.1", port=port)
+
+        # Small hack to check if the server is up
+        # The dpf server should check this in connect_to_server but that's currently not the case
+        # https://github.com/pyansys/pydpf-core/issues/414
+        # We use the fact that server.version throws if the server is not yet connected
+        timeout = 5
+        import time
+
+        tstart = time.time()
+        while (time.time() - tstart) < timeout:
+            time.sleep(0.001)
+            try:
+                server.version
+                break
+            except Exception as e:
+                pass
+        server.version
 
         dpf.load_library("libcomposite_operators.so", "composites", server=server)
         dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
