@@ -10,6 +10,7 @@ from types import MappingProxyType
 from typing import Mapping, Optional
 import uuid
 
+import ansys.dpf.core as dpf
 import pytest
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
@@ -82,7 +83,8 @@ class DockerWrapper:
             stderr=self.server_stderr,
             text=True,
         )
-        # Todo: Check if server is up differently
+
+        # Todo: Use more sophisticated way to check if server is up
         import time
 
         time.sleep(3)
@@ -139,8 +141,6 @@ def dpf_server():
             process_err_file=process_log_stderr,
             port=port,
         )
-
-        import ansys.dpf.core as dpf
 
         server = dpf.server.connect_to_server("127.0.0.1", port=port)
 

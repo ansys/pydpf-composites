@@ -5,6 +5,4 @@ sphinx-copybutton==0.5
 pyvista
 sphinx_gallery
 pypandoc==1.7.5
-## Todo: use correct version and remove mapdl
-ansys-mapdl-core
 ansys-dpf-core

@@ -1,5 +1,0 @@
-* Check what happens on windows
-* set CNAME so that doc is available
-* Add dpf_composites to dpf container
-* Consume correct dpf container
-* Cleanup dependencies (grpc,dpf and pymapl versions)

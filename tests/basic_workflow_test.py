@@ -8,7 +8,7 @@ import pytest
 from ansys.dpf.composites.failure_config import get_failure_criteria_definition
 
 
-def basic_workflow_test(dpf_server):
+def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
 
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
