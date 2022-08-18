@@ -16,11 +16,8 @@ import pytest
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
 
-class DockerWrapper:
-    """Wraps a DPF docker container. The container is started on __init__
-
-    stop cleans up all the resources and stops the container
-    """
+class DockerProcess:
+    """Context manager that wraps a docker process"""
 
     def __init__(
         self,
@@ -32,7 +29,7 @@ class DockerWrapper:
         process_out_file: _PATH = os.devnull,
         process_err_file: _PATH = os.devnull,
     ):
-        """Start the docker container
+        """Initialize the wrapper
         Parameters
         ----------
         image_name :
@@ -54,27 +51,32 @@ class DockerWrapper:
              is redirected.
         """
         if port is None:
-            port = _find_free_port()
+            self.port = _find_free_port()
+        else:
+            self.port = port
         self.server_stdout = open(server_out_file, mode="w", encoding="utf-8")
         self.server_stderr = open(server_err_file, mode="w", encoding="utf-8")
 
         self.process_stdout = open(process_out_file, mode="w", encoding="utf-8")
         self.process_stderr = open(process_err_file, mode="w", encoding="utf-8")
         self.name = str(uuid.uuid4())
+        self.mount_directories = mount_directories
+        self.image_name = image_name
 
+    def __enter__(self):
         cmd = ["docker", "run"]
-        for source_dir, target_dir in mount_directories.items():
+        for source_dir, target_dir in self.mount_directories.items():
             cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
         if sys.platform == "linux":
             cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
         cmd += [
             "-p",
-            f"{port}:50052/tcp",
+            f"{self.port}:50052/tcp",
             "-e",
             "HOME=/home/container",
             "--name",
             self.name,
-            image_name,
+            self.image_name,
         ]
         self.process_stdout.write(f"Starting docker container: {cmd}\n\n")
         self.server_process = subprocess.Popen(
@@ -89,7 +91,12 @@ class DockerWrapper:
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n\n")
 
-    def stop(self):
+    def __exit__(
+        self,
+        type,
+        value,
+        traceback,
+    ):
         out = subprocess.check_output(["docker", "stop", self.name])
         self.process_stdout.write(str(out))
 
@@ -128,15 +135,13 @@ def dpf_server():
 
     process_log_stdout = TEST_ROOT_DIR / "process_log_out.txt"
     process_log_stderr = TEST_ROOT_DIR / "process_log_err.txt"
-    wrapper = None
-    try:
-        wrapper = DockerWrapper(
-            server_out_file=server_log_stdout,
-            server_err_file=server_log_stderr,
-            process_out_file=process_log_stdout,
-            process_err_file=process_log_stderr,
-            port=port,
-        )
+    with DockerProcess(
+        server_out_file=server_log_stdout,
+        server_err_file=server_log_stderr,
+        process_out_file=process_log_stdout,
+        process_err_file=process_log_stderr,
+        port=port,
+    ):
 
         server = dpf.server.connect_to_server("127.0.0.1", port=port)
 
@@ -160,6 +165,3 @@ def dpf_server():
         dpf.load_library("libcomposite_operators.so", "composites", server=server)
         dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
         yield server
-    finally:
-        if wrapper is not None:
-            wrapper.stop()

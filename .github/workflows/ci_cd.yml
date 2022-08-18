@@ -124,7 +124,7 @@ jobs:
           python -m pip install --upgrade pip poetry tox
       - name: Generate the documentation with tox
         run: | 
-          tox -e doc
+          tox -e doc-linux
           touch .tox/doc_out/.nojekyll
           echo "dev.dpf.composites.docs.pyansys.com" >> doc/build/html/CNAME
 
