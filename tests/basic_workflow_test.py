@@ -9,7 +9,7 @@ from ansys.dpf.composites.failure_config import get_failure_criteria_definition
 
 
 def test_basic_workflow(dpf_server):
-    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
