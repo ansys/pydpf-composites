@@ -27,7 +27,7 @@ dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
 # Specify input files and upload them to the server
 
 # Todo make files available for users
-TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data"
+TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
 rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
 h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
 material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
