@@ -27,7 +27,9 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip poetry tox
+          python -m pip install --upgrade pip tox
+          python -m pip install --pre --upgrade poetry
+
       - name: Test with tox
         run: tox -e style
 
@@ -83,7 +85,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip poetry tox tox-gh-actions
+          python -m pip install --upgrade pip tox tox-gh-actions
+          python -m pip install --pre --upgrade poetry
+
       - name: Test with tox
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: tox
@@ -121,12 +125,13 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip poetry tox
+          python -m pip install --upgrade pip tox
+          python -m pip install --pre --upgrade poetry
       - name: Generate the documentation with tox
         run: | 
           tox -e doc-linux
           touch .tox/doc_out/.nojekyll
-          echo "dev.dpf.composites.docs.pyansys.com" >> .tox/doc_out/html/CNAME
+          echo "dev.dpf.composites.docs.pyansys.com" >> .tox/doc_out/CNAME
 
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2
@@ -155,7 +160,7 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
       - name: Install dependencies and build the library
         run: |
-          python -m pip install --upgrade pip poetry
+          python -m pip install --pre --upgrade pip poetry
           python -m pip install -r requirements/requirements_build.txt
           poetry build
           python -m twine check dist/*
