@@ -123,10 +123,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip poetry tox
       - name: Generate the documentation with tox
-        run: tox -e doc
-      - name: create nojekyll file
-        run: |
+        run: | 
+          tox -e doc
           touch .tox/doc_out/.nojekyll
+          echo "dev.dpf.composites.docs.pyansys.com" >> doc/build/html/CNAME
 
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2

@@ -111,7 +111,7 @@ failure_criteria_definition = get_failure_criteria_definition()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
 failure_evaluator.inputs.configuration(json.dumps(failure_criteria_definition))
-failure_evaluator.inputs.materials_container(material_provider.outputs.materials_container)
+failure_evaluator.inputs.materials_container(material_provider.outputs)
 failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
