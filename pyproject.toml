@@ -56,7 +56,8 @@ all = [
     "pyvista",
     "mypy",
     "mypy-extensions",
-    "pre-commit"
+    "pre-commit",
+    "pypandoc"
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "ansys-dpf-core", "pyvista",
     "pypandoc"]
@@ -84,3 +85,4 @@ show_missing = true
 [tool.mypy]
 python_version = 3.7
 mypy_path = "$MYPY_CONFIG_FILE_DIR/src:$MYPY_CONFIG_FILE_DIR/tests"
+ignore_missing_imports = true
