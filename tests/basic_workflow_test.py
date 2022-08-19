@@ -1,12 +1,10 @@
-import json
 import os
 import pathlib
 
 import ansys.dpf.core as dpf
 import pytest
 
-#todo: replace with FailureDefinition
-from .utils import get_basic_combined_failure_criteria
+from utils import get_basic_combined_failure_criteria
 
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
