@@ -24,8 +24,16 @@ def test_max_stress_criterion():
 
     assert json_dumps == ms_default.to_json_dict()
 
-    new_args = dict(zip(ATTRS_MAX_STRESS, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.]))
+    new_values = dict(zip(ATTRS_MAX_STRESS, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.]))
 
-    ms = MaxStressCriterion(**new_args)
+    ms = MaxStressCriterion(**new_values)
     for v in ATTRS_MAX_STRESS:
-        assert getattr(ms, v) == new_args[v]
+        assert getattr(ms, v) == new_values[v]
+
+    # test setters
+    for k, v in new_values.items():
+        setattr(ms_default, k, v)
+        assert getattr(ms_default, k) == v
+
+    # test repr
+    print(ms)

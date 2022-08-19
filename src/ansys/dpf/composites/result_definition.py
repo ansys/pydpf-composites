@@ -9,6 +9,7 @@ from .failure_criteria.combined_failure_criterion import CombinedFailureCriterio
 from ._typing_helper import PATH as _PATH
 from typing import Sequence
 
+#todo: is sampling point needed?
 _SUPPORTED_EXPRESSIONS = ["composite_failure", "sampling_point"]
 _SUPPORTED_MEASURES = ["inverse_reserve_factor", "safety_factor", "safety_margin"]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]

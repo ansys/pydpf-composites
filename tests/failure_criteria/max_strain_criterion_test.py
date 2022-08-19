@@ -27,10 +27,17 @@ def test_max_strain_criterion():
 
     assert json_dumps == ms_default.to_json_dict()
 
-    new_args = dict(zip(ATTRS_MAX_STRAIN, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.,
+    new_values = dict(zip(ATTRS_MAX_STRAIN, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.,
                                            True, 0.01, -0.1, 0.02, -0.2, 0.03, -0.3, 0.15, 0.25, 0.35]))
 
-    ms = MaxStrainCriterion(**new_args)
+    ms = MaxStrainCriterion(**new_values)
     for v in ATTRS_MAX_STRAIN:
-        assert getattr(ms, v) == new_args[v]
+        assert getattr(ms, v) == new_values[v]
 
+    # test setters
+    for k, v in new_values.items():
+        setattr(ms_default, k, v)
+        assert getattr(ms_default, k) == v
+
+    # test repr
+    print(ms)
