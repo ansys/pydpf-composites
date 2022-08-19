@@ -26,18 +26,19 @@ def test_combined_failure_criterion():
     cfc.insert(strain)
 
     attrs_d = cfc.to_dict()
-    assert "criteria" in attrs_d.keys()
+    assert "max_stress" in attrs_d.keys()
+    assert "max_strain" in attrs_d.keys()
 
-    ref_d = {'criteria':
-                 {'max_stress': {'active': True, 's12_active': True, 's13_active': False, 's1_active': True,
-                       's23_active': False, 's2_active': True, 's3_active': False,
-                       'wf_s1': 1.0, 'wf_s12': 1.0, 'wf_s13': 1.0, 'wf_s2': 1.0, 'wf_s23': 1.0, 'wf_s3': 1.0},
-                  'max_strain': {'active': True, 'e12': 0.0, 'e12_active': True, 'e13': 0.0, 'e13_active': False,
-                                 'e1_active': True, 'e1c': 0.0, 'e1t': 0.0, 'e23': 0.0, 'e23_active': False,
-                                 'e2_active': True, 'e2c': 0.0, 'e2t': 0.0, 'e3_active': False, 'e3c': 0.0, 'e3t': 0.0,
-                                 'force_global_limits': False, 'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0, 'wf_e2': 1.0,
-                                 'wf_e23': 1.0, 'wf_e3': 1.0}
-                  }
+    ref_d = {'max_stress': {'active': True, 's12_active': True, 's13_active': False, 's1_active': True,
+                            's23_active': False, 's2_active': True, 's3_active': False,
+                             'wf_s1': 1.0, 'wf_s12': 1.0, 'wf_s13': 1.0, 'wf_s2': 1.0, 'wf_s23': 1.0, 'wf_s3': 1.0
+                            },
+             'max_strain': {'active': True, 'e12': 0.0, 'e12_active': True, 'e13': 0.0, 'e13_active': False,
+                            'e1_active': True, 'e1c': 0.0, 'e1t': 0.0, 'e23': 0.0, 'e23_active': False,
+                            'e2_active': True, 'e2c': 0.0, 'e2t': 0.0, 'e3_active': False, 'e3c': 0.0, 'e3t': 0.0,
+                            'force_global_limits': False, 'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0, 'wf_e2': 1.0,
+                            'wf_e23': 1.0, 'wf_e3': 1.0
+                            }
              }
 
     assert attrs_d == ref_d

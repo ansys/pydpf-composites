@@ -6,7 +6,7 @@ import ansys.dpf.core as dpf
 import pytest
 
 #todo: replace with FailureDefinition
-from ansys.dpf.composites.failure_config import get_failure_criteria_definition
+from .utils import get_basic_combined_failure_criteria
 
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
@@ -59,8 +59,6 @@ def test_basic_workflow(dpf_server):
     layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
     layup_provider.run()
 
-    failure_criteria_definition = get_failure_criteria_definition()
-
     strain_operator = dpf.Operator("EPEL")
     strain_operator.inputs.data_sources(rst_data_source)
     strain_operator.inputs.bool_rotate_to_global(False)
@@ -69,8 +67,9 @@ def test_basic_workflow(dpf_server):
     stress_operator.inputs.data_sources(rst_data_source)
     stress_operator.inputs.bool_rotate_to_global(False)
 
+    rd = get_basic_combined_failure_criteria()
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-    failure_evaluator.inputs.configuration(json.dumps(failure_criteria_definition))
+    failure_evaluator.inputs.configuration(rd.to_json_dict())
     failure_evaluator.inputs.materials_container(material_provider.outputs.materials_container)
     failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
     failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)

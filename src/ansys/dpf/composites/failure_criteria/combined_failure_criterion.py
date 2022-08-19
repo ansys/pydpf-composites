@@ -1,3 +1,4 @@
+import json
 
 class CombinedFailureCriterion:
     """
@@ -62,7 +63,7 @@ class CombinedFailureCriterion:
             return self._failure_criteria.pop(key)
         return None
 
-    def to_dict(self) -> str:
+    def to_dict(self) -> dict:
         """
         :return: the json_dict which can be used for the result definition
         of the DPF Composites Failure Operator
@@ -76,8 +77,14 @@ class CombinedFailureCriterion:
             failure_dict = {key: attr_dict}
             criteria.update(failure_dict)
 
-        combined_criteria = {self.JSON_DICT_KEY: criteria}
-        return combined_criteria
+        return criteria
+
+    def to_json_dict(self) -> str:
+        """
+        :return: the string representation (json.dumps) which can be used for the result definition
+        of the DPF Composites Failure Operator
+        """
+        return json.dumps(self.to_dict())
 
     def __repr__(self):
         s_criteria = ", ".join([f"'{k}': {fc._short_descr()}" for k, fc in self.failure_criteria.items()])

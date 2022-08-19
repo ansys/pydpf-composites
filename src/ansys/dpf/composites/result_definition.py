@@ -174,7 +174,9 @@ class ResultDefinition:
         result_definition = {"version": self._VERSION,
                              "accumulator": "max",
                              "expression": f"{self.expression}",
-                             "failure_criteria_definition": self.combined_failure_criterion.to_dict(),
+                             "failure_criteria_definition": {self.combined_failure_criterion.JSON_DICT_KEY:
+                                                             self.combined_failure_criterion.to_dict()
+                                                             },
                              "measures": self.measures,
                              "stress_strain_eval_mode": f"{self.stress_strain_eval_mode}",
                              "time": self.time,
