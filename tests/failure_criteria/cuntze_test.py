@@ -5,7 +5,7 @@ from ansys.dpf.composites.failure_criteria.cuntze import CuntzeCriterion, ATTRS_
 defaults = dict(zip(ATTRS_CUNTZE, [True, True, True, True, True, 2, 1., 1., 1., 1., 1., 0.2,
                                    1.3805, 53., 2.6]))
 
-def test_core_failure_criterion():
+def test_cuntze_criterion():
 
     cuntze_default = CuntzeCriterion()
     assert cuntze_default.name == "Cuntze"
