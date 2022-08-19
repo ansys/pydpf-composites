@@ -2,17 +2,30 @@ import json
 
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion, ATTRS_MAX_STRESS
 
-defaults = [True, True, False, True, False, False, 1., 1., 1., 1., 1., 1.]
+defaults = dict(zip(ATTRS_MAX_STRESS, [True, True, False, True, False, False, 1., 1., 1., 1., 1., 1.]))
 
 def test_max_stress_criterion():
 
-    max_stress_default = MaxStressCriterion()
-    defaults_dict = {"active": True}
-    for i, v in enumerate(ATTRS_MAX_STRESS):
-        assert getattr(max_stress_default, v) == defaults[i]
-        defaults_dict[v] = defaults[i]
+    ms_default = MaxStressCriterion()
+    assert ms_default.name == "Max Stress"
 
-    attr_values = max_stress_default.to_dict()
+    defaults_dict = {"active": True}
+    for v in ATTRS_MAX_STRESS:
+        assert getattr(ms_default, v) == defaults[v]
+        defaults_dict[v] = defaults[v]
+
+    attr_values = ms_default.to_dict()
     for k, v in attr_values.items():
         assert v == defaults_dict[k]
 
+    json_dumps = '{"active": true, "s12_active": true, "s13_active": false, "s1_active": true, "s23_active": ' \
+                 'false, "s2_active": true, "s3_active": false, "wf_s1": 1.0, "wf_s12": 1.0, "wf_s13": 1.0, ' \
+                 '"wf_s2": 1.0, "wf_s23": 1.0, "wf_s3": 1.0}'
+
+    assert json_dumps == ms_default.to_json_dict()
+
+    new_args = dict(zip(ATTRS_MAX_STRESS, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.]))
+
+    ms = MaxStressCriterion(**new_args)
+    for v in ATTRS_MAX_STRESS:
+        assert getattr(ms, v) == new_args[v]
