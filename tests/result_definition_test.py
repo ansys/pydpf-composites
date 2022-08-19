@@ -42,7 +42,7 @@ def test_result_definition():
 
     for v in _SUPPORTED_MEASURES:
         rd.measures = [v]
-        assert rd.expression == [v]
+        assert rd.measures == [v]
 
     rd.composite_definitions = [r"\\workdir\ACPCompositeDefinitions.h5"]
     assert rd.composite_definitions == [r"\\workdir\ACPCompositeDefinitions.h5"]
@@ -53,8 +53,8 @@ def test_result_definition():
     rd.rst_files = [r"\\workdir\file.rst"]
     assert rd.rst_files == [r"\\workdir\file.rst"]
 
-    rd.material_files = ["'\\workdir\engd.xml"]
-    assert rd.material_files == ["'\\workdir\engd.xml"]
+    rd.material_files = [r"\\workdir\engd.xml"]
+    assert rd.material_files == [r"\\workdir\engd.xml"]
 
     rd.write_data_for_full_element_scope = False
     assert rd.write_data_for_full_element_scope == False
@@ -71,8 +71,61 @@ def test_result_definition():
     rd.max_chunk_size = 7
     assert rd.max_chunk_size == 7
 
-    rd.to_dict()
-    rd.to_json_dict()
+    ref_dict = {'version': 1,
+                'accumulator': 'max',
+                'expression': 'sampling_point',
+                'failure_criteria_definition': {'criteria':
+                                                    {'max_strain': {'active': True, 'e12': 0.0, 'e12_active': True,
+                                                                    'e13': 0.0, 'e13_active': False, 'e1_active': True,
+                                                                    'e1c': 0.0, 'e1t': 0.0, 'e23': 0.0,
+                                                                    'e23_active': False, 'e2_active': True, 'e2c': 0.0,
+                                                                    'e2t': 0.0, 'e3_active': False, 'e3c': 0.0,
+                                                                    'e3t': 0.0, 'force_global_limits': False,
+                                                                    'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0,
+                                                                    'wf_e2': 1.0, 'wf_e23': 1.0, 'wf_e3': 1.0},
+                                                     'max_stress': {'active': True, 's12_active': True,
+                                                                    's13_active': False, 's1_active': True,
+                                                                    's23_active': False, 's2_active': True,
+                                                                    's3_active': False, 'wf_s1': 1.0, 'wf_s12': 1.0,
+                                                                    'wf_s13': 1.0, 'wf_s2': 1.0, 'wf_s23': 1.0,
+                                                                    'wf_s3': 1.0}
+                                                     }
+                                                },
+                'measures': ['safety_margin'],
+                'stress_strain_eval_mode': 'rst_file',
+                'time': 2.3,
+                'max_chunk_size': 7,
+                'scopes': [{'datasources':
+                                {'composite_definition': ['\\\\workdir\\ACPCompositeDefinitions.h5'],
+                                 'assembly_mapping_files': ['\\\\workdir\\solid_model.mapping'],
+                                 'rst_file': ['\\\\workdir\\file.rst'],
+                                 'material_file': ["\\\\workdir\\engd.xml"]
+                                 },
+                            'write_data_for_full_element_scope': False,
+                            'elements': [1, 2, 5],
+                            'ply_ids': ['ply 1', 'ply carbon UD']
+                            }
+                           ]
+                }
+
+    ref_json = '{"version": 1, "accumulator": "max", "expression": "sampling_point", "failure_criteria_definition": ' \
+               '{"criteria": {"max_strain": {"active": true, "e12": 0.0, "e12_active": true, "e13": 0.0, ' \
+               '"e13_active": false, "e1_active": true, "e1c": 0.0, "e1t": 0.0, "e23": 0.0, "e23_active": false, ' \
+               '"e2_active": true, "e2c": 0.0, "e2t": 0.0, "e3_active": false, "e3c": 0.0, "e3t": 0.0, ' \
+               '"force_global_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, "wf_e2": 1.0, "wf_e23": 1.0,' \
+               ' "wf_e3": 1.0}, "max_stress": {"active": true, "s12_active": true, "s13_active": false, ' \
+               '"s1_active": true, "s23_active": false, "s2_active": true, "s3_active": false, "wf_s1": 1.0, ' \
+               '"wf_s12": 1.0, "wf_s13": 1.0, "wf_s2": 1.0, "wf_s23": 1.0, "wf_s3": 1.0}}}, ' \
+               '"measures": ["safety_margin"], "stress_strain_eval_mode": "rst_file", "time": 2.3, ' \
+               '"max_chunk_size": 7, ' \
+               '"scopes": [{"datasources": {"composite_definition": ["\\\\\\\\workdir\\\\ACPCompositeDefinitions.h5"], ' \
+               '"assembly_mapping_files": ["\\\\\\\\workdir\\\\solid_model.mapping"], ' \
+               '"rst_file": ["\\\\\\\\workdir\\\\file.rst"], "material_file": ["\\\\\\\\workdir\\\\engd.xml"]}, ' \
+               '"write_data_for_full_element_scope": false, "elements": [1, 2, 5], ' \
+               '"ply_ids": ["ply 1", "ply carbon UD"]}]}'
+
+    assert rd.to_dict() == ref_dict
+    assert rd.to_json_dict() == ref_json
 
     # test reprs
     rd._short_descr()
