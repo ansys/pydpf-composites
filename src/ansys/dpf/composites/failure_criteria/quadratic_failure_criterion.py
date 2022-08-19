@@ -2,7 +2,7 @@
 Defines the MaxStress failure criterion
 """
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 
 class QuadraticFailureCriterion(FailureCriterionBase):
     """

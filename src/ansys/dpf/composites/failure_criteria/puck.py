@@ -1,5 +1,5 @@
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_PUCK = ["s", "M", "interface_weakening_factor", "cfps", "dim", "force_global_constants",
               "p21_neg", "p21_pos", "p22_neg", "p22_pos",

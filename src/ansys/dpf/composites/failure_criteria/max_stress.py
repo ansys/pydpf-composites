@@ -2,7 +2,7 @@
 Defines the MaxStress failure criterion
 """
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_MAX_STRESS = ["s1_active", "s2_active", "s3_active", "s12_active", "s13_active", "s23_active",
                     "wf_s1", "wf_s2", "wf_s3", "wf_s12", "wf_s13", "wf_s23"]

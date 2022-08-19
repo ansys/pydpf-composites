@@ -2,7 +2,7 @@
 Defines the MaxStrain failure criterion
 """
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_MAX_STRAIN = ["e1_active", "e2_active", "e3_active", "e12_active", "e13_active", "e23_active",
                     "wf_e1", "wf_e2", "wf_e3", "wf_e12", "wf_e13", "wf_e23",

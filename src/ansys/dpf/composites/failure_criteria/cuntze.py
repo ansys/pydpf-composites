@@ -1,5 +1,5 @@
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 import math
 
 ATTRS_CUNTZE = ["dim",

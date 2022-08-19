@@ -4,7 +4,7 @@ Object to represent the Result Definition used by Failure Operator in DPF Compos
 
 import json
 
-from failure_criteria.combined_failure_criterion import CombinedFailureCriterion
+from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
 
 from ._typing_helper import PATH as _PATH
 from typing import Sequence

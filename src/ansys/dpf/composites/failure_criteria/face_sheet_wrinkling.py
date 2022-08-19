@@ -1,5 +1,5 @@
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_WRINKLING = ["homogeneous_core_coeff", "honeycomb_core_coeff", "wf"]
 

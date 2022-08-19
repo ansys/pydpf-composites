@@ -1,5 +1,5 @@
 
-from .failure_criteion_base import FailureCriterionBase
+from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_SHEAR_CRIMPING = ["kc", "kf", "wf"]
 

@@ -14,5 +14,5 @@ def test_max_stress_criterion():
     attr_values = max_stress_default.to_dict()
     for k, v in attr_values.items():
         assert v == defaults_dict[k]
-        
+
 
