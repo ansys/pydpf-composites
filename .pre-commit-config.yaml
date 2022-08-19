@@ -19,10 +19,30 @@ repos:
   rev: v2.1.0
   hooks:
   - id: codespell
+    exclude: "^(tests/|examples/|src/)"
 
 - repo: https://github.com/pycqa/pydocstyle
   rev: 6.1.1
   hooks:
   - id: pydocstyle
     additional_dependencies: [toml]
-    exclude: "tests/"
+    exclude: "^(tests/|examples/)"
+
+- repo: local
+  hooks:
+  - id: mypy-code
+    name: "mypy: strict checks on code"
+    entry: mypy
+    language: python
+    types: [python]
+    require_serial: true
+    exclude: "^(doc/)|(tests/)"
+    args: ["--strict", "--namespace-packages", "--explicit-package-bases"]
+  - id: mypy-tests
+    name: "mypy: lenient checks on tests"
+    entry: mypy
+    language: python
+    types: [python]
+    require_serial: true
+    files: "^(tests/)"
+    args: ["--namespace-packages", "--explicit-package-bases"]
