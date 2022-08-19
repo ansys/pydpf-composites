@@ -5,8 +5,8 @@ import pathlib
 import ansys.dpf.core as dpf
 import pytest
 
+#todo: replace with FailureDefinition
 from ansys.dpf.composites.failure_config import get_failure_criteria_definition
-
 
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
