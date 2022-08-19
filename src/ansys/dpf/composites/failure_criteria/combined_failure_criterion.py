@@ -1,8 +1,3 @@
-"""
-Defines the Combined Failure Criterion that can be used in combination with
-Failure Evaluator operator in DPF Composites
-"""
-import json
 
 class CombinedFailureCriterion:
     """
