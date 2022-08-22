@@ -7,8 +7,8 @@ class CombinedFailureCriterion:
 
     Usage:
         combined_failure = CombinedFailureCriterion("max_stress 3D")
-        max_stress = MaxStressCriterion(s1_active = True, s2_active = True, s3_active = True,
-            s12_active = True, s13_active = True, s23_active = True)
+        max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+            s12=True, s13=True, s23=True)
         combined_failure.insert(max_stress)
 
     """
@@ -41,8 +41,8 @@ class CombinedFailureCriterion:
 
         Example:
             combined_failure = CombinedFailureCriterion("max_stress 3D")
-            max_stress = MaxStressCriterion(s1_active = True, s2_active = True, s3_active = True,
-                 s12_active = True, s13_active = True, s23_active = True)
+            max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+                 s12=True, s13=True, s23=True)
             combined_failure.insert(max_stress)
 
         """

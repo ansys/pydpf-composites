@@ -4,7 +4,7 @@ Defines the MaxStrain failure criterion
 
 from .failure_criterion_base import FailureCriterionBase
 
-ATTRS_MAX_STRAIN = ["e1_active", "e2_active", "e3_active", "e12_active", "e13_active", "e23_active",
+ATTRS_MAX_STRAIN = ["e1", "e2", "e3", "e12", "e13", "e23",
                     "wf_e1", "wf_e2", "wf_e3", "wf_e12", "wf_e13", "wf_e23",
                     "force_global_limits",
                     "e1t", "e1c", "e2t", "e2c", "e3t", "e3c", "e12", "e23", "e13"]
@@ -15,12 +15,12 @@ class MaxStrainCriterion(FailureCriterionBase):
     """
 
     def __init__(self,
-                 e1_active: bool = True,
-                 e2_active: bool = True,
-                 e3_active: bool = False,
-                 e12_active: bool = True,
-                 e13_active: bool = False,
-                 e23_active: bool = False,
+                 e1: bool = True,
+                 e2: bool = True,
+                 e3: bool = False,
+                 e12: bool = True,
+                 e13: bool = False,
+                 e23: bool = False,
                  wf_e1: float = 1.,
                  wf_e2: float = 1.,
                  wf_e3: float = 1.,
@@ -44,35 +44,35 @@ class MaxStrainCriterion(FailureCriterionBase):
         for attr in ATTRS_MAX_STRAIN:
             setattr(self, attr, eval(attr))
 
-    def _get_e1_active(self) -> bool:
-        return self._e1_active
-    def _set_e1_active(self, value: bool):
-        self._e1_active = value
+    def _get_e1(self) -> bool:
+        return self._e1
+    def _set_e1(self, value: bool):
+        self._e1 = value
 
-    def _get_e2_active(self) -> bool:
-        return self._e2_active
-    def _set_e2_active(self, value: bool):
-        self._e2_active = value
+    def _get_e2(self) -> bool:
+        return self._e2
+    def _set_e2(self, value: bool):
+        self._e2 = value
 
-    def _get_e3_active(self) -> bool:
-        return self._e3_active
-    def _set_e3_active(self, value: bool):
-        self._e3_active = value
+    def _get_e3(self) -> bool:
+        return self._e3
+    def _set_e3(self, value: bool):
+        self._e3 = value
 
-    def _get_e12_active(self) -> bool:
-        return self._e12_active
-    def _set_e12_active(self, value: bool):
-        self._e12_active = value
+    def _get_e12(self) -> bool:
+        return self._e12
+    def _set_e12(self, value: bool):
+        self._e12 = value
 
-    def _get_e13_active(self) -> bool:
-        return self._e13_active
-    def _set_e13_active(self, value: bool):
-        self._e13_active = value
+    def _get_e13(self) -> bool:
+        return self._e13
+    def _set_e13(self, value: bool):
+        self._e13 = value
 
-    def _get_e23_active(self) -> bool:
-        return self._e23_active
-    def _set_e23_active(self, value: bool):
-        self._e23_active = value
+    def _get_e23(self) -> bool:
+        return self._e23
+    def _set_e23(self, value: bool):
+        self._e23 = value
 
     def _get_wf_e1(self) -> float:
         return self._wf_e1
@@ -172,17 +172,17 @@ class MaxStrainCriterion(FailureCriterionBase):
             raise ValueError("Strain limit e23 cannot be negative.")
         self._e23 = value
 
-    e1_active = property(_get_e1_active, _set_e1_active,
+    e1 = property(_get_e1, _set_e1,
                          doc="Activates the failure evaluation regarding the strain in the material 1 direction.")
-    e2_active = property(_get_e2_active, _set_e2_active,
+    e2 = property(_get_e2, _set_e2,
                          doc="Activates the failure evaluation regarding the strain in the material 2 direction.")
-    e3_active = property(_get_e3_active, _set_e3_active,
+    e3 = property(_get_e3, _set_e3,
                          doc="Activates the failure evaluation regarding the strain in the material 3 direction (out-of-plane).")
-    e12_active = property(_get_e12_active, _set_e12_active,
+    e12 = property(_get_e12, _set_e12,
                          doc="Activates the failure evaluation regarding the in-plane shear strain e12.")
-    e13_active = property(_get_e13_active, _set_e13_active,
+    e13 = property(_get_e13, _set_e13,
                           doc="Activates the failure evaluation regarding the interlaminar shear strain e13.")
-    e23_active = property(_get_e23_active, _set_e23_active,
+    e23 = property(_get_e23, _set_e23,
                           doc="Activates the failure evaluation regarding the interlaminar shear strain e23.")
 
     wf_e1 = property(_get_wf_e1, _set_wf_e1,

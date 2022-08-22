@@ -77,11 +77,11 @@ def test_result_definition():
                 'failure_criteria_definition':
                     {'criteria':
                          {'max_strain':
-                              {'active': True, 'e12': 0.0, 'e12_active': True,
-                               'e13': 0.0, 'e13_active': False, 'e1_active': True,
+                              {'active': True, 'e12': 0.0, 'e12': True,
+                               'e13': 0.0, 'e13': False, 'e1': True,
                                'e1c': 0.0, 'e1t': 0.0, 'e23': 0.0,
-                               'e23_active': False, 'e2_active': True, 'e2c': 0.0,
-                               'e2t': 0.0, 'e3_active': False, 'e3c': 0.0,
+                               'e23': False, 'e2': True, 'e2c': 0.0,
+                               'e2t': 0.0, 'e3': False, 'e3c': 0.0,
                                'e3t': 0.0, 'force_global_limits': False,
                                'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0,
                                'wf_e2': 1.0, 'wf_e23': 1.0, 'wf_e3': 1.0},
@@ -109,9 +109,9 @@ def test_result_definition():
                 }
 
     ref_json = '{"version": 1, "accumulator": "max", "expression": "sampling_point", "failure_criteria_definition": ' \
-               '{"criteria": {"max_strain": {"active": true, "e12": 0.0, "e12_active": true, "e13": 0.0, ' \
-               '"e13_active": false, "e1_active": true, "e1c": 0.0, "e1t": 0.0, "e23": 0.0, "e23_active": false, ' \
-               '"e2_active": true, "e2c": 0.0, "e2t": 0.0, "e3_active": false, "e3c": 0.0, "e3t": 0.0, ' \
+               '{"criteria": {"max_strain": {"active": true, "e12": 0.0, "e12": true, "e13": 0.0, ' \
+               '"e13": false, "e1": true, "e1c": 0.0, "e1t": 0.0, "e23": 0.0, "e23": false, ' \
+               '"e2": true, "e2c": 0.0, "e2t": 0.0, "e3": false, "e3c": 0.0, "e3t": 0.0, ' \
                '"force_global_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, "wf_e2": 1.0, "wf_e23": 1.0,' \
                ' "wf_e3": 1.0}, "max_stress": {"active": true, "s12": true, "s13": false, ' \
                '"s1": true, "s23": false, "s2": true, "s3": false, "wf_s1": 1.0, ' \
