@@ -7,7 +7,7 @@ from .failure_criterion_base import FailureCriterionBase
 ATTRS_MAX_STRAIN = ["e1", "e2", "e3", "e12", "e13", "e23",
                     "wf_e1", "wf_e2", "wf_e3", "wf_e12", "wf_e13", "wf_e23",
                     "force_global_limits",
-                    "e1t", "e1c", "e2t", "e2c", "e3t", "e3c", "e12", "e23", "e13"]
+                    "eXt", "eXc", "eYt", "eYc", "eZt", "eZc", "eSxy", "eSyz", "eSxz"]
 
 class MaxStrainCriterion(FailureCriterionBase):
     """
@@ -28,15 +28,15 @@ class MaxStrainCriterion(FailureCriterionBase):
                  wf_e13: float = 1.,
                  wf_e23: float = 1.,
                  force_global_limits: bool = False,
-                 e1t: float = 0.,
-                 e1c: float = 0.,
-                 e2t: float = 0.,
-                 e2c: float = 0.,
-                 e3t: float = 0.,
-                 e3c: float = 0.,
-                 e12: float = 0.,
-                 e13: float = 0.,
-                 e23: float = 0.
+                 eXt: float = 0.,
+                 eXc: float = 0.,
+                 eYt: float = 0.,
+                 eYc: float = 0.,
+                 eZt: float = 0.,
+                 eZc: float = 0.,
+                 eSxy: float = 0.,
+                 eSxz: float = 0.,
+                 eSyz: float = 0.
                  ):
         
         super().__init__(name="Max Strain", active=True)
@@ -109,68 +109,68 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _set_force_global_limits(self, value: bool):
         self._force_global_limits = value
 
-    def _get_e1t(self) -> float:
-        return self._e1t
-    def _set_e1t(self, value: float):
+    def _get_eXt(self) -> float:
+        return self._eXt
+    def _set_eXt(self, value: float):
         if value < 0.:
-            raise ValueError("Tensile limit e1t cannot be negative.")
-        self._e1t = value
+            raise ValueError("Tensile limit eXt cannot be negative.")
+        self._eXt = value
 
-    def _get_e1c(self) -> float:
-        return self._e1c
-    def _set_e1c(self, value: float):
+    def _get_eXc(self) -> float:
+        return self._eXc
+    def _set_eXc(self, value: float):
         if value > 0.:
-            raise ValueError("Compressive limit e1c cannot be positive.")
-        self._e1c = value
+            raise ValueError("Compressive limit eXc cannot be positive.")
+        self._eXc = value
 
-    def _get_e2t(self) -> float:
-        return self._e2t
-    def _set_e2t(self, value: float):
+    def _get_eYt(self) -> float:
+        return self._eYt
+    def _set_eYt(self, value: float):
         if value < 0.:
-            raise ValueError("Tensile limit e2t cannot be negative.")
-        self._e2t = value
+            raise ValueError("Tensile limit eYt cannot be negative.")
+        self._eYt = value
 
-    def _get_e2c(self) -> float:
-        return self._e2c
-    def _set_e2c(self, value: float):
+    def _get_eYc(self) -> float:
+        return self._eYc
+    def _set_eYc(self, value: float):
         if value > 0.:
-            raise ValueError("Compressive limit e2c cannot be positive.")
-        self._e2c = value
+            raise ValueError("Compressive limit eYc cannot be positive.")
+        self._eYc = value
 
-    def _get_e3t(self) -> float:
-        return self._e3t
-    def _set_e3t(self, value: float):
+    def _get_eZt(self) -> float:
+        return self._eZt
+    def _set_eZt(self, value: float):
         if value < 0.:
-            raise ValueError("Tensile limit e3t cannot be negative.")
-        self._e3t = value
+            raise ValueError("Tensile limit eZt cannot be negative.")
+        self._eZt = value
 
-    def _get_e3c(self) -> float:
-        return self._e3c
-    def _set_e3c(self, value: float):
+    def _get_eZc(self) -> float:
+        return self._eZc
+    def _set_eZc(self, value: float):
         if value > 0.:
-            raise ValueError("Compressive limit e3c cannot be positive.")
-        self._e3c = value
+            raise ValueError("Compressive limit eZc cannot be positive.")
+        self._eZc = value
 
-    def _get_e12(self) -> float:
-        return self._e12
-    def _set_e12(self, value: float):
+    def _get_eSxy(self) -> float:
+        return self._eSxy
+    def _set_eSxy(self, value: float):
         if value < 0.:
-            raise ValueError("Strain limit e12 cannot be negative.")
-        self._e12 = value
+            raise ValueError("Strain limit eSxy cannot be negative.")
+        self._eSxy = value
 
-    def _get_e13(self) -> float:
-        return self._e13
-    def _set_e13(self, value: float):
+    def _get_eSxz(self) -> float:
+        return self._eSxz
+    def _set_eSxz(self, value: float):
         if value < 0.:
-            raise ValueError("Strain limit e13 cannot be negative.")
-        self._e13 = value
+            raise ValueError("Strain limit eSxz cannot be negative.")
+        self._eSxz = value
 
-    def _get_e23(self) -> float:
-        return self._e23
-    def _set_e23(self, value: float):
+    def _get_eSyz(self) -> float:
+        return self._eSyz
+    def _set_eSyz(self, value: float):
         if value < 0.:
-            raise ValueError("Strain limit e23 cannot be negative.")
-        self._e23 = value
+            raise ValueError("Strain limit eSyz cannot be negative.")
+        self._eSyz = value
 
     e1 = property(_get_e1, _set_e1,
                          doc="Activates the failure evaluation regarding the strain in the material 1 direction.")
@@ -201,21 +201,21 @@ class MaxStrainCriterion(FailureCriterionBase):
     force_global_limits = property(_get_force_global_limits, _set_force_global_limits,
                           doc="Whether to use global limits instead of strain limits of the materials.")
 
-    e1t = property(_get_e1t, _set_e1t,
+    eXt = property(_get_eXt, _set_eXt,
                       doc="Global tensile strain limit in material direction 1.")
-    e1c = property(_get_e1c, _set_e1c,
+    eXc = property(_get_eXc, _set_eXc,
                    doc="Global compressive strain limit in material direction 1.")
-    e2t = property(_get_e2t, _set_e2t,
+    eYt = property(_get_eYt, _set_eYt,
                    doc="Global tensile strain limit in material direction 2.")
-    e2c = property(_get_e2c, _set_e2c,
+    eYc = property(_get_eYc, _set_eYc,
                    doc="Global compressive strain limit in material direction 2.")
-    e3t = property(_get_e3t, _set_e3t,
-                   doc="Global _set_e2c strain limit in material direction 3.")
-    e3c = property(_get_e3c, _set_e3c,
+    eZt = property(_get_eZt, _set_eZt,
+                   doc="Global _set_eYc strain limit in material direction 3.")
+    eZc = property(_get_eZc, _set_eZc,
                    doc="Global compressive strain limit in material direction 3.")
-    e12 = property(_get_e12, _set_e12,
+    eSxy = property(_get_eSxy, _set_eSxy,
                    doc="Global strain limit in material direction 12.")
-    e13 = property(_get_e13, _set_e13,
+    eSxz = property(_get_eSxz, _set_eSxz,
                    doc="Global strain limit in material direction 13.")
-    e23 = property(_get_e23, _set_e23,
+    eSyz = property(_get_eSyz, _set_eSyz,
                    doc="Global strain limit in material direction 23.")

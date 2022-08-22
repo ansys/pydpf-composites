@@ -19,11 +19,10 @@ def test_max_strain_criterion():
     for k, v in attr_values.items():
         assert v == defaults_dict[k]
 
-    json_dumps = '{"active": true, "e12": 0.0, "e12": true, "e13": 0.0, "e13": false, ' \
-                 '"e1": true, "e1c": 0.0, "e1t": 0.0, "e23": 0.0, "e23": false, ' \
-                 '"e2": true, "e2c": 0.0, "e2t": 0.0, "e3": false, "e3c": 0.0, "e3t": 0.0, ' \
-                 '"force_global_limits": false, ' \
-                 '"wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, "wf_e2": 1.0, "wf_e23": 1.0, "wf_e3": 1.0}'
+    json_dumps = '{"active": true, "e1": true, "e12": true, "e13": false, "e2": true, "e23": false, "e3": false, ' \
+                 '"eSxy": 0.0, "eSxz": 0.0, "eSyz": 0.0, "eXc": 0.0, "eXt": 0.0, "eYc": 0.0, "eYt": 0.0, "eZc": 0.0, ' \
+                 '"eZt": 0.0, "force_global_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, ' \
+                 '"wf_e2": 1.0, "wf_e23": 1.0, "wf_e3": 1.0}'
 
     assert json_dumps == ms_default.to_json_dict()
 

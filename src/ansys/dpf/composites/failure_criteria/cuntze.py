@@ -2,10 +2,9 @@
 from .failure_criterion_base import FailureCriterionBase
 import math
 
-ATTRS_CUNTZE = ["dim",
-              "cfc", "cft", "cma", "cmb", "cmc",
+ATTRS_CUNTZE = ["cfc", "cft", "cma", "cmb", "cmc", "dim",
               "wf_cfc", "wf_cft", "wf_cma", "wf_cmb", "wf_cmc",
-              "b21", "b32", "mode_interaction_coeff", "fracture_plane_angle"]
+              "b21", "b32", "fracture_plane_angle", "mode_interaction_coeff"]
 
 class CuntzeCriterion(FailureCriterionBase):
     """
