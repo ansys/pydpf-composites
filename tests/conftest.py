@@ -150,13 +150,20 @@ class LocalServerProcess:
 
         self.server_executable = server_executable
 
+        if sys.platform != "win32":
+            raise Exception(
+                "Local server currently not supported on linux. Please use the docker container"
+            )
+        self.env = os.environ.copy()
+        # Add parent folder of deps to path which contains the composites operators
+        self.env["PATH"] = (
+            self.env["PATH"] + ";" + str(pathlib.Path(self.server_executable).parent.parent)
+        )
+
     def __enter__(self):
-        cmd = [server_executable, "--port", self.port]
+        cmd = [self.server_executable, "--port", str(self.port), "--address", dpf.server.LOCALHOST]
         self.server_process = subprocess.Popen(
-            cmd,
-            stdout=self.server_stdout,
-            stderr=self.server_stderr,
-            text=True,
+            cmd, stdout=self.server_stdout, stderr=self.server_stderr, text=True, env=self.env
         )
 
         return self.port
@@ -167,7 +174,8 @@ class LocalServerProcess:
         value,
         traceback,
     ):
-        self.server_process.communicate()
+        self.server_process.kill()
+        self.server_process.communicate(timeout=5)
 
         self.server_stdout.close()
         self.server_stderr.close()
@@ -228,10 +236,14 @@ def dpf_server(request: pytest.FixtureRequest):
             )
 
     with get_context() as port:
-        server = dpf.server.connect_to_server("127.0.0.1", port=port)
+        server = dpf.server.connect_to_server(port=port)
 
         wait_until_server_is_up(server)
 
-        dpf.load_library("libcomposite_operators.so", "composites", server=server)
-        dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
+        if sys.platform == "win32":
+            dpf.load_library("composite_operators.dll", "composites", server=server)
+            dpf.load_library("Ans.Dpf.EngineeringData.dll", "engineeringdata", server=server)
+        else:
+            dpf.load_library("libcomposite_operators.so", "composites", server=server)
+            dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
         yield server
