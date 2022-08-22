@@ -11,9 +11,9 @@ def test_max_strain_criterion():
     assert ms_default.name == "Max Strain"
 
     defaults_dict = {"active": True}
-    for v in ATTRS_MAX_STRAIN:
-        assert getattr(ms_default, v) == defaults[v]
-        defaults_dict[v] = defaults[v]
+    for key in ATTRS_MAX_STRAIN:
+        assert getattr(ms_default, key) == defaults[key]
+        defaults_dict[key] = defaults[key]
 
     attr_values = ms_default.to_dict()
     for k, v in attr_values.items():

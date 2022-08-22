@@ -1,10 +1,11 @@
 
 from .failure_criterion_base import FailureCriterionBase
 
-ATTRS_PUCK = ["s", "M", "interface_weakening_factor", "cfps", "dim", "force_global_constants",
-              "p21_neg", "p21_pos", "p22_neg", "p22_pos",
-              "pf", "pma", "pmb", "pmc", "pd",
-              "wf_pf", "wf_pma", "wf_pmb", "wf_pmc", "wf_pd"]
+ATTRS_PUCK = ["pf", "pma", "pmb", "pmc", "pd", "dim",
+              "wf_pf", "wf_pma", "wf_pmb", "wf_pmc", "wf_pd",
+              "cfps", "s", "M", "interface_weakening_factor", "force_global_constants",
+              "p21_neg", "p21_pos", "p22_neg", "p22_pos"
+              ]
 
 class PuckCriterion(FailureCriterionBase):
     """
@@ -188,5 +189,5 @@ class PuckCriterion(FailureCriterionBase):
                        doc=f"Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0")
     p22_neg = property(_get_p22_neg, _set_p22_neg,
                        doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.")
-    p22_pos = property(_get_p21_pos, _set_p21_pos,
+    p22_pos = property(_get_p22_pos, _set_p22_pos,
                        doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.")

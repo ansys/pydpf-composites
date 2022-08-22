@@ -1,9 +1,8 @@
 
 from .failure_criterion_base import FailureCriterionBase
 
-ATTRS_LARC = ["dim",
-              "lfc", "lft", "lmc", "lmt",
-              "wf_lfc", "wf_lft", "wf_lmc", "wf_lmt"]
+ATTRS_LARC = ["lft", "lfc", "lmt", "lmc",
+              "dim", "wf_lft", "wf_lfc", "wf_lmt", "wf_lmc"]
 
 class LaRCCriterion(FailureCriterionBase):
     """
@@ -11,15 +10,15 @@ class LaRCCriterion(FailureCriterionBase):
     """
 
     def __init__(self,
-                 lfc: bool = True,
                  lft: bool = True,
-                 lmc: bool = True,
+                 lfc: bool = True,
                  lmt: bool = True,
+                 lmc: bool = True,
                  dim: int = 2,
-                 wf_lfc: float = 1.,
                  wf_lft: float = 1.,
-                 wf_lmc: float = 1.,
-                 wf_lmt: float = 1.
+                 wf_lfc: float = 1.,
+                 wf_lmt: float = 1.,
+                 wf_lmc: float = 1.
                  ):
 
         super().__init__(name="LaRC", active=True)
