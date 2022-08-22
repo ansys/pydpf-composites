@@ -36,7 +36,7 @@ def test_combined_failure_criterion():
              'max_strain': {'active': True, 'eSxy': 0.0, 'e12': True, 'eSxz': 0.0, 'e13': False,
                             'e1': True, 'eXc': 0.0, 'eXt': 0.0, 'eSyz': 0.0, 'e23': False,
                             'e2': True, 'eYc': 0.0, 'eYt': 0.0, 'e3': False, 'eZc': 0.0, 'eZt': 0.0,
-                            'force_global_limits': False, 'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0, 'wf_e2': 1.0,
+                            'force_global_strain_limits': False, 'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0, 'wf_e2': 1.0,
                             'wf_e23': 1.0, 'wf_e3': 1.0
                             }
              }

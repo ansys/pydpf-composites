@@ -6,7 +6,7 @@ from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_MAX_STRAIN = ["e1", "e2", "e3", "e12", "e13", "e23",
                     "wf_e1", "wf_e2", "wf_e3", "wf_e12", "wf_e13", "wf_e23",
-                    "force_global_limits",
+                    "force_global_strain_limits",
                     "eXt", "eXc", "eYt", "eYc", "eZt", "eZc", "eSxy", "eSyz", "eSxz"]
 
 class MaxStrainCriterion(FailureCriterionBase):
@@ -27,7 +27,7 @@ class MaxStrainCriterion(FailureCriterionBase):
                  wf_e12: float = 1.,
                  wf_e13: float = 1.,
                  wf_e23: float = 1.,
-                 force_global_limits: bool = False,
+                 force_global_strain_limits: bool = False,
                  eXt: float = 0.,
                  eXc: float = 0.,
                  eYt: float = 0.,
@@ -104,10 +104,10 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _set_wf_e23(self, value: float):
         self._wf_e23 = value
 
-    def _get_force_global_limits(self) -> bool:
-        return self._force_global_limits
-    def _set_force_global_limits(self, value: bool):
-        self._force_global_limits = value
+    def _get_force_global_strain_limits(self) -> bool:
+        return self._force_global_strain_limits
+    def _set_force_global_strain_limits(self, value: bool):
+        self._force_global_strain_limits = value
 
     def _get_eXt(self) -> float:
         return self._eXt
@@ -197,10 +197,9 @@ class MaxStrainCriterion(FailureCriterionBase):
                      doc="Weighting factor of the failure mode e13.")
     wf_e23 = property(_get_wf_e23, _set_wf_e23,
                      doc="Weighting factor of the failure mode e23.")
-
-    force_global_limits = property(_get_force_global_limits, _set_force_global_limits,
-                          doc="Whether to use global limits instead of strain limits of the materials.")
-
+    force_global_strain_limits = property(_get_force_global_strain_limits, _set_force_global_strain_limits,
+                          doc="Whether to use one set of global strain limits instead of the "
+                              "strain limits of the materials.")
     eXt = property(_get_eXt, _set_eXt,
                       doc="Global tensile strain limit in material direction 1.")
     eXc = property(_get_eXc, _set_eXc,

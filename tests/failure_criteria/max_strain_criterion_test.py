@@ -21,7 +21,7 @@ def test_max_strain_criterion():
 
     json_dumps = '{"active": true, "e1": true, "e12": true, "e13": false, "e2": true, "e23": false, "e3": false, ' \
                  '"eSxy": 0.0, "eSxz": 0.0, "eSyz": 0.0, "eXc": 0.0, "eXt": 0.0, "eYc": 0.0, "eYt": 0.0, "eZc": 0.0, ' \
-                 '"eZt": 0.0, "force_global_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, ' \
+                 '"eZt": 0.0, "force_global_strain_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, ' \
                  '"wf_e2": 1.0, "wf_e23": 1.0, "wf_e3": 1.0}'
 
     assert json_dumps == ms_default.to_json_dict()
