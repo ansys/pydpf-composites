@@ -166,4 +166,4 @@ jobs:
           python -m pip install --pre --upgrade pip poetry
           poetry install -E build
           poetry build
-          python -m twine check dist/*
+          poetry run python -m twine check dist/*
