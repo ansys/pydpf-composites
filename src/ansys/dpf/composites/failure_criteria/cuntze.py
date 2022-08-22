@@ -5,7 +5,7 @@ import math
 ATTRS_CUNTZE = ["dim",
               "cfc", "cft", "cma", "cmb", "cmc",
               "wf_cfc", "wf_cft", "wf_cma", "wf_cmb", "wf_cmc",
-              "b21", "b32", "m", "fracture_plane_angle"]
+              "b21", "b32", "mode_interaction_coeff", "fracture_plane_angle"]
 
 class CuntzeCriterion(FailureCriterionBase):
     """
@@ -27,7 +27,7 @@ class CuntzeCriterion(FailureCriterionBase):
                  b21: float = 0.2,
                  b32: float = 1.3805,
                  fracture_plane_angle: float = 53.,
-                 m: float = 2.6
+                 mode_interaction_coeff: float = 2.6
                  ):
 
         super().__init__(name="Cuntze", active=True)
@@ -66,8 +66,7 @@ class CuntzeCriterion(FailureCriterionBase):
         if value in [2, 3]:
             self._dim = value
         else:
-            raise AttributeError(f"Dimension of {self.name} cannot be set to {value}. Allowed are 2 or 3 for "
-                                 f" LaRC03 and LaRC04 respectively.")
+            raise AttributeError(f"Dimension of {self.name} cannot be set to {value}. Allowed are 2 or 3.")
 
     def _get_wf_cfc(self) -> float:
         return self._wf_cfc
@@ -119,10 +118,10 @@ class CuntzeCriterion(FailureCriterionBase):
         else:
             raise ValueError("Fracture plane angle must be above 45 degrees.")
 
-    def _get_m(self) -> float:
-        return self._m
-    def _set_m(self, value: float):
-        self._m = value
+    def _get_mode_interaction_coeff(self) -> float:
+        return self._mode_interaction_coeff
+    def _set_mode_interaction_coeff(self, value: float):
+        self._mode_interaction_coeff = value
 
     cfc = property(_get_cfc, _set_cfc,
                          doc="Activates the failure evaluation regarding compression in fiber direction.")
@@ -153,7 +152,7 @@ class CuntzeCriterion(FailureCriterionBase):
     b32 = property(_get_b32, _set_b32,
                       doc="Out-of-plane shear friction coefficient. Default is 1.3805. Depends on the fracture "
                           "plane angle.")
-    m = property(_get_m, _set_m,
+    mode_interaction_coeff = property(_get_mode_interaction_coeff, _set_mode_interaction_coeff,
                       doc="Mode interaction coefficient. Default is 2.6.")
     fracture_plane_angle = property(_get_fracture_plane_angle, _set_fracture_plane_angle,
                       doc="Fracture plane angle. Default is 53 degree. Must be > 45. Depends on the out-of-plane "

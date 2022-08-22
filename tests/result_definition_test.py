@@ -74,23 +74,23 @@ def test_result_definition():
     ref_dict = {'version': 1,
                 'accumulator': 'max',
                 'expression': 'sampling_point',
-                'failure_criteria_definition': {'criteria':
-                                                    {'max_strain': {'active': True, 'e12': 0.0, 'e12_active': True,
-                                                                    'e13': 0.0, 'e13_active': False, 'e1_active': True,
-                                                                    'e1c': 0.0, 'e1t': 0.0, 'e23': 0.0,
-                                                                    'e23_active': False, 'e2_active': True, 'e2c': 0.0,
-                                                                    'e2t': 0.0, 'e3_active': False, 'e3c': 0.0,
-                                                                    'e3t': 0.0, 'force_global_limits': False,
-                                                                    'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0,
-                                                                    'wf_e2': 1.0, 'wf_e23': 1.0, 'wf_e3': 1.0},
-                                                     'max_stress': {'active': True, 's12_active': True,
-                                                                    's13_active': False, 's1_active': True,
-                                                                    's23_active': False, 's2_active': True,
-                                                                    's3_active': False, 'wf_s1': 1.0, 'wf_s12': 1.0,
-                                                                    'wf_s13': 1.0, 'wf_s2': 1.0, 'wf_s23': 1.0,
-                                                                    'wf_s3': 1.0}
-                                                     }
-                                                },
+                'failure_criteria_definition':
+                    {'criteria':
+                         {'max_strain':
+                              {'active': True, 'e12': 0.0, 'e12_active': True,
+                               'e13': 0.0, 'e13_active': False, 'e1_active': True,
+                               'e1c': 0.0, 'e1t': 0.0, 'e23': 0.0,
+                               'e23_active': False, 'e2_active': True, 'e2c': 0.0,
+                               'e2t': 0.0, 'e3_active': False, 'e3c': 0.0,
+                               'e3t': 0.0, 'force_global_limits': False,
+                               'wf_e1': 1.0, 'wf_e12': 1.0, 'wf_e13': 1.0,
+                               'wf_e2': 1.0, 'wf_e23': 1.0, 'wf_e3': 1.0},
+                          'max_stress': {'active': True, 's12': True,
+                                         's13': False, 's1': True, 's23': False,
+                                         's2': True, 's3': False, 'wf_s1': 1.0, 'wf_s12': 1.0,
+                                         'wf_s13': 1.0, 'wf_s2': 1.0, 'wf_s23': 1.0, 'wf_s3': 1.0}
+                          }
+                     },
                 'measures': ['safety_margin'],
                 'stress_strain_eval_mode': 'rst_file',
                 'time': 2.3,
@@ -113,8 +113,8 @@ def test_result_definition():
                '"e13_active": false, "e1_active": true, "e1c": 0.0, "e1t": 0.0, "e23": 0.0, "e23_active": false, ' \
                '"e2_active": true, "e2c": 0.0, "e2t": 0.0, "e3_active": false, "e3c": 0.0, "e3t": 0.0, ' \
                '"force_global_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, "wf_e2": 1.0, "wf_e23": 1.0,' \
-               ' "wf_e3": 1.0}, "max_stress": {"active": true, "s12_active": true, "s13_active": false, ' \
-               '"s1_active": true, "s23_active": false, "s2_active": true, "s3_active": false, "wf_s1": 1.0, ' \
+               ' "wf_e3": 1.0}, "max_stress": {"active": true, "s12": true, "s13": false, ' \
+               '"s1": true, "s23": false, "s2": true, "s3": false, "wf_s1": 1.0, ' \
                '"wf_s12": 1.0, "wf_s13": 1.0, "wf_s2": 1.0, "wf_s23": 1.0, "wf_s3": 1.0}}}, ' \
                '"measures": ["safety_margin"], "stress_strain_eval_mode": "rst_file", "time": 2.3, ' \
                '"max_chunk_size": 7, ' \
