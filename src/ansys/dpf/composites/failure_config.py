@@ -1,7 +1,9 @@
 """Failure config helper."""
 
+from typing import Any, Dict
 
-def get_failure_criteria_definition():
+
+def get_failure_criteria_definition() -> Dict[str, Any]:
     """Return dummy failure configuration.
 
     :return:
