@@ -164,6 +164,6 @@ jobs:
         run: |
           # Use dev version of poetry because the stable version fails to resolve all dependencies
           python -m pip install --pre --upgrade pip poetry
-          python -m pip install -r requirements/requirements_build.txt
+          poetry install -E build
           poetry build
           python -m twine check dist/*
