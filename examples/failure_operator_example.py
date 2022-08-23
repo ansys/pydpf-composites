@@ -1,10 +1,11 @@
 """
 .. _failure_operator_example:
 
-Basic example how to use the failure operator which returns
-the minimum and maximum failure values and failure modes of
-a combined failure criterion
-----------------------------------------------------------
+Example how to use the composite failure operator
+-------------------------------------------------
+
+This operator computes the minimum and maximum failure
+values and failure modes of a combined failure criterion
 
 """
 import os

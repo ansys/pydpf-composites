@@ -70,8 +70,7 @@ composite_definitions_source.add_file_path(h5_server_path, "CompositeDefinitions
 
 #%%
 # Setup Mesh Provider
-mesh_provider = dpf.Operator("MeshProvider")
-mesh_provider.inputs.data_sources(rst_data_source)
+mesh_provider = model.metadata.mesh_provider
 
 #%%
 # Setup Material Provider
