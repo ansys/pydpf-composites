@@ -5,8 +5,8 @@ from typing import Any, Sequence
 
 
 class CombinedFailureCriterion:
-
     """
+
     Defines the Combined Failure Criterion that can be used in combination with
     Failure Evaluator operator in DPF Composites.
 
@@ -24,6 +24,7 @@ class CombinedFailureCriterion:
         self, name: str = "CombinedFailureCriterion", failure_criteria: Sequence[Any] = []
     ):
         """
+
         Create a new combined failure criterion.
 
         :param name: user-defined name of the criterion
@@ -68,6 +69,7 @@ class CombinedFailureCriterion:
 
     def remove(self, key):
         """
+
         Removes a failure criterion from the list
         :param key: Name of the failure criterion
         :return: the removed failure criterion or None
@@ -83,6 +85,7 @@ class CombinedFailureCriterion:
 
     def to_dict(self) -> dict:
         """
+
         :return: the json_dict which can be used for the result definition
         of the DPF Composites Failure Operator
 
@@ -101,6 +104,7 @@ class CombinedFailureCriterion:
 
     def to_json(self) -> str:
         """
+
         :return: the string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator
         """
