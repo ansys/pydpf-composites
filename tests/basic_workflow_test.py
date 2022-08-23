@@ -1,10 +1,11 @@
+import json
 import os
 import pathlib
 
 import ansys.dpf.core as dpf
 import pytest
 
-from utils import get_basic_combined_failure_criteria
+from utils import get_basic_combined_failure_criterion
 
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
@@ -65,7 +66,7 @@ def test_basic_workflow(dpf_server):
     stress_operator.inputs.data_sources(rst_data_source)
     stress_operator.inputs.bool_rotate_to_global(False)
 
-    rd = get_basic_combined_failure_criteria()
+    rd = get_basic_combined_failure_criterion()
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
     failure_evaluator.inputs.configuration(rd.to_json())
     failure_evaluator.inputs.materials_container(material_provider.outputs.materials_container)

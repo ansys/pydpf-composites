@@ -61,7 +61,8 @@ jobs:
         # linux docker images on the windows agents
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        # Python 3.10 currently disabled because vtk wheels are not available
+        python-version: ['3.7', '3.8', '3.9']
       fail-fast: false
 
     steps:
@@ -164,6 +165,6 @@ jobs:
         run: |
           # Use dev version of poetry because the stable version fails to resolve all dependencies
           python -m pip install --pre --upgrade pip poetry
-          python -m pip install -r requirements/requirements_build.txt
+          poetry install -E build
           poetry build
-          python -m twine check dist/*
+          poetry run python -m twine check dist/*

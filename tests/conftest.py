@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import namedtuple
 from contextlib import closing
 import os
 import pathlib
@@ -25,6 +26,9 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         action="store",
         help="Path of the dpf server executable",
     )
+
+
+ServerContext = namedtuple("ServerContext", ["port", "platform"])
 
 
 class DockerProcess:
@@ -58,7 +62,7 @@ class DockerProcess:
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n\n")
 
-        return self.port
+        return ServerContext(port=self.port, platform="linux")
 
     def __init__(
         self,
@@ -150,16 +154,23 @@ class LocalServerProcess:
 
         self.server_executable = server_executable
 
-    def __enter__(self):
-        cmd = [server_executable, "--port", self.port]
-        self.server_process = subprocess.Popen(
-            cmd,
-            stdout=self.server_stdout,
-            stderr=self.server_stderr,
-            text=True,
+        if sys.platform != "win32":
+            raise Exception(
+                "Local server currently not supported on linux. Please use the docker container"
+            )
+        self.env = os.environ.copy()
+        # Add parent folder of deps to path which contains the composites operators
+        self.env["PATH"] = (
+            self.env["PATH"] + ";" + str(pathlib.Path(self.server_executable).parent.parent)
         )
 
-        return self.port
+    def __enter__(self):
+        cmd = [self.server_executable, "--port", str(self.port), "--address", dpf.server.LOCALHOST]
+        self.server_process = subprocess.Popen(
+            cmd, stdout=self.server_stdout, stderr=self.server_stderr, text=True, env=self.env
+        )
+
+        return ServerContext(port=self.port, platform=sys.platform)
 
     def __exit__(
         self,
@@ -167,7 +178,8 @@ class LocalServerProcess:
         value,
         traceback,
     ):
-        self.server_process.communicate()
+        self.server_process.kill()
+        self.server_process.communicate(timeout=5)
 
         self.server_stdout.close()
         self.server_stderr.close()
@@ -212,7 +224,7 @@ def dpf_server(request: pytest.FixtureRequest):
 
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
 
-    def get_context():
+    def start_server_process():
         if server_bin:
             return LocalServerProcess(
                 server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
@@ -227,11 +239,15 @@ def dpf_server(request: pytest.FixtureRequest):
                 process_err_file=process_log_stderr,
             )
 
-    with get_context() as port:
-        server = dpf.server.connect_to_server("127.0.0.1", port=port)
+    with start_server_process() as server_process:
+        server = dpf.server.connect_to_server(port=server_process.port)
 
         wait_until_server_is_up(server)
 
-        dpf.load_library("libcomposite_operators.so", "composites", server=server)
-        dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
+        if server_process.platform == "win32":
+            dpf.load_library("composite_operators.dll", "composites", server=server)
+            dpf.load_library("Ans.Dpf.EngineeringData.dll", "engineeringdata", server=server)
+        else:
+            dpf.load_library("libcomposite_operators.so", "composites", server=server)
+            dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
         yield server

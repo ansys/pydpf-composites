@@ -26,7 +26,7 @@ from ansys.dpf.composites.failure_criteria import CuntzeCriterion
 from ansys.dpf.composites.failure_criteria import CoreFailureCriterion
 from ansys.dpf.composites.failure_criteria import VonMisesCriterion
 
-def get_combined_failure_criteria():
+def get_combined_failure_criterion():
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
     tsai_hill = TsaiHillCriterion()
@@ -131,10 +131,10 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # Setup the failure evaluator. Combines the results and evaluates all the failure criteria.
 # The output contains the maximum failure criteria for each integration point.
 #
-cfc = get_combined_failure_criteria()
+failure_criteria_definition = get_combined_failure_criterion()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-failure_evaluator.inputs.configuration(cfc.to_json())
+failure_evaluator.inputs.configuration(json.dumps(failure_criteria_definition))
 failure_evaluator.inputs.materials_container(material_provider.outputs)
 failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
@@ -156,8 +156,5 @@ output = minmax_per_element.outputs.field_max()
 #%%
 # Plot the max and the minimum value for each value
 #
-
-model = dpf.Model(rst_server_path)
-
 value_index = 1
 model.metadata.meshed_region.plot(output[value_index])
