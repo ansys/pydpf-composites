@@ -5,7 +5,7 @@ ATTRS_WRINKLING = ["homogeneous_core_coeff", "honeycomb_core_coeff", "wf"]
 
 class FaceSheetWrinklingCriterion(FailureCriterionBase):
     """
-    Defines the face sheet wrinkling failure criterion for sandwich structures (laminate with cores)
+    Defines the face sheet wrinkling failure criterion for sandwiches (laminate with cores)
     """
 
     def __init__(
@@ -48,7 +48,8 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
     homogeneous_core_coeff = property(
         _get_homogeneous_core_coeff,
         _set_homogeneous_core_coeff,
-        doc="Wrinkling coefficient (reduction factor) for homogeneous core materials. Default is 0.5",
+        doc="Wrinkling coefficient (reduction factor) for homogeneous core materials. "
+            "Default is 0.5",
     )
     honeycomb_core_coeff = property(
         _get_honeycomb_core_coeff,

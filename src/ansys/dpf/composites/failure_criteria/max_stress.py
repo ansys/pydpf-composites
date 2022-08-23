@@ -131,7 +131,8 @@ class MaxStressCriterion(FailureCriterionBase):
     s3 = property(
         _get_s3,
         _set_s3,
-        doc="Activates the failure evaluation regarding the stress in the material 3 direction (out-of-plane).",
+        doc="Activates the failure evaluation regarding the stress in the material "
+            "3 direction (out-of-plane).",
     )
     s12 = property(
         _get_s12,

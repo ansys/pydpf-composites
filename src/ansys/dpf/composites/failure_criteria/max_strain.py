@@ -229,7 +229,8 @@ class MaxStrainCriterion(FailureCriterionBase):
     e3 = property(
         _get_e3,
         _set_e3,
-        doc="Activates the failure evaluation regarding the strain in the material 3 direction (out-of-plane).",
+        doc="Activates the failure evaluation regarding the strain in the "
+            "material 3 direction (out-of-plane).",
     )
     e12 = property(
         _get_e12,
@@ -267,7 +268,10 @@ class MaxStrainCriterion(FailureCriterionBase):
     eYc = property(
         _get_eYc, _set_eYc, doc="Global compressive strain limit in material direction 2."
     )
-    eZt = property(_get_eZt, _set_eZt, doc="Global _set_eYc strain limit in material direction 3.")
+    eZt = property(
+        _get_eZt,
+        _set_eZt,
+        doc="Global _set_eYc strain limit in material direction 3.")
     eZc = property(
         _get_eZc, _set_eZc, doc="Global compressive strain limit in material direction 3."
     )
