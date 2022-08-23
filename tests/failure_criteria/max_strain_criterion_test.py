@@ -24,7 +24,7 @@ def test_max_strain_criterion():
                  '"eZt": 0.0, "force_global_strain_limits": false, "wf_e1": 1.0, "wf_e12": 1.0, "wf_e13": 1.0, ' \
                  '"wf_e2": 1.0, "wf_e23": 1.0, "wf_e3": 1.0}'
 
-    assert json_dumps == ms_default.to_json_dict()
+    assert json_dumps == ms_default.to_json()
 
     new_values = dict(zip(ATTRS_MAX_STRAIN, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.,
                                            True, 0.01, -0.1, 0.02, -0.2, 0.03, -0.3, 0.15, 0.25, 0.35]))

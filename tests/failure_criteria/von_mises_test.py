@@ -22,7 +22,7 @@ def test_von_mises_criterion():
 
     json_dumps = '{"active": true, "ins": false, "iss": true, "vme": true, "vms": true, "wf_vme": 1.0, "wf_vms": 1.0}'
 
-    assert json_dumps == von_mises_default.to_json_dict()
+    assert json_dumps == von_mises_default.to_json()
 
     new_values = dict(zip(ATTRS_VON_MISES, [False, False, 2., 3., False, True]))
 

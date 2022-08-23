@@ -1,4 +1,5 @@
 import json
+from typing import Sequence, Any
 
 class CombinedFailureCriterion:
     """
@@ -15,10 +16,15 @@ class CombinedFailureCriterion:
 
     JSON_DICT_KEY = "criteria"
 
+    #todo: enhance constructure by a list of failure criteria
     def __init__(self,
-                 name: str = "CombinedFailureCriterion"
+                 name: str = "CombinedFailureCriterion",
+                 failure_criteria: Sequence[Any] = []
                  ):
         self._failure_criteria = {}
+        for fc in failure_criteria:
+            self.insert(fc)
+
         self.name = name
 
     def _get_name(self) -> str:
@@ -33,7 +39,7 @@ class CombinedFailureCriterion:
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
     failure_criteria = property(_get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it.")
 
-    def insert(self, fc = None):
+    def insert(self, fc=None):
         """
 
         :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a
@@ -79,7 +85,7 @@ class CombinedFailureCriterion:
 
         return criteria
 
-    def to_json_dict(self) -> str:
+    def to_json(self) -> str:
         """
         :return: the string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator

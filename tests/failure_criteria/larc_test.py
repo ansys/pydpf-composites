@@ -22,7 +22,7 @@ def test_larc_criterion():
     json_dumps = '{"active": true, "dim": 2, "lfc": true, "lft": true, "lmc": true, "lmt": true, ' \
                  '"wf_lfc": 1.0, "wf_lft": 1.0, "wf_lmc": 1.0, "wf_lmt": 1.0}'
 
-    assert json_dumps == larc_default.to_json_dict()
+    assert json_dumps == larc_default.to_json()
 
     new_values = dict(zip(ATTRS_LARC, [False, False, False, False, 3, 2., 4., 5., 6.]))
 

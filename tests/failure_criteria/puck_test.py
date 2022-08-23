@@ -26,7 +26,7 @@ def test_puck_criterion():
                  '"pmb": true, "pmc": true, "s": 0.5, "wf_pd": 1.0, "wf_pf": 1.0, "wf_pma": 1.0, ' \
                  '"wf_pmb": 1.0, "wf_pmc": 1.0}'
 
-    assert json_dumps == puck_default.to_json_dict()
+    assert json_dumps == puck_default.to_json()
 
     new_values = dict(zip(ATTRS_PUCK, [False, False, False, False, True, 3,
                                        4., 5., 6., 7., 8., False, 0.75, 0.8, 0.9, True,

@@ -67,7 +67,7 @@ def test_basic_workflow(dpf_server):
 
     rd = get_basic_combined_failure_criteria()
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-    failure_evaluator.inputs.configuration(rd.to_json_dict())
+    failure_evaluator.inputs.configuration(rd.to_json())
     failure_evaluator.inputs.materials_container(material_provider.outputs.materials_container)
     failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
     failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)

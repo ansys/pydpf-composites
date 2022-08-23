@@ -37,17 +37,10 @@ def get_combined_failure_criteria():
     core_failure = CoreFailureCriterion()
     von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
 
-    cfc = CombinedFailureCriterion()
-    cfc.insert(max_strain)
-    cfc.insert(max_stress)
-    cfc.insert(tsai_hill)
-    cfc.insert(tsai_wu)
-    cfc.insert(hoffman)
-    cfc.insert(hashin)
-    cfc.insert(cuntze)
-    cfc.insert(core_failure)
-    cfc.insert(von_mises_strain_only)
-    return cfc
+    return CombinedFailureCriterion(name="My Failure Criteria",
+                                    failure_criteria=[max_strain, max_stress, tsai_hill, tsai_wu, hoffman, hashin,
+                                                     cuntze, core_failure, von_mises_strain_only])
+
 #%%
 # Load dpf plugin
 server = dpf.server.connect_to_server("127.0.0.1", port=21002)
@@ -141,7 +134,7 @@ stress_operator.inputs.bool_rotate_to_global(False)
 cfc = get_combined_failure_criteria()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-failure_evaluator.inputs.configuration(cfc.to_json_dict())
+failure_evaluator.inputs.configuration(cfc.to_json())
 failure_evaluator.inputs.materials_container(material_provider.outputs)
 failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
@@ -163,5 +156,8 @@ output = minmax_per_element.outputs.field_max()
 #%%
 # Plot the max and the minimum value for each value
 #
+
+model = dpf.Model(rst_server_path)
+
 value_index = 1
 model.metadata.meshed_region.plot(output[value_index])

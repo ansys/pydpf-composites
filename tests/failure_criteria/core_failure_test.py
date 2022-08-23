@@ -20,7 +20,7 @@ def test_core_failure_criterion():
 
     json_dumps = '{"active": true, "include_ins": false, "wf": 1.0}'
 
-    assert json_dumps == cf_default.to_json_dict()
+    assert json_dumps == cf_default.to_json()
 
     new_values = dict(zip(ATTRS_CORE_FAILURE, [True, 2.]))
 

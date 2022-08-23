@@ -21,7 +21,7 @@ def test_max_stress_criterion():
     json_dumps = '{"active": true, "s1": true, "s12": true, "s13": false, "s2": true, "s23": false, "s3": false, ' \
                  '"wf_s1": 1.0, "wf_s12": 1.0, "wf_s13": 1.0, "wf_s2": 1.0, "wf_s23": 1.0, "wf_s3": 1.0}'
 
-    assert json_dumps == ms_default.to_json_dict()
+    assert json_dumps == ms_default.to_json()
 
     new_values = dict(zip(ATTRS_MAX_STRESS, [False, False, True, False, True, True, 2., 3., 4., 5., 6., 7.]))
 

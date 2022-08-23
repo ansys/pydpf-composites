@@ -187,7 +187,7 @@ class ResultDefinition:
             [
                 {"datasources": {
                     "composite_definition": self.composite_definitions,
-                    "assembly_mapping_files": self.assembly_mapping_files,
+                    "assembly_mapping_file": self.assembly_mapping_files,
                     "rst_file": self.rst_files,
                     "material_file": self.material_files,
                 },
@@ -202,7 +202,7 @@ class ResultDefinition:
         result_definition.update(scopes)
         return result_definition
 
-    def to_json_dict(self):
+    def to_json(self):
         """
         :return: the string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator

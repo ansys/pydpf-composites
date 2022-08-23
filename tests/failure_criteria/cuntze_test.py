@@ -30,7 +30,7 @@ def test_cuntze_criterion():
                  '"cmb": true, "cmc": true, "dim": 2, "fracture_plane_angle": 53.0, "mode_interaction_coeff": 2.6, ' \
                  '"wf_cfc": 1.0, "wf_cft": 1.0, "wf_cma": 1.0, "wf_cmb": 1.0, "wf_cmc": 1.0}'
 
-    assert json_dumps == cuntze_default.to_json_dict()
+    assert json_dumps == cuntze_default.to_json()
 
     new_values = dict(zip(ATTRS_CUNTZE, [False, False, False, False, False,
                                          3, 2., 4., 5., 6., 7., 0.4, 2., 60., 3.]))

@@ -21,7 +21,7 @@ def test_shear_crimping_criterion():
 
     json_dumps = '{"active": true, "kc": 1.0, "kf": 0.0, "wf": 1.0}'
 
-    assert json_dumps == sc_default.to_json_dict()
+    assert json_dumps == sc_default.to_json()
 
     new_values = dict(zip(ATTRS_SHEAR_CRIMPING, [2., 1., 3.]))
 

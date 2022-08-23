@@ -22,7 +22,7 @@ def test_tsai_hill_criterion():
 
     json_dumps = '{"active": true, "dim": 2, "wf": 1.0}'
 
-    assert json_dumps == th_default.to_json_dict()
+    assert json_dumps == th_default.to_json()
 
     new_values = dict(zip(ATTRS, [2., 3]))
 

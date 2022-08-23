@@ -22,7 +22,7 @@ def test_hashin_criterion():
     json_dumps = '{"active": true, "dim": 2, "hd": false, "hf": true, "hm": true, "wf_hd": 1.0, ' \
                  '"wf_hf": 1.0, "wf_hm": 1.0}'
 
-    assert json_dumps == hashin_default.to_json_dict()
+    assert json_dumps == hashin_default.to_json()
 
     new_values = dict(zip(ATTRS_HASHIN, [False, False, True,
                                          3, 2., 4., 5.]))

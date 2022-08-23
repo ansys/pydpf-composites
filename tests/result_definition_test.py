@@ -97,7 +97,7 @@ def test_result_definition():
                 'max_chunk_size': 7,
                 'scopes': [{'datasources':
                                 {'composite_definition': ['\\\\workdir\\ACPCompositeDefinitions.h5'],
-                                 'assembly_mapping_files': ['\\\\workdir\\solid_model.mapping'],
+                                 'assembly_mapping_file': ['\\\\workdir\\solid_model.mapping'],
                                  'rst_file': ['\\\\workdir\\file.rst'],
                                  'material_file': ["\\\\workdir\\engd.xml"]
                                  },

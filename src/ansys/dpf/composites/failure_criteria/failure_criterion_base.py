@@ -36,7 +36,7 @@ class FailureCriterionBase:
 
         return attr_dict
 
-    def to_json_dict(self):
+    def to_json(self):
         """
         :return: the string representation of the dict (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator
