@@ -6,8 +6,6 @@ Basic example of setting up a composite failure workflow
 
 """
 
-
-import json
 import os
 import pathlib
 
@@ -134,7 +132,7 @@ stress_operator.inputs.bool_rotate_to_global(False)
 failure_criteria_definition = get_combined_failure_criterion()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-failure_evaluator.inputs.configuration(json.dumps(failure_criteria_definition))
+failure_evaluator.inputs.configuration(failure_criteria_definition.to_json())
 failure_evaluator.inputs.materials_container(material_provider.outputs)
 failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)

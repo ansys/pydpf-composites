@@ -70,6 +70,8 @@ output_all_elements = fc_op.outputs.field_max()
 #
 failure_value_index = 1
 failiure_mode_index = 0
+
+#todo: can we avoid to load the model again?
 model = dpf.Model(rst_server_path)
 model.metadata.meshed_region.plot(output_all_elements[failure_value_index])
 
