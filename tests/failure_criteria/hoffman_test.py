@@ -2,8 +2,9 @@ import pytest
 
 from ansys.dpf.composites.failure_criteria.hoffman import HoffmanCriterion
 
-defaults = {"wf": 1., "dim": 2}
+defaults = {"wf": 1.0, "dim": 2}
 ATTRS = ["wf", "dim"]
+
 
 def test_hoffman_criterion():
 
@@ -24,7 +25,7 @@ def test_hoffman_criterion():
 
     assert json_dumps == hoffman_default.to_json()
 
-    new_values = dict(zip(ATTRS, [2., 3]))
+    new_values = dict(zip(ATTRS, [2.0, 3]))
 
     hoffman = HoffmanCriterion(**new_values)
     for key in ATTRS:

@@ -1,9 +1,9 @@
 import pytest
 
-from ansys.dpf.composites.failure_criteria.von_mises import VonMisesCriterion, ATTRS_VON_MISES
+from ansys.dpf.composites.failure_criteria.von_mises import ATTRS_VON_MISES, VonMisesCriterion
 
+defaults = dict(zip(ATTRS_VON_MISES, [True, True, 1.0, 1.0, True, False]))
 
-defaults = dict(zip(ATTRS_VON_MISES, [True, True, 1., 1., True, False]))
 
 def test_von_mises_criterion():
 
@@ -24,7 +24,7 @@ def test_von_mises_criterion():
 
     assert json_dumps == von_mises_default.to_json()
 
-    new_values = dict(zip(ATTRS_VON_MISES, [False, False, 2., 3., False, True]))
+    new_values = dict(zip(ATTRS_VON_MISES, [False, False, 2.0, 3.0, False, True]))
 
     von_mises = VonMisesCriterion(**new_values)
     for key in ATTRS_VON_MISES:

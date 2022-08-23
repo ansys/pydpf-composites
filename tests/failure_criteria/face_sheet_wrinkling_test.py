@@ -1,8 +1,12 @@
 import pytest
 
-from ansys.dpf.composites.failure_criteria.face_sheet_wrinkling import FaceSheetWrinklingCriterion, ATTRS_WRINKLING
+from ansys.dpf.composites.failure_criteria.face_sheet_wrinkling import (
+    ATTRS_WRINKLING,
+    FaceSheetWrinklingCriterion,
+)
 
-defaults = dict(zip(ATTRS_WRINKLING, [0.5, 0.33, 1.]))
+defaults = dict(zip(ATTRS_WRINKLING, [0.5, 0.33, 1.0]))
+
 
 def test_face_sheet_wrinkling_criterion():
 
@@ -19,11 +23,13 @@ def test_face_sheet_wrinkling_criterion():
     for key, value in attr_values.items():
         assert value == defaults_dict[key]
 
-    json_dumps = '{"active": true, "homogeneous_core_coeff": 0.5, "honeycomb_core_coeff": 0.33, "wf": 1.0}'
+    json_dumps = (
+        '{"active": true, "homogeneous_core_coeff": 0.5, "honeycomb_core_coeff": 0.33, "wf": 1.0}'
+    )
 
     assert json_dumps == wrinkling_default.to_json()
 
-    new_values = dict(zip(ATTRS_WRINKLING, [0.75, 0.53, 2.]))
+    new_values = dict(zip(ATTRS_WRINKLING, [0.75, 0.53, 2.0]))
 
     wrinkling = FaceSheetWrinklingCriterion(**new_values)
     for key in ATTRS_WRINKLING:

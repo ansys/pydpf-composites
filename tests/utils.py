@@ -1,13 +1,16 @@
-from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion
-from ansys.dpf.composites.failure_criteria import MaxStressCriterion
-from ansys.dpf.composites.failure_criteria import MaxStrainCriterion
-from ansys.dpf.composites.failure_criteria import TsaiHillCriterion
-from ansys.dpf.composites.failure_criteria import TsaiWuCriterion
-from ansys.dpf.composites.failure_criteria import HoffmanCriterion
-from ansys.dpf.composites.failure_criteria import HashinCriterion
-from ansys.dpf.composites.failure_criteria import CuntzeCriterion
-from ansys.dpf.composites.failure_criteria import CoreFailureCriterion
-from ansys.dpf.composites.failure_criteria import VonMisesCriterion
+from ansys.dpf.composites.failure_criteria import (
+    CombinedFailureCriterion,
+    CoreFailureCriterion,
+    CuntzeCriterion,
+    HashinCriterion,
+    HoffmanCriterion,
+    MaxStrainCriterion,
+    MaxStressCriterion,
+    TsaiHillCriterion,
+    TsaiWuCriterion,
+    VonMisesCriterion,
+)
+
 
 def get_basic_combined_failure_criterion():
     max_strain = MaxStrainCriterion()
@@ -19,7 +22,7 @@ def get_basic_combined_failure_criterion():
     cuntze = CuntzeCriterion()
     core_failure = CoreFailureCriterion()
     von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-    
+
     cfc = CombinedFailureCriterion()
     cfc.insert(max_strain)
     cfc.insert(max_stress)

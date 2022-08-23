@@ -7,6 +7,7 @@ import pytest
 
 from utils import get_basic_combined_failure_criterion
 
+
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 

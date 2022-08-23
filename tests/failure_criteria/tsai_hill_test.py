@@ -2,8 +2,9 @@ import pytest
 
 from ansys.dpf.composites.failure_criteria.tsai_hill import TsaiHillCriterion
 
-defaults = {"wf": 1., "dim": 2}
+defaults = {"wf": 1.0, "dim": 2}
 ATTRS = ["wf", "dim"]
+
 
 def test_tsai_hill_criterion():
 
@@ -24,7 +25,7 @@ def test_tsai_hill_criterion():
 
     assert json_dumps == th_default.to_json()
 
-    new_values = dict(zip(ATTRS, [2., 3]))
+    new_values = dict(zip(ATTRS, [2.0, 3]))
 
     tsai_hill = TsaiHillCriterion(**new_values)
     for key in ATTRS:

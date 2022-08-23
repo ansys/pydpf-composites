@@ -1,8 +1,12 @@
 import json
 
-from ansys.dpf.composites.failure_criteria.core_failure import CoreFailureCriterion, ATTRS_CORE_FAILURE
+from ansys.dpf.composites.failure_criteria.core_failure import (
+    ATTRS_CORE_FAILURE,
+    CoreFailureCriterion,
+)
 
-defaults = dict(zip(ATTRS_CORE_FAILURE, [False, 1.]))
+defaults = dict(zip(ATTRS_CORE_FAILURE, [False, 1.0]))
+
 
 def test_core_failure_criterion():
 
@@ -22,7 +26,7 @@ def test_core_failure_criterion():
 
     assert json_dumps == cf_default.to_json()
 
-    new_values = dict(zip(ATTRS_CORE_FAILURE, [True, 2.]))
+    new_values = dict(zip(ATTRS_CORE_FAILURE, [True, 2.0]))
 
     cf = CoreFailureCriterion(**new_values)
     for v in ATTRS_CORE_FAILURE:

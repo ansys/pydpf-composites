@@ -1,11 +1,9 @@
 """
-.. _failure_operator_example:
+.. _sampling_point_example:
 
-Example how to use the composite failure operator
--------------------------------------------------
-
-This operator computes the minimum and maximum failure
-values and failure modes of a combined failure criterion
+Basic example how to use the sampling point operator which returns
+data of the lay-up and failure results
+----------------------------------------------------------
 
 """
 import os
@@ -63,28 +61,13 @@ rd.rst_files = [rst_server_path]
 rd.material_files = [material_server_path]
 rd.composite_definitions = [h5_server_path]
 rd.combined_failure_criterion = get_combined_failure_criterion()
-rd.element_scope = [1, 2, 3, 4]
+# select one element only
+rd.element_scope = [3]
 
-fc_op = dpf.Operator("composite::composite_failure_operator")
-fc_op.inputs.result_definition(rd.to_json())
-
-output_all_elements = fc_op.outputs.field_max()
-
-#%%
-# Plot the max IRF per element
-#
-failure_value_index = 1
-failiure_mode_index = 0
-
-# todo: can we avoid to load the model again?
-model = dpf.Model(rst_server_path)
-model.metadata.meshed_region.plot(output_all_elements[failure_value_index])
+sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
+sampling_point_op.inputs.result_definition(rd.to_json())
 
 # %%
-# Scope failure evaluation to certain
-
-# todo: why is the entire mesh shown?
-rd.element_scope = [3, 4]
-fc_op.inputs.result_definition(rd.to_json())
-output_two_elements = fc_op.outputs.field_max()
-model.metadata.meshed_region.plot(output_two_elements[failure_value_index])
+# print the results
+results = sampling_point_op.outputs.results()
+print(results)

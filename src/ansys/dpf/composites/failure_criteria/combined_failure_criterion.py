@@ -1,5 +1,6 @@
 import json
-from typing import Sequence, Any
+from typing import Any, Sequence
+
 
 class CombinedFailureCriterion:
     """
@@ -16,11 +17,9 @@ class CombinedFailureCriterion:
 
     JSON_DICT_KEY = "criteria"
 
-    #todo: enhance constructure by a list of failure criteria
-    def __init__(self,
-                 name: str = "CombinedFailureCriterion",
-                 failure_criteria: Sequence[Any] = []
-                 ):
+    def __init__(
+        self, name: str = "CombinedFailureCriterion", failure_criteria: Sequence[Any] = []
+    ):
         self._failure_criteria = {}
         for fc in failure_criteria:
             self.insert(fc)
@@ -37,7 +36,9 @@ class CombinedFailureCriterion:
         return self._failure_criteria
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
-    failure_criteria = property(_get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it.")
+    failure_criteria = property(
+        _get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it."
+    )
 
     def insert(self, fc=None):
         """
@@ -93,6 +94,8 @@ class CombinedFailureCriterion:
         return json.dumps(self.to_dict())
 
     def __repr__(self):
-        s_criteria = ", ".join([f"'{k}': {fc._short_descr()}" for k, fc in self.failure_criteria.items()])
+        s_criteria = ", ".join(
+            [f"'{k}': {fc._short_descr()}" for k, fc in self.failure_criteria.items()]
+        )
         s = f"{self.__class__.__name__}(failure_criteria={{{s_criteria}}})"
         return s

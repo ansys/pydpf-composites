@@ -1,8 +1,9 @@
 import pytest
 
-from ansys.dpf.composites.failure_criteria.larc import LaRCCriterion, ATTRS_LARC
+from ansys.dpf.composites.failure_criteria.larc import ATTRS_LARC, LaRCCriterion
 
-defaults = dict(zip(ATTRS_LARC, [True, True, True, True, 2, 1., 1., 1., 1.]))
+defaults = dict(zip(ATTRS_LARC, [True, True, True, True, 2, 1.0, 1.0, 1.0, 1.0]))
+
 
 def test_larc_criterion():
 
@@ -19,12 +20,14 @@ def test_larc_criterion():
     for key, value in attr_values.items():
         assert value == defaults_dict[key]
 
-    json_dumps = '{"active": true, "dim": 2, "lfc": true, "lft": true, "lmc": true, "lmt": true, ' \
-                 '"wf_lfc": 1.0, "wf_lft": 1.0, "wf_lmc": 1.0, "wf_lmt": 1.0}'
+    json_dumps = (
+        '{"active": true, "dim": 2, "lfc": true, "lft": true, "lmc": true, "lmt": true, '
+        '"wf_lfc": 1.0, "wf_lft": 1.0, "wf_lmc": 1.0, "wf_lmt": 1.0}'
+    )
 
     assert json_dumps == larc_default.to_json()
 
-    new_values = dict(zip(ATTRS_LARC, [False, False, False, False, 3, 2., 4., 5., 6.]))
+    new_values = dict(zip(ATTRS_LARC, [False, False, False, False, 3, 2.0, 4.0, 5.0, 6.0]))
 
     larc = LaRCCriterion(**new_values)
     for key in ATTRS_LARC:

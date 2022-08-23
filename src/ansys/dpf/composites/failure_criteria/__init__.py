@@ -1,17 +1,17 @@
-from .failure_criterion_base import FailureCriterionBase
-from .max_strain import MaxStrainCriterion
-from .max_stress import MaxStressCriterion
 from .combined_failure_criterion import CombinedFailureCriterion
-from .tsai_wu import TsaiWuCriterion
-from .tsai_hill import TsaiHillCriterion
-from .hoffman import HoffmanCriterion
 from .core_failure import CoreFailureCriterion
 from .cuntze import CuntzeCriterion
 from .face_sheet_wrinkling import FaceSheetWrinklingCriterion
+from .failure_criterion_base import FailureCriterionBase
 from .hashin import HashinCriterion
+from .hoffman import HoffmanCriterion
 from .larc import LaRCCriterion
+from .max_strain import MaxStrainCriterion
+from .max_stress import MaxStressCriterion
 from .puck import PuckCriterion
 from .shear_crimping import ShearCrimpingCriterion
+from .tsai_hill import TsaiHillCriterion
+from .tsai_wu import TsaiWuCriterion
 from .von_mises import VonMisesCriterion
 
 __all__ = [
@@ -28,5 +28,5 @@ __all__ = [
     "LaRCCriterion",
     "PuckCriterion",
     "ShearCrimpingCriterion",
-    "VonMisesCriterion"
+    "VonMisesCriterion",
 ]

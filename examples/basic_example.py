@@ -13,16 +13,19 @@ import pathlib
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion
-from ansys.dpf.composites.failure_criteria import MaxStressCriterion
-from ansys.dpf.composites.failure_criteria import MaxStrainCriterion
-from ansys.dpf.composites.failure_criteria import TsaiHillCriterion
-from ansys.dpf.composites.failure_criteria import TsaiWuCriterion
-from ansys.dpf.composites.failure_criteria import HoffmanCriterion
-from ansys.dpf.composites.failure_criteria import HashinCriterion
-from ansys.dpf.composites.failure_criteria import CuntzeCriterion
-from ansys.dpf.composites.failure_criteria import CoreFailureCriterion
-from ansys.dpf.composites.failure_criteria import VonMisesCriterion
+from ansys.dpf.composites.failure_criteria import (
+    CombinedFailureCriterion,
+    CoreFailureCriterion,
+    CuntzeCriterion,
+    HashinCriterion,
+    HoffmanCriterion,
+    MaxStrainCriterion,
+    MaxStressCriterion,
+    TsaiHillCriterion,
+    TsaiWuCriterion,
+    VonMisesCriterion,
+)
+
 
 def get_combined_failure_criterion():
     max_strain = MaxStrainCriterion()
@@ -35,9 +38,21 @@ def get_combined_failure_criterion():
     core_failure = CoreFailureCriterion()
     von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
 
-    return CombinedFailureCriterion(name="My Failure Criteria",
-                                    failure_criteria=[max_strain, max_stress, tsai_hill, tsai_wu, hoffman, hashin,
-                                                     cuntze, core_failure, von_mises_strain_only])
+    return CombinedFailureCriterion(
+        name="My Failure Criteria",
+        failure_criteria=[
+            max_strain,
+            max_stress,
+            tsai_hill,
+            tsai_wu,
+            hoffman,
+            hashin,
+            cuntze,
+            core_failure,
+            von_mises_strain_only,
+        ],
+    )
+
 
 #%%
 # Load dpf plugin

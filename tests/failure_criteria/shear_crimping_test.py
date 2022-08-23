@@ -1,8 +1,12 @@
 import pytest
 
-from ansys.dpf.composites.failure_criteria.shear_crimping import ShearCrimpingCriterion, ATTRS_SHEAR_CRIMPING
+from ansys.dpf.composites.failure_criteria.shear_crimping import (
+    ATTRS_SHEAR_CRIMPING,
+    ShearCrimpingCriterion,
+)
 
-defaults = dict(zip(ATTRS_SHEAR_CRIMPING, [1., 0., 1.]))
+defaults = dict(zip(ATTRS_SHEAR_CRIMPING, [1.0, 0.0, 1.0]))
+
 
 def test_shear_crimping_criterion():
 
@@ -23,7 +27,7 @@ def test_shear_crimping_criterion():
 
     assert json_dumps == sc_default.to_json()
 
-    new_values = dict(zip(ATTRS_SHEAR_CRIMPING, [2., 1., 3.]))
+    new_values = dict(zip(ATTRS_SHEAR_CRIMPING, [2.0, 1.0, 3.0]))
 
     sc = ShearCrimpingCriterion(**new_values)
     for key in ATTRS_SHEAR_CRIMPING:
