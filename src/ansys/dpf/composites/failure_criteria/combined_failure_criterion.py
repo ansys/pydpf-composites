@@ -5,6 +5,7 @@ from typing import Any, Sequence
 
 
 class CombinedFailureCriterion:
+
     """
     Defines the Combined Failure Criterion that can be used in combination with
     Failure Evaluator operator in DPF Composites
@@ -22,6 +23,12 @@ class CombinedFailureCriterion:
     def __init__(
         self, name: str = "CombinedFailureCriterion", failure_criteria: Sequence[Any] = []
     ):
+        """
+        Create a new combined failure criterion
+
+        :param name: user-defined name of the criterion
+        :param failure_criteria: list of failure criteria
+        """
         self._failure_criteria = {}
         for fc in failure_criteria:
             self.insert(fc)
@@ -43,6 +50,7 @@ class CombinedFailureCriterion:
     )
 
     def insert(self, fc=None):
+
         """
 
         :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a
@@ -55,10 +63,12 @@ class CombinedFailureCriterion:
             combined_failure.insert(max_stress)
 
         """
+
         if fc is not None:
             self._failure_criteria[fc.name] = fc
 
     def remove(self, key):
+
         """
         Removes a failure criterion from the list
         :param key: Name of the failure criterion
@@ -68,15 +78,18 @@ class CombinedFailureCriterion:
             combined_failure.remove("Max Stress")
 
         """
+
         if key in self._failure_criteria.keys():
             return self._failure_criteria.pop(key)
         return None
 
     def to_dict(self) -> dict:
+
         """
         :return: the json_dict which can be used for the result definition
         of the DPF Composites Failure Operator
         """
+
         criteria = {}
         for k, fc in self.failure_criteria.items():
             # returns a dict of all attributes
@@ -89,10 +102,12 @@ class CombinedFailureCriterion:
         return criteria
 
     def to_json(self) -> str:
+
         """
         :return: the string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator
         """
+
         return json.dumps(self.to_dict())
 
     def __repr__(self):

@@ -226,9 +226,7 @@ class ResultDefinition:
             "version": self._VERSION,
             "accumulator": "max",
             "expression": f"{self.expression}",
-            "failure_criteria_definition": {
-                cfc.JSON_DICT_KEY: cfc.to_dict()
-            },
+            "failure_criteria_definition": {cfc.JSON_DICT_KEY: cfc.to_dict()},
             "measures": self.measures,
             "stress_strain_eval_mode": f"{self.stress_strain_eval_mode}",
             "time": self.time,

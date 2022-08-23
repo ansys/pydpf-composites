@@ -2,6 +2,7 @@
 
 from .quadratic_failure_criterion import QuadraticFailureCriterion
 
+
 class HoffmanCriterion(QuadraticFailureCriterion):
     """
     Defines the Hoffman failure criterion for orthotropic reinforced materials.

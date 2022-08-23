@@ -1,6 +1,4 @@
-"""
-Defines the base class of composite failure criterion
-"""
+"""Defines the base class of composite failure criterion"""
 
 import json
 
