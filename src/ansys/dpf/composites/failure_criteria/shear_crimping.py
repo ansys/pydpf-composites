@@ -1,4 +1,4 @@
-"""Shear Crimping Failure Criterion"""
+"""Shear Crimping Failure Criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

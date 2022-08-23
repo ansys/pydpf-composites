@@ -1,4 +1,4 @@
-"""Puck Failure Criterion"""
+"""Puck Failure Criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

@@ -1,4 +1,4 @@
-"""LaRC Failure Criterion"""
+"""LaRC Failure Criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

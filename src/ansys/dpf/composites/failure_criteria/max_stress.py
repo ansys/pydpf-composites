@@ -1,6 +1,4 @@
-"""
-Defines the MaxStress failure criterion
-"""
+"""Defines the MaxStress failure criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

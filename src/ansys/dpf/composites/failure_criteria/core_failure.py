@@ -1,4 +1,4 @@
-"""Core Failure Criterion"""
+"""Core Failure Criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

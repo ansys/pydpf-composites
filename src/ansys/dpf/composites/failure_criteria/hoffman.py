@@ -1,4 +1,4 @@
-"""Hoffman Failure Criterion"""
+"""Hoffman Failure Criterion."""
 
 from .quadratic_failure_criterion import QuadraticFailureCriterion
 

@@ -1,6 +1,4 @@
-"""
-Defines the MaxStrain failure criterion
-"""
+"""Defines the MaxStrain failure criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

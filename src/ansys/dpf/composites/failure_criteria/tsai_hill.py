@@ -1,4 +1,4 @@
-"""Tsai-Hill Failure Criterion"""
+"""Tsai-Hill Failure Criterion."""
 
 from .quadratic_failure_criterion import QuadraticFailureCriterion
 

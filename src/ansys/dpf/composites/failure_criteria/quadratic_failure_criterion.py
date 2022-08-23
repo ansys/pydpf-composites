@@ -1,6 +1,4 @@
-"""
-Base class for quadratic failure criterion
-"""
+"""Base class for quadratic failure criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 

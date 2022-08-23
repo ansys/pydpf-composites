@@ -1,6 +1,4 @@
-"""
-Object to represent the Result Definition used by Failure Operator in DPF Composites
-"""
+"""Object to represent the Result Definition used by Failure Operator in DPF Composites"""
 
 import json
 from typing import Sequence

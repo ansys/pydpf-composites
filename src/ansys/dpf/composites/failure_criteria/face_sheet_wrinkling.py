@@ -1,4 +1,4 @@
-"""Face Sheet Wrinkling Criterion for sandwich structures"""
+"""Face Sheet Wrinkling Criterion for sandwich structures."""
 
 from .failure_criterion_base import FailureCriterionBase
 

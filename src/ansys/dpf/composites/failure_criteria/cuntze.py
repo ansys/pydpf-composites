@@ -1,4 +1,4 @@
-"""Cuntze Failure Criterion"""
+"""Cuntze Failure Criterion."""
 
 import math
 
