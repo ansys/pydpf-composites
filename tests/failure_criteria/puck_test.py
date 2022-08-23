@@ -47,9 +47,9 @@ def test_puck_criterion():
     json_dumps = (
         '{"M": 0.5, "active": true, "cfps": true, "dim": 2, '
         '"force_global_constants": false, "interface_weakening_factor": 0.8, "p21_neg": 0.275, '
-        '"p21_pos": 0.325, "p22_neg": 0.225, "p22_pos": 0.225, "pd": false, "pf": true, "pma": true, '
-        '"pmb": true, "pmc": true, "s": 0.5, "wf_pd": 1.0, "wf_pf": 1.0, "wf_pma": 1.0, '
-        '"wf_pmb": 1.0, "wf_pmc": 1.0}'
+        '"p21_pos": 0.325, "p22_neg": 0.225, "p22_pos": 0.225, "pd": false, "pf": true, '
+        '"pma": true, "pmb": true, "pmc": true, "s": 0.5, "wf_pd": 1.0, "wf_pf": 1.0, '
+        '"wf_pma": 1.0, "wf_pmb": 1.0, "wf_pmc": 1.0}'
     )
 
     assert json_dumps == puck_default.to_json()

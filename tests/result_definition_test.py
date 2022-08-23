@@ -6,7 +6,6 @@ from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import (
     _SUPPORTED_EXPRESSIONS,
     _SUPPORTED_MEASURES,
-    _SUPPORTED_STRESS_STRAIN_EVAL_MODES,
     ResultDefinition,
 )
 

@@ -1,5 +1,3 @@
-import pytest
-
 from ansys.dpf.composites.failure_criteria.shear_crimping import (
     ATTRS_SHEAR_CRIMPING,
     ShearCrimpingCriterion,

@@ -1,5 +1,3 @@
-import pytest
-
 from ansys.dpf.composites.failure_criteria.face_sheet_wrinkling import (
     ATTRS_WRINKLING,
     FaceSheetWrinklingCriterion,

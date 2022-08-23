@@ -1,5 +1,3 @@
-import pytest
-
 from ansys.dpf.composites.failure_criteria.larc import ATTRS_LARC, LaRCCriterion
 
 defaults = dict(zip(ATTRS_LARC, [True, True, True, True, 2, 1.0, 1.0, 1.0, 1.0]))

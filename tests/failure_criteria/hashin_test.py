@@ -1,5 +1,3 @@
-import pytest
-
 from ansys.dpf.composites.failure_criteria.hashin import ATTRS_HASHIN, HashinCriterion
 
 defaults = dict(zip(ATTRS_HASHIN, [True, True, False, 2, 1.0, 1.0, 1]))

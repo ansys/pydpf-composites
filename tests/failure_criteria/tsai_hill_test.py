@@ -1,5 +1,3 @@
-import pytest
-
 from ansys.dpf.composites.failure_criteria.tsai_hill import TsaiHillCriterion
 
 defaults = {"wf": 1.0, "dim": 2}

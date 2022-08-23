@@ -1,5 +1,3 @@
-import json
-
 from ansys.dpf.composites.failure_criteria.max_stress import ATTRS_MAX_STRESS, MaxStressCriterion
 
 defaults = dict(
@@ -22,8 +20,9 @@ def test_max_stress_criterion():
         assert v == defaults_dict[k]
 
     json_dumps = (
-        '{"active": true, "s1": true, "s12": true, "s13": false, "s2": true, "s23": false, "s3": false, '
-        '"wf_s1": 1.0, "wf_s12": 1.0, "wf_s13": 1.0, "wf_s2": 1.0, "wf_s23": 1.0, "wf_s3": 1.0}'
+        '{"active": true, "s1": true, "s12": true, "s13": false, "s2": true, "s23": false, '
+        '"s3": false, "wf_s1": 1.0, "wf_s12": 1.0, "wf_s13": 1.0, "wf_s2": 1.0, '
+        '"wf_s23": 1.0, "wf_s3": 1.0}'
     )
 
     assert json_dumps == ms_default.to_json()

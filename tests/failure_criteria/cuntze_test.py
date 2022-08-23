@@ -1,5 +1,3 @@
-import pytest
-
 from ansys.dpf.composites.failure_criteria.cuntze import ATTRS_CUNTZE, CuntzeCriterion
 
 defaults = dict(
@@ -32,8 +30,9 @@ def test_cuntze_criterion():
             assert value == defaults_dict[key]
 
     json_dumps = (
-        '{"active": true, "b21": 0.2, "b32": 1.3805239792947728, "cfc": true, "cft": true, "cma": true, '
-        '"cmb": true, "cmc": true, "dim": 2, "fracture_plane_angle": 53.0, "mode_interaction_coeff": 2.6, '
+        '{"active": true, "b21": 0.2, "b32": 1.3805239792947728, "cfc": true, '
+        '"cft": true, "cma": true, "cmb": true, "cmc": true, "dim": 2, '
+        '"fracture_plane_angle": 53.0, "mode_interaction_coeff": 2.6, '
         '"wf_cfc": 1.0, "wf_cft": 1.0, "wf_cma": 1.0, "wf_cmb": 1.0, "wf_cmc": 1.0}'
     )
 

@@ -1,5 +1,3 @@
-import json
-
 from ansys.dpf.composites.failure_criteria.core_failure import (
     ATTRS_CORE_FAILURE,
     CoreFailureCriterion,
