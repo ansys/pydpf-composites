@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import namedtuple
 from contextlib import closing
 import os
 import pathlib
@@ -25,6 +26,9 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         action="store",
         help="Path of the dpf server executable",
     )
+
+
+ServerContext = namedtuple("ServerContext", ["port", "platform"])
 
 
 class DockerProcess:
@@ -58,7 +62,7 @@ class DockerProcess:
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n\n")
 
-        return self.port
+        return ServerContext(port=self.port, platform="linux")
 
     def __init__(
         self,
@@ -166,7 +170,7 @@ class LocalServerProcess:
             cmd, stdout=self.server_stdout, stderr=self.server_stderr, text=True, env=self.env
         )
 
-        return self.port
+        return ServerContext(port=self.port, platform=sys.platform)
 
     def __exit__(
         self,
@@ -220,7 +224,7 @@ def dpf_server(request: pytest.FixtureRequest):
 
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
 
-    def get_context():
+    def start_server_process():
         if server_bin:
             return LocalServerProcess(
                 server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
@@ -235,12 +239,12 @@ def dpf_server(request: pytest.FixtureRequest):
                 process_err_file=process_log_stderr,
             )
 
-    with get_context() as port:
-        server = dpf.server.connect_to_server(port=port)
+    with start_server_process() as server_process:
+        server = dpf.server.connect_to_server(port=server_process.port)
 
         wait_until_server_is_up(server)
 
-        if sys.platform == "win32":
+        if server_process.platform == "win32":
             dpf.load_library("composite_operators.dll", "composites", server=server)
             dpf.load_library("Ans.Dpf.EngineeringData.dll", "engineeringdata", server=server)
         else:
