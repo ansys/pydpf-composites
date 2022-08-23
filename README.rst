@@ -41,8 +41,7 @@ Developer Setup
 Installing Pydpf composites in developer mode allows
 you to modify the source and enhance it.
 
-Before contributing to the project, please refer to the `PyAnsys Developer's guide`_. You will 
-need to follow these steps:
+Before contributing to the project, please refer to the `PyAnsys Developer's guide`_.
 
 #. Clone the repository:
 
