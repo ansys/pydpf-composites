@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Pydpf composites &#8212; pydpf-composites</title>
     
@@ -196,58 +196,33 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-to-install">
-   How to install
+  <a class="reference internal nav-link" href="#developer-setup">
+   Developer Setup
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#for-users">
-     For users
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#for-developers">
-     For developers
+    <a class="reference internal nav-link" href="#testing">
+     Testing
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-to-testing">
-   How to testing
+  <a class="reference internal nav-link" href="#build-documentation">
+   Build documentation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-style-checks">
+   Run style checks
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#using-tox">
-     Using tox
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#raw-testing">
-     Raw testing
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#a-note-on-pre-commit">
-     A note on pre-commit
+    <a class="reference internal nav-link" href="#examples">
+     Examples
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#documentation">
-   Documentation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#distributing">
-   Distributing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#examples">
-   Examples
-  </a>
  </li>
 </ul>
 
@@ -274,138 +249,86 @@
 <h1>Pydpf composites<a class="headerlink" href="#pydpf-composites" title="Permalink to this heading">#</a></h1>
 <p><a class="reference external" href="https://docs.pyansys.com/"><img alt="PyAnsys" src="https://img.shields.io/badge/Py-Ansys-ffc107.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABDklEQVQ4jWNgoDfg5mD8vE7q/3bpVyskbW0sMRUwofHD7Dh5OBkZGBgW7/3W2tZpa2tLQEOyOzeEsfumlK2tbVpaGj4N6jIs1lpsDAwMJ278sveMY2BgCA0NFRISwqkhyQ1q/Nyd3zg4OBgYGNjZ2ePi4rB5loGBhZnhxTLJ/9ulv26Q4uVk1NXV/f///////69du4Zdg78lx//t0v+3S88rFISInD59GqIH2esIJ8G9O2/XVwhjzpw5EAam1xkkBJn/bJX+v1365hxxuCAfH9+3b9/+////48cPuNehNsS7cDEzMTAwMMzb+Q2u4dOnT2vWrMHu9ZtzxP9vl/69RVpCkBlZ3N7enoDXBwEAAA+YYitOilMVAAAAAElFTkSuQmCC" /></a> <a class="reference external" href="https://pypi.org/project/pydpf-composites/"><img alt="Python" src="https://img.shields.io/badge/Python-%3E%3D3.7-blue" /></a> <a class="reference external" href="https://pypi.org/project/pydpf-composites"><img alt="PyPI" src="https://img.shields.io/pypi/v/pydpf-composites.svg?logo=python&amp;logoColor=white" /></a> <a class="reference external" href="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml"><img alt="GH-CI" src="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg" /></a> <a class="reference external" href="https://codecov.io/gh/pyansys/pydpf-composites"><img alt="Codecov" src="https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a> <a class="reference external" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat" /></a></p>
 <p>A Python wrapper for Ansys dpf composites</p>
-<section id="how-to-install">
-<h2>How to install<a class="headerlink" href="#how-to-install" title="Permalink to this heading">#</a></h2>
-<p>At least two installation modes are provided: user and developer.</p>
-<section id="for-users">
-<h3>For users<a class="headerlink" href="#for-users" title="Permalink to this heading">#</a></h3>
-<p>In order to install Pydpf composites, make sure you
-have the latest version of <a class="reference external" href="https://pypi.org/project/pip/">pip</a>. To do so, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install -U pip
-</pre></div>
-</div>
-<p>Then, you can simply execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry run python -m pip install ansys-dpf-composites
-</pre></div>
-</div>
-</section>
-<section id="for-developers">
-<h3>For developers<a class="headerlink" href="#for-developers" title="Permalink to this heading">#</a></h3>
+<section id="developer-setup">
+<h2>Developer Setup<a class="headerlink" href="#developer-setup" title="Permalink to this heading">#</a></h2>
 <p>Installing Pydpf composites in developer mode allows
 you to modify the source and enhance it.</p>
-<p>Before contributing to the project, please refer to the <a class="reference external" href="https://dev.docs.pyansys.com/">PyAnsys Developer’s guide</a>. You will
-need to follow these steps:</p>
+<p>Before contributing to the project, please refer to the <a class="reference external" href="https://dev.docs.pyansys.com/">PyAnsys Developer’s guide</a>.</p>
 <ol class="arabic">
-<li><p>Start by cloning this repository:</p>
+<li><p>Clone the repository:</p>
 <blockquote>
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/pyansys/pydpf-composites
+<span class="nb">cd</span> pydpf-composites
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>Create a fresh-clean Python environment and activate it:</p>
+<li><p>Install dependencies:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a virtual environment</span>
-python -m venv .venv
-
-<span class="c1"># Activate it in a POSIX system</span>
-<span class="nb">source</span> .venv/bin/activate
-
-<span class="c1"># Activate it in Windows CMD environment</span>
-.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate.bat
-
-<span class="c1"># Activate it in Windows Powershell</span>
-.venv<span class="se">\S</span>cripts<span class="se">\A</span>ctivate.ps1
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Make sure you have the latest required build system and doc, testing, and CI tools:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install -U pip poetry tox
-python -m pip install -r requirements/requirements_build.txt
-python -m pip install -r requirements/requirements_doc.txt
-python -m pip install -r requirements/requirements_tests.txt
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Install the project in editable mode:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry run python -m pip install ansys-dpf-composites
-</pre></div>
-</div>
-<ol class="arabic simple">
-<li><p>Finally, verify your development installation by running:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install --upgrade pip tox
+python -m pip install --pre --upgrade poetry
+poetry install -E all
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 </ol>
-</section>
-</section>
-<section id="how-to-testing">
-<h2>How to testing<a class="headerlink" href="#how-to-testing" title="Permalink to this heading">#</a></h2>
-<p>This project takes advantage of <a class="reference external" href="https://tox.wiki/">tox</a>. This tool allows to automate common
-development tasks (similar to Makefile) but it is oriented towards Python
-development.</p>
-<section id="using-tox">
-<h3>Using tox<a class="headerlink" href="#using-tox" title="Permalink to this heading">#</a></h3>
-<p>As Makefile has rules, <a class="reference external" href="https://tox.wiki/">tox</a> has environments. In fact, the tool creates its
-own virtual environment so anything being tested is isolated from the project in
-order to guarantee project’s integrity. The following environments commands are provided:</p>
-<ul class="simple">
-<li><p><strong>tox -e style</strong>: will check for coding style quality.</p></li>
-<li><p><strong>tox -e py</strong>: checks for unit tests.</p></li>
-<li><p><strong>tox -e py-coverage</strong>: checks for unit testing and code coverage.</p></li>
-<li><p><strong>tox -e doc</strong>: checs for documentation building process.</p></li>
-</ul>
-</section>
-<section id="raw-testing">
-<h3>Raw testing<a class="headerlink" href="#raw-testing" title="Permalink to this heading">#</a></h3>
-<p>If required, you can always call the style commands (<a class="reference external" href="https://github.com/psf/black">black</a>, <a class="reference external" href="https://github.com/PyCQA/isort">isort</a>,
-<a class="reference external" href="https://flake8.pycqa.org/en/latest/">flake8</a>…) or unit testing ones (<a class="reference external" href="https://docs.pytest.org/en/stable/">pytest</a>) from the command line. However,
-this does not guarantee that your project is being tested in an isolated
-environment, which is the reason why tools like <a class="reference external" href="https://tox.wiki/">tox</a> exist.</p>
-</section>
-<section id="a-note-on-pre-commit">
-<h3>A note on pre-commit<a class="headerlink" href="#a-note-on-pre-commit" title="Permalink to this heading">#</a></h3>
-<p>The style checks take advantage of <a class="reference external" href="https://pre-commit.com/">pre-commit</a>. Developers are not forced but
-encouraged to install this tool via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install pre-commit <span class="o">&amp;&amp;</span> pre-commit install
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">#</a></h3>
+<ol class="arabic">
+<li><p>Run tests with a docker container:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
+pytest .
 </pre></div>
 </div>
-</section>
-</section>
-<section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">#</a></h2>
-<p>For building documentation, you can either run the usual rules provided in the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/">Sphinx</a> Makefile, such us:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make -C doc/ html <span class="o">&amp;&amp;</span> your_browser_name doc/html/index.html
+</div></blockquote>
+</li>
+<li><p>Run tests with a local Grpc server executable:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
 </pre></div>
 </div>
-<p>However, the recommended way of checking documentation integrity is using:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox -e doc <span class="o">&amp;&amp;</span> your_browser_name .tox/doc_out/index.html
+</div></blockquote>
+</li>
+</ol>
+<p>This currently works only on windows and with the directory structure of dpf_composites. (The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder)</p>
+</section>
+</section>
+<section id="build-documentation">
+<h2>Build documentation<a class="headerlink" href="#build-documentation" title="Permalink to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>Windows:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
+docker run -d -p <span class="m">21002</span>:50052  ghcr.io/pyansys/pydpf-composites:latest
+tox -e doc-windows
 </pre></div>
 </div>
-</section>
-<section id="distributing">
-<h2>Distributing<a class="headerlink" href="#distributing" title="Permalink to this heading">#</a></h2>
-<p>If you would like to create either source or wheel files, start by installing
-the building requirements and then executing the build module:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install -r requirements/requirements_build.txt
-python -m build
-python -m twine check dist/*
+</div></blockquote>
+</li>
+<li><p>Linux:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
+docker run -d -p <span class="m">21002</span>:50052  ghcr.io/pyansys/pydpf-composites:latest
+tox -e doc-linux
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+</ol>
 </section>
+<section id="run-style-checks">
+<h2>Run style checks<a class="headerlink" href="#run-style-checks" title="Permalink to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox -e style
+</pre></div>
+</div>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="examples/index.html#ref-examples"><span class="std std-ref">Examples</span></a></p></li>
 </ul>
+</section>
 </section>
 </section>
 
@@ -434,7 +357,7 @@ python -m twine check dist/*
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   
