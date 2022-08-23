@@ -1,3 +1,5 @@
+"""Puck Failure Criterion"""
+
 from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_PUCK = [
@@ -187,9 +189,7 @@ class PuckCriterion(FailureCriterionBase):
     def _set_p22_pos(self, value: float):
         self._p22_pos = value
 
-    pf = property(_get_pf,
-                  _set_pf,
-                  doc="Activates the failure evaluation regarding fiber failure.")
+    pf = property(_get_pf, _set_pf, doc="Activates the failure evaluation regarding fiber failure.")
     pma = property(
         _get_pma,
         _set_pma,
@@ -216,10 +216,7 @@ class PuckCriterion(FailureCriterionBase):
         doc="Whether the 2D or 3D formulation of the criterion is used. The latter one also "
         "supports the failure mode delamination. Use 1 for a simplified Puck criterion.",
     )
-    wf_pf = property(
-        _get_wf_pf,
-        _set_wf_pf,
-        doc="Weighting factor of the fiber failure (pf) mode.")
+    wf_pf = property(_get_wf_pf, _set_wf_pf, doc="Weighting factor of the fiber failure (pf) mode.")
     wf_pma = property(
         _get_wf_pma, _set_wf_pma, doc="Weighting factor of the matrix failure (pma) mode."
     )
@@ -253,7 +250,7 @@ class PuckCriterion(FailureCriterionBase):
         _get_interface_weakening_factor,
         _set_interface_weakening_factor,
         doc="Multiplicator for the interlaminar strength if failure mode pd is active. "
-            "Default is 0.8.",
+        "Default is 0.8.",
     )
 
     force_global_constants = property(
@@ -268,9 +265,7 @@ class PuckCriterion(FailureCriterionBase):
         doc=f"Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0",
     )
     p21_pos = property(
-        _get_p21_pos,
-        _set_p21_pos,
-        doc=f"Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
+        _get_p21_pos, _set_p21_pos, doc=f"Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
     )
     p22_neg = property(
         _get_p22_neg,

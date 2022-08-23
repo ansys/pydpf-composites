@@ -19,7 +19,8 @@ class ResultDefinition:
     _VERSION = 1
     _ACCUMULATOR = "max"
 
-    # todo: TBD: measures, composite_definitions, material_files are list where we just support one file.
+    # todo: TBD: measures, composite_definitions, material_files are list
+    # where we just support one file.
     # should this class work with lists or just single entries?
     def __init__(
         self,
@@ -217,13 +218,16 @@ class ResultDefinition:
         """
         :return: a dict with all properties
         """
+        cfc = self.combined_failure_criterion
+        if not cfc:
+            raise ValueError("Combined failure criterion is not defined!")
+
         result_definition = {
             "version": self._VERSION,
             "accumulator": "max",
             "expression": f"{self.expression}",
             "failure_criteria_definition": {
-                self.combined_failure_criterion.JSON_DICT_KEY:
-                    self.combined_failure_criterion.to_dict()
+                cfc.JSON_DICT_KEY: cfc.to_dict()
             },
             "measures": self.measures,
             "stress_strain_eval_mode": f"{self.stress_strain_eval_mode}",

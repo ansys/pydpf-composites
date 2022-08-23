@@ -1,3 +1,5 @@
+"""Cuntze Failure Criterion"""
+
 import math
 
 from .failure_criterion_base import FailureCriterionBase

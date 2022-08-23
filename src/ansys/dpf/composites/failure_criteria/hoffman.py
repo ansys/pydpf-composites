@@ -1,5 +1,6 @@
-from .quadratic_failure_criterion import QuadraticFailureCriterion
+"""Hoffman Failure Criterion"""
 
+from .quadratic_failure_criterion import QuadraticFailureCriterion
 
 class HoffmanCriterion(QuadraticFailureCriterion):
     """

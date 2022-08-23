@@ -1,3 +1,5 @@
+"""Tsai-Wu Failure Criterion"""
+
 from .quadratic_failure_criterion import QuadraticFailureCriterion
 
 

@@ -1,3 +1,5 @@
+"""Combined Failure Criterion"""
+
 import json
 from typing import Any, Sequence
 

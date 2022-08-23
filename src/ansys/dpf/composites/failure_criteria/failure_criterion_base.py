@@ -38,8 +38,8 @@ class FailureCriterionBase:
 
     def to_json(self):
         """
-        :return: the string representation of the dict (json.dumps) which can be used for the result definition
-        of the DPF Composites Failure Operator
+        :return: the string representation of the dict (json.dumps) which can be used for
+        the result definition of the DPF Composites Failure Operator
         """
         return json.dumps(self.to_dict())
 

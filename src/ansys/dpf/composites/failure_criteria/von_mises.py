@@ -1,3 +1,5 @@
+"""Von Mises Criterion"""
+
 from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_VON_MISES = ["vme", "vms", "wf_vme", "wf_vms", "iss", "ins"]

@@ -1,3 +1,5 @@
+"""LaRC Failure Criterion"""
+
 from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_LARC = ["lft", "lfc", "lmt", "lmc", "dim", "wf_lft", "wf_lfc", "wf_lmt", "wf_lmc"]

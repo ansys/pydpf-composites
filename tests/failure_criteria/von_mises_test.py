@@ -18,7 +18,8 @@ def test_von_mises_criterion():
     for key, value in attr_values.items():
         assert value == defaults_dict[key]
 
-    json_dumps = '{"active": true, "ins": false, "iss": true, "vme": true, "vms": true, "wf_vme": 1.0, "wf_vms": 1.0}'
+    json_dumps = '{"active": true, "ins": false, "iss": true, "vme": true, "vms": true, ' \
+                 '"wf_vme": 1.0, "wf_vms": 1.0}'
 
     assert json_dumps == von_mises_default.to_json()
 

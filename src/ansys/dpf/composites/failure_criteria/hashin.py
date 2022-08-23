@@ -1,3 +1,5 @@
+"""Hashin Failure Criterion"""
+
 from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_HASHIN = ["hf", "hm", "hd", "dim", "wf_hf", "wf_hm", "wf_hd"]

@@ -1,3 +1,5 @@
+"""Core Failure Criterion"""
+
 from .failure_criterion_base import FailureCriterionBase
 
 ATTRS_CORE_FAILURE = ["include_ins", "wf"]
