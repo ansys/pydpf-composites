@@ -45,7 +45,7 @@ class CuntzeCriterion(FailureCriterionBase):
         b32: float = 1.3805,
         fracture_plane_angle: float = 53.0,
         mode_interaction_coeff: float = 2.6,
-    ):
+    ) -> None:
 
         super().__init__(name="Cuntze", active=True)
 

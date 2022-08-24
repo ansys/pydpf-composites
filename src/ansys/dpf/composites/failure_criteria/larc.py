@@ -31,7 +31,7 @@ class LaRCCriterion(FailureCriterionBase):
     def _get_lfc(self) -> bool:
         return self._lfc
 
-    def _set_lfc(self, value: bool):
+    def _set_lfc(self, value: bool) -> None:
         self._lfc = value
 
     def _get_lft(self) -> bool:

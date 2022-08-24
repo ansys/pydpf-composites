@@ -1,14 +1,15 @@
 """Combined Failure Criterion."""
 
 import json
-from typing import Any, Sequence
+from typing import Any, Sequence, Type
+
+from .failure_criterion_base import FailureCriterionBase
 
 
 class CombinedFailureCriterion:
-    """
+    """Defines the Combined Failure Criterion.
 
-    Defines the Combined Failure Criterion that can be used in combination with
-    Failure Evaluator operator in DPF Composites.
+    It can be used in combination with Failure Evaluator operator in DPF Composites.
 
     Usage:
         combined_failure = CombinedFailureCriterion("max_stress 3D")
@@ -42,7 +43,7 @@ class CombinedFailureCriterion:
     def _set_name(self, value: str):
         self._name = value
 
-    def _get_failure_criteria(self):
+    def _get_failure_criteria(self) -> Sequence[Type[FailureCriterionBase]]:
         return self._failure_criteria
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
@@ -50,7 +51,7 @@ class CombinedFailureCriterion:
         _get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it."
     )
 
-    def insert(self, fc=None):
+    def insert(self, fc: Type[FailureCriterionBase] = None):
         """
 
         :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a
@@ -67,7 +68,7 @@ class CombinedFailureCriterion:
         if fc is not None:
             self._failure_criteria[fc.name] = fc
 
-    def remove(self, key):
+    def remove(self, key) -> Type[FailureCriterionBase]:
         """
 
         Removes a failure criterion from the list
@@ -111,7 +112,7 @@ class CombinedFailureCriterion:
 
         return json.dumps(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         s_criteria = ", ".join(
             [f"'{k}': {fc._short_descr()}" for k, fc in self.failure_criteria.items()]
         )
