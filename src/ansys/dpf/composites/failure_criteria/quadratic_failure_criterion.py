@@ -4,7 +4,6 @@ from .failure_criterion_base import FailureCriterionBase
 
 
 class QuadraticFailureCriterion(FailureCriterionBase):
-
     def __init__(self, name: str, active: bool, wf: float, dim: int):
         """Base class for quadratic failure criteria such as Tsai-Wu and Tsai-Hill."""
 

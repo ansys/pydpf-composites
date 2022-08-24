@@ -6,8 +6,6 @@ ATTRS_HASHIN = ["hf", "hm", "hd", "dim", "wf_hf", "wf_hm", "wf_hd"]
 
 
 class HashinCriterion(FailureCriterionBase):
-
-
     def __init__(
         self,
         hf: bool = True,
@@ -20,8 +18,8 @@ class HashinCriterion(FailureCriterionBase):
     ):
         """Defines the Hashin failure criterion.
 
-         Can be used in combination with uni-directional orthotropic reinforced materials.
-         """
+        Can be used in combination with uni-directional orthotropic reinforced materials.
+        """
 
         super().__init__(name="Hashin", active=True)
 

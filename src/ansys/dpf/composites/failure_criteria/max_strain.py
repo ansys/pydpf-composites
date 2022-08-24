@@ -29,7 +29,6 @@ ATTRS_MAX_STRAIN = [
 
 
 class MaxStrainCriterion(FailureCriterionBase):
-
     def __init__(
         self,
         e1: bool = True,
@@ -55,7 +54,7 @@ class MaxStrainCriterion(FailureCriterionBase):
         eSxz: float = 0.0,
         eSyz: float = 0.0,
     ):
-        """ Defines the Maximum Strain failure criterion for orthotropic reinforced materials."""
+        """Defines the Maximum Strain failure criterion for orthotropic reinforced materials."""
 
         super().__init__(name="Max Strain", active=True)
 

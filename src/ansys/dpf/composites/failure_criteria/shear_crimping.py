@@ -6,8 +6,6 @@ ATTRS_SHEAR_CRIMPING = ["kc", "kf", "wf"]
 
 
 class ShearCrimpingCriterion(FailureCriterionBase):
-
-
     def __init__(self, kc: float = 1.0, kf: float = 0.0, wf: float = 1.0):
         """Defines the shear crimping failure criterion for sandwich structures.
 

@@ -6,7 +6,6 @@ ATTRS_LARC = ["lft", "lfc", "lmt", "lmc", "dim", "wf_lft", "wf_lfc", "wf_lmt", "
 
 
 class LaRCCriterion(FailureCriterionBase):
-
     def __init__(
         self,
         lft: bool = True,

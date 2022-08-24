@@ -1,7 +1,7 @@
 """Object to represent the Result Definition used by Failure Operator in DPF Composites"""
 
 import json
-from typing import Sequence, Any
+from typing import Any, Sequence
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion

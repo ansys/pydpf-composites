@@ -6,7 +6,6 @@ ATTRS_VON_MISES = ["vme", "vms", "wf_vme", "wf_vms", "iss", "ins"]
 
 
 class VonMisesCriterion(FailureCriterionBase):
-
     def __init__(
         self,
         vme: bool = True,

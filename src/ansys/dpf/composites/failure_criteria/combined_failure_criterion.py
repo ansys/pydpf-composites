@@ -67,7 +67,7 @@ class CombinedFailureCriterion:
             self._failure_criteria[fc.name] = fc
 
     def remove(self, key) -> Type[FailureCriterionBase]:
-        """ Removes a failure criterion.
+        """Removes a failure criterion.
 
         :param key: Name of the failure criterion
         :return: the removed failure criterion or None

@@ -19,7 +19,6 @@ ATTRS_MAX_STRESS = [
 
 
 class MaxStressCriterion(FailureCriterionBase):
-
     def __init__(
         self,
         s1: bool = True,
