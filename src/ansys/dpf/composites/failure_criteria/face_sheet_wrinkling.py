@@ -16,6 +16,7 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
         honeycomb_core_coeff: float = 0.33,
         wf: float = 1.0,
     ):
+        """Constructs a Face Sheet Wrinkling failure criterion."""
 
         super().__init__(name="Face Sheet Wrinkling", active=True)
 
@@ -25,7 +26,7 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
     def _get_homogeneous_core_coeff(self) -> float:
         return self._homogeneous_core_coeff
 
-    def _set_homogeneous_core_coeff(self, value: float):
+    def _set_homogeneous_core_coeff(self, value: float) -> None:
         if value > 0:
             self._homogeneous_core_coeff = value
         else:
@@ -34,7 +35,7 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
     def _get_honeycomb_core_coeff(self) -> float:
         return self._honeycomb_core_coeff
 
-    def _set_honeycomb_core_coeff(self, value: float):
+    def _set_honeycomb_core_coeff(self, value: float) -> None:
         if value > 0:
             self._honeycomb_core_coeff = value
         else:
@@ -43,7 +44,7 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
     def _get_wf(self) -> float:
         return self._wf
 
-    def _set_wf(self, value: float):
+    def _set_wf(self, value: float) -> None:
         self._wf = value
 
     wf = property(_get_wf, _set_wf, doc="Weighting factor of the failure mode (wb or wt).")

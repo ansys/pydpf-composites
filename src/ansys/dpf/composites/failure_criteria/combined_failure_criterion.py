@@ -24,9 +24,7 @@ class CombinedFailureCriterion:
     def __init__(
         self, name: str = "CombinedFailureCriterion", failure_criteria: Sequence[Any] = []
     ):
-        """
-
-        Create a new combined failure criterion.
+        """Create a new combined failure criterion.
 
         :param name: user-defined name of the criterion
         :param failure_criteria: list of failure criteria
@@ -52,7 +50,7 @@ class CombinedFailureCriterion:
     )
 
     def insert(self, fc: Type[FailureCriterionBase] = None):
-        """
+        """Add a failure criterion.
 
         :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a
         failure criterion of the same type already exists.
@@ -69,9 +67,8 @@ class CombinedFailureCriterion:
             self._failure_criteria[fc.name] = fc
 
     def remove(self, key) -> Type[FailureCriterionBase]:
-        """
+        """ Removes a failure criterion.
 
-        Removes a failure criterion from the list
         :param key: Name of the failure criterion
         :return: the removed failure criterion or None
 
@@ -104,7 +101,7 @@ class CombinedFailureCriterion:
         return criteria
 
     def to_json(self) -> str:
-        """
+        """Returns the object as JSON dict.
 
         :return: the string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator

@@ -46,7 +46,7 @@ class CuntzeCriterion(FailureCriterionBase):
         fracture_plane_angle: float = 53.0,
         mode_interaction_coeff: float = 2.6,
     ) -> None:
-
+        """Constructs a Cuntze failure criterion."""
         super().__init__(name="Cuntze", active=True)
 
         for attr in ATTRS_CUNTZE:
@@ -55,37 +55,37 @@ class CuntzeCriterion(FailureCriterionBase):
     def _get_cfc(self) -> bool:
         return self._cfc
 
-    def _set_cfc(self, value: bool):
+    def _set_cfc(self, value: bool) -> None:
         self._cfc = value
 
     def _get_cft(self) -> bool:
         return self._cft
 
-    def _set_cft(self, value: bool):
+    def _set_cft(self, value: bool) -> None:
         self._cft = value
 
     def _get_cma(self) -> bool:
         return self._cma
 
-    def _set_cma(self, value: bool):
+    def _set_cma(self, value: bool) -> None:
         self._cma = value
 
     def _get_cmb(self) -> bool:
         return self._cmb
 
-    def _set_cmb(self, value: bool):
+    def _set_cmb(self, value: bool) -> None:
         self._cmb = value
 
     def _get_cmc(self) -> bool:
         return self._cmc
 
-    def _set_cmc(self, value: bool):
+    def _set_cmc(self, value: bool) -> None:
         self._cmc = value
 
     def _get_dim(self) -> int:
         return self._dim
 
-    def _set_dim(self, value: int):
+    def _set_dim(self, value: int) -> None:
         if value in [2, 3]:
             self._dim = value
         else:
@@ -96,43 +96,43 @@ class CuntzeCriterion(FailureCriterionBase):
     def _get_wf_cfc(self) -> float:
         return self._wf_cfc
 
-    def _set_wf_cfc(self, value: float):
+    def _set_wf_cfc(self, value: float) -> None:
         self._wf_cfc = value
 
     def _get_wf_cft(self) -> float:
         return self._wf_cft
 
-    def _set_wf_cft(self, value: float):
+    def _set_wf_cft(self, value: float) -> None:
         self._wf_cft = value
 
     def _get_wf_cma(self) -> float:
         return self._wf_cma
 
-    def _set_wf_cma(self, value: float):
+    def _set_wf_cma(self, value: float) -> None:
         self._wf_cma = value
 
     def _get_wf_cmb(self) -> float:
         return self._wf_cmb
 
-    def _set_wf_cmb(self, value: float):
+    def _set_wf_cmb(self, value: float) -> None:
         self._wf_cmb = value
 
     def _get_wf_cmc(self) -> float:
         return self._wf_cmc
 
-    def _set_wf_cmc(self, value: float):
+    def _set_wf_cmc(self, value: float) -> None:
         self._wf_cmc = value
 
     def _get_b21(self) -> float:
         return self._b21
 
-    def _set_b21(self, value: float):
+    def _set_b21(self, value: float) -> None:
         self._b21 = value
 
     def _get_b32(self) -> float:
         return self._b32
 
-    def _set_b32(self, value: float):
+    def _set_b32(self, value: float) -> None:
         if value >= 1.0:
             self._fracture_plane_angle = math.acos(1.0 / value - 1.0) / 2.0 * 180.0 / math.pi
             self._b32 = value
@@ -142,7 +142,7 @@ class CuntzeCriterion(FailureCriterionBase):
     def _get_fracture_plane_angle(self) -> float:
         return self._fracture_plane_angle
 
-    def _set_fracture_plane_angle(self, value: float):
+    def _set_fracture_plane_angle(self, value: float) -> None:
         if value > 45.0:
             self._b32 = 1.0 / (1.0 + math.cos(2.0 * math.pi * value / 180.0))
             self._fracture_plane_angle = value
@@ -152,7 +152,7 @@ class CuntzeCriterion(FailureCriterionBase):
     def _get_mode_interaction_coeff(self) -> float:
         return self._mode_interaction_coeff
 
-    def _set_mode_interaction_coeff(self, value: float):
+    def _set_mode_interaction_coeff(self, value: float) -> None:
         self._mode_interaction_coeff = value
 
     cfc = property(

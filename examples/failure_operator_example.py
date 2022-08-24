@@ -78,6 +78,7 @@ failiure_mode_index = 0
 
 # todo: can we avoid to load the model again?
 model = dpf.Model(rst_server_path)
+# todo: get mesh support from the output (field)
 model.metadata.meshed_region.plot(output_all_elements[failure_value_index])
 
 # %%

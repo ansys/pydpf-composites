@@ -1,7 +1,7 @@
 """Object to represent the Result Definition used by Failure Operator in DPF Composites"""
 
 import json
-from typing import Sequence
+from typing import Sequence, Any
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
@@ -37,6 +37,7 @@ class ResultDefinition:
         time: float = 1.0,
         max_chunk_size: int = 50000,
     ):
+        """Creates a ResultDefinition object"""
 
         self.name = name
         self.expression = expression
@@ -57,7 +58,7 @@ class ResultDefinition:
     def _get_expression(self) -> str:
         return self._expression
 
-    def _set_expression(self, value: str):
+    def _set_expression(self, value: str) -> None:
         if value in _SUPPORTED_EXPRESSIONS:
             self._expression = value
         else:
@@ -67,13 +68,13 @@ class ResultDefinition:
     def _get_combined_failure_criterion(self) -> CombinedFailureCriterion:
         return self._combined_failure_criterion
 
-    def _set_combined_failure_criterion(self, value: CombinedFailureCriterion):
+    def _set_combined_failure_criterion(self, value: CombinedFailureCriterion) -> None:
         self._combined_failure_criterion = value
 
     def _get_measures(self) -> str:
         return self._meassures
 
-    def _set_measures(self, value: str):
+    def _set_measures(self, value: str) -> None:
         for v in value:
             if v not in _SUPPORTED_MEASURES:
                 values = ", ".join([v for v in _SUPPORTED_MEASURES])
@@ -84,7 +85,7 @@ class ResultDefinition:
     def _get_composite_definitions(self) -> Sequence[_PATH]:
         return self._composite_definitions
 
-    def _set_composite_definitions(self, value: Sequence[_PATH]):
+    def _set_composite_definitions(self, value: Sequence[_PATH]) -> None:
         if len(value) > 1:
             raise ValueError("Currently only 1 composite definition is supported!")
         self._composite_definitions = value
@@ -92,43 +93,43 @@ class ResultDefinition:
     def _get_assembly_mapping_files(self) -> Sequence[_PATH]:
         return self._assembly_mapping_files
 
-    def _set_assembly_mapping_files(self, value: Sequence[_PATH]):
+    def _set_assembly_mapping_files(self, value: Sequence[_PATH]) -> None:
         self._assembly_mapping_files = value
 
     def _get_rst_files(self) -> Sequence[_PATH]:
         return self._rst_files
 
-    def _set_rst_files(self, value: Sequence[_PATH]):
+    def _set_rst_files(self, value: Sequence[_PATH]) -> None:
         self._rst_files = value
 
     def _get_material_files(self) -> Sequence[_PATH]:
         return self._material_files
 
-    def _set_material_files(self, value: Sequence[_PATH]):
+    def _set_material_files(self, value: Sequence[_PATH]) -> None:
         self._material_files = value
 
     def _get_write_data_for_full_element_scope(self) -> bool:
         return self._write_data_for_full_element_scope
 
-    def _set_write_data_for_full_element_scope(self, value: bool):
+    def _set_write_data_for_full_element_scope(self, value: bool) -> None:
         self._write_data_for_full_element_scope = value
 
     def _get_element_scope(self) -> Sequence[int]:
         return self._element_scope
 
-    def _set_element_scope(self, value: Sequence[int]):
+    def _set_element_scope(self, value: Sequence[int]) -> None:
         self._element_scope = value
 
     def _get_ply_scope(self) -> Sequence[str]:
         return self._ply_scope
 
-    def _set_ply_scope(self, value: Sequence[str]):
+    def _set_ply_scope(self, value: Sequence[str]) -> None:
         self._ply_scope = value
 
     def _get_stress_strain_eval_mode(self) -> str:
         return self._stress_strain_eval_mode
 
-    def _set_stress_strain_eval_mode(self, value: str):
+    def _set_stress_strain_eval_mode(self, value: str) -> None:
         if value in _SUPPORTED_STRESS_STRAIN_EVAL_MODES:
             self._get_stress_strain_eval_mode = value
         else:
@@ -140,13 +141,13 @@ class ResultDefinition:
     def _get_time(self) -> float:
         return self._time
 
-    def _set_time(self, value: float):
+    def _set_time(self, value: float) -> None:
         self._time = value
 
     def _get_max_chunk_size(self) -> int:
         return self._max_chunk_size
 
-    def _set_max_chunk_size(self, value: int):
+    def _set_max_chunk_size(self, value: int) -> None:
         self._max_chunk_size = value
 
     expression = property(
@@ -250,14 +251,14 @@ class ResultDefinition:
         result_definition.update(scopes)
         return result_definition
 
-    def to_json(self):
+    def to_json(self) -> str:
         """
         :return: the string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator
         """
         return json.dumps(self.to_dict())
 
-    def _get_properties(self, exclude=[]):
+    def _get_properties(self, exclude=[]) -> Sequence[Any]:
         properties = [
             attr
             for attr in dir(self)
@@ -269,7 +270,7 @@ class ResultDefinition:
 
         return properties
 
-    def _short_descr(self):
+    def _short_descr(self) -> str:
         return f"{self.__class__.__name__}(name='{self.name}')"
 
     def __repr__(self):

@@ -19,9 +19,6 @@ ATTRS_MAX_STRESS = [
 
 
 class MaxStressCriterion(FailureCriterionBase):
-    """
-    Defines the Maximum Stress failure criterion for orthotropic reinforced materials.
-    """
 
     def __init__(
         self,
@@ -38,6 +35,7 @@ class MaxStressCriterion(FailureCriterionBase):
         wf_s13: float = 1.0,
         wf_s23: float = 1.0,
     ):
+        """Defines the Maximum Stress failure criterion for orthotropic reinforced materials."""
 
         super().__init__(name="Max Stress", active=True)
 
@@ -47,73 +45,73 @@ class MaxStressCriterion(FailureCriterionBase):
     def _get_s1(self) -> bool:
         return self._s1
 
-    def _set_s1(self, value: bool):
+    def _set_s1(self, value: bool) -> None:
         self._s1 = value
 
     def _get_s2(self) -> bool:
         return self._s2
 
-    def _set_s2(self, value: bool):
+    def _set_s2(self, value: bool) -> None:
         self._s2 = value
 
     def _get_s3(self) -> bool:
         return self._s3
 
-    def _set_s3(self, value: bool):
+    def _set_s3(self, value: bool) -> None:
         self._s3 = value
 
     def _get_s12(self) -> bool:
         return self._s12
 
-    def _set_s12(self, value: bool):
+    def _set_s12(self, value: bool) -> None:
         self._s12 = value
 
     def _get_s13(self) -> bool:
         return self._s13
 
-    def _set_s13(self, value: bool):
+    def _set_s13(self, value: bool) -> None:
         self._s13 = value
 
     def _get_s23(self) -> bool:
         return self._s23
 
-    def _set_s23(self, value: bool):
+    def _set_s23(self, value: bool) -> None:
         self._s23 = value
 
     def _get_wf_s1(self) -> float:
         return self._wf_s1
 
-    def _set_wf_s1(self, value: float):
+    def _set_wf_s1(self, value: float) -> None:
         self._wf_s1 = value
 
     def _get_wf_s2(self) -> float:
         return self._wf_s2
 
-    def _set_wf_s2(self, value: float):
+    def _set_wf_s2(self, value: float) -> None:
         self._wf_s2 = value
 
     def _get_wf_s3(self) -> float:
         return self._wf_s3
 
-    def _set_wf_s3(self, value: float):
+    def _set_wf_s3(self, value: float) -> None:
         self._wf_s3 = value
 
     def _get_wf_s12(self) -> float:
         return self._wf_s12
 
-    def _set_wf_s12(self, value: float):
+    def _set_wf_s12(self, value: float) -> None:
         self._wf_s12 = value
 
     def _get_wf_s13(self) -> float:
         return self._wf_s13
 
-    def _set_wf_s13(self, value: float):
+    def _set_wf_s13(self, value: float) -> None:
         self._wf_s13 = value
 
     def _get_wf_s23(self) -> float:
         return self._wf_s23
 
-    def _set_wf_s23(self, value: float):
+    def _set_wf_s23(self, value: float) -> None:
         self._wf_s23 = value
 
     s1 = property(

@@ -11,7 +11,11 @@ class CoreFailureCriterion(FailureCriterionBase):
     """
 
     def __init__(self, include_ins: bool = False, wf: float = 1.0):
+        """Constructs a core failure criterion.
 
+        :param include_ins: whether to include interlaminar normals stresses or not.
+        :param wf: weighting factor.
+        """
         super().__init__(name="Core Failure", active=True)
 
         for attr in ATTRS_CORE_FAILURE:
@@ -20,13 +24,13 @@ class CoreFailureCriterion(FailureCriterionBase):
     def _get_include_ins(self) -> bool:
         return self._include_ins
 
-    def _set_include_ins(self, value: bool):
+    def _set_include_ins(self, value: bool) -> None:
         self._include_ins = value
 
     def _get_wf(self) -> float:
         return self._wf
 
-    def _set_wf(self, value: float):
+    def _set_wf(self, value: float) -> None:
         self._wf = value
 
     include_ins = property(

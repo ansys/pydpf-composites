@@ -6,9 +6,6 @@ ATTRS_LARC = ["lft", "lfc", "lmt", "lmc", "dim", "wf_lft", "wf_lfc", "wf_lmt", "
 
 
 class LaRCCriterion(FailureCriterionBase):
-    """
-    Defines the LaRC failure criterion for uni-directional orthotropic reinforced materials.
-    """
 
     def __init__(
         self,
@@ -22,6 +19,7 @@ class LaRCCriterion(FailureCriterionBase):
         wf_lmt: float = 1.0,
         wf_lmc: float = 1.0,
     ):
+        """Defines the LaRC failure criterion for uni-directional orthotropic reinforced materials."""
 
         super().__init__(name="LaRC", active=True)
 
@@ -37,25 +35,25 @@ class LaRCCriterion(FailureCriterionBase):
     def _get_lft(self) -> bool:
         return self._lft
 
-    def _set_lft(self, value: bool):
+    def _set_lft(self, value: bool) -> None:
         self._lft = value
 
     def _get_lmc(self) -> bool:
         return self._lmc
 
-    def _set_lmc(self, value: bool):
+    def _set_lmc(self, value: bool) -> None:
         self._lmc = value
 
     def _get_lmt(self) -> bool:
         return self._lmt
 
-    def _set_lmt(self, value: bool):
+    def _set_lmt(self, value: bool) -> None:
         self._lmt = value
 
     def _get_dim(self) -> int:
         return self._dim
 
-    def _set_dim(self, value: int):
+    def _set_dim(self, value: int) -> None:
         if value in [2, 3]:
             self._dim = value
         else:
@@ -67,25 +65,25 @@ class LaRCCriterion(FailureCriterionBase):
     def _get_wf_lfc(self) -> float:
         return self._wf_lfc
 
-    def _set_wf_lfc(self, value: float):
+    def _set_wf_lfc(self, value: float) -> None:
         self._wf_lfc = value
 
     def _get_wf_lft(self) -> float:
         return self._wf_lft
 
-    def _set_wf_lft(self, value: float):
+    def _set_wf_lft(self, value: float) -> None:
         self._wf_lft = value
 
     def _get_wf_lmc(self) -> float:
         return self._wf_lmc
 
-    def _set_wf_lmc(self, value: float):
+    def _set_wf_lmc(self, value: float) -> None:
         self._wf_lmc = value
 
     def _get_wf_lmt(self) -> float:
         return self._wf_lmt
 
-    def _set_wf_lmt(self, value: float):
+    def _set_wf_lmt(self, value: float) -> None:
         self._wf_lmt = value
 
     lfc = property(

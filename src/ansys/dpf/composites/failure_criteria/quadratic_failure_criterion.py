@@ -4,11 +4,9 @@ from .failure_criterion_base import FailureCriterionBase
 
 
 class QuadraticFailureCriterion(FailureCriterionBase):
-    """
-    Base class for quadratic failure criteria such as Tsai-Wu and Tsai-Hill
-    """
 
     def __init__(self, name: str, active: bool, wf: float, dim: int):
+        """Base class for quadratic failure criteria such as Tsai-Wu and Tsai-Hill."""
 
         super().__init__(name=name, active=active)
 
@@ -18,13 +16,13 @@ class QuadraticFailureCriterion(FailureCriterionBase):
     def _get_wf(self) -> float:
         return self._wf
 
-    def _set_wf(self, value: float):
+    def _set_wf(self, value: float) -> None:
         self._wf = value
 
     def _get_dim(self) -> int:
         return self._dim
 
-    def _set_dim(self, value: int):
+    def _set_dim(self, value: int) -> None:
         if value in [2, 3]:
             self._dim = value
         else:

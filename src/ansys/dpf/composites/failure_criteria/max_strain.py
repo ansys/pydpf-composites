@@ -29,9 +29,6 @@ ATTRS_MAX_STRAIN = [
 
 
 class MaxStrainCriterion(FailureCriterionBase):
-    """
-    Defines the Maximum Strain failure criterion for orthotropic reinforced materials.
-    """
 
     def __init__(
         self,
@@ -58,6 +55,7 @@ class MaxStrainCriterion(FailureCriterionBase):
         eSxz: float = 0.0,
         eSyz: float = 0.0,
     ):
+        """ Defines the Maximum Strain failure criterion for orthotropic reinforced materials."""
 
         super().__init__(name="Max Strain", active=True)
 
@@ -67,85 +65,85 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_e1(self) -> bool:
         return self._e1
 
-    def _set_e1(self, value: bool):
+    def _set_e1(self, value: bool) -> None:
         self._e1 = value
 
     def _get_e2(self) -> bool:
         return self._e2
 
-    def _set_e2(self, value: bool):
+    def _set_e2(self, value: bool) -> None:
         self._e2 = value
 
     def _get_e3(self) -> bool:
         return self._e3
 
-    def _set_e3(self, value: bool):
+    def _set_e3(self, value: bool) -> None:
         self._e3 = value
 
     def _get_e12(self) -> bool:
         return self._e12
 
-    def _set_e12(self, value: bool):
+    def _set_e12(self, value: bool) -> None:
         self._e12 = value
 
     def _get_e13(self) -> bool:
         return self._e13
 
-    def _set_e13(self, value: bool):
+    def _set_e13(self, value: bool) -> None:
         self._e13 = value
 
     def _get_e23(self) -> bool:
         return self._e23
 
-    def _set_e23(self, value: bool):
+    def _set_e23(self, value: bool) -> None:
         self._e23 = value
 
     def _get_wf_e1(self) -> float:
         return self._wf_e1
 
-    def _set_wf_e1(self, value: float):
+    def _set_wf_e1(self, value: float) -> None:
         self._wf_e1 = value
 
     def _get_wf_e2(self) -> float:
         return self._wf_e2
 
-    def _set_wf_e2(self, value: float):
+    def _set_wf_e2(self, value: float) -> None:
         self._wf_e2 = value
 
     def _get_wf_e3(self) -> float:
         return self._wf_e3
 
-    def _set_wf_e3(self, value: float):
+    def _set_wf_e3(self, value: float) -> None:
         self._wf_e3 = value
 
     def _get_wf_e12(self) -> float:
         return self._wf_e12
 
-    def _set_wf_e12(self, value: float):
+    def _set_wf_e12(self, value: float) -> None:
         self._wf_e12 = value
 
     def _get_wf_e13(self) -> float:
         return self._wf_e13
 
-    def _set_wf_e13(self, value: float):
+    def _set_wf_e13(self, value: float) -> None:
         self._wf_e13 = value
 
     def _get_wf_e23(self) -> float:
         return self._wf_e23
 
-    def _set_wf_e23(self, value: float):
+    def _set_wf_e23(self, value: float) -> None:
         self._wf_e23 = value
 
     def _get_force_global_strain_limits(self) -> bool:
         return self._force_global_strain_limits
 
-    def _set_force_global_strain_limits(self, value: bool):
+    def _set_force_global_strain_limits(self, value: bool) -> None:
         self._force_global_strain_limits = value
 
     def _get_eXt(self) -> float:
         return self._eXt
 
-    def _set_eXt(self, value: float):
+    def _set_eXt(self, value: float) -> None:
         if value < 0.0:
             raise ValueError("Tensile limit eXt cannot be negative.")
         self._eXt = value
@@ -153,7 +151,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eXc(self) -> float:
         return self._eXc
 
-    def _set_eXc(self, value: float):
+    def _set_eXc(self, value: float) -> None:
         if value > 0.0:
             raise ValueError("Compressive limit eXc cannot be positive.")
         self._eXc = value
@@ -161,7 +159,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eYt(self) -> float:
         return self._eYt
 
-    def _set_eYt(self, value: float):
+    def _set_eYt(self, value: float) -> None:
         if value < 0.0:
             raise ValueError("Tensile limit eYt cannot be negative.")
         self._eYt = value
@@ -169,7 +167,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eYc(self) -> float:
         return self._eYc
 
-    def _set_eYc(self, value: float):
+    def _set_eYc(self, value: float) -> None:
         if value > 0.0:
             raise ValueError("Compressive limit eYc cannot be positive.")
         self._eYc = value
@@ -177,7 +175,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eZt(self) -> float:
         return self._eZt
 
-    def _set_eZt(self, value: float):
+    def _set_eZt(self, value: float) -> None:
         if value < 0.0:
             raise ValueError("Tensile limit eZt cannot be negative.")
         self._eZt = value
@@ -185,7 +183,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eZc(self) -> float:
         return self._eZc
 
-    def _set_eZc(self, value: float):
+    def _set_eZc(self, value: float) -> None:
         if value > 0.0:
             raise ValueError("Compressive limit eZc cannot be positive.")
         self._eZc = value
@@ -193,7 +191,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eSxy(self) -> float:
         return self._eSxy
 
-    def _set_eSxy(self, value: float):
+    def _set_eSxy(self, value: float) -> None:
         if value < 0.0:
             raise ValueError("Strain limit eSxy cannot be negative.")
         self._eSxy = value
@@ -201,7 +199,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eSxz(self) -> float:
         return self._eSxz
 
-    def _set_eSxz(self, value: float):
+    def _set_eSxz(self, value: float) -> None:
         if value < 0.0:
             raise ValueError("Strain limit eSxz cannot be negative.")
         self._eSxz = value
@@ -209,7 +207,7 @@ class MaxStrainCriterion(FailureCriterionBase):
     def _get_eSyz(self) -> float:
         return self._eSyz
 
-    def _set_eSyz(self, value: float):
+    def _set_eSyz(self, value: float) -> None:
         if value < 0.0:
             raise ValueError("Strain limit eSyz cannot be negative.")
         self._eSyz = value

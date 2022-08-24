@@ -5,13 +5,14 @@ import json
 
 class FailureCriterionBase:
     def __init__(self, name: str, active: bool):
+        """Constructor a the base class of a failure criterion."""
         self.active = active
         self._name = name
 
     def _get_active(self) -> bool:
         return self._active
 
-    def _set_active(self, value: bool):
+    def _set_active(self, value: bool) -> None:
         self._active = value
 
     def _get_name(self) -> str:
@@ -53,7 +54,7 @@ class FailureCriterionBase:
 
         return properties
 
-    def _short_descr(self):
+    def _short_descr(self) -> str:
         return f"{self.__class__.__name__}(name='{self.name}', active={self.active})"
 
     def __repr__(self):

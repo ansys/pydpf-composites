@@ -6,11 +6,14 @@ ATTRS_SHEAR_CRIMPING = ["kc", "kf", "wf"]
 
 
 class ShearCrimpingCriterion(FailureCriterionBase):
-    """
-    Defines the shear crimping failure criterion for sandwich structures (laminate with cores)
-    """
+
 
     def __init__(self, kc: float = 1.0, kf: float = 0.0, wf: float = 1.0):
+        """Defines the shear crimping failure criterion for sandwich structures.
+
+        A laminate is classified as sandwich if it has at least one core material.
+        For instance a honeycomb.
+        """
 
         super().__init__(name="Shear Crimping", active=True)
 
@@ -20,19 +23,19 @@ class ShearCrimpingCriterion(FailureCriterionBase):
     def _get_kc(self) -> float:
         return self._kc
 
-    def _set_kc(self, value: float):
+    def _set_kc(self, value: float) -> None:
         self._kc = value
 
     def _get_kf(self) -> float:
         return self._kf
 
-    def _set_kf(self, value: float):
+    def _set_kf(self, value: float) -> None:
         self._kf = value
 
     def _get_wf(self) -> float:
         return self._wf
 
-    def _set_wf(self, value: float):
+    def _set_wf(self, value: float) -> None:
         self._wf = value
 
     wf = property(_get_wf, _set_wf, doc="Weighting factor of the failure mode (wb or wt).")

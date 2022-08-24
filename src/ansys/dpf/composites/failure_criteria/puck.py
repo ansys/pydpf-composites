@@ -27,9 +27,6 @@ ATTRS_PUCK = [
 
 
 class PuckCriterion(FailureCriterionBase):
-    """
-    Defines the Puck failure criterion for uni-directional orthotropic reinforced materials.
-    """
 
     def __init__(
         self,
@@ -54,6 +51,10 @@ class PuckCriterion(FailureCriterionBase):
         p22_neg: float = 0.225,
         p22_pos: float = 0.225,
     ):
+        """Defines the Puck failure criterion.
+
+         Can be used in combination with uni-directional orthotropic reinforced materials.
+         """
 
         super().__init__(name="Puck", active=True)
 
@@ -63,37 +64,37 @@ class PuckCriterion(FailureCriterionBase):
     def _get_pf(self) -> bool:
         return self._pf
 
-    def _set_pf(self, value: bool):
+    def _set_pf(self, value: bool) -> None:
         self._pf = value
 
     def _get_pma(self) -> bool:
         return self._pma
 
-    def _set_pma(self, value: bool):
+    def _set_pma(self, value: bool) -> None:
         self._pma = value
 
     def _get_pmb(self) -> bool:
         return self._pmb
 
-    def _set_pmb(self, value: bool):
+    def _set_pmb(self, value: bool) -> None:
         self._pmb = value
 
     def _get_pmc(self) -> bool:
         return self._pmc
 
-    def _set_pmc(self, value: bool):
+    def _set_pmc(self, value: bool) -> None:
         self._pmc = value
 
     def _get_pd(self) -> bool:
         return self._pd
 
-    def _set_pd(self, value: bool):
+    def _set_pd(self, value: bool) -> None:
         self._pd = value
 
     def _get_dim(self) -> int:
         return self._dim
 
-    def _set_dim(self, value: int):
+    def _set_dim(self, value: int) -> None:
         if value in [1, 2, 3]:
             self._dim = value
         else:
@@ -104,43 +105,43 @@ class PuckCriterion(FailureCriterionBase):
     def _get_wf_pf(self) -> float:
         return self._wf_pf
 
-    def _set_wf_pf(self, value: float):
+    def _set_wf_pf(self, value: float) -> None:
         self._wf_pf = value
 
     def _get_wf_pma(self) -> float:
         return self._wf_pma
 
-    def _set_wf_pma(self, value: float):
+    def _set_wf_pma(self, value: float) -> None:
         self._wf_pma = value
 
     def _get_wf_pmb(self) -> float:
         return self._wf_pmb
 
-    def _set_wf_pmb(self, value: float):
+    def _set_wf_pmb(self, value: float) -> None:
         self._wf_pmb = value
 
     def _get_wf_pmc(self) -> float:
         return self._wf_pmc
 
-    def _set_wf_pmc(self, value: float):
+    def _set_wf_pmc(self, value: float) -> None:
         self._wf_pmc = value
 
     def _get_wf_pd(self) -> float:
         return self._wf_pd
 
-    def _set_wf_pd(self, value: float):
+    def _set_wf_pd(self, value: float) -> None:
         self._wf_pd = value
 
     def _get_cfps(self) -> float:
         return self._cfps
 
-    def _set_cfps(self, value: float):
+    def _set_cfps(self, value: float) -> None:
         self._cfps = value
 
     def _get_s(self) -> float:
         return self._s
 
-    def _set_s(self, value: float):
+    def _set_s(self, value: float) -> None:
         if value < 0.0 or value >= 1.0:
             raise AttributeError(f"Parameter s cannot be set to {value}. Allowed range: [0, 1).")
         self._s = value
@@ -148,7 +149,7 @@ class PuckCriterion(FailureCriterionBase):
     def _get_m(self) -> float:
         return self._M
 
-    def _set_m(self, value: float):
+    def _set_m(self, value: float) -> None:
         if value < 0.0 or value >= 1.0:
             raise AttributeError(f"Parameter M cannot be set to {value}. Allowed range: [0, 1).")
         self._M = value
@@ -156,37 +157,37 @@ class PuckCriterion(FailureCriterionBase):
     def _get_interface_weakening_factor(self) -> float:
         return self._interface_weakening_factor
 
-    def _set_interface_weakening_factor(self, value: float):
+    def _set_interface_weakening_factor(self, value: float) -> None:
         self._interface_weakening_factor = value
 
     def _get_force_global_constants(self) -> bool:
         return self._force_global_constants
 
-    def _set_force_global_constants(self, value: bool):
+    def _set_force_global_constants(self, value: bool) -> None:
         self._force_global_constants = value
 
     def _get_p21_neg(self) -> float:
         return self._p21_neg
 
-    def _set_p21_neg(self, value: float):
+    def _set_p21_neg(self, value: float) -> None:
         self._p21_neg = value
 
     def _get_p21_pos(self) -> float:
         return self._p21_pos
 
-    def _set_p21_pos(self, value: float):
+    def _set_p21_pos(self, value: float) -> None:
         self._p21_pos = value
 
     def _get_p22_neg(self) -> float:
         return self._p22_neg
 
-    def _set_p22_neg(self, value: float):
+    def _set_p22_neg(self, value: float) -> None:
         self._p22_neg = value
 
     def _get_p22_pos(self) -> float:
         return self._p22_pos
 
-    def _set_p22_pos(self, value: float):
+    def _set_p22_pos(self, value: float) -> None:
         self._p22_pos = value
 
     pf = property(_get_pf, _set_pf, doc="Activates the failure evaluation regarding fiber failure.")
