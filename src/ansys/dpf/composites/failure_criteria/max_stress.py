@@ -19,6 +19,8 @@ ATTRS_MAX_STRESS = [
 
 
 class MaxStressCriterion(FailureCriterionBase):
+    """Defines the Maximum Stress failure criterion for orthotropic reinforced materials."""
+
     def __init__(
         self,
         s1: bool = True,
@@ -34,8 +36,7 @@ class MaxStressCriterion(FailureCriterionBase):
         wf_s13: float = 1.0,
         wf_s23: float = 1.0,
     ):
-        """Defines the Maximum Stress failure criterion for orthotropic reinforced materials."""
-
+        """Create a Maximum Stress failure criterion for orthotropic reinforced materials."""
         super().__init__(name="Max Stress", active=True)
 
         for attr in ATTRS_MAX_STRESS:

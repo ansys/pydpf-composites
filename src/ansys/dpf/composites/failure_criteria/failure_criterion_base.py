@@ -1,12 +1,14 @@
 """Defines the base class of composite failure criterion."""
 
 import json
-from typing import Any, Sequence
+from typing import Any, Dict, Sequence
 
 
 class FailureCriterionBase:
+    """Defines the base class for failure criteria."""
+
     def __init__(self, name: str, active: bool):
-        """Constructor a the base class of a failure criterion."""
+        """Do not use directly! Construct a base failure criterion."""
         self.active = active
         self._name = name
 
@@ -24,10 +26,8 @@ class FailureCriterionBase:
     )
     name = property(_get_name, doc="Name of the failure criterion. Read only.")
 
-    def to_dict(self) -> dict:
-        """
-        :return: a dict with all properties
-        """
+    def to_dict(self) -> Dict[str, Any]:
+        """:return: a dict with all properties."""
         properties = self._get_properties(exclude=["name"])
 
         attr_dict = {}
@@ -37,13 +37,13 @@ class FailureCriterionBase:
         return attr_dict
 
     def to_json(self) -> str:
-        """
-        :return: the string representation of the dict (json.dumps) which can be used for
-        the result definition of the DPF Composites Failure Operator
+        """:return: the string representation of the object as JSON.
+
+        It can be used for the result definition of the DPF Composites Failure Operator.
         """
         return json.dumps(self.to_dict())
 
-    def _get_properties(self, exclude=[]) -> Sequence[Any]:
+    def _get_properties(self, exclude: Sequence[str] = []) -> Sequence[Any]:
         properties = [
             attr
             for attr in dir(self)
@@ -56,9 +56,11 @@ class FailureCriterionBase:
         return properties
 
     def _short_descr(self) -> str:
+        """:return: short description of the object."""
         return f"{self.__class__.__name__}(name='{self.name}', active={self.active})"
 
     def __repr__(self) -> str:
+        """:return: string conversion."""
         s_attrs = ", ".join([f"{attr}={getattr(self, attr)}" for attr in self._get_properties()])
         s = f"{self.__class__.__name__}({s_attrs})"
         return s

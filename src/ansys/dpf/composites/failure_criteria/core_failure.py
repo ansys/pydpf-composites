@@ -6,12 +6,10 @@ ATTRS_CORE_FAILURE = ["include_ins", "wf"]
 
 
 class CoreFailureCriterion(FailureCriterionBase):
-    """
-    Defines the core shear failure criterion for core materials like foam and honeycomb.
-    """
+    """Defines the core shear failure criterion for core materials like foam and honeycomb."""
 
     def __init__(self, include_ins: bool = False, wf: float = 1.0):
-        """Constructs a core failure criterion.
+        """Construct a core failure criterion.
 
         :param include_ins: whether to include interlaminar normals stresses or not.
         :param wf: weighting factor.

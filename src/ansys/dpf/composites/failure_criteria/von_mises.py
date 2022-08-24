@@ -1,4 +1,4 @@
-"""Von Mises Criterion"""
+"""Von Mises Criterion."""
 
 from .failure_criterion_base import FailureCriterionBase
 
@@ -6,6 +6,8 @@ ATTRS_VON_MISES = ["vme", "vms", "wf_vme", "wf_vms", "iss", "ins"]
 
 
 class VonMisesCriterion(FailureCriterionBase):
+    """Defines the von Mises criterion for isotropic materials."""
+
     def __init__(
         self,
         vme: bool = True,
@@ -15,8 +17,7 @@ class VonMisesCriterion(FailureCriterionBase):
         iss: bool = True,
         ins: bool = False,
     ):
-        """Defines the von Mises criterion for isotropic materials."""
-
+        """Create a von Mises criterion for isotropic materials."""
         super().__init__(name="Von Mises", active=True)
 
         for attr in ATTRS_VON_MISES:

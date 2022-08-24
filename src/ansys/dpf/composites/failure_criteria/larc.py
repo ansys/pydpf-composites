@@ -6,6 +6,8 @@ ATTRS_LARC = ["lft", "lfc", "lmt", "lmc", "dim", "wf_lft", "wf_lfc", "wf_lmt", "
 
 
 class LaRCCriterion(FailureCriterionBase):
+    """Defines the LaRC failure criterion for UD reinforced materials."""
+
     def __init__(
         self,
         lft: bool = True,
@@ -18,8 +20,7 @@ class LaRCCriterion(FailureCriterionBase):
         wf_lmt: float = 1.0,
         wf_lmc: float = 1.0,
     ):
-        """Defines the LaRC failure criterion for uni-directional orthotropic reinforced materials."""
-
+        """Create a LaRC failure criterion for uni-directional reinforced materials."""
         super().__init__(name="LaRC", active=True)
 
         for attr in ATTRS_LARC:

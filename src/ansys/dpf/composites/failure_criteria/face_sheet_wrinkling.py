@@ -6,9 +6,7 @@ ATTRS_WRINKLING = ["homogeneous_core_coeff", "honeycomb_core_coeff", "wf"]
 
 
 class FaceSheetWrinklingCriterion(FailureCriterionBase):
-    """
-    Defines the face sheet wrinkling failure criterion for sandwiches (laminate with cores)
-    """
+    """Defines the face sheet wrinkling criterion for sandwiches (laminate with cores)."""
 
     def __init__(
         self,
@@ -16,8 +14,7 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
         honeycomb_core_coeff: float = 0.33,
         wf: float = 1.0,
     ):
-        """Constructs a Face Sheet Wrinkling failure criterion."""
-
+        """Construct a Face Sheet Wrinkling failure criterion."""
         super().__init__(name="Face Sheet Wrinkling", active=True)
 
         for attr in ATTRS_WRINKLING:

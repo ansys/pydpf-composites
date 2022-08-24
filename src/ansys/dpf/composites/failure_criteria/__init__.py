@@ -1,3 +1,5 @@
+"""Module of failure criteria."""
+
 from .combined_failure_criterion import CombinedFailureCriterion
 from .core_failure import CoreFailureCriterion
 from .cuntze import CuntzeCriterion

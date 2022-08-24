@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
     CombinedFailureCriterion,
 )
@@ -9,7 +11,7 @@ from ansys.dpf.composites.result_definition import (
     ResultDefinition,
 )
 
-defaults = {
+defaults: Dict[str, Any] = {
     "expression": "composite_failure",
     "combined_failure_criterion": None,
     "measures": ["inverse_reserve_factor"],

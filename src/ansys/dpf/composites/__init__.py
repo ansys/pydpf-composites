@@ -1,3 +1,5 @@
+"""Module for the post-processing of composite structures."""
+
 try:
     import importlib.metadata as importlib_metadata
 except ModuleNotFoundError:
@@ -24,3 +26,7 @@ from .failure_criteria import (
     )
 """
 from .result_definition import ResultDefinition
+
+__all__ = [
+    "ResultDefinition",
+]

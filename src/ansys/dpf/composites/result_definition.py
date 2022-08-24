@@ -1,7 +1,7 @@
-"""Object to represent the Result Definition used by Failure Operator in DPF Composites"""
+"""Object to represent the Result Definition used by Failure Operator in DPF Composites."""
 
 import json
-from typing import Any, Sequence
+from typing import Any, Dict, Sequence, Type, Union
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
@@ -13,6 +13,11 @@ _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
 class ResultDefinition:
+    """Represent the result definition used in DPF Composites.
+
+    It can be used in combination with the composite::failure_evaluator and
+    composite::sampling_point_evaluator, and others.
+    """
 
     _VERSION = 1
     _ACCUMULATOR = "max"
@@ -24,7 +29,7 @@ class ResultDefinition:
         self,
         name: str,
         expression: str = "composite_failure",
-        combined_failure_criterion: CombinedFailureCriterion = None,
+        combined_failure_criterion: Union[Type[CombinedFailureCriterion], None] = None,
         measures: Sequence[str] = ["inverse_reserve_factor"],
         composite_definitions: Sequence[_PATH] = [],
         assembly_mapping_files: Sequence[_PATH] = [],
@@ -37,8 +42,7 @@ class ResultDefinition:
         time: float = 1.0,
         max_chunk_size: int = 50000,
     ):
-        """Creates a ResultDefinition object"""
-
+        """Create a ResultDefinition object."""
         self.name = name
         self.expression = expression
         self.combined_failure_criterion = combined_failure_criterion
@@ -131,7 +135,7 @@ class ResultDefinition:
 
     def _set_stress_strain_eval_mode(self, value: str) -> None:
         if value in _SUPPORTED_STRESS_STRAIN_EVAL_MODES:
-            self._get_stress_strain_eval_mode = value
+            self._stress_strain_eval_mode = value
         else:
             values = ", ".join([v for v in _SUPPORTED_STRESS_STRAIN_EVAL_MODES])
             raise ValueError(
@@ -213,10 +217,8 @@ class ResultDefinition:
         "defines the number of elements per chunk.",
     )
 
-    def to_dict(self) -> dict:
-        """
-        :return: a dict with all properties
-        """
+    def to_dict(self) -> Dict[str, Any]:
+        """:return: a dict with all properties."""
         cfc = self.combined_failure_criterion
         if not cfc:
             raise ValueError("Combined failure criterion is not defined!")
@@ -252,13 +254,13 @@ class ResultDefinition:
         return result_definition
 
     def to_json(self) -> str:
-        """
-        :return: the string representation (json.dumps) which can be used for the result definition
-        of the DPF Composites Failure Operator
+        """:return: the string representation (json.dumps).
+
+        It can be used for the result definition of the DPF Composites Failure Operator.
         """
         return json.dumps(self.to_dict())
 
-    def _get_properties(self, exclude=[]) -> Sequence[Any]:
+    def _get_properties(self, exclude: Sequence[str] = []) -> Sequence[Any]:
         properties = [
             attr
             for attr in dir(self)
@@ -271,9 +273,11 @@ class ResultDefinition:
         return properties
 
     def _short_descr(self) -> str:
+        """:return: short description of the object."""
         return f"{self.__class__.__name__}(name='{self.name}')"
 
     def __repr__(self) -> str:
+        """:return: string conversion."""
         s_attrs = ", ".join([f"{attr}={getattr(self, attr)}" for attr in self._get_properties()])
         s = f"{self.__class__.__name__}({s_attrs})"
         return s

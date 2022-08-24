@@ -27,7 +27,7 @@ from ansys.dpf.composites.failure_criteria import (
 
 # %%
 # Definition of the combined failure criterion
-def get_combined_failure_criterion():
+def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
     core_failure = CoreFailureCriterion()
@@ -63,7 +63,7 @@ rd.rst_files = [rst_server_path]
 rd.material_files = [material_server_path]
 rd.composite_definitions = [h5_server_path]
 rd.combined_failure_criterion = get_combined_failure_criterion()
-#rd.element_scope = [1, 2, 3, 4]
+# rd.element_scope = [1, 2, 3, 4]
 
 fc_op = dpf.Operator("composite::composite_failure_operator")
 fc_op.inputs.result_definition(rd.to_json())

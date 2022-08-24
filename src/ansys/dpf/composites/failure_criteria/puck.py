@@ -27,6 +27,8 @@ ATTRS_PUCK = [
 
 
 class PuckCriterion(FailureCriterionBase):
+    """Defines the Puck failure criterion for UD reinforced materials."""
+
     def __init__(
         self,
         pf: bool = True,
@@ -50,11 +52,10 @@ class PuckCriterion(FailureCriterionBase):
         p22_neg: float = 0.225,
         p22_pos: float = 0.225,
     ):
-        """Defines the Puck failure criterion.
+        """Create a Puck failure criterion.
 
         Can be used in combination with uni-directional orthotropic reinforced materials.
         """
-
         super().__init__(name="Puck", active=True)
 
         for attr in ATTRS_PUCK:

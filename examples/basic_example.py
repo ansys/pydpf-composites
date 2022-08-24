@@ -27,7 +27,7 @@ from ansys.dpf.composites.failure_criteria import (
 )
 
 
-def get_combined_failure_criterion():
+def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
     tsai_hill = TsaiHillCriterion()

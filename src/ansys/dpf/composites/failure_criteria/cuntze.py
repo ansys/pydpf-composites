@@ -24,9 +24,7 @@ ATTRS_CUNTZE = [
 
 
 class CuntzeCriterion(FailureCriterionBase):
-    """
-    Defines the LaRC failure criterion for uni-directional orthotropic reinforced materials.
-    """
+    """Defines the Cuntze criterion for uni-directional orthotropic reinforced materials."""
 
     def __init__(
         self,
@@ -46,7 +44,7 @@ class CuntzeCriterion(FailureCriterionBase):
         fracture_plane_angle: float = 53.0,
         mode_interaction_coeff: float = 2.6,
     ) -> None:
-        """Constructs a Cuntze failure criterion."""
+        """Construct a Cuntze failure criterion."""
         super().__init__(name="Cuntze", active=True)
 
         for attr in ATTRS_CUNTZE:
