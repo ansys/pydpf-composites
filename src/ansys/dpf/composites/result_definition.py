@@ -273,7 +273,7 @@ class ResultDefinition:
     def _short_descr(self) -> str:
         return f"{self.__class__.__name__}(name='{self.name}')"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         s_attrs = ", ".join([f"{attr}={getattr(self, attr)}" for attr in self._get_properties()])
         s = f"{self.__class__.__name__}({s_attrs})"
         return s

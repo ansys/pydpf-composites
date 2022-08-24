@@ -1,7 +1,7 @@
 """Combined Failure Criterion."""
 
 import json
-from typing import Any, Sequence, Type
+from typing import Any, Sequence, Type, Dict
 
 from .failure_criterion_base import FailureCriterionBase
 
@@ -29,7 +29,7 @@ class CombinedFailureCriterion:
         :param name: user-defined name of the criterion
         :param failure_criteria: list of failure criteria
         """
-        self._failure_criteria = {}
+        self._failure_criteria: Dict[Any] = {}
         for fc in failure_criteria:
             self.insert(fc)
 
@@ -38,7 +38,7 @@ class CombinedFailureCriterion:
     def _get_name(self) -> str:
         return self._name
 
-    def _set_name(self, value: str):
+    def _set_name(self, value: str) -> None:
         self._name = value
 
     def _get_failure_criteria(self) -> Sequence[Type[FailureCriterionBase]]:
@@ -49,7 +49,7 @@ class CombinedFailureCriterion:
         _get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it."
     )
 
-    def insert(self, fc: Type[FailureCriterionBase] = None):
+    def insert(self, fc: Type[FailureCriterionBase] = None) -> None:
         """Add a failure criterion.
 
         :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a

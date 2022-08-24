@@ -1,6 +1,7 @@
 """Defines the base class of composite failure criterion."""
 
 import json
+from typing import Any, Sequence
 
 
 class FailureCriterionBase:
@@ -35,14 +36,14 @@ class FailureCriterionBase:
 
         return attr_dict
 
-    def to_json(self):
+    def to_json(self) -> str:
         """
         :return: the string representation of the dict (json.dumps) which can be used for
         the result definition of the DPF Composites Failure Operator
         """
         return json.dumps(self.to_dict())
 
-    def _get_properties(self, exclude=[]):
+    def _get_properties(self, exclude=[]) -> Sequence[Any]:
         properties = [
             attr
             for attr in dir(self)
@@ -57,7 +58,7 @@ class FailureCriterionBase:
     def _short_descr(self) -> str:
         return f"{self.__class__.__name__}(name='{self.name}', active={self.active})"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         s_attrs = ", ".join([f"{attr}={getattr(self, attr)}" for attr in self._get_properties()])
         s = f"{self.__class__.__name__}({s_attrs})"
         return s
