@@ -24,6 +24,7 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
+
 # %%
 # Definition of the combined failure criterion
 def get_combined_failure_criterion() -> CombinedFailureCriterion:

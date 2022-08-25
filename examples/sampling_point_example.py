@@ -8,7 +8,7 @@ Example how the lay-up data and through-the-thickness results of an
 element can be queried and visualized
 
 """
-#todo: complete it once the new format is ready
+# todo: complete it once the new format is ready
 import os
 import pathlib
 
