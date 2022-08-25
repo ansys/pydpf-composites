@@ -1,11 +1,14 @@
 """
 .. _sampling_point_example:
 
-Basic example how to use the sampling point operator which returns
-data of the lay-up and failure results
-----------------------------------------------------------
+How to use the Sampling Point operator
+--------------------------------------
+
+Example how the lay-up data and through-the-thickness results of an
+element can be queried and visualized
 
 """
+#todo: complete it once the new format is ready
 import os
 import pathlib
 

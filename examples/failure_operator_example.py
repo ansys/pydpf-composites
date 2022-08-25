@@ -1,8 +1,8 @@
 """
 .. _failure_operator_example:
 
-Example how to use the composite failure operator
--------------------------------------------------
+How to use the composite failure operator
+-----------------------------------------
 
 This operator computes the minimum and maximum failure
 values and failure modes of a combined failure criterion
