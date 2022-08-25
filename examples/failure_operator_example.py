@@ -24,7 +24,6 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
-
 # %%
 # Definition of the combined failure criterion
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
@@ -58,12 +57,12 @@ material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=serve
 
 # %%
 # Define the result definition which is used to configure the composite_failure_operator
+# Process all elements
 rd = ResultDefinition("combined failure criteria")
 rd.rst_files = [rst_server_path]
 rd.material_files = [material_server_path]
 rd.composite_definitions = [h5_server_path]
 rd.combined_failure_criterion = get_combined_failure_criterion()
-# rd.element_scope = [1, 2, 3, 4]
 
 fc_op = dpf.Operator("composite::composite_failure_operator")
 fc_op.inputs.result_definition(rd.to_json())
@@ -76,16 +75,22 @@ output_all_elements = fc_op.outputs.field_max()
 failure_value_index = 1
 failiure_mode_index = 0
 
-# todo: can we avoid to load the model again?
-model = dpf.Model(rst_server_path)
-# todo: get mesh support from the output (field)
-model.metadata.meshed_region.plot(output_all_elements[failure_value_index])
+irf_field = output_all_elements[failure_value_index]
+irf_field.plot()
 
 # %%
 # Scope failure evaluation to certain
-
-# todo: why is the entire mesh shown?
-rd.element_scope = [3, 4]
+rd.element_scope = [1, 3]
 fc_op.inputs.result_definition(rd.to_json())
 output_two_elements = fc_op.outputs.field_max()
-model.metadata.meshed_region.plot(output_two_elements[failure_value_index])
+irf_field = output_two_elements[failure_value_index]
+irf_field.plot()
+
+# %%
+# Scope by plies
+rd.element_scope = []
+rd.ply_scope = ["P1L1__ud_patch ns1"]
+fc_op.inputs.result_definition(rd.to_json())
+output_woven_plies = fc_op.outputs.field_max()
+irf_field = output_woven_plies[failure_value_index]
+irf_field.plot()

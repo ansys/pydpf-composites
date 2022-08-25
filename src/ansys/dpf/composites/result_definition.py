@@ -203,7 +203,8 @@ class ResultDefinition:
     element_scope = property(
         _get_element_scope,
         _set_element_scope,
-        doc="List of element which are selected for the " "computation.",
+        doc="List of element which are selected for the " "computation. All elements are selected"
+            " if element_scope is an empty list.",
     )
     ply_scope = property(
         _get_ply_scope, _set_ply_scope, doc="List of plies which are selected for the computation."
