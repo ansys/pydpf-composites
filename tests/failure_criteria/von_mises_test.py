@@ -38,4 +38,4 @@ def test_von_mises_criterion():
         assert getattr(von_mises_default, k) == v
 
     # test repr
-    print(von_mises)
+    von_mises.__repr__()

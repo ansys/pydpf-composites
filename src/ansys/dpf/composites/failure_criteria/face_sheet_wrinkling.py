@@ -1,8 +1,7 @@
 """Face Sheet Wrinkling Criterion for sandwich structures."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_WRINKLING = ["homogeneous_core_coeff", "honeycomb_core_coeff", "wf"]
 
 
 class FaceSheetWrinklingCriterion(FailureCriterionBase):
@@ -10,6 +9,7 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         homogeneous_core_coeff: float = 0.5,
         honeycomb_core_coeff: float = 0.33,
         wf: float = 1.0,
@@ -56,3 +56,6 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
         _set_honeycomb_core_coeff,
         doc="Wrinkling coefficient (reduction factor) for honeycombs. Default is 0.33.",
     )
+
+
+ATTRS_WRINKLING = inspect.signature(FaceSheetWrinklingCriterion).parameters.keys()

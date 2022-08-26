@@ -1,14 +1,13 @@
 """Shear Crimping Failure Criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_SHEAR_CRIMPING = ["kc", "kf", "wf"]
 
 
 class ShearCrimpingCriterion(FailureCriterionBase):
     """Defines the shear crimping failure criterion for sandwich structures."""
 
-    def __init__(self, kc: float = 1.0, kf: float = 0.0, wf: float = 1.0):
+    def __init__(self, *, kc: float = 1.0, kf: float = 0.0, wf: float = 1.0):
         """Create a shear crimping failure criterion for sandwich structures.
 
         A laminate is classified as sandwich if it has at least one core material.
@@ -51,3 +50,6 @@ class ShearCrimpingCriterion(FailureCriterionBase):
         "Default is 0 so the face sheet do not contribute to the allowable load. Valid for thin "
         "face sheets.",
     )
+
+
+ATTRS_SHEAR_CRIMPING = inspect.signature(ShearCrimpingCriterion).parameters.keys()

@@ -1,29 +1,7 @@
 """Puck Failure Criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_PUCK = [
-    "pf",
-    "pma",
-    "pmb",
-    "pmc",
-    "pd",
-    "dim",
-    "wf_pf",
-    "wf_pma",
-    "wf_pmb",
-    "wf_pmc",
-    "wf_pd",
-    "cfps",
-    "s",
-    "M",
-    "interface_weakening_factor",
-    "force_global_constants",
-    "p21_neg",
-    "p21_pos",
-    "p22_neg",
-    "p22_pos",
-]
 
 
 class PuckCriterion(FailureCriterionBase):
@@ -31,6 +9,7 @@ class PuckCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         pf: bool = True,
         pma: bool = True,
         pmb: bool = True,
@@ -278,3 +257,6 @@ class PuckCriterion(FailureCriterionBase):
         _set_p22_pos,
         doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.",
     )
+
+
+ATTRS_PUCK = inspect.signature(PuckCriterion).parameters.keys()

@@ -1,8 +1,7 @@
 """Hashin Failure Criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_HASHIN = ["hf", "hm", "hd", "dim", "wf_hf", "wf_hm", "wf_hd"]
 
 
 class HashinCriterion(FailureCriterionBase):
@@ -10,6 +9,7 @@ class HashinCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         hf: bool = True,
         hm: bool = True,
         hd: bool = False,
@@ -94,3 +94,6 @@ class HashinCriterion(FailureCriterionBase):
         _get_wf_hm, _set_wf_hm, doc="Weighting factor of the matrix failure (hm) mode."
     )
     wf_hd = property(_get_wf_hd, _set_wf_hd, doc="Weighting factor of the delamination (hd) mode.")
+
+
+ATTRS_HASHIN = inspect.signature(HashinCriterion).parameters.keys()

@@ -36,4 +36,4 @@ def test_core_failure_criterion():
         assert getattr(cf_default, k) == v
 
     # test repr
-    print(cf)
+    cf.__repr__()

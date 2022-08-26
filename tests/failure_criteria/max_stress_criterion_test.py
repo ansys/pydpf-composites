@@ -41,4 +41,4 @@ def test_max_stress_criterion():
         assert getattr(ms_default, k) == v
 
     # test repr
-    print(ms)
+    ms.__repr__()

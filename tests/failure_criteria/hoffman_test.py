@@ -36,4 +36,4 @@ def test_hoffman_criterion():
         assert getattr(hoffman_default, k) == v
 
     # test repr
-    print(hoffman)
+    hoffman.__repr__()

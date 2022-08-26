@@ -58,19 +58,24 @@ h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
 material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
 
 # %%
+
 # Define the result definition which is used to configure the composite_failure_operator
-rd = ResultDefinition("combined failure criteria")
-rd.rst_files = [rst_server_path]
-rd.material_files = [material_server_path]
-rd.composite_definitions = [h5_server_path]
-rd.combined_failure_criterion = get_combined_failure_criterion()
-# select one element only
-rd.element_scope = [3]
+rd = ResultDefinition(
+    "combined failure criteria",
+    rst_files=[rst_server_path],
+    material_files=[material_server_path],
+    composite_definitions=[h5_server_path],
+    combined_failure_criterion=get_combined_failure_criterion(),
+    element_scope=[3],
+)
 
 sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
 sampling_point_op.inputs.result_definition(rd.to_json())
 
 # %%
+
 # print the results
+
+# todo: rework once the new format is available
 results = sampling_point_op.outputs.results()
 print(results)

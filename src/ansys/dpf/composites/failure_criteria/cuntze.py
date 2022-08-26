@@ -1,26 +1,9 @@
 """Cuntze Failure Criterion."""
 
+import inspect
 import math
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_CUNTZE = [
-    "cfc",
-    "cft",
-    "cma",
-    "cmb",
-    "cmc",
-    "dim",
-    "wf_cfc",
-    "wf_cft",
-    "wf_cma",
-    "wf_cmb",
-    "wf_cmc",
-    "b21",
-    "b32",
-    "fracture_plane_angle",
-    "mode_interaction_coeff",
-]
 
 
 class CuntzeCriterion(FailureCriterionBase):
@@ -28,6 +11,7 @@ class CuntzeCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         cfc: bool = True,
         cft: bool = True,
         cma: bool = True,
@@ -214,3 +198,6 @@ class CuntzeCriterion(FailureCriterionBase):
         doc="Fracture plane angle. Default is 53 degree. Must be > 45. Depends on the out-of-plane "
         "shear friction coefficient.",
     )
+
+
+ATTRS_CUNTZE = inspect.signature(CuntzeCriterion).parameters.keys()

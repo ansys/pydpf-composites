@@ -36,4 +36,4 @@ def test_tsai_wu_criterion():
         assert getattr(tw_default, k) == v
 
     # test repr
-    print(tsai_wu)
+    tsai_wu.__repr__()

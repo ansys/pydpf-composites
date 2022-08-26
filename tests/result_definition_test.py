@@ -13,12 +13,8 @@ from ansys.dpf.composites.result_definition import (
 
 defaults: Dict[str, Any] = {
     "expression": "composite_failure",
-    "combined_failure_criterion": None,
     "measures": ["inverse_reserve_factor"],
-    "composite_definitions": [],
     "assembly_mapping_files": [],
-    "rst_files": [],
-    "material_files": [],
     "write_data_for_full_element_scope": True,
     "element_scope": [],
     "ply_scope": [],
@@ -33,7 +29,14 @@ def test_result_definition():
     cfc.insert(MaxStrainCriterion())
     cfc.insert(MaxStressCriterion())
 
-    rd = ResultDefinition("my first result definition")
+    rd = ResultDefinition(
+        name="my first result definition",
+        combined_failure_criterion=cfc,
+        composite_definitions=[r"\\workdir\ACPCompositeDefinitions.h5"],
+        rst_files=[r"\\workdir\file.rst"],
+        material_files=[r"\\workdir\engd.xml"],
+    )
+
     assert rd.name == "my first result definition"
 
     for k, v in defaults.items():
@@ -50,16 +53,11 @@ def test_result_definition():
         rd.measures = [v]
         assert rd.measures == [v]
 
-    rd.composite_definitions = [r"\\workdir\ACPCompositeDefinitions.h5"]
-    assert rd.composite_definitions == [r"\\workdir\ACPCompositeDefinitions.h5"]
-
     rd.assembly_mapping_files = [r"\\workdir\solid_model.mapping"]
+
+    assert rd.composite_definitions == [r"\\workdir\ACPCompositeDefinitions.h5"]
     assert rd.assembly_mapping_files == [r"\\workdir\solid_model.mapping"]
-
-    rd.rst_files = [r"\\workdir\file.rst"]
     assert rd.rst_files == [r"\\workdir\file.rst"]
-
-    rd.material_files = [r"\\workdir\engd.xml"]
     assert rd.material_files == [r"\\workdir\engd.xml"]
 
     rd.write_data_for_full_element_scope = False
@@ -148,3 +146,4 @@ def test_result_definition():
 
     # test reprs
     rd._short_descr()
+    rd.__repr__()

@@ -59,11 +59,13 @@ material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=serve
 # %%
 # Define the result definition which is used to configure the composite_failure_operator
 # Process all elements
-rd = ResultDefinition("combined failure criteria")
-rd.rst_files = [rst_server_path]
-rd.material_files = [material_server_path]
-rd.composite_definitions = [h5_server_path]
-rd.combined_failure_criterion = get_combined_failure_criterion()
+rd = ResultDefinition(
+    name="combined failure criteria",
+    rst_files=[rst_server_path],
+    material_files=[material_server_path],
+    composite_definitions=[h5_server_path],
+    combined_failure_criterion=get_combined_failure_criterion(),
+)
 
 fc_op = dpf.Operator("composite::composite_failure_operator")
 fc_op.inputs.result_definition(rd.to_json())

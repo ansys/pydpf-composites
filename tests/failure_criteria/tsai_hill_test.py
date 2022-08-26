@@ -36,4 +36,4 @@ def test_tsai_hill_criterion():
         assert getattr(th_default, k) == v
 
     # test repr
-    print(tsai_hill)
+    tsai_hill.__repr__()

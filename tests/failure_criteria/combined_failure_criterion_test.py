@@ -78,4 +78,4 @@ def test_combined_failure_criterion():
     assert attrs_d == ref_d
 
     # test repr
-    cfc
+    cfc.__repr__()

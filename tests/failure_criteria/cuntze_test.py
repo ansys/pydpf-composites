@@ -1,3 +1,5 @@
+import pytest
+
 from ansys.dpf.composites.failure_criteria.cuntze import ATTRS_CUNTZE, CuntzeCriterion
 
 defaults = dict(
@@ -49,7 +51,7 @@ def test_cuntze_criterion():
     for key in ATTRS_CUNTZE:
         value = getattr(cuntze, key)
         if key in ["b32", "fracture_plane_angle"]:
-            assert abs(value - new_values[key]) < 1.0e-4, f"{key}: {value} != {new_values[key]}"
+            assert value == pytest.approx(new_values[key]), f"{key}: {value} != {new_values[key]}"
         else:
             assert value == new_values[key], f"{key}: {value} != {new_values[key]}"
 
@@ -59,4 +61,4 @@ def test_cuntze_criterion():
         assert getattr(cuntze_default, k) == v
 
     # test repr
-    print(cuntze)
+    cuntze.__repr__()

@@ -1,21 +1,7 @@
 """Defines the MaxStress failure criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_MAX_STRESS = [
-    "s1",
-    "s2",
-    "s3",
-    "s12",
-    "s13",
-    "s23",
-    "wf_s1",
-    "wf_s2",
-    "wf_s3",
-    "wf_s12",
-    "wf_s13",
-    "wf_s23",
-]
 
 
 class MaxStressCriterion(FailureCriterionBase):
@@ -23,6 +9,7 @@ class MaxStressCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         s1: bool = True,
         s2: bool = True,
         s3: bool = False,
@@ -152,3 +139,6 @@ class MaxStressCriterion(FailureCriterionBase):
     wf_s12 = property(_get_wf_s12, _set_wf_s12, doc="Weighting factor of the failure mode s12.")
     wf_s13 = property(_get_wf_s13, _set_wf_s13, doc="Weighting factor of the failure mode s13.")
     wf_s23 = property(_get_wf_s23, _set_wf_s23, doc="Weighting factor of the failure mode s23.")
+
+
+ATTRS_MAX_STRESS = inspect.signature(MaxStressCriterion).parameters.keys()

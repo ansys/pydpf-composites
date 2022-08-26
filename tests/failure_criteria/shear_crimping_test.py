@@ -38,4 +38,4 @@ def test_shear_crimping_criterion():
         assert getattr(sc_default, k) == v
 
     # test repr
-    print(sc)
+    sc.__repr__()

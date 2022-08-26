@@ -1,7 +1,7 @@
 """Object to represent the Result Definition used by Failure Operator in DPF Composites."""
 
 import json
-from typing import Any, Dict, Sequence, Type, Union
+from typing import Any, Dict, Sequence
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
@@ -28,18 +28,18 @@ class ResultDefinition:
     def __init__(
         self,
         name: str,
-        expression: str = "composite_failure",
-        combined_failure_criterion: Union[Type[CombinedFailureCriterion], None] = None,
-        measures: Sequence[str] = ["inverse_reserve_factor"],
-        composite_definitions: Sequence[_PATH] = [],
+        combined_failure_criterion: CombinedFailureCriterion,
+        composite_definitions: Sequence[_PATH],
+        rst_files: Sequence[_PATH],
+        material_files: Sequence[_PATH],
         assembly_mapping_files: Sequence[_PATH] = [],
-        rst_files: Sequence[_PATH] = [],
-        material_files: Sequence[_PATH] = [],
+        measures: Sequence[str] = ["inverse_reserve_factor"],
         write_data_for_full_element_scope: bool = True,
         element_scope: Sequence[int] = [],
         ply_scope: Sequence[str] = [],
         stress_strain_eval_mode: str = "rst_file",
         time: float = 1.0,
+        expression: str = "composite_failure",
         max_chunk_size: int = 50000,
     ):
         """Create a ResultDefinition object."""
@@ -198,7 +198,7 @@ class ResultDefinition:
         doc="If both an element and ply scope are defined, this option defines "
         "whether the results are computed on the intersection of the scopes "
         "or for all elements of the element scope. Elements which do not "
-        "intersect with the ply scope will get the default value.",
+        "intersect with the ply scope will get the default value. Default is True.",
     )
     element_scope = property(
         _get_element_scope,
@@ -216,7 +216,7 @@ class ResultDefinition:
         _get_max_chunk_size,
         _set_max_chunk_size,
         doc="The computation is chunked. This parameter "
-        "defines the number of elements per chunk.",
+        "defines the number of elements per chunk. Use -1 to disable chunking.",
     )
 
     def to_dict(self) -> Dict[str, Any]:

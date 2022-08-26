@@ -93,4 +93,4 @@ def test_puck_criterion():
         assert getattr(puck_default, k) == v
 
     # test repr
-    print(puck)
+    puck.__repr__()

@@ -1,14 +1,13 @@
 """Core Failure Criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_CORE_FAILURE = ["include_ins", "wf"]
 
 
 class CoreFailureCriterion(FailureCriterionBase):
     """Defines the core shear failure criterion for core materials like foam and honeycomb."""
 
-    def __init__(self, include_ins: bool = False, wf: float = 1.0):
+    def __init__(self, *, include_ins: bool = False, wf: float = 1.0):
         """Construct a core failure criterion.
 
         :param include_ins: whether to include interlaminar normals stresses or not.
@@ -38,3 +37,6 @@ class CoreFailureCriterion(FailureCriterionBase):
         "considers interlaminar normal stresses.",
     )
     wf = property(_get_wf, _set_wf, doc="Weighting factor of the failure mode (cs).")
+
+
+ATTRS_CORE_FAILURE = inspect.signature(CoreFailureCriterion).parameters.keys()

@@ -1,8 +1,7 @@
 """LaRC Failure Criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_LARC = ["lft", "lfc", "lmt", "lmc", "dim", "wf_lft", "wf_lfc", "wf_lmt", "wf_lmc"]
 
 
 class LaRCCriterion(FailureCriterionBase):
@@ -10,6 +9,7 @@ class LaRCCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         lft: bool = True,
         lfc: bool = True,
         lmt: bool = True,
@@ -121,3 +121,6 @@ class LaRCCriterion(FailureCriterionBase):
     wf_lmt = property(
         _get_wf_lmt, _set_wf_lmt, doc="Weighting factor of matrix failure due to tension (lmt)."
     )
+
+
+ATTRS_LARC = inspect.signature(LaRCCriterion).parameters.keys()

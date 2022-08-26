@@ -1,7 +1,7 @@
 """Combined Failure Criterion."""
 
 import json
-from typing import Any, Dict, Sequence, Type
+from typing import Any, Dict, Sequence
 
 from .failure_criterion_base import FailureCriterionBase
 
@@ -21,14 +21,16 @@ class CombinedFailureCriterion:
     JSON_DICT_KEY = "criteria"
 
     def __init__(
-        self, name: str = "CombinedFailureCriterion", failure_criteria: Sequence[Any] = []
+        self,
+        name: str = "CombinedFailureCriterion",
+        failure_criteria: Sequence[FailureCriterionBase] = [],
     ):
         """Create a new combined failure criterion.
 
         :param name: user-defined name of the criterion
         :param failure_criteria: list of failure criteria
         """
-        self._failure_criteria: Dict[str, Type[FailureCriterionBase]] = {}
+        self._failure_criteria: Dict[str, FailureCriterionBase] = {}
         for fc in failure_criteria:
             self.insert(fc)
 
@@ -40,7 +42,7 @@ class CombinedFailureCriterion:
     def _set_name(self, value: str) -> None:
         self._name = value
 
-    def _get_failure_criteria(self) -> Dict[str, Type[FailureCriterionBase]]:
+    def _get_failure_criteria(self) -> Dict[str, FailureCriterionBase]:
         return self._failure_criteria
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
@@ -48,7 +50,7 @@ class CombinedFailureCriterion:
         _get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it."
     )
 
-    def insert(self, fc: Type[FailureCriterionBase]) -> None:
+    def insert(self, fc: FailureCriterionBase) -> None:
         """Add a failure criterion.
 
         :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a
@@ -63,7 +65,7 @@ class CombinedFailureCriterion:
         if fc is not None:
             self._failure_criteria[fc.name] = fc
 
-    def remove(self, key: str) -> Type[FailureCriterionBase]:
+    def remove(self, key: str) -> FailureCriterionBase:
         """Remove a failure criterion.
 
         :param key: Name of the failure criterion

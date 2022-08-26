@@ -1,31 +1,7 @@
 """Defines the MaxStrain failure criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_MAX_STRAIN = [
-    "e1",
-    "e2",
-    "e3",
-    "e12",
-    "e13",
-    "e23",
-    "wf_e1",
-    "wf_e2",
-    "wf_e3",
-    "wf_e12",
-    "wf_e13",
-    "wf_e23",
-    "force_global_strain_limits",
-    "eXt",
-    "eXc",
-    "eYt",
-    "eYc",
-    "eZt",
-    "eZc",
-    "eSxy",
-    "eSyz",
-    "eSxz",
-]
 
 
 class MaxStrainCriterion(FailureCriterionBase):
@@ -33,6 +9,7 @@ class MaxStrainCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         e1: bool = True,
         e2: bool = True,
         e3: bool = False,
@@ -271,3 +248,6 @@ class MaxStrainCriterion(FailureCriterionBase):
     eSxy = property(_get_eSxy, _set_eSxy, doc="Global strain limit in material direction 12.")
     eSxz = property(_get_eSxz, _set_eSxz, doc="Global strain limit in material direction 13.")
     eSyz = property(_get_eSyz, _set_eSyz, doc="Global strain limit in material direction 23.")
+
+
+ATTRS_MAX_STRAIN = inspect.signature(MaxStrainCriterion).parameters.keys()

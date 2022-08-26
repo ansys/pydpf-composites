@@ -1,8 +1,7 @@
 """Von Mises Criterion."""
+import inspect
 
 from .failure_criterion_base import FailureCriterionBase
-
-ATTRS_VON_MISES = ["vme", "vms", "wf_vme", "wf_vms", "iss", "ins"]
 
 
 class VonMisesCriterion(FailureCriterionBase):
@@ -10,6 +9,7 @@ class VonMisesCriterion(FailureCriterionBase):
 
     def __init__(
         self,
+        *,
         vme: bool = True,
         vms: bool = True,
         wf_vme: float = 1.0,
@@ -75,3 +75,6 @@ class VonMisesCriterion(FailureCriterionBase):
         _set_ins,
         doc="Whether to consider the interlaminar normal stress in the stress criterion.",
     )
+
+
+ATTRS_VON_MISES = inspect.signature(VonMisesCriterion).parameters.keys()

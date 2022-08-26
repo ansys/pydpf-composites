@@ -38,4 +38,4 @@ def test_larc_criterion():
         assert getattr(larc_default, k) == v
 
     # test repr
-    print(larc)
+    larc.__repr__()

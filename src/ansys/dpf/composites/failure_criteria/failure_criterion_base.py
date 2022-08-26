@@ -7,7 +7,7 @@ from typing import Any, Dict, Sequence
 class FailureCriterionBase:
     """Defines the base class for failure criteria."""
 
-    def __init__(self, name: str, active: bool):
+    def __init__(self, *, name: str, active: bool):
         """Do not use directly! Construct a base failure criterion."""
         self.active = active
         self._name = name

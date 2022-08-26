@@ -40,4 +40,4 @@ def test_face_sheet_wrinkling_criterion():
         assert getattr(wrinkling_default, k) == v
 
     # test repr
-    print(wrinkling)
+    wrinkling.__repr__()

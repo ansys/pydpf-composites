@@ -38,4 +38,4 @@ def test_hashin_criterion():
         assert getattr(hashin_default, k) == v
 
     # test repr
-    print(hashin)
+    hashin.__repr__()
