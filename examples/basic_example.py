@@ -6,8 +6,6 @@ Basic example of setting up a composite failure workflow
 
 """
 
-
-import json
 import os
 import pathlib
 
@@ -15,7 +13,46 @@ import pathlib
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.failure_config import get_failure_criteria_definition
+from ansys.dpf.composites.failure_criteria import (
+    CombinedFailureCriterion,
+    CoreFailureCriterion,
+    CuntzeCriterion,
+    HashinCriterion,
+    HoffmanCriterion,
+    MaxStrainCriterion,
+    MaxStressCriterion,
+    TsaiHillCriterion,
+    TsaiWuCriterion,
+    VonMisesCriterion,
+)
+
+
+def get_combined_failure_criterion() -> CombinedFailureCriterion:
+    max_strain = MaxStrainCriterion()
+    max_stress = MaxStressCriterion()
+    tsai_hill = TsaiHillCriterion()
+    tsai_wu = TsaiWuCriterion()
+    hoffman = HoffmanCriterion()
+    hashin = HashinCriterion()
+    cuntze = CuntzeCriterion()
+    core_failure = CoreFailureCriterion()
+    von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
+
+    return CombinedFailureCriterion(
+        name="My Failure Criteria",
+        failure_criteria=[
+            max_strain,
+            max_stress,
+            tsai_hill,
+            tsai_wu,
+            hoffman,
+            hashin,
+            cuntze,
+            core_failure,
+            von_mises_strain_only,
+        ],
+    )
+
 
 #%%
 # Load dpf plugin
@@ -48,8 +85,7 @@ composite_definitions_source.add_file_path(h5_server_path, "CompositeDefinitions
 
 #%%
 # Setup Mesh Provider
-mesh_provider = dpf.Operator("MeshProvider")
-mesh_provider.inputs.data_sources(rst_data_source)
+mesh_provider = model.metadata.mesh_provider
 
 #%%
 # Setup Material Provider
@@ -107,10 +143,10 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # Setup the failure evaluator. Combines the results and evaluates all the failure criteria.
 # The output contains the maximum failure criteria for each integration point.
 #
-failure_criteria_definition = get_failure_criteria_definition()
+failure_criteria_definition = get_combined_failure_criterion()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-failure_evaluator.inputs.configuration(json.dumps(failure_criteria_definition))
+failure_evaluator.inputs.configuration(failure_criteria_definition.to_json())
 failure_evaluator.inputs.materials_container(material_provider.outputs)
 failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
