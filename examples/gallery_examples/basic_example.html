@@ -48,6 +48,7 @@
     <script src="../../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How to use the composite failure operator" href="failure_operator_example.html" />
     <link rel="prev" title="Examples" href="../index.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
@@ -179,6 +180,16 @@
    Basic example of setting up a composite failure workflow
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="failure_operator_example.html">
+   How to use the composite failure operator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sampling_point_example.html">
+   How to use the Sampling Point operator
+  </a>
+ </li>
 </ul>
 
     
@@ -226,15 +237,52 @@ to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="basic-example-of-setting-up-a-composite-failure-workflow">
 <span id="basic-example"></span><span id="sphx-glr-examples-gallery-examples-basic-example-py"></span><h1>Basic example of setting up a composite failure workflow<a class="headerlink" href="#basic-example-of-setting-up-a-composite-failure-workflow" title="Permalink to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 </pre></div>
 </div>
 <p>Load ansys libraries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_config</span> <span class="kn">import</span> <span class="n">get_failure_criteria_definition</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CombinedFailureCriterion</span><span class="p">,</span>
+    <span class="n">CoreFailureCriterion</span><span class="p">,</span>
+    <span class="n">CuntzeCriterion</span><span class="p">,</span>
+    <span class="n">HashinCriterion</span><span class="p">,</span>
+    <span class="n">HoffmanCriterion</span><span class="p">,</span>
+    <span class="n">MaxStrainCriterion</span><span class="p">,</span>
+    <span class="n">MaxStressCriterion</span><span class="p">,</span>
+    <span class="n">TsaiHillCriterion</span><span class="p">,</span>
+    <span class="n">TsaiWuCriterion</span><span class="p">,</span>
+    <span class="n">VonMisesCriterion</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_combined_failure_criterion</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">CombinedFailureCriterion</span><span class="p">:</span>
+    <span class="n">max_strain</span> <span class="o">=</span> <span class="n">MaxStrainCriterion</span><span class="p">()</span>
+    <span class="n">max_stress</span> <span class="o">=</span> <span class="n">MaxStressCriterion</span><span class="p">()</span>
+    <span class="n">tsai_hill</span> <span class="o">=</span> <span class="n">TsaiHillCriterion</span><span class="p">()</span>
+    <span class="n">tsai_wu</span> <span class="o">=</span> <span class="n">TsaiWuCriterion</span><span class="p">()</span>
+    <span class="n">hoffman</span> <span class="o">=</span> <span class="n">HoffmanCriterion</span><span class="p">()</span>
+    <span class="n">hashin</span> <span class="o">=</span> <span class="n">HashinCriterion</span><span class="p">()</span>
+    <span class="n">cuntze</span> <span class="o">=</span> <span class="n">CuntzeCriterion</span><span class="p">()</span>
+    <span class="n">core_failure</span> <span class="o">=</span> <span class="n">CoreFailureCriterion</span><span class="p">()</span>
+    <span class="n">von_mises_strain_only</span> <span class="o">=</span> <span class="n">VonMisesCriterion</span><span class="p">(</span><span class="n">vme</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vms</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;My Failure Criteria&quot;</span><span class="p">,</span>
+        <span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">max_strain</span><span class="p">,</span>
+            <span class="n">max_stress</span><span class="p">,</span>
+            <span class="n">tsai_hill</span><span class="p">,</span>
+            <span class="n">tsai_wu</span><span class="p">,</span>
+            <span class="n">hoffman</span><span class="p">,</span>
+            <span class="n">hashin</span><span class="p">,</span>
+            <span class="n">cuntze</span><span class="p">,</span>
+            <span class="n">core_failure</span><span class="p">,</span>
+            <span class="n">von_mises_strain_only</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 <p>Load dpf plugin</p>
@@ -268,8 +316,7 @@ to download the full example code</p>
 </pre></div>
 </div>
 <p>Setup Mesh Provider</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;MeshProvider&quot;</span><span class="p">)</span>
-<span class="n">mesh_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_provider</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">mesh_provider</span>
 </pre></div>
 </div>
 <p>Setup Material Provider
@@ -326,10 +373,10 @@ in the element coordinate system ( material coordinate system)</p>
 </div>
 <p>Setup the failure evaluator. Combines the results and evaluates all the failure criteria.
 The output contains the maximum failure criteria for each integration point.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_criteria_definition</span></a> <span class="o">=</span> <span class="n">get_failure_criteria_definition</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">failure_criteria_definition</span> <span class="o">=</span> <span class="n">get_combined_failure_criterion</span><span class="p">()</span>
 
 <span class="n">failure_evaluator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::multiple_failure_criteria_operator&quot;</span><span class="p">)</span>
-<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><a href="https://docs.python.org/dev/library/json.html#json.dumps" title="json.dumps" class="sphx-glr-backref-module-json sphx-glr-backref-type-py-function"><span class="n">json</span><span class="o">.</span><span class="n">dumps</span></a><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_criteria_definition</span></a><span class="p">))</span>
+<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">failure_criteria_definition</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
 <span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">materials_container</span><span class="p">(</span><span class="n">material_provider</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
 <span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">strains</span><span class="p">(</span><span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
 <span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">stresses</span><span class="p">(</span><span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
@@ -353,7 +400,7 @@ to compute the min and max failure criteria for each element</p>
 <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">meshed_region</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">value_index</span></a><span class="p">])</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_basic_example_001.png" srcset="../../_images/sphx_glr_basic_example_001.png" alt="basic example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.170 seconds)</p>
+<img src="../../_images/sphx_glr_basic_example_001.png" srcset="../../_images/sphx_glr_basic_example_001.png" alt="basic example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.659 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-basic-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d793f7edefe895cce4c5ac36c52043cb/basic_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">basic_example.py</span></code></a></p>
