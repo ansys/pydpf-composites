@@ -59,6 +59,21 @@ def get_selected_indices_by_material_id(element_info: ElementInfo, material_id: 
     return get_selected_indices(element_info, layers=layer_indices)
 
 
+@contextmanager
+def get_analysis_ply(mesh, name):
+    ANALYSIS_PLY_PREFIX = "AnalysisPly:"
+
+    with mesh.property_field(
+        ANALYSIS_PLY_PREFIX + name
+    ).as_local_field() as analysis_ply_property_field:
+        yield AnalysisPly(analysis_ply_property_field)
+
+
+class AnalysisPly:
+    def __init__(self, property_field):
+        self.property_field = property_field
+
+
 class LayupInfo:
     def _get_n_spots(self, apdl_element_type, keyopt_8):
         if apdl_element_type == 181:
@@ -285,6 +300,45 @@ def test_basic_workflow(dpf_server):
         )
 
 
+def test_basic_filter_by_global_ply(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+
+    input_field, mesh, rst_data_source = setup_operators(
+        dpf_server, rst_path=rst_path, material_path=material_path, h5_path=h5_path
+    )
+
+    result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+
+    with get_field_info(
+        input_field=input_field, mesh=mesh, rst_data_source=rst_data_source
+    ) as field_info, get_analysis_ply(mesh=mesh, name="P1L1__ud_patch ns1") as analysis_ply:
+        with result_field.as_local_field() as local_result_field:
+
+            for element_id in analysis_ply.property_field.scoping.ids:
+                strain_data = field_info.field.get_entity_data_by_id(element_id)
+
+                layer_index = analysis_ply.property_field.get_entity_data_by_id(element_id)
+                element_info = field_info.layup_info.get_element_info(element_id, strain_data)
+
+                selected_indices = get_selected_indices(element_info, layers=[layer_index])
+                component = 0
+                value = strain_data[selected_indices][:, component]
+
+                local_result_field.append(value, element_id)
+
+    assert list(result_field.scoping.ids) == [1, 2]
+    assert result_field.get_entity_data_by_id(1) == pytest.approx(
+        input_field.get_entity_data_by_id(1)[12:24, 0]
+    )
+    assert result_field.get_entity_data_by_id(2) == pytest.approx(
+        input_field.get_entity_data_by_id(2)[12:24, 0]
+    )
+
+
 def test_basic_performance(dpf_server):
     timer = Timer()
 
@@ -310,10 +364,10 @@ def test_basic_performance(dpf_server):
     ) as field_info:
         timer.add("start")
 
-        result_field = get_result_field(field_info, layers=[5], corner_nodes=[3], spots=[2])
+        result_field = get_result_field(field_info, layers=[0], corner_nodes=[0], spots=[0])
 
         timer.add("filter_single_value")
-        result_field = get_result_field(field_info, layers=[0], spots=[2])
+        result_field = get_result_field(field_info, layers=[0], spots=[0])
 
         timer.add("filter list of values")
 
