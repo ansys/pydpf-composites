@@ -231,7 +231,7 @@ def setup_operators(server, rst_path, h5_path, material_path):
 
     fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
 
-    return (fields_container[0], mesh, rst_data_source)
+    return (fields_container[0], mesh, rst_data_source, material_provider)
 
 
 def get_result_field(
@@ -272,7 +272,7 @@ def test_basic_workflow(dpf_server):
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
-    input_field, mesh, rst_data_source = setup_operators(
+    input_field, mesh, rst_data_source, _ = setup_operators(
         dpf_server, rst_path=rst_path, material_path=material_path, h5_path=h5_path
     )
 
@@ -307,7 +307,7 @@ def test_basic_filter_by_global_ply(dpf_server):
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
-    input_field, mesh, rst_data_source = setup_operators(
+    input_field, mesh, rst_data_source, _ = setup_operators(
         dpf_server, rst_path=rst_path, material_path=material_path, h5_path=h5_path
     )
 
@@ -339,6 +339,63 @@ def test_basic_filter_by_global_ply(dpf_server):
     )
 
 
+def test_material_properties(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+
+    input_field, mesh, rst_data_source, material_provider = setup_operators(
+        dpf_server, rst_path=rst_path, material_path=material_path, h5_path=h5_path
+    )
+
+    properties = []
+    for id in [1, 2, 3, 4]:
+        property_name = "strain_tensile_x_direction"
+        # property_name = "density"
+        material_property_field = dpf.Operator("eng_data::ans_mat_property_field_provider")
+        material_property_field.inputs.materials_container(material_provider)
+        material_property_field.inputs.dpf_mat_id(id)
+        material_property_field.inputs.property_name(property_name)
+        result_info_provider = dpf.Operator("ResultInfoProvider")
+        result_info_provider.inputs.data_sources(rst_data_source)
+        material_property_field.inputs.unit_system_or_result_info(result_info_provider)
+        properties.append(
+            material_property_field.get_output(output_type=dpf.types.fields_container)[0].data[0]
+        )
+
+    result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+
+    with get_field_info(
+        input_field=input_field, mesh=mesh, rst_data_source=rst_data_source
+    ) as field_info, get_analysis_ply(mesh=mesh, name="P1L1__ud_patch ns1") as analysis_ply:
+        with result_field.as_local_field() as local_result_field:
+
+            for element_id in field_info.field.scoping.ids:
+                strain_data = field_info.field.get_entity_data_by_id(element_id)
+                component = 0
+                element_info = field_info.layup_info.get_element_info(element_id, strain_data)
+                layer_data = []
+                for layer_index, material_id in enumerate(element_info.material_ids):
+                    ext = properties[material_id - 1]
+                    selected_indices = get_selected_indices(element_info, layers=[layer_index])
+
+                    value = strain_data[selected_indices][:, component]
+                    if ext > 0:
+                        layer_data.append(np.max(value / ext))
+
+                local_result_field.append([np.max(layer_data)], element_id)
+
+    assert list(result_field.scoping.ids) == [1, 2]
+    assert result_field.get_entity_data_by_id(1) == pytest.approx(
+        input_field.get_entity_data_by_id(1)[12:24, 0]
+    )
+    assert result_field.get_entity_data_by_id(2) == pytest.approx(
+        input_field.get_entity_data_by_id(2)[12:24, 0]
+    )
+
+
 def test_basic_performance(dpf_server):
     timer = Timer()
 
@@ -355,7 +412,7 @@ def test_basic_performance(dpf_server):
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
     material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
 
-    input_field, mesh, rst_data_source = setup_operators(
+    input_field, mesh, rst_data_source, _ = setup_operators(
         dpf_server, rst_path=rst_path, material_path=material_path, h5_path=h5_path
     )
 
