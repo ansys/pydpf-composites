@@ -1,0 +1,158 @@
+import os
+import pathlib
+
+import ansys.dpf.core as dpf
+import numpy as np
+
+from ansys.dpf.composites.layup_info import get_layup_info
+
+from .helper import CompositeFiles, Timer, setup_operators
+
+
+def get_data_files():
+    # Using lightweight data for unit tests. Replace by get_ger_data_data_files
+    # for actual performance tests
+    # return get_ger_data_files()
+    return get_dummy_data_files()
+
+
+def get_dummy_data_files():
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    return CompositeFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
+
+
+def get_ger_data_files():
+    ger_path = (
+        pathlib.Path("D:\\")
+        / "ANSYSDev"
+        / "additional_model_data_git"
+        / "additional_model_data"
+        / "ger89"
+        / "ger89_files"
+        / "dp0"
+    )
+    rst_path = ger_path / "SYS-1" / "MECH" / "file.rst"
+    h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
+    material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
+    return CompositeFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
+
+
+def get_test_data(dpf_server):
+    files = get_data_files()
+    rst_path = dpf.upload_file_in_tmp_folder(files.rst_path, server=dpf_server)
+
+    rst_data_source = dpf.DataSources(rst_path)
+
+    strain_operator = dpf.Operator("EPEL")
+    strain_operator.inputs.data_sources(rst_data_source)
+    strain_operator.inputs.bool_rotate_to_global(False)
+
+    fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
+    field = fields_container[0]
+    return field
+
+
+def test_performance_data_pointer(dpf_server):
+    timer = Timer()
+
+    field = get_test_data(dpf_server)
+
+    timer.add("read data")
+
+    local_field = field
+    timer.add("local_field")
+
+    indices = np.ones(np.max(local_field.scoping.ids) + 1, dtype=int) * -1
+    timer.add("Indices setup")
+
+    indices[local_field.scoping.ids] = np.arange(len(local_field.scoping.ids))
+    timer.add("Indices setup 2")
+
+    data = local_field.data
+    timer.add("get numpy data")
+
+    timer.add("allocate buffer")
+    dp = local_field._data_pointer // 6
+    timer.add("data pointer division")
+    data_pointer_with_end = np.append(dp, len(data))
+    timer.add("data pointer with end")
+    max_per_element = np.zeros(len(local_field.scoping.ids))
+    for element_idx, element_id in enumerate(local_field.scoping.ids):
+        idx = indices[element_id]
+        max_per_element[element_idx] = np.max(
+            data[data_pointer_with_end[idx] : data_pointer_with_end[idx + 1], 0]
+        )
+
+    timer.add("end")
+
+    timer.add("assert")
+    timer.summary()
+
+
+def test_performance_by_index(dpf_server):
+    timer = Timer()
+
+    field = get_test_data(dpf_server)
+    timer.add("read data")
+
+    with field.as_local_field() as local_field:
+        timer.add("local_field")
+        max_per_element = np.zeros(len(local_field.scoping.ids))
+        timer.add("allocate out")
+
+        for element_idx, element_id in enumerate(local_field.scoping.ids):
+            max_per_element[element_idx] = np.max(local_field.get_entity_data(element_idx)[:, 0])
+
+        timer.add("after loop")
+    timer.add("after local field")
+
+    timer.summary()
+
+
+def test_performance_by_id(dpf_server):
+    timer = Timer()
+
+    field = get_test_data(dpf_server)
+    timer.add("read data")
+
+    with field.as_local_field() as local_field:
+        timer.add("local_field")
+        max_per_element = np.zeros(len(local_field.scoping.ids))
+        timer.add("allocate out")
+
+        for element_idx, element_id in enumerate(local_field.scoping.ids):
+            max_per_element[element_idx] = np.max(
+                local_field.get_entity_data_by_id(element_id)[:, 0]
+            )
+
+        timer.add("after loop")
+    timer.add("after local field")
+
+    timer.summary()
+
+
+def test_performance_element_info(dpf_server):
+    timer = Timer()
+
+    files = get_data_files()
+    setup_result = setup_operators(dpf_server, files)
+    timer.add("read data")
+
+    with get_layup_info(
+        setup_result.mesh, rst_data_source=setup_result.rst_data_source
+    ) as layup_info:
+        timer.add("layup info")
+        scope = setup_result.field.scoping.ids
+        timer.add("scope")
+
+        for element_id in scope:
+            layup_info.get_element_info(element_id)
+
+        timer.add("after loop")
+    timer.add("after local field")
+
+    timer.summary()
