@@ -66,13 +66,13 @@ def _get_n_spots(apdl_element_type: int, keyopt_8: int) -> int:
     raise Exception(f"Unsupported element type")
 
 
-def _get_corner_nodes_by_element_type_array() -> NDArray[Any]:
+def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     # Precompute n_corner_nodes for all element types
     # self.corner_nodes_by_element_type by can be indexed by element type to get the number of
     # corner nodes
     all_element_types = [int(e.value) for e in dpf.element_types if e.value >= 0]
-    corner_nodes_by_element_type: NDArray[Any] = (
-        np.ones(np.amax(all_element_types) + 1, dtype=int) * -1
+    corner_nodes_by_element_type: NDArray[np.int64] = (
+        np.ones(np.amax(all_element_types) + 1, dtype=np.int64) * -1
     )
     corner_nodes_by_element_type[all_element_types] = [
         dpf.element_types.descriptor(element_type).n_corner_nodes
