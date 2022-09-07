@@ -1,3 +1,4 @@
+"""Functions to get elementary indices based on filter input."""
 from typing import Collection, Optional
 
 import numpy
@@ -8,12 +9,21 @@ from ansys.dpf.composites.layup_info import ElementInfo
 
 
 # Todo: Implement using numpy
+# Todo implement bound checks
 def get_selected_indices(
     element_info: ElementInfo,
     layers: Optional[Collection[int]] = None,
     corner_nodes: Optional[Collection[int]] = None,
     spots: Optional[Collection[int]] = None,
 ) -> NDArray[np.int64]:
+    """Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.
+
+    :param element_info: ElementInfo
+    :param layers: List of selected layers
+    :param corner_nodes: List of selected nodes
+    :param spots:  List of selected spots
+    :return: numpy array of selected indices
+    """
     if layers is None:
         layer_indices: Collection[int] = range(element_info.n_layers)
     else:
@@ -28,10 +38,10 @@ def get_selected_indices(
     else:
         spot_indices = spots
 
-    # User cartesian after tests are in place
     all_indices = np.zeros(
         len(spot_indices) * len(corner_node_indices) * len(layer_indices), dtype=np.int64
     )
+    # Todo: Use numpy. Probably use ravel_multi_index
     current_index = 0
     for layer_index in layer_indices:
         layer_start_index = layer_index * element_info.n_corner_nodes * element_info.n_spots
@@ -47,6 +57,13 @@ def get_selected_indices(
 def get_selected_indices_by_material_id(
     element_info: ElementInfo, material_id: int
 ) -> NDArray[np.int64]:
+    """Get selected indices by material id.
+
+    Selects all indices that are in a layer with the given material
+    :param element_info: ElementInfo
+    :param material_id
+    :return: elementary indices
+    """
     layer_indices = [
         index for index, mat_id in enumerate(element_info.material_ids) if mat_id == material_id
     ]

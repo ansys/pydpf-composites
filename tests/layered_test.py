@@ -92,14 +92,14 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
         )
         assert result_field.get_entity_data_by_id(1) == pytest.approx(3.05458950e-03)
 
-        # Test layer output for layer and spot selection
+        # Test layer output for layer and spot selection (nodes of a given spot+layer)
         result_field = get_result_field(field_info, layers=[0], spots=[2], scope=[1])
         assert result_field.get_entity_data_by_id(1) == pytest.approx(
             setup_result.field.get_entity_data_by_id(1)[8:12, 0]
         )
 
         # Test filter by material
-        # Material 3 is present in layer 1,2 and 4
+        # Material 2 is present in layer 1,2 and 4
         result_field_by_mat = get_result_field(field_info, material_id=2)
         result_field_layer = get_result_field(field_info, layers=[1, 2, 4])
 
@@ -151,13 +151,14 @@ def test_filter_by_global_ply(dpf_server):
 def test_material_properties(dpf_server):
     """
     Test evaluation of material properties to compute a user defined failure criterion
-    Properties are precomputed. Needs to be cleaned up
+    Properties are precomputed. Needs to be improves. The test documents the current status
     """
     files = get_data_files()
 
     setup_result = setup_operators(dpf_server, files)
 
     properties = []
+    # Number of materials is hardcoded. Should be determined from the material support
     for id in [1, 2, 3, 4]:
         property_name = "strain_tensile_x_direction"
         material_property_field = dpf.Operator("eng_data::ans_mat_property_field_provider")
@@ -179,16 +180,16 @@ def test_material_properties(dpf_server):
         rst_data_source=setup_result.rst_data_source,
     ) as field_info:
         with result_field.as_local_field() as local_result_field:
+            component = 0
 
             for element_id in field_info.field.scoping.ids:
                 strain_data = field_info.field.get_entity_data_by_id(element_id)
-                component = 0
                 element_info = field_info.layup_info.get_element_info(element_id)
                 layer_data = []
                 for layer_index, material_id in enumerate(element_info.material_ids):
                     ext = properties[material_id - 1]
                     selected_indices = get_selected_indices(element_info, layers=[layer_index])
-
+                    # Max strain criteria in x direction
                     value = strain_data[selected_indices][:, component]
                     if ext > 0:
                         layer_data.append(np.max(value / ext))

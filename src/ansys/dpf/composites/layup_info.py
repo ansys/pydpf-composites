@@ -78,12 +78,13 @@ def _get_n_spots(apdl_element_type: int, keyopt_8: int) -> int:
 
 def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     # Precompute n_corner_nodes for all element types
-    # self.corner_nodes_by_element_type by can be indexed by element type to get the number of
-    # corner nodes
+    # corner_nodes_by_element_type by can be indexed by element type to get the number of
+    # corner nodes. If negative value is returned number of corner nodes is not available.
     all_element_types = [int(e.value) for e in dpf.element_types if e.value >= 0]
     corner_nodes_by_element_type: NDArray[np.int64] = (
         np.ones(np.amax(all_element_types) + 1, dtype=np.int64) * -1
     )
+
     corner_nodes_by_element_type[all_element_types] = [
         dpf.element_types.descriptor(element_type).n_corner_nodes
         if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
@@ -96,7 +97,7 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
 class LayupInfo:
     """Provider for ElementInfo.
 
-     Precomputes id to index maps for all
+    Precomputes id to index maps for all
     property fields to improve performance
     """
 
@@ -109,7 +110,7 @@ class LayupInfo:
         keyopt_8: Any,
         material_ids: Any,
     ):
-        """Create LayupInfo object and precompute indices.
+        """Initialize LayupInfo object and precompute indices.
 
         :param mesh: dpf meshed region
         :param layer_indices: layer_indices property field
