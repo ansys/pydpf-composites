@@ -38,10 +38,10 @@ class ElementInfo:
     material_ids: List[int]
 
 
-def _setup_index_by_id(scoping: Any) -> Any:
+def _setup_index_by_id(scoping: Any) -> NDArray[np.int64]:
     # Setup array that can be indexed by id to get the index.
     # For ids which are not present in the scoping the array has a value of -1
-    indices: Any = np.ones(max(scoping.ids) + 1, dtype=int) * -1
+    indices: NDArray[np.int64] = np.ones(max(scoping.ids) + 1, dtype=np.int64) * -1
     indices[scoping.ids] = np.arange(len(scoping.ids))
     return indices
 
@@ -49,7 +49,8 @@ def _setup_index_by_id(scoping: Any) -> Any:
 class _IndexerNoDataPointer:
     def __init__(self, array: Any):
         self.indices = _setup_index_by_id(array.scoping)
-        self.data = array.data
+        # The next call accesses the numpy data. This sends the data over grpc which takes some time
+        self.data: NDArray[Any] = array.data
 
     def by_id(self, entity_id: int) -> Any:
         return self.data[self.indices[entity_id]]
@@ -58,8 +59,13 @@ class _IndexerNoDataPointer:
 class _IndexerWithDataPointer:
     def __init__(self, array: Any):
         self.indices = _setup_index_by_id(array.scoping)
-        self.data = array.data
-        self._data_pointer = np.append(array._data_pointer, len(self.data))  # type: ignore
+        # The next call accesses the numpy data. This sends the data over grpc which takes some time
+        self.data: NDArray[Any] = array.data
+        # The data pointer only contains the start index of each element. We add the end to make
+        # it easier to use
+        self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
+            array._data_pointer, len(self.data)
+        )
 
     def by_id(self, entity_id: int) -> Any:
         idx = self.indices[entity_id]
