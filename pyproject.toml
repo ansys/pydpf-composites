@@ -40,6 +40,7 @@ mypy-extensions = {version = "^0.4.3", optional = true}
 ansys-dpf-core = {version = "^0.5.2", optional = true}
 pyvista = {version = "^0.36.1", optional = true}
 pre-commit = {version = "*", optional = true}
+numpy = {version = "*", optional = true}
 
 [tool.poetry.extras]
 all = [
@@ -57,13 +58,14 @@ all = [
     "mypy",
     "mypy-extensions",
     "pre-commit",
-    "pypandoc"
+    "pypandoc",
+    "numpy"
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "ansys-dpf-core", "pyvista",
     "pypandoc"]
 test = ["pytest", "pytest-cov","ansys-dpf-core", "pyvista"]
 build = ["build", "twine"]
-pre-commit = ["pre-commit", "mypy", "mypy-extensions"]
+pre-commit = ["pre-commit", "mypy", "mypy-extensions", "numpy"]
 
 
 [tool.black]

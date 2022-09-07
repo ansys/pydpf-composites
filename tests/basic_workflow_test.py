@@ -4,7 +4,7 @@ import pathlib
 import ansys.dpf.core as dpf
 import pytest
 
-from utils import get_basic_combined_failure_criterion
+from .utils import get_basic_combined_failure_criterion
 
 
 def test_basic_workflow(dpf_server):
