@@ -134,7 +134,7 @@ jobs:
         run: | 
           tox -e doc-linux
           touch .tox/doc_out/.nojekyll
-          echo "dev.dpf.composites.docs.pyansys.com" >> .tox/doc_out/CNAME
+          echo "dev.composites.dpf.docs.pyansys.com" >> .tox/doc_out/CNAME
 
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2
