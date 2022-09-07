@@ -100,7 +100,7 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
 
         # Test filter by material
         # Material 3 is present in layer 1,2 and 4
-        result_field_by_mat = get_result_field(field_info, material_id=3)
+        result_field_by_mat = get_result_field(field_info, material_id=2)
         result_field_layer = get_result_field(field_info, layers=[1, 2, 4])
 
         assert result_field_by_mat.get_entity_data_by_id(1) == pytest.approx(
