@@ -63,33 +63,29 @@ def test_performance_data_pointer(dpf_server):
 
     timer.add("read data")
 
-    local_field = field
-    timer.add("local_field")
-
-    indices = np.ones(np.max(local_field.scoping.ids) + 1, dtype=int) * -1
+    indices = np.ones(np.max(field.scoping.ids) + 1, dtype=int) * -1
     timer.add("Indices setup")
 
-    indices[local_field.scoping.ids] = np.arange(len(local_field.scoping.ids))
+    indices[field.scoping.ids] = np.arange(len(field.scoping.ids))
     timer.add("Indices setup 2")
 
-    data = local_field.data
+    data = field.data
     timer.add("get numpy data")
 
-    timer.add("allocate buffer")
-    dp = local_field._data_pointer // 6
+    n_components = 6
+    data_pointer = field._data_pointer // n_components
     timer.add("data pointer division")
-    data_pointer_with_end = np.append(dp, len(data))
+    data_pointer_with_end = np.append(data_pointer, len(data))
     timer.add("data pointer with end")
-    max_per_element = np.zeros(len(local_field.scoping.ids))
-    for element_idx, element_id in enumerate(local_field.scoping.ids):
+    max_per_element = np.zeros(len(field.scoping.ids))
+    for element_idx, element_id in enumerate(field.scoping.ids):
         idx = indices[element_id]
         max_per_element[element_idx] = np.max(
             data[data_pointer_with_end[idx] : data_pointer_with_end[idx + 1], 0]
         )
 
-    timer.add("end")
+    timer.add("loop")
 
-    timer.add("assert")
     timer.summary()
 
 
@@ -102,12 +98,12 @@ def test_performance_by_index(dpf_server):
     with field.as_local_field() as local_field:
         timer.add("local_field")
         max_per_element = np.zeros(len(local_field.scoping.ids))
-        timer.add("allocate out")
+        timer.add("allocate")
 
         for element_idx, element_id in enumerate(local_field.scoping.ids):
             max_per_element[element_idx] = np.max(local_field.get_entity_data(element_idx)[:, 0])
 
-        timer.add("after loop")
+        timer.add("loop")
     timer.add("after local field")
 
     timer.summary()
@@ -122,14 +118,14 @@ def test_performance_by_id(dpf_server):
     with field.as_local_field() as local_field:
         timer.add("local_field")
         max_per_element = np.zeros(len(local_field.scoping.ids))
-        timer.add("allocate out")
+        timer.add("allocate")
 
         for element_idx, element_id in enumerate(local_field.scoping.ids):
             max_per_element[element_idx] = np.max(
                 local_field.get_entity_data_by_id(element_id)[:, 0]
             )
 
-        timer.add("after loop")
+        timer.add("loop")
     timer.add("after local field")
 
     timer.summary()
@@ -152,7 +148,7 @@ def test_performance_element_info(dpf_server):
         for element_id in scope:
             layup_info.get_element_info(element_id)
 
-        timer.add("after loop")
+        timer.add("loop")
     timer.add("after local field")
 
     timer.summary()
