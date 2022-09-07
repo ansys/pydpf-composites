@@ -197,4 +197,4 @@ def test_material_properties(dpf_server):
 
     assert list(result_field.scoping.ids) == [1, 2, 3, 4]
 
-    # Todo check failure results
+    assert result_field.get_entity_data_by_id(1) == pytest.approx([1.3871777438275192])
