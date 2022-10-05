@@ -55,9 +55,13 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
 
     .. code:: bash
 
-          python -m pip install --upgrade pip tox
-          python -m pip install --pre --upgrade poetry
-          poetry install -E all
+        python -m pip install pipx
+        pipx ensurepath
+        pipx install poetry
+        pipx instal pip
+        pipx instal tox
+
+
 
 
 Testing
