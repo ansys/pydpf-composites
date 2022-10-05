@@ -14,6 +14,8 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
+from ansys.dpf.composites.load_plugin import load_composites_plugin
+
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
 SERVER_BIN_OPTION_KEY = "--server-bin"
@@ -203,7 +205,7 @@ def wait_until_server_is_up(server):
     # The dpf server should check this in connect_to_server but that's currently not the case
     # https://github.com/pyansys/pydpf-core/issues/414
     # We use the fact that server.version throws if the server is not yet connected
-    timeout = 5
+    timeout = 10
     import time
 
     tstart = time.time()
@@ -219,8 +221,14 @@ def wait_until_server_is_up(server):
 
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
-    server_log_stdout = TEST_ROOT_DIR / "server_log_out.txt"
-    server_log_stderr = TEST_ROOT_DIR / "server_log_err.txt"
+
+    # Use a unique session id so logs don't get overwritten
+    # by tests that run in different sessions
+    import uuid
+
+    uid = uuid.uuid4()
+    server_log_stdout = TEST_ROOT_DIR / f"server_log_out-{uid}.txt"
+    server_log_stderr = TEST_ROOT_DIR / f"server_log_err-{uid}.txt"
 
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
 
@@ -230,8 +238,9 @@ def dpf_server(request: pytest.FixtureRequest):
                 server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
             )
         else:
-            process_log_stdout = TEST_ROOT_DIR / "process_log_out.txt"
-            process_log_stderr = TEST_ROOT_DIR / "process_log_err.txt"
+
+            process_log_stdout = TEST_ROOT_DIR / f"process_log_out-{uid}.txt"
+            process_log_stderr = TEST_ROOT_DIR / f"process_log_err-{uid}.txt"
             return DockerProcess(
                 server_out_file=server_log_stdout,
                 server_err_file=server_log_stderr,
@@ -243,11 +252,6 @@ def dpf_server(request: pytest.FixtureRequest):
         server = dpf.server.connect_to_server(port=server_process.port)
 
         wait_until_server_is_up(server)
+        load_composites_plugin(platform=server_process.platform, server=server)
 
-        if server_process.platform == "win32":
-            dpf.load_library("composite_operators.dll", "composites", server=server)
-            dpf.load_library("Ans.Dpf.EngineeringData.dll", "engineeringdata", server=server)
-        else:
-            dpf.load_library("libcomposite_operators.so", "composites", server=server)
-            dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
         yield server

@@ -161,5 +161,5 @@ cython_debug/
 doc/source/examples/gallery_examples
 
 # testing server logs
-tests/*_log_err.txt
-tests/*_log_out.txt
+tests/*_log_err*.txt
+tests/*_log_out*.txt
