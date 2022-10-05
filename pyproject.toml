@@ -63,8 +63,7 @@ all = [
     "mypy",
     "mypy-extensions",
     "pre-commit",
-    "pypandoc",
-    "numpy"
+    "pypandoc"
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "ansys-dpf-core", "pyvista",
     "pypandoc"]

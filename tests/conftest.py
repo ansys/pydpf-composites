@@ -221,6 +221,9 @@ def wait_until_server_is_up(server):
 
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
+
+    # Use a unique session id so logs don't get overwritten
+    # by tests that run in different sessions
     import uuid
 
     uid = uuid.uuid4()
