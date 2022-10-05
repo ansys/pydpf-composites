@@ -59,7 +59,7 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         pipx ensurepath
         pipx install poetry
         pipx instal pip
-        pipx instal tox
+        pipx install tox
 
 
 
