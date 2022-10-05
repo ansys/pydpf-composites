@@ -44,6 +44,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -265,9 +266,11 @@ you to modify the source and enhance it.</p>
 </li>
 <li><p>Install dependencies:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install --upgrade pip tox
-python -m pip install --pre --upgrade poetry
-poetry install -E all
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install pipx
+pipx ensurepath
+pipx install poetry
+pipx instal pip
+pipx install tox
 </pre></div>
 </div>
 </div></blockquote>
@@ -357,7 +360,7 @@ tox -e doc-linux
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
 </p>
   </div>
   

@@ -44,6 +44,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -254,6 +255,7 @@ values and failure modes of a combined failure criterion</p>
     <span class="n">MaxStressCriterion</span><span class="p">,</span>
     <span class="n">VonMisesCriterion</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.load_plugin</span> <span class="kn">import</span> <span class="n">load_composites_plugin</span>
 </pre></div>
 </div>
 <p>Definition of the combined failure criterion</p>
@@ -271,11 +273,7 @@ values and failure modes of a combined failure criterion</p>
 </div>
 <p>Load dpf plugin</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">21002</span><span class="p">)</span>
-<span class="n">dpf</span><span class="o">.</span><span class="n">load_library</span><span class="p">(</span><span class="s2">&quot;libcomposite_operators.so&quot;</span><span class="p">,</span> <span class="s2">&quot;composites&quot;</span><span class="p">)</span>
-<span class="n">dpf</span><span class="o">.</span><span class="n">load_library</span><span class="p">(</span><span class="s2">&quot;libAns.Dpf.EngineeringData.so&quot;</span><span class="p">,</span> <span class="s2">&quot;engineeringdata&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;engineeringdata successfully loaded&#39;
+<span class="n">load_composites_plugin</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Specify input files and upload them to the server</p>
@@ -301,7 +299,7 @@ Process all elements</p>
 <span class="n">fc_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::composite_failure_operator&quot;</span><span class="p">)</span>
 <span class="n">fc_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">result_definition</span><span class="p">(</span><span class="n">rd</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
 
-<span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">fc_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="p">()</span>
+<span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">fc_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_containerMax</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Plot the max IRF per element</p>
@@ -315,7 +313,7 @@ Process all elements</p>
 <img src="../../_images/sphx_glr_failure_operator_example_001.png" srcset="../../_images/sphx_glr_failure_operator_example_001.png" alt="failure operator example" class = "sphx-glr-single-img"/><p>Scope failure evaluation to certain</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rd</span><span class="o">.</span><span class="n">element_scope</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="n">fc_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">result_definition</span><span class="p">(</span><span class="n">rd</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
-<span class="n">output_two_elements</span> <span class="o">=</span> <span class="n">fc_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="p">()</span>
+<span class="n">output_two_elements</span> <span class="o">=</span> <span class="n">fc_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_containerMax</span><span class="p">()</span>
 <span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_two_elements</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_value_index</span></a><span class="p">]</span>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
@@ -324,12 +322,12 @@ Process all elements</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rd</span><span class="o">.</span><span class="n">element_scope</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">rd</span><span class="o">.</span><span class="n">ply_scope</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span><span class="p">]</span>
 <span class="n">fc_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">result_definition</span><span class="p">(</span><span class="n">rd</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
-<span class="n">output_woven_plies</span> <span class="o">=</span> <span class="n">fc_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="p">()</span>
+<span class="n">output_woven_plies</span> <span class="o">=</span> <span class="n">fc_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_containerMax</span><span class="p">()</span>
 <span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_woven_plies</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_value_index</span></a><span class="p">]</span>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_failure_operator_example_003.png" srcset="../../_images/sphx_glr_failure_operator_example_003.png" alt="failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.286 seconds)</p>
+<img src="../../_images/sphx_glr_failure_operator_example_003.png" srcset="../../_images/sphx_glr_failure_operator_example_003.png" alt="failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.270 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-failure-operator-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/53550da7d710b90f295d971d334d40bd/failure_operator_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">failure_operator_example.py</span></code></a></p>
@@ -366,7 +364,7 @@ Process all elements</p>
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
 </p>
   </div>
   

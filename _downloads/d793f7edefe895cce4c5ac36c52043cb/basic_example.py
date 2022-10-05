@@ -25,6 +25,7 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
+from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
@@ -57,8 +58,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 #%%
 # Load dpf plugin
 server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-dpf.load_library("libcomposite_operators.so", "composites")
-dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
+load_composites_plugin()
 
 #%%
 # Specify input files and upload them to the server

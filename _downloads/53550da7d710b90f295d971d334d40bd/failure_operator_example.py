@@ -23,6 +23,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
     VonMisesCriterion,
 )
+from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 
 # %%
@@ -42,8 +43,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 # %%
 # Load dpf plugin
 server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-dpf.load_library("libcomposite_operators.so", "composites")
-dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
+load_composites_plugin()
 
 # %%
 # Specify input files and upload them to the server
@@ -70,7 +70,7 @@ rd = ResultDefinition(
 fc_op = dpf.Operator("composite::composite_failure_operator")
 fc_op.inputs.result_definition(rd.to_json())
 
-output_all_elements = fc_op.outputs.field_max()
+output_all_elements = fc_op.outputs.fields_containerMax()
 
 #%%
 # Plot the max IRF per element
@@ -85,7 +85,7 @@ irf_field.plot()
 # Scope failure evaluation to certain
 rd.element_scope = [1, 3]
 fc_op.inputs.result_definition(rd.to_json())
-output_two_elements = fc_op.outputs.field_max()
+output_two_elements = fc_op.outputs.fields_containerMax()
 irf_field = output_two_elements[failure_value_index]
 irf_field.plot()
 
@@ -94,6 +94,6 @@ irf_field.plot()
 rd.element_scope = []
 rd.ply_scope = ["P1L1__ud_patch ns1"]
 fc_op.inputs.result_definition(rd.to_json())
-output_woven_plies = fc_op.outputs.field_max()
+output_woven_plies = fc_op.outputs.fields_containerMax()
 irf_field = output_woven_plies[failure_value_index]
 irf_field.plot()

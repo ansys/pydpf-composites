@@ -42,7 +42,7 @@ Basic example of setting up a composite failure workflow
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 14-57
+.. GENERATED FROM PYTHON SOURCE LINES 14-58
 
 .. code-block:: default
 
@@ -60,6 +60,7 @@ Load ansys libraries
         TsaiWuCriterion,
         VonMisesCriterion,
     )
+    from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 
     def get_combined_failure_criterion() -> CombinedFailureCriterion:
@@ -96,28 +97,21 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-59
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
 
 Load dpf plugin
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-63
+.. GENERATED FROM PYTHON SOURCE LINES 60-63
 
 .. code-block:: default
 
     server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-    dpf.load_library("libcomposite_operators.so", "composites")
-    dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata")
+    load_composites_plugin()
 
 
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    'engineeringdata successfully loaded'
 
 
 
@@ -379,7 +373,7 @@ Plot the max and the minimum value for each value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.659 seconds)
+   **Total running time of the script:** ( 0 minutes  9.075 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_basic_example.py:
