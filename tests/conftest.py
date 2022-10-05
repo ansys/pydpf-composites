@@ -14,6 +14,8 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
+from ansys.dpf.composites.load_plugin import load_composites_plugin
+
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
 SERVER_BIN_OPTION_KEY = "--server-bin"
@@ -243,11 +245,6 @@ def dpf_server(request: pytest.FixtureRequest):
         server = dpf.server.connect_to_server(port=server_process.port)
 
         wait_until_server_is_up(server)
+        load_composites_plugin(platform=server_process.platform, server=server)
 
-        if server_process.platform == "win32":
-            dpf.load_library("composite_operators.dll", "composites", server=server)
-            dpf.load_library("Ans.Dpf.EngineeringData.dll", "engineeringdata", server=server)
-        else:
-            dpf.load_library("libcomposite_operators.so", "composites", server=server)
-            dpf.load_library("libAns.Dpf.EngineeringData.so", "engineeringdata", server=server)
         yield server
