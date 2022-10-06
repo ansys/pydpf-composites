@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EngineeringData version="21.2.0.137" versiondate="2/18/2021 2:58:00 PM">
+  <Notes>
+  </Notes>
+  <Materials>
+    <MatML_Doc>
+      <Material>
+        <BulkDetails>
+          <Name>PA66-50GF</Name>
+          <PropertyData property="pr0">
+            <Data format="string">-</Data>
+            <Qualifier name="Field Variable Compatible">Temperature</Qualifier>
+            <Qualifier name="Localized Name">Density</Qualifier>
+            <ParameterValue parameter="pa0" format="string">
+              <Data>Interpolation Options</Data>
+              <Qualifier name="AlgorithmType">Linear Multivariate (CGAL)</Qualifier>
+              <Qualifier name="Normalized">True</Qualifier>
+              <Qualifier name="Cached">True</Qualifier>
+              <Qualifier name="ExtrapolationType">Projection to the Convex Hull</Qualifier>
+              <Qualifier name="BETA">AlgorithmType$$Linear Multivariate (CGAL)$$EngineeringData.CGAL</Qualifier>
+              <Qualifier name="Localized Name">Interpolation Options</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa1" format="float">
+              <Data>1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791,1585.02673796791</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Density</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa2" format="float">
+              <Data>0,0.1666666667,0.3333333333,0.5,0.6666666667,0.8333333333,1,0.1111111111,0.2777777778,0.4444444444,0.6111111111,0.7777777778,0,0.8333333333,0.2222222222,0.3888888889,0.5555555556,0.1111111111,0.6111111111,0,0.3333333333,0.6666666667,0.2222222222,0.3888888889,0.1111111111,0.4444444444,0,0.5,0.2222222222,0.1111111111,0.2777777778,0,0.3333333333,0.1111111111,0,0.1666666667,0</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa3" format="float">
+              <Data>0,0,0,0,0,0,0,0.1111111111,0.1111111111,0.1111111111,0.1111111111,0.1111111111,0.1666666667,0.1666666667,0.2222222222,0.2222222222,0.2222222222,0.2777777778,0.2777777778,0.3333333333,0.3333333333,0.3333333333,0.3888888889,0.3888888889,0.4444444444,0.4444444444,0.5,0.5,0.5555555556,0.6111111111,0.6111111111,0.6666666667,0.6666666667,0.7777777778,0.8333333333,0.8333333333,1</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+          </PropertyData>
+          <PropertyData property="pr1">
+            <Data format="string">-</Data>
+            <Qualifier name="Behavior">Orthotropic</Qualifier>
+            <Qualifier name="Field Variable Compatible">Temperature</Qualifier>
+            <Qualifier name="Localized Name">Orthotropic Elasticity</Qualifier>
+            <ParameterValue parameter="pa0" format="string">
+              <Data>Interpolation Options</Data>
+              <Qualifier name="AlgorithmType">Linear Multivariate (CGAL)</Qualifier>
+              <Qualifier name="Normalized">True</Qualifier>
+              <Qualifier name="Cached">True</Qualifier>
+              <Qualifier name="ExtrapolationType">Projection to the Convex Hull</Qualifier>
+              <Qualifier name="BETA">AlgorithmType$$Linear Multivariate (CGAL)$$EngineeringData.CGAL</Qualifier>
+              <Qualifier name="Localized Name">Interpolation Options</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa4" format="float">
+              <Data>5732645909.98373,6838874602.85311,8342142919.31012,10342531806.0015,12795332106.2053,15986791810.8379,19956911254.7373,6295321462.55236,7543825565.20623,9339696830.2215,11692525070.9125,14775659114.293,6072228919.4523,15986791810.8379,7042320391.54998,8554579436.97979,10790839822.0336,6471177430.37758,11692525070.9125,6327705073.61956,8006084508.07763,12795332106.2053,7011118412.34136,8554579436.97979,6526724475.31365,9339696830.2215,6482536704.52601,10342531806.0015,7042320391.54998,6471177430.37758,7543825565.20623,6327705073.61956,8342142919.31012,6295321462.55236,6072228919.4523,6838874602.85311,5732645909.98373</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Young's Modulus X direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa5" format="float">
+              <Data>5767129606.14651,6072228919.4523,6327705073.61956,6482536704.52601,6327705073.61956,6072228919.4523,5732645909.98373,6341125882.97357,6471177430.37758,6526724475.31365,6471177430.37758,6295321462.55236,6838874602.85311,6838874602.85311,7080121116.97899,7011118412.34136,7042320391.54998,7543825565.20623,7543825565.20623,8342142919.31012,8004255218.54559,8342142919.31012,8554579436.97979,8519558791.80099,9339696830.2215,9289220306.0187,10342531806.0015,10339013803.9512,10790839822.0336,11692525070.9125,11692525070.9125,12795332106.2053,12795332106.2053,14775659114.293,15986791810.8379,15986791810.8379,19956911254.7373</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Young's Modulus Y direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa6" format="float">
+              <Data>19956911254.7373,15986791810.8379,12795332106.2053,10339013803.9512,8342142919.31012,6838874602.85311,5767129606.14651,14775659114.293,11692525070.9125,9289220306.0187,7543825565.20623,6341125882.97357,15986791810.8379,6072228919.4523,10790839822.0336,8519558791.80099,7080121116.97899,11692525070.9125,6471177430.37758,12795332106.2053,7969184401.03622,6327705073.61956,8519558791.80099,7011118412.34136,9289220306.0187,6526724475.31365,10339013803.9512,6482536704.52601,7080121116.97899,7543825565.20623,6471177430.37758,8342142919.31012,6327705073.61956,6341125882.97357,6838874602.85311,6072228919.4523,5767129606.14651</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Young's Modulus Z direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa7" format="float">
+              <Data>0.505498233095789,0.466354726449203,0.418991030388486,0.367544828465698,0.331283668136924,0.31256721124568,0.346893410692351,0.446079726366616,0.417256078207773,0.382114116687014,0.35877819955578,0.370887154932317,0.414075826962336,0.405132858195849,0.380753501626585,0.365619948871686,0.360893327767479,0.357926902292072,0.364135862228763,0.317814222848338,0.322508730213832,0.384401608669688,0.299652925586555,0.308923682909029,0.26702724971479,0.309436477986694,0.23037133322665,0.325655503777845,0.235526287409231,0.198564242830029,0.234934491055607,0.163830475854605,0.25061742292567,0.158020285157487,0.118721734908181,0.173308869439244,0.0996455346532527</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Poisson's Ratio XY</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa8" format="float">
+              <Data>0.09687418581193,0.118721734908181,0.163830475854605,0.230668268939278,0.317814222848338,0.414075826962336,0.505498233095789,0.154257515427624,0.198564242830029,0.271737972825119,0.357926902292072,0.446079726366616,0.173308869439244,0.466354726449203,0.232400494150626,0.303397009682965,0.380753501626585,0.234934491055607,0.417256078207773,0.25061742292567,0.327064332305482,0.418991030388486,0.308923682909029,0.368672800719028,0.309436477986694,0.386753555268188,0.325655503777845,0.367893391954362,0.354202486865211,0.364135862228763,0.35877819955578,0.384401608669688,0.331283668136924,0.35944034321986,0.405132858195849,0.31256721124568,0.335229076014371</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Poisson's Ratio YZ</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa9" format="float">
+              <Data>0.0996455346532527,0.173308869439244,0.25061742292567,0.325655503777845,0.384401608669688,0.405132858195849,0.335229076014371,0.158020285157487,0.234934491055607,0.309436477986694,0.364135862228763,0.35944034321986,0.118721734908181,0.31256721124568,0.235526287409231,0.308923682909029,0.354202486865211,0.198564242830029,0.35877819955578,0.163830475854605,0.326910539836471,0.331283668136924,0.303397009682965,0.365619948871686,0.271737972825119,0.382114116687014,0.230668268939278,0.367544828465698,0.380753501626585,0.357926902292072,0.417256078207773,0.317814222848338,0.418991030388486,0.446079726366616,0.414075826962336,0.466354726449203,0.505498233095789</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Poisson's Ratio XZ</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa10" format="float">
+              <Data>1908665981.0943,1977617804.66846,2020768741.8103,2036236382.15576,2094238260.92867,2132622626.79779,2184575677.29235,2203496526.76694,2383452802.49567,2511193289.76343,2642843335.83147,2791470908.60794,1977617804.66846,3148022004.60159,2562650574.37491,2834839793.57913,3065324696.57257,2383452802.49567,3374126453.39731,2020768741.8103,2986128123.91824,3721457530.33688,2834839793.57913,3267189458.84207,2511193289.76343,3566771196.61273,2036236382.15576,3904882254.49822,3065324696.57257,2642843335.83147,3374126453.39731,2094238260.92867,3721457530.33688,2791470908.60794,2132622626.79779,3148022004.60159,2184575677.29235</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Shear Modulus XY</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa11" format="float">
+              <Data>2151389479.76312,2132622626.79779,2094238260.92867,2038118792.51982,2020768741.8103,1977617804.66846,1908665981.0943,2754875868.99572,2642843335.83147,2537608191.79208,2383452802.49567,2203496526.76694,3148022004.60159,1977617804.66846,3040138006.9423,2853611302.25822,2562650574.37491,3374126453.39731,2383452802.49567,3721457530.33688,3007175893.60286,2020768741.8103,3267189458.84207,2853611302.25822,3566771196.61273,2537608191.79208,3904882254.49822,2038118792.51982,3040138006.9423,3374126453.39731,2642843335.83147,3721457530.33688,2094238260.92867,2754875868.99572,3148022004.60159,2132622626.79779,2151389479.76312</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Shear Modulus YZ</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa12" format="float">
+              <Data>2184575677.29235,3148022004.60159,3721457530.33688,3904882254.49822,3721457530.33688,3148022004.60159,2151389479.76312,2791470908.60794,3374126453.39731,3566771196.61273,3374126453.39731,2754875868.99572,2132622626.79779,2132622626.79779,3065324696.57257,3267189458.84207,3040138006.9423,2642843335.83147,2642843335.83147,2094238260.92867,3006137041.18622,2094238260.92867,2853611302.25822,2834839793.57913,2537608191.79208,2511193289.76343,2038118792.51982,2036236382.15576,2562650574.37491,2383452802.49567,2383452802.49567,2020768741.8103,2020768741.8103,2203496526.76694,1977617804.66846,1977617804.66846,1908665981.0943</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Shear Modulus XZ</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa2" format="float">
+              <Data>0,0.1666666667,0.3333333333,0.5,0.6666666667,0.8333333333,1,0.1111111111,0.2777777778,0.4444444444,0.6111111111,0.7777777778,0,0.8333333333,0.2222222222,0.3888888889,0.5555555556,0.1111111111,0.6111111111,0,0.3333333333,0.6666666667,0.2222222222,0.3888888889,0.1111111111,0.4444444444,0,0.5,0.2222222222,0.1111111111,0.2777777778,0,0.3333333333,0.1111111111,0,0.1666666667,0</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa3" format="float">
+              <Data>0,0,0,0,0,0,0,0.1111111111,0.1111111111,0.1111111111,0.1111111111,0.1111111111,0.1666666667,0.1666666667,0.2222222222,0.2222222222,0.2222222222,0.2777777778,0.2777777778,0.3333333333,0.3333333333,0.3333333333,0.3888888889,0.3888888889,0.4444444444,0.4444444444,0.5,0.5,0.5555555556,0.6111111111,0.6111111111,0.6666666667,0.6666666667,0.7777777778,0.8333333333,0.8333333333,1</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+          </PropertyData>
+          <PropertyData property="pr2">
+            <Data format="string">-</Data>
+            <Qualifier name="Behavior">Orthotropic</Qualifier>
+            <Qualifier name="Field Variable Compatible">Temperature</Qualifier>
+            <Qualifier name="Localized Name">Orthotropic Stress Limits</Qualifier>
+            <ParameterValue parameter="pa0" format="string">
+              <Data>Interpolation Options</Data>
+              <Qualifier name="AlgorithmType">Linear Multivariate (CGAL)</Qualifier>
+              <Qualifier name="Normalized">True</Qualifier>
+              <Qualifier name="Cached">True</Qualifier>
+              <Qualifier name="ExtrapolationType">Projection to the Convex Hull</Qualifier>
+              <Qualifier name="BETA">AlgorithmType$$Linear Multivariate (CGAL)$$EngineeringData.CGAL</Qualifier>
+              <Qualifier name="Localized Name">Interpolation Options</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa13" format="float">
+              <Data>86321598.3455422,90384567.7374478,99012363.9977194,110863459.905149,127790072.10902,146564215.061951,174505544.15667,215596698.538311,291672603.395415,90176208.0286858,91212015.0362928,101532219.360235,120252607.373807,135595673.857536,162221055.346877,236837314.195679,85332249.1882311,215596698.538311,93806269.2103374,94979748.2756654,112701974.946696,126577982.135636,186594560.061883,84692707.1819528,162221055.345843,86177164.3390163,96708845.0921165,105140299.669543,140344798.742934,174505544.15667,86272658.3117792,126577982.136624,84971929.3720499,97567966.6457176,135595673.854408,87321650.8641872,97970919.9740177,105140299.669543,146564215.061951,96849592.1470539,112701974.942137,94261136.6956704,120252607.365756,90317711.7742694,96708845.0921165,127790072.10902,86272658.3123281,94979748.2777525,84971929.3723435,101532219.35555,87321650.8641872,110863459.905149,93806269.2169861,84692707.1820633,91212015.0322006,86177164.3390163,99012363.9977194,90176208.0311181,85332249.1882311,90384567.7374478,86321598.3455422</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Tensile X direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa14" format="float">
+              <Data>86321598.3455422,85332249.1882311,86177164.3390163,87321650.8641872,90317711.7742694,87321650.8641872,86177164.3390164,85332249.1882311,86321598.3455422,90176208.0286858,84692707.1819528,84971929.3720499,94261136.6956703,84971929.3723435,84692707.1820633,90176208.0311181,90384567.7374478,90384567.7374478,93806269.2103374,86272658.3117793,96849592.1470539,86272658.3123282,93806269.2169861,91212015.0362928,91212015.0322006,99012363.9977194,96708845.0921164,97970919.9740177,96708845.0921165,99012363.9977194,94979748.2756654,94979748.2777525,101532219.360235,97567966.6457176,101532219.35555,110863459.905149,105140299.669543,105140299.669543,110863459.905149,112701974.946696,112701974.942137,120252607.373807,120252607.365756,127790072.10902,140344798.742934,127790072.10902,126577982.135636,126577982.136624,135595673.857536,135595673.854408,146564215.061951,146564215.061951,186594560.061883,162221055.346877,162221055.345843,174505544.15667,174505544.15667,236837314.195679,215596698.538311,215596698.538311,291672603.395415</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Tensile Y direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa15" format="float">
+              <Data>291672603.395415,215596698.538311,174505544.15667,146564215.061951,127790072.10902,110863459.905149,99012363.9977194,90384567.7374478,86321598.3455422,236837314.231384,162221055.372115,135595673.875391,120252607.388508,101532219.369933,91212015.0432151,90176208.0406627,215596698.538311,85332249.1882311,186594560.036315,126577982.118495,112701974.931542,94979748.2673797,93806269.20866,162221055.372115,84692707.1825186,174505544.15667,140344798.742934,105140299.669543,96708845.0921165,86177164.3390163,126577982.118495,86272658.3081729,135595673.875391,97567966.6181947,84971929.3715043,146564215.061951,105140299.669543,97970919.9740177,87321650.8641872,112701974.931542,96849592.1448107,120252607.388508,94261136.6996169,127790072.10902,96708845.0921164,90317711.7742694,94979748.2673797,86272658.3081729,101532219.369933,84971929.3715043,110863459.905149,87321650.8641872,93806269.20866,91212015.0432151,84692707.1825186,99012363.9977194,86177164.3390163,90176208.0406627,90384567.7374478,85332249.1882311,86321598.3455422</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Tensile Z direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa16" format="float">
+              <Data>-86440908.5061267,-90409687.3369812,-98925956.9304976,-110633726.163773,-127359893.430804,-145854580.028044,-173359302.585832,-213716668.959584,-288205536.732309,-90255385.7361879,-91194352.5010645,-101384885.018968,-119919613.038103,-135013363.172227,-161246202.358395,-234741222.981229,-85506001.7595878,-213716668.959584,-93837827.1663226,-94903479.303328,-112455118.170946,-126106940.017911,-185464554.796532,-84819649.7405334,-161246202.35736,-86393913.9502841,-96681259.7247454,-104969370.840348,-139857492.028023,-173359302.585832,-86343962.7100673,-126106940.01889,-85126709.1262416,-97463380.1613211,-135013363.169119,-87567036.2102815,-97958600.166778,-104969370.840348,-145854580.028044,-96933160.7615323,-112455118.166401,-94437991.3231712,-119919613.030107,-90579303.5864305,-96681259.7247454,-127359893.430804,-86343962.7106004,-94903479.3053909,-85126709.1265507,-101384885.014316,-87567036.2102815,-110633726.163773,-93837827.1729409,-84819649.7406725,-91194352.4970047,-86393913.9502841,-98925956.9304976,-90255385.7386728,-85506001.7595877,-90409687.3369812,-86440908.5061267</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Compressive X direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa17" format="float">
+              <Data>-86440908.5061267,-85506001.7595878,-86393913.9502841,-87567036.2102815,-90579303.5864305,-87567036.2102816,-86393913.9502841,-85506001.7595878,-86440908.5061267,-90255385.7361879,-84819649.7405334,-85126709.1262416,-94437991.3231712,-85126709.1265507,-84819649.7406725,-90255385.7386728,-90409687.3369813,-90409687.3369813,-93837827.1663226,-86343962.7100673,-96933160.7615323,-86343962.7106005,-93837827.1729409,-91194352.5010645,-91194352.4970047,-98925956.9304976,-96681259.7247454,-97958600.166778,-96681259.7247454,-98925956.9304976,-94903479.303328,-94903479.3053909,-101384885.018968,-97463380.1613211,-101384885.014316,-110633726.163773,-104969370.840348,-104969370.840348,-110633726.163773,-112455118.170946,-112455118.166401,-119919613.038103,-119919613.030107,-127359893.430804,-139857492.028023,-127359893.430804,-126106940.017911,-126106940.01889,-135013363.172227,-135013363.169119,-145854580.028044,-145854580.028044,-185464554.796532,-161246202.358395,-161246202.35736,-173359302.585833,-173359302.585833,-234741222.981229,-213716668.959584,-213716668.959584,-288205536.732309</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Compressive Y direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa18" format="float">
+              <Data>-288205536.732309,-213716668.959584,-173359302.585832,-145854580.028044,-127359893.430804,-110633726.163773,-98925956.9304976,-90409687.3369813,-86440908.5061267,-234741223.016182,-161246202.38324,-135013363.189834,-119919613.052625,-101384885.028547,-91194352.5078958,-90255385.7480809,-213716668.959584,-85506001.7595878,-185464554.771408,-126106940.000996,-112455118.155961,-94903479.2951513,-93837827.1647479,-161246202.38324,-84819649.7410114,-173359302.585832,-139857492.028023,-104969370.840348,-96681259.7247454,-86393913.9502841,-126106940.000996,-86343962.7065533,-135013363.189834,-97463380.133748,-85126709.1256014,-145854580.028044,-104969370.840348,-97958600.166778,-87567036.2102815,-112455118.155961,-96933160.7594039,-119919613.052625,-94437991.3270098,-127359893.430804,-96681259.7247454,-90579303.5864305,-94903479.2951513,-86343962.7065533,-101384885.028547,-85126709.1256014,-110633726.163773,-87567036.2102816,-93837827.1647479,-91194352.5078958,-84819649.7410114,-98925956.9304976,-86393913.9502841,-90255385.7480809,-90409687.3369813,-85506001.7595878,-86440908.5061267</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Compressive Z direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa19" format="float">
+              <Data>49872228.0255241,46021830.2433138,43336553.9357973,40898780.3706,37851548.2904908,37379888.4140558,36183492.1628165,34965291.1579027,32406259.7122698,51518435.9505068,48438393.2015537,47546161.4395835,42599147.8756454,45320585.8514964,44543353.0014838,37564157.3428085,46021830.2433138,48300189.4592792,53272678.007876,51672541.8804328,47349455.0154353,51565255.9815708,43264042.3048979,48438393.2015537,55403451.4882113,43336553.9357973,55064236.4076846,52102473.1775239,49635486.433439,59123962.7197742,51672541.8804328,59203060.2586807,47546161.4395835,56858205.8245747,62384873.7895557,40898780.3706,52102473.1775239,59856275.1931331,65946825.7302853,47349455.0154353,62757834.9769946,42599147.8756454,65570577.1714411,37851548.2904908,49635486.433439,68301283.4709828,51565255.9815708,59203060.2586807,45320585.8514964,62384873.7895557,37379888.4140558,65946825.7302853,43264042.3048979,44543353.0014838,55403451.4882113,36183492.1628165,59123962.7197742,37564157.3428085,34965291.1579027,48300189.4592792,32406259.7122698</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Shear XY</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa20" format="float">
+              <Data>32406259.7122698,34965291.1579027,36183492.1628165,37379888.4140558,37851548.2904907,40898780.3706,43336553.9357973,46021830.2433138,49872228.0255241,37564157.3417492,44543353.0008387,45320585.8508972,42599147.873938,47546161.4388411,48438393.2008662,51518435.9471658,48300189.4592792,46021830.2433138,43264042.3048278,51565255.9816979,47349455.0173648,51672541.8798233,53272678.0028204,55403451.4888192,48438393.2056715,59123962.7197742,49635486.433439,52102473.1775239,55064236.4076846,43336553.9357973,59203060.2570591,51672541.8767401,62384873.7917058,56858205.8566799,47546161.4457101,65946825.7302853,59856275.1931331,52102473.1775239,40898780.3706,62757834.9693848,47349455.0106981,65570577.1706434,42599147.8804904,68301283.4709828,49635486.433439,37851548.2904907,59203060.2531286,51565255.9752269,62384873.7955009,45320585.8597453,65946825.7302853,37379888.4140558,43264042.2990015,55403451.4961075,44543353.0102978,59123962.7197742,36183492.1628165,37564157.3485408,48300189.4592792,34965291.1579027,32406259.7122698</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Shear YZ</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa21" format="float">
+              <Data>32406259.7122698,48300189.4592792,59123962.7197742,65946825.7302853,68301283.4709828,65946825.7302853,59123962.7197742,48300189.4592792,32406259.7122698,37564157.3417492,55403451.4888192,62384873.7917057,65570577.1706433,62384873.7955009,55403451.4961075,37564157.3485408,34965291.1579027,34965291.1579027,43264042.3048278,59203060.2570591,62757834.9693848,59203060.2531286,43264042.2990015,44543353.0008387,44543353.0102978,36183492.1628165,49635486.433439,59856275.1931331,49635486.433439,36183492.1628165,51565255.9816979,51565255.9752269,45320585.8508972,56858205.8566799,45320585.8597453,37379888.4140558,52102473.1775239,52102473.1775239,37379888.4140558,47349455.0173648,47349455.0106981,42599147.873938,42599147.8804905,37851548.2904907,55064236.4076846,37851548.2904908,51672541.8798233,51672541.8767401,47546161.4388411,47546161.4457101,40898780.3706,40898780.3706,53272678.0028204,48438393.2008662,48438393.2056715,43336553.9357973,43336553.9357973,51518435.9471658,46021830.2433138,46021830.2433138,49872228.0255241</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Shear XZ</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa2" format="float">
+              <Data>0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1,0.0833333333,0.2083333333,0.3333333333,0.4583333333,0.5833333333,0.7083333333,0.8333333333,0,0.875,0.1666666667,0.2916666667,0.4166666667,0.5416666667,0.6666666667,0.0833333333,0.7083333333,0,0.25,0.375,0.5,0.75,0.1666666667,0.5416666667,0.0833333333,0.3333333333,0.5833333333,0,0.25,0.375,0.625,0.1666666667,0.4166666667,0.0833333333,0.4583333333,0,0.25,0.5,0.1666666667,0.2916666667,0.0833333333,0.3333333333,0,0.375,0.1666666667,0.0833333333,0.2083333333,0,0.25,0.0833333333,0,0.125,0</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa3" format="float">
+              <Data>0,0,0,0,0,0,0,0,0,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.125,0.125,0.1666666667,0.1666666667,0.1666666667,0.1666666667,0.1666666667,0.2083333333,0.2083333333,0.25,0.25,0.25,0.25,0.25,0.2916666667,0.2916666667,0.3333333333,0.3333333333,0.3333333333,0.375,0.375,0.375,0.375,0.4166666667,0.4166666667,0.4583333333,0.4583333333,0.5,0.5,0.5,0.5416666667,0.5416666667,0.5833333333,0.5833333333,0.625,0.625,0.6666666667,0.7083333333,0.7083333333,0.75,0.75,0.8333333333,0.875,0.875,1</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+          </PropertyData>
+          <PropertyData property="pr3">
+            <Data format="string">-</Data>
+            <Qualifier name="Definition">Nonlinear</Qualifier>
+            <Qualifier name="Behavior">Voce Law</Qualifier>
+            <Qualifier name="Field Variable Compatible">Temperature</Qualifier>
+            <Qualifier name="Localized Name">Nonlinear Isotropic Hardening Voce Law</Qualifier>
+            <ParameterValue parameter="pa22" format="float">
+              <Data>33527973.627102</Data>
+              <Qualifier name="Variable Type">Dependent</Qualifier>
+              <Qualifier name="Localized Name">Initial Yield Stress</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa23" format="float">
+              <Data>721448251.368928</Data>
+              <Qualifier name="Variable Type">Dependent</Qualifier>
+              <Qualifier name="Localized Name">Linear Coefficient</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa24" format="float">
+              <Data>57828899.8796863</Data>
+              <Qualifier name="Variable Type">Dependent</Qualifier>
+              <Qualifier name="Localized Name">Exponential Coefficient</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa25" format="float">
+              <Data>274.914349189751</Data>
+              <Qualifier name="Variable Type">Dependent</Qualifier>
+              <Qualifier name="Localized Name">Exponential Saturation Parameter</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa26" format="float">
+              <Data>7.88860905221012e-31</Data>
+              <Qualifier name="Variable Type">Independent</Qualifier>
+              <Qualifier name="Localized Name">Temperature</Qualifier>
+            </ParameterValue>
+          </PropertyData>
+          <PropertyData property="pr4">
+            <Data format="string">-</Data>
+            <Qualifier name="Separated Hill Potentials for Plasticity and Creep">No</Qualifier>
+            <Qualifier name="Field Variable Compatible">Temperature</Qualifier>
+            <Qualifier name="Localized Name">Hill Yield Criterion</Qualifier>
+            <ParameterValue parameter="pa0" format="string">
+              <Data>Interpolation Options</Data>
+              <Qualifier name="AlgorithmType">Linear Multivariate (CGAL)</Qualifier>
+              <Qualifier name="Normalized">True</Qualifier>
+              <Qualifier name="Cached">True</Qualifier>
+              <Qualifier name="ExtrapolationType">Projection to the Convex Hull</Qualifier>
+              <Qualifier name="BETA">AlgorithmType$$Linear Multivariate (CGAL)$$EngineeringData.CGAL</Qualifier>
+              <Qualifier name="Localized Name">Interpolation Options</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa27" format="float">
+              <Data>1,1.05082580072621,1.11235348476362,1.18916518545813,1.28924439899308,1.42818125978501,1.64233383788073,2.04905826083359,3.64106594584538,1.03286148189184,1.0904204738735,1.16146913154477,1.2525720927322,1.3760081173004,1.55849296882462,1.87531400948195,1,2.04905826083359,1.06996578194341,1.13595891185875,1.21939085546581,1.33009233706371,1.4882410228664,1.03286148189184,1.55849296882462,1,1.11235348476362,1.18916518545813,1.28924439899308,1.64233383788073,1.06996578194341,1.33009233706371,1.03286148189184,1.16146913154477,1.3760081173004,1,1.11235348476362,1.18916518545813,1.42818125978501,1.06996578194341,1.21939085546581,1.03286148189184,1.2525720927322,1,1.11235348476362,1.28924439899308,1.06996578194341,1.13595891185875,1.03286148189184,1.16146913154477,1,1.18916518545813,1.06996578194341,1.03286148189184,1.0904204738735,1,1.11235348476362,1.03286148189184,1,1.05082580072621,1</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Yield stress ratio in X direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa28" format="float">
+              <Data>1,1,1,1,1,1,1,1,1,1.03286148189184,1.03286148189184,1.03286148189184,1.03286148189184,1.03286148189184,1.03286148189184,1.03286148189184,1.05082580072621,1.05082580072621,1.06996578194341,1.06996578194341,1.06996578194341,1.06996578194341,1.06996578194341,1.0904204738735,1.0904204738735,1.11235348476362,1.11235348476362,1.11235348476362,1.11235348476362,1.11235348476362,1.13595891185875,1.13595891185875,1.16146913154477,1.16146913154477,1.16146913154477,1.18916518545813,1.18916518545813,1.18916518545813,1.18916518545813,1.21939085546581,1.21939085546581,1.2525720927322,1.2525720927322,1.28924439899308,1.28924439899308,1.28924439899308,1.33009233706371,1.33009233706371,1.3760081173004,1.3760081173004,1.42818125978501,1.42818125978501,1.4882410228664,1.55849296882462,1.55849296882462,1.64233383788073,1.64233383788073,1.87531400948195,2.04905826083359,2.04905826083359,3.64106594584538</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Yield stress ratio in Y direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa29" format="float">
+              <Data>3.64106594584538,2.04905826083359,1.64233383788073,1.42818125978501,1.28924439899308,1.18916518545813,1.11235348476362,1.05082580072621,1,1.87531400983824,1.55849296900789,1.37600811741756,1.25257209281578,1.16146913160849,1.0904204739243,1.03286148193364,2.04905826083359,1,1.48824102271112,1.33009233696,1.21939085538991,1.13595891179991,1.06996578189595,1.55849296900789,1.03286148193364,1.64233383788073,1.28924439899308,1.18916518545813,1.11235348476362,1,1.33009233696,1.06996578189595,1.37600811741756,1.16146913160849,1.03286148193364,1.42818125978501,1.18916518545813,1.11235348476362,1,1.21939085538991,1.06996578189595,1.25257209281578,1.03286148193364,1.28924439899308,1.11235348476362,1,1.13595891179991,1.06996578189595,1.16146913160849,1.03286148193364,1.18916518545813,1,1.06996578189595,1.0904204739243,1.03286148193364,1.11235348476362,1,1.03286148193364,1.05082580072621,1,1</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Yield stress ratio in Z direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa30" format="float">
+              <Data>1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Yield stress ratio in XY direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa31" format="float">
+              <Data>1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Yield stress ratio in YZ direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa32" format="float">
+              <Data>1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149,1.16928258834149</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Localized Name">Yield stress ratio in XZ direction</Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa2" format="float">
+              <Data>0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1,0.0833333333,0.2083333333,0.3333333333,0.4583333333,0.5833333333,0.7083333333,0.8333333333,0,0.875,0.1666666667,0.2916666667,0.4166666667,0.5416666667,0.6666666667,0.0833333333,0.7083333333,0,0.25,0.375,0.5,0.75,0.1666666667,0.5416666667,0.0833333333,0.3333333333,0.5833333333,0,0.25,0.375,0.625,0.1666666667,0.4166666667,0.0833333333,0.4583333333,0,0.25,0.5,0.1666666667,0.2916666667,0.0833333333,0.3333333333,0,0.375,0.1666666667,0.0833333333,0.2083333333,0,0.25,0.0833333333,0,0.125,0</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A11</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+            <ParameterValue parameter="pa3" format="float">
+              <Data>0,0,0,0,0,0,0,0,0,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.125,0.125,0.1666666667,0.1666666667,0.1666666667,0.1666666667,0.1666666667,0.2083333333,0.2083333333,0.25,0.25,0.25,0.25,0.25,0.2916666667,0.2916666667,0.3333333333,0.3333333333,0.3333333333,0.375,0.375,0.375,0.375,0.4166666667,0.4166666667,0.4583333333,0.4583333333,0.5,0.5,0.5,0.5416666667,0.5416666667,0.5833333333,0.5833333333,0.625,0.625,0.6666666667,0.7083333333,0.7083333333,0.75,0.75,0.8333333333,0.875,0.875,1</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Localized Name">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Field Variable">Orientation Tensor A22</Qualifier>
+              <Qualifier name="Default Data">0.333</Qualifier>
+              <Qualifier name="Upper Limit">1</Qualifier>
+              <Qualifier name="Lower Limit">0</Qualifier>
+              <Qualifier name="Field Units">
+              </Qualifier>
+            </ParameterValue>
+          </PropertyData>
+          <PropertyData property="pr5" delimiter=";">
+            <Data format="string">-</Data>
+            <Qualifier name="Orientation Tensor A11">Orientation Tensor A11:UF01</Qualifier>
+            <Qualifier name="Orientation Tensor A22">Orientation Tensor A22:UF02</Qualifier>
+            <Qualifier name="Defined User Fields">Orientation Tensor A11:Orientation Tensor A11:UF01,Orientation Tensor A22:Orientation Tensor A22:UF02</Qualifier>
+            <Qualifier name="Localized Name">Field Variable</Qualifier>
+          </PropertyData>
+        </BulkDetails>
+      </Material>
+      <Metadata>
+        <ParameterDetails id="pa0">
+          <Name>Options Variable</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa1">
+          <Name>Density</Name>
+          <Units name="Density">
+            <Unit>
+              <Name>kg</Name>
+            </Unit>
+            <Unit power="-3">
+              <Name>m</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa2">
+          <Name>Orientation Tensor A11</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa3">
+          <Name>Orientation Tensor A22</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa4">
+          <Name>Young's Modulus X direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa5">
+          <Name>Young's Modulus Y direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa6">
+          <Name>Young's Modulus Z direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa7">
+          <Name>Poisson's Ratio XY</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa8">
+          <Name>Poisson's Ratio YZ</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa9">
+          <Name>Poisson's Ratio XZ</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa10">
+          <Name>Shear Modulus XY</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa11">
+          <Name>Shear Modulus YZ</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa12">
+          <Name>Shear Modulus XZ</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa13">
+          <Name>Tensile X direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa14">
+          <Name>Tensile Y direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa15">
+          <Name>Tensile Z direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa16">
+          <Name>Compressive X direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa17">
+          <Name>Compressive Y direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa18">
+          <Name>Compressive Z direction</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa19">
+          <Name>Shear XY</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa20">
+          <Name>Shear YZ</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa21">
+          <Name>Shear XZ</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa22">
+          <Name>Initial Yield Stress</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa23">
+          <Name>Linear Coefficient</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa24">
+          <Name>Exponential Coefficient</Name>
+          <Units name="Pressure">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa25">
+          <Name>Exponential Saturation Parameter</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa26">
+          <Name>Temperature</Name>
+          <Units name="Temperature">
+            <Unit>
+              <Name>C</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa27">
+          <Name>Yield stress ratio in X direction</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa28">
+          <Name>Yield stress ratio in Y direction</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa29">
+          <Name>Yield stress ratio in Z direction</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa30">
+          <Name>Yield stress ratio in XY direction</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa31">
+          <Name>Yield stress ratio in YZ direction</Name>
+          <Unitless />
+        </ParameterDetails>
+        <ParameterDetails id="pa32">
+          <Name>Yield stress ratio in XZ direction</Name>
+          <Unitless />
+        </ParameterDetails>
+        <PropertyDetails id="pr0">
+          <Unitless />
+          <Name>Density</Name>
+        </PropertyDetails>
+        <PropertyDetails id="pr1">
+          <Unitless />
+          <Name>Elasticity</Name>
+        </PropertyDetails>
+        <PropertyDetails id="pr2">
+          <Unitless />
+          <Name>Stress Limits</Name>
+        </PropertyDetails>
+        <PropertyDetails id="pr3">
+          <Unitless />
+          <Name>Isotropic Hardening</Name>
+        </PropertyDetails>
+        <PropertyDetails id="pr4">
+          <Unitless />
+          <Name>Hill Yield Criterion</Name>
+        </PropertyDetails>
+        <PropertyDetails id="pr5">
+          <Unitless />
+          <Name>Field Variable</Name>
+        </PropertyDetails>
+      </Metadata>
+    </MatML_Doc>
+  </Materials>
+  <ANSYSWBTransferData>
+    <Materials>
+      <Material>
+        <Name>PA66-50GF</Name>
+        <DataTransferID>5d4eeb3f-9b2c-4001-8554-fd435875233b</DataTransferID>
+        <PreviousTransferIDs>
+        </PreviousTransferIDs>
+      </Material>
+    </Materials>
+  </ANSYSWBTransferData>
+</EngineeringData>
