@@ -19,6 +19,7 @@ from ansys.dpf.composites.load_plugin import load_composites_plugin
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
 SERVER_BIN_OPTION_KEY = "--server-bin"
+PORT_OPTION_KEY = "--port"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -27,6 +28,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         SERVER_BIN_OPTION_KEY,
         action="store",
         help="Path of the dpf server executable",
+    )
+
+    parser.addoption(
+        PORT_OPTION_KEY,
+        action="store",
+        help="Port of an already running dpf server. "
+        "Can be used to test with a debug container. Only supported for linux containers.",
     )
 
 
@@ -187,6 +195,20 @@ class LocalServerProcess:
         self.server_stderr.close()
 
 
+class RunningServer:
+    """Context manager that wraps an already running dpf server that serves at a port"""
+
+    def __init__(self, port: str, platform: str = "linux"):
+        self.port = port
+        self.platform = platform
+
+    def __enter__(self):
+        return ServerContext(port=self.port, platform=self.platform)
+
+    def __exit__(self, *args):
+        pass
+
+
 def _find_free_port() -> int:
     """Find a free port on localhost.
 
@@ -231,8 +253,17 @@ def dpf_server(request: pytest.FixtureRequest):
     server_log_stderr = TEST_ROOT_DIR / f"server_log_err-{uid}.txt"
 
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
+    running_server_port = request.config.getoption(PORT_OPTION_KEY)
+
+    if server_bin and running_server_port:
+        raise Exception(
+            "Invalid inputs. Both port and server-bin option are specified. "
+            "These two options are exclusive"
+        )
 
     def start_server_process():
+        if running_server_port:
+            return RunningServer(port=running_server_port)
         if server_bin:
             return LocalServerProcess(
                 server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
