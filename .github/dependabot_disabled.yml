@@ -1,0 +1,15 @@
+# Currently disabled because dependabot cannot handle
+# version specifications that depend on the python version: e.g.
+#
+# numpy = [
+#    {version = ">=1.15,<1.22", python = ">=3.7,<3.8"},
+#    {version = "^1.22", python = ">=3.8,<3.11"}
+#]
+# See also: https://github.com/dependabot/dependabot-core/issues/5862
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    versioning-strategy: "lockfile-only"

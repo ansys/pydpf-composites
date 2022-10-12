@@ -24,6 +24,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
+
+# Dependabot cannot handle these kind of dependencies.
+# If we can use a single numpy version for all python version
+# we can reactivate dependabot.
+# See also: https://github.com/dependabot/dependabot-core/issues/5862
 numpy = [
     {version = ">=1.15,<1.22", python = ">=3.7,<3.8"},
     {version = "^1.22", python = ">=3.8,<3.11"}
