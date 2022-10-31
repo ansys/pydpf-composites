@@ -34,7 +34,6 @@ Pydpf composites
 A Python wrapper for Ansys dpf composites
 
 
-    
 Developer Setup
 ^^^^^^^^^^^^^^^^
 
@@ -58,11 +57,25 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         python -m pip install pipx
         pipx ensurepath
         pipx install poetry
-        pipx instal pip
+        pipx install pip
         pipx install tox
 
+Build environment
+^^^^^^^^^^^^^^^^^
 
+# Build package and install into the local env
 
+.. code:: bash
+    poetry install -E build
+    poetry build
+    python -m pip install dist\ansys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
+
+Use tox to create a virtual env for the development. Activate this env to run tests and scripts
+(*<root>\\.tox\\dev\\Scripts\\activate*).
+
+.. code:: bash
+
+    tox -e dev
 
 Testing
 --------------
@@ -101,10 +114,8 @@ Build documentation
         docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
         tox -e doc-linux
 
-
-
 Run style checks
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 .. code:: bash
 

@@ -22,9 +22,13 @@ class ResultDefinition:
     _VERSION = 1
     _ACCUMULATOR = "max"
 
-    # todo: TBD: measures, composite_definitions, material_files are list
+    # todo: TBD: measures, composite_definitions, material_files are of type list
     # where we just support one file.
     # should this class work with lists or just single entries?
+
+    # todo: which object should upload the files to the server? Or is this a user task?
+    # for instance: rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
+
     def __init__(
         self,
         name: str,
@@ -76,7 +80,7 @@ class ResultDefinition:
         self._combined_failure_criterion = value
 
     def _get_measures(self) -> str:
-        return self._meassures
+        return self._measures
 
     def _set_measures(self, value: str) -> None:
         for v in value:
@@ -84,7 +88,7 @@ class ResultDefinition:
                 values = ", ".join([v for v in _SUPPORTED_MEASURES])
                 raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
         else:
-            self._meassures = value
+            self._measures = value
 
     def _get_composite_definitions(self) -> Sequence[_PATH]:
         return self._composite_definitions
