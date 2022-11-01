@@ -53,7 +53,7 @@ class SamplingPoint:
         load_composites_plugin()
 
         # initialize the sampling point operator. Do it just once
-        self._operator = dpf.Operator(name="composite::composite_sampling_point_operator", server=server)
+        self._operator = dpf.Operator(name="composite::composite_sampling_point_operator", server=self._server)
         if not self._operator:
             raise RuntimeError("SamplingPoint: failed to initialize the operator!")
 
