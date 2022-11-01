@@ -1,9 +1,10 @@
 """Wrapper for the Sampling Point Operator"""
 
 import json
-#from typing import Any, Dict, Sequence
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 import numpy as np
+from typing import Sequence
 
 from .result_definition import ResultDefinition
 from .load_plugin import load_composites_plugin
@@ -26,28 +27,32 @@ class SamplingPoint:
         Result definition object which defines all the inputs and scope.
     """
 
-    #todo: should we support the different server types if server is None?
+    FAILURE_MODES = {"irf": "inverse_reserve_factor",
+                     "rf": "reserve_factor",
+                     "mos": "margin_of_safety"}
+
+    # todo: should we support the different server types if server is None?
 
     def __init__(
-        self,
-        name: str,
-        result_definition: ResultDefinition = None,
-        server: BaseServer = None
+            self,
+            name: str,
+            result_definition: ResultDefinition = None,
+            server: BaseServer = None
     ):
         """Create a SamplingPoint object."""
         self.name = name
         self._result_definition = result_definition
 
-        #todo: TBD - how to handle the server
+        # todo: TBD - how to handle the server
 
-        #specifies the server. Creates a new one if needed
+        # specifies the server. Creates a new one if needed
         self._server = get_or_create_server(server)
         if not self._server:
             raise RuntimeError("SamplingPoint: cannot connect or create a server")
 
         load_composites_plugin()
 
-        #initialize the sampling point operator. Do it just once
+        # initialize the sampling point operator. Do it just once
         self._operator = dpf.Operator(name="composite::composite_sampling_point_operator", server=server)
         if not self._operator:
             raise RuntimeError("SamplingPoint: failed to initialize the operator!")
@@ -72,6 +77,11 @@ class SamplingPoint:
     def results(self):
         if self._uptodate and self._results:
             return self._results
+
+    @property
+    def analysis_plies(self):
+        if self._uptodate and self._results:
+            return self._results[0]["layup"]["analysis_plies"]
 
     @property
     def s1(self):
@@ -134,9 +144,19 @@ class SamplingPoint:
             return self._results[0]["results"]["strains"]["e23"]
 
     @property
-    def inverse_reserve_factors(self):
+    def inverse_reserve_factor(self):
         if self._uptodate and self._results:
             return self._results[0]["results"]["failures"]["inverse_reserve_factor"]
+
+    @property
+    def reserve_factor(self):
+        if self._uptodate and self._results:
+            return self._results[0]["results"]["failures"]["reserve_factor"]
+
+    @property
+    def margin_of_safety(self):
+        if self._uptodate and self._results:
+            return self._results[0]['results']['failures']['margin_of_safety']
 
     @property
     def failure_modes(self):
@@ -171,55 +191,142 @@ class SamplingPoint:
         self._results = json.loads(result_as_string)
         self._uptodate = True
 
-    def plot(self,
-             show_failure_modes: bool = False):
-        """Plots all results.
-        """
+    def _plot_yaxis_data(self, core_scale_factor):
+        # returns the offsets and ticks of the y-axis
+        offsets = np.array(self.offsets)
+        for index, ply in enumerate(self.analysis_plies):
+            is_core = ply["is_core"]
+            height = offsets[index * 3 + 2] - offsets[index * 3]
+            if is_core:
+                height *= core_scale_factor
 
-        offsets = self.offsets
+            if index > 0:
+                # top of previous ply is bottom of current ply
+                offsets[index * 3] = offsets[index * 3 - 1]
 
-        fig = plt.figure()
-        gs = fig.add_gridspec(1, 3, hspace=0, wspace=0)
-        (strains, stresses, failures) = gs.subplots(sharex='col', sharey='row')
+            offsets[index * 3 + 1] = offsets[index * 3] + height / 2.
+            offsets[index * 3 + 2] = offsets[index * 3] + height
 
-        strains.plot(self.e1, offsets, label="e1")
-        strains.plot(self.e2, offsets, label="e2")
-        strains.plot(self.e12, offsets, label="e12")
-        strains.plot(self.e13, offsets, label="e13")
-        strains.plot(self.e23, offsets, label="e23")
-        strains.set_title("Strains")
-        strains.legend()
-        strains.grid()
+        ticks = list(offsets[::3]) + [offsets[-1]]
 
-        stresses.plot(self.s1, offsets, label="s1")
-        stresses.plot(self.s2, offsets, label="s2")
-        stresses.plot(self.s3, offsets, label="s3")
-        stresses.plot(self.s12, offsets, label="s12")
-        stresses.plot(self.s13, offsets, label="s13")
-        stresses.plot(self.s23, offsets, label="s23")
-        stresses.set_title("Stresses")
-        stresses.grid()
+        return offsets, ticks
 
-        irfs = self.inverse_reserve_factors
-        failures.plot(irfs, offsets, label="irf")
-        failures.set_title("Failures")
-        if show_failure_modes:
-            fms = self.failure_modes
-            for index, fm in enumerate(fms):
-                failures.annotate(fms[index],
-                                  xy=(irfs[index], offsets[index]),
-                                  xytext=(irfs[index], offsets[index])
-                                  )
-
-        failures.legend()
-        failures.grid()
-
-        angles_in_rad = np.array(self._results[0]["layup"]["polar_properties"]["angles"])/180.*np.pi
+    def _polar_plot(self):
+        # adds a polar plot of the laminate properties
+        angles_in_rad = np.array(self._results[0]["layup"]["polar_properties"]["angles"]) / 180. * np.pi
 
         fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
         ax.plot(angles_in_rad, self.polar_properties_E1, label="E1")
         ax.plot(angles_in_rad, self.polar_properties_E2, label="E2")
         ax.plot(angles_in_rad, self.polar_properties_G12, label="G12")
         ax.legend()
+        return fig, ax
+
+    def _laminate_plot(self, plot, offsets):
+        width = 1.
+        for index, ply in enumerate(self.analysis_plies):
+            angle = ply["angle"]
+            sinus = np.sin(angle / 180. * np.pi)
+            hatch = ""
+
+            if ply["is_core"]:
+                hatch = "x"
+            #elif np.sin(-np.pi / 8) < sinus < np.sin(np.pi / 8):
+            #    hatch = "--"
+            #elif np.sin(np.pi / 8) < sinus < np.sin(3 * np.pi / 8):
+            #    hatch = "/"
+            #elif np.sin(3 * np.pi / 8) < sinus < np.sin(5 * np.pi / 8):
+            #    hatch = "|"
+            #elif np.sin(-3 * np.pi / 8) < sinus < np.sin(-np.pi / 8):
+            #    hatch = "\\"
+
+            height = offsets[index * 3 + 2] - offsets[index * 3]
+            origin = (0., offsets[index * 3])
+            plot.add_patch(Rectangle(
+                xy=origin,
+                width=width,
+                height=height,
+                fill=False,
+                hatch=hatch
+            ))
+            mat = ply["material"]
+            th = ply["thickness"]
+            text = f"{mat}\nangle={angle}, th={th}"
+            plot.annotate(text=text,
+                          xy=(origin[0] + width / 2., origin[1] + height / 2.),
+                          ha="center",
+                          va="center",
+                          fontsize=8)
+
+    def _component_plot(self, plot, offsets, components, title):
+        for comp in components:
+            plot.plot(getattr(self, comp), offsets, label=comp)
+        plot.set_title(title)
+        plot.legend()
+        plot.grid()
+
+    def plot(self,
+             strain_components: Sequence[str] = ["e1", "e2", "e3", "e12", "e13", "e23"],
+             stress_components: Sequence[str] = ["s1", "s2", "s3", "s12", "s13", "s23"],
+             failure_components: Sequence[str] = ["irf", "rf", "mos"],
+             show_failure_modes: bool = False,
+             show_laminate: bool = True,
+             show_polar_plot: bool = True,
+             core_scale_factor: float = 1.):
+        """Plots all results.
+        """
+
+        offsets, ticks = self._plot_yaxis_data(core_scale_factor)
+        num_active_plots = int(show_laminate)
+        num_active_plots += 1 if len(strain_components) > 0 else 0
+        num_active_plots += 1 if len(stress_components) > 0 else 0
+        num_active_plots += 1 if len(failure_components) > 0 else 0
+
+        fig = plt.figure()
+        gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
+        sub_plots = gs.subplots(sharex='col', sharey='row')
+
+        if num_active_plots > 0:
+            if core_scale_factor != 1.:
+                labels = []
+            else:
+                labels = [str(t) for t in ticks]
+
+            sub_plots[0].set_yticks(ticks=ticks, labels=labels)
+
+            index = 0
+            if show_laminate:
+                self._laminate_plot(sub_plots[index], offsets)
+                index += 1
+
+            if len(strain_components) > 0:
+                self._component_plot(sub_plots[index], offsets, strain_components, "Strains")
+                index += 1
+
+            if len(stress_components) > 0:
+                self._component_plot(sub_plots[index], offsets, stress_components, "Stresses")
+                index += 1
+
+            if len(failure_components) > 0:
+
+                failure_plot = sub_plots[index]
+                failure_components = [self.FAILURE_MODES[v] for v in failure_components]
+                self._component_plot(failure_plot, offsets, failure_components, "Failures")
+
+                all_measures = [getattr(self, v) for v in failure_components]
+
+                if show_failure_modes:
+                    modes = self.failure_modes
+                    for index, fm in enumerate(modes):
+                        for values in all_measures:
+                            failure_plot.annotate(fm,
+                                                  xy=(values[index], offsets[index]),
+                                                  xytext=(values[index], offsets[index])
+                                                  )
+
+                index += 1
+
+        if show_polar_plot:
+            fix, polar_plot = self._polar_plot()
 
         plt.show()
