@@ -86,4 +86,4 @@ results = json.loads(sampling_point_op.outputs.results())
 s13 = results[0]["results"]["stresses"]["s13"]
 offsets = results[0]["results"]["offsets"]
 
-plt.plot(s13, offsets, title="S13")
+plt.plot(s13, offsets)
