@@ -3,12 +3,9 @@
 import json
 import numpy as np
 from typing import Sequence
-from random import randrange
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-from matplotlib.path import Path
-from matplotlib.hatch import _hatch_types, HatchPatternBase, Shapes
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server_types import BaseServer
@@ -16,6 +13,7 @@ from ansys.dpf.core.server import get_or_create_server
 
 from .result_definition import ResultDefinition
 from .load_plugin import load_composites_plugin
+
 
 class SamplingPoint:
     """Implements the Sampling Point object which uses the sampling point operator
@@ -30,15 +28,9 @@ class SamplingPoint:
         Result definition object which defines all the inputs and scope.
     """
 
-    SPOTS_PER_PLY = 3
-
     FAILURE_MODES = {"irf": "inverse_reserve_factor",
                      "rf": "reserve_factor",
                      "mos": "margin_of_safety"}
-
-    INTERFACE_INDICES = {"bottom": 0,
-                         "middle": 1,
-                         "top": 2}
 
     # todo: should we support the different server types if server is None?
 
@@ -49,6 +41,8 @@ class SamplingPoint:
             server: BaseServer = None
     ):
         """Create a SamplingPoint object."""
+        self._spots_per_ply = 0
+        self._interface_indices = {}
         self.name = name
         self._result_definition = result_definition
 
@@ -195,11 +189,27 @@ class SamplingPoint:
         self._operator.inputs.result_definition(self.result_definition.to_json())
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
+
+        # update the number of spots
+        self._spots_per_ply = int(len(np.array(self._results[0]["results"]["strains"]["e1"])) / \
+                                  len(self._results[0]["layup"]["analysis_plies"]))
+
+        if self._spots_per_ply == 3:
+            self._interface_indices = {"bottom": 0,
+                                       "middle": 1,
+                                       "top": 2}
+        elif self._spots_per_ply == 2:
+            self._interface_indices = {"bottom": 0,
+                                       "top": 1}
+        elif self._spots_per_ply == 1:
+            self._interface_indices = {"middle": 0}
+
         self._uptodate = True
 
     def get_indices(self, spots: Sequence[str] = ["bottom", "middle", "top"]):
-        """Returns the indices of the selected interfaces for each ply. For instance, can be used to
-        access the stresses at the bottom of each ply.
+        """Returns the indices of the selected interfaces for each ply.
+        The indices are sorted from bottom to top.
+        For instance, can be used to access the stresses at the bottom of each ply.
 
         Parameters
         ----------
@@ -207,12 +217,13 @@ class SamplingPoint:
             selection of the interfaces. Only the indices of the bottom interfaces of plies
             are returned if spots is equal to ["bottom"]
         """
-        ply_wise_indices = [self.INTERFACE_INDICES[v] for v in spots]
+        ply_wise_indices = [self._interface_indices[v] for v in spots]
+        ply_wise_indices.sort()
         num_plies = len(self.analysis_plies)
 
         indices = []
         for ply_index in range(0, num_plies):
-            indices.extend([ply_index * self.SPOTS_PER_PLY + index for index in ply_wise_indices])
+            indices.extend([ply_index * self._spots_per_ply + index for index in ply_wise_indices])
 
         return indices
 
@@ -229,24 +240,42 @@ class SamplingPoint:
         core_scale_factor:
             Scale the thickness of core plies
         """
-        offsets = np.array(self.offsets)
+        offsets = self.offsets
+        indices = self.get_indices(spots)
 
+        if core_scale_factor == 1.:
+            return offsets[indices]
+
+        thicknesses = []
         for index, ply in enumerate(self.analysis_plies):
             is_core = ply["is_core"]
-            height = offsets[index * 3 + 2] - offsets[index * 3]
+
+            if self._spots_per_ply > 1:
+                # get thickness from the offsets
+                th = offsets[(index + 1) * self._spots_per_ply - 1] - offsets[index * self._spots_per_ply]
+            else:
+                # get thickness from the analysis ply
+                th = ply["thickness"]
+
             if is_core:
-                height *= core_scale_factor
+                th *= core_scale_factor
 
-            if index > 0:
-                # top of previous ply is bottom of current ply
-                offsets[index * 3] = offsets[index * 3 - 1]
+            thicknesses.append(th)
 
-            offsets[index * 3 + 1] = offsets[index * 3] + height / 2.
-            offsets[index * 3 + 2] = offsets[index * 3] + height
+        for index, ply in enumerate(self.analysis_plies):
+            if self._spots_per_ply > 1:
+                step = thicknesses[index] / (self._spots_per_ply - 1)
+                top_of_previous_ply = offsets[index * self._spots_per_ply - 1] if index > 0 else offsets[0]
+                for i in range(0, self._spots_per_ply):
+                    offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
+            else:
+                # spots_per_ply is 1
+                if index == 0:
+                    offsets[0] = self.results[0]['layup']["offset"] + th / 2.
+                else:
+                    offsets[index] = offsets[index-1] + (thicknesses[index-1] + thicknesses[index]) / 2.
 
-        selected_offsets = [offsets[index] for index in self.get_indices(spots)]
-
-        return selected_offsets
+        return offsets[indices]
 
     def get_polar_plot(self,
                        components: Sequence[str] = ["E1", "E2", "G12"]):

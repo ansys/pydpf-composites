@@ -1,7 +1,7 @@
 """
-.. _sampling_point_example:
+.. _sampling_point_operator_example:
 
-How to use the Sampling Point wrapper
+How to use the Sampling Point operator
 --------------------------------------
 
 Example how the lay-up data and through-the-thickness results of an
@@ -10,12 +10,14 @@ element can be queried and visualized
 """
 import os
 import pathlib
+import json
+import matplotlib.pyplot as plt
 
 # %%
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites import ResultDefinition, SamplingPoint
+from ansys.dpf.composites import ResultDefinition
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -68,43 +70,20 @@ rd = ResultDefinition(
     element_scope=[3],
 )
 
-# %%
-
-# Create the sampling point and update it
-sampling_point = SamplingPoint("my first sampling point", rd, server)
-sampling_point.update()
+sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
+sampling_point_op.inputs.result_definition(rd.to_json())
 
 # %%
 
-# print the results using preconfigured plots
+# get the results and convert into JSON Dict
 
-fig, axes = sampling_point.get_result_plots(core_scale_factor=0.1, spots=["bottom", "top"], show_failure_modes=True)
-fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
+results = json.loads(sampling_point_op.outputs.results())
 
-# custom plots: plot out-of-plane shear stresses
+# %%
 
-import matplotlib.pyplot as plt
+# Extract the data and plot it
 
-fig, ax1 = plt.subplots()
-sampling_point.add_results_to_plot(ax1, ["s13", "s23"], ["bottom", "top"], 0.5, "Out-of-plane shear stresses")
-ax1.legend()
-plt.rcParams['hatch.linewidth'] = 0.2
-sampling_point.add_ply_sequence_to_plot(ax1, 0.5)
+s13 = results[0]["results"]["stresses"]["s13"]
+offsets = results[0]["results"]["offsets"]
 
-# custom plots: extract s12 and s2 at the bottom and top of each ply and plot it
-
-interfaces = ["bottom", "top"]
-core_scale_factor = 1.
-indices = sampling_point.get_indices(["bottom", "top"])
-offsets = sampling_point.get_offsets(["bottom", "top"], core_scale_factor)
-s12 = sampling_point.s12[indices]
-s2 = sampling_point.s2[indices]
-
-fig, ax1 = plt.subplots()
-plt.rcParams['hatch.linewidth'] = 0.2
-line = ax1.plot(s12, offsets, label="s12")
-line = ax1.plot(s2, offsets, label="s2")
-ax1.set_yticks([])
-ax1.legend()
-ax1.set_title("S12 and S2")
-#sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
+plt.plot(s13, offsets, title="S13")
