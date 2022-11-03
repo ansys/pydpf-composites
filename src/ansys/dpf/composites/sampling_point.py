@@ -1,7 +1,7 @@
-"""Wrapper for the Sampling Point Operator"""
+"""Wrapper for the Sampling Point Operator."""
 
 import json
-from typing import Sequence
+from typing import Any, Dict, Sequence, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -9,15 +9,20 @@ from ansys.dpf.core.server_types import BaseServer
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.typing as npt
 
 from .load_plugin import load_composites_plugin
 from .result_definition import ResultDefinition
 
 
 class SamplingPoint:
-    """Implements the Sampling Point object which uses the sampling point operator
-    of dpf-composites. Allows to plot the lay-up and results at a certain point of the
-    layerd structure.
+    """Implements the Sampling Point object which wraps the DPF sampling point operator.
+
+    Allows to plot the lay-up and results at a certain point of the layerd structure.
+    The results (e.g. analysis_plies, e1, s12, failure_modes ...) are always from the
+    bottom to the top of the laminate (along the element normal direction).
+    Post-processing results such as e1 are returned as flat arrays where self.spots_per_ply
+    can be used to compute the index for a certain ply.
 
     Parameters
     ----------
@@ -36,11 +41,14 @@ class SamplingPoint:
     # todo: should we support the different server types if server is None?
 
     def __init__(
-        self, name: str, result_definition: ResultDefinition = None, server: BaseServer = None
+        self,
+        name: str,
+        result_definition: Union[ResultDefinition, None] = None,
+        server: BaseServer = None,
     ):
         """Create a SamplingPoint object."""
         self._spots_per_ply = 0
-        self._interface_indices = {}
+        self._interface_indices: Dict[str, int] = {}
         self.name = name
         self._result_definition = result_definition
 
@@ -65,147 +73,234 @@ class SamplingPoint:
         self._uptodate = False
 
     @property
-    def result_definition(self):
+    def spots_per_ply(self) -> int:
+        """Access the number of through-the-thickness integration points per ply."""
+        return self._spots_per_ply
+
+    @property
+    def result_definition(self) -> Union[ResultDefinition, None]:
+        """Input for the Sampling Point operator."""
         return self._result_definition
 
     @result_definition.setter
-    def result_definition(self, value):
+    def result_definition(self, value: Union[ResultDefinition, None]) -> None:
         self._uptodate = False
         self._result_definition = value
 
     @property
-    def results(self):
+    def results(self) -> Any:
+        """Access the results of the sampling point operator as JSON Dict."""
         if self._uptodate and self._results:
             return self._results
 
     @property
-    def analysis_plies(self):
+    def analysis_plies(self) -> Union[Sequence[Any]]:
+        """List of analysis plies from the bottom to the top."""
         if self._uptodate and self._results:
-            return self._results[0]["layup"]["analysis_plies"]
+            plies = self._results[0]["layup"]["analysis_plies"]
+            if len(plies) == 0:
+                raise RuntimeError("No plies are found for the selected element!")
+            return plies
+
+        return []
 
     @property
-    def s1(self):
+    def s1(self) -> npt.NDArray[np.float64]:
+        """Stresses in the material 1 direction of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["stresses"]["s1"])
 
+        raise RuntimeError(f"s1 of Sampling Point {self.name} is not accessible")
+
     @property
-    def s2(self):
+    def s2(self) -> npt.NDArray[np.float64]:
+        """Stresses in the material 2 direction of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["stresses"]["s2"])
 
+        raise RuntimeError(f"s2 of Sampling Point {self.name} is not accessible")
+
     @property
-    def s3(self):
+    def s3(self) -> npt.NDArray[np.float64]:
+        """Stresses in the material 3 direction of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["stresses"]["s3"])
 
+        raise RuntimeError(f"s3 of Sampling Point {self.name} is not accessible")
+
     @property
-    def s12(self):
+    def s12(self) -> npt.NDArray[np.float64]:
+        """In-plane shear stresses s12 of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["stresses"]["s12"])
 
+        raise RuntimeError(f"s12 of Sampling Point {self.name} is not accessible")
+
     @property
-    def s13(self):
+    def s13(self) -> npt.NDArray[np.float64]:
+        """Out-of-plane shear stresses s13 of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["stresses"]["s13"])
 
+        raise RuntimeError(f"s13 of Sampling Point {self.name} is not accessible")
+
     @property
-    def s23(self):
+    def s23(self) -> npt.NDArray[np.float64]:
+        """Out-of-plane shear stresses s23 of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["stresses"]["s23"])
 
+        raise RuntimeError(f"s23 of Sampling Point {self.name} is not accessible")
+
     @property
-    def e1(self):
+    def e1(self) -> npt.NDArray[np.float64]:
+        """Strains in the material 1 direction of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["strains"]["e1"])
 
+        raise RuntimeError(f"e1 of Sampling Point {self.name} is not accessible")
+
     @property
-    def e2(self):
+    def e2(self) -> npt.NDArray[np.float64]:
+        """Strains in the material 2 direction of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["strains"]["e2"])
 
+        raise RuntimeError(f"e2 of Sampling Point {self.name} is not accessible")
+
     @property
-    def e3(self):
+    def e3(self) -> npt.NDArray[np.float64]:
+        """Strains in the material 3 direction of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["strains"]["e3"])
 
+        raise RuntimeError(f"e3 of Sampling Point {self.name} is not accessible")
+
     @property
-    def e12(self):
+    def e12(self) -> npt.NDArray[np.float64]:
+        """In-plane shear strains e12 of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["strains"]["e12"])
 
+        raise RuntimeError(f"e12 of Sampling Point {self.name} is not accessible")
+
     @property
-    def e13(self):
+    def e13(self) -> npt.NDArray[np.float64]:
+        """Out-of-plane shear strains e13 of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["strains"]["e13"])
 
+        raise RuntimeError(f"e13 of Sampling Point {self.name} is not accessible")
+
     @property
-    def e23(self):
+    def e23(self) -> npt.NDArray[np.float64]:
+        """Out-of-plane shear strains e23 of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["strains"]["e23"])
 
+        raise RuntimeError(f"e23 of Sampling Point {self.name} is not accessible")
+
     @property
-    def inverse_reserve_factor(self):
+    def inverse_reserve_factor(self) -> npt.NDArray[np.float64]:
+        """Critical inverse reserve factor of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["failures"]["inverse_reserve_factor"])
 
+        raise RuntimeError(f"IRF of Sampling Point {self.name} is not accessible")
+
     @property
-    def reserve_factor(self):
+    def reserve_factor(self) -> npt.NDArray[np.float64]:
+        """Lowest reserve factor of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["failures"]["reserve_factor"])
 
+        raise RuntimeError(f"RF of Sampling Point {self.name} is not accessible")
+
     @property
-    def margin_of_safety(self):
+    def margin_of_safety(self) -> npt.NDArray[np.float64]:
+        """Lowest margin of safety of each ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["failures"]["margin_of_safety"])
 
-    @property
-    def failure_modes(self):
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["failures"]["failure_modes"])
+        raise RuntimeError(f"MoS of Sampling Point {self.name} is not accessible")
 
     @property
-    def offsets(self):
+    def failure_modes(self) -> Sequence[str]:
+        """Critical failure mode of each ply."""
+        if self._uptodate and self._results:
+            return self._results[0]["results"]["failures"]["failure_modes"]
+
+        raise RuntimeError(f"Failure modes of Sampling Point {self.name} is not accessible")
+
+    @property
+    def offsets(self) -> npt.NDArray[np.float64]:
+        """Access the z-coordinates for each interface and ply."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["results"]["offsets"])
 
+        raise RuntimeError(f"Offsets of Sampling Point {self.name} is not accessible")
+
     @property
-    def polar_properties_E1(self):
+    def polar_properties_E1(self) -> npt.NDArray[np.float64]:
+        """Access the polar property E1 of the laminate."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["layup"]["polar_properties"]["E1"])
 
+        raise RuntimeError(f"Polar property E1 of Sampling Point {self.name} is not accessible")
+
     @property
-    def polar_properties_E2(self):
+    def polar_properties_E2(self) -> npt.NDArray[np.float64]:
+        """Access the polar property E2 of the laminate."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["layup"]["polar_properties"]["E2"])
 
+        raise RuntimeError(f"Polar property E2 of Sampling Point {self.name} is not accessible")
+
     @property
-    def polar_properties_G12(self):
+    def polar_properties_G12(self) -> npt.NDArray[np.float64]:
+        """Access the polar property G12 of the laminate."""
         if self._uptodate and self._results:
             return np.array(self._results[0]["layup"]["polar_properties"]["G12"])
 
-    def update(self):
-        """Query the results from the DPF operator and updates the local copy of the results"""
-        self._operator.inputs.result_definition(self.result_definition.to_json())
+        raise RuntimeError(f"Polar property G12 of Sampling Point {self.name} is not accessible")
+
+    def update(self) -> None:
+        """Run the DPF operator and caches the results.
+
+        Important: call this method before you access the data.
+        """
+        if self.result_definition:
+            self._operator.inputs.result_definition(self.result_definition.to_json())
+        else:
+            raise RuntimeError(
+                "Cannot update Sampling Point because " "the Result definition is missing."
+            )
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
 
-        # update the number of spots
-        self._spots_per_ply = int(
-            len(np.array(self._results[0]["results"]["strains"]["e1"]))
-            / len(self._results[0]["layup"]["analysis_plies"])
-        )
+        self._spots_per_ply = 0
+        if self._results:
+            # update the number of spots
+            self._spots_per_ply = int(
+                len(np.array(self._results[0]["results"]["strains"]["e1"]))
+                / len(self._results[0]["layup"]["analysis_plies"])
+            )
 
         if self._spots_per_ply == 3:
             self._interface_indices = {"bottom": 0, "middle": 1, "top": 2}
         elif self._spots_per_ply == 2:
             self._interface_indices = {"bottom": 0, "top": 1}
         elif self._spots_per_ply == 1:
-            self._interface_indices = {"middle": 0}
+            raise RuntimeError(
+                "Result files which only have results at the middle of the ply are "
+                "not supported!"
+            )
 
         self._uptodate = True
 
-    def get_indices(self, spots: Sequence[str] = ["bottom", "middle", "top"]):
-        """Returns the indices of the selected interfaces for each ply.
+    def get_indices(self, spots: Sequence[str] = ["bottom", "middle", "top"]) -> Sequence[int]:
+        """Access the indices of the selected interfaces for each ply.
+
         The indices are sorted from bottom to top.
         For instance, can be used to access the stresses at the bottom of each ply.
 
@@ -217,74 +312,67 @@ class SamplingPoint:
         """
         ply_wise_indices = [self._interface_indices[v] for v in spots]
         ply_wise_indices.sort()
-        num_plies = len(self.analysis_plies)
-
         indices = []
-        for ply_index in range(0, num_plies):
-            indices.extend([ply_index * self._spots_per_ply + index for index in ply_wise_indices])
+        if self.analysis_plies:
+            num_plies = len(self.analysis_plies)
+
+            for ply_index in range(0, num_plies):
+                indices.extend(
+                    [ply_index * self._spots_per_ply + index for index in ply_wise_indices]
+                )
 
         return indices
 
     def get_offsets(
         self, spots: Sequence[str] = ["bot", "mid", "top"], core_scale_factor: float = 1.0
-    ):
-        """Returns the y coordinates of the selected interfaces for each ply.
-        Core materials can be scaled by core_scale_factor
+    ) -> npt.NDArray[np.float64]:
+        """Access the y coordinates of the selected interfaces for each ply.
 
         Parameters
         ----------
         spots:
-            Select the interfaces of interest
+            Select the interfaces of interest.
 
         core_scale_factor:
-            Scale the thickness of core plies
+            Scale the thickness of core plies.
         """
         offsets = self.offsets
+        if not offsets:
+            raise RuntimeError("Please update the sampling point first!")
+
         indices = self.get_indices(spots)
 
         if core_scale_factor == 1.0:
             return offsets[indices]
 
         thicknesses = []
+        if not self.analysis_plies:
+            raise RuntimeError("No analysis plies are found in the selected element!")
+
         for index, ply in enumerate(self.analysis_plies):
             is_core = ply["is_core"]
-
-            if self._spots_per_ply > 1:
-                # get thickness from the offsets
-                th = (
-                    offsets[(index + 1) * self._spots_per_ply - 1]
-                    - offsets[index * self._spots_per_ply]
-                )
-            else:
-                # get thickness from the analysis ply
-                th = ply["thickness"]
-
+            # get thickness from the offsets
+            th = (
+                offsets[(index + 1) * self._spots_per_ply - 1]
+                - offsets[index * self._spots_per_ply]
+            )
             if is_core:
                 th *= core_scale_factor
 
             thicknesses.append(th)
 
         for index, ply in enumerate(self.analysis_plies):
-            if self._spots_per_ply > 1:
-                step = thicknesses[index] / (self._spots_per_ply - 1)
-                top_of_previous_ply = (
-                    offsets[index * self._spots_per_ply - 1] if index > 0 else offsets[0]
-                )
-                for i in range(0, self._spots_per_ply):
-                    offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
-            else:
-                # spots_per_ply is 1
-                if index == 0:
-                    offsets[0] = self.results[0]["layup"]["offset"] + th / 2.0
-                else:
-                    offsets[index] = (
-                        offsets[index - 1] + (thicknesses[index - 1] + thicknesses[index]) / 2.0
-                    )
+            step = thicknesses[index] / (self._spots_per_ply - 1)
+            top_of_previous_ply = (
+                offsets[index * self._spots_per_ply - 1] if index > 0 else offsets[0]
+            )
+            for i in range(0, self._spots_per_ply):
+                offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
 
         return offsets[indices]
 
-    def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]):
-        """Returns the figure and axis of the default polar plot
+    def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
+        """Access the figure and axis of the default polar plot.
 
         Parameters
         ----------
@@ -295,6 +383,9 @@ class SamplingPoint:
         -------
         sampling_point.get_polar_plot(components=["E1", "G12"])
         """
+        if not self._results:
+            raise RuntimeError("Please update the sampling point to generate the poloar plot.")
+
         theta = np.array(self._results[0]["layup"]["polar_properties"]["angles"]) / 180.0 * np.pi
         fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
 
@@ -305,8 +396,8 @@ class SamplingPoint:
         ax.legend()
         return fig, ax
 
-    def add_ply_sequence_to_plot(self, axis, core_scale_factor):
-        """This function adds the stacking (ply + text) to an axis/plot.
+    def add_ply_sequence_to_plot(self, axis: Any, core_scale_factor: float) -> None:
+        """Add the stacking (ply + text) to an axis/plot.
 
         Parameters
         ----------
@@ -341,7 +432,14 @@ class SamplingPoint:
                 fontsize=8,
             )
 
-    def add_results_to_plot(self, axis, components, spots, core_scale_factor, title):
+    def add_results_to_plot(
+        self,
+        axis: Any,
+        components: Sequence[str],
+        spots: Sequence[str],
+        core_scale_factor: float,
+        title: str,
+    ) -> None:
         """Add results (strains, stresses or failure values) to a plot/axis."""
         indices = self.get_indices(spots)
         offsets = self.get_offsets(spots, core_scale_factor)
@@ -361,17 +459,36 @@ class SamplingPoint:
         stress_components: Sequence[str] = ["s1", "s2", "s3", "s12", "s13", "s23"],
         failure_components: Sequence[str] = ["irf", "rf", "mos"],
         show_failure_modes: bool = False,
-        show_laminate: bool = True,
+        create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots=["bottom", "middle", "top"],
-    ):
-        """Returns a figure with an axis (plot) for each selected result entity.
+        spots: Sequence[str] = ["bottom", "middle", "top"],
+    ) -> Any:
+        """Generate a figure with an axis (plot) for each selected result entity.
 
         Parameters:
         -----------
+        strain_components
+            Specify the strain entities of interest.
+            Supported are "e1", "e2", "e3", "e12", "e13", "e23".
+            Plot is skipped if the list is empty.
+        stress_components
+            Specify the stress entities of interest.
+            Supported are "s1", "s2", "s3", "s12", "s13", "s23".
+            Plot is skipped if the list is empty.
+        failure_components
+            Specify the failure values of interest. Supported are "irf", "rf", "mos".
+            Plot is skipped if the list is empty.
+        show_failure_modes
+            Enable this flag to add the critical failure mode to the failure plot
+        create_laminate_plot
+            Plot the stacking sequence of the laminate including text information
+            such as material, thickness and angle.
+        core_scale_factor
+            Ply thickness of core materials are scaled by this factor.
+        spots
+            Show results at these interfaces.
         """
-
-        num_active_plots = int(show_laminate)
+        num_active_plots = int(create_laminate_plot)
         num_active_plots += 1 if len(strain_components) > 0 else 0
         num_active_plots += 1 if len(stress_components) > 0 else 0
         num_active_plots += 1 if len(failure_components) > 0 else 0
@@ -391,7 +508,7 @@ class SamplingPoint:
             axes[0].set_yticks(ticks=ticks, labels=labels)
 
             index = 0
-            if show_laminate:
+            if create_laminate_plot:
                 plt.rcParams["hatch.linewidth"] = 0.2
                 self.add_ply_sequence_to_plot(axes[index], core_scale_factor)
                 axes[index].set_xticks([])
@@ -417,7 +534,7 @@ class SamplingPoint:
                     axes[index], failure_components, spots, core_scale_factor, "Failures"
                 )
 
-                # todo: extract the failure mode of the critical value and move to a separate function
+                # todo: extract the failure mode of the critical value (separate function)
                 middle_indices = self.get_indices(["middle"])
                 middle_offsets = self.get_offsets(
                     spots=["middle"], core_scale_factor=core_scale_factor
