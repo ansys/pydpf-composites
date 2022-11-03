@@ -57,8 +57,7 @@ h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
 material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
 
 # %%
-
-# Define the result definition which is used to configure the composite_failure_operator
+# Configuration of the result definition which is used to configure the composite_failure_operator
 rd = ResultDefinition(
     "combined failure criteria",
     rst_files=[rst_server_path],
@@ -69,46 +68,47 @@ rd = ResultDefinition(
 )
 
 # %%
-
 # Create the sampling point and update it
 sampling_point = SamplingPoint("my first sampling point", rd, server)
 sampling_point.update()
 
 # %%
-
-# print the results using preconfigured plots
+# Plot results using preconfigured plots
 
 fig, axes = sampling_point.get_result_plots(
     core_scale_factor=0.1, spots=["bottom", "top"], show_failure_modes=True
 )
 fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
-# custom plots: plot out-of-plane shear stresses
+# %%
+# Generate a custom plot: plot S13 and S23
 
 import matplotlib.pyplot as plt
 
 fig, ax1 = plt.subplots()
+core_scale_factor = 0.5
+
 sampling_point.add_results_to_plot(
-    ax1, ["s13", "s23"], ["bottom", "top"], 0.5, "Out-of-plane shear stresses"
+    ax1, ["s13", "s23"], ["bottom", "top"], core_scale_factor, "Out-of-plane shear stresses"
 )
 ax1.legend()
 plt.rcParams["hatch.linewidth"] = 0.2
-sampling_point.add_ply_sequence_to_plot(ax1, 0.5)
+sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 
-# custom plots: extract s12 and s2 at the bottom and top of each ply and plot it
+# %%
+# Another approach to generate a custom plot
 
 interfaces = ["bottom", "top"]
 core_scale_factor = 1.0
-indices = sampling_point.get_indices(["bottom", "top"])
-offsets = sampling_point.get_offsets(["bottom", "top"], core_scale_factor)
-s12 = sampling_point.s12[indices]
-s2 = sampling_point.s2[indices]
+indices = sampling_point.get_indices(interfaces)
+offsets = sampling_point.get_offsets(interfaces, core_scale_factor)
+e12 = sampling_point.e12[indices]
+e2 = sampling_point.e2[indices]
 
 fig, ax1 = plt.subplots()
 plt.rcParams["hatch.linewidth"] = 0.2
-line = ax1.plot(s12, offsets, label="s12")
-line = ax1.plot(s2, offsets, label="s2")
+line = ax1.plot(e12, offsets, label="e12")
+line = ax1.plot(e2, offsets, label="e2")
 ax1.set_yticks([])
 ax1.legend()
-ax1.set_title("S12 and S2")
-# sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
+ax1.set_title("e12 and e2")

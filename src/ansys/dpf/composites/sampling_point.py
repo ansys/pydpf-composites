@@ -277,6 +277,13 @@ class SamplingPoint:
             )
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
+        if not self._results or len(self._results) == 0:
+            raise RuntimeError(f"Sampling Point {self.name} has no results.")
+        if self._results and len(self._results) > 1:
+            raise RuntimeError(
+                f"Sampling Point {self.name} is scoped to more than one element"
+                f" which is not yet supported."
+            )
 
         self._spots_per_ply = 0
         if self._results:
