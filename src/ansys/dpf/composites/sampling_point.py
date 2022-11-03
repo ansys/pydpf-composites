@@ -1,18 +1,17 @@
 """Wrapper for the Sampling Point Operator"""
 
 import json
-import numpy as np
 from typing import Sequence
 
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
-
 import ansys.dpf.core as dpf
-from ansys.dpf.core.server_types import BaseServer
 from ansys.dpf.core.server import get_or_create_server
+from ansys.dpf.core.server_types import BaseServer
+from matplotlib.patches import Rectangle
+import matplotlib.pyplot as plt
+import numpy as np
 
-from .result_definition import ResultDefinition
 from .load_plugin import load_composites_plugin
+from .result_definition import ResultDefinition
 
 
 class SamplingPoint:
@@ -28,17 +27,16 @@ class SamplingPoint:
         Result definition object which defines all the inputs and scope.
     """
 
-    FAILURE_MODES = {"irf": "inverse_reserve_factor",
-                     "rf": "reserve_factor",
-                     "mos": "margin_of_safety"}
+    FAILURE_MODES = {
+        "irf": "inverse_reserve_factor",
+        "rf": "reserve_factor",
+        "mos": "margin_of_safety",
+    }
 
     # todo: should we support the different server types if server is None?
 
     def __init__(
-            self,
-            name: str,
-            result_definition: ResultDefinition = None,
-            server: BaseServer = None
+        self, name: str, result_definition: ResultDefinition = None, server: BaseServer = None
     ):
         """Create a SamplingPoint object."""
         self._spots_per_ply = 0
@@ -57,7 +55,9 @@ class SamplingPoint:
             load_composites_plugin()
 
         # initialize the sampling point operator. Do it just once
-        self._operator = dpf.Operator(name="composite::composite_sampling_point_operator", server=used_server)
+        self._operator = dpf.Operator(
+            name="composite::composite_sampling_point_operator", server=used_server
+        )
         if not self._operator:
             raise RuntimeError("SamplingPoint: failed to initialize the operator!")
 
@@ -156,7 +156,7 @@ class SamplingPoint:
     @property
     def margin_of_safety(self):
         if self._uptodate and self._results:
-            return np.array(self._results[0]['results']['failures']['margin_of_safety'])
+            return np.array(self._results[0]["results"]["failures"]["margin_of_safety"])
 
     @property
     def failure_modes(self):
@@ -184,23 +184,21 @@ class SamplingPoint:
             return np.array(self._results[0]["layup"]["polar_properties"]["G12"])
 
     def update(self):
-        """ Query the results from the DPF operator and updates the local copy of the results
-        """
+        """Query the results from the DPF operator and updates the local copy of the results"""
         self._operator.inputs.result_definition(self.result_definition.to_json())
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
 
         # update the number of spots
-        self._spots_per_ply = int(len(np.array(self._results[0]["results"]["strains"]["e1"])) / \
-                                  len(self._results[0]["layup"]["analysis_plies"]))
+        self._spots_per_ply = int(
+            len(np.array(self._results[0]["results"]["strains"]["e1"]))
+            / len(self._results[0]["layup"]["analysis_plies"])
+        )
 
         if self._spots_per_ply == 3:
-            self._interface_indices = {"bottom": 0,
-                                       "middle": 1,
-                                       "top": 2}
+            self._interface_indices = {"bottom": 0, "middle": 1, "top": 2}
         elif self._spots_per_ply == 2:
-            self._interface_indices = {"bottom": 0,
-                                       "top": 1}
+            self._interface_indices = {"bottom": 0, "top": 1}
         elif self._spots_per_ply == 1:
             self._interface_indices = {"middle": 0}
 
@@ -227,8 +225,9 @@ class SamplingPoint:
 
         return indices
 
-    def get_offsets(self, spots: Sequence[str] = ["bot", "mid", "top"],
-                    core_scale_factor: float = 1.):
+    def get_offsets(
+        self, spots: Sequence[str] = ["bot", "mid", "top"], core_scale_factor: float = 1.0
+    ):
         """Returns the y coordinates of the selected interfaces for each ply.
         Core materials can be scaled by core_scale_factor
 
@@ -243,7 +242,7 @@ class SamplingPoint:
         offsets = self.offsets
         indices = self.get_indices(spots)
 
-        if core_scale_factor == 1.:
+        if core_scale_factor == 1.0:
             return offsets[indices]
 
         thicknesses = []
@@ -252,7 +251,10 @@ class SamplingPoint:
 
             if self._spots_per_ply > 1:
                 # get thickness from the offsets
-                th = offsets[(index + 1) * self._spots_per_ply - 1] - offsets[index * self._spots_per_ply]
+                th = (
+                    offsets[(index + 1) * self._spots_per_ply - 1]
+                    - offsets[index * self._spots_per_ply]
+                )
             else:
                 # get thickness from the analysis ply
                 th = ply["thickness"]
@@ -265,20 +267,23 @@ class SamplingPoint:
         for index, ply in enumerate(self.analysis_plies):
             if self._spots_per_ply > 1:
                 step = thicknesses[index] / (self._spots_per_ply - 1)
-                top_of_previous_ply = offsets[index * self._spots_per_ply - 1] if index > 0 else offsets[0]
+                top_of_previous_ply = (
+                    offsets[index * self._spots_per_ply - 1] if index > 0 else offsets[0]
+                )
                 for i in range(0, self._spots_per_ply):
                     offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
             else:
                 # spots_per_ply is 1
                 if index == 0:
-                    offsets[0] = self.results[0]['layup']["offset"] + th / 2.
+                    offsets[0] = self.results[0]["layup"]["offset"] + th / 2.0
                 else:
-                    offsets[index] = offsets[index-1] + (thicknesses[index-1] + thicknesses[index]) / 2.
+                    offsets[index] = (
+                        offsets[index - 1] + (thicknesses[index - 1] + thicknesses[index]) / 2.0
+                    )
 
         return offsets[indices]
 
-    def get_polar_plot(self,
-                       components: Sequence[str] = ["E1", "E2", "G12"]):
+    def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]):
         """Returns the figure and axis of the default polar plot
 
         Parameters
@@ -290,8 +295,8 @@ class SamplingPoint:
         -------
         sampling_point.get_polar_plot(components=["E1", "G12"])
         """
-        theta = np.array(self._results[0]["layup"]["polar_properties"]["angles"]) / 180. * np.pi
-        fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+        theta = np.array(self._results[0]["layup"]["polar_properties"]["angles"]) / 180.0 * np.pi
+        fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
 
         for comp in components:
             ax.plot(theta, getattr(self, f"polar_properties_{comp}", []), label=comp)
@@ -310,8 +315,7 @@ class SamplingPoint:
         core_scale_factor
             Scales the thickness of core plies
         """
-        offsets = self.get_offsets(spots=["bottom", "top"],
-                                   core_scale_factor=core_scale_factor)
+        offsets = self.get_offsets(spots=["bottom", "top"], core_scale_factor=core_scale_factor)
 
         num_spots = 2
         x_bound = axis.get_xbound()
@@ -323,26 +327,22 @@ class SamplingPoint:
 
             height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
             origin = (x_bound[0], offsets[index * num_spots])
-            axis.add_patch(Rectangle(
-                xy=origin,
-                width=width,
-                height=height,
-                fill=False,
-                hatch=hatch
-            ))
+            axis.add_patch(
+                Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch)
+            )
             mat = ply["material"]
             th = ply["thickness"]
             text = f"{mat}\nangle={angle}, th={th}"
-            axis.annotate(text=text,
-                          xy=(origin[0] + width / 2., origin[1] + height / 2.),
-                          ha="center",
-                          va="center",
-                          fontsize=8)
+            axis.annotate(
+                text=text,
+                xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
+                ha="center",
+                va="center",
+                fontsize=8,
+            )
 
     def add_results_to_plot(self, axis, components, spots, core_scale_factor, title):
-        """Add results (strains, stresses or failure values) to a plot/axis.
-
-        """
+        """Add results (strains, stresses or failure values) to a plot/axis."""
         indices = self.get_indices(spots)
         offsets = self.get_offsets(spots, core_scale_factor)
 
@@ -355,14 +355,16 @@ class SamplingPoint:
         axis.legend()
         axis.grid()
 
-    def get_result_plots(self,
-                         strain_components: Sequence[str] = ["e1", "e2", "e3", "e12", "e13", "e23"],
-                         stress_components: Sequence[str] = ["s1", "s2", "s3", "s12", "s13", "s23"],
-                         failure_components: Sequence[str] = ["irf", "rf", "mos"],
-                         show_failure_modes: bool = False,
-                         show_laminate: bool = True,
-                         core_scale_factor: float = 1.,
-                         spots=["bottom", "middle", "top"]):
+    def get_result_plots(
+        self,
+        strain_components: Sequence[str] = ["e1", "e2", "e3", "e12", "e13", "e23"],
+        stress_components: Sequence[str] = ["s1", "s2", "s3", "s12", "s13", "s23"],
+        failure_components: Sequence[str] = ["irf", "rf", "mos"],
+        show_failure_modes: bool = False,
+        show_laminate: bool = True,
+        core_scale_factor: float = 1.0,
+        spots=["bottom", "middle", "top"],
+    ):
         """Returns a figure with an axis (plot) for each selected result entity.
 
         Parameters:
@@ -376,12 +378,12 @@ class SamplingPoint:
 
         fig = plt.figure()
         gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
-        axes = gs.subplots(sharex='col', sharey='row')
+        axes = gs.subplots(sharex="col", sharey="row")
 
         if num_active_plots > 0:
             ticks = self.get_offsets(spots=["top"], core_scale_factor=core_scale_factor)
 
-            if core_scale_factor != 1.:
+            if core_scale_factor != 1.0:
                 labels = []
             else:
                 labels = [str(t) for t in ticks]
@@ -390,39 +392,50 @@ class SamplingPoint:
 
             index = 0
             if show_laminate:
-                plt.rcParams['hatch.linewidth'] = 0.2
+                plt.rcParams["hatch.linewidth"] = 0.2
                 self.add_ply_sequence_to_plot(axes[index], core_scale_factor)
                 axes[index].set_xticks([])
                 index += 1
 
             if len(strain_components) > 0:
-                self.add_results_to_plot(axes[index], strain_components, spots, core_scale_factor, "Strains")
+                self.add_results_to_plot(
+                    axes[index], strain_components, spots, core_scale_factor, "Strains"
+                )
                 index += 1
 
             if len(stress_components) > 0:
-                self.add_results_to_plot(axes[index], stress_components, spots, core_scale_factor, "Stresses")
+                self.add_results_to_plot(
+                    axes[index], stress_components, spots, core_scale_factor, "Stresses"
+                )
                 index += 1
 
             if len(failure_components) > 0:
 
                 failure_plot = axes[index]
                 failure_components = [self.FAILURE_MODES[v] for v in failure_components]
-                self.add_results_to_plot(axes[index], failure_components, spots, core_scale_factor, "Failures")
+                self.add_results_to_plot(
+                    axes[index], failure_components, spots, core_scale_factor, "Failures"
+                )
 
                 # todo: extract the failure mode of the critical value and move to a separate function
                 middle_indices = self.get_indices(["middle"])
-                middle_offsets = self.get_offsets(spots=["middle"], core_scale_factor=core_scale_factor)
-                all_measures = [np.array(getattr(self, v))[middle_indices] for v in failure_components]
+                middle_offsets = self.get_offsets(
+                    spots=["middle"], core_scale_factor=core_scale_factor
+                )
+                all_measures = [
+                    np.array(getattr(self, v))[middle_indices] for v in failure_components
+                ]
 
                 if show_failure_modes:
                     raw_data = self.failure_modes
                     modes = [raw_data[i] for i in middle_indices]
                     for index, fm in enumerate(modes):
                         for values in all_measures:
-                            failure_plot.annotate(fm,
-                                                  xy=(values[index], middle_offsets[index]),
-                                                  xytext=(values[index], middle_offsets[index])
-                                                  )
+                            failure_plot.annotate(
+                                fm,
+                                xy=(values[index], middle_offsets[index]),
+                                xytext=(values[index], middle_offsets[index]),
+                            )
 
                 index += 1
 

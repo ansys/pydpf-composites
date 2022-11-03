@@ -78,7 +78,9 @@ sampling_point.update()
 
 # print the results using preconfigured plots
 
-fig, axes = sampling_point.get_result_plots(core_scale_factor=0.1, spots=["bottom", "top"], show_failure_modes=True)
+fig, axes = sampling_point.get_result_plots(
+    core_scale_factor=0.1, spots=["bottom", "top"], show_failure_modes=True
+)
 fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
 # custom plots: plot out-of-plane shear stresses
@@ -86,25 +88,27 @@ fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 import matplotlib.pyplot as plt
 
 fig, ax1 = plt.subplots()
-sampling_point.add_results_to_plot(ax1, ["s13", "s23"], ["bottom", "top"], 0.5, "Out-of-plane shear stresses")
+sampling_point.add_results_to_plot(
+    ax1, ["s13", "s23"], ["bottom", "top"], 0.5, "Out-of-plane shear stresses"
+)
 ax1.legend()
-plt.rcParams['hatch.linewidth'] = 0.2
+plt.rcParams["hatch.linewidth"] = 0.2
 sampling_point.add_ply_sequence_to_plot(ax1, 0.5)
 
 # custom plots: extract s12 and s2 at the bottom and top of each ply and plot it
 
 interfaces = ["bottom", "top"]
-core_scale_factor = 1.
+core_scale_factor = 1.0
 indices = sampling_point.get_indices(["bottom", "top"])
 offsets = sampling_point.get_offsets(["bottom", "top"], core_scale_factor)
 s12 = sampling_point.s12[indices]
 s2 = sampling_point.s2[indices]
 
 fig, ax1 = plt.subplots()
-plt.rcParams['hatch.linewidth'] = 0.2
+plt.rcParams["hatch.linewidth"] = 0.2
 line = ax1.plot(s12, offsets, label="s12")
 line = ax1.plot(s2, offsets, label="s2")
 ax1.set_yticks([])
 ax1.legend()
 ax1.set_title("S12 and S2")
-#sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
+# sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)

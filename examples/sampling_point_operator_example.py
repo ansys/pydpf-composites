@@ -8,9 +8,9 @@ Example how the lay-up data and through-the-thickness results of an
 element can be queried and visualized
 
 """
+import json
 import os
 import pathlib
-import json
 import matplotlib.pyplot as plt
 
 # %%

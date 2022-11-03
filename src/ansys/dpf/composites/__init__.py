@@ -10,7 +10,4 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 from .result_definition import ResultDefinition
 from .sampling_point import SamplingPoint
 
-__all__ = [
-    "ResultDefinition",
-    "SamplingPoint"
-]
+__all__ = ["ResultDefinition", "SamplingPoint"]
