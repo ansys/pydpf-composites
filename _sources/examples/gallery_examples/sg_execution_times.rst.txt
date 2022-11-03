@@ -5,14 +5,14 @@
 
 Computation times
 =================
-**00:04.822** total execution time for **examples_gallery_examples** files:
+**00:05.840** total execution time for **examples_gallery_examples** files:
 
 +---------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_basic_example.py` (``basic_example.py``)                       | 00:02.598 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_basic_example.py` (``basic_example.py``)                       | 00:03.696 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py` (``failure_operator_example.py``) | 00:01.304 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py` (``failure_operator_example.py``) | 00:01.245 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_short_fiber_example.py` (``short_fiber_example.py``)           | 00:00.702 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_short_fiber_example.py` (``short_fiber_example.py``)           | 00:00.680 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py` (``sampling_point_example.py``)     | 00:00.218 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py` (``sampling_point_example.py``)     | 00:00.219 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------+-----------+--------+
