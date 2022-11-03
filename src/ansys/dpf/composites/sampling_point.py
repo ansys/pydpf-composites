@@ -1,7 +1,7 @@
 """Wrapper for the Sampling Point Operator."""
 
 import json
-from typing import Any, Dict, Sequence, Union
+from typing import Any, Dict, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -337,13 +337,10 @@ class SamplingPoint:
             Scale the thickness of core plies.
         """
         offsets = self.offsets
-        if not offsets:
-            raise RuntimeError("Please update the sampling point first!")
-
         indices = self.get_indices(spots)
 
         if core_scale_factor == 1.0:
-            return offsets[indices]
+            return cast(npt.NDArray[np.float64], offsets[indices])
 
         thicknesses = []
         if not self.analysis_plies:
@@ -369,7 +366,7 @@ class SamplingPoint:
             for i in range(0, self._spots_per_ply):
                 offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
 
-        return offsets[indices]
+        return cast(npt.NDArray[np.float64], offsets[indices])
 
     def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
         """Access the figure and axis of the default polar plot.
