@@ -1,6 +1,5 @@
 """Helper to load composites plugin."""
 
-import sys
 from typing import Optional
 
 import ansys.dpf.core as dpf
