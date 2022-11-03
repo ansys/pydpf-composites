@@ -81,9 +81,9 @@ def test_sampling_point(dpf_server):
         stress_components=["s13", "s23"],
         failure_components=["rf"],
         show_failure_modes=True,
-        show_laminate=True,
+        create_laminate_plot=True,
         core_scale_factor=0.5,
-        spots=["bottom", "top"],
+        spots=["bottom", "top"]
     )
 
     fig, axis = sampling_point.get_polar_plot(["E1", "G12"])
