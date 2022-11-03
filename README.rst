@@ -35,7 +35,7 @@ A Python wrapper for Ansys dpf composites
 
 
 Developer Setup
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Installing Pydpf composites in developer mode allows
 you to modify the source and enhance it.
