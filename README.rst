@@ -66,6 +66,7 @@ Build environment
 # Build package and install into the local env
 
 .. code:: bash
+
     poetry install -E build
     poetry build
     python -m pip install dist\ansys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
@@ -97,7 +98,6 @@ This currently works only on windows and with the directory structure of dpf_com
 
 Build documentation
 ^^^^^^^^^^^^^^^^^^^
-
 #. Windows:
 
     .. code:: bash
@@ -120,9 +120,6 @@ Run style checks
 .. code:: bash
 
     tox -e style
-
-
-
 
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
