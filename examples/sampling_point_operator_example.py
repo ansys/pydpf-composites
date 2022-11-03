@@ -11,11 +11,11 @@ element can be queried and visualized
 import json
 import os
 import pathlib
-import matplotlib.pyplot as plt
 
 # %%
 # Load ansys libraries
 import ansys.dpf.core as dpf
+import matplotlib.pyplot as plt
 
 from ansys.dpf.composites import ResultDefinition
 from ansys.dpf.composites.failure_criteria import (
