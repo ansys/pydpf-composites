@@ -41,7 +41,7 @@ class ElementInfo:
 def _setup_index_by_id(scoping: Any) -> NDArray[np.int64]:
     # Setup array that can be indexed by id to get the index.
     # For ids which are not present in the scoping the array has a value of -1
-    indices: NDArray[np.int64] = np.ones(max(scoping.ids) + 1, dtype=np.int64) * -1
+    indices: NDArray[np.int64] = np.full(max(scoping.ids) + 1, -1, dtype=np.int64)
     indices[scoping.ids] = np.arange(len(scoping.ids))
     return indices
 
