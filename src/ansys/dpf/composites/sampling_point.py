@@ -440,10 +440,10 @@ class SamplingPoint:
         self,
         axis: Any,
         components: Sequence[str],
-        spots: Sequence[str],
-        core_scale_factor: float,
-        title: str,
-        xlabel: str,
+        spots: Sequence[str] = ["bottom", "top"],
+        core_scale_factor: float = 1.,
+        title: str = "",
+        xlabel: str = "",
     ) -> None:
         """Add results (strains, stresses or failure values) to a plot/axis.
 
