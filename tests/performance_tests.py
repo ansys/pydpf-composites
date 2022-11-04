@@ -9,6 +9,11 @@ from ansys.dpf.composites.layup_info import get_layup_info
 from .helper import CompositeFiles, Timer, setup_operators
 
 
+def check_performance(timer, last_measured_performance):
+    assert timer.get_runtime_without_first_step() < last_measured_performance * 2
+    assert timer.get_runtime_without_first_step() > last_measured_performance / 2
+
+
 def get_data_files():
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
@@ -29,7 +34,6 @@ def get_ger_data_files():
     ger_path = (
         pathlib.Path("D:\\")
         / "ANSYSDev"
-        / "additional_model_data_git"
         / "additional_model_data"
         / "ger89"
         / "ger89_files"
@@ -56,10 +60,25 @@ def get_test_data(dpf_server):
     return field
 
 
+def get_generated_test_data(server, n_components=6):
+    n_entities = 10000
+    n_layers_times_nodes_times_integration_points = 10 * 4 * 3
+
+    field = dpf.fields_factory.create_vector_field(
+        num_entities=0, server=server, num_comp=n_components
+    )
+    with field.as_local_field() as f:
+        for id in range(1, n_entities + 1):
+            f.append(np.ones(n_layers_times_nodes_times_integration_points * n_components), id)
+
+    return field
+
+
 def test_performance_data_pointer(dpf_server):
     timer = Timer()
 
-    field = get_test_data(dpf_server)
+    n_components = 6
+    field = get_generated_test_data(dpf_server, n_components=n_components)
 
     timer.add("read data")
 
@@ -72,7 +91,6 @@ def test_performance_data_pointer(dpf_server):
     data = field.data
     timer.add("get numpy data")
 
-    n_components = 6
     data_pointer = field._data_pointer // n_components
     timer.add("data pointer division")
     data_pointer_with_end = np.append(data_pointer, len(data))
@@ -87,12 +105,14 @@ def test_performance_data_pointer(dpf_server):
     timer.add("loop")
 
     timer.summary()
+    last_measured_performance = 0.1129
+    check_performance(timer, last_measured_performance)
 
 
 def test_performance_by_index(dpf_server):
     timer = Timer()
 
-    field = get_test_data(dpf_server)
+    field = get_generated_test_data(dpf_server)
     timer.add("read data")
 
     with field.as_local_field() as local_field:
@@ -107,12 +127,14 @@ def test_performance_by_index(dpf_server):
     timer.add("after local field")
 
     timer.summary()
+    last_measured_performance = 0.466
+    check_performance(timer, last_measured_performance)
 
 
 def test_performance_by_id(dpf_server):
     timer = Timer()
 
-    field = get_test_data(dpf_server)
+    field = get_generated_test_data(dpf_server)
     timer.add("read data")
 
     with field.as_local_field() as local_field:
@@ -129,6 +151,8 @@ def test_performance_by_id(dpf_server):
     timer.add("after local field")
 
     timer.summary()
+    last_measured_performance = 0.4927256107330322
+    check_performance(timer, last_measured_performance)
 
 
 def test_performance_element_info(dpf_server):

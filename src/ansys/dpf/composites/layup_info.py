@@ -10,20 +10,16 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-@contextmanager
 def get_analysis_ply(mesh: Any, name: str) -> Any:
     """Return analysis ply property field.
 
     :param mesh: dpf meshed region
     :param name:
-    :return: analysis_ply property field
+    :return: analysis_ply local property field contexmanager
     """
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
-    with mesh.property_field(
-        ANALYSIS_PLY_PREFIX + name
-    ).as_local_field() as analysis_ply_property_field:
-        yield analysis_ply_property_field
+    return mesh.property_field(ANALYSIS_PLY_PREFIX + name).as_local_field()
 
 
 @dataclass
@@ -100,11 +96,16 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     return corner_nodes_by_element_type
 
 
-class LayupInfo:
+class ElementInfoProvider:
     """Provider for ElementInfo.
 
     Precomputes id to index maps for all
     property fields to improve performance
+
+    Note: Every property we add to element info adds some performance
+    overhead for all the calls to get_element info. We should keep it
+    focused on the most important properties. We can add different providers
+    for other properties (such as thickness and angles)
     """
 
     def __init__(
@@ -169,7 +170,7 @@ class LayupInfo:
 
 
 @contextmanager
-def get_layup_info(mesh: Any, rst_data_source: Any) -> Generator[LayupInfo, None, None]:
+def get_layup_info(mesh: Any, rst_data_source: Any) -> Generator[ElementInfoProvider, None, None]:
     """Get LayupInfo Object.
 
     :param mesh: dpf meshed region
@@ -194,4 +195,4 @@ def get_layup_info(mesh: Any, rst_data_source: Any) -> Generator[LayupInfo, None
             key: stack.enter_context(value.as_local_field()) for key, value in fields.items()
         }
 
-        yield LayupInfo(mesh, **context_dict)
+        yield ElementInfoProvider(mesh, **context_dict)

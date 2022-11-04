@@ -50,7 +50,6 @@ ansys-dpf-core = {version = "^0.5.2", optional = true}
 vtk = {version = "*", optional = true, allow-prereleases = true}
 pyvista = {version = "^0.36.1", optional = true}
 pre-commit = {version = "*", optional = true}
-numpy = {version = "*", optional = true}
 
 
 [tool.poetry.extras]

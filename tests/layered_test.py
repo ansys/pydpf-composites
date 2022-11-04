@@ -7,7 +7,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.layup_info import LayupInfo, get_analysis_ply, get_layup_info
+from ansys.dpf.composites.layup_info import ElementInfoProvider, get_analysis_ply, get_layup_info
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_material_id,
@@ -19,7 +19,7 @@ from .helper import CompositeFiles, setup_operators
 @dataclass
 class FieldInfo:
     field: Any
-    layup_info: LayupInfo
+    layup_info: ElementInfoProvider
 
 
 @contextmanager

@@ -14,17 +14,31 @@ class Timer:
         self.timings.append((label, time.time()))
 
     def summary(self):
-        diffs = []
-        for idx, timing in enumerate(self.timings):
-            if idx > 0:
-                diffs.append((timing[0], timing[1] - self.timings[idx - 1][1]))
 
+        diffs = self._get_diffs()
         print("")
         print("Timer summary")
         for diff in diffs:
             print(diff)
-        print(f"Total:{sum([diff[1] for diff in diffs])}")
+        print(f"Total:{self._get_sum()}")
         print("")
+
+    def get_runtime_without_first_step(self):
+        """
+        Gets the total runtime without the first entry. Useful
+        if the first step does some setup that is not relevant for performance
+        """
+        return self._get_sum() - self._get_diffs()[0][1]
+
+    def _get_sum(self):
+        return sum([diff[1] for diff in self._get_diffs()])
+
+    def _get_diffs(self):
+        diffs = []
+        for idx, timing in enumerate(self.timings):
+            if idx > 0:
+                diffs.append((timing[0], timing[1] - self.timings[idx - 1][1]))
+        return diffs
 
 
 @dataclass
