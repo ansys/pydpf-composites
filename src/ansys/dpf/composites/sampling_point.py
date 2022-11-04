@@ -441,7 +441,7 @@ class SamplingPoint:
         axis: Any,
         components: Sequence[str],
         spots: Sequence[str] = ["bottom", "top"],
-        core_scale_factor: float = 1.,
+        core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
     ) -> None:
