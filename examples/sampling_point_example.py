@@ -1,11 +1,11 @@
 """
 .. _sampling_point_example:
 
-How to use the Sampling Point wrapper
---------------------------------------
+Sampling Point - Processing and visualization of laminate results
+-----------------------------------------------------------------
 
-Example how the lay-up data and through-the-thickness results of an
-element can be queried and visualized
+Example how the lay-up and through-the-thickness results of a
+layered element can be accessed, processed and visualized.
 
 """
 import os
@@ -76,8 +76,17 @@ sampling_point.update()
 # Plot results using preconfigured plots
 
 fig, axes = sampling_point.get_result_plots(
-    core_scale_factor=0.1, spots=["bottom", "top"], show_failure_modes=True
+    strain_components=[],  # do not plot strains
+    core_scale_factor=0.1,
+    spots=["bottom", "top"],
+    show_failure_modes=True,
 )
+fig.set_figheight(8)
+fig.set_figwidth(12)
+
+# %%
+# Plot polar properties using a preconfigured plot
+
 fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
 # %%
@@ -89,7 +98,7 @@ fig, ax1 = plt.subplots()
 core_scale_factor = 0.5
 
 sampling_point.add_results_to_plot(
-    ax1, ["s13", "s23"], ["bottom", "top"], core_scale_factor, "Out-of-plane shear stresses"
+    ax1, ["s13", "s23"], ["bottom", "top"], core_scale_factor, "Out-of-plane shear stresses", "MPA"
 )
 ax1.legend()
 plt.rcParams["hatch.linewidth"] = 0.2

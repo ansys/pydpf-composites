@@ -443,8 +443,31 @@ class SamplingPoint:
         spots: Sequence[str],
         core_scale_factor: float,
         title: str,
+        xlabel: str,
     ) -> None:
-        """Add results (strains, stresses or failure values) to a plot/axis."""
+        """Add results (strains, stresses or failure values) to a plot/axis.
+
+        Parameters
+        ----------
+        axis:
+            Matplotlib axis object
+        components:
+            List of result components
+        spots:
+            List of interfaces (bottom, middle and/or top)
+        core_scale_factor:
+            Scales the thickness of core plies
+        title:
+            Becomes the title of the plot. Ignored if empty.
+        xlabel:
+            Becomes the label of the x-axis. Ignored if empty.
+
+        Example
+        -------
+        fig, ax1 = plt.subplots()
+        sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], ["bottom", "top"],
+                                                 0.1, "Interlaminar Stresses", "[MPa]")
+        """
         indices = self.get_indices(spots)
         offsets = self.get_offsets(spots, core_scale_factor)
 
@@ -454,6 +477,9 @@ class SamplingPoint:
             axis.plot(values, offsets, label=comp)
         if title:
             axis.set_title(title)
+        if xlabel:
+            axis.set_xlabel(xlabel)
+
         axis.legend()
         axis.grid()
 
@@ -506,8 +532,10 @@ class SamplingPoint:
 
             if core_scale_factor != 1.0:
                 labels = []
+                axes[0].set_ylabel("z-Coordinates (scaled)")
             else:
                 labels = [str(t) for t in ticks]
+                axes[0].set_ylabel("z-Coordinates [length]")
 
             axes[0].set_yticks(ticks=ticks, labels=labels)
 
@@ -520,13 +548,18 @@ class SamplingPoint:
 
             if len(strain_components) > 0:
                 self.add_results_to_plot(
-                    axes[index], strain_components, spots, core_scale_factor, "Strains"
+                    axes[index], strain_components, spots, core_scale_factor, "Strains", "[-]"
                 )
                 index += 1
 
             if len(stress_components) > 0:
                 self.add_results_to_plot(
-                    axes[index], stress_components, spots, core_scale_factor, "Stresses"
+                    axes[index],
+                    stress_components,
+                    spots,
+                    core_scale_factor,
+                    "Stresses",
+                    "[force/area]",
                 )
                 index += 1
 
@@ -535,7 +568,7 @@ class SamplingPoint:
                 failure_plot = axes[index]
                 failure_components = [self.FAILURE_MODES[v] for v in failure_components]
                 self.add_results_to_plot(
-                    axes[index], failure_components, spots, core_scale_factor, "Failures"
+                    axes[index], failure_components, spots, core_scale_factor, "Failures", "[-]"
                 )
 
                 # todo: extract the failure mode of the critical value (separate function)

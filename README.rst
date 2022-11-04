@@ -31,8 +31,18 @@ Pydpf composites
    :alt: Black
 
 
-A Python wrapper for Ansys dpf composites
+A Python wrapper for Ansys dpf composites. It implements a few classes on top of the
+DPF Composites operators and data accessors for short fiber and layered composites
+(layered shell and solid elements). This module can be used to post-process these structures,
+and to implement custom failure criteria and computation.
+For instance fatigue analysis. See `Examples <examples/index.html>`_.
 
+Key features:
+
+* Result Definition object to configure combined failure criteria.
+* Sampling Point object to extract and visualize results from the bottom to the top of a laminate.
+* Exposure of material properties (elasticity, strength limits et).
+* Accessors to extract ply-wise results and material properties.
 
 Developer Setup
 ^^^^^^^^^^^^^^^

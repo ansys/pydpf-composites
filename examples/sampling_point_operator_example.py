@@ -1,11 +1,13 @@
 """
 .. _sampling_point_operator_example:
 
-How to use the Sampling Point operator
---------------------------------------
+Basic example for a Sampling Point Operator
+-------------------------------------------
 
-Example how the lay-up data and through-the-thickness results of an
-element can be queried and visualized
+Sampling Point Operator returns the through-the-thickness results
+of a layered element and lay-up information (ply material, thickness).
+This basic example shows how the configure the operator and how to
+access the data.
 
 """
 import json
@@ -62,7 +64,7 @@ material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=serve
 
 # Define the result definition which is used to configure the composite_failure_operator
 rd = ResultDefinition(
-    "combined failure criteria",
+    "Combined Failure Criteria",
     rst_files=[rst_server_path],
     material_files=[material_server_path],
     composite_definitions=[h5_server_path],
@@ -81,9 +83,27 @@ results = json.loads(sampling_point_op.outputs.results())
 
 # %%
 
-# Extract the data and plot it
-
-s13 = results[0]["results"]["stresses"]["s13"]
+# Extract failure values and modes and plot them
+element_label = results[0]["element_label"]
+failure_values = results[0]["results"]["failures"]["inverse_reserve_factor"]
+failure_modes = results[0]["results"]["failures"]["failure_modes"]
 offsets = results[0]["results"]["offsets"]
 
-plt.plot(s13, offsets)
+fig, ax1 = plt.subplots()
+ax1.plot(failure_values, offsets)
+
+# add failure modes in the middle of each ply
+failure_modes_middle = failure_modes[1::3]
+offsets_middle = offsets[1::3]
+failure_values_middle = failure_values[1::3]
+for index, fm in enumerate(failure_modes_middle):
+    ax1.annotate(
+        fm,
+        xy=(failure_values_middle[index], offsets_middle[index]),
+        xytext=(failure_values_middle[index], offsets_middle[index]),
+    )
+
+# finalize the plot
+ax1.set_title(f"{rd.name} of element {element_label}")
+ax1.set_xlabel("Inverse Reserve Factor [-]")
+ax1.set_ylabel("z-Coordinate [length]")
