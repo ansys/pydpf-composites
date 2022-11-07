@@ -3,6 +3,7 @@
    :maxdepth: 3
 
    self
+   api/index
    examples/index
 
 
