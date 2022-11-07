@@ -76,13 +76,12 @@ class ResultDefinition:
         """Configuration of the failure criteria such as Max Stress, Puck and Wrinkling."""
         return self._combined_failure_criterion
 
-
     @property
     def measures(self) -> str:
         """Defines the return type of the failure values.
-        
+
         Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin"."""
-        return self._meassures
+        return self._measures
 
     @measures.setter
     def measures(self, value: str) -> None:
@@ -91,7 +90,7 @@ class ResultDefinition:
                 values = ", ".join([v for v in _SUPPORTED_MEASURES])
                 raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
         else:
-            self._meassures = value
+            self._measures = value
 
     @property
     def composite_definitions(self) -> Sequence[_PATH]:
@@ -178,9 +177,9 @@ class ResultDefinition:
     def stress_strain_eval_mode(self) -> str:
         """Results are loaded from a result file by default ("rst_file").
 
-         Set to "mapdl_live" to activate on the fly strain and stress evaluation.
-         Can be used if the result file contains only the primary results (deformations).
-         """
+        Set to "mapdl_live" to activate on the fly strain and stress evaluation.
+        Can be used if the result file contains only the primary results (deformations).
+        """
         return self._stress_strain_eval_mode
 
     @stress_strain_eval_mode.setter
