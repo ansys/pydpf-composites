@@ -59,8 +59,17 @@ class ResultDefinition:
         self._max_chunk_size = max_chunk_size
 
     @property
-    def expression(self):
-        """Defines the type of the result. Supported type is "composite_failure" """
+    def name(self) -> str:
+        """User-defined name."""
+        return self._expression
+
+    @name.setter
+    def name(self, value: str) -> None:
+        self._name = value
+
+    @property
+    def expression(self) -> str:
+        """Define the type of the result. Supported type is "composite_failure"."""
         return self._expression
 
     @expression.setter
@@ -73,18 +82,19 @@ class ResultDefinition:
 
     @property
     def combined_failure_criterion(self) -> CombinedFailureCriterion:
-        """Configuration of the failure criteria such as Max Stress, Puck and Wrinkling."""
+        """Configure of the failure criteria such as Max Stress, Puck and Wrinkling."""
         return self._combined_failure_criterion
 
     @property
-    def measures(self) -> str:
-        """Defines the return type of the failure values.
+    def measures(self) -> Sequence[str]:
+        """Define the return type of the failure values.
 
-        Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin"."""
+        Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin".
+        """
         return self._measures
 
     @measures.setter
-    def measures(self, value: str) -> None:
+    def measures(self, value: Sequence[str]) -> None:
         for v in value:
             if v not in _SUPPORTED_MEASURES:
                 values = ", ".join([v for v in _SUPPORTED_MEASURES])
@@ -96,7 +106,8 @@ class ResultDefinition:
     def composite_definitions(self) -> Sequence[_PATH]:
         """File path of the composite definitions file of ACP.
 
-        This file includes the section data such as ply material, angle and thickness."""
+        This file includes the section data such as ply material, angle and thickness.
+        """
         return self._composite_definitions
 
     @composite_definitions.setter
@@ -110,7 +121,8 @@ class ResultDefinition:
         """Assembly files which define the mapping of the labels (optional).
 
         This input is needed if multiple parts are assembled in WB / Mechanical to map the
-        local element and node labels to the global ones."""
+        local element and node labels to the global ones.
+        """
         return self._assembly_mapping_files
 
     @assembly_mapping_files.setter
@@ -119,7 +131,7 @@ class ResultDefinition:
 
     @property
     def rst_files(self) -> Sequence[_PATH]:
-        """Path of the result files (.rst)"""
+        """Path of the result files (.rst)."""
         return self._rst_files
 
     @rst_files.setter
@@ -130,7 +142,8 @@ class ResultDefinition:
     def material_files(self) -> Sequence[_PATH]:
         """Path of material files which store the material properties.
 
-        Supported formats are XML and ENGD."""
+        Supported formats are XML and ENGD.
+        """
         return self._material_files
 
     @material_files.setter
@@ -155,7 +168,8 @@ class ResultDefinition:
     def element_scope(self) -> Sequence[int]:
         """Define the scope through a list of element labels.
 
-        All elements are selected if element_scope is an empty list."""
+        All elements are selected if element_scope is an empty list.
+        """
         return self._element_scope
 
     @element_scope.setter
@@ -166,7 +180,8 @@ class ResultDefinition:
     def ply_scope(self) -> Sequence[str]:
         """List of plies for ply-wise post-processing (optional).
 
-        Is used in combination with element_scope."""
+        Is used in combination with element_scope.
+        """
         return self._ply_scope
 
     @ply_scope.setter
