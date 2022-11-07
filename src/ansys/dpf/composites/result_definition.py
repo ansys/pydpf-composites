@@ -63,7 +63,7 @@ class ResultDefinition:
         """Defines the type of the result. Supported type is "composite_failure" """
         return self._expression
 
-    @property.setter
+    @expression.setter
     def expression(self, value: str) -> None:
         if value in _SUPPORTED_EXPRESSIONS:
             self._expression = value
@@ -76,18 +76,15 @@ class ResultDefinition:
         """Configuration of the failure criteria such as Max Stress, Puck and Wrinkling."""
         return self._combined_failure_criterion
 
-    @property.setter
-    def combined_failure_criterion(self, value: CombinedFailureCriterion) -> None:
-        self._combined_failure_criterion = value
 
     @property
     def measures(self) -> str:
         """Defines the return type of the failure values.
         
-        Supported types are {0}.""".format(", ".join(self._SUPPORTED_MEASURES))
+        Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin"."""
         return self._meassures
 
-    @property.setter
+    @measures.setter
     def measures(self, value: str) -> None:
         for v in value:
             if v not in _SUPPORTED_MEASURES:
@@ -103,7 +100,7 @@ class ResultDefinition:
         This file includes the section data such as ply material, angle and thickness."""
         return self._composite_definitions
 
-    @property.setter
+    @composite_definitions.setter
     def composite_definitions(self, value: Sequence[_PATH]) -> None:
         if len(value) > 1:
             raise ValueError("Currently only 1 composite definition is supported!")
@@ -117,7 +114,7 @@ class ResultDefinition:
         local element and node labels to the global ones."""
         return self._assembly_mapping_files
 
-    @property.setter
+    @assembly_mapping_files.setter
     def assembly_mapping_files(self, value: Sequence[_PATH]) -> None:
         self._assembly_mapping_files = value
 
@@ -126,7 +123,7 @@ class ResultDefinition:
         """Path of the result files (.rst)"""
         return self._rst_files
 
-    @property.setter
+    @rst_files.setter
     def rst_files(self, value: Sequence[_PATH]) -> None:
         self._rst_files = value
 
@@ -137,7 +134,7 @@ class ResultDefinition:
         Supported formats are XML and ENGD."""
         return self._material_files
 
-    @property.setter
+    @material_files.setter
     def material_files(self, value: Sequence[_PATH]) -> None:
         self._material_files = value
 
@@ -151,7 +148,7 @@ class ResultDefinition:
         """
         return self._write_data_for_full_element_scope
 
-    @property.setter
+    @write_data_for_full_element_scope.setter
     def write_data_for_full_element_scope(self, value: bool) -> None:
         self._write_data_for_full_element_scope = value
 
@@ -162,7 +159,7 @@ class ResultDefinition:
         All elements are selected if element_scope is an empty list."""
         return self._element_scope
 
-    @property.setter
+    @element_scope.setter
     def element_scope(self, value: Sequence[int]) -> None:
         self._element_scope = value
 
@@ -173,7 +170,7 @@ class ResultDefinition:
         Is used in combination with element_scope."""
         return self._ply_scope
 
-    @property.setter
+    @ply_scope.setter
     def ply_scope(self, value: Sequence[str]) -> None:
         self._ply_scope = value
 
@@ -186,7 +183,7 @@ class ResultDefinition:
          """
         return self._stress_strain_eval_mode
 
-    @property.setter
+    @stress_strain_eval_mode.setter
     def stress_strain_eval_mode(self, value: str) -> None:
         if value in _SUPPORTED_STRESS_STRAIN_EVAL_MODES:
             self._stress_strain_eval_mode = value
@@ -201,7 +198,7 @@ class ResultDefinition:
         """Select time / solution step."""
         return self._time
 
-    @property.setter
+    @time.setter
     def time(self, value: float) -> None:
         self._time = value
 
@@ -214,12 +211,12 @@ class ResultDefinition:
         """
         return self._max_chunk_size
 
-    @property.setter
+    @max_chunk_size.setter
     def max_chunk_size(self, value: int) -> None:
         self._max_chunk_size = value
 
     def to_dict(self) -> Dict[str, Any]:
-        """:return: a dict with all properties."""
+        """Get the result definition in a dict representation."""
         cfc = self.combined_failure_criterion
         if not cfc:
             raise ValueError("Combined failure criterion is not defined!")
@@ -255,10 +252,7 @@ class ResultDefinition:
         return result_definition
 
     def to_json(self) -> str:
-        """:return: the string representation (json.dumps).
-
-        It can be used for the result definition of the DPF Composites Failure Operator.
-        """
+        """Convert the dict representation of the result definition into a JSON Dict."""
         return json.dumps(self.to_dict())
 
     def _get_properties(self, exclude: Sequence[str] = []) -> Sequence[Any]:
