@@ -1,7 +1,7 @@
 """LayupInfo Provider."""
 
 from dataclasses import dataclass
-from typing import Any, List, Union, cast
+from typing import Any, Dict, List, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, PropertyField, Scoping
@@ -32,6 +32,7 @@ class ElementInfo:
     is_layered: bool
     element_type: int
     material_ids: List[int]
+    is_shell: bool
 
 
 def _setup_index_by_id(scoping: Scoping) -> NDArray[np.int64]:
@@ -78,12 +79,36 @@ class _IndexerWithDataPointer:
         return self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
 
 
-# Todo: Extend for more element types
-def _get_n_spots(apdl_element_type: int, keyopt_8: int) -> int:
-    if apdl_element_type == 181:
-        if keyopt_8 == 2:
-            return 3
-    raise Exception(f"Unsupported element type")
+"""
+Map of keyopt_8 to number of spots.
+Example: Element 181 with keyopt8==1 has two spots
+"""
+n_spots_by_element_type_and_keyopt: Dict[int, Dict[int, int]] = {
+    181: {0: 0, 1: 2, 2: 3},
+    281: {0: 0, 1: 2, 2: 3},
+    185: {0: 0, 1: 2},
+    186: {0: 0, 1: 2},
+    190: {0: 0, 1: 2},
+}
+
+
+def _is_shell(apdl_element_type: int) -> bool:
+    return {181: True, 281: True, 185: False, 186: False, 190: False}[apdl_element_type]
+
+
+def _get_n_spots(apdl_element_type: int, keyopt_8: int, keyopt_3: int) -> int:
+    is_potentially_homogeneous_solid = apdl_element_type == 185 or apdl_element_type == 186
+    if is_potentially_homogeneous_solid and keyopt_3 == 0:
+        return 0
+
+    try:
+        return n_spots_by_element_type_and_keyopt[apdl_element_type][keyopt_8]
+    except KeyError:
+        raise RuntimeError(
+            f"Unsupported element type keyopt8 combination "
+            f"Apdl Element Type: {apdl_element_type} "
+            f"keyopt8: {keyopt_8}."
+        )
 
 
 def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
@@ -153,6 +178,7 @@ class ElementInfoProvider:
         element_types_apdl: PropertyField,
         element_types_dpf: PropertyField,
         keyopt_8_values: PropertyField,
+        keyopt_3_values: PropertyField,
         material_ids: PropertyField,
     ):
         """Initialize LayupInfo object and precompute indices.
@@ -170,6 +196,7 @@ class ElementInfoProvider:
         self.apdl_element_types = _IndexerNoDataPointer(element_types_apdl)
         self.dpf_element_types = _IndexerNoDataPointer(element_types_dpf)
         self.keyopt_8_values = _IndexerNoDataPointer(keyopt_8_values)
+        self.keyopt_3_values = _IndexerNoDataPointer(keyopt_3_values)
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
@@ -180,8 +207,10 @@ class ElementInfoProvider:
         is_layered = False
         n_layers = 1
         keyopt_8 = self.keyopt_8_values.by_id(element_id)
-        n_spots = _get_n_spots(apdl_element_type, keyopt_8)
+        keyopt_3 = self.keyopt_3_values.by_id(element_id)
+        n_spots = _get_n_spots(apdl_element_type, keyopt_8, keyopt_3)
         material_ids: Any = []
+        element_type = self.dpf_element_types.by_id(element_id)
 
         layer_data = self.layer_indices.by_id(element_id)
         if layer_data is not None:
@@ -190,8 +219,6 @@ class ElementInfoProvider:
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
             is_layered = True
-
-        element_type = self.dpf_element_types.by_id(element_id)
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
@@ -205,6 +232,7 @@ class ElementInfoProvider:
             element_type=apdl_element_type,
             material_ids=material_ids,
             id=element_id,
+            is_shell=_is_shell(apdl_element_type),
         )
 
 
@@ -217,16 +245,19 @@ def get_element_info_provider(
     :param rst_data_source: dpf datasource
     :return: LayupInfo
     """
-    keyopt_8_provider = dpf.Operator("property_field_provider_by_name")
-    keyopt_8_provider.inputs.data_sources(rst_data_source)
-    keyopt_8_provider.inputs.property_name("keyopt_8")
-    key_opt_8_field = keyopt_8_provider.outputs.property_field()
+
+    def get_keyopt_property_field(keyopt: int) -> PropertyField:
+        keyopt_8_provider = dpf.Operator("property_field_provider_by_name")
+        keyopt_8_provider.inputs.data_sources(rst_data_source)
+        keyopt_8_provider.inputs.property_name(f"keyopt_{keyopt}")
+        return keyopt_8_provider.outputs.property_field()
 
     fields = {
         "layer_indices": mesh.property_field("element_layer_indices"),
         "element_types_apdl": mesh.property_field("apdl_element_type"),
         "element_types_dpf": mesh.elements.element_types_field,
-        "keyopt_8_values": key_opt_8_field,
+        "keyopt_8_values": get_keyopt_property_field(8),
+        "keyopt_3_values": get_keyopt_property_field(3),
         "material_ids": mesh.property_field("element_layered_material_ids"),
     }
 

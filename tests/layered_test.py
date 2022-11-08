@@ -1,13 +1,15 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 import pathlib
-from typing import Any, List, Optional
+from typing import Dict, Generator, List, Optional
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core import DataSources, Field, MeshedRegion, PropertyField
 import numpy as np
 import pytest
 
 from ansys.dpf.composites.layup_info import (
+    ElementInfo,
     ElementInfoProvider,
     get_analysis_ply_info_provider,
     get_element_info_provider,
@@ -23,12 +25,14 @@ from .helper import CompositeFiles, setup_operators
 
 @dataclass
 class FieldInfo:
-    field: Any
+    field: Field
     layup_info: ElementInfoProvider
 
 
 @contextmanager
-def get_field_info(input_field, mesh, rst_data_source):
+def get_field_info(
+    input_field: Field, mesh: MeshedRegion, rst_data_source: DataSources
+) -> Generator[FieldInfo, None, None]:
     layup_info = get_element_info_provider(mesh, rst_data_source=rst_data_source)
     with input_field.as_local_field() as local_input_field:
         yield FieldInfo(field=local_input_field, layup_info=layup_info)
@@ -205,3 +209,141 @@ def test_material_properties(dpf_server):
     assert list(result_field.scoping.ids) == [1, 2, 3, 4]
 
     assert result_field.get_entity_data_by_id(1) == pytest.approx([1.3871777438275192])
+
+
+@dataclass
+class ExpectedOutput:
+    n_layers: int
+    n_corner_nodes: int
+    element_type: int
+    # n_spots can be 0 for homogenous solids or
+    # if output is only requested on top/bottom of the element
+    # otherwise it is 2 or 3 for top/bot or top/bot/mid output
+    n_spots: int
+    is_layered: bool
+
+
+def test_all_element_types(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
+
+    def get_expected_output(
+        with_mid: bool, only_top_bot_of_stack: bool
+    ) -> Dict[int, ExpectedOutput]:
+        if with_mid:
+            n_spots_shell = 3
+        else:
+            n_spots_shell = 2
+
+        if only_top_bot_of_stack:
+            n_spots_shell = 0
+
+        if only_top_bot_of_stack:
+            n_spots_layered_solid = 0
+        else:
+            n_spots_layered_solid = 2
+
+        n_spots_homogeneous_solid = 0
+        return {
+            1: ExpectedOutput(3, 4, 181, n_spots_shell, True),
+            2: ExpectedOutput(3, 3, 181, n_spots_shell, True),
+            3: ExpectedOutput(3, 4, 281, n_spots_shell, True),
+            4: ExpectedOutput(3, 3, 281, n_spots_shell, True),
+            10: ExpectedOutput(1, 8, 185, n_spots_homogeneous_solid, False),
+            11: ExpectedOutput(1, 6, 185, n_spots_homogeneous_solid, False),
+            12: ExpectedOutput(1, 5, 185, n_spots_homogeneous_solid, False),
+            13: ExpectedOutput(1, 4, 185, n_spots_homogeneous_solid, False),
+            20: ExpectedOutput(1, 8, 186, n_spots_homogeneous_solid, False),
+            21: ExpectedOutput(1, 6, 186, n_spots_homogeneous_solid, False),
+            22: ExpectedOutput(1, 5, 186, n_spots_homogeneous_solid, False),
+            23: ExpectedOutput(1, 4, 186, n_spots_homogeneous_solid, False),
+            30: ExpectedOutput(3, 8, 185, n_spots_layered_solid, True),
+            31: ExpectedOutput(3, 6, 185, n_spots_layered_solid, True),
+            40: ExpectedOutput(3, 8, 186, n_spots_layered_solid, True),
+            41: ExpectedOutput(3, 6, 186, n_spots_layered_solid, True),
+            50: ExpectedOutput(3, 8, 190, n_spots_layered_solid, True),
+            51: ExpectedOutput(3, 6, 190, n_spots_layered_solid, True),
+        }
+
+    def check_output(rst_file, expected_output):
+        rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
+        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+
+        rst_data_source = dpf.DataSources(rst_path)
+
+        mesh_provider = dpf.Operator("MeshProvider")
+        mesh_provider.inputs.data_sources(rst_data_source)
+        mesh: MeshedRegion = mesh_provider.outputs.mesh()
+
+        # Mock the info that gets added in the layup provider
+        # All the layered elements have a layered section with three layers (materials 1,2,1)
+        material_property_field = PropertyField()
+        layer_indices_property_field = PropertyField()
+        element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
+        layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
+        for layered_element_id in layered_element_ids:
+            material_property_field.append([1, 2, 1], layered_element_id)
+            layer_indices_property_field.append([3, 0, 1, 2], layered_element_id)
+
+        mesh.set_property_field("element_layered_material_ids", material_property_field)
+        mesh.set_property_field("element_layer_indices", layer_indices_property_field)
+
+        strain_operator = dpf.Operator("EPEL")
+        strain_operator.inputs.data_sources(rst_data_source)
+        strain_operator.inputs.bool_rotate_to_global(False)
+
+        fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
+        field = fields_container[0]
+
+        with get_field_info(
+            input_field=field,
+            mesh=mesh,
+            rst_data_source=rst_data_source,
+        ) as field_info:
+            for element_id in element_ids:
+                element_info: ElementInfo = field_info.layup_info.get_element_info(element_id)
+                assert element_info.element_type == expected_output[element_id].element_type
+                assert element_info.is_layered == expected_output[element_id].is_layered
+                if element_info.is_layered:
+                    assert list(element_info.material_ids) == [1, 2, 1]
+                assert element_info.n_spots == expected_output[element_id].n_spots, str(
+                    element_info
+                )
+                assert (
+                    element_info.n_corner_nodes == expected_output[element_id].n_corner_nodes
+                ), str(element_info)
+
+                field: Field = field_info.field
+                entity_data = field.get_entity_data_by_id(element_id)
+                num_elementary_data = entity_data.shape[0]
+
+                if element_info.n_spots == 0:
+                    if element_info.is_shell:
+                        # Shell with only bottom-top-of-stack output
+                        assert num_elementary_data == 2 * element_info.n_corner_nodes
+                    else:
+                        # Solid with only bottom-top-of-stack output or homogeneous solid
+                        assert num_elementary_data == element_info.n_corner_nodes
+                else:
+                    if element_info.is_shell:
+                        corner_nodes_per_layer = element_info.n_corner_nodes
+                    else:
+                        corner_nodes_per_layer = element_info.n_corner_nodes / 2
+                    assert (
+                        num_elementary_data
+                        == corner_nodes_per_layer * element_info.n_spots * element_info.n_layers
+                    )
+
+    check_output(
+        "model_with_all_element_types_all_except_mid_output.rst",
+        get_expected_output(with_mid=False, only_top_bot_of_stack=False),
+    )
+
+    check_output(
+        "model_with_all_element_types_all_output.rst",
+        get_expected_output(with_mid=True, only_top_bot_of_stack=False),
+    )
+
+    check_output(
+        "model_with_all_element_types_minimal_output.rst",
+        get_expected_output(with_mid=True, only_top_bot_of_stack=True),
+    )
