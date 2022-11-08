@@ -60,8 +60,8 @@ class ResultDefinition:
 
     @property
     def name(self) -> str:
-        """User-defined name."""
-        return self._expression
+        """Custom name."""
+        return self._name
 
     @name.setter
     def name(self, value: str) -> None:
