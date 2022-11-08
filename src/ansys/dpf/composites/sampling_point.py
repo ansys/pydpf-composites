@@ -467,8 +467,8 @@ class SamplingPoint:
         components :
             Defines which stiffness quantities should be added to the plot
 
-        Example
-        -------
+        Examples
+        --------
         sampling_point.get_polar_plot(components=["E1", "G12"])
         """
         if not self._results:
