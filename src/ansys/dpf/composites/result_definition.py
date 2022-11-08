@@ -60,7 +60,7 @@ class ResultDefinition:
 
     @property
     def name(self) -> str:
-        """Custom name."""
+        """Define a custom name."""
         return self._name
 
     @name.setter
