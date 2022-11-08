@@ -124,9 +124,10 @@ def test_filter_by_global_ply(dpf_server):
         input_field=setup_result.field,
         mesh=setup_result.mesh,
         rst_data_source=setup_result.rst_data_source,
-    ) as field_info, get_analysis_ply_info_provider(
-        mesh=setup_result.mesh, name="P1L1__ud_patch ns1"
-    ) as analysis_ply_info_provider:
+    ) as field_info:
+        analysis_ply_info_provider = get_analysis_ply_info_provider(
+            mesh=setup_result.mesh, name="P1L1__ud_patch ns1"
+        )
         with result_field.as_local_field() as local_result_field:
             for element_id in analysis_ply_info_provider.property_field.scoping.ids:
                 strain_data = field_info.field.get_entity_data_by_id(element_id)

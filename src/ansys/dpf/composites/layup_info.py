@@ -1,25 +1,24 @@
 """LayupInfo Provider."""
 
-from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Any, Generator, List, cast
+from typing import Any, List, Union, cast
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import DataSources, MeshedRegion, PropertyField
+from ansys.dpf.core import DataSources, Field, MeshedRegion, PropertyField, Scoping
 import numpy as np
 from numpy.typing import NDArray
 
 
-def get_analysis_ply(mesh: Any, name: str) -> Any:
+def get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
     """Return analysis ply property field.
 
     :param mesh: dpf meshed region
     :param name:
-    :return: analysis_ply local property field contexmanager
+    :return: analysis_ply local property field contextmanager
     """
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
-    return mesh.property_field(ANALYSIS_PLY_PREFIX + name).as_local_field()
+    return mesh.property_field(ANALYSIS_PLY_PREFIX + name)
 
 
 @dataclass
@@ -35,7 +34,7 @@ class ElementInfo:
     material_ids: List[int]
 
 
-def _setup_index_by_id(scoping: Any) -> NDArray[np.int64]:
+def _setup_index_by_id(scoping: Scoping) -> NDArray[np.int64]:
     # Setup array that can be indexed by id to get the index.
     # For ids which are not present in the scoping the array has a value of -1
     indices: NDArray[np.int64] = np.full(max(scoping.ids) + 1, -1, dtype=np.int64)
@@ -44,32 +43,32 @@ def _setup_index_by_id(scoping: Any) -> NDArray[np.int64]:
 
 
 class _IndexerNoDataPointer:
-    def __init__(self, array: Any):
-        self.indices = _setup_index_by_id(array.scoping)
+    def __init__(self, field: Union[Field, PropertyField]):
+        self.indices = _setup_index_by_id(field.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
         # Without converting this to a numpy array, performance during the lookup is about 50%.
         # It is not clear why. To be checked with dpf team. If this is a local field there is no
         # performance difference because the local field implementation already returns a numpy
         # array
-        self.data: NDArray[Any] = np.array(array.data)
+        self.data: NDArray[Any] = np.array(field.data)
 
     def by_id(self, entity_id: int) -> Any:
         return self.data[self.indices[entity_id]]
 
 
 class _IndexerWithDataPointer:
-    def __init__(self, array: Any):
-        self.indices = _setup_index_by_id(array.scoping)
+    def __init__(self, field: Union[Field, PropertyField]):
+        self.indices = _setup_index_by_id(field.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
         # Without converting this to a numpy array, performance during the lookup is about 50%.
         # It is not clear why. To be checked with dpf team. If this is a local field there is no
         # performance difference because the local field implementation already returns a numpy
         # array
-        self.data: NDArray[Any] = np.array(array.data)
+        self.data: NDArray[Any] = np.array(field.data)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
         self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
-            array._data_pointer, len(self.data)
+            field._data_pointer, len(self.data)
         )
 
     def by_id(self, entity_id: int) -> Any:
@@ -125,17 +124,14 @@ class AnalysisPlyInfoProvider:
         return cast(int, self._layer_indices.by_id(element_id))
 
 
-@contextmanager
-def get_analysis_ply_info_provider(
-    mesh: MeshedRegion, name: str
-) -> Generator[AnalysisPlyInfoProvider, None, None]:
+def get_analysis_ply_info_provider(mesh: MeshedRegion, name: str) -> AnalysisPlyInfoProvider:
     """Get AnalysisPlyInfoProvider.
 
     :param mesh
-    :param Analysis Ply Name
+    :param name Analysis Ply Name
     """
-    with get_analysis_ply(mesh, name) as analysis_ply:
-        yield AnalysisPlyInfoProvider(analysis_ply)
+    analysis_ply = get_analysis_ply(mesh, name)
+    return AnalysisPlyInfoProvider(analysis_ply)
 
 
 class ElementInfoProvider:
@@ -212,7 +208,9 @@ class ElementInfoProvider:
         )
 
 
-def get_element_info_provider(mesh: Any, rst_data_source: DataSources) -> ElementInfoProvider:
+def get_element_info_provider(
+    mesh: MeshedRegion, rst_data_source: DataSources
+) -> ElementInfoProvider:
     """Get LayupInfo Object.
 
     :param mesh: dpf meshed region
