@@ -12,6 +12,7 @@ from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import ResultDefinition
 from ansys.dpf.composites.sampling_point import SamplingPoint
+from ansys.dpf.composites.enums import Spot
 
 
 def test_sampling_point(dpf_server):
@@ -40,12 +41,10 @@ def test_sampling_point(dpf_server):
 
     sampling_point = SamplingPoint(name="my first SP", result_definition=rd, server=dpf_server)
 
-    sampling_point.update()
-
-    indices = sampling_point.get_indices(["bottom", "top"])
+    indices = sampling_point.get_indices([Spot.BOTTOM, Spot.TOP])
     ref_indices = [0, 2, 3, 5, 6, 8, 9, 11, 12, 14]
-    offsets = sampling_point.get_offsets(["bottom", "top"], 1.0)
-    scaled_offsets = sampling_point.get_offsets(["bottom", "top"], 0.2)
+    offsets = sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 1.0)
+    scaled_offsets = sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 0.2)
     ref_offsets = [
         -0.00295,
         -0.0027,
@@ -83,16 +82,16 @@ def test_sampling_point(dpf_server):
         show_failure_modes=True,
         create_laminate_plot=True,
         core_scale_factor=0.5,
-        spots=["bottom", "top"],
+        spots=[Spot.BOTTOM, Spot.TOP],
     )
 
     fig, axis = sampling_point.get_polar_plot(["E1", "G12"])
 
     """Test manually created plots using the provided helpers"""
-    interfaces = ["bottom", "top"]
+    spots = [Spot.BOTTOM, Spot.TOP]
     core_scale_factor = 1.0
-    indices = sampling_point.get_indices(interfaces)
-    offsets = sampling_point.get_offsets(interfaces, core_scale_factor)
+    indices = sampling_point.get_indices(spots)
+    offsets = sampling_point.get_offsets_by_spots(spots, core_scale_factor)
     s13 = sampling_point.s13[indices]
 
     fig, ax1 = plt.subplots()
@@ -105,7 +104,7 @@ def test_sampling_point(dpf_server):
 
     fig, ax1 = plt.subplots()
     sampling_point.add_results_to_plot(
-        ax1, ["s13", "s23"], ["bottom", "top"], 0.5, "Out-of-plane shear stresses"
+        ax1, ["s13", "s23"], [Spot.BOTTOM, Spot.TOP], 0.5, "Out-of-plane shear stresses"
     )
     ax1.legend()
     plt.rcParams["hatch.linewidth"] = 0.2
