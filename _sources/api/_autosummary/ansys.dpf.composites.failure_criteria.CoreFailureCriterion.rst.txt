@@ -1,0 +1,46 @@
+﻿ansys.dpf.composites.failure\_criteria.CoreFailureCriterion
+===========================================================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: CoreFailureCriterion
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      CoreFailureCriterion.to_dict
+      
+      
+      CoreFailureCriterion.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      CoreFailureCriterion.active
+      
+      
+      CoreFailureCriterion.include_ins
+      
+      
+      CoreFailureCriterion.name
+      
+      
+      CoreFailureCriterion.wf
+      
+   
+   

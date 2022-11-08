@@ -1,0 +1,6 @@
+max\_chunk\_size
+================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: ResultDefinition.max_chunk_size

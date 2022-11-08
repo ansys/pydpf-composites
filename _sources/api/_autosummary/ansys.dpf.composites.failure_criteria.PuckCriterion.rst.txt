@@ -1,0 +1,98 @@
+﻿ansys.dpf.composites.failure\_criteria.PuckCriterion
+====================================================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: PuckCriterion
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      PuckCriterion.to_dict
+      
+      
+      PuckCriterion.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      PuckCriterion.active
+      
+      
+      PuckCriterion.cfps
+      
+      
+      PuckCriterion.dim
+      
+      
+      PuckCriterion.force_global_constants
+      
+      
+      PuckCriterion.interface_weakening_factor
+      
+      
+      PuckCriterion.name
+      
+      
+      PuckCriterion.p21_neg
+      
+      
+      PuckCriterion.p21_pos
+      
+      
+      PuckCriterion.p22_neg
+      
+      
+      PuckCriterion.p22_pos
+      
+      
+      PuckCriterion.pd
+      
+      
+      PuckCriterion.pf
+      
+      
+      PuckCriterion.pma
+      
+      
+      PuckCriterion.pmb
+      
+      
+      PuckCriterion.pmc
+      
+      
+      PuckCriterion.s
+      
+      
+      PuckCriterion.wf_pd
+      
+      
+      PuckCriterion.wf_pf
+      
+      
+      PuckCriterion.wf_pma
+      
+      
+      PuckCriterion.wf_pmb
+      
+      
+      PuckCriterion.wf_pmc
+      
+   
+   

@@ -1,0 +1,6 @@
+rst\_files
+==========
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: ResultDefinition.rst_files

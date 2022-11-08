@@ -1,0 +1,49 @@
+﻿ansys.dpf.composites.failure\_criteria.FaceSheetWrinklingCriterion
+==================================================================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: FaceSheetWrinklingCriterion
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      FaceSheetWrinklingCriterion.to_dict
+      
+      
+      FaceSheetWrinklingCriterion.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      FaceSheetWrinklingCriterion.active
+      
+      
+      FaceSheetWrinklingCriterion.homogeneous_core_coeff
+      
+      
+      FaceSheetWrinklingCriterion.honeycomb_core_coeff
+      
+      
+      FaceSheetWrinklingCriterion.name
+      
+      
+      FaceSheetWrinklingCriterion.wf
+      
+   
+   
