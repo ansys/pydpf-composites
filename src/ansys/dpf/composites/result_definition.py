@@ -85,6 +85,10 @@ class ResultDefinition:
         """Configure of the failure criteria such as Max Stress, Puck and Wrinkling."""
         return self._combined_failure_criterion
 
+    @combined_failure_criterion.setter
+    def combined_failure_criterion(self, cfc: CombinedFailureCriterion) -> None:
+        self._combined_failure_criterion = cfc
+
     @property
     def measures(self) -> Sequence[str]:
         """Define the return type of the failure values.
