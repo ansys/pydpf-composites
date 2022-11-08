@@ -97,7 +97,12 @@ fig, ax1 = plt.subplots()
 core_scale_factor = 0.5
 
 sampling_point.add_results_to_plot(
-    ax1, ["s13", "s23"], ["bottom", "top"], core_scale_factor, "Out-of-plane shear stresses", "MPA"
+    ax1,
+    ["s13", "s23"],
+    [Spot.BOTTOM, Spot.TOP],
+    core_scale_factor,
+    "Out-of-plane shear stresses",
+    "MPA",
 )
 ax1.legend()
 plt.rcParams["hatch.linewidth"] = 0.2
@@ -109,7 +114,7 @@ sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 interfaces = [Spot.BOTTOM, Spot.TOP]
 core_scale_factor = 1.0
 indices = sampling_point.get_indices(interfaces)
-offsets = sampling_point.get_offsets(interfaces, core_scale_factor)
+offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
 e12 = sampling_point.e12[indices]
 e2 = sampling_point.e2[indices]
 
