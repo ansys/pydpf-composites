@@ -396,7 +396,6 @@ class SamplingPoint:
         --------
         ply_top_indices = sampling_point.get_indices([Spot.TOP])
         """
-
         if not self._isuptodate or not self._results:
             self.run()
 
