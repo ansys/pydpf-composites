@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 
+from .enums import Spot
 from .load_plugin import load_composites_plugin
 from .result_definition import ResultDefinition
 
@@ -366,9 +367,9 @@ class SamplingPoint:
             )
 
         if self._spots_per_ply == 3:
-            self._interface_indices = {"bottom": 0, "middle": 1, "top": 2}
+            self._interface_indices = {Spot.BOTTOM: 0, Spot.MIDDLE: 1, Spot.TOP: 2}
         elif self._spots_per_ply == 2:
-            self._interface_indices = {"bottom": 0, "top": 1}
+            self._interface_indices = {Spot.BOTTOM: 0, Spot.TOP: 1}
         elif self._spots_per_ply == 1:
             raise RuntimeError(
                 "Result files which only have results at the middle of the ply are "
@@ -377,7 +378,9 @@ class SamplingPoint:
 
         self._isuptodate = True
 
-    def get_indices(self, spots: Sequence[str] = ["bottom", "middle", "top"]) -> Sequence[int]:
+    def get_indices(
+        self, spots: Sequence[Spot] = [Spot.BOTTOM, Spot.MIDDLE, Spot.TOP]
+    ) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
 
         The indices are sorted from bottom to top.
@@ -386,8 +389,12 @@ class SamplingPoint:
         Parameters
         ----------
         spots
-            selection of the interfaces. Only the indices of the bottom interfaces of plies
-            are returned if spots is equal to ["bottom"]
+            selection of the spots. Only the indices of the bottom interfaces of plies
+            are returned if spots is equal to [BOTTOM]
+
+        Examples
+        --------
+        ply_top_indices = sampling_point.get_indices([Spot.TOP])
         """
         ply_wise_indices = [self._interface_indices[v] for v in spots]
         ply_wise_indices.sort()
@@ -402,15 +409,17 @@ class SamplingPoint:
 
         return indices
 
-    def get_offsets(
-        self, spots: Sequence[str] = ["bot", "mid", "top"], core_scale_factor: float = 1.0
+    def get_offsets_by_spots(
+        self,
+        spots: Sequence[Spot] = [Spot.BOTTOM, Spot.MIDDLE, Spot.TOP],
+        core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected interfaces for each ply.
 
         Parameters
         ----------
         spots:
-            Select the interfaces of interest.
+            Select the spot(s) of interest.
 
         core_scale_factor:
             Scale the thickness of core plies.
@@ -482,7 +491,9 @@ class SamplingPoint:
         core_scale_factor
             Scales the thickness of core plies
         """
-        offsets = self.get_offsets(spots=["bottom", "top"], core_scale_factor=core_scale_factor)
+        offsets = self.get_offsets_by_spots(
+            spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
+        )
 
         num_spots = 2
         x_bound = axis.get_xbound()
@@ -512,7 +523,7 @@ class SamplingPoint:
         self,
         axis: Any,
         components: Sequence[str],
-        spots: Sequence[str] = ["bottom", "top"],
+        spots: Sequence[str] = [Spot.BOTTOM, Spot.TOP],
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
@@ -537,11 +548,11 @@ class SamplingPoint:
         Example
         -------
         fig, ax1 = plt.subplots()
-        sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], ["bottom", "top"],
+        sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], [Spot.BOTTOM, Spot.TOP],
                                                  0.1, "Interlaminar Stresses", "[MPa]")
         """
         indices = self.get_indices(spots)
-        offsets = self.get_offsets(spots, core_scale_factor)
+        offsets = self.get_offsets_by_spots(spots, core_scale_factor)
 
         for comp in components:
             raw_values = getattr(self, comp)
@@ -563,7 +574,7 @@ class SamplingPoint:
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Sequence[str] = ["bottom", "middle", "top"],
+        spots: Sequence[str] = [Spot.BOTTOM, Spot.MIDDLE, Spot.TOP],
     ) -> Any:
         """Generate a figure with an axis (plot) for each selected result entity.
 
@@ -600,7 +611,7 @@ class SamplingPoint:
         axes = gs.subplots(sharex="col", sharey="row")
 
         if num_active_plots > 0:
-            ticks = self.get_offsets(spots=["top"], core_scale_factor=core_scale_factor)
+            ticks = self.get_offsets_by_spots(spots=[Spot.TOP], core_scale_factor=core_scale_factor)
 
             if core_scale_factor != 1.0:
                 labels = []
@@ -644,9 +655,9 @@ class SamplingPoint:
                 )
 
                 # todo: extract the failure mode of the critical value (separate function)
-                middle_indices = self.get_indices(["middle"])
-                middle_offsets = self.get_offsets(
-                    spots=["middle"], core_scale_factor=core_scale_factor
+                middle_indices = self.get_indices([Spot.MIDDLE])
+                middle_offsets = self.get_offsets_by_spots(
+                    spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
                 )
                 all_measures = [
                     np.array(getattr(self, v))[middle_indices] for v in failure_components
