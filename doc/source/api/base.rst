@@ -8,3 +8,4 @@ pyDPF Composite Objects and Helpers
 
     ResultDefinition
     SamplingPoint
+    Spot

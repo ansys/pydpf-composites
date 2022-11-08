@@ -15,7 +15,7 @@ import pathlib
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites import ResultDefinition, SamplingPoint
+from ansys.dpf.composites import ResultDefinition, SamplingPoint, Spot
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -77,7 +77,7 @@ sampling_point = SamplingPoint("my first sampling point", rd, server)
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=["bottom", "top"],
+    spots=[Spot.BOTTOM, Spot.TOP],
     show_failure_modes=True,
 )
 fig.set_figheight(8)
@@ -106,7 +106,7 @@ sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 # %%
 # Another approach to generate a custom plot
 
-interfaces = ["bottom", "top"]
+interfaces = [Spot.BOTTOM, Spot.TOP]
 core_scale_factor = 1.0
 indices = sampling_point.get_indices(interfaces)
 offsets = sampling_point.get_offsets(interfaces, core_scale_factor)
