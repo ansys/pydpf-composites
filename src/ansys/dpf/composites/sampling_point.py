@@ -32,6 +32,12 @@ class SamplingPoint:
         The name of the object.
     result_definition :
         Result definition object which defines all the inputs and scope.
+
+    Notes
+    -----
+
+
+
     """
 
     FAILURE_MODES = {
@@ -556,7 +562,7 @@ class SamplingPoint:
         --------
         fig, ax1 = plt.subplots()
         sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], [Spot.BOTTOM, Spot.TOP],
-                                                 0.1, "Interlaminar Stresses", "[MPa]")
+        0.1, "Interlaminar Stresses", "[MPa]")
         """
         indices = self.get_indices(spots)
         offsets = self.get_offsets_by_spots(spots, core_scale_factor)
