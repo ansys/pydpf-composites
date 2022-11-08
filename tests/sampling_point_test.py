@@ -5,6 +5,7 @@ import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 import numpy.testing
 
+from ansys.dpf.composites.enums import Spot
 from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
     CombinedFailureCriterion,
 )
@@ -12,7 +13,6 @@ from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import ResultDefinition
 from ansys.dpf.composites.sampling_point import SamplingPoint
-from ansys.dpf.composites.enums import Spot
 
 
 def test_sampling_point(dpf_server):

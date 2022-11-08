@@ -399,7 +399,7 @@ class SamplingPoint:
 
         if not self._isuptodate or not self._results:
             self.run()
-            
+
         ply_wise_indices = [self._interface_indices[v] for v in spots]
         ply_wise_indices.sort()
         indices = []
