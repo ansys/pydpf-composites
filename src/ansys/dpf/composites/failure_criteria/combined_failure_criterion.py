@@ -11,11 +11,11 @@ class CombinedFailureCriterion:
 
     It can be used in combination with Failure Evaluator operator in DPF Composites.
 
-    Usage:
-        combined_failure = CombinedFailureCriterion("max_stress 3D")
-        max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
-            s12=True, s13=True, s23=True)
-        combined_failure.insert(max_stress)
+    Examples
+    --------
+    combined_failure = CombinedFailureCriterion("max_stress 3D")
+    max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+    combined_failure.insert(max_stress)
     """
 
     JSON_DICT_KEY = "criteria"
@@ -27,8 +27,12 @@ class CombinedFailureCriterion:
     ):
         """Create a new combined failure criterion.
 
-        :param name: user-defined name of the criterion
-        :param failure_criteria: list of failure criteria
+        Parameters
+        ----------
+        name:
+            user-defined name of the criterion
+        failure_criteria:
+            list of failure criteria
         """
         self._failure_criteria: Dict[str, FailureCriterionBase] = {}
         for fc in failure_criteria:
@@ -53,14 +57,17 @@ class CombinedFailureCriterion:
     def insert(self, fc: FailureCriterionBase) -> None:
         """Add a failure criterion.
 
-        :param fc: Adds a failure criterion to list of selected criteria. Overwrites an entity if a
-        failure criterion of the same type already exists.
+        Parameters
+        ----------
+        fc:
+            Adds a failure criterion to list of selected criteria. Overwrites an entity if a
+            failure criterion of the same type already exists.
 
-        Example:
-            combined_failure = CombinedFailureCriterion("max_stress 3D")
-            max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
-                 s12=True, s13=True, s23=True)
-            combined_failure.insert(max_stress)
+        Examples
+        --------
+        combined_failure = CombinedFailureCriterion("max_stress 3D")
+        max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+        combined_failure.insert(max_stress)
         """
         if fc is not None:
             self._failure_criteria[fc.name] = fc
@@ -68,11 +75,18 @@ class CombinedFailureCriterion:
     def remove(self, key: str) -> FailureCriterionBase:
         """Remove a failure criterion.
 
-        :param key: Name of the failure criterion
-        :return: the removed failure criterion or None
+        Parameters
+        ----------
+        key:
+            Name of the failure criterion
 
-        Example:
-            combined_failure.remove("Max Stress")
+        Returns
+        -------
+        The removed failure criterion or None
+
+        Examples
+        --------
+        combined_failure.remove("Max Stress")
         """
         if not key in self._failure_criteria.keys():
             raise KeyError(f"{key} does not exist in the list of failure criteria!")
@@ -82,7 +96,9 @@ class CombinedFailureCriterion:
     def to_dict(self) -> Dict[str, Any]:
         """Return a dict representation of this object.
 
-        :return: the json_dict which can be used for the result definition
+        Returns
+        -------
+        The json_dict which can be used for the result definition
         of the DPF Composites Failure Operator
         """
         criteria = {}
@@ -99,7 +115,9 @@ class CombinedFailureCriterion:
     def to_json(self) -> str:
         """Return the object as JSON dict.
 
-        :return: the string representation (json.dumps) which can be used for the result definition
+        Returns
+        -------
+        The string representation (json.dumps) which can be used for the result definition
         of the DPF Composites Failure Operator
         """
         return json.dumps(self.to_dict())
