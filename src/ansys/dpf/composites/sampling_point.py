@@ -450,6 +450,7 @@ class SamplingPoint:
             thicknesses.append(th)
 
         for index, ply in enumerate(self.analysis_plies):
+            # spots per ply is always 2 or 3
             step = thicknesses[index] / (self._spots_per_ply - 1)
             top_of_previous_ply = (
                 offsets[index * self._spots_per_ply - 1] if index > 0 else offsets[0]
@@ -471,8 +472,11 @@ class SamplingPoint:
         --------
         sampling_point.get_polar_plot(components=["E1", "G12"])
         """
+        if not self._isuptodate or not self._results:
+            self.run()
+
         if not self._results:
-            raise RuntimeError("Please update the sampling point to generate the poloar plot.")
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
 
         theta = np.array(self._results[0]["layup"]["polar_properties"]["angles"]) / 180.0 * np.pi
         fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
@@ -581,8 +585,8 @@ class SamplingPoint:
     ) -> Any:
         """Generate a figure with an axis (plot) for each selected result entity.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         strain_components
             Specify the strain entities of interest.
             Supported are "e1", "e2", "e3", "e12", "e13", "e23".
