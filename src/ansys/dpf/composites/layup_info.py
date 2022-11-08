@@ -1,11 +1,11 @@
 """LayupInfo Provider."""
 
-import contextlib
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Any, Generator, List
+from typing import Any, Generator, List, cast
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core import DataSources, MeshedRegion, PropertyField
 import numpy as np
 from numpy.typing import NDArray
 
@@ -26,6 +26,7 @@ def get_analysis_ply(mesh: Any, name: str) -> Any:
 class ElementInfo:
     """Layup information for a given element."""
 
+    id: int
     n_layers: int
     n_corner_nodes: int
     n_spots: int
@@ -46,7 +47,11 @@ class _IndexerNoDataPointer:
     def __init__(self, array: Any):
         self.indices = _setup_index_by_id(array.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
-        self.data: NDArray[Any] = array.data
+        # Without converting this to a numpy array, performance during the lookup is about 50%.
+        # It is not clear why. To be checked with dpf team. If this is a local field there is no
+        # performance difference because the local field implementation already returns a numpy
+        # array
+        self.data: NDArray[Any] = np.array(array.data)
 
     def by_id(self, entity_id: int) -> Any:
         return self.data[self.indices[entity_id]]
@@ -56,7 +61,11 @@ class _IndexerWithDataPointer:
     def __init__(self, array: Any):
         self.indices = _setup_index_by_id(array.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
-        self.data: NDArray[Any] = array.data
+        # Without converting this to a numpy array, performance during the lookup is about 50%.
+        # It is not clear why. To be checked with dpf team. If this is a local field there is no
+        # performance difference because the local field implementation already returns a numpy
+        # array
+        self.data: NDArray[Any] = np.array(array.data)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
         self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
@@ -96,6 +105,39 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     return corner_nodes_by_element_type
 
 
+class AnalysisPlyInfoProvider:
+    """AnalysisPlyInfoProvider. Provides layer indices by element id."""
+
+    def __init__(
+        self,
+        analysis_ply_property_field: PropertyField,
+    ):
+        """Initialize AnalysisPlyInfoProvider object and precompute indices.
+
+        :param analysis_ply_property_field: analysis ply property field
+
+        """
+        self._layer_indices = _IndexerNoDataPointer(analysis_ply_property_field)
+        self.property_field = analysis_ply_property_field
+
+    def get_layer_index_by_element_id(self, element_id: int) -> int:
+        """Get the layer index for the analysis ply in a given element."""
+        return cast(int, self._layer_indices.by_id(element_id))
+
+
+@contextmanager
+def get_analysis_ply_info_provider(
+    mesh: MeshedRegion, name: str
+) -> Generator[AnalysisPlyInfoProvider, None, None]:
+    """Get AnalysisPlyInfoProvider.
+
+    :param mesh
+    :param Analysis Ply Name
+    """
+    with get_analysis_ply(mesh, name) as analysis_ply:
+        yield AnalysisPlyInfoProvider(analysis_ply)
+
+
 class ElementInfoProvider:
     """Provider for ElementInfo.
 
@@ -110,12 +152,12 @@ class ElementInfoProvider:
 
     def __init__(
         self,
-        mesh: Any,
-        layer_indices: Any,
-        element_types_apdl: Any,
-        element_types_dpf: Any,
-        keyopt_8: Any,
-        material_ids: Any,
+        mesh: MeshedRegion,
+        layer_indices: PropertyField,
+        element_types_apdl: PropertyField,
+        element_types_dpf: PropertyField,
+        keyopt_8_values: PropertyField,
+        material_ids: PropertyField,
     ):
         """Initialize LayupInfo object and precompute indices.
 
@@ -123,25 +165,25 @@ class ElementInfoProvider:
         :param layer_indices: layer_indices property field
         :param element_types_apdl: apdl_element_types property_field
         :param element_types_dpf: dpf_element_types property field
-        :param keyopt_8: keyopt_8 property field
+        :param keyopt_8_values: keyopt_8 property field
         :param material_ids: material_ids property field
         """
         self.layer_indices = _IndexerWithDataPointer(layer_indices)
         self.layer_materials = _IndexerWithDataPointer(material_ids)
 
-        self.apdl_element_type = _IndexerNoDataPointer(element_types_apdl)
-        self.dpf_element_type = _IndexerNoDataPointer(element_types_dpf)
-        self.keyopt_8 = _IndexerNoDataPointer(keyopt_8)
+        self.apdl_element_types = _IndexerNoDataPointer(element_types_apdl)
+        self.dpf_element_types = _IndexerNoDataPointer(element_types_dpf)
+        self.keyopt_8_values = _IndexerNoDataPointer(keyopt_8_values)
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
 
     def get_element_info(self, element_id: int) -> ElementInfo:
         """Get ElementInfo Object for a given element id."""
-        apdl_element_type = self.apdl_element_type.by_id(element_id)
+        apdl_element_type = self.apdl_element_types.by_id(element_id)
         is_layered = False
         n_layers = 1
-        keyopt_8 = self.keyopt_8.by_id(element_id)
+        keyopt_8 = self.keyopt_8_values.by_id(element_id)
         n_spots = _get_n_spots(apdl_element_type, keyopt_8)
         material_ids: Any = []
 
@@ -153,7 +195,7 @@ class ElementInfoProvider:
             n_layers = layer_data[0]
             is_layered = True
 
-        element_type = self.dpf_element_type.by_id(element_id)
+        element_type = self.dpf_element_types.by_id(element_id)
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
@@ -166,11 +208,11 @@ class ElementInfoProvider:
             is_layered=is_layered,
             element_type=apdl_element_type,
             material_ids=material_ids,
+            id=element_id,
         )
 
 
-@contextmanager
-def get_layup_info(mesh: Any, rst_data_source: Any) -> Generator[ElementInfoProvider, None, None]:
+def get_element_info_provider(mesh: Any, rst_data_source: DataSources) -> ElementInfoProvider:
     """Get LayupInfo Object.
 
     :param mesh: dpf meshed region
@@ -185,14 +227,9 @@ def get_layup_info(mesh: Any, rst_data_source: Any) -> Generator[ElementInfoProv
     fields = {
         "layer_indices": mesh.property_field("element_layer_indices"),
         "element_types_apdl": mesh.property_field("apdl_element_type"),
-        "element_types_dpf": mesh.elements.element_types_field.as_local_field(),
-        "keyopt_8": key_opt_8_field,
+        "element_types_dpf": mesh.elements.element_types_field,
+        "keyopt_8_values": key_opt_8_field,
         "material_ids": mesh.property_field("element_layered_material_ids"),
     }
 
-    with contextlib.ExitStack() as stack:
-        context_dict = {
-            key: stack.enter_context(value.as_local_field()) for key, value in fields.items()
-        }
-
-        yield ElementInfoProvider(mesh, **context_dict)
+    return ElementInfoProvider(mesh, **fields)

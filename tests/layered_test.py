@@ -7,9 +7,14 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.layup_info import ElementInfoProvider, get_analysis_ply, get_layup_info
+from ansys.dpf.composites.layup_info import (
+    ElementInfoProvider,
+    get_analysis_ply_info_provider,
+    get_element_info_provider,
+)
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
+    get_selected_indices_by_analysis_ply,
     get_selected_indices_by_material_id,
 )
 
@@ -24,9 +29,9 @@ class FieldInfo:
 
 @contextmanager
 def get_field_info(input_field, mesh, rst_data_source):
+    layup_info = get_element_info_provider(mesh, rst_data_source=rst_data_source)
     with input_field.as_local_field() as local_input_field:
-        with get_layup_info(mesh, rst_data_source=rst_data_source) as layup_info:
-            yield FieldInfo(field=local_input_field, layup_info=layup_info)
+        yield FieldInfo(field=local_input_field, layup_info=layup_info)
 
 
 def get_result_field(
@@ -119,17 +124,17 @@ def test_filter_by_global_ply(dpf_server):
         input_field=setup_result.field,
         mesh=setup_result.mesh,
         rst_data_source=setup_result.rst_data_source,
-    ) as field_info, get_analysis_ply(
+    ) as field_info, get_analysis_ply_info_provider(
         mesh=setup_result.mesh, name="P1L1__ud_patch ns1"
-    ) as analysis_ply:
+    ) as analysis_ply_info_provider:
         with result_field.as_local_field() as local_result_field:
-            for element_id in analysis_ply.scoping.ids:
+            for element_id in analysis_ply_info_provider.property_field.scoping.ids:
                 strain_data = field_info.field.get_entity_data_by_id(element_id)
 
-                layer_index = analysis_ply.get_entity_data_by_id(element_id)
                 element_info = field_info.layup_info.get_element_info(element_id)
-
-                selected_indices = get_selected_indices(element_info, layers=[layer_index])
+                selected_indices = get_selected_indices_by_analysis_ply(
+                    analysis_ply_info_provider, element_info
+                )
                 component = 0
                 value = strain_data[selected_indices][:, component]
 

@@ -5,7 +5,7 @@ import numpy
 import numpy as np
 from numpy.typing import NDArray
 
-from ansys.dpf.composites.layup_info import ElementInfo
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfo
 
 
 # Todo: Implement using numpy
@@ -68,3 +68,17 @@ def get_selected_indices_by_material_id(
         index for index, mat_id in enumerate(element_info.material_ids) if mat_id == material_id
     ]
     return get_selected_indices(element_info, layers=layer_indices)
+
+
+def get_selected_indices_by_analysis_ply(
+    analysis_ply_info_provider: AnalysisPlyInfoProvider, element_info: ElementInfo
+) -> NDArray[np.int64]:
+    """Get selected indices by analysis ply.
+
+    Selects all indices that are in a layer with the given analysis ply
+    :param analysis_ply_info_provider: The AnalysisPlyInfoProvider for the Analysis ply.
+    :param element_info: ElementInfo
+    :return: elementary indices
+    """
+    layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_info.id)
+    return get_selected_indices(element_info, layers=[layer_index])

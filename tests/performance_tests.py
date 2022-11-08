@@ -4,21 +4,21 @@ import pathlib
 import ansys.dpf.core as dpf
 import numpy as np
 
-from ansys.dpf.composites.layup_info import get_layup_info
+from ansys.dpf.composites.layup_info import get_element_info_provider
 
 from .helper import CompositeFiles, Timer, setup_operators
 
 
-def check_performance(timer, last_measured_performance):
-    assert timer.get_runtime_without_first_step() < last_measured_performance * 2
-    assert timer.get_runtime_without_first_step() > last_measured_performance / 2
+def check_performance(timer, last_measured_performance, performance_factor=1.1):
+    assert timer.get_runtime_without_first_step() < last_measured_performance * performance_factor
+    assert timer.get_runtime_without_first_step() > last_measured_performance / performance_factor
 
 
 def get_data_files():
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_dummy_data_files()
+    return get_ger_data_files()
 
 
 def get_dummy_data_files():
@@ -105,7 +105,7 @@ def test_performance_data_pointer(dpf_server):
     timer.add("loop")
 
     timer.summary()
-    last_measured_performance = 0.1129
+    last_measured_performance = 0.11
     check_performance(timer, last_measured_performance)
 
 
@@ -162,17 +162,55 @@ def test_performance_element_info(dpf_server):
     setup_result = setup_operators(dpf_server, files)
     timer.add("read data")
 
-    with get_layup_info(
+    layup_info = get_element_info_provider(
         setup_result.mesh, rst_data_source=setup_result.rst_data_source
-    ) as layup_info:
-        timer.add("layup info")
-        scope = setup_result.field.scoping.ids
-        timer.add("scope")
+    )
+    timer.add("layup info")
+    scope = setup_result.field.scoping.ids
+    timer.add("scope")
 
-        for element_id in scope:
-            layup_info.get_element_info(element_id)
+    for element_id in scope:
+        layup_info.get_element_info(element_id)
 
-        timer.add("loop")
+    timer.add("loop")
     timer.add("after local field")
+
+    timer.summary()
+
+
+def test_performance_local_field(dpf_server):
+    """
+    Document performance behaviour of local vs non-local fields
+    """
+    timer = Timer()
+
+    files = get_data_files()
+    setup_result = setup_operators(dpf_server, files)
+    timer.add("Load data")
+
+    data_non_local = setup_result.field.data
+    timer.add("get data non-local")
+    # Loop over .data property of non-local field is very slow
+    for value in data_non_local:
+        pass
+
+    timer.add("loop non local")
+
+    data_non_local = np.array(data_non_local)
+    timer.add("to numpy array")
+    # Loop over .data property of non-local field converted to numpy array is very fast
+    for value in data_non_local:
+        pass
+
+    timer.add("loop non local numpy array")
+
+    with setup_result.field.as_local_field() as f:
+        data_local = f.data
+        timer.add("get data local")
+        # Loop over .data property of local field is very fast
+        for value in data_local:
+            pass
+
+        timer.add("loop local")
 
     timer.summary()
