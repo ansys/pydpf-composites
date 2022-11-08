@@ -72,7 +72,7 @@ class SamplingPoint:
 
         self._results = None
         self._isuptodate = False
-        self._rd_hash = None
+        self._rd_hash = ""
 
     @property
     def spots_per_ply(self) -> int:
