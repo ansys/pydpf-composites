@@ -1,5 +1,5 @@
-ACP Objects
------------
+Failure Criteria
+----------------
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
 

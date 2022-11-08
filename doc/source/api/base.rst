@@ -1,5 +1,5 @@
-Database
---------
+pyDPF Composite Objects and Helpers
+-----------------------------------
 
 .. currentmodule:: ansys.dpf.composites
 
