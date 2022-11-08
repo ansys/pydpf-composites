@@ -334,15 +334,19 @@ class SamplingPoint:
     def run(self) -> None:
         """Run the DPF operator and caches the results."""
         if self.result_definition:
-            new_hash = hashlib.sha1(json.dumps(self.result_definition.to_dict(), sort_keys=True))
-            if new_hash != self._rd_hash:
+            new_hash = hashlib.sha1(
+                json.dumps(self.result_definition.to_dict(), sort_keys=True).encode("utf8")
+            )
+            if new_hash.hexdigest() != self._rd_hash:
                 # only set input if the result definition changed
                 self._operator.inputs.result_definition(self.result_definition.to_json())
                 self._isuptodate = False
+                self._rd_hash = new_hash.hexdigest()
         else:
             raise RuntimeError(
                 "Cannot update Sampling Point because the Result Definition is missing."
             )
+
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
         if not self._results or len(self._results) == 0:
