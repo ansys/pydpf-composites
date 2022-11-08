@@ -548,8 +548,8 @@ class SamplingPoint:
         xlabel:
             Becomes the label of the x-axis. Ignored if empty.
 
-        Example
-        -------
+        Examples
+        --------
         fig, ax1 = plt.subplots()
         sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], [Spot.BOTTOM, Spot.TOP],
                                                  0.1, "Interlaminar Stresses", "[MPa]")
@@ -603,6 +603,10 @@ class SamplingPoint:
             Ply thickness of core materials are scaled by this factor.
         spots
             Show results at these interfaces.
+
+        Examples
+        --------
+        sampling_point.get_result_plots()
         """
         num_active_plots = int(create_laminate_plot)
         num_active_plots += 1 if len(strain_components) > 0 else 0
