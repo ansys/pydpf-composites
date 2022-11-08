@@ -50,7 +50,7 @@ class SamplingPoint:
     ):
         """Create a SamplingPoint object."""
         self._spots_per_ply = 0
-        self._interface_indices: Dict[str, int] = {}
+        self._interface_indices: Dict[Spot, int] = {}
         self.name = name
         self._result_definition = result_definition
 
@@ -523,7 +523,7 @@ class SamplingPoint:
         self,
         axis: Any,
         components: Sequence[str],
-        spots: Sequence[str] = [Spot.BOTTOM, Spot.TOP],
+        spots: Sequence[Spot] = [Spot.BOTTOM, Spot.TOP],
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
@@ -574,7 +574,7 @@ class SamplingPoint:
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Sequence[str] = [Spot.BOTTOM, Spot.MIDDLE, Spot.TOP],
+        spots: Sequence[Spot] = [Spot.BOTTOM, Spot.MIDDLE, Spot.TOP],
     ) -> Any:
         """Generate a figure with an axis (plot) for each selected result entity.
 
