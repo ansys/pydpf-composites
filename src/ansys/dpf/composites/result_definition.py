@@ -93,16 +93,12 @@ class ResultDefinition:
     def combined_failure_criterion(self, cfc: CombinedFailureCriterion) -> None:
         self._combined_failure_criterion = cfc
 
-<<<<<<< HEAD
-    def _get_measures(self) -> str:
-=======
     @property
     def measures(self) -> Sequence[str]:
         """Define the return type of the failure values.
 
         Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin".
         """
->>>>>>> remotes/origin/main
         return self._measures
 
     @measures.setter

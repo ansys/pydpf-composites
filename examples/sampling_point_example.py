@@ -70,7 +70,6 @@ rd = ResultDefinition(
 # %%
 # Create the sampling point and update it
 sampling_point = SamplingPoint("my first sampling point", rd, server)
-sampling_point.update()
 
 # %%
 # Plot results using preconfigured plots

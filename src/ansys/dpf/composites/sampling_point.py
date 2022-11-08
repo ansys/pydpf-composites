@@ -1,5 +1,6 @@
 """Wrapper for the Sampling Point Operator."""
 
+import hashlib
 import json
 from typing import Any, Dict, Sequence, Union, cast
 
@@ -70,7 +71,8 @@ class SamplingPoint:
             raise RuntimeError("SamplingPoint: failed to initialize the operator!")
 
         self._results = None
-        self._uptodate = False
+        self._isuptodate = False
+        self._rd_hash = None
 
     @property
     def spots_per_ply(self) -> int:
@@ -84,196 +86,262 @@ class SamplingPoint:
 
     @result_definition.setter
     def result_definition(self, value: Union[ResultDefinition, None]) -> None:
-        self._uptodate = False
+        self._isuptodate = False
         self._result_definition = value
 
     @property
     def results(self) -> Any:
         """Access the results of the sampling point operator as JSON Dict."""
-        if self._uptodate and self._results:
-            return self._results
+        if not self._isuptodate or not self._results:
+            self.run()
+
+        return self._results
 
     @property
     def analysis_plies(self) -> Union[Sequence[Any]]:
         """List of analysis plies from the bottom to the top."""
-        if self._uptodate and self._results:
-            plies = self._results[0]["layup"]["analysis_plies"]
-            if len(plies) == 0:
-                raise RuntimeError("No plies are found for the selected element!")
-            return plies
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        return []
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        plies = self._results[0]["layup"]["analysis_plies"]
+        if len(plies) == 0:
+            raise RuntimeError("No plies are found for the selected element!")
+        return plies
 
     @property
     def s1(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 1 direction of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["stresses"]["s1"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"s1 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["stresses"]["s1"])
 
     @property
     def s2(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 2 direction of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["stresses"]["s2"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"s2 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["stresses"]["s2"])
 
     @property
     def s3(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 3 direction of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["stresses"]["s3"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"s3 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["stresses"]["s3"])
 
     @property
     def s12(self) -> npt.NDArray[np.float64]:
         """In-plane shear stresses s12 of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["stresses"]["s12"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"s12 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["stresses"]["s12"])
 
     @property
     def s13(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear stresses s13 of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["stresses"]["s13"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"s13 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["stresses"]["s13"])
 
     @property
     def s23(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear stresses s23 of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["stresses"]["s23"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"s23 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["stresses"]["s23"])
 
     @property
     def e1(self) -> npt.NDArray[np.float64]:
         """Strains in the material 1 direction of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["strains"]["e1"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"e1 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["strains"]["e1"])
 
     @property
     def e2(self) -> npt.NDArray[np.float64]:
         """Strains in the material 2 direction of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["strains"]["e2"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"e2 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["strains"]["e2"])
 
     @property
     def e3(self) -> npt.NDArray[np.float64]:
         """Strains in the material 3 direction of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["strains"]["e3"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"e3 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["strains"]["e3"])
 
     @property
     def e12(self) -> npt.NDArray[np.float64]:
         """In-plane shear strains e12 of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["strains"]["e12"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"e12 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["strains"]["e12"])
 
     @property
     def e13(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear strains e13 of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["strains"]["e13"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"e13 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["strains"]["e13"])
 
     @property
     def e23(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear strains e23 of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["strains"]["e23"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"e23 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["strains"]["e13"])
 
     @property
     def inverse_reserve_factor(self) -> npt.NDArray[np.float64]:
         """Critical inverse reserve factor of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["failures"]["inverse_reserve_factor"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"IRF of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["failures"]["inverse_reserve_factor"])
 
     @property
     def reserve_factor(self) -> npt.NDArray[np.float64]:
         """Lowest reserve factor of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["failures"]["reserve_factor"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"RF of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["failures"]["reserve_factor"])
 
     @property
     def margin_of_safety(self) -> npt.NDArray[np.float64]:
         """Lowest margin of safety of each ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["failures"]["margin_of_safety"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"MoS of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["failures"]["margin_of_safety"])
 
     @property
     def failure_modes(self) -> Sequence[str]:
         """Critical failure mode of each ply."""
-        if self._uptodate and self._results:
-            return self._results[0]["results"]["failures"]["failure_modes"]
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"Failure modes of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return self._results[0]["results"]["failures"]["failure_modes"]
 
     @property
     def offsets(self) -> npt.NDArray[np.float64]:
         """Access the z-coordinates for each interface and ply."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["results"]["offsets"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"Offsets of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["results"]["offsets"])
 
     @property
     def polar_properties_E1(self) -> npt.NDArray[np.float64]:
         """Access the polar property E1 of the laminate."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["layup"]["polar_properties"]["E1"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"Polar property E1 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["layup"]["polar_properties"]["E1"])
 
     @property
     def polar_properties_E2(self) -> npt.NDArray[np.float64]:
         """Access the polar property E2 of the laminate."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["layup"]["polar_properties"]["E2"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"Polar property E2 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
+
+        return np.array(self._results[0]["layup"]["polar_properties"]["E2"])
 
     @property
     def polar_properties_G12(self) -> npt.NDArray[np.float64]:
         """Access the polar property G12 of the laminate."""
-        if self._uptodate and self._results:
-            return np.array(self._results[0]["layup"]["polar_properties"]["G12"])
+        if not self._isuptodate or not self._results:
+            self.run()
 
-        raise RuntimeError(f"Polar property G12 of Sampling Point {self.name} is not accessible")
+        if not self._results:
+            raise RuntimeError(f"Results of sampling point {self.name} are not available.")
 
-    def update(self) -> None:
-        """Run the DPF operator and caches the results.
+        return np.array(self._results[0]["layup"]["polar_properties"]["G12"])
 
-        Important: call this method before you access the data.
-        """
+    def run(self) -> None:
+        """Run the DPF operator and caches the results."""
         if self.result_definition:
-            self._operator.inputs.result_definition(self.result_definition.to_json())
+            new_hash = hashlib.sha1(json.dumps(self.result_definition.to_dict(), sort_keys=True))
+            if new_hash != self._rd_hash:
+                # only set input if the result definition changed
+                self._operator.inputs.result_definition(self.result_definition.to_json())
+                self._isuptodate = False
         else:
             raise RuntimeError(
-                "Cannot update Sampling Point because " "the Result definition is missing."
+                "Cannot update Sampling Point because the Result Definition is missing."
             )
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
@@ -303,7 +371,7 @@ class SamplingPoint:
                 "not supported!"
             )
 
-        self._uptodate = True
+        self._isuptodate = True
 
     def get_indices(self, spots: Sequence[str] = ["bottom", "middle", "top"]) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
