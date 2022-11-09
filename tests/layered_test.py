@@ -9,9 +9,9 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.layup_info import (
+    AnalysisPlyInfoProvider,
     ElementInfo,
     ElementInfoProvider,
-    get_analysis_ply_info_provider,
     get_element_info_provider,
 )
 from ansys.dpf.composites.select_indices import (
@@ -67,7 +67,7 @@ def get_result_field(
                     )
                 else:
                     selected_indices = get_selected_indices(
-                        element_info, layers=layers, corner_nodes=corner_nodes, spots=spots
+                        element_info, layers=layers, nodes=corner_nodes, spots=spots
                     )
 
                 value = strain_data[selected_indices][:, component]
@@ -129,7 +129,7 @@ def test_filter_by_global_ply(dpf_server):
         mesh=setup_result.mesh,
         rst_data_source=setup_result.rst_data_source,
     ) as field_info:
-        analysis_ply_info_provider = get_analysis_ply_info_provider(
+        analysis_ply_info_provider = AnalysisPlyInfoProvider(
             mesh=setup_result.mesh, name="P1L1__ud_patch ns1"
         )
         with result_field.as_local_field() as local_result_field:
@@ -223,6 +223,22 @@ class ExpectedOutput:
     is_layered: bool
 
 
+def get_layup_property_fields():
+    # Mock the info that gets added in the layup provider
+    # All the layered elements have a layered section with three layers (materials 1,2,1)
+    material_property_field = PropertyField()
+    layer_indices_property_field = PropertyField()
+
+    # The rst file contains all types of elements
+    # Please check the *.dat files in dpf_composites/test_data/model_with_all_element_types
+    # for the definition of the elements
+    layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
+    for layered_element_id in layered_element_ids:
+        material_property_field.append([1, 2, 1], layered_element_id)
+        layer_indices_property_field.append([3, 0, 1, 2], layered_element_id)
+    return material_property_field, layer_indices_property_field
+
+
 def test_all_element_types(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
 
@@ -274,16 +290,7 @@ def test_all_element_types(dpf_server):
         mesh_provider.inputs.data_sources(rst_data_source)
         mesh: MeshedRegion = mesh_provider.outputs.mesh()
 
-        # Mock the info that gets added in the layup provider
-        # All the layered elements have a layered section with three layers (materials 1,2,1)
-        material_property_field = PropertyField()
-        layer_indices_property_field = PropertyField()
-        element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
-        layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
-        for layered_element_id in layered_element_ids:
-            material_property_field.append([1, 2, 1], layered_element_id)
-            layer_indices_property_field.append([3, 0, 1, 2], layered_element_id)
-
+        material_property_field, layer_indices_property_field = get_layup_property_fields()
         mesh.set_property_field("element_layered_material_ids", material_property_field)
         mesh.set_property_field("element_layer_indices", layer_indices_property_field)
 
@@ -293,6 +300,7 @@ def test_all_element_types(dpf_server):
 
         fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
         field = fields_container[0]
+        element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
 
         with get_field_info(
             input_field=field,
@@ -347,3 +355,130 @@ def test_all_element_types(dpf_server):
         "model_with_all_element_types_minimal_output.rst",
         get_expected_output(with_mid=True, only_top_bot_of_stack=True),
     )
+
+
+def test_access_to_invalid_element(dpf_server):
+    files = get_data_files()
+    setup_result = setup_operators(dpf_server, files)
+
+    with get_field_info(
+        input_field=setup_result.field,
+        mesh=setup_result.mesh,
+        rst_data_source=setup_result.rst_data_source,
+    ) as field_info:
+        # Try to get non existing element
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info = field_info.layup_info.get_element_info(1000)
+        assert str(exc_info.value).startswith("Could not determine element properties")
+
+
+def test_access_to_invalid_analysis_ply(dpf_server):
+    files = get_data_files()
+    setup_result = setup_operators(dpf_server, files)
+
+    with get_field_info(
+        input_field=setup_result.field,
+        mesh=setup_result.mesh,
+        rst_data_source=setup_result.rst_data_source,
+    ) as field_info:
+        # try to get non existing anlysis ply
+        with pytest.raises(RuntimeError) as exc_info:
+
+            analysis_ply_info_provider = AnalysisPlyInfoProvider(
+                mesh=setup_result.mesh, name="notexisting"
+            )
+        assert str(exc_info.value).startswith("Analysis Ply not available")
+
+        # try to get element that is not part of analysis ply
+        analysis_ply_info_provider = AnalysisPlyInfoProvider(
+            mesh=setup_result.mesh, name="P1L1__ud_patch ns1"
+        )
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info = field_info.layup_info.get_element_info(4)
+            selected_indices = get_selected_indices_by_analysis_ply(
+                analysis_ply_info_provider, element_info
+            )
+
+        assert str(exc_info.value) == "Analysis Ply 'P1L1__ud_patch ns1' is not part of element 4"
+
+
+def test_document_error_cases_indices(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
+
+    def get_layup_info_for_rst(rst_file):
+        rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
+        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+
+        rst_data_source = dpf.DataSources(rst_path)
+
+        mesh_provider = dpf.Operator("MeshProvider")
+        mesh_provider.inputs.data_sources(rst_data_source)
+        mesh: MeshedRegion = mesh_provider.outputs.mesh()
+
+        with pytest.raises(RuntimeError) as exc_info:
+            layup_info = get_element_info_provider(mesh, rst_data_source=rst_data_source)
+        assert str(exc_info.value).startswith("Missing property field in mesh")
+        material_property_field, layer_indices_property_field = get_layup_property_fields()
+        mesh.set_property_field("element_layered_material_ids", material_property_field)
+        mesh.set_property_field("element_layer_indices", layer_indices_property_field)
+        return get_element_info_provider(mesh, rst_data_source=rst_data_source)
+
+    layup_info = get_layup_info_for_rst("model_with_all_element_types_minimal_output.rst")
+    element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
+    layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
+    non_layered_element_ids = set(element_ids).difference(set(layered_element_ids))
+
+    for element_id in layered_element_ids:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, [1], None, None)
+        assert str(exc_info.value).startswith(
+            "Computation of indices is not supported for elements with no spots"
+        )
+
+    for element_id in non_layered_element_ids:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, [1], None, None)
+        assert str(exc_info.value).startswith(
+            "Computation of indices is not supported for non-layered elements."
+        )
+
+    layup_info = get_layup_info_for_rst("model_with_all_element_types_all_output.rst")
+
+    for element_id in non_layered_element_ids:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, [1], None, None)
+        assert str(exc_info.value).startswith(
+            "Computation of indices is not supported for non-layered elements."
+        )
+
+    for element_id in layered_element_ids:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, [3], None, None)
+        assert str(exc_info.value).startswith(
+            "Layer index 3 is greater or equal number of layers 3"
+        )
+
+    for element_id in layered_element_ids:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, [1], [4], None)
+        assert str(exc_info.value).startswith(
+            "corner node index 4 is greater or equal number of corner nodes"
+        )
+
+    for element_id in layered_element_ids:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, [1], [1], [3])
+        assert str(exc_info.value).startswith("spot index 3 is greater or equal number of spots")
+
+    element_info: ElementInfo = layup_info.get_element_info(1)
+    selected_indices = get_selected_indices_by_material_id(element_info, 5)
+    assert len(selected_indices) == 0
+
+
+# Check non-existing material id
