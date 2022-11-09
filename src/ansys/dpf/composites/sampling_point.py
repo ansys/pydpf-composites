@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from collections import namedtuple
 from typing import Any, Dict, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
@@ -15,6 +16,8 @@ import numpy.typing as npt
 from .enums import Spot
 from .load_plugin import load_composites_plugin
 from .result_definition import ResultDefinition
+
+SamplingPointFigure = namedtuple("SamplingPointFigure", ("figure", "axes"))
 
 
 class SamplingPoint:
@@ -71,6 +74,7 @@ class SamplingPoint:
         "rf": "reserve_factor",
         "mos": "margin_of_safety",
     }
+
 
     def __init__(
         self,
@@ -489,7 +493,7 @@ class SamplingPoint:
         return cast(npt.NDArray[np.float64], offsets[indices])
 
     def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
-        """Access the figure and axis of the default polar plot.
+        """Create a standard polar plot to visualize the polar properties of the laminate.
 
         Parameters
         ----------
@@ -514,15 +518,15 @@ class SamplingPoint:
 
         ax.set_title("Polar Properties")
         ax.legend()
-        return fig, ax
+        return SamplingPointFigure(fig, ax)
 
-    def add_ply_sequence_to_plot(self, axis: Any, core_scale_factor: float) -> None:
-        """Add the stacking (ply + text) to an axis/plot.
+    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float) -> None:
+        """Add the stacking (ply + text) to an axes/plot.
 
         Parameters
         ----------
-        axis
-            Matplotlib plot/axis object
+        axes
+            Matplotlib single axes object
         core_scale_factor
             Scales the thickness of core plies
         """
@@ -531,7 +535,7 @@ class SamplingPoint:
         )
 
         num_spots = 2
-        x_bound = axis.get_xbound()
+        x_bound = axes.get_xbound()
         width = x_bound[1] - x_bound[0]
 
         for index, ply in enumerate(self.analysis_plies):
@@ -540,13 +544,13 @@ class SamplingPoint:
 
             height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
             origin = (x_bound[0], offsets[index * num_spots])
-            axis.add_patch(
+            axes.add_patch(
                 Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch)
             )
             mat = ply["material"]
             th = ply["thickness"]
             text = f"{mat}\nangle={angle}, th={th}"
-            axis.annotate(
+            axes.annotate(
                 text=text,
                 xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
                 ha="center",
@@ -556,19 +560,19 @@ class SamplingPoint:
 
     def add_results_to_plot(
         self,
-        axis: Any,
+        axes: Any,
         components: Sequence[str],
         spots: Sequence[Spot] = [Spot.BOTTOM, Spot.TOP],
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
     ) -> None:
-        """Add results (strains, stresses or failure values) to a plot/axis.
+        """Add results (strains, stresses or failure values) to single axes object (plot).
 
         Parameters
         ----------
-        axis:
-            Matplotlib axis object
+        axes:
+            Matplotlib single axes object
         components:
             List of result components
         spots:
@@ -592,14 +596,14 @@ class SamplingPoint:
         for comp in components:
             raw_values = getattr(self, comp)
             values = [raw_values[i] for i in indices]
-            axis.plot(values, offsets, label=comp)
+            axes.plot(values, offsets, label=comp)
         if title:
-            axis.set_title(title)
+            axes.set_title(title)
         if xlabel:
-            axis.set_xlabel(xlabel)
+            axes.set_xlabel(xlabel)
 
-        axis.legend()
-        axis.grid()
+        axes.legend()
+        axes.grid()
 
     def get_result_plots(
         self,
@@ -611,7 +615,7 @@ class SamplingPoint:
         core_scale_factor: float = 1.0,
         spots: Sequence[Spot] = [Spot.BOTTOM, Spot.MIDDLE, Spot.TOP],
     ) -> Any:
-        """Generate a figure with an axis (plot) for each selected result entity.
+        """Generate a figure with a grid of axes (plot) for each selected result entity.
 
         Parameters
         ----------
@@ -664,6 +668,7 @@ class SamplingPoint:
             index = 0
             if create_laminate_plot:
                 plt.rcParams["hatch.linewidth"] = 0.2
+                plt.rcParams["hatch.color"] = "silver"
                 self.add_ply_sequence_to_plot(axes[index], core_scale_factor)
                 axes[index].set_xticks([])
                 index += 1
@@ -715,4 +720,4 @@ class SamplingPoint:
 
                 index += 1
 
-        return fig, axes
+        return SamplingPointFigure(fig, axes)

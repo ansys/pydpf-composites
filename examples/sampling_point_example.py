@@ -48,7 +48,8 @@ load_composites_plugin()
 # %%
 # Specify input files and upload them to the server
 
-TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
+#TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
+TEST_DATA_ROOT_DIR = pathlib.Path(r'D:\ANSYSDev\pydpf-composites') / "tests" / "data" / "shell"
 rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
 h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
 material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
@@ -105,7 +106,7 @@ sampling_point.add_results_to_plot(
     "MPA",
 )
 ax1.legend()
-plt.rcParams["hatch.linewidth"] = 0.2
+#plt.rcParams["hatch.linewidth"] = 0.2
 sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 
 # %%
@@ -120,6 +121,7 @@ e2 = sampling_point.e2[indices]
 
 fig, ax1 = plt.subplots()
 plt.rcParams["hatch.linewidth"] = 0.2
+plt.rcParams["hatch.color"] = "silver"
 line = ax1.plot(e12, offsets, label="e12")
 line = ax1.plot(e2, offsets, label="e2")
 ax1.set_yticks([])
