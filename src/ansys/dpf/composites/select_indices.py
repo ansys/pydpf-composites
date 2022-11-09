@@ -125,4 +125,4 @@ def get_selected_indices_by_analysis_ply(
             f"is not part of element {element_info.id}"
         )
     else:
-        return get_selected_indices(element_info, layers=[layer_index])
+        return get_selected_indices(element_info, layers=[int(layer_index)])
