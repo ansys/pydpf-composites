@@ -102,7 +102,7 @@ class SamplingPoint:
         if not self._operator:
             raise RuntimeError("SamplingPoint: failed to initialize the operator!")
 
-        self._results = None
+        self._results: Any = None
         self._isuptodate = False
         self._rd_hash = ""
 
@@ -129,11 +129,11 @@ class SamplingPoint:
         return self._results
 
     @property
-    def analysis_plies(self) -> Union[Sequence[Any]]:
+    def analysis_plies(self) -> Sequence[Any]:
         """List of analysis plies from the bottom to the top."""
         self._update_and_check_results()
 
-        plies = self._results[0]["layup"]["analysis_plies"]
+        plies = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
         if len(plies) == 0:
             raise RuntimeError("No plies are found for the selected element!")
         return plies
@@ -232,7 +232,7 @@ class SamplingPoint:
     def failure_modes(self) -> Sequence[str]:
         """Critical failure mode of each ply."""
         self._update_and_check_results()
-        return self._results[0]["results"]["failures"]["failure_modes"]
+        return cast(Sequence[str], self._results[0]["results"]["failures"]["failure_modes"])
 
     @property
     def offsets(self) -> npt.NDArray[np.float64]:
