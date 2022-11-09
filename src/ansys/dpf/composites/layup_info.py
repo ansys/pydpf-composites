@@ -322,12 +322,14 @@ class ElementInfoProvider:
 
 
 def get_element_info_provider(
-    mesh: MeshedRegion, rst_data_source: DataSources
+    mesh: MeshedRegion, rst_data_source: DataSources, no_bounds_checks: bool = True
 ) -> ElementInfoProvider:
     """Get LayupInfo Object.
 
     :param mesh: dpf meshed region
     :param rst_data_source: dpf datasource
+    :param no_bounds_checks: Disable bounds checks. Improves
+                             performance but can result in cryptic error messages
     :return: LayupInfo
     """
 
@@ -358,4 +360,4 @@ def get_element_info_provider(
         "material_ids": mesh.property_field("element_layered_material_ids"),
     }
 
-    return ElementInfoProvider(mesh, **fields)
+    return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)

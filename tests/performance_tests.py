@@ -163,12 +163,11 @@ def test_performance_element_info(dpf_server):
     timer.add("read data")
 
     layup_info = get_element_info_provider(
-        setup_result.mesh, rst_data_source=setup_result.rst_data_source
+        setup_result.mesh, rst_data_source=setup_result.rst_data_source, no_bounds_checks=True
     )
     timer.add("layup info")
     scope = setup_result.field.scoping.ids
     timer.add("scope")
-
     for element_id in scope:
         layup_info.get_element_info(element_id)
 
