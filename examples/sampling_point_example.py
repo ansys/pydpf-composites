@@ -48,8 +48,7 @@ load_composites_plugin()
 # %%
 # Specify input files and upload them to the server
 
-#TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
-TEST_DATA_ROOT_DIR = pathlib.Path(r'D:\ANSYSDev\pydpf-composites') / "tests" / "data" / "shell"
+TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
 rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
 h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
 material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
@@ -106,7 +105,8 @@ sampling_point.add_results_to_plot(
     "MPA",
 )
 ax1.legend()
-#plt.rcParams["hatch.linewidth"] = 0.2
+plt.rcParams["hatch.linewidth"] = 0.2
+plt.rcParams["hatch.color"] = "silver"
 sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 
 # %%

@@ -1,8 +1,8 @@
 """Wrapper for the Sampling Point Operator."""
 
+from collections import namedtuple
 import hashlib
 import json
-from collections import namedtuple
 from typing import Any, Dict, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
@@ -74,7 +74,6 @@ class SamplingPoint:
         "rf": "reserve_factor",
         "mos": "margin_of_safety",
     }
-
 
     def __init__(
         self,
