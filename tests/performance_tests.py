@@ -18,7 +18,7 @@ def get_data_files():
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_ger_data_files()
+    return get_dummy_data_files()
 
 
 def get_dummy_data_files():

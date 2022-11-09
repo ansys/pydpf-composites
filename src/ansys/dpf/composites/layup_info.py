@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 import sys
-from typing import Any, Dict, List, Union, cast
+from typing import Any, Dict, List, Optional, cast
 
 if sys.version_info >= (3, 8):
     from typing import Protocol
@@ -10,7 +10,7 @@ else:
     from typing_extensions import Protocol
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import DataSources, Field, MeshedRegion, PropertyField, Scoping
+from ansys.dpf.core import DataSources, MeshedRegion, PropertyField, Scoping
 import numpy as np
 from numpy.typing import NDArray
 
@@ -19,7 +19,7 @@ def get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
     """Return analysis ply property field.
 
     :param mesh: dpf meshed region
-    :param name:
+    :param name: Analysis Ply name
     :return: analysis_ply local property field contextmanager
     """
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
@@ -61,51 +61,58 @@ def _setup_index_by_id(scoping: Scoping) -> NDArray[np.int64]:
     return indices
 
 
-class _Indexer(Protocol):
-    def by_id(self, entity_id: int) -> Any:
+class _IndexerSingleValue(Protocol):
+    def by_id(self, entity_id: int) -> Optional[np.int64]:
+        pass
+
+
+class _IndexerArrayValue(Protocol):
+    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         pass
 
 
 class _IndexerNoDataPointer:
-    def __init__(self, field: Union[Field, PropertyField]):
+    def __init__(self, field: PropertyField):
+        # For PropertyFields the return type is always int, for Fields always double.
         self.indices = _setup_index_by_id(field.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
         # Without converting this to a numpy array, performance during the lookup is about 50%.
         # It is not clear why. To be checked with dpf team. If this is a local field there is no
         # performance difference because the local field implementation already returns a numpy
         # array
-        self.data: NDArray[Any] = np.array(field.data)
+        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         self.max_id = len(self.indices) - 1
 
-    def by_id(self, entity_id: int) -> Any:
+    def by_id(self, entity_id: int) -> Optional[np.int64]:
         if entity_id > self.max_id:
             return None
-        return self.data[self.indices[entity_id]]
+        return cast(np.int64, self.data[self.indices[entity_id]])
 
 
 class _IndexerNoDataPointerNoBoundsCheck:
-    def __init__(self, field: Union[Field, PropertyField]):
+    # For PropertyFields the return type is always int, for Fields always double.
+    def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
         # Without converting this to a numpy array, performance during the lookup is about 50%.
         # It is not clear why. To be checked with dpf team. If this is a local field there is no
         # performance difference because the local field implementation already returns a numpy
         # array
-        self.data: NDArray[Any] = np.array(field.data)
+        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
 
-    def by_id(self, entity_id: int) -> Any:
-        return self.data[self.indices[entity_id]]
+    def by_id(self, entity_id: int) -> Optional[np.int64]:
+        return cast(np.int64, self.data[self.indices[entity_id]])
 
 
 class _IndexerWithDataPointer:
-    def __init__(self, field: Union[Field, PropertyField]):
+    def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
         # Without converting this to a numpy array, performance during the lookup is about 50%.
         # It is not clear why. To be checked with dpf team. If this is a local field there is no
         # performance difference because the local field implementation already returns a numpy
         # array
-        self.data: NDArray[Any] = np.array(field.data)
+        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
         self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
@@ -113,25 +120,27 @@ class _IndexerWithDataPointer:
         )
         self.max_id = len(self.indices) - 1
 
-    def by_id(self, entity_id: int) -> Any:
+    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         if entity_id > self.max_id:
             return None
 
         idx = self.indices[entity_id]
         if idx < 0:
             return None
-        return self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
+        return cast(
+            NDArray[np.int64], self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
+        )
 
 
 class _IndexerWithDataPointerNoBoundsCheck:
-    def __init__(self, field: Union[Field, PropertyField]):
+    def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
         # The next call accesses the numpy data. This sends the data over grpc which takes some time
         # Without converting this to a numpy array, performance during the lookup is about 50%.
         # It is not clear why. To be checked with dpf team. If this is a local field there is no
         # performance difference because the local field implementation already returns a numpy
         # array
-        self.data: NDArray[Any] = np.array(field.data)
+        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
         self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
@@ -139,11 +148,13 @@ class _IndexerWithDataPointerNoBoundsCheck:
         )
         self.max_id = len(self.indices) - 1
 
-    def by_id(self, entity_id: int) -> Any:
+    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         idx = self.indices[entity_id]
         if idx < 0:
             return None
-        return self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
+        return cast(
+            NDArray[np.int64], self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
+        )
 
 
 """
@@ -159,18 +170,18 @@ n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
 }
 
 
-def _is_shell(apdl_element_type: int) -> bool:
-    return {181: True, 281: True, 185: False, 186: False, 190: False}[apdl_element_type]
+def _is_shell(apdl_element_type: np.int64) -> bool:
+    return {181: True, 281: True, 185: False, 186: False, 190: False}[int(apdl_element_type)]
 
 
-def _get_n_spots(apdl_element_type: int, keyopt_8: int, keyopt_3: int) -> int:
+def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.int64) -> int:
 
     if keyopt_3 == 0:
         if apdl_element_type == 185 or apdl_element_type == 186:
             return 0
 
     try:
-        return n_spots_by_element_type_and_keyopt_dict[apdl_element_type][keyopt_8]
+        return n_spots_by_element_type_and_keyopt_dict[int(apdl_element_type)][int(keyopt_8)]
     except KeyError:
         raise RuntimeError(
             f"Unsupported element type keyopt8 combination "
@@ -210,12 +221,9 @@ class AnalysisPlyInfoProvider:
         self.property_field = get_analysis_ply(mesh, name)
         self._layer_indices = _IndexerNoDataPointer(self.property_field)
 
-    def get_layer_index_by_element_id(self, element_id: int) -> int:
+    def get_layer_index_by_element_id(self, element_id: int) -> Optional[np.int64]:
         """Get the layer index for the analysis ply in a given element."""
-        try:
-            return cast(int, self._layer_indices.by_id(element_id))
-        except IndexError:
-            return -1
+        return self._layer_indices.by_id(element_id)
 
 
 class ElementInfoProvider:
@@ -254,13 +262,13 @@ class ElementInfoProvider:
                 error messages
         """
 
-        def get_indexer_with_data_pointer(field: Union[Field, PropertyField]) -> _Indexer:
+        def get_indexer_with_data_pointer(field: PropertyField) -> _IndexerArrayValue:
             if no_bounds_checks:
                 return _IndexerWithDataPointerNoBoundsCheck(field)
             else:
                 return _IndexerWithDataPointer(field)
 
-        def get_indexer_no_data_pointer(field: Union[Field, PropertyField]) -> _Indexer:
+        def get_indexer_no_data_pointer(field: PropertyField) -> _IndexerSingleValue:
             if no_bounds_checks:
                 return _IndexerNoDataPointerNoBoundsCheck(field)
             else:
@@ -313,7 +321,7 @@ class ElementInfoProvider:
             n_corner_nodes=corner_nodes_dpf,
             n_spots=n_spots,
             is_layered=is_layered,
-            element_type=apdl_element_type,
+            element_type=int(apdl_element_type),
             material_ids=material_ids,
             id=element_id,
             is_shell=is_shell,
@@ -322,7 +330,7 @@ class ElementInfoProvider:
 
 
 def get_element_info_provider(
-    mesh: MeshedRegion, rst_data_source: DataSources, no_bounds_checks: bool = True
+    mesh: MeshedRegion, rst_data_source: DataSources, no_bounds_checks: bool = False
 ) -> ElementInfoProvider:
     """Get LayupInfo Object.
 
