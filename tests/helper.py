@@ -1,9 +1,13 @@
+from contextlib import contextmanager
 from dataclasses import dataclass
 import pathlib
 import time
-from typing import Any
+from typing import Any, Generator
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core import DataSources, Field, MeshedRegion
+
+from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider
 
 
 class Timer:
@@ -115,3 +119,27 @@ def setup_operators(server, files: CompositeFiles, upload=True):
         rst_data_source=rst_data_source,
         material_provider=material_provider,
     )
+
+
+@dataclass
+class FieldInfo:
+    field: Field
+    layup_info: ElementInfoProvider
+
+
+@contextmanager
+def get_field_info(
+    input_field: Field, mesh: MeshedRegion, rst_data_source: DataSources
+) -> Generator[FieldInfo, None, None]:
+    layup_info = get_element_info_provider(mesh, rst_data_source=rst_data_source)
+    with input_field.as_local_field() as local_input_field:
+        yield FieldInfo(field=local_input_field, layup_info=layup_info)
+
+
+def get_basic_shell_files():
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+
+    rst_path = TEST_DATA_ROOT_DIR / "shell.rst"
+    h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
+    material_path = TEST_DATA_ROOT_DIR / "material.engd"
+    return CompositeFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
