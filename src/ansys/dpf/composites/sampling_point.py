@@ -35,9 +35,25 @@ class SamplingPoint:
 
     Notes
     -----
+    Results such as strains and stresses are typically stored at the BOTTOM, (MIDDLE)
+    and TOP of each layer. These points are named spots and define the through-the-thickness
+    location of the results. This is important to understand the indexing and how to access
+    the results. Example: Laminate with 4 layers and 3 spots per layer.
 
+    *Stacking*        *Index*  *Spot*
 
+    ---------------   11       TOP of Layer 4
+      Layer 4         10       MIDDLE of Layer 4
+    ---------------   8, 9     TOP of Layer 3, BOTTOM of Layer 4
+      Layer 3         7        MIDDLE of Layer 3
+    ---------------   5, 6     TOP of Layer 2, BOTTOM of Layer 3
+      Layer 2         4        MIDDLE of Layer 2
+    ---------------   2, 3     TOP of Layer 1, BOTTOM of Layer 2
+      Layer 1         1        MIDDLE of Layer 1
+    ---------------   0        BOTTOM of Layer 1
 
+    The function get_indices and get_offsets_by_spots can be used to evaluate the
+    indices and offsets.
     """
 
     FAILURE_MODES = {
