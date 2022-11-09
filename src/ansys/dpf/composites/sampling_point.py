@@ -72,8 +72,6 @@ class SamplingPoint:
         "mos": "margin_of_safety",
     }
 
-    # todo: should we support the different server types if server is None?
-
     def __init__(
         self,
         name: str,
@@ -85,8 +83,6 @@ class SamplingPoint:
         self._interface_indices: Dict[Spot, int] = {}
         self.name = name
         self._result_definition = result_definition
-
-        # todo: TBD - how to handle the server
 
         # specifies the server. Creates a new one if needed
         used_server = get_or_create_server(server)
