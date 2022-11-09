@@ -12,10 +12,10 @@ _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
 class ResultDefinition:
-    """Represent the result definition used in DPF Composites.
+    """Represents the result definition of DPF Composites.
 
-    It can be used in combination with the composite::failure_evaluator and
-    composite::sampling_point_evaluator, and others.
+    It is used to configure the DPF operators composite::failure_evaluator
+    and composite::sampling_point_evaluator.
     """
 
     _VERSION = 1
