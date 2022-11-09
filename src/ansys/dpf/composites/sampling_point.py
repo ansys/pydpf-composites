@@ -35,25 +35,35 @@ class SamplingPoint:
 
     Notes
     -----
-    Results such as strains and stresses are typically stored at the BOTTOM, (MIDDLE)
-    and TOP of each layer. These points are named spots and define the through-the-thickness
-    location of the results. This is important to understand the indexing and how to access
-    the results. Example: Laminate with 4 layers and 3 spots per layer.
+    The results of layered elements are stored per integration point. A layered shell element
+    has a number of in-plane integration points (depending on the integration scheme) and
+    typically 3 integration points through-the-thickness. We call this through-the-thickness
+    integration points ``SPOTS`` and they are typically at the BOTTOM, MIDDLE and TOP of the layer.
+    This notation is used here to identify the corresponding data.
 
-    *Stacking*        *Index*  *Spot*
+    The Sampling Point returns 3 results per layer (one for each spot) because the results of
+    the in-plane integration points are interpolated to the centroid of the element.
+    The table below shows an example of a laminate with 3 layers. So a result (e.g. s1) has
+    9 values, 3 for each ply.
 
-    ---------------   11       TOP of Layer 4
-      Layer 4         10       MIDDLE of Layer 4
-    ---------------   8, 9     TOP of Layer 3, BOTTOM of Layer 4
-      Layer 3         7        MIDDLE of Layer 3
-    ---------------   5, 6     TOP of Layer 2, BOTTOM of Layer 3
-      Layer 2         4        MIDDLE of Layer 2
-    ---------------   2, 3     TOP of Layer 1, BOTTOM of Layer 2
-      Layer 1         1        MIDDLE of Layer 1
-    ---------------   0        BOTTOM of Layer 1
+    +------------+------------+------------------------+
+    | Layer      | Index      | Spot                   |
+    +============+============+========================+
+    |            | - 8        | - TOP of Layer 3       |
+    | Layer 3    | - 7        | - MIDDLE of Layer 3    |
+    |            | - 6        | - BOTTOM of Layer 3    |
+    +------------+------------+------------------------+
+    |            | - 5        | - TOP of Layer 2       |
+    | Layer 2    | - 4        | - MIDDLE of Layer 2    |
+    |            | - 3        | - BOTTOM of Layer 2    |
+    +------------+------------+------------------------+
+    |            | - 2        | - TOP of Layer 1       |
+    | Layer 1    | - 1        | - MIDDLE of Layer 1    |
+    |            | - 0        | - BOTTOM of Layer 1    |
+    +------------+------------+------------------------+
 
-    The function get_indices and get_offsets_by_spots can be used to evaluate the
-    indices and offsets.
+    The function get_indices and get_offsets_by_spots simplify the indexing and
+    filtering of the data.
     """
 
     FAILURE_MODES = {
