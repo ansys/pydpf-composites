@@ -1,0 +1,6 @@
+offsets
+=======
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: SamplingPoint.offsets

@@ -1,9 +1,5 @@
 .. _ref_examples:
 
-========
-Examples
-========
-
 .. === EXAMPLES Gallery ===
 
 ..

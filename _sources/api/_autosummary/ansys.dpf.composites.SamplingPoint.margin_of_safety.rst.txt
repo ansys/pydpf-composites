@@ -1,0 +1,6 @@
+margin\_of\_safety
+==================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: SamplingPoint.margin_of_safety

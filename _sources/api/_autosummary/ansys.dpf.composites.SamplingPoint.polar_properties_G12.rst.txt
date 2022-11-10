@@ -1,0 +1,6 @@
+polar\_properties\_G12
+======================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: SamplingPoint.polar_properties_G12

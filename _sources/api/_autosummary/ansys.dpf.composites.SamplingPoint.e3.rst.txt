@@ -1,0 +1,6 @@
+e3
+==
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: SamplingPoint.e3

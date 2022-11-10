@@ -1,0 +1,6 @@
+s23
+===
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: SamplingPoint.s23

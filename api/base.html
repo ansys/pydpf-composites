@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>pyDPF Composite Objects and Helpers &#8212; pydpf-composites</title>
+    <title>Objects and Helpers &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -160,7 +160,7 @@
     
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API Reference</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">pyDPF Composite Objects and Helpers</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Objects and Helpers</a></li> 
       </ul>
     </div>
         </div>
@@ -184,7 +184,7 @@
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
-   pyDPF Composite Objects and Helpers
+   Objects and Helpers
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -195,6 +195,16 @@
    <li class="toctree-l2">
     <a class="reference internal" href="_autosummary/ansys.dpf.composites.ResultDefinition.html">
      ansys.dpf.composites.ResultDefinition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.SamplingPoint.html">
+     ansys.dpf.composites.SamplingPoint
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.Spot.html">
+     ansys.dpf.composites.Spot
     </a>
    </li>
   </ul>
@@ -244,12 +254,18 @@
               
               <article class="bd-article" role="main">
                 
-  <section id="pydpf-composite-objects-and-helpers">
-<h1>pyDPF Composite Objects and Helpers<a class="headerlink" href="#pydpf-composite-objects-and-helpers" title="Permalink to this heading">#</a></h1>
+  <section id="objects-and-helpers">
+<h1>Objects and Helpers<a class="headerlink" href="#objects-and-helpers" title="Permalink to this heading">#</a></h1>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ResultDefinition.html#ansys.dpf.composites.ResultDefinition" title="ansys.dpf.composites.ResultDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a>(name, ...[, ...])</p></td>
-<td><p>Represent the result definition used in DPF Composites.</p></td>
+<td><p>Represents the result definition of DPF Composites.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.SamplingPoint.html#ansys.dpf.composites.SamplingPoint" title="ansys.dpf.composites.SamplingPoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint</span></code></a>(name[, result_definition, server])</p></td>
+<td><p>Implements the Sampling Point object which wraps the DPF sampling point operator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.Spot.html#ansys.dpf.composites.Spot" title="ansys.dpf.composites.Spot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spot</span></code></a>(value)</p></td>
+<td><p>Implements an interface to access the spots of the results of layered elements.</p></td>
 </tr>
 </tbody>
 </table>

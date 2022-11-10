@@ -13,7 +13,3 @@
    here.
 
 .. include:: ../../README.rst
-
-Examples
---------
-* :ref:`ref_examples`

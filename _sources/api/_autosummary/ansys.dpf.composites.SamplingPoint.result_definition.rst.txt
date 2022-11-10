@@ -1,0 +1,6 @@
+result\_definition
+==================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: SamplingPoint.result_definition

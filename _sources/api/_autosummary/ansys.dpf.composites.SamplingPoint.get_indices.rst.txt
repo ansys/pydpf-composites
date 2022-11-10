@@ -1,0 +1,6 @@
+get\_indices
+============
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: SamplingPoint.get_indices

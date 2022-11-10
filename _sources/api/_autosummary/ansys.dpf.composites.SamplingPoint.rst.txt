@@ -1,0 +1,122 @@
+﻿ansys.dpf.composites.SamplingPoint
+==================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: SamplingPoint
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      SamplingPoint.add_ply_sequence_to_plot
+      
+      
+      SamplingPoint.add_results_to_plot
+      
+      
+      SamplingPoint.get_indices
+      
+      
+      SamplingPoint.get_offsets_by_spots
+      
+      
+      SamplingPoint.get_polar_plot
+      
+      
+      SamplingPoint.get_result_plots
+      
+      
+      SamplingPoint.run
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      SamplingPoint.analysis_plies
+      
+      
+      SamplingPoint.e1
+      
+      
+      SamplingPoint.e12
+      
+      
+      SamplingPoint.e13
+      
+      
+      SamplingPoint.e2
+      
+      
+      SamplingPoint.e23
+      
+      
+      SamplingPoint.e3
+      
+      
+      SamplingPoint.failure_modes
+      
+      
+      SamplingPoint.inverse_reserve_factor
+      
+      
+      SamplingPoint.margin_of_safety
+      
+      
+      SamplingPoint.offsets
+      
+      
+      SamplingPoint.polar_properties_E1
+      
+      
+      SamplingPoint.polar_properties_E2
+      
+      
+      SamplingPoint.polar_properties_G12
+      
+      
+      SamplingPoint.reserve_factor
+      
+      
+      SamplingPoint.result_definition
+      
+      
+      SamplingPoint.results
+      
+      
+      SamplingPoint.s1
+      
+      
+      SamplingPoint.s12
+      
+      
+      SamplingPoint.s13
+      
+      
+      SamplingPoint.s2
+      
+      
+      SamplingPoint.s23
+      
+      
+      SamplingPoint.s3
+      
+      
+      SamplingPoint.spots_per_ply
+      
+   
+   
