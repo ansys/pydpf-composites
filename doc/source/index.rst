@@ -3,6 +3,7 @@
    :maxdepth: 3
 
    self
+   api/index
    examples/index
 
 
@@ -12,7 +13,3 @@
    here.
 
 .. include:: ../../README.rst
-
-Examples
---------
-* :ref:`ref_examples`
