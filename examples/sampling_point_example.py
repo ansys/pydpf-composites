@@ -1,14 +1,13 @@
 """
 .. _sampling_point_example:
 
-How to use the Sampling Point operator
---------------------------------------
+Sampling Point - Processing and visualization of laminate results
+-----------------------------------------------------------------
 
-Example how the lay-up data and through-the-thickness results of an
-element can be queried and visualized
+Example how the lay-up and through-the-thickness results of a
+layered element can be accessed, processed and visualized.
 
 """
-# todo: complete it once the new format is ready
 import os
 import pathlib
 
@@ -16,7 +15,7 @@ import pathlib
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites import ResultDefinition
+from ansys.dpf.composites import ResultDefinition, SamplingPoint, Spot
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -58,8 +57,7 @@ h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
 material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
 
 # %%
-
-# Define the result definition which is used to configure the composite_failure_operator
+# Configuration of the result definition which is used to configure the composite_failure_operator
 rd = ResultDefinition(
     "combined failure criteria",
     rst_files=[rst_server_path],
@@ -69,13 +67,63 @@ rd = ResultDefinition(
     element_scope=[3],
 )
 
-sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
-sampling_point_op.inputs.result_definition(rd.to_json())
+# %%
+# Create the sampling point and update it
+sampling_point = SamplingPoint("my first sampling point", rd, server)
 
 # %%
+# Plot results using preconfigured plots
 
-# print the results
+fig, axes = sampling_point.get_result_plots(
+    strain_components=[],  # do not plot strains
+    core_scale_factor=0.1,
+    spots=[Spot.BOTTOM, Spot.TOP],
+    show_failure_modes=True,
+)
+fig.set_figheight(8)
+fig.set_figwidth(12)
 
-# todo: rework once the new format is available
-results = sampling_point_op.outputs.results()
-print(results)
+# %%
+# Plot polar properties using a preconfigured plot
+
+fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
+
+# %%
+# Generate a custom plot: plot S13 and S23
+
+import matplotlib.pyplot as plt
+
+fig, ax1 = plt.subplots()
+core_scale_factor = 0.5
+
+sampling_point.add_results_to_plot(
+    ax1,
+    ["s13", "s23"],
+    [Spot.BOTTOM, Spot.TOP],
+    core_scale_factor,
+    "Out-of-plane shear stresses",
+    "MPA",
+)
+ax1.legend()
+plt.rcParams["hatch.linewidth"] = 0.2
+plt.rcParams["hatch.color"] = "silver"
+sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
+
+# %%
+# Another approach to generate a custom plot
+
+interfaces = [Spot.BOTTOM, Spot.TOP]
+core_scale_factor = 1.0
+indices = sampling_point.get_indices(interfaces)
+offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
+e12 = sampling_point.e12[indices]
+e2 = sampling_point.e2[indices]
+
+fig, ax1 = plt.subplots()
+plt.rcParams["hatch.linewidth"] = 0.2
+plt.rcParams["hatch.color"] = "silver"
+line = ax1.plot(e12, offsets, label="e12")
+line = ax1.plot(e2, offsets, label="e2")
+ax1.set_yticks([])
+ax1.legend()
+ax1.set_title("e12 and e2")

@@ -12,18 +12,22 @@ _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
 class ResultDefinition:
-    """Represent the result definition used in DPF Composites.
+    """Represents the result definition of DPF Composites.
 
-    It can be used in combination with the composite::failure_evaluator and
-    composite::sampling_point_evaluator, and others.
+    It is used to configure the DPF operators composite::failure_evaluator
+    and composite::sampling_point_evaluator.
     """
 
     _VERSION = 1
     _ACCUMULATOR = "max"
 
-    # todo: TBD: measures, composite_definitions, material_files are list
+    # todo: TBD: measures, composite_definitions, material_files are of type list
     # where we just support one file.
     # should this class work with lists or just single entries?
+
+    # todo: which object should upload the files to the server? Or is this a user task?
+    # for instance: rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
+
     def __init__(
         self,
         name: str,

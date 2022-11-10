@@ -31,12 +31,21 @@ Pydpf composites
    :alt: Black
 
 
-A Python wrapper for Ansys dpf composites
+A Python wrapper for Ansys dpf composites. It implements a few classes on top of the
+DPF Composites operators and data accessors for short fiber and layered composites
+(layered shell and solid elements). This module can be used to post-process these structures,
+and to implement custom failure criteria and computation.
+For instance fatigue analysis. See `Examples <examples/index.html>`_.
 
+Key features:
 
-    
+* Result Definition object to configure combined failure criteria.
+* Sampling Point object to extract and visualize results from the bottom to the top of a laminate.
+* Exposure of material properties (elasticity, strength limits et).
+* Accessors to extract ply-wise results and material properties.
+
 Developer Setup
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Installing Pydpf composites in developer mode allows
 you to modify the source and enhance it.
@@ -58,11 +67,26 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         python -m pip install pipx
         pipx ensurepath
         pipx install poetry
-        pipx instal pip
+        pipx install pip
         pipx install tox
 
+Build environment
+^^^^^^^^^^^^^^^^^
 
+# Build package and install into the local env
 
+.. code:: bash
+
+    poetry install -E build
+    poetry build
+    python -m pip install dist\ansys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
+
+Use tox to create a virtual env for the development. Activate this env to run tests and scripts
+(*<root>\\.tox\\dev\\Scripts\\activate*).
+
+.. code:: bash
+
+    tox -e dev
 
 Testing
 --------------
@@ -84,7 +108,6 @@ This currently works only on windows and with the directory structure of dpf_com
 
 Build documentation
 ^^^^^^^^^^^^^^^^^^^
-
 #. Windows:
 
     .. code:: bash
@@ -101,17 +124,12 @@ Build documentation
         docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
         tox -e doc-linux
 
-
-
 Run style checks
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 .. code:: bash
 
     tox -e style
-
-
-
 
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
