@@ -2,10 +2,10 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 import pathlib
 import time
-from typing import Any, Generator
+from typing import Generator
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import DataSources, Field, MeshedRegion
+from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
 from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider
 
@@ -54,10 +54,10 @@ class CompositeFiles:
 
 @dataclass
 class SetupResult:
-    field: Any
-    mesh: Any
-    rst_data_source: Any
-    material_provider: Any
+    field: Field
+    mesh: MeshedRegion
+    rst_data_source: DataSources
+    material_provider: Operator
 
 
 def setup_operators(server, files: CompositeFiles, upload=True):
