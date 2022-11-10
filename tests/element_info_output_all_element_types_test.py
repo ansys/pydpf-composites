@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import pathlib
-from typing import Dict
+from typing import Collection, Dict
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Field, MeshedRegion, PropertyField
@@ -27,9 +27,27 @@ class ExpectedOutput:
     is_layered: bool
 
 
+@dataclass
+class ElementIds:
+    all: Collection[int]
+    layered: Collection[int]
+    non_layered: Collection[int]
+
+
+def get_element_ids() -> ElementIds:
+    """
+    Element ids in the "all_element_types" rst files
+    """
+    layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
+    element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
+    non_layered_element_ids = set(element_ids).difference(set(layered_element_ids))
+
+    return ElementIds(element_ids, layered_element_ids, non_layered_element_ids)
+
+
 def get_layup_property_fields():
     """
-    Helper function to get layup information for the all_element_types rst
+    Helper function to get layup information for the all_element_types*.rst
     files without a layup definition file
     """
     # Mock the info that gets added in the layup provider
@@ -40,8 +58,7 @@ def get_layup_property_fields():
     # The rst file contains all types of elements
     # Please check the *.dat files in dpf_composites/test_data/model_with_all_element_types
     # for the definition of the elements
-    layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
-    for layered_element_id in layered_element_ids:
+    for layered_element_id in get_element_ids().layered:
         material_property_field.append([1, 2, 1], layered_element_id)
         layer_indices_property_field.append([3, 0, 1, 2], layered_element_id)
     return material_property_field, layer_indices_property_field
@@ -112,14 +129,13 @@ def test_all_element_types(dpf_server):
 
         fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
         field = fields_container[0]
-        element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
 
         with get_field_info(
             input_field=field,
             mesh=mesh,
             rst_data_source=rst_data_source,
         ) as field_info:
-            for element_id in element_ids:
+            for element_id in get_element_ids().all:
                 element_info: ElementInfo = field_info.layup_info.get_element_info(element_id)
                 assert element_info.element_type == expected_output[element_id].element_type
                 assert element_info.is_layered == expected_output[element_id].is_layered
@@ -191,11 +207,8 @@ def test_document_error_cases_indices(dpf_server):
         return get_element_info_provider(mesh, rst_data_source=rst_data_source)
 
     layup_info = get_layup_info_for_rst("model_with_all_element_types_minimal_output.rst")
-    element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
-    layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
-    non_layered_element_ids = set(element_ids).difference(set(layered_element_ids))
 
-    for element_id in layered_element_ids:
+    for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, [1], None, None)
@@ -203,7 +216,7 @@ def test_document_error_cases_indices(dpf_server):
             "Computation of indices is not supported for elements with no spots"
         )
 
-    for element_id in non_layered_element_ids:
+    for element_id in get_element_ids().non_layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, [1], None, None)
@@ -213,7 +226,7 @@ def test_document_error_cases_indices(dpf_server):
 
     layup_info = get_layup_info_for_rst("model_with_all_element_types_all_output.rst")
 
-    for element_id in non_layered_element_ids:
+    for element_id in get_element_ids().non_layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, [1], None, None)
@@ -221,7 +234,7 @@ def test_document_error_cases_indices(dpf_server):
             "Computation of indices is not supported for non-layered elements."
         )
 
-    for element_id in layered_element_ids:
+    for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, [3], None, None)
@@ -229,7 +242,7 @@ def test_document_error_cases_indices(dpf_server):
             "Layer index 3 is greater or equal number of layers 3"
         )
 
-    for element_id in layered_element_ids:
+    for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, [1], [4], None)
@@ -237,7 +250,7 @@ def test_document_error_cases_indices(dpf_server):
             "corner node index 4 is greater or equal number of corner nodes"
         )
 
-    for element_id in layered_element_ids:
+    for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, [1], [1], [3])

@@ -10,7 +10,7 @@ from .helper import get_basic_shell_files, get_field_info, setup_operators
 def test_material_properties(dpf_server):
     """
     Test evaluation of material properties to compute a user defined failure criterion
-    Properties are precomputed. Needs to be improves. The test documents the current status
+    Properties are precomputed. Needs to be improve. The test documents the current status
     """
     files = get_basic_shell_files()
 

@@ -20,7 +20,7 @@ def get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
 
     :param mesh: dpf meshed region
     :param name: Analysis Ply name
-    :return: analysis_ply local property field contextmanager
+    :return: analysis_ply property field
     """
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
     property_field_name = ANALYSIS_PLY_PREFIX + name
@@ -42,14 +42,17 @@ class ElementInfo:
     """Layup information for a given element."""
 
     id: int
+    # Is one for homogeneous elements
     n_layers: int
     n_corner_nodes: int
     n_spots: int
     is_layered: bool
+    # Apdl element type (e.g. 181)
     element_type: int
+    # Dpf Material id
     material_ids: List[int]
     is_shell: bool
-    # -1 for non-layered elements
+    # is -1 for non-layered elements
     nodes_per_layer: int
 
 
@@ -71,15 +74,21 @@ class _IndexerArrayValue(Protocol):
         pass
 
 
+# General comment for all Indexer:
+# The .data call accesses the actual data. This sends the data over grpc which takes some time
+# It looks like it returns a DpfArray for non-local fields and an numpy array for local fields.
+# Without converting the DpfArray to a numpy array,
+# performance during the lookup is about 50% slower.
+# It is not clear why. To be checked with dpf team. If this is a local field there is no
+# performance difference because the local field implementation already returns a numpy
+# array
+# The indexers are currently only implemented for PropertyFields, but it probably makes sense
+# to add them also for Fields
+
+
 class _IndexerNoDataPointer:
     def __init__(self, field: PropertyField):
-        # For PropertyFields the return type is always int, for Fields always double.
         self.indices = _setup_index_by_id(field.scoping)
-        # The next call accesses the numpy data. This sends the data over grpc which takes some time
-        # Without converting this to a numpy array, performance during the lookup is about 50%.
-        # It is not clear why. To be checked with dpf team. If this is a local field there is no
-        # performance difference because the local field implementation already returns a numpy
-        # array
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         self.max_id = len(self.indices) - 1
 
@@ -90,14 +99,8 @@ class _IndexerNoDataPointer:
 
 
 class _IndexerNoDataPointerNoBoundsCheck:
-    # For PropertyFields the return type is always int, for Fields always double.
     def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
-        # The next call accesses the numpy data. This sends the data over grpc which takes some time
-        # Without converting this to a numpy array, performance during the lookup is about 50%.
-        # It is not clear why. To be checked with dpf team. If this is a local field there is no
-        # performance difference because the local field implementation already returns a numpy
-        # array
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
@@ -107,11 +110,6 @@ class _IndexerNoDataPointerNoBoundsCheck:
 class _IndexerWithDataPointer:
     def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
-        # The next call accesses the numpy data. This sends the data over grpc which takes some time
-        # Without converting this to a numpy array, performance during the lookup is about 50%.
-        # It is not clear why. To be checked with dpf team. If this is a local field there is no
-        # performance difference because the local field implementation already returns a numpy
-        # array
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
@@ -135,11 +133,6 @@ class _IndexerWithDataPointer:
 class _IndexerWithDataPointerNoBoundsCheck:
     def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
-        # The next call accesses the numpy data. This sends the data over grpc which takes some time
-        # Without converting this to a numpy array, performance during the lookup is about 50%.
-        # It is not clear why. To be checked with dpf team. If this is a local field there is no
-        # performance difference because the local field implementation already returns a numpy
-        # array
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
@@ -195,8 +188,8 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     # corner_nodes_by_element_type by can be indexed by element type to get the number of
     # corner nodes. If negative value is returned number of corner nodes is not available.
     all_element_types = [int(e.value) for e in dpf.element_types if e.value >= 0]
-    corner_nodes_by_element_type: NDArray[np.int64] = (
-        np.ones(np.amax(all_element_types) + 1, dtype=np.int64) * -1
+    corner_nodes_by_element_type: NDArray[np.int64] = np.full(
+        np.amax(all_element_types) + 1, -1, dtype=np.int64
     )
 
     corner_nodes_by_element_type[all_element_types] = [
@@ -209,12 +202,13 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
 
 
 class AnalysisPlyInfoProvider:
-    """AnalysisPlyInfoProvider. Provides layer indices by element id."""
+    """AnalysisPlyInfoProvider. Provides layer index by element id."""
 
     def __init__(self, mesh: MeshedRegion, name: str):
         """Initialize AnalysisPlyInfoProvider object and precompute indices.
 
-        :param analysis_ply_property_field: analysis ply property field
+        :param mesh: dpf meshed region (with layup information)
+        :param name: Analysis Ply name
 
         """
         self.name = name
@@ -256,6 +250,7 @@ class ElementInfoProvider:
         :param element_types_apdl: apdl_element_types property_field
         :param element_types_dpf: dpf_element_types property field
         :param keyopt_8_values: keyopt_8 property field
+        :param keyopt_3_values: keyopt_3 property field
         :param material_ids: material_ids property field
         :param no_bounds_checks: Disable bounds checks.
                 Results in better performance but potentially cryptic
@@ -338,14 +333,14 @@ def get_element_info_provider(
     :param rst_data_source: dpf datasource
     :param no_bounds_checks: Disable bounds checks. Improves
                              performance but can result in cryptic error messages
-    :return: LayupInfo
+    :return: ElementInfoProvider
     """
 
     def get_keyopt_property_field(keyopt: int) -> PropertyField:
-        keyopt_8_provider = dpf.Operator("property_field_provider_by_name")
-        keyopt_8_provider.inputs.data_sources(rst_data_source)
-        keyopt_8_provider.inputs.property_name(f"keyopt_{keyopt}")
-        return keyopt_8_provider.outputs.property_field()
+        keyopt_provider = dpf.Operator("property_field_provider_by_name")
+        keyopt_provider.inputs.data_sources(rst_data_source)
+        keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
+        return keyopt_provider.outputs.property_field()
 
     requested_property_fields = [
         "apdl_element_type",
@@ -359,6 +354,7 @@ def get_element_info_provider(
             if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
                 message += " Maybe you have to run the layup provider operator first."
             raise RuntimeError(message)
+
     fields = {
         "layer_indices": mesh.property_field("element_layer_indices"),
         "element_types_apdl": mesh.property_field("apdl_element_type"),

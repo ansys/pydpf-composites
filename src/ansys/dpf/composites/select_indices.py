@@ -23,6 +23,10 @@ def get_selected_indices(
     :param layers: List of selected layers
     :param nodes: List of selected nodes
     :param spots:  List of selected spots
+                   The spot indices correspond to
+                        0: bot, 1: top         if element_info.n_spots == 2
+                        0: bot, 1: top  2: mid if element_info.n_spots == 3
+
     :param disable_checks:  Set to True to disable checks.
            Results in better performance but potentially
            cryptic error messages or invalid indices
