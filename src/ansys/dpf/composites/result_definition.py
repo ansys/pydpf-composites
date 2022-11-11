@@ -6,25 +6,28 @@ from typing import Any, Dict, Sequence
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
 
-# todo: is sampling point needed?
-_SUPPORTED_EXPRESSIONS = ["composite_failure", "sampling_point"]
+_SUPPORTED_EXPRESSIONS = ["composite_failure"]
 _SUPPORTED_MEASURES = ["inverse_reserve_factor", "safety_factor", "safety_margin"]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
 class ResultDefinition:
-    """Represent the result definition used in DPF Composites.
+    """Represents the result definition of DPF Composites.
 
-    It can be used in combination with the composite::failure_evaluator and
-    composite::sampling_point_evaluator, and others.
+    It is used to configure the DPF operators composite::failure_evaluator
+    and composite::sampling_point_evaluator.
     """
 
     _VERSION = 1
     _ACCUMULATOR = "max"
 
-    # todo: TBD: measures, composite_definitions, material_files are list
+    # todo: TBD: measures, composite_definitions, material_files are of type list
     # where we just support one file.
     # should this class work with lists or just single entries?
+
+    # todo: which object should upload the files to the server? Or is this a user task?
+    # for instance: rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
+
     def __init__(
         self,
         name: str,
@@ -43,97 +46,167 @@ class ResultDefinition:
         max_chunk_size: int = 50000,
     ):
         """Create a ResultDefinition object."""
-        self.name = name
-        self.expression = expression
-        self.combined_failure_criterion = combined_failure_criterion
-        self.measures = measures
-        self.composite_definitions = composite_definitions
-        self.assembly_mapping_files = assembly_mapping_files
-        self.rst_files = rst_files
-        self.material_files = material_files
-        self.write_data_for_full_element_scope = write_data_for_full_element_scope
-        self.element_scope = element_scope
-        self.ply_scope = ply_scope
-        self.stress_strain_eval_mode = stress_strain_eval_mode
+        self._name = name
+        self._expression = expression
+        self._combined_failure_criterion = combined_failure_criterion
+        self._measures = measures
+        self._composite_definitions = composite_definitions
+        self._assembly_mapping_files = assembly_mapping_files
+        self._rst_files = rst_files
+        self._material_files = material_files
+        self._write_data_for_full_element_scope = write_data_for_full_element_scope
+        self._element_scope = element_scope
+        self._ply_scope = ply_scope
+        self._stress_strain_eval_mode = stress_strain_eval_mode
         # todo: is 1 a good default? Shouldn't it be last?
-        self.time = time
-        self.max_chunk_size = max_chunk_size
+        self._time = time
+        self._max_chunk_size = max_chunk_size
 
-    def _get_expression(self) -> str:
+    @property
+    def name(self) -> str:
+        """Define a custom name."""
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        self._name = value
+
+    @property
+    def expression(self) -> str:
+        """Define the type of the result. Supported type is "composite_failure"."""
         return self._expression
 
-    def _set_expression(self, value: str) -> None:
+    @expression.setter
+    def expression(self, value: str) -> None:
         if value in _SUPPORTED_EXPRESSIONS:
             self._expression = value
         else:
             values = ", ".join([v for v in _SUPPORTED_EXPRESSIONS])
             raise ValueError(f"Expression {value} is not allowed. Supported are {values}")
 
-    def _get_combined_failure_criterion(self) -> CombinedFailureCriterion:
+    @property
+    def combined_failure_criterion(self) -> CombinedFailureCriterion:
+        """Configure of the failure criteria such as Max Stress, Puck and Wrinkling."""
         return self._combined_failure_criterion
 
-    def _set_combined_failure_criterion(self, value: CombinedFailureCriterion) -> None:
-        self._combined_failure_criterion = value
+    @combined_failure_criterion.setter
+    def combined_failure_criterion(self, cfc: CombinedFailureCriterion) -> None:
+        self._combined_failure_criterion = cfc
 
-    def _get_measures(self) -> str:
-        return self._meassures
+    @property
+    def measures(self) -> Sequence[str]:
+        """Define the return type of the failure values.
 
-    def _set_measures(self, value: str) -> None:
+        Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin".
+        """
+        return self._measures
+
+    @measures.setter
+    def measures(self, value: Sequence[str]) -> None:
         for v in value:
             if v not in _SUPPORTED_MEASURES:
                 values = ", ".join([v for v in _SUPPORTED_MEASURES])
                 raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
         else:
-            self._meassures = value
+            self._measures = value
 
-    def _get_composite_definitions(self) -> Sequence[_PATH]:
+    @property
+    def composite_definitions(self) -> Sequence[_PATH]:
+        """File path of the composite definitions file of ACP.
+
+        This file includes the section data such as ply material, angle and thickness.
+        """
         return self._composite_definitions
 
-    def _set_composite_definitions(self, value: Sequence[_PATH]) -> None:
+    @composite_definitions.setter
+    def composite_definitions(self, value: Sequence[_PATH]) -> None:
         if len(value) > 1:
             raise ValueError("Currently only 1 composite definition is supported!")
         self._composite_definitions = value
 
-    def _get_assembly_mapping_files(self) -> Sequence[_PATH]:
+    @property
+    def assembly_mapping_files(self) -> Sequence[_PATH]:
+        """Assembly files which define the mapping of the labels (optional).
+
+        This input is needed if multiple parts are assembled in WB / Mechanical to map the
+        local element and node labels to the global ones.
+        """
         return self._assembly_mapping_files
 
-    def _set_assembly_mapping_files(self, value: Sequence[_PATH]) -> None:
+    @assembly_mapping_files.setter
+    def assembly_mapping_files(self, value: Sequence[_PATH]) -> None:
         self._assembly_mapping_files = value
 
-    def _get_rst_files(self) -> Sequence[_PATH]:
+    @property
+    def rst_files(self) -> Sequence[_PATH]:
+        """Path of the result files (.rst)."""
         return self._rst_files
 
-    def _set_rst_files(self, value: Sequence[_PATH]) -> None:
+    @rst_files.setter
+    def rst_files(self, value: Sequence[_PATH]) -> None:
         self._rst_files = value
 
-    def _get_material_files(self) -> Sequence[_PATH]:
+    @property
+    def material_files(self) -> Sequence[_PATH]:
+        """Path of material files which store the material properties.
+
+        Supported formats are XML and ENGD.
+        """
         return self._material_files
 
-    def _set_material_files(self, value: Sequence[_PATH]) -> None:
+    @material_files.setter
+    def material_files(self, value: Sequence[_PATH]) -> None:
         self._material_files = value
 
-    def _get_write_data_for_full_element_scope(self) -> bool:
+    @property
+    def write_data_for_full_element_scope(self) -> bool:
+        """Write the data for all element labels in element_scoping.
+
+        This makes sense if the user explicitly requests an element scope
+        but the actual scope where postprocessing has happened is smaller
+        (e.g. due to ply scoping).
+        """
         return self._write_data_for_full_element_scope
 
-    def _set_write_data_for_full_element_scope(self, value: bool) -> None:
+    @write_data_for_full_element_scope.setter
+    def write_data_for_full_element_scope(self, value: bool) -> None:
         self._write_data_for_full_element_scope = value
 
-    def _get_element_scope(self) -> Sequence[int]:
+    @property
+    def element_scope(self) -> Sequence[int]:
+        """Define the scope through a list of element labels.
+
+        All elements are selected if element_scope is an empty list.
+        """
         return self._element_scope
 
-    def _set_element_scope(self, value: Sequence[int]) -> None:
+    @element_scope.setter
+    def element_scope(self, value: Sequence[int]) -> None:
         self._element_scope = value
 
-    def _get_ply_scope(self) -> Sequence[str]:
+    @property
+    def ply_scope(self) -> Sequence[str]:
+        """List of plies for ply-wise post-processing (optional).
+
+        Is used in combination with element_scope.
+        """
         return self._ply_scope
 
-    def _set_ply_scope(self, value: Sequence[str]) -> None:
+    @ply_scope.setter
+    def ply_scope(self, value: Sequence[str]) -> None:
         self._ply_scope = value
 
-    def _get_stress_strain_eval_mode(self) -> str:
+    @property
+    def stress_strain_eval_mode(self) -> str:
+        """Results are loaded from a result file by default ("rst_file").
+
+        Set to "mapdl_live" to activate on the fly strain and stress evaluation.
+        Can be used if the result file contains only the primary results (deformations).
+        """
         return self._stress_strain_eval_mode
 
-    def _set_stress_strain_eval_mode(self, value: str) -> None:
+    @stress_strain_eval_mode.setter
+    def stress_strain_eval_mode(self, value: str) -> None:
         if value in _SUPPORTED_STRESS_STRAIN_EVAL_MODES:
             self._stress_strain_eval_mode = value
         else:
@@ -142,85 +215,30 @@ class ResultDefinition:
                 f"Stress strain eval mode '{value} 'is not allowed. Supported are {values}"
             )
 
-    def _get_time(self) -> float:
+    @property
+    def time(self) -> float:
+        """Select time / solution step."""
         return self._time
 
-    def _set_time(self, value: float) -> None:
+    @time.setter
+    def time(self, value: float) -> None:
         self._time = value
 
-    def _get_max_chunk_size(self) -> int:
+    @property
+    def max_chunk_size(self) -> int:
+        """Define the chunk size (number of elements) for the result evaluation.
+
+        Small chunks reduces the maximum peak of memory but too many chunks causes
+        some overhead. Default is 50'000. Use -1 to disable chunking.
+        """
         return self._max_chunk_size
 
-    def _set_max_chunk_size(self, value: int) -> None:
+    @max_chunk_size.setter
+    def max_chunk_size(self, value: int) -> None:
         self._max_chunk_size = value
 
-    expression = property(
-        _get_expression,
-        _set_expression,
-        doc="Defines the type of the computation. Supported are {0}".format(
-            ", ".join([v for v in _SUPPORTED_EXPRESSIONS])
-        ),
-    )
-    combined_failure_criterion = property(
-        _get_combined_failure_criterion,
-        _set_combined_failure_criterion,
-        doc="Combined failure criterion with the selected failure criteria, failure modes and "
-        "weighting factors",
-    )
-    measures = property(
-        _get_measures,
-        _set_measures,
-        doc="Defines the type of failure measurement. Supported are {0}".format(
-            ", ".join([v for v in _SUPPORTED_MEASURES])
-        ),
-    )
-    composite_definitions = property(
-        _get_composite_definitions,
-        _set_composite_definitions,
-        doc="List of ACP Composite Definitions (.h5) files which contain"
-        " the lay-up information.",
-    )
-    assembly_mapping_files = property(
-        _get_assembly_mapping_files,
-        _set_assembly_mapping_files,
-        doc="Optional: List of files (.h5) to map global node and element labels in an "
-        "assembly. It is only used in the context of assemblies.",
-    )
-    rst_files = property(_get_rst_files, _set_rst_files, doc="List of result files (.rst).")
-    material_files = property(
-        _get_material_files,
-        _set_material_files,
-        doc="List of material files (.xml or .engd) " "which contain all material properties.",
-    )
-    write_data_for_full_element_scope = property(
-        _get_write_data_for_full_element_scope,
-        _set_write_data_for_full_element_scope,
-        doc="If both an element and ply scope are defined, this option defines "
-        "whether the results are computed on the intersection of the scopes "
-        "or for all elements of the element scope. Elements which do not "
-        "intersect with the ply scope will get the default value. Default is True.",
-    )
-    element_scope = property(
-        _get_element_scope,
-        _set_element_scope,
-        doc="List of element which are selected for the "
-        "computation. All elements are selected"
-        " if element_scope is an empty list.",
-    )
-    ply_scope = property(
-        _get_ply_scope, _set_ply_scope, doc="List of plies which are selected for the computation."
-    )
-    # todo: describe what time means (load step, time, DPF time id, index)?
-    time = property(_get_time, _set_time, doc="The results are computed for this time step.")
-    max_chunk_size = property(
-        _get_max_chunk_size,
-        _set_max_chunk_size,
-        doc="The computation is chunked. This parameter "
-        "defines the number of elements per chunk. Use -1 to disable chunking.",
-    )
-
     def to_dict(self) -> Dict[str, Any]:
-        """:return: a dict with all properties."""
+        """Get the result definition in a dict representation."""
         cfc = self.combined_failure_criterion
         if not cfc:
             raise ValueError("Combined failure criterion is not defined!")
@@ -256,10 +274,7 @@ class ResultDefinition:
         return result_definition
 
     def to_json(self) -> str:
-        """:return: the string representation (json.dumps).
-
-        It can be used for the result definition of the DPF Composites Failure Operator.
-        """
+        """Convert the dict representation of the result definition into a JSON Dict."""
         return json.dumps(self.to_dict())
 
     def _get_properties(self, exclude: Sequence[str] = []) -> Sequence[Any]:
@@ -283,49 +298,3 @@ class ResultDefinition:
         s_attrs = ", ".join([f"{attr}={getattr(self, attr)}" for attr in self._get_properties()])
         s = f"{self.__class__.__name__}({s_attrs})"
         return s
-
-
-"""
-const std::string example_result_definition = "{"
-            "\"version\": 1,"
-            // Currently unused, keep for max per layer etc.
-            "\"accumulator\": \"max\","
-            // Currently unused => remove
-            "\"expression\": \"composite_failure\","
-            "\"failure_criteria_definition\": {"
-                "\"criteria\": {"
-                    "\"max_stress\": {"
-                        "\"active\": True,"
-                        "\"s1\" : True,"
-                        "\"s12\" : True,"
-                        "\"s13\" : False,"
-                        "\"s2\" : True,"
-                        "\"s23\" : False,"
-                        "\"s3\" : False,"
-                        "\"wf_s1\" : 1,"
-                        "\"wf_s12\" : 1,"
-                        "\"wf_s13\" : 1,"
-                        "\"wf_s2\" : 1,"
-                        "\"wf_s23\" : 1,"
-                        "\"wf_s3\" : 1"
-                    "}"
-                "}"
-            "},"
-            "\"measures\" : [\"inverse_reserve_factor\"],"
-            "\"scopes\" : [{"
-                "\"datasources\": {"
-                    "\"composite_definition\": [\"example_path\"],"
-                    "\"assembly_mapping_file\" : [] ,"
-                    "\"rst_file\" : [\"example_path\"],"
-                    "\"material_file\": [\"example_path\"]"
-                "},"
-                "\"write_data_for_full_element_scope\": false,"
-                "\"elements\": [1, 2, 3, 4],"
-                "\"ply_ids\": [\"ply1\"]"
-            "}],"
-            "\"stress_strain_eval_mode\": \"rst_file\","  // or mapdl_live
-            "\"time\" : 1,"
-            // Optional. Default is 50000
-            "\"max_chunk_size\": 50000"
-          "}";
-"""

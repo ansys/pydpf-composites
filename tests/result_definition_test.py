@@ -78,7 +78,7 @@ def test_result_definition():
     ref_dict = {
         "version": 1,
         "accumulator": "max",
-        "expression": "sampling_point",
+        "expression": "composite_failure",
         "failure_criteria_definition": {
             "criteria": {
                 "max_strain": {
