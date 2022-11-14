@@ -4,7 +4,7 @@ import pathlib
 import ansys.dpf.core as dpf
 import numpy as np
 
-from ansys.dpf.composites.layup_info import get_element_info_provider
+from ansys.dpf.composites.layup_info import _IndexerWithDataPointer, get_element_info_provider
 
 from .helper import CompositeFiles, Timer, setup_operators
 
@@ -18,7 +18,7 @@ def get_data_files():
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_dummy_data_files()
+    return get_ger_data_files()
 
 
 def get_dummy_data_files():
@@ -38,6 +38,10 @@ def get_ger_data_files():
         / "ger89"
         / "ger89_files"
         / "dp0"
+    )
+
+    ger_path = (
+        pathlib.Path("D:\\") / "ANSYSDev" / "workbench_projects" / "beewind_example_files" / "dp0"
     )
     rst_path = ger_path / "SYS-1" / "MECH" / "file.rst"
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
@@ -213,3 +217,87 @@ def test_performance_local_field(dpf_server):
         timer.add("loop local")
 
     timer.summary()
+
+
+def test_performance_flat(dpf_server):
+    timer = Timer()
+
+    files = get_data_files()
+    setup_result = setup_operators(dpf_server, files, upload=False)
+    timer.add("read data")
+
+    layup_info = get_element_info_provider(
+        setup_result.mesh, stream_provider=setup_result.streams_provider, no_bounds_checks=False
+    )
+    timer.add("layup info")
+    scope = setup_result.field.scoping.ids
+    timer.add("scope")
+    all_data = np.full((setup_result.field.elementary_data_count, 12), -1)
+    start_index = 0
+
+    #  analysis_ply_info_provider = AnalysisPlyInfoProvider(setup_result.mesh, "P1L1__B45.9")
+
+    indexer_data = _IndexerWithDataPointer(setup_result.field)
+    timer.add("indexer")
+
+    #   with setup_result.field.as_local_field() as local_field:
+    #       with setup_result.mesh.elements.connectivities_field.as_local_field()
+    #       as local_connectivity:
+
+    timer.add("local_field")
+
+    for element_id in scope:
+        element_info = layup_info.get_element_info(element_id)
+        if not element_info.is_layered:
+            continue
+        all_indices = np.arange(
+            0,
+            (
+                element_info.n_spots
+                * element_info.number_of_nodes_per_spot_plane
+                * element_info.n_layers
+            ),
+        )
+        indices = np.unravel_index(
+            all_indices,
+            (
+                element_info.n_layers,
+                element_info.n_spots,
+                element_info.number_of_nodes_per_spot_plane,
+            ),
+        )
+        #  element_data = local_field.get_entity_data_by_id(element_id)
+        element_data = indexer_data.by_id(element_id)
+
+        #          nodes = np.array(local_connectivity.get_entity_data_by_id(element_id))
+        num_elementary_data = (
+            element_info.n_spots
+            * element_info.number_of_nodes_per_spot_plane
+            * element_info.n_layers
+        )
+        end_index = start_index + num_elementary_data
+        all_data[start_index:end_index, 0] = indices[0]
+        all_data[start_index:end_index, 1] = indices[1]
+        #         all_data[start_index:end_index, 2] = nodes[indices[2]]
+        all_data[start_index:end_index, 2] = indices[2]
+        all_data[start_index:end_index, 3:9] = element_data
+        all_data[start_index:end_index, 9] = element_info.element_type
+        all_data[start_index:end_index, 10] = element_info.material_ids[indices[0]]
+        #   all_data[start_index:end_index, 11] = analysis_ply_indices[indices[0]]
+        start_index = start_index + num_elementary_data
+
+    timer.add("loop")
+    #    numpy.savez_compressed("out.npz", a=all_data)
+
+    timer.add("after local field")
+
+    timer.summary()
+
+
+def test_ravel():
+    n_spots = 3
+    n_nodes = 4
+    n_layers = 2
+    all_indices = np.arange(0, (n_spots * n_nodes * n_layers))
+    indices = np.unravel_index(all_indices, (n_layers, n_spots, n_nodes))
+    indices

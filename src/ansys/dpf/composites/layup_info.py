@@ -120,10 +120,10 @@ class _IndexerWithDataPointer:
     def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-        # The data pointer only contains the start index of each element. We add the end to make
-        # it easier to use
+        self.n_components = field.component_count
+
         self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
-            field._data_pointer, len(self.data)
+            field._data_pointer, len(self.data) * self.n_components
         )
         self.max_id = len(self.indices) - 1
 
@@ -135,7 +135,12 @@ class _IndexerWithDataPointer:
         if idx < 0:
             return None
         return cast(
-            NDArray[np.int64], self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
+            NDArray[np.int64],
+            self.data[
+                self._data_pointer[idx]
+                // self.n_components : self._data_pointer[idx + 1]
+                // self.n_components
+            ],
         )
 
 
@@ -143,10 +148,11 @@ class _IndexerWithDataPointerNoBoundsCheck:
     def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-        # The data pointer only contains the start index of each element. We add the end to make
-        # it easier to use
+
+        self.n_components = field.component_count
+
         self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
-            field._data_pointer, len(self.data)
+            field._data_pointer, len(self.data) * self.n_components
         )
         self.max_id = len(self.indices) - 1
 
@@ -155,7 +161,12 @@ class _IndexerWithDataPointerNoBoundsCheck:
         if idx < 0:
             return None
         return cast(
-            NDArray[np.int64], self.data[self._data_pointer[idx] : self._data_pointer[idx + 1]]
+            NDArray[np.int64],
+            self.data[
+                self._data_pointer[idx]
+                // self.n_components : self._data_pointer[idx + 1]
+                // self.n_components
+            ],
         )
 
 
