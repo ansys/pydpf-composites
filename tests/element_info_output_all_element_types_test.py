@@ -15,7 +15,7 @@ from ansys.dpf.composites.select_indices import (
 from .helper import get_field_info
 
 
-@dataclass
+@dataclass(frozen=True)
 class ExpectedOutput:
     n_layers: int
     n_corner_nodes: int
@@ -27,7 +27,7 @@ class ExpectedOutput:
     is_layered: bool
 
 
-@dataclass
+@dataclass(frozen=True)
 class ElementIds:
     all: Collection[int]
     layered: Collection[int]

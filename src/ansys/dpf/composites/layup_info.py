@@ -10,7 +10,7 @@ else:
     from typing_extensions import Protocol
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import DataSources, MeshedRegion, PropertyField, Scoping
+from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField, Scoping
 import numpy as np
 from numpy.typing import NDArray
 
@@ -37,23 +37,32 @@ def get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
     return mesh.property_field(property_field_name)
 
 
-@dataclass
+@dataclass(frozen=True)
 class ElementInfo:
-    """Layup information for a given element."""
+    """Layup information for a given element.
+
+    Attributes:
+        id: Element id / Element Label
+        n_layers: number of layers. 1 for non-layered elements
+        n_corner_nodes: Number of corner nodes (without midside nodes).
+        n_spots: number of spots (through-the-thickness integration points) per layer
+        element_type: Apdl element type (e.g. 181 for layered shells)
+        material_ids: List of Dpf Material Ids for all layers
+        is_shell: True if the element is a shell element
+        number_of_nodes_per_spot_plane: Number of nodes per output plane.
+        Equal to n_corner_nodes for shell elements and n_corner_nodes / 2
+        for solid elements. Equal to -1 for non-layered elements.
+    """
 
     id: int
-    # Is one for homogeneous elements
     n_layers: int
     n_corner_nodes: int
     n_spots: int
     is_layered: bool
-    # Apdl element type (e.g. 181)
     element_type: int
-    # Dpf Material id
     material_ids: List[int]
     is_shell: bool
-    # is -1 for non-layered elements
-    nodes_per_layer: int
+    number_of_nodes_per_spot_plane: int
 
 
 def _setup_index_by_id(scoping: Scoping) -> NDArray[np.int64]:
@@ -226,10 +235,6 @@ class ElementInfoProvider:
     Precomputes id to index maps for all
     property fields to improve performance
 
-    Note: Every property we add to element info adds some performance
-    overhead for all the calls to get_element info. We should keep it
-    focused on the most important properties. We can add different providers
-    for other properties (such as thickness and angles)
     """
 
     def __init__(
@@ -256,6 +261,10 @@ class ElementInfoProvider:
                 Results in better performance but potentially cryptic
                 error messages
         """
+        # Note: Every property we add to element info adds some performance
+        # overhead for all the calls to get_element info. We should keep it
+        # focused on the most important properties. We can add different providers
+        # for other properties (such as thickness and angles)
 
         def get_indexer_with_data_pointer(field: PropertyField) -> _IndexerArrayValue:
             if no_bounds_checks:
@@ -281,7 +290,11 @@ class ElementInfoProvider:
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
 
     def get_element_info(self, element_id: int) -> ElementInfo:
-        """Get ElementInfo Object for a given element id."""
+        """Get ElementInfo Object for a given element id.
+
+        :param element_id: Element Id/Label
+        :return: ElementInfo
+        """
         apdl_element_type = self.apdl_element_types.by_id(element_id)
         is_layered = False
         n_layers = 1
@@ -308,9 +321,9 @@ class ElementInfoProvider:
         if corner_nodes_dpf < 0:
             raise Exception(f"Invalid number of corner nodes for element with type {element_type}")
         is_shell = _is_shell(apdl_element_type)
-        nodes_per_layer = -1
+        number_of_nodes_per_spot_plane = -1
         if is_layered:
-            nodes_per_layer = corner_nodes_dpf if is_shell else corner_nodes_dpf // 2
+            number_of_nodes_per_spot_plane = corner_nodes_dpf if is_shell else corner_nodes_dpf // 2
         return ElementInfo(
             n_layers=n_layers,
             n_corner_nodes=corner_nodes_dpf,
@@ -320,17 +333,21 @@ class ElementInfoProvider:
             material_ids=material_ids,
             id=element_id,
             is_shell=is_shell,
-            nodes_per_layer=nodes_per_layer,
+            number_of_nodes_per_spot_plane=number_of_nodes_per_spot_plane,
         )
 
 
 def get_element_info_provider(
-    mesh: MeshedRegion, rst_data_source: DataSources, no_bounds_checks: bool = False
+    mesh: MeshedRegion,
+    rst_data_source: DataSources = None,
+    stream_provider: Operator = None,
+    no_bounds_checks: bool = False,
 ) -> ElementInfoProvider:
     """Get LayupInfo Object.
 
     :param mesh: dpf meshed region
     :param rst_data_source: dpf datasource
+    :param stream_provider: dpf stream provider
     :param no_bounds_checks: Disable bounds checks. Improves
                              performance but can result in cryptic error messages
     :return: ElementInfoProvider
@@ -338,7 +355,13 @@ def get_element_info_provider(
 
     def get_keyopt_property_field(keyopt: int) -> PropertyField:
         keyopt_provider = dpf.Operator("property_field_provider_by_name")
-        keyopt_provider.inputs.data_sources(rst_data_source)
+        if stream_provider is not None:
+            keyopt_provider.inputs.streams_container(stream_provider)
+        else:
+            if rst_data_source is None:
+                raise Exception("Missing stream provider or data source")
+            keyopt_provider.inputs.data_sources(rst_data_source)
+
         keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
         return keyopt_provider.outputs.property_field()
 

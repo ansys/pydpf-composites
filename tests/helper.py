@@ -58,9 +58,12 @@ class SetupResult:
     mesh: MeshedRegion
     rst_data_source: DataSources
     material_provider: Operator
+    streams_provider: Operator
 
 
 def setup_operators(server, files: CompositeFiles, upload=True):
+
+    timer = Timer()
     eng_data_path = files.material_path
     h5_path = files.h5_path
     rst_path = files.rst_path
@@ -78,17 +81,28 @@ def setup_operators(server, files: CompositeFiles, upload=True):
     composite_definitions_source.add_file_path(h5_path, "CompositeDefinitions")
 
     rst_data_source = dpf.DataSources(rst_path)
+    streams_provider = dpf.operators.metadata.streams_provider()
+    streams_provider.inputs.data_sources.connect(rst_data_source)
+
+    stress_operator = dpf.Operator("EPEL")
+    stress_operator.inputs.streams_container(streams_provider)
+    stress_operator.inputs.bool_rotate_to_global(False)
+
+    fields_container = stress_operator.get_output(output_type=dpf.types.fields_container)
+
+    timer.add("stresses")
 
     mesh_provider = dpf.Operator("MeshProvider")
-    mesh_provider.inputs.data_sources(rst_data_source)
+    mesh_provider.inputs.streams_container(streams_provider)
     mesh = mesh_provider.outputs.mesh()
+    timer.add("mesh")
 
     material_support_provider = dpf.Operator("support_provider")
     material_support_provider.inputs.property("mat")
-    material_support_provider.inputs.data_sources(rst_data_source)
+    material_support_provider.inputs.streams_container(streams_provider)
 
     result_info_provider = dpf.Operator("ResultInfoProvider")
-    result_info_provider.inputs.data_sources(rst_data_source)
+    result_info_provider.inputs.streams_container(streams_provider)
 
     material_provider = dpf.Operator("eng_data::ans_mat_material_provider")
     material_provider.inputs.data_sources = eng_data_source
@@ -107,21 +121,20 @@ def setup_operators(server, files: CompositeFiles, upload=True):
     layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
     layup_provider.run()
 
-    strain_operator = dpf.Operator("EPEL")
-    strain_operator.inputs.data_sources(rst_data_source)
-    strain_operator.inputs.bool_rotate_to_global(False)
+    timer.add("layup")
 
-    fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
+    timer.summary()
 
     return SetupResult(
         field=fields_container[0],
         mesh=mesh,
         rst_data_source=rst_data_source,
         material_provider=material_provider,
+        streams_provider=streams_provider,
     )
 
 
-@dataclass
+@dataclass(frozen=True)
 class FieldInfo:
     field: Field
     layup_info: ElementInfoProvider

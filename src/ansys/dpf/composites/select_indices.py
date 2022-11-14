@@ -7,7 +7,6 @@ from numpy.typing import NDArray
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfo
 
 
-# Todo: Implement using numpy
 def get_selected_indices(
     element_info: ElementInfo,
     layers: Optional[Collection[int]] = None,
@@ -18,7 +17,6 @@ def get_selected_indices(
     """Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.
 
     Returns an empty selection if any of the collections is empty.
-
     :param element_info: ElementInfo
     :param layers: List of selected layers
     :param nodes: List of selected nodes
@@ -40,7 +38,7 @@ def get_selected_indices(
         layer_indices = layers
 
     if nodes is None:
-        node_indices: Collection[int] = range(element_info.nodes_per_layer)
+        node_indices: Collection[int] = range(element_info.number_of_nodes_per_spot_plane)
     else:
         if len(nodes) == 0:
             return np.array([])
@@ -67,10 +65,10 @@ def get_selected_indices(
                 f"equal number of layers {element_info.n_layers}. Element Info: {element_info}"
             )
 
-        if max(node_indices) >= element_info.nodes_per_layer:
+        if max(node_indices) >= element_info.number_of_nodes_per_spot_plane:
             raise RuntimeError(
                 f"corner node index {max(node_indices)} is greater or "
-                f"equal number of corner nodes {element_info.nodes_per_layer}. "
+                f"equal number of corner nodes {element_info.number_of_nodes_per_spot_plane}. "
                 f"Element Info: {element_info}"
             )
 
