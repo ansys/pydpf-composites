@@ -1,0 +1,6 @@
+element\_type
+=============
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: ElementInfo.element_type

@@ -1,0 +1,25 @@
+﻿ansys.dpf.composites.AnalysisPlyInfoProvider
+============================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: AnalysisPlyInfoProvider
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      AnalysisPlyInfoProvider.get_layer_index_by_element_id
+      
+   
+   
+
+   
+   
+   

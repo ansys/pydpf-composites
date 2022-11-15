@@ -1,0 +1,6 @@
+n\_corner\_nodes
+================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: ElementInfo.n_corner_nodes

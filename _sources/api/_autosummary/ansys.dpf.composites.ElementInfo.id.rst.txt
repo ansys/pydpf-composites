@@ -1,0 +1,6 @@
+id
+==
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: ElementInfo.id

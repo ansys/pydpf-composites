@@ -11,3 +11,5 @@ and attributes.
 
     base
     failure_criteria
+    layup_information
+    select_indices

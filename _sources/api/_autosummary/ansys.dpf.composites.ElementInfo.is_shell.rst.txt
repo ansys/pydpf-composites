@@ -1,0 +1,6 @@
+is\_shell
+=========
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: ElementInfo.is_shell
