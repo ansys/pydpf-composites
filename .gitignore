@@ -160,6 +160,9 @@ cython_debug/
 # Generated sphinx gallery
 doc/source/examples/gallery_examples
 
+# Generated API documentation
+doc/source/api/_autosummary
+
 # testing server logs
-tests/*_log_err*.txt
-tests/*_log_out*.txt
+tests/logs/*_log_err*.txt
+tests/logs/*_log_out*.txt

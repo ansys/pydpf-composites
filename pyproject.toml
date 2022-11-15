@@ -68,13 +68,14 @@ all = [
     "mypy",
     "mypy-extensions",
     "pre-commit",
-    "pypandoc"
+    "pypandoc",
+    "numpy"
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "ansys-dpf-core", "pyvista",
     "pypandoc"]
 test = ["pytest", "pytest-cov","ansys-dpf-core", "pyvista"]
 build = ["build", "twine"]
-pre-commit = ["pre-commit", "mypy", "mypy-extensions"]
+pre-commit = ["pre-commit", "mypy", "mypy-extensions", "numpy"]
 
 
 [tool.black]

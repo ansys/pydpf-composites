@@ -249,8 +249,10 @@ def dpf_server(request: pytest.FixtureRequest):
     import uuid
 
     uid = uuid.uuid4()
-    server_log_stdout = TEST_ROOT_DIR / f"server_log_out-{uid}.txt"
-    server_log_stderr = TEST_ROOT_DIR / f"server_log_err-{uid}.txt"
+    if not os.path.exists(TEST_ROOT_DIR / "logs"):
+        os.mkdir(TEST_ROOT_DIR / "logs")
+    server_log_stdout = TEST_ROOT_DIR / "logs" / f"server_log_out-{uid}.txt"
+    server_log_stderr = TEST_ROOT_DIR / "logs" / f"server_log_err-{uid}.txt"
 
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
@@ -270,8 +272,8 @@ def dpf_server(request: pytest.FixtureRequest):
             )
         else:
 
-            process_log_stdout = TEST_ROOT_DIR / f"process_log_out-{uid}.txt"
-            process_log_stderr = TEST_ROOT_DIR / f"process_log_err-{uid}.txt"
+            process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
+            process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
             return DockerProcess(
                 server_out_file=server_log_stdout,
                 server_err_file=server_log_stderr,

@@ -35,23 +35,6 @@ jobs:
       - name: Test with tox
         run: tox -e style
 
-  docs-style:
-    name: Documentation Style Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-  
-      - name: Running Vale
-        uses: errata-ai/vale-action@reviewdog
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          files: doc
-          reporter: github-pr-check
-          level: error
-          filter_mode: nofilter
-          fail_on_error: true
-          vale_flags: "--config=doc/.vale.ini"
 
   tests:
     name: Tests and coverage
@@ -100,13 +83,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: server_output
-          path: tests/*_log_*.txt
+          path: tests/logs/*_log_*.txt
           retention-days: 7
 
   docs:
     name: Documentation
     runs-on: ubuntu-latest
-    needs: docs-style
     steps:
       - name: Install OS packages
         run: |
