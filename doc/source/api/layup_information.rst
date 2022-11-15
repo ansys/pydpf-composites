@@ -1,5 +1,6 @@
 Layup Information
 -----------------
+General functionality to access information on the composite layup.
 
 .. currentmodule:: ansys.dpf.composites
 
@@ -8,6 +9,5 @@ Layup Information
 
     ElementInfoProvider
     ElementInfo
-    get_analysis_ply
     AnalysisPlyInfoProvider
     get_element_info_provider

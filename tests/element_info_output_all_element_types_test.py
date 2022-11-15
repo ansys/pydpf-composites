@@ -9,7 +9,7 @@ import pytest
 from ansys.dpf.composites.layup_info import ElementInfo, get_element_info_provider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
-    get_selected_indices_by_material_id,
+    get_selected_indices_by_material_ids,
 )
 
 from .helper import get_field_info
@@ -258,5 +258,5 @@ def test_document_error_cases_indices(dpf_server):
 
     # Try to get non-existing material id
     element_info: ElementInfo = layup_info.get_element_info(1)
-    selected_indices = get_selected_indices_by_material_id(element_info, 5)
+    selected_indices = get_selected_indices_by_material_ids(element_info, [5])
     assert len(selected_indices) == 0

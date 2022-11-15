@@ -10,7 +10,8 @@ from .helper import get_basic_shell_files, get_field_info, setup_operators
 def test_material_properties(dpf_server):
     """
     Test evaluation of material properties to compute a user defined failure criterion
-    Properties are precomputed. Needs to be improve. The test documents the current status
+    Properties are precomputed. Needs to be improve and be properly documented.
+    The test documents the current status
     """
     files = get_basic_shell_files()
 
@@ -19,6 +20,7 @@ def test_material_properties(dpf_server):
     properties = []
     # Number of materials is hardcoded. Should be determined from the material support
     for id in [1, 2, 3, 4]:
+        # Check EngineeringDataDefinitions.cpp for available properties
         property_name = "strain_tensile_x_direction"
         material_property_field = dpf.Operator("eng_data::ans_mat_property_field_provider")
         material_property_field.inputs.materials_container(setup_result.material_provider)

@@ -123,7 +123,7 @@ def setup_operators(server, files: CompositeFiles, upload=True):
 
     timer.add("layup")
 
-    timer.summary()
+    # timer.summary()
 
     return SetupResult(
         field=fields_container[0],
@@ -142,9 +142,9 @@ class FieldInfo:
 
 @contextmanager
 def get_field_info(
-    input_field: Field, mesh: MeshedRegion, rst_data_source: DataSources
+    input_field: Field, mesh: MeshedRegion, data_source: DataSources
 ) -> Generator[FieldInfo, None, None]:
-    layup_info = get_element_info_provider(mesh, rst_data_source=rst_data_source)
+    layup_info = get_element_info_provider(mesh, data_source=data_source)
     with input_field.as_local_field() as local_input_field:
         yield FieldInfo(field=local_input_field, layup_info=layup_info)
 

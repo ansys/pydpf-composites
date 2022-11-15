@@ -7,7 +7,7 @@ from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
-    get_selected_indices_by_material_id,
+    get_selected_indices_by_material_ids,
 )
 
 from .helper import FieldInfo, get_basic_shell_files, get_field_info, setup_operators
@@ -18,7 +18,7 @@ def get_result_field(
     layers: Optional[List[int]] = None,
     corner_nodes: Optional[List[int]] = None,
     spots: Optional[List[int]] = None,
-    scope: Optional[List[int]] = None,
+    element_ids: Optional[List[int]] = None,
     material_id: Optional[int] = None,
 ):
     """
@@ -30,15 +30,15 @@ def get_result_field(
     component = 0
     result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
     with result_field.as_local_field() as local_result_field:
-        if scope is None:
-            scope = field_info.field.scoping.ids
-        for element_id in scope:
+        if element_ids is None:
+            element_ids = field_info.field.scoping.ids
+        for element_id in element_ids:
             strain_data = field_info.field.get_entity_data_by_id(element_id)
             element_info = field_info.layup_info.get_element_info(element_id)
             if element_info.is_layered:
                 if material_id:
-                    selected_indices = get_selected_indices_by_material_id(
-                        element_info, material_id
+                    selected_indices = get_selected_indices_by_material_ids(
+                        element_info, [material_id]
                     )
                 else:
                     selected_indices = get_selected_indices(
@@ -63,12 +63,12 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
     ) as field_info:
         # Test single value output
         result_field = get_result_field(
-            field_info, layers=[5], corner_nodes=[3], spots=[2], scope=[1]
+            field_info, layers=[5], corner_nodes=[3], spots=[2], element_ids=[1]
         )
         assert result_field.get_entity_data_by_id(1) == pytest.approx(3.05458950e-03)
 
         # Test layer output for layer and spot selection (nodes of a given spot+layer)
-        result_field = get_result_field(field_info, layers=[0], spots=[2], scope=[1])
+        result_field = get_result_field(field_info, layers=[0], spots=[2], element_ids=[1])
         assert result_field.get_entity_data_by_id(1) == pytest.approx(
             setup_result.field.get_entity_data_by_id(1)[8:12, 0]
         )

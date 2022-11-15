@@ -16,19 +16,32 @@ def get_selected_indices(
 ) -> NDArray[np.int64]:
     """Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.
 
-    Returns an empty selection if any of the collections is empty.
-    :param element_info: ElementInfo
-    :param layers: List of selected layers
-    :param nodes: List of selected nodes
-    :param spots:  List of selected spots
-                   The spot indices correspond to
-                        0: bot, 1: top         if element_info.n_spots == 2
-                        0: bot, 1: top  2: mid if element_info.n_spots == 3
+    Parameters
+    ----------
+    element_info : ElementInfo
+    layers:  Collection[int], optional
+        List of selected layers.
+    nodes:  Collection[int], optional
+        List of selected nodes
+    spots: Collection[int], optional
+        List of selected spots.
+        The spot indices correspond to:
+        0: bot, 1: top         if element_info.n_spots == 2.
+        0: bot, 1: top  2: mid if element_info.n_spots == 3.
+    disable_checks:
+        Set to True to disable checks.
+        Results in better performance but potentially
+        cryptic error messages or invalid indices
 
-    :param disable_checks:  Set to True to disable checks.
-           Results in better performance but potentially
-           cryptic error messages or invalid indices
-    :return: numpy array of selected indices
+    Returns
+    -------
+    NDArray[int64]:
+        numpy array of selected indices
+
+
+    Notes
+    -----
+    Returns an empty selection if any of the collections is empty.
     """
     if layers is None:
         layer_indices: Collection[int] = range(element_info.n_layers)
@@ -94,18 +107,27 @@ def get_selected_indices(
     return all_indices
 
 
-def get_selected_indices_by_material_id(
-    element_info: ElementInfo, material_id: int
+def get_selected_indices_by_material_ids(
+    element_info: ElementInfo, material_ids: Collection[int]
 ) -> NDArray[np.int64]:
-    """Get selected indices by material id.
+    """Get selected indices by material ids.
 
-    Selects all indices that are in a layer with the given material
-    :param element_info: ElementInfo
-    :param material_id
-    :return: elementary indices
+    Selects all indices that are in a layer with one of the selected materials
+
+    Parameters
+    ----------
+    element_info: ElementInfo
+    material_ids: Collection[int]
+        Collection of material ids to select
+
+    Returns
+    -------
+    NDArray[int64]:
+        selected elementary indices
+
     """
     layer_indices = [
-        index for index, mat_id in enumerate(element_info.material_ids) if mat_id == material_id
+        index for index, mat_id in enumerate(element_info.material_ids) if mat_id in material_ids
     ]
     return get_selected_indices(element_info, layers=layer_indices)
 
@@ -116,9 +138,17 @@ def get_selected_indices_by_analysis_ply(
     """Get selected indices by analysis ply.
 
     Selects all indices that are in a layer with the given analysis ply
-    :param analysis_ply_info_provider: The AnalysisPlyInfoProvider for the Analysis ply.
-    :param element_info: ElementInfo
-    :return: elementary indices
+
+    Parameters
+    ----------
+    analysis_ply_info_provider: AnalysisPlyInfoProvider
+        The AnalysisPlyInfoProvider for the Analysis ply.
+    element_info: ElementInfo
+
+    Returns
+    -------
+    NDArray[int64]:
+        selected elementary indices
     """
     layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_info.id)
     if layer_index is None:
