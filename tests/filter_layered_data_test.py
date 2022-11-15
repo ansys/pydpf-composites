@@ -59,7 +59,7 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
     with get_field_info(
         input_field=setup_result.field,
         mesh=setup_result.mesh,
-        rst_data_source=setup_result.rst_data_source,
+        data_source=setup_result.rst_data_source,
     ) as field_info:
         # Test single value output
         result_field = get_result_field(
@@ -93,7 +93,7 @@ def test_filter_by_global_ply(dpf_server):
     with get_field_info(
         input_field=setup_result.field,
         mesh=setup_result.mesh,
-        rst_data_source=setup_result.rst_data_source,
+        data_source=setup_result.rst_data_source,
     ) as field_info:
         analysis_ply_info_provider = AnalysisPlyInfoProvider(
             mesh=setup_result.mesh, name="P1L1__ud_patch ns1"
@@ -131,7 +131,7 @@ def test_access_to_invalid_element(dpf_server):
     with get_field_info(
         input_field=setup_result.field,
         mesh=setup_result.mesh,
-        rst_data_source=setup_result.rst_data_source,
+        data_source=setup_result.rst_data_source,
     ) as field_info:
         # Try to get non existing element
         with pytest.raises(RuntimeError) as exc_info:
@@ -146,7 +146,7 @@ def test_access_to_invalid_analysis_ply(dpf_server):
     with get_field_info(
         input_field=setup_result.field,
         mesh=setup_result.mesh,
-        rst_data_source=setup_result.rst_data_source,
+        data_source=setup_result.rst_data_source,
     ) as field_info:
         # try to get non existing anlysis ply
         with pytest.raises(RuntimeError) as exc_info:

@@ -133,7 +133,7 @@ def test_all_element_types(dpf_server):
         with get_field_info(
             input_field=field,
             mesh=mesh,
-            rst_data_source=rst_data_source,
+            data_source=rst_data_source,
         ) as field_info:
             for element_id in get_element_ids().all:
                 element_info: ElementInfo = field_info.layup_info.get_element_info(element_id)
@@ -199,12 +199,12 @@ def test_document_error_cases_indices(dpf_server):
         mesh: MeshedRegion = mesh_provider.outputs.mesh()
 
         with pytest.raises(RuntimeError) as exc_info:
-            layup_info = get_element_info_provider(mesh, rst_data_source=rst_data_source)
+            layup_info = get_element_info_provider(mesh, data_source=rst_data_source)
         assert str(exc_info.value).startswith("Missing property field in mesh")
         material_property_field, layer_indices_property_field = get_layup_property_fields()
         mesh.set_property_field("element_layered_material_ids", material_property_field)
         mesh.set_property_field("element_layer_indices", layer_indices_property_field)
-        return get_element_info_provider(mesh, rst_data_source=rst_data_source)
+        return get_element_info_provider(mesh, data_source=rst_data_source)
 
     layup_info = get_layup_info_for_rst("model_with_all_element_types_minimal_output.rst")
 

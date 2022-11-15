@@ -38,7 +38,7 @@ def test_material_properties(dpf_server):
     with get_field_info(
         input_field=setup_result.field,
         mesh=setup_result.mesh,
-        rst_data_source=setup_result.rst_data_source,
+        data_source=setup_result.rst_data_source,
     ) as field_info:
         with result_field.as_local_field() as local_result_field:
             component = 0
