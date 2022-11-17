@@ -11,8 +11,6 @@ access the data.
 
 """
 import json
-import os
-import pathlib
 
 # %%
 # Load ansys libraries
@@ -20,6 +18,10 @@ import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 
 from ansys.dpf.composites import ResultDefinition
+from ansys.dpf.composites.example_helper.example_helper import (
+    _get_long_fiber_example_files,
+    connect_to_or_start_server,
+)
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -27,7 +29,6 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 
 # %%
@@ -46,28 +47,17 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 # %%
 # Load dpf plugin
-server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-load_composites_plugin()
+server_context = connect_to_or_start_server()
+composite_files_on_server = _get_long_fiber_example_files(server_context, "shell")
+
 
 # %%
-# Specify input files and upload them to the server
-
-TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
-rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
-material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
-
-# %%
-
 # Define the result definition which is used to configure the composite_failure_operator
 rd = ResultDefinition(
-    "Combined Failure Criteria",
-    rst_files=[rst_server_path],
-    material_files=[material_server_path],
-    composite_definitions=[h5_server_path],
+    name="combined failure criteria",
+    rst_files=[composite_files_on_server.rst],
+    material_files=[composite_files_on_server.engineering_data],
+    composite_definitions=[composite_files_on_server.composite_definitions],
     combined_failure_criterion=get_combined_failure_criterion(),
     element_scope=[3],
 )

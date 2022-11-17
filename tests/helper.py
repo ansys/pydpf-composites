@@ -7,6 +7,7 @@ from typing import Generator
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
+from ansys.dpf.composites.example_helper.example_helper import LongFiberCompositesFiles
 from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider
 
 
@@ -46,13 +47,6 @@ class Timer:
 
 
 @dataclass
-class CompositeFiles:
-    rst_path: pathlib.Path
-    h5_path: pathlib.Path
-    material_path: pathlib.Path
-
-
-@dataclass
 class SetupResult:
     field: Field
     mesh: MeshedRegion
@@ -61,18 +55,18 @@ class SetupResult:
     streams_provider: Operator
 
 
-def setup_operators(server, files: CompositeFiles, upload=True):
+def setup_operators(server, files: LongFiberCompositesFiles, upload=True):
 
     timer = Timer()
-    eng_data_path = files.material_path
-    h5_path = files.h5_path
-    rst_path = files.rst_path
+    eng_data_path = files.engineering_data
+    h5_path = files.composite_definitions
+    rst_path = files.rst
 
     if upload:
-        rst_path = dpf.upload_file_in_tmp_folder(files.rst_path, server=server)
+        rst_path = dpf.upload_file_in_tmp_folder(files.rst, server=server)
 
-        h5_path = dpf.upload_file_in_tmp_folder(files.h5_path, server=server)
-        eng_data_path = dpf.upload_file_in_tmp_folder(files.material_path, server=server)
+        h5_path = dpf.upload_file_in_tmp_folder(files.composite_definitions, server=server)
+        eng_data_path = dpf.upload_file_in_tmp_folder(files.engineering_data, server=server)
 
     eng_data_source = dpf.DataSources()
     eng_data_source.add_file_path(eng_data_path, "EngineeringData")
@@ -155,4 +149,6 @@ def get_basic_shell_files():
     rst_path = TEST_DATA_ROOT_DIR / "shell.rst"
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
-    return CompositeFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
+    return LongFiberCompositesFiles(
+        rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
+    )

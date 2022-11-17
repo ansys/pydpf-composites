@@ -6,7 +6,7 @@ import numpy as np
 
 from ansys.dpf.composites.layup_info import get_element_info_provider
 
-from .helper import CompositeFiles, Timer, setup_operators
+from .helper import LongFiberCompositesFiles, Timer, setup_operators
 
 
 def check_performance(timer, last_measured_performance, performance_factor=1.1):
@@ -27,7 +27,7 @@ def get_dummy_data_files():
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    return CompositeFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
+    return LongFiberCompositesFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
 
 
 def get_ger_data_files():
@@ -42,12 +42,12 @@ def get_ger_data_files():
     rst_path = ger_path / "SYS-1" / "MECH" / "file.rst"
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
     material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
-    return CompositeFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
+    return LongFiberCompositesFiles(rst_path=rst_path, h5_path=h5_path, material_path=material_path)
 
 
 def get_test_data(dpf_server):
     files = get_data_files()
-    rst_path = dpf.upload_file_in_tmp_folder(files.rst_path, server=dpf_server)
+    rst_path = dpf.upload_file_in_tmp_folder(files.rst, server=dpf_server)
 
     rst_data_source = dpf.DataSources(rst_path)
 
