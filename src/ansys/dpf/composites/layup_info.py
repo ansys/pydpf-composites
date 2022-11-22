@@ -428,7 +428,7 @@ def get_element_info_provider(
 
     Notes
     -----
-    Either a data_source or a stream_provider is required
+        Either a data_source or a stream_provider is required
     """
 
     def get_keyopt_property_field(keyopt: int) -> PropertyField:
