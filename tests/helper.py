@@ -138,7 +138,7 @@ class FieldInfo:
 def get_field_info(
     input_field: Field, mesh: MeshedRegion, data_source: DataSources
 ) -> Generator[FieldInfo, None, None]:
-    layup_info = get_element_info_provider(mesh, data_source=data_source)
+    layup_info = get_element_info_provider(mesh, stream_provider_or_data_source=data_source)
     with input_field.as_local_field() as local_input_field:
         yield FieldInfo(field=local_input_field, layup_info=layup_info)
 

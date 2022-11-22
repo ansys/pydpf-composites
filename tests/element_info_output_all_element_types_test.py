@@ -6,6 +6,7 @@ import ansys.dpf.core as dpf
 from ansys.dpf.core import Field, MeshedRegion, PropertyField
 import pytest
 
+from ansys.dpf.composites import Spot
 from ansys.dpf.composites.layup_info import ElementInfo, get_element_info_provider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
@@ -199,19 +200,21 @@ def test_document_error_cases_indices(dpf_server):
         mesh: MeshedRegion = mesh_provider.outputs.mesh()
 
         with pytest.raises(RuntimeError) as exc_info:
-            layup_info = get_element_info_provider(mesh, data_source=rst_data_source)
+            layup_info = get_element_info_provider(
+                mesh, stream_provider_or_data_source=rst_data_source
+            )
         assert str(exc_info.value).startswith("Missing property field in mesh")
         material_property_field, layer_indices_property_field = get_layup_property_fields()
         mesh.set_property_field("element_layered_material_ids", material_property_field)
         mesh.set_property_field("element_layer_indices", layer_indices_property_field)
-        return get_element_info_provider(mesh, data_source=rst_data_source)
+        return get_element_info_provider(mesh, stream_provider_or_data_source=rst_data_source)
 
     layup_info = get_layup_info_for_rst("model_with_all_element_types_minimal_output.rst")
 
     for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, [1], None, None)
+            get_selected_indices(element_info, layers=[1])
         assert str(exc_info.value).startswith(
             "Computation of indices is not supported for elements with no spots"
         )
@@ -219,7 +222,7 @@ def test_document_error_cases_indices(dpf_server):
     for element_id in get_element_ids().non_layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, [1], None, None)
+            get_selected_indices(element_info, layers=[1])
         assert str(exc_info.value).startswith(
             "Computation of indices is not supported for non-layered elements."
         )
@@ -229,7 +232,7 @@ def test_document_error_cases_indices(dpf_server):
     for element_id in get_element_ids().non_layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, [1], None, None)
+            get_selected_indices(element_info, layers=[1])
         assert str(exc_info.value).startswith(
             "Computation of indices is not supported for non-layered elements."
         )
@@ -237,7 +240,7 @@ def test_document_error_cases_indices(dpf_server):
     for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, [3], None, None)
+            get_selected_indices(element_info, layers=[3])
         assert str(exc_info.value).startswith(
             "Layer index 3 is greater or equal number of layers 3"
         )
@@ -245,18 +248,20 @@ def test_document_error_cases_indices(dpf_server):
     for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, [1], [4], None)
+            get_selected_indices(element_info, layers=[1], nodes=[4])
         assert str(exc_info.value).startswith(
             "corner node index 4 is greater or equal number of corner nodes"
         )
-
-    for element_id in get_element_ids().layered:
-        with pytest.raises(RuntimeError) as exc_info:
-            element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, [1], [1], [3])
-        assert str(exc_info.value).startswith("spot index 3 is greater or equal number of spots")
 
     # Try to get non-existing material id
     element_info: ElementInfo = layup_info.get_element_info(1)
     selected_indices = get_selected_indices_by_material_ids(element_info, [5])
     assert len(selected_indices) == 0
+
+    layup_info = get_layup_info_for_rst("model_with_all_element_types_all_except_mid_output.rst")
+
+    for element_id in get_element_ids().layered:
+        with pytest.raises(RuntimeError) as exc_info:
+            element_info: ElementInfo = layup_info.get_element_info(element_id)
+            get_selected_indices(element_info, layers=[1], nodes=[1], spots=[Spot.MIDDLE])
+        assert str(exc_info.value).startswith("spot index 2 is greater or equal number of spots")

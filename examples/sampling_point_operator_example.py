@@ -9,6 +9,9 @@ of a layered element and lay-up information (ply material, thickness).
 This basic example shows how the configure the operator and how to
 access the data.
 
+The :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py` shows
+how the sampling point data can be visualized.
+
 """
 import json
 
@@ -19,8 +22,8 @@ import matplotlib.pyplot as plt
 
 from ansys.dpf.composites import ResultDefinition
 from ansys.dpf.composites.example_helper.example_helper import (
-    _get_long_fiber_example_files,
     connect_to_or_start_server,
+    get_long_fiber_example_files,
 )
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -48,7 +51,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 # %%
 # Load dpf plugin
 server_context = connect_to_or_start_server()
-composite_files_on_server = _get_long_fiber_example_files(server_context, "shell")
+composite_files_on_server = get_long_fiber_example_files(server_context, "shell")
 
 
 # %%

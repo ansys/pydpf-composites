@@ -1,9 +1,17 @@
 """
 .. _basic_example:
 
-Basic example of setting up a composite failure workflow
+Basic example of setting up a composite failure workflow.
 ----------------------------------------------------------
 
+This example shows how to connect the different dpf operators that are needed to
+evaluate composite failure criteria. For simple use cases it is preferable
+to use the composite failure operator
+(:ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`)
+or the composite sampling point operator
+(:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`).
+The :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` example shows how
+helper functions can be used to obtain composite result data.
 """
 
 #%%
@@ -11,8 +19,8 @@ Basic example of setting up a composite failure workflow
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.example_helper.example_helper import (
-    _get_long_fiber_example_files,
     connect_to_or_start_server,
+    get_long_fiber_example_files,
 )
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -56,7 +64,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 
 server_context = connect_to_or_start_server()
-composite_files_on_server = _get_long_fiber_example_files(server_context, "shell")
+composite_files_on_server = get_long_fiber_example_files(server_context, "shell")
 
 #%%
 

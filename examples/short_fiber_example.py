@@ -11,13 +11,13 @@ Basic example for a short fiber failure analysis
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.example_helper.example_helper import (
-    _get_short_fiber_example_files,
     connect_to_or_start_server,
+    get_short_fiber_example_files,
 )
 
 # %%
 server_context = connect_to_or_start_server()
-composite_files_on_server = _get_short_fiber_example_files(server_context, "short_fiber")
+composite_files_on_server = get_short_fiber_example_files(server_context, "short_fiber")
 
 
 # %%

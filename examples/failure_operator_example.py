@@ -14,8 +14,8 @@ import ansys.dpf.core as dpf
 
 from ansys.dpf.composites import ResultDefinition
 from ansys.dpf.composites.example_helper.example_helper import (
-    _get_long_fiber_example_files,
     connect_to_or_start_server,
+    get_long_fiber_example_files,
 )
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -26,7 +26,7 @@ from ansys.dpf.composites.failure_criteria import (
 )
 
 server_context = connect_to_or_start_server()
-composite_files_on_server = _get_long_fiber_example_files(server_context, "shell")
+composite_files_on_server = get_long_fiber_example_files(server_context, "shell")
 
 # %%
 # Definition of the combined failure criterion

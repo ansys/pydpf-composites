@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 import sys
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Collection, Dict, List, Optional, Union, cast
 
 if sys.version_info >= (3, 8):
     from typing import Protocol
@@ -14,16 +14,23 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField, S
 import numpy as np
 from numpy.typing import NDArray
 
+_ANALYSIS_PLY_PREFIX = "AnalysisPly:"
+
+
+def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
+    """Get all available analysis plies names."""
+    return [
+        property_field_name[len(_ANALYSIS_PLY_PREFIX) :]
+        for property_field_name in mesh.available_property_fields
+        if property_field_name.startswith(_ANALYSIS_PLY_PREFIX)
+    ]
+
 
 def _get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
     property_field_name = ANALYSIS_PLY_PREFIX + name
     if property_field_name not in mesh.available_property_fields:
-        available_analysis_plies = [
-            property_field_name
-            for property_field_name in mesh.available_property_fields
-            if property_field_name.startswith(ANALYSIS_PLY_PREFIX)
-        ]
+        available_analysis_plies = get_all_analysis_ply_names(mesh)
         raise RuntimeError(
             f"Analysis Ply not available: {name}. "
             f"Available analysis plies: {available_analysis_plies}"
@@ -37,23 +44,23 @@ class ElementInfo:
 
     Use :class:`~ElementInfoProvider` to obtain a :class:`~ElementInfo` for a given element.
 
-    Attributes
+    Parameters
     ----------
-    id: int
+    id
         Element id / Element Label
-    n_layers: int
-     number of layers. Equal to 1 for non-layered elements
-    n_corner_nodes: int
+    n_layers
+        number of layers. Equal to 1 for non-layered elements
+    n_corner_nodes
         Number of corner nodes (without midside nodes).
-    n_spots: int
+    n_spots
         number of spots (through-the-thickness integration points) per layer
-    element_type: int
+    element_type
         Apdl element type (e.g. 181 for layered shells)
-    material_ids: int
+    material_ids
         List of Dpf Material Ids for all layers
-    is_shell: bool
+    is_shell
         True if the element is a shell element
-    number_of_nodes_per_spot_plane: int
+    number_of_nodes_per_spot_plane
         Number of nodes per output plane.
         Equal to n_corner_nodes for shell elements and n_corner_nodes / 2
         for solid elements. Equal to -1 for non-layered elements.
@@ -127,9 +134,7 @@ class _IndexerWithDataPointer:
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
-        self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
-            field._data_pointer, len(self.data)
-        )
+        self._data_pointer: NDArray[np.int64] = np.append(field._data_pointer, len(self.data))
         self.max_id = len(self.indices) - 1
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
@@ -150,9 +155,7 @@ class _IndexerWithDataPointerNoBoundsCheck:
         self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
         # The data pointer only contains the start index of each element. We add the end to make
         # it easier to use
-        self._data_pointer: NDArray[np.int64] = np.append(  # type: ignore
-            field._data_pointer, len(self.data)
-        )
+        self._data_pointer: NDArray[np.int64] = np.append(field._data_pointer, len(self.data))
         self.max_id = len(self.indices) - 1
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
@@ -222,9 +225,9 @@ class AnalysisPlyInfoProvider:
 
     Parameters
     ----------
-    mesh: MeshedRegion
+    mesh
         Dpf MeshedRegion with layup information.
-    name: str
+    name
         Analysis Ply Name
     """
 
@@ -246,6 +249,36 @@ class AnalysisPlyInfoProvider:
         return self._layer_indices.by_id(element_id)
 
 
+def get_dpf_material_id_by_analyis_ply_map(
+    mesh: MeshedRegion,
+    data_source_or_streams_provider: Union[DataSources, Operator],
+) -> Dict[str, int]:
+    """Get Dict that maps analysis ply names to dpf_material_ids.
+
+    Parameters
+    ----------
+    mesh: MeshedRegion
+        Dpf Meshed region enriched with layup information
+    data_source_or_streams_provider: Union[DataSources, Operator]
+    """
+    analysis_ply_to_material_map = {}
+    element_info_provider = get_element_info_provider(
+        mesh=mesh, stream_provider_or_data_source=data_source_or_streams_provider
+    )
+
+    for analysis_ply_name in get_all_analysis_ply_names(mesh):
+        analysis_ply_info_provider = AnalysisPlyInfoProvider(mesh, analysis_ply_name)
+        first_element_id = analysis_ply_info_provider.property_field.scoping.ids[0]
+        element_info = element_info_provider.get_element_info(first_element_id)
+        assert element_info is not None
+        layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
+        analysis_ply_to_material_map[analysis_ply_name] = element_info.material_ids[
+            cast(int, layer_index)
+        ]
+
+    return analysis_ply_to_material_map
+
+
 class ElementInfoProvider:
     """Provider for :class:`~ElementInfo`.
 
@@ -258,14 +291,14 @@ class ElementInfoProvider:
 
     Parameters
     ----------
-    mesh: MeshedRegion
-    layer_indices: PropertyField
-    element_types_apdl: PropertyField
-    element_types_dpf: PropertyField
-    keyopt_8_values: PropertyField
-    keyopt_3_values: PropertyField
-    material_ids: PropertyField
-    no_bounds_checks: bool
+    mesh
+    layer_indices
+    element_types_apdl
+    element_types_dpf
+    keyopt_8_values
+    keyopt_3_values
+    material_ids
+    no_bounds_checks
         Disable bounds checks.
         Results in better performance but potentially cryptic
         error messages
@@ -375,20 +408,17 @@ class ElementInfoProvider:
 
 def get_element_info_provider(
     mesh: MeshedRegion,
-    data_source: DataSources = None,
-    stream_provider: Operator = None,
+    stream_provider_or_data_source: Union[Operator, DataSources],
     no_bounds_checks: bool = False,
 ) -> ElementInfoProvider:
     """Get :class:`~ElementInfoProvider` Object.
 
     Parameters
     ----------
-    mesh: dpf meshed region
-    data_source: DataSources
-        dpf data source
-    stream_provider: Operator
-        dpf stream provider
-    no_bounds_checks: bool
+    mesh
+    stream_provider_or_data_source
+        dpf stream provider or dpf data source
+    no_bounds_checks
         Disable bounds checks. Improves
         performance but can result in cryptic error messages
 
@@ -398,17 +428,15 @@ def get_element_info_provider(
 
     Notes
     -----
-        Either a data_source or a stream_provider is required
+    Either a data_source or a stream_provider is required
     """
 
     def get_keyopt_property_field(keyopt: int) -> PropertyField:
         keyopt_provider = dpf.Operator("property_field_provider_by_name")
-        if stream_provider is not None:
-            keyopt_provider.inputs.streams_container(stream_provider)
+        if isinstance(stream_provider_or_data_source, Operator):
+            keyopt_provider.inputs.streams_container(stream_provider_or_data_source)
         else:
-            if data_source is None:
-                raise Exception("Missing stream provider or data source")
-            keyopt_provider.inputs.data_sources(data_source)
+            keyopt_provider.inputs.data_sources(stream_provider_or_data_source)
 
         keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
         return keyopt_provider.outputs.property_field()

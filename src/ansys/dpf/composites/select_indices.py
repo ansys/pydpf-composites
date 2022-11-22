@@ -4,6 +4,8 @@ from typing import Collection, Optional
 import numpy as np
 from numpy.typing import NDArray
 
+from ansys.dpf.composites import Spot
+from ansys.dpf.composites.enums import get_rst_spot_index
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfo
 
 
@@ -11,23 +13,20 @@ def get_selected_indices(
     element_info: ElementInfo,
     layers: Optional[Collection[int]] = None,
     nodes: Optional[Collection[int]] = None,
-    spots: Optional[Collection[int]] = None,
+    spots: Optional[Collection[Spot]] = None,
     disable_checks: bool = False,
 ) -> NDArray[np.int64]:
     """Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.
 
     Parameters
     ----------
-    element_info : ElementInfo
-    layers:  Collection[int], optional
+    element_info
+    layers
         List of selected layers.
-    nodes:  Collection[int], optional
+    nodes
         List of selected nodes
-    spots: Collection[int], optional
+    spots
         List of selected spots.
-        The spot indices correspond to:
-        0: bot, 1: top         if element_info.n_spots == 2.
-        0: bot, 1: top  2: mid if element_info.n_spots == 3.
     disable_checks:
         Set to True to disable checks.
         Results in better performance but potentially
@@ -35,8 +34,8 @@ def get_selected_indices(
 
     Returns
     -------
-    NDArray[int64]:
-        numpy array of selected indices
+    NDArray:
+        Array of selected indices
 
 
     Notes
@@ -61,7 +60,7 @@ def get_selected_indices(
     else:
         if len(spots) == 0:
             return np.array([])
-        spot_indices = spots
+        spot_indices = [get_rst_spot_index(spot) for spot in spots]
 
     if not disable_checks:
         if not element_info.is_layered:
@@ -117,13 +116,13 @@ def get_selected_indices_by_material_ids(
     Parameters
     ----------
     element_info: ElementInfo
-    material_ids: Collection[int]
+    material_ids
         Collection of material ids to select
 
     Returns
     -------
     NDArray[int64]:
-        selected elementary indices
+        Selected elementary indices
 
     """
     layer_indices = [

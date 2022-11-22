@@ -104,16 +104,18 @@ def _get_file_url(directory: str, filename: str) -> str:
     return EXAMPLE_REPO + "/".join([directory, filename])
 
 
-def _get_long_fiber_example_files(
+def get_long_fiber_example_files(
     server_context: ServerContext, example_key: str
 ) -> LongFiberCompositesFiles:
+    """Get long fiber example file by example key."""
     example_files = _long_fiber_examples[example_key]
     return cast(LongFiberCompositesFiles, _get_example_files(example_files, server_context.server))
 
 
-def _get_short_fiber_example_files(
+def get_short_fiber_example_files(
     server_context: ServerContext, example_key: str
 ) -> ShortFiberCompositesFiles:
+    """Get short fiber example file by example key."""
     example_files = _short_fiber_examples[example_key]
     return cast(ShortFiberCompositesFiles, _get_example_files(example_files, server_context.server))
 
