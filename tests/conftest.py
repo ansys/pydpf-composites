@@ -282,6 +282,9 @@ def dpf_server(request: pytest.FixtureRequest):
             )
 
     with start_server_process() as server_process:
+        import time
+
+        time.sleep(10)
         server = dpf.server.connect_to_server(port=server_process.port, timeout=40)
 
         wait_until_server_is_up(server)
