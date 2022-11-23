@@ -35,16 +35,14 @@ def get_material_operators(
 ) -> MaterialOperators:
     """Get Material Properties related operators.
 
-    Attributes
+    Parameters
     ----------
-    rst_data_source: DataSources
-    engineering_data_source: DataSources
-        Material Data source that contains
+    rst_data_source
+        Data source that contains an rst file
+    engineering_data_source
+        Data source that contains the EngineeringData file
     ----------
 
-    Returns
-    -------
-    MaterialOperators
     """
     material_support_provider = Operator("support_provider")
     material_support_provider.inputs.property("mat")

@@ -12,7 +12,7 @@ class Spot(Enum):
 
 
 def get_rst_spot_index(spot: Spot) -> int:
-    """Return to spot in index in the rst file.
+    """Return the spot in index in the rst file.
 
     The order in the rst file is always bottom, top, (mid)
     """

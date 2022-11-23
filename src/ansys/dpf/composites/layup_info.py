@@ -257,9 +257,9 @@ def get_dpf_material_id_by_analyis_ply_map(
 
     Parameters
     ----------
-    mesh: MeshedRegion
+    mesh
         Dpf Meshed region enriched with layup information
-    data_source_or_streams_provider: Union[DataSources, Operator]
+    data_source_or_streams_provider
     """
     analysis_ply_to_material_map = {}
     element_info_provider = get_element_info_provider(

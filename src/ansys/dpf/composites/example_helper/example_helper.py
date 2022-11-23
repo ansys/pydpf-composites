@@ -52,7 +52,7 @@ class _LongFiberCompositesExampleFilenames:
 
 
 @dataclass
-class _ShortfiberCompositesExampleFilenames:
+class _ShortFiberCompositesExampleFilenames:
     rst: str
     dsdat: str
     engineering_data: str
@@ -60,14 +60,34 @@ class _ShortfiberCompositesExampleFilenames:
 
 @dataclass
 class _LongFiberExampleLocation:
+    """Location of the a given long fiber example in the example_data repo.
+
+    Parameters
+    ----------
+    directory
+        Directory in example_data/pydpf-composites
+    files
+        Example files in directory
+    """
+
     directory: str
     files: _LongFiberCompositesExampleFilenames
 
 
 @dataclass
 class _ShortFiberExampleLocation:
+    """Location of the a given short fiber example in the example_data repo.
+
+    Parameters
+    ----------
+    directory
+        Directory in example_data/pydpf-composites
+    files
+        Example files in directory
+    """
+
     directory: str
-    files: _ShortfiberCompositesExampleFilenames
+    files: _ShortFiberCompositesExampleFilenames
 
 
 _long_fiber_examples: Dict[str, _LongFiberExampleLocation] = {
@@ -84,7 +104,7 @@ _long_fiber_examples: Dict[str, _LongFiberExampleLocation] = {
 _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
     "short_fiber": _ShortFiberExampleLocation(
         directory="short_fiber",
-        files=_ShortfiberCompositesExampleFilenames(
+        files=_ShortFiberCompositesExampleFilenames(
             rst="file.rst", engineering_data="MatML.xml", dsdat="ds.dat"
         ),
     )
@@ -94,6 +114,7 @@ _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
 def connect_to_or_start_server() -> ServerContext:
     """Connect to or start a dpf server."""
     # Todo: add different modes to start or get the server
+    # Currently just connects to a hardcoded port
     server = dpf.server.connect_to_server("127.0.0.1", port=21002)
     load_composites_plugin()
     # Todo: return what type of server we have
@@ -109,7 +130,7 @@ def get_long_fiber_example_files(
 ) -> LongFiberCompositesFiles:
     """Get long fiber example file by example key."""
     example_files = _long_fiber_examples[example_key]
-    return cast(LongFiberCompositesFiles, _get_example_files(example_files, server_context.server))
+    return cast(LongFiberCompositesFiles, _get_example_files(example_files, server_context))
 
 
 def get_short_fiber_example_files(
@@ -117,11 +138,12 @@ def get_short_fiber_example_files(
 ) -> ShortFiberCompositesFiles:
     """Get short fiber example file by example key."""
     example_files = _short_fiber_examples[example_key]
-    return cast(ShortFiberCompositesFiles, _get_example_files(example_files, server_context.server))
+    return cast(ShortFiberCompositesFiles, _get_example_files(example_files, server_context))
 
 
 def _get_example_files(
-    example_files: Union[_ShortFiberExampleLocation, _LongFiberExampleLocation], server: dpf.server
+    example_files: Union[_ShortFiberExampleLocation, _LongFiberExampleLocation],
+    server_context: ServerContext,
 ) -> Union[ShortFiberCompositesFiles, LongFiberCompositesFiles]:
     composite_files_on_server: Union[ShortFiberCompositesFiles, LongFiberCompositesFiles]
     if isinstance(example_files, _ShortFiberExampleLocation):
@@ -134,8 +156,10 @@ def _get_example_files(
                 file_url = _get_file_url(example_files.directory, filename)
                 local_path = os.path.join(tmpdir, filename)
                 urllib.request.urlretrieve(file_url, local_path)
-                # if not server.local_server and not server.docker_config.use_docker:
-                server_path = dpf.upload_file_in_tmp_folder(local_path, server=server)
+                # todo: Only upload files if server/ server_context_requires it
+                server_path = dpf.upload_file_in_tmp_folder(
+                    local_path, server=server_context.server
+                )
                 setattr(composite_files_on_server, key, server_path)
 
     return composite_files_on_server
