@@ -282,7 +282,7 @@ def dpf_server(request: pytest.FixtureRequest):
             )
 
     with start_server_process() as server_process:
-        server = dpf.server.connect_to_server(port=server_process.port, timeout=10)
+        server = dpf.server.connect_to_server(port=server_process.port, timeout=40)
 
         wait_until_server_is_up(server)
         load_composites_plugin(platform=server_process.platform, server=server)
