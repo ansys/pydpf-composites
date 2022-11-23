@@ -222,23 +222,30 @@ def _find_free_port() -> int:
         return sock.getsockname()[1]  # type: ignore
 
 
-def wait_until_server_is_up(server):
-    # Small hack to check if the server is up
-    # The dpf server should check this in connect_to_server but that's currently not the case
-    # https://github.com/pyansys/pydpf-core/issues/414
-    # We use the fact that server.version throws if the server is not yet connected
-    timeout = 10
+def try_until_timeout(fun, timeout=10):
+    """
+    Try to run a function until a timeout is reached.
+    Before the timeout is reached,
+    all exceptions are ignored and a retry happens.
+    """
     import time
 
     tstart = time.time()
     while (time.time() - tstart) < timeout:
         time.sleep(0.001)
         try:
-            server.version
-            break
+            return fun()
         except Exception as e:
             pass
-    server.version
+    return fun()
+
+
+def wait_until_server_is_up(server):
+    # Small hack to check if the server is up
+    # The dpf server should check this in connect_to_server but that's currently not the case
+    # https://github.com/pyansys/pydpf-core/issues/414
+    # We use the fact that server.version throws if the server is not yet connected
+    try_until_timeout(lambda: server.version)
 
 
 @pytest.fixture(scope="session")
@@ -282,10 +289,13 @@ def dpf_server(request: pytest.FixtureRequest):
             )
 
     with start_server_process() as server_process:
-        import time
+        # Workaround for dpf bug. The timeout is not respected when connecting
+        # to a server:https://github.com/pyansys/pydpf-core/issues/638
+        # We just try until connect_to_server succeeds
+        def start_server():
+            return dpf.server.connect_to_server(port=server_process.port)
 
-        time.sleep(10)
-        server = dpf.server.connect_to_server(port=server_process.port, timeout=40)
+        server = try_until_timeout(start_server)
 
         wait_until_server_is_up(server)
         load_composites_plugin(platform=server_process.platform, server=server)
