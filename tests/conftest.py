@@ -298,6 +298,6 @@ def dpf_server(request: pytest.FixtureRequest):
         server = try_until_timeout(start_server)
 
         wait_until_server_is_up(server)
-        load_composites_plugin(platform=server_process.platform, server=server)
+        load_composites_plugin(server)
 
         yield server

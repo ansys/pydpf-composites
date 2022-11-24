@@ -90,7 +90,7 @@ class _ShortFiberExampleLocation:
     files: _ShortFiberCompositesExampleFilenames
 
 
-_long_fiber_examples: Dict[str, _LongFiberExampleLocation] = {
+_continuous_fiber_examples: Dict[str, _LongFiberExampleLocation] = {
     "shell": _LongFiberExampleLocation(
         directory="shell",
         files=_LongFiberCompositesExampleFilenames(
@@ -116,8 +116,7 @@ def connect_to_or_start_server() -> ServerContext:
     # Todo: add different modes to start or get the server
     # Currently just connects to a hardcoded port
     server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-    load_composites_plugin()
-    # Todo: return what type of server we have
+    load_composites_plugin(server)
     return ServerContext(server=server)
 
 
@@ -125,11 +124,11 @@ def _get_file_url(directory: str, filename: str) -> str:
     return EXAMPLE_REPO + "/".join([directory, filename])
 
 
-def get_long_fiber_example_files(
+def get_continuous_fiber_example_files(
     server_context: ServerContext, example_key: str
 ) -> LongFiberCompositesFiles:
     """Get long fiber example file by example key."""
-    example_files = _long_fiber_examples[example_key]
+    example_files = _continuous_fiber_examples[example_key]
     return cast(LongFiberCompositesFiles, _get_example_files(example_files, server_context))
 
 
@@ -156,7 +155,9 @@ def _get_example_files(
                 file_url = _get_file_url(example_files.directory, filename)
                 local_path = os.path.join(tmpdir, filename)
                 urllib.request.urlretrieve(file_url, local_path)
-                # todo: Only upload files if server/ server_context_requires it
+                # todo: With 0.7.1 the server will have
+                #  a boolean property 'local_server' that we can use to
+                # determine if files should be uploaded
                 server_path = dpf.upload_file_in_tmp_folder(
                     local_path, server=server_context.server
                 )

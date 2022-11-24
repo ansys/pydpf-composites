@@ -28,7 +28,7 @@ from ansys.dpf.composites.add_layup_info_to_mesh import (
 from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
-    get_long_fiber_example_files,
+    get_continuous_fiber_example_files,
 )
 from ansys.dpf.composites.layup_info import (
     get_all_analysis_ply_names,
@@ -39,7 +39,7 @@ from ansys.dpf.composites.layup_info import (
 # Start server and load example files
 
 server_context = connect_to_or_start_server()
-composite_files_on_server = get_long_fiber_example_files(server_context, "shell")
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 #%%
 # Setup Mesh Provider
