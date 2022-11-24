@@ -80,7 +80,7 @@ class ElementInfo:
     number_of_nodes_per_spot_plane: int
 
 
-_supported_element_types = [181, 281, 185, 186, 190]
+_supported_element_types = [181, 281, 185, 186, 187, 190]
 
 """
 Map of keyopt_8 to number of spots.
@@ -91,12 +91,15 @@ n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
     281: {0: 0, 1: 2, 2: 3},
     185: {0: 0, 1: 2},
     186: {0: 0, 1: 2},
+    187: {0: 0},
     190: {0: 0, 1: 2},
 }
 
 
 def _is_shell(apdl_element_type: np.int64) -> bool:
-    return {181: True, 281: True, 185: False, 186: False, 190: False}[int(apdl_element_type)]
+    return {181: True, 281: True, 185: False, 186: False, 190: False, 187: False}[
+        int(apdl_element_type)
+    ]
 
 
 def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.int64) -> int:

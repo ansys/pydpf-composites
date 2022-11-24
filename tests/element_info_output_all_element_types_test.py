@@ -40,7 +40,7 @@ def get_element_ids() -> ElementIds:
     Element ids in the "all_element_types" rst files
     """
     layered_element_ids = [1, 2, 3, 4, 30, 31, 40, 41, 50, 51]
-    element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 40, 41, 50, 51]
+    element_ids = [1, 2, 3, 4, 10, 11, 12, 13, 20, 21, 22, 23, 24, 30, 31, 40, 41, 50, 51]
     non_layered_element_ids = set(element_ids).difference(set(layered_element_ids))
 
     return ElementIds(element_ids, layered_element_ids, non_layered_element_ids)
@@ -102,6 +102,7 @@ def test_all_element_types(dpf_server):
             21: ExpectedOutput(1, 6, 186, n_spots_homogeneous_solid, False),
             22: ExpectedOutput(1, 5, 186, n_spots_homogeneous_solid, False),
             23: ExpectedOutput(1, 4, 186, n_spots_homogeneous_solid, False),
+            24: ExpectedOutput(1, 4, 187, n_spots_homogeneous_solid, False),
             30: ExpectedOutput(3, 8, 185, n_spots_layered_solid, True),
             31: ExpectedOutput(3, 6, 185, n_spots_layered_solid, True),
             40: ExpectedOutput(3, 8, 186, n_spots_layered_solid, True),
