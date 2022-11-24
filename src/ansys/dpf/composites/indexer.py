@@ -38,8 +38,6 @@ class _PropertyFieldIndexerArrayValue(Protocol):
 # It is not clear why. To be checked with dpf team. If this is a local field there is no
 # performance difference because the local field implementation already returns a numpy
 # array
-# The indexers are currently only implemented for PropertyFields, but it probably makes sense
-# to add them also for Fields
 
 
 class _PropertyFieldIndexerNoDataPointer:
