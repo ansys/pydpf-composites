@@ -12,11 +12,7 @@ from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 from .._typing_helper import PATH as _PATH
 
-# Todo switch to official data repo once the PR is merged
-EXAMPLE_REPO = (
-    "https://github.com/janvonrickenbach/example-data/raw/"
-    "feat/add_basic_pydpf_composites_examples/pydpf-composites/"
-)
+EXAMPLE_REPO = "https://github.com/pyansys/example-data/raw/master/pydpf-composites/"
 
 
 @dataclass(frozen=True)
