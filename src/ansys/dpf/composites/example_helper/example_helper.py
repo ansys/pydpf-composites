@@ -3,7 +3,7 @@
 from dataclasses import asdict, dataclass
 import os
 import tempfile
-from typing import Dict, Optional, Union, cast
+from typing import Dict, Optional, TypeVar, Union, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -38,6 +38,27 @@ class ShortFiberCompositesFiles:
     rst: Optional[_PATH] = ""
     dsdat: Optional[_PATH] = ""
     engineering_data: Optional[_PATH] = ""
+
+
+FilesType = TypeVar("FilesType", ShortFiberCompositesFiles, LongFiberCompositesFiles)
+
+
+def upload_composite_files_to_server(data_files: FilesType, server: dpf.server) -> FilesType:
+    """Upload composites files to server.
+
+    Parameters
+    ----------
+    data_files
+    server
+    """
+    if isinstance(data_files, ShortFiberCompositesFiles):
+        server_files: FilesType = ShortFiberCompositesFiles()
+    else:
+        server_files = LongFiberCompositesFiles()
+    for key, filename in asdict(data_files).items():
+        server_file = dpf.upload_file_in_tmp_folder(filename, server=server)
+        setattr(server_files, key, server_file)
+    return server_files
 
 
 @dataclass

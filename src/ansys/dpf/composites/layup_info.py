@@ -1,6 +1,7 @@
 """LayupInfo Provider."""
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import Any, Collection, Dict, List, Optional, Union, cast
 
 import ansys.dpf.core as dpf
@@ -9,6 +10,8 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ansys.dpf.composites.indexer import (
+    _FieldIndexerNoDataPointer,
+    _FieldIndexerWithDataPointer,
     _PropertyFieldIndexerArrayValue,
     _PropertyFieldIndexerNoDataPointer,
     _PropertyFieldIndexerNoDataPointerNoBoundsCheck,
@@ -380,3 +383,61 @@ def get_element_info_provider(
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
+
+
+class LayupProperty(Enum):
+    """Enum for Layup Properties.
+
+    Values correspond to labels in output container of layup provider.
+    """
+
+    Angle = 0
+    ShearAngle = 1
+    Thickness = 2
+    LaminateOffset = 3
+
+
+class LayupPropertiesProvider:
+    """Provider for layup properties.
+
+    Parameters
+    ----------
+    layup_provider
+    """
+
+    def __init__(self, layup_provider: Operator):
+        """Initialize LayupProperties provider."""
+        layup_outputs_container = layup_provider.outputs.fields_container()
+        composite_label = layup_outputs_container.labels[0]
+        angle_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.Angle.value}
+        )
+        self._angle_indexer = _FieldIndexerWithDataPointer(angle_field)
+        thickness_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.Thickness.value}
+        )
+        self._thickness_indexer = _FieldIndexerWithDataPointer(thickness_field)
+        shear_angle_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.ShearAngle.value}
+        )
+        self._shear_angle_indexer = _FieldIndexerWithDataPointer(shear_angle_field)
+        offset_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.LaminateOffset.value}
+        )
+        self._offset_indexer = _FieldIndexerNoDataPointer(offset_field)
+
+    def get_element_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get angles for all layers. Returns None if element is not layered todo: test."""
+        return self._angle_indexer.by_id(element_id)
+
+    def get_element_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get thicknesses for all layers. Returns None if element is not layered."""
+        return self._thickness_indexer.by_id(element_id)
+
+    def get_element_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get shear angle for all layers. Returns None if element is not layered."""
+        return self._shear_angle_indexer.by_id(element_id)
+
+    def get_element_laminate_offset(self, element_id: int) -> Optional[np.double]:
+        """Get laminate offset of element. Returns None if element is not layered."""
+        return self._offset_indexer.by_id(element_id)

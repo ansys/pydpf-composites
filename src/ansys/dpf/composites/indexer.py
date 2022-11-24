@@ -52,6 +52,18 @@ class _PropertyFieldIndexerNoDataPointer:
         return cast(np.int64, self.data[self.indices[entity_id]])
 
 
+class _FieldIndexerNoDataPointer:
+    def __init__(self, field: Field):
+        self.indices = _setup_index_by_id(field.scoping)
+        self.data: NDArray[np.double] = np.array(field.data, dtype=np.double)
+        self.max_id = len(self.indices) - 1
+
+    def by_id(self, entity_id: int) -> Optional[np.double]:
+        if entity_id > self.max_id:
+            return None
+        return cast(np.double, self.data[self.indices[entity_id]])
+
+
 class _PropertyFieldIndexerNoDataPointerNoBoundsCheck:
     def __init__(self, field: PropertyField):
         self.indices = _setup_index_by_id(field.scoping)
