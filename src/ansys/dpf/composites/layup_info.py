@@ -1,18 +1,21 @@
 """LayupInfo Provider."""
 
 from dataclasses import dataclass
-import sys
 from typing import Any, Collection, Dict, List, Optional, Union, cast
 
-if sys.version_info >= (3, 8):
-    from typing import Protocol
-else:
-    from typing_extensions import Protocol
-
 import ansys.dpf.core as dpf
-from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField, Scoping
+from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
 from numpy.typing import NDArray
+
+from ansys.dpf.composites.indexer import (
+    _PropertyFieldIndexerArrayValue,
+    _PropertyFieldIndexerNoDataPointer,
+    _PropertyFieldIndexerNoDataPointerNoBoundsCheck,
+    _PropertyFieldIndexerSingleValue,
+    _PropertyFieldIndexerWithDataPointer,
+    _PropertyFieldIndexerWithDataPointerNoBoundsCheck,
+)
 
 _ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
@@ -75,111 +78,6 @@ class ElementInfo:
     material_ids: List[int]
     is_shell: bool
     number_of_nodes_per_spot_plane: int
-
-
-def _setup_index_by_id(scoping: Scoping) -> NDArray[np.int64]:
-    # Setup array that can be indexed by id to get the index.
-    # For ids which are not present in the scoping the array has a value of -1
-    indices: NDArray[np.int64] = np.full(max(scoping.ids) + 1, -1, dtype=np.int64)
-    indices[scoping.ids] = np.arange(len(scoping.ids))
-    return indices
-
-
-class _IndexerSingleValue(Protocol):
-    def by_id(self, entity_id: int) -> Optional[np.int64]:
-        pass
-
-
-class _IndexerArrayValue(Protocol):
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        pass
-
-
-# General comment for all Indexer:
-# The .data call accesses the actual data. This sends the data over grpc which takes some time
-# It looks like it returns a DpfArray for non-local fields and an numpy array for local fields.
-# Without converting the DpfArray to a numpy array,
-# performance during the lookup is about 50% slower.
-# It is not clear why. To be checked with dpf team. If this is a local field there is no
-# performance difference because the local field implementation already returns a numpy
-# array
-# The indexers are currently only implemented for PropertyFields, but it probably makes sense
-# to add them also for Fields
-
-
-class _IndexerNoDataPointer:
-    def __init__(self, field: PropertyField):
-        self.indices = _setup_index_by_id(field.scoping)
-        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-        self.max_id = len(self.indices) - 1
-
-    def by_id(self, entity_id: int) -> Optional[np.int64]:
-        if entity_id > self.max_id:
-            return None
-        return cast(np.int64, self.data[self.indices[entity_id]])
-
-
-class _IndexerNoDataPointerNoBoundsCheck:
-    def __init__(self, field: PropertyField):
-        self.indices = _setup_index_by_id(field.scoping)
-        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-
-    def by_id(self, entity_id: int) -> Optional[np.int64]:
-        return cast(np.int64, self.data[self.indices[entity_id]])
-
-
-class _IndexerWithDataPointer:
-    def __init__(self, field: PropertyField):
-        self.indices = _setup_index_by_id(field.scoping)
-        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-        self.n_components = field.component_count
-
-        self._data_pointer: NDArray[np.int64] = np.append(
-            field._data_pointer, len(self.data) * self.n_components
-        )
-        self.max_id = len(self.indices) - 1
-
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        if entity_id > self.max_id:
-            return None
-
-        idx = self.indices[entity_id]
-        if idx < 0:
-            return None
-        return cast(
-            NDArray[np.int64],
-            self.data[
-                self._data_pointer[idx]
-                // self.n_components : self._data_pointer[idx + 1]
-                // self.n_components
-            ],
-        )
-
-
-class _IndexerWithDataPointerNoBoundsCheck:
-    def __init__(self, field: PropertyField):
-        self.indices = _setup_index_by_id(field.scoping)
-        self.data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-
-        self.n_components = field.component_count
-
-        self._data_pointer: NDArray[np.int64] = np.append(
-            field._data_pointer, len(self.data) * self.n_components
-        )
-        self.max_id = len(self.indices) - 1
-
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        idx = self.indices[entity_id]
-        if idx < 0:
-            return None
-        return cast(
-            NDArray[np.int64],
-            self.data[
-                self._data_pointer[idx]
-                // self.n_components : self._data_pointer[idx + 1]
-                // self.n_components
-            ],
-        )
 
 
 _supported_element_types = [181, 281, 185, 186, 190]
@@ -250,7 +148,7 @@ class AnalysisPlyInfoProvider:
         """Initialize AnalysisPlyProvider."""
         self.name = name
         self.property_field = _get_analysis_ply(mesh, name)
-        self._layer_indices = _IndexerNoDataPointer(self.property_field)
+        self._layer_indices = _PropertyFieldIndexerNoDataPointer(self.property_field)
 
     def get_layer_index_by_element_id(self, element_id: int) -> Optional[np.int64]:
         """Get the layer index for the analysis ply in a given element.
@@ -336,21 +234,21 @@ class ElementInfoProvider:
         # focused on the most important properties. We can add different providers
         # for other properties (such as thickness and angles)
 
-        def get_indexer_with_data_pointer(field: PropertyField) -> _IndexerArrayValue:
+        def get_indexer_with_data_pointer(field: PropertyField) -> _PropertyFieldIndexerArrayValue:
             if no_bounds_checks:
-                return _IndexerWithDataPointerNoBoundsCheck(field)
+                return _PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
             else:
-                return _IndexerWithDataPointer(field)
+                return _PropertyFieldIndexerWithDataPointer(field)
 
-        def get_indexer_no_data_pointer(field: PropertyField) -> _IndexerSingleValue:
+        def get_indexer_no_data_pointer(field: PropertyField) -> _PropertyFieldIndexerSingleValue:
             if no_bounds_checks:
-                return _IndexerNoDataPointerNoBoundsCheck(field)
+                return _PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
             else:
-                return _IndexerNoDataPointer(field)
+                return _PropertyFieldIndexerNoDataPointer(field)
 
         # Has to be always with bounds checks because it does not contain
         # data for all the elements
-        self.layer_indices = _IndexerWithDataPointer(layer_indices)
+        self.layer_indices = _PropertyFieldIndexerWithDataPointer(layer_indices)
         self.layer_materials = get_indexer_with_data_pointer(material_ids)
 
         self.apdl_element_types = get_indexer_no_data_pointer(element_types_apdl)
