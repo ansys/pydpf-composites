@@ -7,7 +7,8 @@ from ansys.dpf.composites.add_layup_info_to_mesh import (
 )
 from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider
-from tests.helper import get_basic_shell_files
+
+from .helper import get_basic_shell_files
 
 
 def test_layup_properties(dpf_server):
