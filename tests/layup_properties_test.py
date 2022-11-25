@@ -21,7 +21,7 @@ def test_layup_properties(dpf_server):
 
     layup_operators = add_layup_info_to_mesh(composite_data_sources, mesh=mesh)
 
-    properties_provider = LayupPropertiesProvider(layup_operators.layup_provider)
+    properties_provider = LayupPropertiesProvider(layup_operators.layup_provider, mesh=mesh)
 
     angles_by_element = [
         properties_provider.get_element_angles(element_id)
@@ -68,3 +68,23 @@ def test_layup_properties(dpf_server):
     assert shear_angle_by_element[1] == pytest.approx(six_layers)
     assert shear_angle_by_element[2] == pytest.approx(five_layers)
     assert shear_angle_by_element[3] == pytest.approx(five_layers)
+
+    plies_by_element = [
+        properties_provider.get_analysis_plies(element_id)
+        for element_id in mesh.elements.scoping.ids
+    ]
+
+    six_layers = [
+        "P1L1__woven_45",
+        "P1L1__ud_patch ns1",
+        "P1L1__ud",
+        "P1L1__core",
+        "P1L1__ud.2",
+        "P1L1__woven_45.2",
+    ]
+    five_layers = ["P1L1__woven_45", "P1L1__ud", "P1L1__core", "P1L1__ud.2", "P1L1__woven_45.2"]
+
+    assert plies_by_element[0] == six_layers
+    assert plies_by_element[1] == six_layers
+    assert plies_by_element[2] == five_layers
+    assert plies_by_element[3] == five_layers

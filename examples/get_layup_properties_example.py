@@ -1,9 +1,14 @@
 """
 .. _layup_properties_plot:
 
-Create a plot with the layup properties
+Get Layup Properties
 ----------------------------------------------------------
 
+This example shows how to access basic layup properties such as layer
+thicknesses, angles and analysis ply names. These properties can be queried
+very efficiently. To get the full layup information of an element including results
+consider also the sampling point operator
+(:ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py`)
 """
 
 #%%
@@ -41,12 +46,15 @@ layup_operators = add_layup_info_to_mesh(mesh=mesh, data_sources=composites_data
 
 #%%
 # Get layup properties for all the elements and show the first one as an example
-properties_provider = LayupPropertiesProvider(layup_provider=layup_operators.layup_provider)
+properties_provider = LayupPropertiesProvider(
+    layup_provider=layup_operators.layup_provider, mesh=mesh
+)
 element_id = 1
 thicknesses = properties_provider.get_element_thicknesses(element_id)
 offset = properties_provider.get_element_laminate_offset(element_id)
 angles = properties_provider.get_element_angles(element_id)
 shear_angles = properties_provider.get_element_shear_angles(element_id)
+analysis_plies = properties_provider.get_analysis_plies(element_id)
 
 
 #%%
@@ -54,14 +62,16 @@ shear_angles = properties_provider.get_element_shear_angles(element_id)
 y_coordinates = offset + np.cumsum(thicknesses)
 y_centers = y_coordinates - thicknesses / 2
 
-fig, ax1 = f, ax = plt.subplots(figsize=(4, 10))
+fig, ax1 = f, ax = plt.subplots(figsize=(6, 10))
 
 for y_coordinate in y_coordinates:
     ax1.axhline(y=y_coordinate, color="k")
 
-for angle, shear_angle, y_coordinate in zip(angles, shear_angles, y_centers):
+for angle, shear_angle, y_coordinate, analysis_ply in zip(
+    angles, shear_angles, y_centers, analysis_plies
+):
     ax1.annotate(
-        f"Angle={angle}°, Shear Angle={shear_angle}°",
+        f"Angle={angle}°, Shear Angle={shear_angle}°, {analysis_ply}",
         xy=(0.1, y_coordinate),
         xytext=(0.1, y_coordinate),
     )
