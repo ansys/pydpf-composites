@@ -32,10 +32,12 @@ def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
     ]
 
 
-def _get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
+def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -> PropertyField:
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
     property_field_name = ANALYSIS_PLY_PREFIX + name
-    if property_field_name not in mesh.available_property_fields:
+
+    # This tests can be expensive so it can be skipped
+    if not skip_check and property_field_name not in mesh.available_property_fields:
         available_analysis_plies = get_all_analysis_ply_names(mesh)
         raise RuntimeError(
             f"Analysis Ply not available: {name}. "
@@ -212,18 +214,18 @@ def get_analysis_ply_index_to_name_map(
         Dpf Meshed region enriched with layup information
     """
     analysis_ply_name_to_index_map = {}
-    analysis_ply_index_property_field = mesh.property_field("layer_to_analysis_ply")
+    with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
 
-    for analysis_ply_name in get_all_analysis_ply_names(mesh):
-        analysis_ply_info_provider = AnalysisPlyInfoProvider(mesh, analysis_ply_name)
-        first_element_id = analysis_ply_info_provider.property_field.scoping.ids[0]
-        analysis_ply_indices: List[int] = analysis_ply_index_property_field.get_entity_data_by_id(
-            first_element_id
-        )
+        for analysis_ply_name in get_all_analysis_ply_names(mesh):
+            analysis_ply_property_field = _get_analysis_ply(
+                mesh, analysis_ply_name, skip_check=True
+            )
+            first_element_id = analysis_ply_property_field.scoping.id(0)
+            analysis_ply_indices: List[int] = local_field.get_entity_data_by_id(first_element_id)
 
-        layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
-        assert layer_index is not None
-        analysis_ply_name_to_index_map[analysis_ply_indices[layer_index]] = analysis_ply_name
+            layer_index = analysis_ply_property_field.get_entity_data(0)[0]
+            assert layer_index is not None
+            analysis_ply_name_to_index_map[analysis_ply_indices[layer_index]] = analysis_ply_name
 
     return analysis_ply_name_to_index_map
 
@@ -463,7 +465,7 @@ class LayupPropertiesProvider:
         )
 
     def get_element_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
-        """Get angles for all layers. Returns None if element is not layered todo: test."""
+        """Get angles for all layers. Returns None if element is not layered."""
         return self._angle_indexer.by_id(element_id)
 
     def get_element_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
@@ -481,5 +483,6 @@ class LayupPropertiesProvider:
     def get_analysis_plies(self, element_id: int) -> Optional[Collection[str]]:
         """Get analysis ply names. Returns None if element is not layered."""
         indexes = self._analysis_ply_indexer.by_id(element_id)
-        assert indexes is not None
+        if indexes is None:
+            return None
         return [self._index_to_name_map[index] for index in indexes]

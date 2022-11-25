@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.indexer import _FieldIndexerWithDataPointer
-from ansys.dpf.composites.layup_info import get_element_info_provider
+from ansys.dpf.composites.layup_info import LayupPropertiesProvider, get_element_info_provider
 
 from .helper import LongFiberCompositesFiles, Timer, setup_operators
 
@@ -44,9 +44,6 @@ def get_ger_data_files():
         / "dp0"
     )
 
-    ger_path = (
-        pathlib.Path("D:\\") / "ANSYSDev" / "workbench_projects" / "beewind_example_files" / "dp0"
-    )
     rst_path = ger_path / "SYS-1" / "MECH" / "file.rst"
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
     material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
@@ -189,6 +186,32 @@ def test_performance_element_info(dpf_server):
 
     timer.add("loop")
     timer.add("after local field")
+
+    timer.summary()
+
+
+def test_performance_layup_properties(dpf_server):
+    timer = Timer()
+
+    files = get_data_files()
+    setup_result = setup_operators(dpf_server, files, upload=False)
+    timer.add("read data")
+
+    layup_info = LayupPropertiesProvider(
+        layup_provider=setup_result.layup_provider, mesh=setup_result.mesh
+    )
+
+    timer.add("layup info")
+    scope = setup_result.field.scoping.ids
+    timer.add("scope")
+    for element_id in scope:
+        layup_info.get_element_thicknesses(element_id)
+        layup_info.get_element_angles(element_id)
+        layup_info.get_element_shear_angles(element_id)
+        layup_info.get_element_laminate_offset(element_id)
+        layup_info.get_analysis_plies(element_id)
+
+    timer.add("loop")
 
     timer.summary()
 

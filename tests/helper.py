@@ -53,6 +53,7 @@ class SetupResult:
     rst_data_source: DataSources
     material_provider: Operator
     streams_provider: Operator
+    layup_provider: Operator
 
 
 def setup_operators(server, files: LongFiberCompositesFiles, upload=True):
@@ -125,6 +126,7 @@ def setup_operators(server, files: LongFiberCompositesFiles, upload=True):
         rst_data_source=rst_data_source,
         material_provider=material_provider,
         streams_provider=streams_provider,
+        layup_provider=layup_provider,
     )
 
 
