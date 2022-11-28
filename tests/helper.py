@@ -78,11 +78,11 @@ def setup_operators(server, files: LongFiberCompositesFiles, upload=True):
     streams_provider = dpf.operators.metadata.streams_provider()
     streams_provider.inputs.data_sources.connect(rst_data_source)
 
-    stress_operator = dpf.Operator("EPEL")
-    stress_operator.inputs.streams_container(streams_provider)
-    stress_operator.inputs.bool_rotate_to_global(False)
+    strain_operator = dpf.Operator("EPEL")
+    strain_operator.inputs.streams_container(streams_provider)
+    strain_operator.inputs.bool_rotate_to_global(False)
 
-    fields_container = stress_operator.get_output(output_type=dpf.types.fields_container)
+    fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
 
     timer.add("stresses")
 

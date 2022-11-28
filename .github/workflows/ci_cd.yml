@@ -46,8 +46,7 @@ jobs:
         # linux docker images on the windows agents
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        # Python 3.10 currently disabled because vtk wheels are not available
-        python-version: ['3.7', '3.8', '3.9']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
       fail-fast: false
 
     steps:
@@ -85,6 +84,7 @@ jobs:
           name: server_output
           path: tests/logs/*_log_*.txt
           retention-days: 7
+
 
   docs:
     name: Documentation
