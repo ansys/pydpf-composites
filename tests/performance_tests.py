@@ -205,9 +205,9 @@ def test_performance_layup_properties(dpf_server):
     scope = setup_result.field.scoping.ids
     timer.add("scope")
     for element_id in scope:
-        layup_info.get_element_thicknesses(element_id)
-        layup_info.get_element_angles(element_id)
-        layup_info.get_element_shear_angles(element_id)
+        layup_info.get_layer_thicknesses(element_id)
+        layup_info.get_layer_angles(element_id)
+        layup_info.get_layer_shear_angles(element_id)
         layup_info.get_element_laminate_offset(element_id)
         layup_info.get_analysis_plies(element_id)
 

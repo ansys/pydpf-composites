@@ -50,10 +50,10 @@ properties_provider = LayupPropertiesProvider(
     layup_provider=layup_operators.layup_provider, mesh=mesh
 )
 element_id = 1
-thicknesses = properties_provider.get_element_thicknesses(element_id)
+thicknesses = properties_provider.get_layer_thicknesses(element_id)
 offset = properties_provider.get_element_laminate_offset(element_id)
-angles = properties_provider.get_element_angles(element_id)
-shear_angles = properties_provider.get_element_shear_angles(element_id)
+angles = properties_provider.get_layer_angles(element_id)
+shear_angles = properties_provider.get_layer_shear_angles(element_id)
 analysis_plies = properties_provider.get_analysis_plies(element_id)
 
 

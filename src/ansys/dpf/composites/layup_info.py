@@ -302,11 +302,12 @@ class ElementInfoProvider:
 
         Parameters
         ----------
-        element_id: Element Id/Label
+        element_id:
+            Element Id/Label
 
         Returns
         -------
-        Optional[ElementInfo]
+        Optional[ElementInfo]:
             Returns None if element type is not supported
         """
         is_layered = False
@@ -432,9 +433,14 @@ class LayupProperty(Enum):
 class LayupPropertiesProvider:
     """Provider for layup properties.
 
+    Some properties such as layered material ids and
+    information about the element type are available
+    through the :class:`~ElementInfoProvider`.
+
     Parameters
     ----------
     layup_provider
+    mesh
     """
 
     def __init__(self, layup_provider: Operator, mesh: MeshedRegion):
@@ -464,24 +470,49 @@ class LayupPropertiesProvider:
             mesh.property_field("layer_to_analysis_ply")
         )
 
-    def get_element_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
-        """Get angles for all layers. Returns None if element is not layered."""
+    def get_layer_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get angles for all layers. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
         return self._angle_indexer.by_id(element_id)
 
-    def get_element_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
-        """Get thicknesses for all layers. Returns None if element is not layered."""
+    def get_layer_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get thicknesses for all layers. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
         return self._thickness_indexer.by_id(element_id)
 
-    def get_element_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
-        """Get shear angle for all layers. Returns None if element is not layered."""
+    def get_layer_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get shear angle for all layers. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
         return self._shear_angle_indexer.by_id(element_id)
 
     def get_element_laminate_offset(self, element_id: int) -> Optional[np.double]:
-        """Get laminate offset of element. Returns None if element is not layered."""
+        """Get laminate offset of element. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
         return self._offset_indexer.by_id(element_id)
 
     def get_analysis_plies(self, element_id: int) -> Optional[Collection[str]]:
-        """Get analysis ply names. Returns None if element is not layered."""
+        """Get analysis ply names. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
         indexes = self._analysis_ply_indexer.by_id(element_id)
         if indexes is None:
             return None

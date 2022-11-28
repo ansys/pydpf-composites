@@ -25,8 +25,7 @@ def test_layup_properties(dpf_server):
     properties_provider = LayupPropertiesProvider(layup_operators.layup_provider, mesh=mesh)
 
     angles_by_element = [
-        properties_provider.get_element_angles(element_id)
-        for element_id in mesh.elements.scoping.ids
+        properties_provider.get_layer_angles(element_id) for element_id in mesh.elements.scoping.ids
     ]
 
     six_layers = [45, 0, 0, 0, 0, 45]
@@ -37,7 +36,7 @@ def test_layup_properties(dpf_server):
     assert angles_by_element[3] == pytest.approx(five_layers)
 
     thickness_by_element = [
-        properties_provider.get_element_thicknesses(element_id)
+        properties_provider.get_layer_thicknesses(element_id)
         for element_id in mesh.elements.scoping.ids
     ]
 
@@ -59,7 +58,7 @@ def test_layup_properties(dpf_server):
     assert offset_by_element[3] == pytest.approx(-0.00295)
 
     shear_angle_by_element = [
-        properties_provider.get_element_shear_angles(element_id)
+        properties_provider.get_layer_shear_angles(element_id)
         for element_id in mesh.elements.scoping.ids
     ]
 
