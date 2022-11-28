@@ -1,0 +1,37 @@
+﻿ansys.dpf.composites.LayupPropertiesProvider
+============================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: LayupPropertiesProvider
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      LayupPropertiesProvider.get_analysis_plies
+      
+      
+      LayupPropertiesProvider.get_element_laminate_offset
+      
+      
+      LayupPropertiesProvider.get_layer_angles
+      
+      
+      LayupPropertiesProvider.get_layer_shear_angles
+      
+      
+      LayupPropertiesProvider.get_layer_thicknesses
+      
+   
+   
+
+   
+   
+   

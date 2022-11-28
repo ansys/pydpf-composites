@@ -1,0 +1,6 @@
+get\_layer\_thicknesses
+=======================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: LayupPropertiesProvider.get_layer_thicknesses
