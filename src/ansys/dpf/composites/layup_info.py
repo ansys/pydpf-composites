@@ -1,6 +1,7 @@
 """LayupInfo Provider."""
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import Any, Collection, Dict, List, Optional, Union, cast
 
 import ansys.dpf.core as dpf
@@ -9,6 +10,8 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ansys.dpf.composites.indexer import (
+    _FieldIndexerNoDataPointer,
+    _FieldIndexerWithDataPointer,
     _PropertyFieldIndexerArrayValue,
     _PropertyFieldIndexerNoDataPointer,
     _PropertyFieldIndexerNoDataPointerNoBoundsCheck,
@@ -29,10 +32,12 @@ def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
     ]
 
 
-def _get_analysis_ply(mesh: MeshedRegion, name: str) -> PropertyField:
+def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -> PropertyField:
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
     property_field_name = ANALYSIS_PLY_PREFIX + name
-    if property_field_name not in mesh.available_property_fields:
+
+    # This tests can be expensive so it can be skipped
+    if not skip_check and property_field_name not in mesh.available_property_fields:
         available_analysis_plies = get_all_analysis_ply_names(mesh)
         raise RuntimeError(
             f"Analysis Ply not available: {name}. "
@@ -195,6 +200,36 @@ def get_dpf_material_id_by_analyis_ply_map(
     return analysis_ply_to_material_map
 
 
+def get_analysis_ply_index_to_name_map(
+    mesh: MeshedRegion,
+) -> Dict[int, str]:
+    """Get Dict that maps analysis ply indices to analysis ply names.
+
+    The resulting dict can be used to map from the indices stored in
+    mesh.property_field("layer_to_analysis_ply") to the analysis ply name
+
+    Parameters
+    ----------
+    mesh
+        Dpf Meshed region enriched with layup information
+    """
+    analysis_ply_name_to_index_map = {}
+    with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
+
+        for analysis_ply_name in get_all_analysis_ply_names(mesh):
+            analysis_ply_property_field = _get_analysis_ply(
+                mesh, analysis_ply_name, skip_check=True
+            )
+            first_element_id = analysis_ply_property_field.scoping.id(0)
+            analysis_ply_indices: List[int] = local_field.get_entity_data_by_id(first_element_id)
+
+            layer_index = analysis_ply_property_field.get_entity_data(0)[0]
+            assert layer_index is not None
+            analysis_ply_name_to_index_map[analysis_ply_indices[layer_index]] = analysis_ply_name
+
+    return analysis_ply_name_to_index_map
+
+
 class ElementInfoProvider:
     """Provider for :class:`~ElementInfo`.
 
@@ -267,11 +302,12 @@ class ElementInfoProvider:
 
         Parameters
         ----------
-        element_id: Element Id/Label
+        element_id:
+            Element Id/Label
 
         Returns
         -------
-        Optional[ElementInfo]
+        Optional[ElementInfo]:
             Returns None if element type is not supported
         """
         is_layered = False
@@ -380,3 +416,104 @@ def get_element_info_provider(
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
+
+
+class LayupProperty(Enum):
+    """Enum for Layup Properties.
+
+    Values correspond to labels in output container of layup provider.
+    """
+
+    Angle = 0
+    ShearAngle = 1
+    Thickness = 2
+    LaminateOffset = 3
+
+
+class LayupPropertiesProvider:
+    """Provider for layup properties.
+
+    Some properties such as layered material ids and
+    information about the element type are available
+    through the :class:`~ElementInfoProvider`.
+
+    Parameters
+    ----------
+    layup_provider
+    mesh
+    """
+
+    def __init__(self, layup_provider: Operator, mesh: MeshedRegion):
+        """Initialize LayupProperties provider."""
+        layup_outputs_container = layup_provider.outputs.fields_container()
+        composite_label = layup_outputs_container.labels[0]
+        angle_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.Angle.value}
+        )
+        self._angle_indexer = _FieldIndexerWithDataPointer(angle_field)
+        thickness_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.Thickness.value}
+        )
+        self._thickness_indexer = _FieldIndexerWithDataPointer(thickness_field)
+        shear_angle_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.ShearAngle.value}
+        )
+        self._shear_angle_indexer = _FieldIndexerWithDataPointer(shear_angle_field)
+        offset_field = layup_outputs_container.get_field(
+            {composite_label: LayupProperty.LaminateOffset.value}
+        )
+        self._offset_indexer = _FieldIndexerNoDataPointer(offset_field)
+
+        self._index_to_name_map = get_analysis_ply_index_to_name_map(mesh)
+
+        self._analysis_ply_indexer = _PropertyFieldIndexerWithDataPointer(
+            mesh.property_field("layer_to_analysis_ply")
+        )
+
+    def get_layer_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get angles for all layers. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
+        return self._angle_indexer.by_id(element_id)
+
+    def get_layer_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get thicknesses for all layers. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
+        return self._thickness_indexer.by_id(element_id)
+
+    def get_layer_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+        """Get shear angle for all layers. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
+        return self._shear_angle_indexer.by_id(element_id)
+
+    def get_element_laminate_offset(self, element_id: int) -> Optional[np.double]:
+        """Get laminate offset of element. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
+        return self._offset_indexer.by_id(element_id)
+
+    def get_analysis_plies(self, element_id: int) -> Optional[Collection[str]]:
+        """Get analysis ply names. Returns None if element is not layered.
+
+        Parameters
+        ----------
+        element_id
+        """
+        indexes = self._analysis_ply_indexer.by_id(element_id)
+        if indexes is None:
+            return None
+        return [self._index_to_name_map[index] for index in indexes]

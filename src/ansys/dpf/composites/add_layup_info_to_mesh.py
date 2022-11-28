@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator
 
-from ansys.dpf.composites.example_helper.example_helper import LongFiberCompositesFiles
+from ansys.dpf.composites.example_helper.example_helper import ContinuousFiberCompositesFiles
 from ansys.dpf.composites.material_setup import MaterialOperators, get_material_operators
 
 
@@ -23,7 +23,9 @@ class CompositeDataSources:
     composites: DataSources
 
 
-def get_composites_data_sources(composite_files: LongFiberCompositesFiles) -> CompositeDataSources:
+def get_composites_data_sources(
+    composite_files: ContinuousFiberCompositesFiles,
+) -> CompositeDataSources:
     """Create dpf data sources from a LongFibercompositeFiles object.
 
     Parameters

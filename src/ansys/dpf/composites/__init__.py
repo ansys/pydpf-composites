@@ -12,6 +12,7 @@ from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfo,
     ElementInfoProvider,
+    LayupPropertiesProvider,
     get_element_info_provider,
 )
 from .result_definition import ResultDefinition
@@ -34,4 +35,5 @@ __all__ = [
     "get_selected_indices",
     "get_selected_indices_by_material_ids",
     "get_selected_indices_by_analysis_ply",
+    "LayupPropertiesProvider",
 ]

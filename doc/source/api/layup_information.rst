@@ -11,3 +11,4 @@ General functionality to access information on the composite layup.
     ElementInfo
     AnalysisPlyInfoProvider
     get_element_info_provider
+    LayupPropertiesProvider

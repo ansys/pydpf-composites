@@ -7,7 +7,7 @@ from typing import Generator
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
-from ansys.dpf.composites.example_helper.example_helper import LongFiberCompositesFiles
+from ansys.dpf.composites.example_helper.example_helper import ContinuousFiberCompositesFiles
 from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider
 
 
@@ -53,9 +53,10 @@ class SetupResult:
     rst_data_source: DataSources
     material_provider: Operator
     streams_provider: Operator
+    layup_provider: Operator
 
 
-def setup_operators(server, files: LongFiberCompositesFiles, upload=True):
+def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
 
     timer = Timer()
     eng_data_path = files.engineering_data
@@ -125,6 +126,7 @@ def setup_operators(server, files: LongFiberCompositesFiles, upload=True):
         rst_data_source=rst_data_source,
         material_provider=material_provider,
         streams_provider=streams_provider,
+        layup_provider=layup_provider,
     )
 
 
@@ -149,6 +151,6 @@ def get_basic_shell_files():
     rst_path = TEST_DATA_ROOT_DIR / "shell.rst"
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
-    return LongFiberCompositesFiles(
+    return ContinuousFiberCompositesFiles(
         rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
     )

@@ -3,7 +3,7 @@
 from dataclasses import asdict, dataclass
 import os
 import tempfile
-from typing import Dict, Optional, Union, cast
+from typing import Dict, Optional, TypeVar, Union, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -23,8 +23,8 @@ class ServerContext:
 
 
 @dataclass
-class LongFiberCompositesFiles:
-    """Container for long fiber file paths."""
+class ContinuousFiberCompositesFiles:
+    """Container for continuous fiber file paths."""
 
     rst: _PATH = ""
     composite_definitions: _PATH = ""
@@ -40,8 +40,29 @@ class ShortFiberCompositesFiles:
     engineering_data: Optional[_PATH] = ""
 
 
+FilesType = TypeVar("FilesType", ShortFiberCompositesFiles, ContinuousFiberCompositesFiles)
+
+
+def upload_composite_files_to_server(data_files: FilesType, server: dpf.server) -> FilesType:
+    """Upload composites files to server.
+
+    Parameters
+    ----------
+    data_files
+    server
+    """
+    if isinstance(data_files, ShortFiberCompositesFiles):
+        server_files: FilesType = ShortFiberCompositesFiles()
+    else:
+        server_files = ContinuousFiberCompositesFiles()
+    for key, filename in asdict(data_files).items():
+        server_file = dpf.upload_file_in_tmp_folder(filename, server=server)
+        setattr(server_files, key, server_file)
+    return server_files
+
+
 @dataclass
-class _LongFiberCompositesExampleFilenames:
+class _ContinuousFiberCompositesExampleFilenames:
     rst: str
     composite_definitions: str
     engineering_data: str
@@ -55,8 +76,8 @@ class _ShortFiberCompositesExampleFilenames:
 
 
 @dataclass
-class _LongFiberExampleLocation:
-    """Location of the a given long fiber example in the example_data repo.
+class _ContinuousFiberExampleLocation:
+    """Location of the a given continuous fiber example in the example_data repo.
 
     Parameters
     ----------
@@ -67,7 +88,7 @@ class _LongFiberExampleLocation:
     """
 
     directory: str
-    files: _LongFiberCompositesExampleFilenames
+    files: _ContinuousFiberCompositesExampleFilenames
 
 
 @dataclass
@@ -86,10 +107,10 @@ class _ShortFiberExampleLocation:
     files: _ShortFiberCompositesExampleFilenames
 
 
-_continuous_fiber_examples: Dict[str, _LongFiberExampleLocation] = {
-    "shell": _LongFiberExampleLocation(
+_continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
+    "shell": _ContinuousFiberExampleLocation(
         directory="shell",
-        files=_LongFiberCompositesExampleFilenames(
+        files=_ContinuousFiberCompositesExampleFilenames(
             rst="shell.rst",
             engineering_data="material.engd",
             composite_definitions="ACPCompositeDefinitions.h5",
@@ -122,10 +143,10 @@ def _get_file_url(directory: str, filename: str) -> str:
 
 def get_continuous_fiber_example_files(
     server_context: ServerContext, example_key: str
-) -> LongFiberCompositesFiles:
-    """Get long fiber example file by example key."""
+) -> ContinuousFiberCompositesFiles:
+    """Get continuous fiber example file by example key."""
     example_files = _continuous_fiber_examples[example_key]
-    return cast(LongFiberCompositesFiles, _get_example_files(example_files, server_context))
+    return cast(ContinuousFiberCompositesFiles, _get_example_files(example_files, server_context))
 
 
 def get_short_fiber_example_files(
@@ -137,14 +158,14 @@ def get_short_fiber_example_files(
 
 
 def _get_example_files(
-    example_files: Union[_ShortFiberExampleLocation, _LongFiberExampleLocation],
+    example_files: Union[_ShortFiberExampleLocation, _ContinuousFiberExampleLocation],
     server_context: ServerContext,
-) -> Union[ShortFiberCompositesFiles, LongFiberCompositesFiles]:
-    composite_files_on_server: Union[ShortFiberCompositesFiles, LongFiberCompositesFiles]
+) -> Union[ShortFiberCompositesFiles, ContinuousFiberCompositesFiles]:
+    composite_files_on_server: Union[ShortFiberCompositesFiles, ContinuousFiberCompositesFiles]
     if isinstance(example_files, _ShortFiberExampleLocation):
         composite_files_on_server = ShortFiberCompositesFiles()
     else:
-        composite_files_on_server = LongFiberCompositesFiles()
+        composite_files_on_server = ContinuousFiberCompositesFiles()
     with tempfile.TemporaryDirectory() as tmpdir:
         for key, filename in asdict(example_files.files).items():
             if filename is not None:
