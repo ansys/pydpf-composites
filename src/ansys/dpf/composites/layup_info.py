@@ -102,7 +102,7 @@ n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
 
 
 def _is_shell(apdl_element_type: np.int64) -> bool:
-    return {181: True, 281: True, 185: False, 186: False, 190: False, 187: False}[
+    return {181: True, 281: True, 185: False, 186: False, 187: False, 190: False, 187: False}[
         int(apdl_element_type)
     ]
 
