@@ -93,7 +93,7 @@ class SamplingPoint:
             raise RuntimeError("SamplingPoint: cannot connect to DPF server or launch it.")
 
         if used_server != server:
-            load_composites_plugin()
+            load_composites_plugin(used_server)
 
         # initialize the sampling point operator. Do it just once
         self._operator = dpf.Operator(

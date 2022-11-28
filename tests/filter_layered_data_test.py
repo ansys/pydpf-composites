@@ -3,6 +3,7 @@ from typing import List, Optional
 import ansys.dpf.core as dpf
 import pytest
 
+from ansys.dpf.composites import Spot
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
@@ -17,7 +18,7 @@ def get_result_field(
     field_info: FieldInfo,
     layers: Optional[List[int]] = None,
     corner_nodes: Optional[List[int]] = None,
-    spots: Optional[List[int]] = None,
+    spots: Optional[List[Spot]] = None,
     element_ids: Optional[List[int]] = None,
     material_id: Optional[int] = None,
 ):
@@ -63,12 +64,14 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
     ) as field_info:
         # Test single value output
         result_field = get_result_field(
-            field_info, layers=[5], corner_nodes=[3], spots=[2], element_ids=[1]
+            field_info, layers=[5], corner_nodes=[3], spots=[Spot.MIDDLE], element_ids=[1]
         )
         assert result_field.get_entity_data_by_id(1) == pytest.approx(3.05458950e-03)
 
         # Test layer output for layer and spot selection (nodes of a given spot+layer)
-        result_field = get_result_field(field_info, layers=[0], spots=[2], element_ids=[1])
+        result_field = get_result_field(
+            field_info, layers=[0], spots=[Spot.MIDDLE], element_ids=[1]
+        )
         assert result_field.get_entity_data_by_id(1) == pytest.approx(
             setup_result.field.get_entity_data_by_id(1)[8:12, 0]
         )
