@@ -8,7 +8,7 @@ import pytest
 from ansys.dpf.composites.indexer import _FieldIndexerWithDataPointer
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, get_element_info_provider
 
-from .helper import LongFiberCompositesFiles, Timer, setup_operators
+from .helper import ContinuousFiberCompositesFiles, Timer, setup_operators
 
 
 def check_performance(timer, last_measured_performance, performance_factor=1.1):
@@ -29,7 +29,7 @@ def get_dummy_data_files():
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    return LongFiberCompositesFiles(
+    return ContinuousFiberCompositesFiles(
         rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
     )
 
@@ -47,7 +47,7 @@ def get_ger_data_files():
     rst_path = ger_path / "SYS-1" / "MECH" / "file.rst"
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
     material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
-    return LongFiberCompositesFiles(
+    return ContinuousFiberCompositesFiles(
         rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
     )
 
