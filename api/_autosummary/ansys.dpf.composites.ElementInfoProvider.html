@@ -300,7 +300,7 @@
 <h1>ansys.dpf.composites.ElementInfoProvider<a class="headerlink" href="#ansys-dpf-composites-elementinfoprovider" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.ElementInfoProvider">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">ElementInfoProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mesh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MeshedRegion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PropertyField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_types_apdl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PropertyField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_types_dpf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PropertyField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyopt_8_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PropertyField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyopt_3_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PropertyField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PropertyField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_bounds_checks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.ElementInfoProvider" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">ElementInfoProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_types_apdl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_types_dpf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyopt_8_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyopt_3_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_bounds_checks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.ElementInfoProvider" title="Permalink to this definition">#</a></dt>
 <dd><p>Provider for <a class="reference internal" href="ansys.dpf.composites.ElementInfo.html#ansys.dpf.composites.ElementInfo" title="ansys.dpf.composites.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>.</p>
 <p>Use <a class="reference internal" href="ansys.dpf.composites.get_element_info_provider.html#ansys.dpf.composites.get_element_info_provider" title="ansys.dpf.composites.get_element_info_provider"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_element_info_provider()</span></code></a> to create <a class="reference internal" href="#ansys.dpf.composites.ElementInfoProvider" title="ansys.dpf.composites.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a>
 objects.</p>
@@ -308,19 +308,18 @@ objects.</p>
 call <a class="reference internal" href="ansys.dpf.composites.ElementInfoProvider.get_element_info.html#ansys.dpf.composites.ElementInfoProvider.get_element_info" title="ansys.dpf.composites.ElementInfoProvider.get_element_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_element_info()</span></code></a> for each element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>mesh: MeshedRegion</strong></dt><dd></dd>
-<dt><strong>layer_indices: PropertyField</strong></dt><dd></dd>
-<dt><strong>element_types_apdl: PropertyField</strong></dt><dd></dd>
-<dt><strong>element_types_dpf: PropertyField</strong></dt><dd></dd>
-<dt><strong>keyopt_8_values: PropertyField</strong></dt><dd></dd>
-<dt><strong>keyopt_3_values: PropertyField</strong></dt><dd></dd>
-<dt><strong>material_ids: PropertyField</strong></dt><dd></dd>
-<dt><strong>no_bounds_checks: bool</strong></dt><dd><p>Disable bounds checks.
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mesh</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.meshed_region.html#ansys.dpf.core.meshed_region.MeshedRegion" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeshedRegion</span></code></a>) – </p></li>
+<li><p><strong>layer_indices</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.property_field.html#ansys.dpf.core.property_field.PropertyField" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropertyField</span></code></a>) – </p></li>
+<li><p><strong>element_types_apdl</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.property_field.html#ansys.dpf.core.property_field.PropertyField" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropertyField</span></code></a>) – </p></li>
+<li><p><strong>element_types_dpf</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.property_field.html#ansys.dpf.core.property_field.PropertyField" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropertyField</span></code></a>) – </p></li>
+<li><p><strong>keyopt_8_values</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.property_field.html#ansys.dpf.core.property_field.PropertyField" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropertyField</span></code></a>) – </p></li>
+<li><p><strong>keyopt_3_values</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.property_field.html#ansys.dpf.core.property_field.PropertyField" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropertyField</span></code></a>) – </p></li>
+<li><p><strong>material_ids</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.property_field.html#ansys.dpf.core.property_field.PropertyField" title="(in PyDPF-Core v0.7.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropertyField</span></code></a>) – </p></li>
+<li><p><strong>no_bounds_checks</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Disable bounds checks.
 Results in better performance but potentially cryptic
-error messages</p>
-</dd>
-</dl>
+error messages</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Methods</p>
@@ -360,7 +359,7 @@ error messages</p>
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

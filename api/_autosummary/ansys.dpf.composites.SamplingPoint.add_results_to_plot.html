@@ -446,30 +446,29 @@
 <h1>add_results_to_plot<a class="headerlink" href="#add-results-to-plot" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.SamplingPoint.add_results_to_plot">
-<span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">add_results_to_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">axes:</span> <span class="pre">~typing.Any,</span> <span class="pre">components:</span> <span class="pre">~typing.Sequence[str],</span> <span class="pre">spots:</span> <span class="pre">~typing.Sequence[~ansys.dpf.composites.enums.Spot]</span> <span class="pre">=</span> <span class="pre">[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;],</span> <span class="pre">core_scale_factor:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">title:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">xlabel:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.add_results_to_plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">add_results_to_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">axes,</span> <span class="pre">components,</span> <span class="pre">spots=[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;],</span> <span class="pre">core_scale_factor=1.0,</span> <span class="pre">title='',</span> <span class="pre">xlabel=''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.add_results_to_plot" title="Permalink to this definition">#</a></dt>
 <dd><p>Add results (strains, stresses or failure values) to single axes object (plot).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>axes:</strong></dt><dd><p>Matplotlib single axes object</p>
-</dd>
-<dt><strong>components:</strong></dt><dd><p>List of result components</p>
-</dd>
-<dt><strong>spots:</strong></dt><dd><p>List of interfaces (bottom, middle and/or top)</p>
-</dd>
-<dt><strong>core_scale_factor:</strong></dt><dd><p>Scales the thickness of core plies</p>
-</dd>
-<dt><strong>title:</strong></dt><dd><p>Becomes the title of the plot. Ignored if empty.</p>
-</dd>
-<dt><strong>xlabel:</strong></dt><dd><p>Becomes the label of the x-axis. Ignored if empty.</p>
-</dd>
-</dl>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – Matplotlib single axes object</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – List of result components</p></li>
+<li><p><strong>spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.Spot.html#ansys.dpf.composites.Spot" title="ansys.dpf.composites.enums.Spot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spot</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></code>) – List of interfaces (bottom, middle and/or top)</p></li>
+<li><p><strong>core_scale_factor</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Scales the thickness of core plies</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Becomes the title of the plot. Ignored if empty.</p></li>
+<li><p><strong>xlabel</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Becomes the label of the x-axis. Ignored if empty.</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <p>fig, ax1 = plt.subplots()
 sampling_point.add_results_to_plot(ax1, [“s13”, “s23”, “s3”], [Spot.BOTTOM, Spot.TOP],
 0.1, “Interlaminar Stresses”, “[MPa]”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -499,7 +498,7 @@ sampling_point.add_results_to_plot(ax1, [“s13”, “s23”, “s3”], [Spot.
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

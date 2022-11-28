@@ -446,21 +446,23 @@
 <h1>get_indices<a class="headerlink" href="#get-indices" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.SamplingPoint.get_indices">
-<span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">get_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">spots:</span> <span class="pre">~typing.Sequence[~ansys.dpf.composites.enums.Spot]</span> <span class="pre">=</span> <span class="pre">[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.get_indices" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">get_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">spots=[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.get_indices" title="Permalink to this definition">#</a></dt>
 <dd><p>Access the indices of the selected interfaces for each ply.</p>
 <p>The indices are sorted from bottom to top.
 For instance, can be used to access the stresses at the bottom of each ply.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>spots</strong></dt><dd><p>selection of the spots. Only the indices of the bottom interfaces of plies
+<dd class="field-odd"><p><strong>spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.Spot.html#ansys.dpf.composites.Spot" title="ansys.dpf.composites.enums.Spot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spot</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></code>) – selection of the spots. Only the indices of the bottom interfaces of plies
 are returned if spots is equal to [BOTTOM]</p>
-</dd>
-</dl>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <p>ply_top_indices = sampling_point.get_indices([Spot.TOP])</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -490,7 +492,7 @@ are returned if spots is equal to [BOTTOM]</p>
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

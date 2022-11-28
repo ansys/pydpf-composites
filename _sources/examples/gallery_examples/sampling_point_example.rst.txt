@@ -26,31 +26,20 @@ Sampling Point - Processing and visualization of laminate results
 Example how the lay-up and through-the-thickness results of a
 layered element can be accessed, processed and visualized.
 
-.. GENERATED FROM PYTHON SOURCE LINES 11-14
-
-.. code-block:: default
-
-    import os
-    import pathlib
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 15-16
+.. GENERATED FROM PYTHON SOURCE LINES 12-13
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-29
+.. GENERATED FROM PYTHON SOURCE LINES 13-28
 
 .. code-block:: default
 
-    import ansys.dpf.core as dpf
 
     from ansys.dpf.composites import ResultDefinition, SamplingPoint, Spot
+    from ansys.dpf.composites.example_helper.example_helper import (
+        connect_to_or_start_server,
+        get_continuous_fiber_example_files,
+    )
     from ansys.dpf.composites.failure_criteria import (
         CombinedFailureCriterion,
         CoreFailureCriterion,
@@ -58,7 +47,6 @@ Load ansys libraries
         MaxStressCriterion,
         VonMisesCriterion,
     )
-    from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 
 
@@ -68,11 +56,11 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-31
+.. GENERATED FROM PYTHON SOURCE LINES 29-30
 
 Definition of the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-43
+.. GENERATED FROM PYTHON SOURCE LINES 30-45
 
 .. code-block:: default
 
@@ -88,23 +76,8 @@ Definition of the combined failure criterion
         )
 
 
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 44-45
-
-Load dpf plugin
-
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
-
-.. code-block:: default
-
-    server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-    load_composites_plugin()
+    server_context = connect_to_or_start_server()
+    composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 
 
@@ -113,43 +86,19 @@ Load dpf plugin
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
-
-Specify input files and upload them to the server
-
-.. GENERATED FROM PYTHON SOURCE LINES 50-59
-
-.. code-block:: default
-
-
-    TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-    h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
-    material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 60-61
+.. GENERATED FROM PYTHON SOURCE LINES 46-47
 
 Configuration of the result definition which is used to configure the composite_failure_operator
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-70
+.. GENERATED FROM PYTHON SOURCE LINES 47-56
 
 .. code-block:: default
 
     rd = ResultDefinition(
-        "combined failure criteria",
-        rst_files=[rst_server_path],
-        material_files=[material_server_path],
-        composite_definitions=[h5_server_path],
+        name="combined failure criteria",
+        rst_files=[composite_files_on_server.rst],
+        material_files=[composite_files_on_server.engineering_data],
+        composite_definitions=[composite_files_on_server.composite_definitions],
         combined_failure_criterion=get_combined_failure_criterion(),
         element_scope=[3],
     )
@@ -161,15 +110,15 @@ Configuration of the result definition which is used to configure the composite_
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-72
+.. GENERATED FROM PYTHON SOURCE LINES 57-58
 
 Create the sampling point and update it
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-74
+.. GENERATED FROM PYTHON SOURCE LINES 58-60
 
 .. code-block:: default
 
-    sampling_point = SamplingPoint("my first sampling point", rd, server)
+    sampling_point = SamplingPoint("my first sampling point", rd, server_context.server)
 
 
 
@@ -178,11 +127,11 @@ Create the sampling point and update it
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-76
+.. GENERATED FROM PYTHON SOURCE LINES 61-62
 
 Plot results using preconfigured plots
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-86
+.. GENERATED FROM PYTHON SOURCE LINES 62-72
 
 .. code-block:: default
 
@@ -208,11 +157,11 @@ Plot results using preconfigured plots
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-88
+.. GENERATED FROM PYTHON SOURCE LINES 73-74
 
 Plot polar properties using a preconfigured plot
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-91
+.. GENERATED FROM PYTHON SOURCE LINES 74-77
 
 .. code-block:: default
 
@@ -231,11 +180,11 @@ Plot polar properties using a preconfigured plot
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-93
+.. GENERATED FROM PYTHON SOURCE LINES 78-79
 
 Generate a custom plot: plot S13 and S23
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-112
+.. GENERATED FROM PYTHON SOURCE LINES 79-98
 
 .. code-block:: default
 
@@ -270,11 +219,11 @@ Generate a custom plot: plot S13 and S23
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-114
+.. GENERATED FROM PYTHON SOURCE LINES 99-100
 
 Another approach to generate a custom plot
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-130
+.. GENERATED FROM PYTHON SOURCE LINES 100-116
 
 .. code-block:: default
 
@@ -315,7 +264,7 @@ Another approach to generate a custom plot
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.907 seconds)
+   **Total running time of the script:** ( 0 minutes  1.173 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_sampling_point_example.py:

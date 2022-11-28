@@ -23,31 +23,20 @@
 Basic example for a short fiber failure analysis
 ------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-12
-
-.. code-block:: default
-
-    import os
-    import pathlib
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 13-14
+.. GENERATED FROM PYTHON SOURCE LINES 10-11
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 14-18
+.. GENERATED FROM PYTHON SOURCE LINES 11-18
 
 .. code-block:: default
 
     import ansys.dpf.core as dpf
 
-    from ansys.dpf.composites.load_plugin import load_composites_plugin
+    from ansys.dpf.composites.example_helper.example_helper import (
+        connect_to_or_start_server,
+        get_short_fiber_example_files,
+    )
 
 
 
@@ -56,16 +45,13 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-20
-
-Load dpf plugin
-
-.. GENERATED FROM PYTHON SOURCE LINES 20-23
+.. GENERATED FROM PYTHON SOURCE LINES 19-23
 
 .. code-block:: default
 
-    server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-    load_composites_plugin()
+    server_context = connect_to_or_start_server()
+    composite_files_on_server = get_short_fiber_example_files(server_context, "short_fiber")
+
 
 
 
@@ -76,42 +62,16 @@ Load dpf plugin
 
 .. GENERATED FROM PYTHON SOURCE LINES 24-25
 
-Specify input files and upload them to the server
-
-.. GENERATED FROM PYTHON SOURCE LINES 25-36
-
-.. code-block:: default
-
-
-    TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "short_fiber"
-
-    engd_file_path = os.path.join(TEST_DATA_ROOT_DIR, "MatML.xml")
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "file.rst")
-    dat_file_path = os.path.join(TEST_DATA_ROOT_DIR, "ds.dat")
-
-    rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-    dat_file_path_server_path = dpf.upload_file_in_tmp_folder(dat_file_path, server=server)
-    engd_file_path_server_path = dpf.upload_file_in_tmp_folder(engd_file_path, server=server)
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 37-38
-
 Setup data sources
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-43
+.. GENERATED FROM PYTHON SOURCE LINES 25-30
 
 .. code-block:: default
 
     data_sources = dpf.DataSources()
-    data_sources.add_file_path(engd_file_path_server_path, "EngineeringData")
-    data_sources.add_file_path(dat_file_path_server_path, "dat")
-    data_sources.set_result_file_path(rst_server_path)
+    data_sources.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
+    data_sources.add_file_path(composite_files_on_server.dsdat, "dat")
+    data_sources.set_result_file_path(composite_files_on_server.rst)
 
 
 
@@ -120,15 +80,15 @@ Setup data sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-45
+.. GENERATED FROM PYTHON SOURCE LINES 31-32
 
 Create dpf model and mesh provider
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-47
+.. GENERATED FROM PYTHON SOURCE LINES 32-34
 
 .. code-block:: default
 
-    model = dpf.Model(rst_server_path)
+    model = dpf.Model(composite_files_on_server.rst)
 
 
 
@@ -137,11 +97,11 @@ Create dpf model and mesh provider
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-49
+.. GENERATED FROM PYTHON SOURCE LINES 35-36
 
 Short Fiber Failure Criterion Evaluator
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-66
+.. GENERATED FROM PYTHON SOURCE LINES 36-53
 
 .. code-block:: default
 
@@ -177,7 +137,7 @@ Short Fiber Failure Criterion Evaluator
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.958 seconds)
+   **Total running time of the script:** ( 0 minutes  2.518 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_short_fiber_example.py:

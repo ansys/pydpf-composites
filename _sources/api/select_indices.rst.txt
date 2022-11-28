@@ -1,10 +1,12 @@
+.. _select_indices:
+
 Select Elementary Indices
 -------------------------
 
 This module provides functions to filter elementary data.
 A layered element has
 
-    num_elementary_data = number_of_layers number_of_spots number_of_nodes_per_spot_plane
+    num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane
 
 elementary data points. number_of_spots indicates the number of through-the-thickness integration points per layer. number_of_spots is controlled
 by the keyoption 8 which indicates how much output is written (e.g. only 'bottom' and 'top' or 'bottom', 'top' and 'mid').
@@ -33,8 +35,8 @@ Here are some examples:
     => num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane = 56
 
 The functions in this module compute an array of elementary indices for a given selection of
-layers, nodes, spots, material_ids or global plies. These elementary indices can be used to index the first axis
-of the elementary data array. Please check the example section for complete usage examples.
+layers, nodes, spots, material_ids or analysis plies. These elementary indices can be used to index the first axis
+of the elementary data array. Please check the :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` section for complete usage examples.
 
 
 .. currentmodule:: ansys.dpf.composites

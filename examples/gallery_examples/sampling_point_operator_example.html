@@ -184,12 +184,17 @@
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="basic_example.html">
-   Basic example of setting up a composite failure workflow
+   Basic example of setting up a composite failure workflow.
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="failure_operator_example.html">
    How to use the composite failure operator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="filter_composite_data_example.html">
+   Filter result data by different criteria
   </a>
  </li>
  <li class="toctree-l1">
@@ -258,9 +263,9 @@ to download the full example code</p>
 of a layered element and lay-up information (ply material, thickness).
 This basic example shows how the configure the operator and how to
 access the data.</p>
+<p>The <a class="reference internal" href="sampling_point_example.html#sphx-glr-examples-gallery-examples-sampling-point-example-py"><span class="std std-ref">Sampling Point - Processing and visualization of laminate results</span></a> shows
+how the sampling point data can be visualized.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
 </pre></div>
 </div>
 <p>Load ansys libraries</p>
@@ -268,6 +273,10 @@ access the data.</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="n">ResultDefinition</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">connect_to_or_start_server</span><span class="p">,</span>
+    <span class="n">get_continuous_fiber_example_files</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CombinedFailureCriterion</span><span class="p">,</span>
     <span class="n">CoreFailureCriterion</span><span class="p">,</span>
@@ -275,7 +284,6 @@ access the data.</p>
     <span class="n">MaxStressCriterion</span><span class="p">,</span>
     <span class="n">VonMisesCriterion</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.load_plugin</span> <span class="kn">import</span> <span class="n">load_composites_plugin</span>
 </pre></div>
 </div>
 <p>Definition of the combined failure criterion</p>
@@ -292,26 +300,16 @@ access the data.</p>
 </pre></div>
 </div>
 <p>Load dpf plugin</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">21002</span><span class="p">)</span>
-<span class="n">load_composites_plugin</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server_context</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server_context</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Specify input files and upload them to the server</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">TEST_DATA_ROOT_DIR</span></a> <span class="o">=</span> <a href="https://docs.python.org/dev/library/pathlib.html#pathlib.Path" title="pathlib.Path" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class"><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span></a><span class="p">(</span><a href="https://docs.python.org/dev/library/os.html#os.environ" title="os.environ" class="sphx-glr-backref-module-os sphx-glr-backref-type-py-data"><span class="n">os</span><span class="o">.</span><span class="n">environ</span></a><span class="p">[</span><span class="s2">&quot;REPO_ROOT&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="s2">&quot;tests&quot;</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;shell&quot;</span>
-<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rst_path</span></a> <span class="o">=</span> <a href="https://docs.python.org/dev/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/dev/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">TEST_DATA_ROOT_DIR</span></a><span class="p">,</span> <span class="s2">&quot;shell.rst&quot;</span><span class="p">)</span>
-<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_path</span></a> <span class="o">=</span> <a href="https://docs.python.org/dev/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/dev/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">TEST_DATA_ROOT_DIR</span></a><span class="p">,</span> <span class="s2">&quot;ACPCompositeDefinitions.h5&quot;</span><span class="p">)</span>
-<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_path</span></a> <span class="o">=</span> <a href="https://docs.python.org/dev/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/dev/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">TEST_DATA_ROOT_DIR</span></a><span class="p">,</span> <span class="s2">&quot;material.engd&quot;</span><span class="p">)</span>
-<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rst_server_path</span></a> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">upload_file_in_tmp_folder</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rst_path</span></a><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">)</span>
-<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_server_path</span></a> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">upload_file_in_tmp_folder</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_path</span></a><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">)</span>
-<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_server_path</span></a> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">upload_file_in_tmp_folder</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_path</span></a><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the result definition which is used to configure the composite_failure_operator</span>
-<span class="n">rd</span> <span class="o">=</span> <span class="n">ResultDefinition</span><span class="p">(</span>
-    <span class="s2">&quot;Combined Failure Criteria&quot;</span><span class="p">,</span>
-    <span class="n">rst_files</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rst_server_path</span></a><span class="p">],</span>
-    <span class="n">material_files</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_server_path</span></a><span class="p">],</span>
-    <span class="n">composite_definitions</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_server_path</span></a><span class="p">],</span>
+<p>Define the result definition which is used to configure the composite_failure_operator</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rd</span> <span class="o">=</span> <span class="n">ResultDefinition</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;combined failure criteria&quot;</span><span class="p">,</span>
+    <span class="n">rst_files</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">],</span>
+    <span class="n">material_files</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">engineering_data</span></a><span class="p">],</span>
+    <span class="n">composite_definitions</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">composite_definitions</span></a><span class="p">],</span>
     <span class="n">combined_failure_criterion</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span>
     <span class="n">element_scope</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
 <span class="p">)</span>
@@ -351,10 +349,10 @@ access the data.</p>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;z-Coordinate [length]&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_sampling_point_operator_example_001.png" srcset="../../_images/sphx_glr_sampling_point_operator_example_001.png" alt="Combined Failure Criteria of element 3" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(13.597222222222216, 0.5, &#39;z-Coordinate [length]&#39;)
+<img src="../../_images/sphx_glr_sampling_point_operator_example_001.png" srcset="../../_images/sphx_glr_sampling_point_operator_example_001.png" alt="combined failure criteria of element 3" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(13.597222222222216, 0.5, &#39;z-Coordinate [length]&#39;)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.165 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.694 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-sampling-point-operator-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/207356112fcaa512fe52f9b74ede8a87/sampling_point_operator_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">sampling_point_operator_example.py</span></code></a></p>
@@ -391,7 +389,7 @@ access the data.</p>
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

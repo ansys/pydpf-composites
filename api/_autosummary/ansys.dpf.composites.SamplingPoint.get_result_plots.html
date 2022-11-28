@@ -446,36 +446,34 @@
 <h1>get_result_plots<a class="headerlink" href="#get-result-plots" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.SamplingPoint.get_result_plots">
-<span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">get_result_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">strain_components:</span> <span class="pre">~typing.Sequence[str]</span> <span class="pre">=</span> <span class="pre">['e1',</span> <span class="pre">'e2',</span> <span class="pre">'e3',</span> <span class="pre">'e12',</span> <span class="pre">'e13',</span> <span class="pre">'e23'],</span> <span class="pre">stress_components:</span> <span class="pre">~typing.Sequence[str]</span> <span class="pre">=</span> <span class="pre">['s1',</span> <span class="pre">'s2',</span> <span class="pre">'s3',</span> <span class="pre">'s12',</span> <span class="pre">'s13',</span> <span class="pre">'s23'],</span> <span class="pre">failure_components:</span> <span class="pre">~typing.Sequence[str]</span> <span class="pre">=</span> <span class="pre">['irf',</span> <span class="pre">'rf',</span> <span class="pre">'mos'],</span> <span class="pre">show_failure_modes:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">create_laminate_plot:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">core_scale_factor:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">spots:</span> <span class="pre">~typing.Sequence[~ansys.dpf.composites.enums.Spot]</span> <span class="pre">=</span> <span class="pre">[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></span><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.get_result_plots" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">get_result_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">strain_components=['e1',</span> <span class="pre">'e2',</span> <span class="pre">'e3',</span> <span class="pre">'e12',</span> <span class="pre">'e13',</span> <span class="pre">'e23'],</span> <span class="pre">stress_components=['s1',</span> <span class="pre">'s2',</span> <span class="pre">'s3',</span> <span class="pre">'s12',</span> <span class="pre">'s13',</span> <span class="pre">'s23'],</span> <span class="pre">failure_components=['irf',</span> <span class="pre">'rf',</span> <span class="pre">'mos'],</span> <span class="pre">show_failure_modes=False,</span> <span class="pre">create_laminate_plot=True,</span> <span class="pre">core_scale_factor=1.0,</span> <span class="pre">spots=[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.get_result_plots" title="Permalink to this definition">#</a></dt>
 <dd><p>Generate a figure with a grid of axes (plot) for each selected result entity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>strain_components</strong></dt><dd><p>Specify the strain entities of interest.
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strain_components</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">['e1',</span> <span class="pre">'e2',</span> <span class="pre">'e3',</span> <span class="pre">'e12',</span> <span class="pre">'e13',</span> <span class="pre">'e23']</span></code>) – Specify the strain entities of interest.
 Supported are “e1”, “e2”, “e3”, “e12”, “e13”, “e23”.
-Plot is skipped if the list is empty.</p>
-</dd>
-<dt><strong>stress_components</strong></dt><dd><p>Specify the stress entities of interest.
+Plot is skipped if the list is empty.</p></li>
+<li><p><strong>stress_components</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">['s1',</span> <span class="pre">'s2',</span> <span class="pre">'s3',</span> <span class="pre">'s12',</span> <span class="pre">'s13',</span> <span class="pre">'s23']</span></code>) – Specify the stress entities of interest.
 Supported are “s1”, “s2”, “s3”, “s12”, “s13”, “s23”.
-Plot is skipped if the list is empty.</p>
-</dd>
-<dt><strong>failure_components</strong></dt><dd><p>Specify the failure values of interest. Supported are “irf”, “rf”, “mos”.
-Plot is skipped if the list is empty.</p>
-</dd>
-<dt><strong>show_failure_modes</strong></dt><dd><p>Enable this flag to add the critical failure mode to the failure plot</p>
-</dd>
-<dt><strong>create_laminate_plot</strong></dt><dd><p>Plot the stacking sequence of the laminate including text information
-such as material, thickness and angle.</p>
-</dd>
-<dt><strong>core_scale_factor</strong></dt><dd><p>Ply thickness of core materials are scaled by this factor.</p>
-</dd>
-<dt><strong>spots</strong></dt><dd><p>Show results at these interfaces.</p>
-</dd>
-</dl>
+Plot is skipped if the list is empty.</p></li>
+<li><p><strong>failure_components</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">['irf',</span> <span class="pre">'rf',</span> <span class="pre">'mos']</span></code>) – Specify the failure values of interest. Supported are “irf”, “rf”, “mos”.
+Plot is skipped if the list is empty.</p></li>
+<li><p><strong>show_failure_modes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Enable this flag to add the critical failure mode to the failure plot</p></li>
+<li><p><strong>create_laminate_plot</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Plot the stacking sequence of the laminate including text information
+such as material, thickness and angle.</p></li>
+<li><p><strong>core_scale_factor</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Ply thickness of core materials are scaled by this factor.</p></li>
+<li><p><strong>spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.Spot.html#ansys.dpf.composites.Spot" title="ansys.dpf.composites.enums.Spot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spot</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">[&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;]</span></code>) – Show results at these interfaces.</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <p>sampling_point.get_result_plots()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -505,7 +503,7 @@ such as material, thickness and angle.</p>
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

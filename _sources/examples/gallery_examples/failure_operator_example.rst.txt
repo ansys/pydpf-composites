@@ -26,31 +26,21 @@ How to use the composite failure operator
 This operator computes the minimum and maximum failure
 values and failure modes of a combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 11-14
-
-.. code-block:: default
-
-    import os
-    import pathlib
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 15-16
+.. GENERATED FROM PYTHON SOURCE LINES 12-13
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-29
+.. GENERATED FROM PYTHON SOURCE LINES 13-31
 
 .. code-block:: default
 
     import ansys.dpf.core as dpf
 
     from ansys.dpf.composites import ResultDefinition
+    from ansys.dpf.composites.example_helper.example_helper import (
+        connect_to_or_start_server,
+        get_continuous_fiber_example_files,
+    )
     from ansys.dpf.composites.failure_criteria import (
         CombinedFailureCriterion,
         CoreFailureCriterion,
@@ -58,7 +48,9 @@ Load ansys libraries
         MaxStressCriterion,
         VonMisesCriterion,
     )
-    from ansys.dpf.composites.load_plugin import load_composites_plugin
+
+    server_context = connect_to_or_start_server()
+    composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 
 
@@ -67,12 +59,11 @@ Load ansys libraries
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 30-31
+.. GENERATED FROM PYTHON SOURCE LINES 32-33
 
 Definition of the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-43
+.. GENERATED FROM PYTHON SOURCE LINES 33-45
 
 .. code-block:: default
 
@@ -95,62 +86,20 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-45
-
-Load dpf plugin
-
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
-
-.. code-block:: default
-
-    server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-    load_composites_plugin()
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
-
-Specify input files and upload them to the server
-
-.. GENERATED FROM PYTHON SOURCE LINES 50-59
-
-.. code-block:: default
-
-
-    TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-    h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
-    material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 60-62
+.. GENERATED FROM PYTHON SOURCE LINES 46-48
 
 Define the result definition which is used to configure the composite_failure_operator
 Process all elements
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-75
+.. GENERATED FROM PYTHON SOURCE LINES 48-61
 
 .. code-block:: default
 
     rd = ResultDefinition(
         name="combined failure criteria",
-        rst_files=[rst_server_path],
-        material_files=[material_server_path],
-        composite_definitions=[h5_server_path],
+        rst_files=[composite_files_on_server.rst],
+        material_files=[composite_files_on_server.engineering_data],
+        composite_definitions=[composite_files_on_server.composite_definitions],
         combined_failure_criterion=get_combined_failure_criterion(),
     )
 
@@ -166,12 +115,12 @@ Process all elements
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-78
+.. GENERATED FROM PYTHON SOURCE LINES 62-64
 
 Plot the max IRF per element
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-84
+.. GENERATED FROM PYTHON SOURCE LINES 64-70
 
 .. code-block:: default
 
@@ -193,11 +142,11 @@ Plot the max IRF per element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-86
+.. GENERATED FROM PYTHON SOURCE LINES 71-72
 
 Scope failure evaluation to certain
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-92
+.. GENERATED FROM PYTHON SOURCE LINES 72-78
 
 .. code-block:: default
 
@@ -219,11 +168,11 @@ Scope failure evaluation to certain
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-94
+.. GENERATED FROM PYTHON SOURCE LINES 79-80
 
 Scope by plies
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-100
+.. GENERATED FROM PYTHON SOURCE LINES 80-86
 
 .. code-block:: default
 
@@ -248,7 +197,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.435 seconds)
+   **Total running time of the script:** ( 0 minutes  1.690 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_failure_operator_example.py:

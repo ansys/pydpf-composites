@@ -1,18 +1,27 @@
 """
 .. _basic_example:
 
-Basic example of setting up a composite failure workflow
+Basic example of setting up a composite failure workflow.
 ----------------------------------------------------------
 
+This example shows how to connect the different dpf operators that are needed to
+evaluate composite failure criteria. For simple use cases it is preferable
+to use the composite failure operator
+(:ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`)
+or the composite sampling point operator
+(:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`).
+The :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` example shows how
+helper functions can be used to obtain composite result data.
 """
-
-import os
-import pathlib
 
 #%%
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
+from ansys.dpf.composites.example_helper.example_helper import (
+    connect_to_or_start_server,
+    get_continuous_fiber_example_files,
+)
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -25,7 +34,6 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
@@ -55,33 +63,21 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
     )
 
 
-#%%
-# Load dpf plugin
-server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-load_composites_plugin()
-
-#%%
-# Specify input files and upload them to the server
-
-# Todo make files available for users
-TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "shell"
-rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=server)
-material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=server)
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 #%%
 
-model = dpf.Model(rst_server_path)
-rst_data_source = dpf.DataSources(rst_server_path)
+model = dpf.Model(composite_files_on_server.rst)
+rst_data_source = dpf.DataSources(composite_files_on_server.rst)
 
 eng_data_source = dpf.DataSources()
-eng_data_source.add_file_path(material_server_path, "EngineeringData")
+eng_data_source.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
 
 composite_definitions_source = dpf.DataSources()
-composite_definitions_source.add_file_path(h5_server_path, "CompositeDefinitions")
+composite_definitions_source.add_file_path(
+    composite_files_on_server.composite_definitions, "CompositeDefinitions"
+)
 
 #%%
 # Setup Mesh Provider

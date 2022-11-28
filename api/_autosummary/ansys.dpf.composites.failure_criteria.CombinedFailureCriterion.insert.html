@@ -376,21 +376,23 @@
 <h1>insert<a class="headerlink" href="#insert" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert">
-<span class="sig-prename descclassname"><span class="pre">CombinedFailureCriterion.</span></span><span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FailureCriterionBase</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">CombinedFailureCriterion.</span></span><span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert" title="Permalink to this definition">#</a></dt>
 <dd><p>Add a failure criterion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>fc:</strong></dt><dd><p>Adds a failure criterion to list of selected criteria. Overwrites an entity if a
+<dd class="field-odd"><p><strong>fc</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">FailureCriterionBase</span></code>) – Adds a failure criterion to list of selected criteria. Overwrites an entity if a
 failure criterion of the same type already exists.</p>
-</dd>
-</dl>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <p>combined_failure = CombinedFailureCriterion(“max_stress 3D”)
 max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
 combined_failure.insert(max_stress)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -420,7 +422,7 @@ combined_failure.insert(max_stress)</p>
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

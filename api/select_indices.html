@@ -265,11 +265,11 @@
               <article class="bd-article" role="main">
                 
   <section id="select-elementary-indices">
-<h1>Select Elementary Indices<a class="headerlink" href="#select-elementary-indices" title="Permalink to this heading">#</a></h1>
+<span id="select-indices"></span><h1>Select Elementary Indices<a class="headerlink" href="#select-elementary-indices" title="Permalink to this heading">#</a></h1>
 <p>This module provides functions to filter elementary data.
 A layered element has</p>
 <blockquote>
-<div><p>num_elementary_data = number_of_layers number_of_spots number_of_nodes_per_spot_plane</p>
+<div><p>num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane</p>
 </div></blockquote>
 <p>elementary data points. number_of_spots indicates the number of through-the-thickness integration points per layer. number_of_spots is controlled
 by the keyoption 8 which indicates how much output is written (e.g. only ‘bottom’ and ‘top’ or ‘bottom’, ‘top’ and ‘mid’).
@@ -302,8 +302,8 @@ symmetrical 3x3 tensors). The elementary data of an element is available as a 2D
 </li>
 </ul>
 <p>The functions in this module compute an array of elementary indices for a given selection of
-layers, nodes, spots, material_ids or global plies. These elementary indices can be used to index the first axis
-of the elementary data array. Please check the example section for complete usage examples.</p>
+layers, nodes, spots, material_ids or analysis plies. These elementary indices can be used to index the first axis
+of the elementary data array. Please check the <a class="reference internal" href="../examples/gallery_examples/filter_composite_data_example.html#sphx-glr-examples-gallery-examples-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> section for complete usage examples.</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices.html#ansys.dpf.composites.get_selected_indices" title="ansys.dpf.composites.get_selected_indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_selected_indices</span></code></a>(element_info[, layers, ...])</p></td>
@@ -344,7 +344,7 @@ of the elementary data array. Please check the example section for complete usag
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
   </div>
   

@@ -6,43 +6,30 @@ Basic example for a short fiber failure analysis
 
 
 """
-import os
-import pathlib
-
 # %%
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.load_plugin import load_composites_plugin
+from ansys.dpf.composites.example_helper.example_helper import (
+    connect_to_or_start_server,
+    get_short_fiber_example_files,
+)
 
 # %%
-# Load dpf plugin
-server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-load_composites_plugin()
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_short_fiber_example_files(server_context, "short_fiber")
 
-# %%
-# Specify input files and upload them to the server
-
-TEST_DATA_ROOT_DIR = pathlib.Path(os.environ["REPO_ROOT"]) / "tests" / "data" / "short_fiber"
-
-engd_file_path = os.path.join(TEST_DATA_ROOT_DIR, "MatML.xml")
-rst_path = os.path.join(TEST_DATA_ROOT_DIR, "file.rst")
-dat_file_path = os.path.join(TEST_DATA_ROOT_DIR, "ds.dat")
-
-rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-dat_file_path_server_path = dpf.upload_file_in_tmp_folder(dat_file_path, server=server)
-engd_file_path_server_path = dpf.upload_file_in_tmp_folder(engd_file_path, server=server)
 
 # %%
 # Setup data sources
 data_sources = dpf.DataSources()
-data_sources.add_file_path(engd_file_path_server_path, "EngineeringData")
-data_sources.add_file_path(dat_file_path_server_path, "dat")
-data_sources.set_result_file_path(rst_server_path)
+data_sources.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
+data_sources.add_file_path(composite_files_on_server.dsdat, "dat")
+data_sources.set_result_file_path(composite_files_on_server.rst)
 
 # %%
 # Create dpf model and mesh provider
-model = dpf.Model(rst_server_path)
+model = dpf.Model(composite_files_on_server.rst)
 
 # %%
 # Short Fiber Failure Criterion Evaluator
