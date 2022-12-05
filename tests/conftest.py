@@ -300,4 +300,9 @@ def dpf_server(request: pytest.FixtureRequest):
         wait_until_server_is_up(server)
         load_composites_plugin(server)
 
+        context = dpf.server.server_context.ServerContext(
+            dpf.server_context.LicensingContextType.premium
+        )
+        server.apply_context(context)
+
         yield server
