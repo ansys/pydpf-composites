@@ -296,13 +296,12 @@ def dpf_server(request: pytest.FixtureRequest):
             return dpf.server.connect_to_server(port=server_process.port)
 
         server = try_until_timeout(start_server)
-
-        wait_until_server_is_up(server)
-        load_composites_plugin(server)
-
         context = dpf.server.server_context.ServerContext(
             dpf.server_context.LicensingContextType.premium
         )
         server.apply_context(context)
+
+        wait_until_server_is_up(server)
+        load_composites_plugin(server)
 
         yield server
