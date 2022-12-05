@@ -101,7 +101,7 @@ Testing
 
     .. code:: bash
 
-        pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
+        pytest . --server-bin dpf_composites/bin/lib/deps/dpf/bin/winx64/Ans.Dpf.Grpc.exe
 
 This currently works only on windows and with the directory structure of dpf_composites. (The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder)
 
