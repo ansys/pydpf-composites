@@ -80,7 +80,7 @@ class ElementInfo:
     n_spots: int
     is_layered: bool
     element_type: int
-    material_ids: List[int]
+    material_ids: NDArray[np.int64]
     is_shell: bool
     number_of_nodes_per_spot_plane: int
 
@@ -182,6 +182,10 @@ def get_dpf_material_id_by_analyis_ply_map(
         Dpf Meshed region enriched with layup information
     data_source_or_streams_provider
     """
+    # Note: The stream_provider_or_data_source is not strictly needed for this workflow
+    # We just need it because get_element_info_provider provider needs it (which needs
+    # it to determine the keyopts, which are not needed in this context)
+    # Maybe we could split the ElementInfoProvider
     analysis_ply_to_material_map = {}
     element_info_provider = get_element_info_provider(
         mesh=mesh, stream_provider_or_data_source=data_source_or_streams_provider
@@ -193,9 +197,9 @@ def get_dpf_material_id_by_analyis_ply_map(
         element_info = element_info_provider.get_element_info(first_element_id)
         assert element_info is not None
         layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
-        analysis_ply_to_material_map[analysis_ply_name] = element_info.material_ids[
-            cast(int, layer_index)
-        ]
+        analysis_ply_to_material_map[analysis_ply_name] = int(
+            element_info.material_ids[cast(int, layer_index)]
+        )
 
     return analysis_ply_to_material_map
 

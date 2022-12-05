@@ -7,7 +7,14 @@ from typing import Generator
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
-from ansys.dpf.composites.example_helper.example_helper import ContinuousFiberCompositesFiles
+from ansys.dpf.composites.add_layup_info_to_mesh import (
+    add_layup_info_to_mesh,
+    get_composites_data_sources,
+)
+from ansys.dpf.composites.example_helper.example_helper import (
+    ContinuousFiberCompositesFiles,
+    upload_composite_files_to_server,
+)
 from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider
 
 
@@ -59,30 +66,18 @@ class SetupResult:
 def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
 
     timer = Timer()
-    eng_data_path = files.engineering_data
-    h5_path = files.composite_definitions
-    rst_path = files.rst
 
     if upload:
-        rst_path = dpf.upload_file_in_tmp_folder(files.rst, server=server)
+        upload_composite_files_to_server(data_files=files, server=server)
 
-        h5_path = dpf.upload_file_in_tmp_folder(files.composite_definitions, server=server)
-        eng_data_path = dpf.upload_file_in_tmp_folder(files.engineering_data, server=server)
+    data_sources = get_composites_data_sources(files)
 
-    eng_data_source = dpf.DataSources()
-    eng_data_source.add_file_path(eng_data_path, "EngineeringData")
-
-    composite_definitions_source = dpf.DataSources()
-    composite_definitions_source.add_file_path(h5_path, "CompositeDefinitions")
-
-    rst_data_source = dpf.DataSources(rst_path)
     streams_provider = dpf.operators.metadata.streams_provider()
-    streams_provider.inputs.data_sources.connect(rst_data_source)
+    streams_provider.inputs.data_sources.connect(data_sources.rst)
 
     strain_operator = dpf.Operator("EPEL")
     strain_operator.inputs.streams_container(streams_provider)
     strain_operator.inputs.bool_rotate_to_global(False)
-
     fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
 
     timer.add("stresses")
@@ -92,41 +87,15 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
     mesh = mesh_provider.outputs.mesh()
     timer.add("mesh")
 
-    material_support_provider = dpf.Operator("support_provider")
-    material_support_provider.inputs.property("mat")
-    material_support_provider.inputs.streams_container(streams_provider)
-
-    result_info_provider = dpf.Operator("ResultInfoProvider")
-    result_info_provider.inputs.streams_container(streams_provider)
-
-    material_provider = dpf.Operator("eng_data::ans_mat_material_provider")
-    material_provider.inputs.data_sources = eng_data_source
-    material_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
-    material_provider.inputs.abstract_field_support(
-        material_support_provider.outputs.abstract_field_support
-    )
-    material_provider.inputs.Engineering_data_file(eng_data_source)
-
-    layup_provider = dpf.Operator("composite::layup_provider_operator")
-    layup_provider.inputs.mesh(mesh_provider.outputs.mesh)
-    layup_provider.inputs.data_sources(composite_definitions_source)
-    layup_provider.inputs.abstract_field_support(
-        material_support_provider.outputs.abstract_field_support
-    )
-    layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
-    layup_provider.run()
-
-    timer.add("layup")
-
-    # timer.summary()
+    layup_operators = add_layup_info_to_mesh(data_sources=data_sources, mesh=mesh)
 
     return SetupResult(
         field=fields_container[0],
         mesh=mesh,
-        rst_data_source=rst_data_source,
-        material_provider=material_provider,
+        rst_data_source=data_sources.rst,
+        material_provider=layup_operators.material_operators.material_provider,
         streams_provider=streams_provider,
-        layup_provider=layup_provider,
+        layup_provider=layup_operators.layup_provider,
     )
 
 
