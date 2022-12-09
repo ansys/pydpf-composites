@@ -2,6 +2,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
+from ansys.dpf.composites.enums import MaterialProperty
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
@@ -60,10 +61,10 @@ def test_material_properties(dpf_server):
 
     setup_result = setup_operators(dpf_server, files)
 
-    property_name = "strain_tensile_x_direction"
+    material_property = MaterialProperty.strain_tensile_x_direction
 
     property_dict = get_constant_property_dict(
-        property_name=property_name,
+        material_property=material_property,
         materials_provider=setup_result.material_provider,
         rst_data_source=setup_result.rst_data_source,
         mesh=setup_result.mesh,

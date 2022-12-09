@@ -3,11 +3,12 @@ from typing import Collection, Dict, Union, cast
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 
+from ansys.dpf.composites.enums import MaterialProperty
 from ansys.dpf.composites.layup_info import get_dpf_material_id_by_analyis_ply_map
 
 
 def get_constant_property(
-    property_name: str,
+    material_property: MaterialProperty,
     dpf_material_id: int,
     materials_provider: Operator,
     rst_data_source: DataSources,
@@ -16,8 +17,8 @@ def get_constant_property(
 
     Parameters
     ----------
-    property_name:
-        material property name (todo: document)
+    material_property:
+        material property
     dpf_material_id:
         dpf material id
     materials_provider:
@@ -28,7 +29,7 @@ def get_constant_property(
     material_property_field = Operator("eng_data::ans_mat_property_field_provider")
     material_property_field.inputs.materials_container(materials_provider)
     material_property_field.inputs.dpf_mat_id(dpf_material_id)
-    material_property_field.inputs.property_name(property_name)
+    material_property_field.inputs.property_name(material_property.value)
     result_info_provider = Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)
     material_property_field.inputs.unit_system_or_result_info(result_info_provider)
@@ -61,7 +62,7 @@ def get_all_material_ids(
 
 
 def get_constant_property_dict(
-    property_name: str,
+    material_property: MaterialProperty,
     materials_provider: Operator,
     rst_data_source: DataSources,
     mesh: MeshedRegion,
@@ -78,7 +79,7 @@ def get_constant_property_dict(
     properties = {}
     for id in get_all_material_ids(mesh, rst_data_source):
         property = get_constant_property(
-            property_name=property_name,
+            material_property=material_property,
             dpf_material_id=id,
             materials_provider=materials_provider,
             rst_data_source=rst_data_source,
