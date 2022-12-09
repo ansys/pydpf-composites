@@ -32,9 +32,14 @@ def get_constant_property(
     result_info_provider = Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)
     material_property_field.inputs.unit_system_or_result_info(result_info_provider)
-    return cast(
-        float, material_property_field.get_output(output_type=types.fields_container)[0].data[0]
+    properties = material_property_field.get_output(output_type=types.fields_container)
+    assert len(properties) == 1, "Properties Container as to have exactly one entry"
+    assert len(properties[0].data) == 1, (
+        "Properties Field as to have exactly one entry. "
+        "Probably the property is not constant. "
+        "Variable properties are currently not supported."
     )
+    return cast(float, properties[0].data[0])
 
 
 def get_all_material_ids(

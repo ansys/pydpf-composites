@@ -68,7 +68,7 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
     timer = Timer()
 
     if upload:
-        upload_composite_files_to_server(data_files=files, server=server)
+        files = upload_composite_files_to_server(data_files=files, server=server)
 
     data_sources = get_composites_data_sources(files)
 
