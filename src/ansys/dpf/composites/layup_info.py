@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Collection, Dict, List, Optional, Union, cast
+from typing import Any, Collection, Dict, List, Optional, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -198,7 +198,7 @@ def get_dpf_material_id_by_analyis_ply_map(
         assert element_info is not None
         layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
         analysis_ply_to_material_map[analysis_ply_name] = int(
-            element_info.material_ids[cast(int, layer_index)]
+            element_info.material_ids[layer_index]
         )
 
     return analysis_ply_to_material_map
@@ -407,7 +407,10 @@ def get_element_info_provider(
         if property_field_name not in mesh.available_property_fields:
             message = f"Missing property field in mesh: '{property_field_name}'."
             if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
-                message += " Maybe you have to run the layup provider operator first."
+                message += (
+                    " Maybe you have to run the layup provider operator first. "
+                    "Please call add_layup_info_to_mesh "
+                )
             raise RuntimeError(message)
 
     fields = {

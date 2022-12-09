@@ -2,7 +2,9 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
+from ansys.dpf.composites.add_layup_info_to_mesh import get_composites_data_sources
 from ansys.dpf.composites.enums import MaterialProperty
+from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
@@ -11,6 +13,7 @@ from ansys.dpf.composites.layup_info import (
     get_element_info_provider,
 )
 from ansys.dpf.composites.material_properties import get_constant_property_dict
+from ansys.dpf.composites.material_setup import get_material_operators
 from ansys.dpf.composites.select_indices import get_selected_indices
 
 from .helper import get_basic_shell_files, get_field_info, setup_operators
@@ -54,8 +57,6 @@ def test_get_analysis_ply_index_to_name_map(dpf_server):
 def test_material_properties(dpf_server):
     """
     Test evaluation of material properties to compute a user defined failure criterion
-    Properties are precomputed. Needs to be improve and be properly documented.
-    The test documents the current status
     """
     files = get_basic_shell_files()
 
@@ -96,3 +97,33 @@ def test_material_properties(dpf_server):
     assert list(result_field.scoping.ids) == [1, 2, 3, 4]
 
     assert result_field.get_entity_data_by_id(1) == pytest.approx([1.3871777438275192])
+
+
+def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server):
+
+    files = get_basic_shell_files()
+    files = upload_composite_files_to_server(data_files=files, server=dpf_server)
+
+    data_sources = get_composites_data_sources(files)
+
+    streams_provider = dpf.operators.metadata.streams_provider()
+    streams_provider.inputs.data_sources.connect(data_sources.rst)
+
+    mesh_provider = dpf.Operator("MeshProvider")
+    mesh_provider.inputs.streams_container(streams_provider)
+    mesh = mesh_provider.outputs.mesh()
+
+    material_operators = get_material_operators(
+        rst_data_source=data_sources.rst, engineering_data_source=data_sources.rst
+    )
+
+    material_property = MaterialProperty.strain_tensile_x_direction
+
+    with pytest.raises(RuntimeError) as exc_info:
+        get_constant_property_dict(
+            material_property=material_property,
+            materials_provider=material_operators.material_provider,
+            rst_data_source=data_sources.rst,
+            mesh=mesh,
+        )
+    assert "Please call add_layup_info_to_mesh" in str(exc_info.value)
