@@ -103,7 +103,7 @@ jobs:
       - name: pull and start dpf container
         run: |
           docker pull ghcr.io/pyansys/pydpf-composites:231
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:latest
+          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:231
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
