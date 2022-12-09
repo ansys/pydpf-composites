@@ -67,7 +67,7 @@ def test_material_properties(dpf_server):
     property_dict = get_constant_property_dict(
         material_property=material_property,
         materials_provider=setup_result.material_provider,
-        rst_data_source=setup_result.rst_data_source,
+        data_source_or_streams_provider=setup_result.streams_provider,
         mesh=setup_result.mesh,
     )
     result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
@@ -123,7 +123,7 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
         get_constant_property_dict(
             material_property=material_property,
             materials_provider=material_operators.material_provider,
-            rst_data_source=data_sources.rst,
+            data_source_or_streams_provider=data_sources.rst,
             mesh=mesh,
         )
     assert "Please call add_layup_info_to_mesh" in str(exc_info.value)

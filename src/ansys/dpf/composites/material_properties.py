@@ -11,7 +11,7 @@ def get_constant_property(
     material_property: MaterialProperty,
     dpf_material_id: int,
     materials_provider: Operator,
-    rst_data_source: DataSources,
+    data_source_or_streams_provider: Union[DataSources, Operator],
 ) -> float:
     """Get a constant material property.
 
@@ -23,15 +23,18 @@ def get_constant_property(
         dpf material id
     materials_provider:
         Dpf Materials provider operator
-    rst_data_source:
-        Dpf Data source that contains a rst file
+    data_source_or_streams_provider:
+        Data source or streams provider that contains a rst file
     """
     material_property_field = Operator("eng_data::ans_mat_property_field_provider")
     material_property_field.inputs.materials_container(materials_provider)
     material_property_field.inputs.dpf_mat_id(dpf_material_id)
     material_property_field.inputs.property_name(material_property.value)
     result_info_provider = Operator("ResultInfoProvider")
-    result_info_provider.inputs.data_sources(rst_data_source)
+    if isinstance(data_source_or_streams_provider, DataSources):
+        result_info_provider.inputs.data_sources(data_source_or_streams_provider)
+    else:
+        result_info_provider.inputs.streams_container(data_source_or_streams_provider)
     material_property_field.inputs.unit_system_or_result_info(result_info_provider)
     properties = material_property_field.get_output(output_type=types.fields_container)
     assert len(properties) == 1, "Properties Container as to have exactly one entry"
@@ -64,25 +67,33 @@ def get_all_material_ids(
 def get_constant_property_dict(
     material_property: MaterialProperty,
     materials_provider: Operator,
-    rst_data_source: DataSources,
+    data_source_or_streams_provider: Union[DataSources, Operator],
     mesh: MeshedRegion,
 ) -> Dict[int, float]:
     """Get a dictionary with constant properties.
 
+    Returns a dictionary with the dpf material id as key and
+    the requested property as the value.
+
     Parameters
     ----------
-    mesh:
-        Dpf MeshedRegion enriched with layup information
+    material_property:
+        Requested material property
+    materials_provider:
     data_source_or_streams_provider:
         Dpf DataSource or StreamProvider that contains a rst file
+    mesh:
+        Dpf MeshedRegion enriched with layup information
     """
     properties = {}
-    for id in get_all_material_ids(mesh, rst_data_source):
+    for id in get_all_material_ids(
+        mesh=mesh, data_source_or_streams_provider=data_source_or_streams_provider
+    ):
         property = get_constant_property(
             material_property=material_property,
             dpf_material_id=id,
             materials_provider=materials_provider,
-            rst_data_source=rst_data_source,
+            data_source_or_streams_provider=data_source_or_streams_provider,
         )
         properties[id] = property
     return properties

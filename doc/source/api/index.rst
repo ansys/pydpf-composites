@@ -13,3 +13,4 @@ and attributes.
     failure_criteria
     layup_information
     select_indices
+    material_properties
