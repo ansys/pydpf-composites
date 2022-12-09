@@ -132,10 +132,8 @@ def connect_to_or_start_server() -> ServerContext:
     """Connect to or start a dpf server."""
     # Todo: add different modes to start or get the server
     # Currently just connects to a hardcoded port
-    context = dpf.server.server_context.ServerContext(
-        dpf.server_context.LicensingContextType.premium
-    )
-    server = dpf.server.connect_to_server("127.0.0.1", port=21002, context=context)
+
+    server = dpf.server.connect_to_server("127.0.0.1", port=21002)
     load_composites_plugin(server)
     return ServerContext(server=server)
 
