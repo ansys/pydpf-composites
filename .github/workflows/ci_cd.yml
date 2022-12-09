@@ -62,7 +62,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: pull and start dpf container
         run:  |
-          docker pull ghcr.io/pyansys/pydpf-composites:latest
+          docker pull ghcr.io/pyansys/pydpf-composites:231
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -102,8 +102,8 @@ jobs:
           password: ${{ secrets.PYANSYS_CI_BOT_PACKAGE_TOKEN }}
       - name: pull and start dpf container
         run: |
-          docker pull ghcr.io/pyansys/pydpf-composites:latest
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:latest
+          docker pull ghcr.io/pyansys/pydpf-composites:231
+          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:231
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
