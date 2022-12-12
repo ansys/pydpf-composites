@@ -5,15 +5,15 @@ Interlaminar Normal Stresses in Layered Shells
 ----------------------------------------------
 
 This example shows how to connect the different dpf operators that are needed to
-evaluate the interlaminar normal stresses in layered shells. For simple use cases it is preferable
-to use the composite failure operator
+evaluate the interlaminar normal stresses, in short INS, in layered shells.
+For simple use cases it is preferable to use the composite failure operator
 (:ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`)
 or the composite sampling point operator
 (:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`).
 The :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` example shows how
 helper functions can be used to obtain composite result data.
 
-Interlaminar normal stresses, in short INS, are typically not available if layered shell elements are
+INS are typically not available if layered shell elements are
 used. The INS operator recomputes s3 based on the laminate strains, the geometrical curvature and
 the lay-up.
 
@@ -83,7 +83,7 @@ stress_operator.inputs.data_sources(rst_data_source)
 stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
-# Setup the failure evaluator. Combines the results and evaluates all the failure criteria.
+# Setup of failure evaluator. Combines the results and evaluates all the failure criteria.
 # The output contains the maximum failure criteria for each integration point.
 #
 
@@ -91,10 +91,11 @@ ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
 ins_operator.inputs.materials_container(material_provider.outputs)
 ins_operator.inputs.mesh(mesh_provider.outputs.mesh)
 ins_operator.inputs.mesh_properties_container(layup_provider.outputs.mesh_properties_container)
-ins_operator.inputs.section_data_container(layup_provider.outputs.section_data_container)
+# pass inputs by pin because the input name is not set yet
+ins_operator.connect(24, layup_provider.outputs.section_data_container)
+ins_operator.connect(0, strain_operator.outputs.fields_container)
+ins_operator.connect(1, stress_operator.outputs.fields_container)
 
-ins_operator.inputs.strains_container(strain_operator.outputs.fields_container)
-ins_operator.inputs.stresses_container(stress_operator.outputs.fields_container)
 # call run because ins operator has not output
 ins_operator.run()
 
@@ -106,7 +107,7 @@ element_ids = stress_field.scoping.ids
 element_infos = [element_info_provider.get_element_info(element_id) for element_id in element_ids]
 
 #%%
-# Plot max s3 (interlaminar normal stresses) for each element
+# Plot max interlaminar normal stresses for each element
 
 s3_component = Sym3x3TensorComponent.tensor33
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
