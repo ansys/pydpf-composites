@@ -10,7 +10,7 @@ from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfo
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
-    get_selected_indices_by_material_ids,
+    get_selected_indices_by_dpf_material_ids,
 )
 
 from .helper import get_basic_shell_files, setup_operators
@@ -23,13 +23,13 @@ def get_result_field(
     corner_nodes: Optional[List[int]] = None,
     spots: Optional[List[Spot]] = None,
     element_ids: Optional[List[int]] = None,
-    material_id: Optional[np.int64] = None,
+    dpf_material_id: Optional[np.int64] = None,
 ):
     """
     Convenience function to get a filtered field. Getting the strain data is
     not optimized using data_pointers. This function is not very generic but should
     capture some common use cases that users use.
-    Note: If a material_id are specified, corner_nodes, spots and layers are ignored.
+    Note: If a dpf_material_id are specified, corner_nodes, spots and layers are ignored.
     """
     component = 0
     result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
@@ -42,9 +42,9 @@ def get_result_field(
                 element_info = element_info_provider.get_element_info(element_id)
                 assert element_info is not None
                 if element_info.is_layered:
-                    if material_id:
-                        selected_indices = get_selected_indices_by_material_ids(
-                            element_info, [material_id]
+                    if dpf_material_id:
+                        selected_indices = get_selected_indices_by_dpf_material_ids(
+                            element_info, [dpf_material_id]
                         )
                     else:
                         selected_indices = get_selected_indices(
@@ -93,7 +93,7 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
     result_field_by_mat = get_result_field(
         element_info_provider=element_info_provider,
         input_field=setup_result.field,
-        material_id=2,
+        dpf_material_id=2,
     )
     result_field_layer = get_result_field(
         element_info_provider=element_info_provider,

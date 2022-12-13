@@ -64,8 +64,8 @@ class ElementInfo:
         number of spots (through-the-thickness integration points) per layer
     element_type
         Apdl element type (e.g. 181 for layered shells)
-    material_ids
-        List of Dpf Material Ids for all layers
+    dpf_material_ids
+        List of dpf_material_ids for all layers
     is_shell
         True if the element is a shell element
     number_of_nodes_per_spot_plane
@@ -80,7 +80,7 @@ class ElementInfo:
     n_spots: int
     is_layered: bool
     element_type: int
-    material_ids: NDArray[np.int64]
+    dpf_material_ids: NDArray[np.int64]
     is_shell: bool
     number_of_nodes_per_spot_plane: int
 
@@ -197,7 +197,7 @@ def get_dpf_material_id_by_analyis_ply_map(
         element_info = element_info_provider.get_element_info(first_element_id)
         assert element_info is not None
         layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
-        analysis_ply_to_material_map[analysis_ply_name] = element_info.material_ids[layer_index]
+        analysis_ply_to_material_map[analysis_ply_name] = element_info.dpf_material_ids[layer_index]
 
     return analysis_ply_to_material_map
 
@@ -329,13 +329,13 @@ class ElementInfoProvider:
             return None
 
         n_spots = _get_n_spots(apdl_element_type, keyopt_8, keyopt_3)
-        material_ids: Any = []
+        dpf_material_ids: Any = []
         element_type = self.dpf_element_types.by_id(element_id)
 
         layer_data = self.layer_indices.by_id(element_id)
         if layer_data is not None:
-            material_ids = self.layer_materials.by_id(element_id)
-            assert material_ids is not None
+            dpf_material_ids = self.layer_materials.by_id(element_id)
+            assert dpf_material_ids is not None
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
             is_layered = True
@@ -353,7 +353,7 @@ class ElementInfoProvider:
             n_spots=n_spots,
             is_layered=is_layered,
             element_type=int(apdl_element_type),
-            material_ids=material_ids,
+            dpf_material_ids=dpf_material_ids,
             id=element_id,
             is_shell=is_shell,
             number_of_nodes_per_spot_plane=number_of_nodes_per_spot_plane,
@@ -438,7 +438,7 @@ class LayupProperty(Enum):
 class LayupPropertiesProvider:
     """Provider for layup properties.
 
-    Some properties such as layered material ids and
+    Some properties such as layered dpf_material_ids and
     information about the element type are available
     through the :class:`~ElementInfoProvider`.
 

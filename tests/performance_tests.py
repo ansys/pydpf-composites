@@ -333,8 +333,8 @@ def test_performance_flat(dpf_server):
             all_data[start_index:end_index, 3:9] = element_data
             all_data[start_index:end_index, 9] = element_info.element_type
 
-            # material ids
-            all_data[start_index:end_index, 10] = element_info.material_ids[flat_layer_indices]
+            # dpf_material_ids
+            all_data[start_index:end_index, 10] = element_info.dpf_material_ids[flat_layer_indices]
             start_index = start_index + num_elementary_data
 
         timer.add("loop")
@@ -369,7 +369,7 @@ def test_performance_flat(dpf_server):
     # Element type
     assert np.all(np.abs(all_data[:, 9]) == pytest.approx(181))
 
-    # Material ids
+    # dpf_material_ids
     assert np.all(np.abs(all_data[:n_values_per_layers, 10]) == 2)
     assert np.all(np.abs(all_data[n_values_per_layers : 2 * n_values_per_layers, 10]) == 3)
 

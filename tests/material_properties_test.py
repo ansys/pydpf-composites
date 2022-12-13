@@ -35,7 +35,7 @@ def test_get_analysis_ply_material_id_map(dpf_server):
         for element_id in analysis_ply_info_provider.property_field.scoping.ids:
             element_info = element_info_provider.get_element_info(element_id)
             layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_id)
-            assert material_map[analyis_ply_name] == element_info.material_ids[layer_index]
+            assert material_map[analyis_ply_name] == element_info.dpf_material_ids[layer_index]
 
 
 def test_get_analysis_ply_index_to_name_map(dpf_server):
@@ -83,8 +83,8 @@ def test_material_properties(dpf_server):
                 strain_data = local_input_field.get_entity_data_by_id(element_id)
                 element_info = element_info_provider.get_element_info(element_id)
                 layer_data = []
-                for layer_index, material_id in enumerate(element_info.material_ids):
-                    ext = property_dict[material_id]
+                for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
+                    ext = property_dict[dpf_material_id]
                     selected_indices = get_selected_indices(element_info, layers=[layer_index])
                     # Max strain criteria in x direction
                     value = strain_data[selected_indices][:, component]

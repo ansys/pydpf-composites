@@ -10,7 +10,7 @@ from ansys.dpf.composites.layup_info import get_dpf_material_id_by_analyis_ply_m
 
 def get_constant_property(
     material_property: MaterialProperty,
-    material_id: np.int64,
+    dpf_material_id: np.int64,
     materials_provider: Operator,
     data_source_or_streams_provider: Union[DataSources, Operator],
 ) -> float:
@@ -20,7 +20,7 @@ def get_constant_property(
     ----------
     material_property:
         material property
-    material_id:
+    dpf_material_id:
     materials_provider:
         Dpf Materials provider operator
     data_source_or_streams_provider:
@@ -28,7 +28,7 @@ def get_constant_property(
     """
     material_property_field = Operator("eng_data::ans_mat_property_field_provider")
     material_property_field.inputs.materials_container(materials_provider)
-    material_property_field.inputs.dpf_mat_id(int(material_id))
+    material_property_field.inputs.dpf_mat_id(int(dpf_material_id))
     material_property_field.inputs.property_name(material_property.value)
     result_info_provider = Operator("ResultInfoProvider")
     if isinstance(data_source_or_streams_provider, DataSources):
@@ -46,10 +46,10 @@ def get_constant_property(
     return cast(float, properties[0].data[0])
 
 
-def get_all_material_ids(
+def get_all_dpf_material_ids(
     mesh: MeshedRegion, data_source_or_streams_provider: Union[DataSources, Operator]
 ) -> Collection[np.int64]:
-    """Get all the material ids.
+    """Get all the dpf_material_ids.
 
     Parameters
     ----------
@@ -72,7 +72,7 @@ def get_constant_property_dict(
 ) -> Dict[np.int64, float]:
     """Get a dictionary with constant properties.
 
-    Returns a dictionary with the material id as key and
+    Returns a dictionary with the dpf_material_id as key and
     the requested property as the value. Only constant properties
     are supported. Variable properties are evaluated at their
     default value.
@@ -90,14 +90,14 @@ def get_constant_property_dict(
         Dpf MeshedRegion enriched with layup information
     """
     properties = {}
-    for material_id in get_all_material_ids(
+    for dpf_material_id in get_all_dpf_material_ids(
         mesh=mesh, data_source_or_streams_provider=data_source_or_streams_provider
     ):
         constant_property = get_constant_property(
             material_property=material_property,
-            material_id=material_id,
+            dpf_material_id=dpf_material_id,
             materials_provider=materials_provider,
             data_source_or_streams_provider=data_source_or_streams_provider,
         )
-        properties[material_id] = constant_property
+        properties[dpf_material_id] = constant_property
     return properties

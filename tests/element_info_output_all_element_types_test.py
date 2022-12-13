@@ -10,7 +10,7 @@ from ansys.dpf.composites import Spot
 from ansys.dpf.composites.layup_info import ElementInfo, get_element_info_provider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
-    get_selected_indices_by_material_ids,
+    get_selected_indices_by_dpf_material_ids,
 )
 
 
@@ -136,7 +136,7 @@ def test_all_element_types(dpf_server):
                 assert element_info.element_type == expected_output[element_id].element_type
                 assert element_info.is_layered == expected_output[element_id].is_layered
                 if element_info.is_layered:
-                    assert list(element_info.material_ids) == [1, 2, 1]
+                    assert list(element_info.dpf_material_ids) == [1, 2, 1]
                 assert element_info.n_spots == expected_output[element_id].n_spots, str(
                     element_info
                 )
@@ -248,9 +248,9 @@ def test_document_error_cases_indices(dpf_server):
             "corner node index 4 is greater or equal number of corner nodes"
         )
 
-    # Try to get non-existing material id
+    # Try to get non-existing dpf_material_id
     element_info: ElementInfo = layup_info.get_element_info(1)
-    selected_indices = get_selected_indices_by_material_ids(element_info, [5])
+    selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [5])
     assert len(selected_indices) == 0
 
     layup_info = get_layup_info_for_rst("model_with_all_element_types_all_except_mid_output.rst")

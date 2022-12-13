@@ -106,18 +106,18 @@ def get_selected_indices(
     return all_indices
 
 
-def get_selected_indices_by_material_ids(
-    element_info: ElementInfo, material_ids: Collection[np.int64]
+def get_selected_indices_by_dpf_material_ids(
+    element_info: ElementInfo, dpf_material_ids: Collection[np.int64]
 ) -> NDArray[np.int64]:
-    """Get selected indices by material ids.
+    """Get selected indices by dpf_material_ids.
 
     Selects all indices that are in a layer with one of the selected materials
 
     Parameters
     ----------
     element_info: ElementInfo
-    material_ids
-        Collection of material ids to select
+    dpf_material_ids
+        Collection of dpf_material_ids to select
 
     Returns
     -------
@@ -126,7 +126,9 @@ def get_selected_indices_by_material_ids(
 
     """
     layer_indices = [
-        index for index, mat_id in enumerate(element_info.material_ids) if mat_id in material_ids
+        index
+        for index, mat_id in enumerate(element_info.dpf_material_ids)
+        if mat_id in dpf_material_ids
     ]
     return get_selected_indices(element_info, layers=layer_indices)
 

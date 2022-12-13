@@ -44,7 +44,7 @@ composites_data_sources = get_composites_data_sources(composite_files_on_server)
 layup_operators = add_layup_info_to_mesh(mesh=mesh, data_sources=composites_data_sources)
 
 #%%
-# Get dictionary that maps dpf material id to properties
+# Get dictionary that maps dpf_material_id to properties
 # The creation of the dictionary is currently quite expensive and
 # should be done before using the properties in a loop.
 # Currently only constant properties are supported.
@@ -80,8 +80,8 @@ with result_field.as_local_field() as local_result_field:
         strain_data = strain_field.get_entity_data_by_id(element_id)
         element_info = element_info_provider.get_element_info(element_id)
         element_max = 0
-        for layer_index, material_id in enumerate(element_info.material_ids):
-            tensile_strain_limit_1 = property_dict[material_id]
+        for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
+            tensile_strain_limit_1 = property_dict[dpf_material_id]
             selected_indices = get_selected_indices(element_info, layers=[layer_index])
             # Tensile max strain criteria in 1 direction
             layer_strain_values = strain_data[selected_indices][:, component.value]
