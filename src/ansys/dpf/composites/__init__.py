@@ -1,4 +1,5 @@
 """Module for the post-processing of composite structures."""
+from .material import MaterialId
 
 try:
     import importlib.metadata as importlib_metadata
@@ -45,4 +46,5 @@ __all__ = [
     "get_all_material_ids",
     "get_constant_property_dict",
     "MaterialProperty",
+    "MaterialId",
 ]

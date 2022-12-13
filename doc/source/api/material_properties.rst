@@ -10,3 +10,4 @@ Material Properties
     get_all_material_ids
     get_constant_property_dict
     MaterialProperty
+    MaterialId
