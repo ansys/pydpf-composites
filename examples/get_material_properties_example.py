@@ -53,7 +53,7 @@ layup_operators = add_layup_info_to_mesh(mesh=mesh, data_sources=composites_data
 material_property = MaterialProperty.Strain_Limits_eXt
 
 property_dict = get_constant_property_dict(
-    material_property=material_property,
+    material_properties=[material_property],
     materials_provider=layup_operators.material_operators.material_provider,
     data_source_or_streams_provider=composites_data_sources.rst,
     mesh=mesh,
@@ -81,7 +81,7 @@ with result_field.as_local_field() as local_result_field:
         element_info = element_info_provider.get_element_info(element_id)
         element_max = 0
         for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
-            tensile_strain_limit_1 = property_dict[dpf_material_id]
+            tensile_strain_limit_1 = property_dict[dpf_material_id][material_property]
             selected_indices = get_selected_indices(element_info, layers=[layer_index])
             # Tensile max strain criteria in 1 direction
             layer_strain_values = strain_data[selected_indices][:, component.value]

@@ -65,7 +65,7 @@ def test_material_properties(dpf_server):
     material_property = MaterialProperty.Strain_Limits_eXt
 
     property_dict = get_constant_property_dict(
-        material_property=material_property,
+        material_properties=[material_property],
         materials_provider=setup_result.material_provider,
         data_source_or_streams_provider=setup_result.streams_provider,
         mesh=setup_result.mesh,
@@ -84,7 +84,7 @@ def test_material_properties(dpf_server):
                 element_info = element_info_provider.get_element_info(element_id)
                 layer_data = []
                 for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
-                    ext = property_dict[dpf_material_id]
+                    ext = property_dict[dpf_material_id][material_property]
                     selected_indices = get_selected_indices(element_info, layers=[layer_index])
                     # Max strain criteria in x direction
                     value = strain_data[selected_indices][:, component]
@@ -120,7 +120,7 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
 
     with pytest.raises(RuntimeError) as exc_info:
         get_constant_property_dict(
-            material_property=material_property,
+            material_properties=[material_property],
             materials_provider=material_operators.material_provider,
             data_source_or_streams_provider=data_sources.rst,
             mesh=mesh,

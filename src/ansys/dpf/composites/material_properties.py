@@ -65,11 +65,11 @@ def get_all_dpf_material_ids(
 
 
 def get_constant_property_dict(
-    material_property: MaterialProperty,
+    material_properties: Collection[MaterialProperty],
     materials_provider: Operator,
     data_source_or_streams_provider: Union[DataSources, Operator],
     mesh: MeshedRegion,
-) -> Dict[np.int64, float]:
+) -> Dict[np.int64, Dict[MaterialProperty, float]]:
     """Get a dictionary with constant properties.
 
     Returns a dictionary with the dpf_material_id as key and
@@ -81,23 +81,25 @@ def get_constant_property_dict(
 
     Parameters
     ----------
-    material_property:
-        Requested material property
+    material_properties:
+        Requested material properties
     materials_provider:
     data_source_or_streams_provider:
         Dpf DataSource or StreamProvider that contains a rst file
     mesh:
         Dpf MeshedRegion enriched with layup information
     """
-    properties = {}
+    properties: Dict[np.int64, Dict[MaterialProperty, float]] = {}
     for dpf_material_id in get_all_dpf_material_ids(
         mesh=mesh, data_source_or_streams_provider=data_source_or_streams_provider
     ):
-        constant_property = get_constant_property(
-            material_property=material_property,
-            dpf_material_id=dpf_material_id,
-            materials_provider=materials_provider,
-            data_source_or_streams_provider=data_source_or_streams_provider,
-        )
-        properties[dpf_material_id] = constant_property
+        properties[dpf_material_id] = {}
+        for material_property in material_properties:
+            constant_property = get_constant_property(
+                material_property=material_property,
+                dpf_material_id=dpf_material_id,
+                materials_provider=materials_provider,
+                data_source_or_streams_provider=data_source_or_streams_provider,
+            )
+            properties[dpf_material_id][material_property] = constant_property
     return properties

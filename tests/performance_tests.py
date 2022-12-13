@@ -5,6 +5,12 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
+from ansys.dpf.composites import MaterialProperty, get_constant_property_dict
+from ansys.dpf.composites.add_layup_info_to_mesh import (
+    add_layup_info_to_mesh,
+    get_composites_data_sources,
+)
+from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
 from ansys.dpf.composites.indexer import _FieldIndexerWithDataPointer
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, get_element_info_provider
 
@@ -251,6 +257,38 @@ def test_performance_local_field(dpf_server):
 
         timer.add("loop local")
 
+    timer.summary()
+
+
+def test_performance_property_dict(dpf_server):
+    """
+    Document performance behaviour of local vs non-local fields
+    """
+    timer = Timer()
+
+    files = get_data_files()
+
+    files = upload_composite_files_to_server(data_files=files, server=dpf_server)
+
+    data_sources = get_composites_data_sources(files)
+    mesh_provider = dpf.Operator("MeshProvider")
+    mesh_provider.inputs.data_sources(data_sources.rst)
+    mesh = mesh_provider.outputs.mesh()
+    timer.add("mesh")
+
+    timer.add("Load data")
+
+    layup_operators = add_layup_info_to_mesh(data_sources, mesh)
+    timer.add("After enrich mesh")
+
+    property_dict = get_constant_property_dict(
+        material_properties=[MaterialProperty.Strain_Limits_eXt],
+        materials_provider=layup_operators.material_operators.material_provider,
+        data_source_or_streams_provider=data_sources.rst,
+        mesh=mesh,
+    )
+
+    timer.add("After property dict")
     timer.summary()
 
 
