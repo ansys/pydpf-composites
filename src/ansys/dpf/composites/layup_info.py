@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Collection, Dict, List, Optional, Union, cast
+from typing import Any, Collection, Dict, List, Optional, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -19,7 +19,6 @@ from ansys.dpf.composites.indexer import (
     _PropertyFieldIndexerWithDataPointer,
     _PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
-from ansys.dpf.composites.material import MaterialId
 
 _ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
@@ -81,7 +80,7 @@ class ElementInfo:
     n_spots: int
     is_layered: bool
     element_type: int
-    material_ids: NDArray[MaterialId]
+    material_ids: NDArray[np.int64]
     is_shell: bool
     number_of_nodes_per_spot_plane: int
 
@@ -174,7 +173,7 @@ class AnalysisPlyInfoProvider:
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
-) -> Dict[str, MaterialId]:
+) -> Dict[str, np.int64]:
     """Get Dict that maps analysis ply names to dpf_material_ids.
 
     Parameters
@@ -354,7 +353,7 @@ class ElementInfoProvider:
             n_spots=n_spots,
             is_layered=is_layered,
             element_type=int(apdl_element_type),
-            material_ids=cast(NDArray[MaterialId], material_ids),
+            material_ids=material_ids,
             id=element_id,
             is_shell=is_shell,
             number_of_nodes_per_spot_plane=number_of_nodes_per_spot_plane,

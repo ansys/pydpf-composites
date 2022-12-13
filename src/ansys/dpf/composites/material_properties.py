@@ -2,15 +2,15 @@
 from typing import Collection, Dict, Union, cast
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
+import numpy as np
 
 from ansys.dpf.composites.enums import MaterialProperty
 from ansys.dpf.composites.layup_info import get_dpf_material_id_by_analyis_ply_map
-from ansys.dpf.composites.material import MaterialId
 
 
 def get_constant_property(
     material_property: MaterialProperty,
-    material_id: MaterialId,
+    material_id: np.int64,
     materials_provider: Operator,
     data_source_or_streams_provider: Union[DataSources, Operator],
 ) -> float:
@@ -48,7 +48,7 @@ def get_constant_property(
 
 def get_all_material_ids(
     mesh: MeshedRegion, data_source_or_streams_provider: Union[DataSources, Operator]
-) -> Collection[MaterialId]:
+) -> Collection[np.int64]:
     """Get all the material ids.
 
     Parameters
@@ -61,7 +61,7 @@ def get_all_material_ids(
     id_to_material_map = get_dpf_material_id_by_analyis_ply_map(
         mesh, data_source_or_streams_provider
     )
-    return [MaterialId(mat_id) for mat_id in set(id_to_material_map.values())]
+    return set(id_to_material_map.values())
 
 
 def get_constant_property_dict(
@@ -69,10 +69,10 @@ def get_constant_property_dict(
     materials_provider: Operator,
     data_source_or_streams_provider: Union[DataSources, Operator],
     mesh: MeshedRegion,
-) -> Dict[MaterialId, float]:
+) -> Dict[np.int64, float]:
     """Get a dictionary with constant properties.
 
-    Returns a dictionary with the MaterialId as key and
+    Returns a dictionary with the material id as key and
     the requested property as the value. Only constant properties
     are supported. Variable properties are evaluated at their
     default value.

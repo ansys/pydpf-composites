@@ -2,11 +2,11 @@ from typing import List, Optional
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Field
+import numpy as np
 import pytest
 
 from ansys.dpf.composites import Spot, get_element_info_provider
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider
-from ansys.dpf.composites.material import MaterialId
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
@@ -23,7 +23,7 @@ def get_result_field(
     corner_nodes: Optional[List[int]] = None,
     spots: Optional[List[Spot]] = None,
     element_ids: Optional[List[int]] = None,
-    material_id: Optional[MaterialId] = None,
+    material_id: Optional[np.int64] = None,
 ):
     """
     Convenience function to get a filtered field. Getting the strain data is
@@ -93,7 +93,7 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
     result_field_by_mat = get_result_field(
         element_info_provider=element_info_provider,
         input_field=setup_result.field,
-        material_id=MaterialId(2),
+        material_id=2,
     )
     result_field_layer = get_result_field(
         element_info_provider=element_info_provider,
