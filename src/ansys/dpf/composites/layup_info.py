@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Collection, Dict, List, Optional, Union
+from typing import Any, Collection, Dict, List, Optional, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -19,6 +19,7 @@ from ansys.dpf.composites.indexer import (
     _PropertyFieldIndexerWithDataPointer,
     _PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
+from ansys.dpf.composites.material import MaterialId
 
 _ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
@@ -80,7 +81,7 @@ class ElementInfo:
     n_spots: int
     is_layered: bool
     element_type: int
-    material_ids: NDArray[np.int64]
+    material_ids: NDArray[MaterialId]
     is_shell: bool
     number_of_nodes_per_spot_plane: int
 
@@ -173,7 +174,7 @@ class AnalysisPlyInfoProvider:
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
-) -> Dict[str, int]:
+) -> Dict[str, MaterialId]:
     """Get Dict that maps analysis ply names to dpf_material_ids.
 
     Parameters
@@ -197,9 +198,7 @@ def get_dpf_material_id_by_analyis_ply_map(
         element_info = element_info_provider.get_element_info(first_element_id)
         assert element_info is not None
         layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
-        analysis_ply_to_material_map[analysis_ply_name] = int(
-            element_info.material_ids[layer_index]
-        )
+        analysis_ply_to_material_map[analysis_ply_name] = element_info.material_ids[layer_index]
 
     return analysis_ply_to_material_map
 
@@ -355,7 +354,7 @@ class ElementInfoProvider:
             n_spots=n_spots,
             is_layered=is_layered,
             element_type=int(apdl_element_type),
-            material_ids=material_ids,
+            material_ids=cast(NDArray[MaterialId], material_ids),
             id=element_id,
             is_shell=is_shell,
             number_of_nodes_per_spot_plane=number_of_nodes_per_spot_plane,

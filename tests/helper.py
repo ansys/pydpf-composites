@@ -1,8 +1,6 @@
-from contextlib import contextmanager
 from dataclasses import dataclass
 import pathlib
 import time
-from typing import Generator
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
@@ -15,7 +13,6 @@ from ansys.dpf.composites.example_helper.example_helper import (
     ContinuousFiberCompositesFiles,
     upload_composite_files_to_server,
 )
-from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider
 
 
 class Timer:
@@ -97,21 +94,6 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
         streams_provider=streams_provider,
         layup_provider=layup_operators.layup_provider,
     )
-
-
-@dataclass(frozen=True)
-class FieldInfo:
-    field: Field
-    layup_info: ElementInfoProvider
-
-
-@contextmanager
-def get_field_info(
-    input_field: Field, mesh: MeshedRegion, data_source: DataSources
-) -> Generator[FieldInfo, None, None]:
-    layup_info = get_element_info_provider(mesh, stream_provider_or_data_source=data_source)
-    with input_field.as_local_field() as local_input_field:
-        yield FieldInfo(field=local_input_field, layup_info=layup_info)
 
 
 def get_basic_shell_files():

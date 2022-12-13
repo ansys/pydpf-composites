@@ -16,7 +16,7 @@ from ansys.dpf.composites.material_properties import get_constant_property_dict
 from ansys.dpf.composites.material_setup import get_material_operators
 from ansys.dpf.composites.select_indices import get_selected_indices
 
-from .helper import get_basic_shell_files, get_field_info, setup_operators
+from .helper import get_basic_shell_files, setup_operators
 
 
 def test_get_analysis_ply_material_id_map(dpf_server):
@@ -72,17 +72,16 @@ def test_material_properties(dpf_server):
     )
     result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
-    with get_field_info(
-        input_field=setup_result.field,
-        mesh=setup_result.mesh,
-        data_source=setup_result.rst_data_source,
-    ) as field_info:
+    element_info_provider = get_element_info_provider(
+        setup_result.mesh, setup_result.streams_provider
+    )
+    with setup_result.field.as_local_field() as local_input_field:
         with result_field.as_local_field() as local_result_field:
             component = 0
 
-            for element_id in field_info.field.scoping.ids:
-                strain_data = field_info.field.get_entity_data_by_id(element_id)
-                element_info = field_info.layup_info.get_element_info(element_id)
+            for element_id in local_input_field.scoping.ids:
+                strain_data = local_input_field.get_entity_data_by_id(element_id)
+                element_info = element_info_provider.get_element_info(element_id)
                 layer_data = []
                 for layer_index, material_id in enumerate(element_info.material_ids):
                     ext = property_dict[material_id]

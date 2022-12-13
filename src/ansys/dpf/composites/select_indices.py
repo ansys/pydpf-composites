@@ -7,6 +7,7 @@ from numpy.typing import NDArray
 from ansys.dpf.composites import Spot
 from ansys.dpf.composites.enums import get_rst_spot_index
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfo
+from ansys.dpf.composites.material import MaterialId
 
 
 def get_selected_indices(
@@ -107,7 +108,7 @@ def get_selected_indices(
 
 
 def get_selected_indices_by_material_ids(
-    element_info: ElementInfo, material_ids: Collection[int]
+    element_info: ElementInfo, material_ids: Collection[MaterialId]
 ) -> NDArray[np.int64]:
     """Get selected indices by material ids.
 

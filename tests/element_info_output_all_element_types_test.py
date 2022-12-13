@@ -13,8 +13,6 @@ from ansys.dpf.composites.select_indices import (
     get_selected_indices_by_material_ids,
 )
 
-from .helper import get_field_info
-
 
 @dataclass(frozen=True)
 class ExpectedOutput:
@@ -131,14 +129,10 @@ def test_all_element_types(dpf_server):
 
         fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
         field = fields_container[0]
-
-        with get_field_info(
-            input_field=field,
-            mesh=mesh,
-            data_source=rst_data_source,
-        ) as field_info:
+        element_info_provider = get_element_info_provider(mesh, rst_data_source)
+        with field.as_local_field() as local_field:
             for element_id in get_element_ids().all:
-                element_info: ElementInfo = field_info.layup_info.get_element_info(element_id)
+                element_info: ElementInfo = element_info_provider.get_element_info(element_id)
                 assert element_info.element_type == expected_output[element_id].element_type
                 assert element_info.is_layered == expected_output[element_id].is_layered
                 if element_info.is_layered:
@@ -150,7 +144,7 @@ def test_all_element_types(dpf_server):
                     element_info.n_corner_nodes == expected_output[element_id].n_corner_nodes
                 ), str(element_info)
 
-                field: Field = field_info.field
+                field: Field = local_field
                 entity_data = field.get_entity_data_by_id(element_id)
                 num_elementary_data = entity_data.shape[0]
 
