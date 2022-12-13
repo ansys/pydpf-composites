@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  MAIN_PYTHON_VERSION: '3.9'
+  MAIN_PYTHON_VERSION: '3.10'
   ANSYS_VERSION: '231'
 
 concurrency:
