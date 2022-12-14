@@ -123,7 +123,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
             engineering_data="materials.xml",
             composite_definitions="ACPCompositeDefinitions.h5",
         ),
-    )
+    ),
 }
 
 _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {

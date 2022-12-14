@@ -25,20 +25,15 @@ Note, the INS operator fills the results directly into the stress field.
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.example_helper.example_helper import (
-    connect_to_or_start_server,
-    get_continuous_fiber_example_files,
-)
-
-from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
+from ansys.dpf.composites import get_element_info_provider, get_selected_indices
 from ansys.dpf.composites.add_layup_info_to_mesh import (
     add_layup_info_to_mesh,
     get_composites_data_sources,
 )
-
-from ansys.dpf.composites import (
-    get_element_info_provider,
-    get_selected_indices,
+from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
+from ansys.dpf.composites.example_helper.example_helper import (
+    connect_to_or_start_server,
+    get_continuous_fiber_example_files,
 )
 
 server_context = connect_to_or_start_server()
@@ -64,7 +59,9 @@ mesh_provider = model.metadata.mesh_provider
 #%%
 # Set up material and lay-up provider
 composites_data_sources = get_composites_data_sources(composite_files_on_server)
-layup_operators = add_layup_info_to_mesh(mesh=mesh_provider.outputs.mesh(), data_sources=composites_data_sources)
+layup_operators = add_layup_info_to_mesh(
+    mesh=mesh_provider.outputs.mesh(), data_sources=composites_data_sources
+)
 
 layup_provider = layup_operators.layup_provider
 material_provider = layup_operators.material_operators.material_provider
@@ -117,12 +114,10 @@ with result_field.as_local_field() as local_result_field:
         stress_data = stress_field.get_entity_data_by_id(element_id)
         element_info = element_info_provider.get_element_info(element_id)
         assert element_info is not None
-        #select all stresses from bottom to top of node 0
-        selected_indices = get_selected_indices(
-            element_info, layers=None, nodes=[0], spots=None
-        )
+        # select all stresses from bottom to top of node 0
+        selected_indices = get_selected_indices(element_info, layers=None, nodes=[0], spots=None)
 
-        s3 = stress_data[selected_indices][::s3_component.value]
+        s3 = stress_data[selected_indices][:: s3_component.value]
         local_result_field.append(max(s3), element_id)
 
 mesh = mesh_provider.outputs.mesh()
