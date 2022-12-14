@@ -1,0 +1,6 @@
+﻿get\_constant\_property
+=======================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autofunction:: get_constant_property

@@ -249,8 +249,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.material_ids.html">
-       material_ids
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.dpf_material_ids.html">
+       dpf_material_ids
       </a>
      </li>
      <li class="toctree-l3">
@@ -280,11 +280,21 @@
      ansys.dpf.composites.LayupPropertiesProvider
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html">
+     get_dpf_material_id_by_analyis_ply_map
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../select_indices.html">
    Select Elementary Indices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../material_properties.html">
+   Material Properties
   </a>
  </li>
 </ul>
@@ -345,7 +355,7 @@
 <h1>ansys.dpf.composites.ElementInfo<a class="headerlink" href="#ansys-dpf-composites-elementinfo" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.ElementInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">ElementInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_corner_nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_spots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_layered</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_shell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_nodes_per_spot_plane</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.ElementInfo" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">ElementInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_corner_nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_spots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_layered</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpf_material_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_shell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_nodes_per_spot_plane</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.ElementInfo" title="Permalink to this definition">#</a></dt>
 <dd><p>Layup information for a given element.</p>
 <p>Use <a class="reference internal" href="ansys.dpf.composites.ElementInfoProvider.html#ansys.dpf.composites.ElementInfoProvider" title="ansys.dpf.composites.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> to obtain a <a class="reference internal" href="#ansys.dpf.composites.ElementInfo" title="ansys.dpf.composites.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a> for a given element.</p>
 <dl class="field-list simple">
@@ -356,7 +366,7 @@
 <li><p><strong>n_corner_nodes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of corner nodes (without midside nodes).</p></li>
 <li><p><strong>n_spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – number of spots (through-the-thickness integration points) per layer</p></li>
 <li><p><strong>element_type</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Apdl element type (e.g. 181 for layered shells)</p></li>
-<li><p><strong>material_ids</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>]</em>) – List of Dpf Material Ids for all layers</p></li>
+<li><p><strong>dpf_material_ids</strong> (<a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><em>numpy.ndarray</em></a><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.25.dev0)"><em>numpy.dtype</em></a><em>[</em><em>numpy.int64</em><em>]</em><em>]</em>) – List of dpf_material_ids for all layers</p></li>
 <li><p><strong>is_shell</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – True if the element is a shell element</p></li>
 <li><p><strong>number_of_nodes_per_spot_plane</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of nodes per output plane.
 Equal to n_corner_nodes for shell elements and n_corner_nodes / 2
@@ -390,7 +400,7 @@ for solid elements. Equal to -1 for non-layered elements.</p></li>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ElementInfo.element_type.html#ansys.dpf.composites.ElementInfo.element_type" title="ansys.dpf.composites.ElementInfo.element_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo.element_type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ElementInfo.material_ids.html#ansys.dpf.composites.ElementInfo.material_ids" title="ansys.dpf.composites.ElementInfo.material_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo.material_ids</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ElementInfo.dpf_material_ids.html#ansys.dpf.composites.ElementInfo.dpf_material_ids" title="ansys.dpf.composites.ElementInfo.dpf_material_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo.dpf_material_ids</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ElementInfo.is_shell.html#ansys.dpf.composites.ElementInfo.is_shell" title="ansys.dpf.composites.ElementInfo.is_shell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo.is_shell</span></code></a></p></td>

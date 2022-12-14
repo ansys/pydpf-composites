@@ -12,3 +12,4 @@ General functionality to access information on the composite layup.
     AnalysisPlyInfoProvider
     get_element_info_provider
     LayupPropertiesProvider
+    get_dpf_material_id_by_analyis_ply_map

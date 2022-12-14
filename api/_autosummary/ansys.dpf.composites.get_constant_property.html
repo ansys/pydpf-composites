@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>get_selected_indices_by_material_ids &#8212; pydpf-composites</title>
+    <title>get_constant_property &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -49,8 +49,8 @@
     <script src="../../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="get_selected_indices_by_analysis_ply" href="ansys.dpf.composites.get_selected_indices_by_analysis_ply.html" />
-    <link rel="prev" title="get_selected_indices" href="ansys.dpf.composites.get_selected_indices.html" />
+    <link rel="next" title="get_all_dpf_material_ids" href="ansys.dpf.composites.get_all_dpf_material_ids.html" />
+    <link rel="prev" title="Material Properties" href="../material_properties.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -160,8 +160,8 @@
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../select_indices.html" accesskey="U">Select Elementary Indices</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">get_selected_indices_by_material_ids</a></li> 
+          <li class="nav-item nav-item-2"><a href="../material_properties.html" accesskey="U">Material Properties</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">get_constant_property</a></li> 
       </ul>
     </div>
         </div>
@@ -198,9 +198,14 @@
    Layup Information
   </a>
  </li>
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1">
   <a class="reference internal" href="../select_indices.html">
    Select Elementary Indices
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../material_properties.html">
+   Material Properties
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -208,19 +213,24 @@
    </i>
   </label>
   <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.get_selected_indices.html">
-     get_selected_indices
-    </a>
-   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     get_selected_indices_by_material_ids
+     get_constant_property
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.get_selected_indices_by_analysis_ply.html">
-     get_selected_indices_by_analysis_ply
+    <a class="reference internal" href="ansys.dpf.composites.get_all_dpf_material_ids.html">
+     get_all_dpf_material_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_constant_property_dict.html">
+     get_constant_property_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.MaterialProperty.html">
+     ansys.dpf.composites.MaterialProperty
     </a>
    </li>
   </ul>
@@ -252,10 +262,10 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys.dpf.composites.get_selected_indices_by_material_ids">
+  <a class="reference internal nav-link" href="#ansys.dpf.composites.get_constant_property">
    <code class="docutils literal notranslate">
     <span class="pre">
-     get_selected_indices_by_material_ids()
+     get_constant_property()
     </span>
    </code>
   </a>
@@ -279,25 +289,26 @@
               
               <article class="bd-article" role="main">
                 
-  <section id="get-selected-indices-by-material-ids">
-<h1>get_selected_indices_by_material_ids<a class="headerlink" href="#get-selected-indices-by-material-ids" title="Permalink to this heading">#</a></h1>
+  <section id="get-constant-property">
+<h1>get_constant_property<a class="headerlink" href="#get-constant-property" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="ansys.dpf.composites.get_selected_indices_by_material_ids">
-<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">get_selected_indices_by_material_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.get_selected_indices_by_material_ids" title="Permalink to this definition">#</a></dt>
-<dd><p>Get selected indices by material ids.</p>
-<p>Selects all indices that are in a layer with one of the selected materials</p>
+<dt class="sig sig-object py" id="ansys.dpf.composites.get_constant_property">
+<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">get_constant_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_property</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpf_material_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials_provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_source_or_streams_provider</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.get_constant_property" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a constant material property.</p>
+<p>Only constant properties
+are supported. Variable properties are evaluated at their
+default value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>element_info</strong> (<a class="reference internal" href="ansys.dpf.composites.ElementInfo.html#ansys.dpf.composites.ElementInfo" title="ansys.dpf.composites.ElementInfo"><em>ElementInfo</em></a>) – </p></li>
-<li><p><strong>material_ids</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Collection of material ids to select</p></li>
+<li><p><strong>material_property</strong> (<a class="reference internal" href="ansys.dpf.composites.MaterialProperty.html#ansys.dpf.composites.MaterialProperty" title="ansys.dpf.composites.enums.MaterialProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>) – material property</p></li>
+<li><p><strong>dpf_material_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int64</span></code>) – </p></li>
+<li><p><strong>materials_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – Dpf Materials provider operator</p></li>
+<li><p><strong>data_source_or_streams_provider</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.data_sources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSources</span></code></a>, <a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>]) – Data source or streams provider that contains a rst file</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Selected elementary indices</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>NDArray[int64]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>

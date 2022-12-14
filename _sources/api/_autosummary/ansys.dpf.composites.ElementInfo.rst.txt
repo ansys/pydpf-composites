@@ -43,7 +43,7 @@
       ElementInfo.element_type
       
       
-      ElementInfo.material_ids
+      ElementInfo.dpf_material_ids
       
       
       ElementInfo.is_shell

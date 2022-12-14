@@ -35,7 +35,7 @@ Here are some examples:
     => num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane = 56
 
 The functions in this module compute an array of elementary indices for a given selection of
-layers, nodes, spots, material_ids or analysis plies. These elementary indices can be used to index the first axis
+layers, nodes, spots, dpf_material_ids or analysis plies. These elementary indices can be used to index the first axis
 of the elementary data array. Please check the :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` section for complete usage examples.
 
 
@@ -45,5 +45,5 @@ of the elementary data array. Please check the :ref:`sphx_glr_examples_gallery_e
     :toctree: _autosummary
 
     get_selected_indices
-    get_selected_indices_by_material_ids
+    get_selected_indices_by_dpf_material_ids
     get_selected_indices_by_analysis_ply

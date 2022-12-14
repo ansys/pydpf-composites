@@ -1,6 +1,0 @@
-material\_ids
-=============
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: ElementInfo.material_ids

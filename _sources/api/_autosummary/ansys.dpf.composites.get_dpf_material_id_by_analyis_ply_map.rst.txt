@@ -1,0 +1,6 @@
+﻿get\_dpf\_material\_id\_by\_analyis\_ply\_map
+=============================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autofunction:: get_dpf_material_id_by_analyis_ply_map

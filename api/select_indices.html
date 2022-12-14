@@ -50,7 +50,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="get_selected_indices" href="_autosummary/ansys.dpf.composites.get_selected_indices.html" />
-    <link rel="prev" title="get_layer_thicknesses" href="_autosummary/ansys.dpf.composites.LayupPropertiesProvider.get_layer_thicknesses.html" />
+    <link rel="prev" title="get_dpf_material_id_by_analyis_ply_map" href="_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -213,8 +213,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices_by_material_ids.html">
-     get_selected_indices_by_material_ids
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices_by_dpf_material_ids.html">
+     get_selected_indices_by_dpf_material_ids
     </a>
    </li>
    <li class="toctree-l2">
@@ -223,6 +223,11 @@
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="material_properties.html">
+   Material Properties
+  </a>
  </li>
 </ul>
 
@@ -302,15 +307,15 @@ symmetrical 3x3 tensors). The elementary data of an element is available as a 2D
 </li>
 </ul>
 <p>The functions in this module compute an array of elementary indices for a given selection of
-layers, nodes, spots, material_ids or analysis plies. These elementary indices can be used to index the first axis
+layers, nodes, spots, dpf_material_ids or analysis plies. These elementary indices can be used to index the first axis
 of the elementary data array. Please check the <a class="reference internal" href="../examples/gallery_examples/filter_composite_data_example.html#sphx-glr-examples-gallery-examples-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> section for complete usage examples.</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices.html#ansys.dpf.composites.get_selected_indices" title="ansys.dpf.composites.get_selected_indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_selected_indices</span></code></a>(element_info[, layers, ...])</p></td>
 <td><p>Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices_by_material_ids.html#ansys.dpf.composites.get_selected_indices_by_material_ids" title="ansys.dpf.composites.get_selected_indices_by_material_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_selected_indices_by_material_ids</span></code></a>(...)</p></td>
-<td><p>Get selected indices by material ids.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices_by_dpf_material_ids.html#ansys.dpf.composites.get_selected_indices_by_dpf_material_ids" title="ansys.dpf.composites.get_selected_indices_by_dpf_material_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_selected_indices_by_dpf_material_ids</span></code></a>(...)</p></td>
+<td><p>Get selected indices by dpf_material_ids.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_selected_indices_by_analysis_ply.html#ansys.dpf.composites.get_selected_indices_by_analysis_ply" title="ansys.dpf.composites.get_selected_indices_by_analysis_ply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_selected_indices_by_analysis_ply</span></code></a>(...)</p></td>
 <td><p>Get selected indices by analysis ply.</p></td>
