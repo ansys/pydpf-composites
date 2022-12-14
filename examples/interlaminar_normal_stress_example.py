@@ -30,7 +30,7 @@ from ansys.dpf.composites.add_layup_info_to_mesh import (
     add_layup_info_to_mesh,
     get_composites_data_sources,
 )
-from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
+from ansys.dpf.composites.enums import Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
     get_continuous_fiber_example_files,
