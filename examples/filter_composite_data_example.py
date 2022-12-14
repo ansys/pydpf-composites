@@ -19,7 +19,7 @@ from ansys.dpf.composites import (
     get_element_info_provider,
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
-    get_selected_indices_by_material_ids,
+    get_selected_indices_by_dpf_material_ids,
 )
 from ansys.dpf.composites.add_layup_info_to_mesh import (
     add_layup_info_to_mesh,
@@ -118,7 +118,7 @@ mesh.plot(ply_result_field)
 
 #%%
 # Loop all elements and get maximum stress in material direction
-# for all plies that have the material with material id.
+# for all plies that have the material with dpf_material_id.
 # Note: It is currently not possible to get a dpf_material_id for a
 # given material name. It is only possible
 # to get the dpf_material_id from an analysis ply
@@ -137,7 +137,7 @@ with material_result_field.as_local_field() as local_result_field:
         element_info = element_info_provider.get_element_info(element_id)
         assert element_info is not None
 
-        selected_indices = get_selected_indices_by_material_ids(element_info, [ud_material_id])
+        selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [ud_material_id])
 
         value = np.max(stress_data[selected_indices][:, component.value])
         local_result_field.append([value], element_id)

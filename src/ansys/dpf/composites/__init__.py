@@ -7,20 +7,26 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
-from .enums import Spot
+from .enums import MaterialProperty, Spot
 from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfo,
     ElementInfoProvider,
     LayupPropertiesProvider,
+    get_dpf_material_id_by_analyis_ply_map,
     get_element_info_provider,
+)
+from .material_properties import (
+    get_all_dpf_material_ids,
+    get_constant_property,
+    get_constant_property_dict,
 )
 from .result_definition import ResultDefinition
 from .sampling_point import SamplingPoint
 from .select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
-    get_selected_indices_by_material_ids,
+    get_selected_indices_by_dpf_material_ids,
 )
 
 __all__ = [
@@ -30,10 +36,15 @@ __all__ = [
     "ResultDefinition",
     "ElementInfoProvider",
     "ElementInfo",
+    "get_dpf_material_id_by_analyis_ply_map",
     "AnalysisPlyInfoProvider",
     "get_element_info_provider",
     "get_selected_indices",
-    "get_selected_indices_by_material_ids",
+    "get_selected_indices_by_dpf_material_ids",
     "get_selected_indices_by_analysis_ply",
     "LayupPropertiesProvider",
+    "get_constant_property",
+    "get_all_dpf_material_ids",
+    "get_constant_property_dict",
+    "MaterialProperty",
 ]
