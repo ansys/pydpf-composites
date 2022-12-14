@@ -16,6 +16,10 @@ def get_constant_property(
 ) -> float:
     """Get a constant material property.
 
+    Only constant properties
+    are supported. Variable properties are evaluated at their
+    default value.
+
     Parameters
     ----------
     material_property:

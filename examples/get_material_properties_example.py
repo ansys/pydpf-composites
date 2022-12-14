@@ -89,7 +89,7 @@ with result_field.as_local_field() as local_result_field:
                 layer_max = np.max(layer_strain_values)
                 element_max = max(element_max, layer_max / tensile_strain_limit_1)
 
-        # Compute Maximum over all layers and add to output field
+        # add to output field
         local_result_field.append([element_max], element_id)
 
 
