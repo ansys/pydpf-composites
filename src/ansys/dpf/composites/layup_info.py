@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Collection, Dict, List, Optional, Union
+from typing import Any, Collection, Dict, List, Optional, Sequence, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -169,7 +169,7 @@ class AnalysisPlyInfoProvider:
         """
         return self._layer_indices.by_id(element_id)
 
-    def ply_element_ids(self) -> Optional[np.int64]:
+    def ply_element_ids(self) -> Optional[Sequence[np.int64]]:
         """Return list of element labels of the analysis ply."""
         return self.property_field.scoping.ids
 

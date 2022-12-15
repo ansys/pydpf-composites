@@ -89,7 +89,8 @@ ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
 ins_operator.inputs.materials_container(material_provider.outputs)
 ins_operator.inputs.mesh(mesh_provider.outputs.mesh)
 ins_operator.inputs.mesh_properties_container(layup_provider.outputs.mesh_properties_container)
-# pass inputs by pin because the input name is not set yet. Will be improved in sever version 2023 R2
+# pass inputs by pin because the input name is not set yet.
+# Will be improved in sever version 2023 R2
 ins_operator.connect(24, layup_provider.outputs.fields_container)
 ins_operator.connect(0, strain_operator.outputs.fields_container)
 ins_operator.connect(1, stress_operator.outputs.fields_container)
