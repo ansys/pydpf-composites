@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union
+from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -171,7 +171,7 @@ class AnalysisPlyInfoProvider:
 
     def ply_element_ids(self) -> Optional[Sequence[np.int64]]:
         """Return list of element labels of the analysis ply."""
-        return self.property_field.scoping.ids
+        return cast(Sequence[np.int64], self.property_field.scoping.ids)
 
 
 def get_dpf_material_id_by_analyis_ply_map(
