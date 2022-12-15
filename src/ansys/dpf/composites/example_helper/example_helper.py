@@ -180,8 +180,6 @@ def _get_example_files(
             if filename is not None:
                 file_url = _get_file_url(example_files.directory, filename)
                 local_path = os.path.join(tmpdir, filename)
-                print(f"URL: {file_url}")
-                print(f"local path: {local_path}")
                 urllib.request.urlretrieve(file_url, local_path)
                 # todo: With 0.7.1 the server will have
                 #  a boolean property 'local_server' that we can use to

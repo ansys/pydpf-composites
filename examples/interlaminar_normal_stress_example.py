@@ -22,7 +22,7 @@ Note, the INS operator fills the results directly into the stress field.
 """
 
 #%%
-# Load ansys libraries
+# Load Ansys libraries
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites import Spot, get_element_info_provider, get_selected_indices
@@ -37,11 +37,15 @@ from ansys.dpf.composites.example_helper.example_helper import (
 )
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
+#%%
+# Start Server and upload files
+# -----------------------------
 server_context = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server_context, "ins")
 
 #%%
-# configure data sources
+# Configure data sources
+# -----------------------------
 model = dpf.Model(composite_files_on_server.rst)
 rst_data_source = dpf.DataSources(composite_files_on_server.rst)
 
@@ -54,11 +58,12 @@ composite_definitions_source.add_file_path(
 )
 
 #%%
-# Setup Mesh Provider
+# Setup Data Provider
+# -------------------
+#
+# Mesh provider, material and lay-up provider
 mesh_provider = model.metadata.mesh_provider
 
-#%%
-# Set up material and lay-up provider
 composites_data_sources = get_composites_data_sources(composite_files_on_server)
 layup_operators = add_layup_info_to_mesh(
     mesh=mesh_provider.outputs.mesh(), data_sources=composites_data_sources
@@ -68,7 +73,9 @@ layup_provider = layup_operators.layup_provider
 material_provider = layup_operators.material_operators.material_provider
 
 #%%
-# Setup the result operators: strains and stresses
+# Inputs from the result files
+# ----------------------------
+#
 # Rotate to global is False because the post-processing engine expects the results to be
 # in the element coordinate system ( material coordinate system)
 
@@ -81,10 +88,12 @@ stress_operator.inputs.data_sources(rst_data_source)
 stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
-# Setup of failure evaluator. Combines the results and evaluates all the failure criteria.
-# The output contains the maximum failure criteria for each integration point.
+# Interlaminar Normal Stress Operator
+# -----------------------------------
 #
-
+# Configure the INS operator and set all inputs.
+# The s3 stresses are evaluated and stored in the stress
+# container on run
 ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
 ins_operator.inputs.materials_container(material_provider.outputs)
 ins_operator.inputs.mesh(mesh_provider.outputs.mesh)
@@ -99,14 +108,18 @@ ins_operator.connect(1, stress_operator.outputs.fields_container)
 ins_operator.run()
 
 #%%
-# Get element infos for all the elements
+# Plot s3 stresses
+# ----------------
+#
+# Prepare data for the plotting
 stress_field = stress_operator.outputs.fields_container()[0]
 element_info_provider = get_element_info_provider(mesh_provider.outputs.mesh(), rst_data_source)
 element_ids = stress_field.scoping.ids
 element_infos = [element_info_provider.get_element_info(element_id) for element_id in element_ids]
 
 #%%
-# Plot max interlaminar normal stresses for each element
+# Plot max s3 of each element
+# '''''''''''''''''''''''''''
 
 s3_component = Sym3x3TensorComponent.tensor33
 max_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
@@ -128,7 +141,9 @@ mesh = mesh_provider.outputs.mesh()
 mesh.plot(max_s3_field)
 
 #%%
-# Plot interlaminar normal stresses for a certain ply
+# Plot s3 of a certain ply
+# ''''''''''''''''''''''''
+
 analysis_ply_name = get_all_analysis_ply_names(mesh_provider.outputs.mesh())
 selected_ply = "P3L1__Ply.1"
 
