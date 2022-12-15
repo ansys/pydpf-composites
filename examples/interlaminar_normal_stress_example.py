@@ -25,7 +25,7 @@ Note, the INS operator fills the results directly into the stress field.
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites import get_element_info_provider, get_selected_indices
+from ansys.dpf.composites import get_element_info_provider, get_selected_indices, Spot
 from ansys.dpf.composites.add_layup_info_to_mesh import (
     add_layup_info_to_mesh,
     get_composites_data_sources,
