@@ -169,7 +169,7 @@ class AnalysisPlyInfoProvider:
         """
         return self._layer_indices.by_id(element_id)
 
-    def ply_element_ids(self):
+    def ply_element_ids(self) -> Optional[np.int64]:
         """Return list of element labels of the analysis ply."""
         return self.property_field.scoping.ids
 
