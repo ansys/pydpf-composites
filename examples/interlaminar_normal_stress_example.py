@@ -35,12 +35,13 @@ from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
     get_continuous_fiber_example_files,
 )
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
 server_context = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server_context, "ins")
 
 #%%
-
+# configure data sources
 model = dpf.Model(composite_files_on_server.rst)
 rst_data_source = dpf.DataSources(composite_files_on_server.rst)
 
@@ -88,8 +89,8 @@ ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
 ins_operator.inputs.materials_container(material_provider.outputs)
 ins_operator.inputs.mesh(mesh_provider.outputs.mesh)
 ins_operator.inputs.mesh_properties_container(layup_provider.outputs.mesh_properties_container)
-# pass inputs by pin because the input name is not set yet
-ins_operator.connect(24, layup_provider.outputs.section_data_container)
+# pass inputs by pin because the input name is not set yet. Will be improved in sever version 2023 R2
+ins_operator.connect(24, layup_provider.outputs.fields_container)
 ins_operator.connect(0, strain_operator.outputs.fields_container)
 ins_operator.connect(1, stress_operator.outputs.fields_container)
 
@@ -98,8 +99,8 @@ ins_operator.run()
 
 #%%
 # Get element infos for all the elements
-stress_field = stress_operator.outputs.fields_container[0]
-element_info_provider = get_element_info_provider(mesh_provider.outputs.mesh, rst_data_source)
+stress_field = stress_operator.outputs.fields_container()[0]
+element_info_provider = get_element_info_provider(mesh_provider.outputs.mesh(), rst_data_source)
 element_ids = stress_field.scoping.ids
 element_infos = [element_info_provider.get_element_info(element_id) for element_id in element_ids]
 
@@ -107,8 +108,8 @@ element_infos = [element_info_provider.get_element_info(element_id) for element_
 # Plot max interlaminar normal stresses for each element
 
 s3_component = Sym3x3TensorComponent.tensor33
-result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
-with result_field.as_local_field() as local_result_field:
+max_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+with max_s3_field.as_local_field() as local_max_s3_field:
     element_ids = stress_field.scoping.ids
     for element_id in element_ids:
         stress_data = stress_field.get_entity_data_by_id(element_id)
@@ -117,8 +118,36 @@ with result_field.as_local_field() as local_result_field:
         # select all stresses from bottom to top of node 0
         selected_indices = get_selected_indices(element_info, layers=None, nodes=[0], spots=None)
 
-        s3 = stress_data[selected_indices][:: s3_component.value]
-        local_result_field.append(max(s3), element_id)
+        # order is bottom, top, mid
+        s3 = stress_data[selected_indices, s3_component.value]
+
+        local_max_s3_field.append([max(s3)], element_id)
 
 mesh = mesh_provider.outputs.mesh()
-mesh.plot(result_field)
+mesh.plot(max_s3_field)
+
+#%%
+# Plot interlaminar normal stresses for a certain ply
+analysis_ply_name = get_all_analysis_ply_names(mesh_provider.outputs.mesh())
+selected_ply = "P3L1__Ply.1"
+
+ply_info_provider = AnalysisPlyInfoProvider(mesh_provider.outputs.mesh(), selected_ply)
+p8l1_ply_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
+    element_ids = ply_info_provider.ply_element_ids()
+    for element_id in element_ids:
+        stress_data = stress_field.get_entity_data_by_id(element_id)
+        element_info = element_info_provider.get_element_info(element_id)
+        assert element_info is not None
+        # select all stresses from bottom to top of node 0
+        layer_index = ply_info_provider.get_layer_index_by_element_id(element_id)
+        selected_indices = get_selected_indices(
+            element_info, layers=[layer_index], nodes=[0], spots=[Spot.MIDDLE]
+        )
+
+        # order is bottom, top, mid
+        s3 = stress_data[selected_indices, s3_component.value]
+
+        p8l1_ply_s3_field.append(s3, element_id)
+
+mesh.plot(p8l1_ply_s3_field)

@@ -169,6 +169,10 @@ class AnalysisPlyInfoProvider:
         """
         return self._layer_indices.by_id(element_id)
 
+    def ply_element_ids(self):
+        """Return list of element labels of the analysis ply."""
+        return self.property_field.scoping.ids
+
 
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
