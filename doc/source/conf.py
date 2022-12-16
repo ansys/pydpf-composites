@@ -1,9 +1,13 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
+import os
 
 from ansys_sphinx_theme import pyansys_logo_black as logo
+from ansys_sphinx_theme import get_version_match
 import pyvista
 from sphinx_gallery.sorting import FileNameSortKey
+
+from ansys.dpf.composites import __version__
 
 # Manage errors
 pyvista.set_error_output_file("errors.txt")
@@ -18,14 +22,17 @@ pyvista.BUILDING_GALLERY = True
 project = "ansys-dpf-composites"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "ANSYS, Inc."
-release = version = "0.1.dev0"
+release = version = __version__
 
 # Select desired logo, theme, and declare the html title
 html_logo = logo
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "pydpf-composites"
 
+
 # specify the location of your github repo
+cname = os.environ.get("DOCUMENTATION_CNAME", "composites.dpf.docs.pyansys.com")
+
 html_theme_options = {
     "github_url": "https://github.com/pyansys/pydpf-composites",
     "show_prev_next": False,
@@ -33,6 +40,11 @@ html_theme_options = {
     "additional_breadcrumbs": [
         ("PyAnsys", "https://docs.pyansys.com/"),
     ],
+    "switcher": {
+        "json_url": f"{cname}/release/versions.json",
+        "version_match": get_version_match(__version__),
+    },
+    "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
 }
 
 # Sphinx extensions
@@ -45,6 +57,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
     "sphinx_gallery.gen_gallery",
+    "sphinx_design",
 ]
 
 # Intersphinx mapping
