@@ -92,8 +92,8 @@ grpcio = "*"
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.4.2"
-description = "This is the ansys-sphinx-theme module."
+version = "0.8.0"
+description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 category = "main"
 optional = true
 python-versions = ">=3.5"
@@ -102,6 +102,9 @@ python-versions = ">=3.5"
 Jinja2 = ">=3.1.2"
 pydata-sphinx-theme = "0.9.0"
 Sphinx = ">=4.0.0"
+
+[package.extras]
+doc = ["Sphinx (==5.3.0)", "numpydoc (==1.5.0)", "sphinx-copybutton (==0.5.1)", "sphinx-notfound-page (==0.8.3)"]
 
 [[package]]
 name = "appdirs"
@@ -1517,7 +1520,7 @@ test = ["pytest", "pytest-cov", "ansys-dpf-core", "pyvista"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0"
-content-hash = "acd45483dc29b90f77be33cb1c94f78582dc27be6f30cac14f7b4c39c62b176e"
+content-hash = "4d4269048242af9a2637d7c286bed5213e8d9916dd73525e8ae7a6e75f0b3b58"
 
 [metadata.files]
 aiohttp = [
@@ -1633,8 +1636,8 @@ ansys-grpc-dpf = [
     {file = "ansys_grpc_dpf-0.7.0-py3-none-any.whl", hash = "sha256:b9f003deadf1d6db3b44ddc7717b511b2f33bc68001bb223afb767d558df75ed"},
 ]
 ansys-sphinx-theme = [
-    {file = "ansys-sphinx-theme-0.4.2.tar.gz", hash = "sha256:98f4b4c8c2176515dff82b83a85df18b4d3ba6d058ef17e33d08cadab5be4ef9"},
-    {file = "ansys_sphinx_theme-0.4.2-py3-none-any.whl", hash = "sha256:aafeedd8de45d86b7ced3925b783394da1cc520f8b5fdb647b5fbc67842ef0a0"},
+    {file = "ansys-sphinx-theme-0.8.0.tar.gz", hash = "sha256:dd44821353d8f93f77163164a85ba2f0fedf603361cd43c3a301ed1aee5bea61"},
+    {file = "ansys_sphinx_theme-0.8.0-py3-none-any.whl", hash = "sha256:3023db8eb3ed747493d9b33120b4e7a26bbe0321a86f1b3dfb44ead58ba2eef1"},
 ]
 appdirs = [
     {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
