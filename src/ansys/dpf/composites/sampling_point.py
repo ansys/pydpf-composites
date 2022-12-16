@@ -3,7 +3,7 @@
 from collections import namedtuple
 import hashlib
 import json
-from typing import Any, Dict, Sequence, Union, cast
+from typing import Any, Dict, Sequence, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -78,7 +78,7 @@ class SamplingPoint:
     def __init__(
         self,
         name: str,
-        result_definition: Union[ResultDefinition, None] = None,
+        result_definition: ResultDefinition,
         server: BaseServer = None,
     ):
         """Create a SamplingPoint object."""
@@ -107,12 +107,12 @@ class SamplingPoint:
         self._rd_hash = ""
 
     @property
-    def result_definition(self) -> Union[ResultDefinition, None]:
+    def result_definition(self) -> ResultDefinition:
         """Input for the Sampling Point operator."""
         return self._result_definition
 
     @result_definition.setter
-    def result_definition(self, value: Union[ResultDefinition, None]) -> None:
+    def result_definition(self, value: ResultDefinition) -> None:
         self._isuptodate = False
         self._result_definition = value
 
