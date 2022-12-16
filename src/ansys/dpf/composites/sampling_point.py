@@ -107,11 +107,6 @@ class SamplingPoint:
         self._rd_hash = ""
 
     @property
-    def spots_per_ply(self) -> int:
-        """Access the number of through-the-thickness integration points per ply."""
-        return self._spots_per_ply
-
-    @property
     def result_definition(self) -> Union[ResultDefinition, None]:
         """Input for the Sampling Point operator."""
         return self._result_definition
@@ -120,6 +115,28 @@ class SamplingPoint:
     def result_definition(self, value: Union[ResultDefinition, None]) -> None:
         self._isuptodate = False
         self._result_definition = value
+
+    @property
+    def element_id(self) -> int:
+        """Element label where to sample the laminate.
+
+        Returns -1 if the element id is not set."""
+        element_scope = self._result_definition.element_scope
+        if len(element_scope) > 1:
+            raise RuntimeError("The scope of a Sampling Point can only be one element.")
+        if len(element_scope) == 0:
+            return -1
+        return element_scope[0]
+
+    @element_id.setter
+    def element_id(self, value: int) -> None:
+        self._result_definition.element_scope = [value]
+        self._isuptodate = False
+    
+    @property
+    def spots_per_ply(self) -> int:
+        """Access the number of through-the-thickness integration points per ply."""
+        return self._spots_per_ply
 
     @property
     def results(self) -> Any:

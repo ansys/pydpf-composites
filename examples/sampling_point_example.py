@@ -113,3 +113,17 @@ line = ax1.plot(e2, offsets, label="e2")
 ax1.set_yticks([])
 ax1.legend()
 ax1.set_title("e12 and e2")
+
+
+# %%
+# Sample another element
+# ----------------------
+#
+# The element where the sampling is taking place can be easily changed.
+sampling_point.element_id = 4
+fig, axes = sampling_point.get_result_plots(
+    strain_components=[],  # do not plot strains
+    core_scale_factor=0.1,
+    spots=[Spot.BOTTOM, Spot.TOP],
+    show_failure_modes=True,
+)
