@@ -124,7 +124,7 @@ jobs:
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2
         with:
-          name: Documentation-html
+          name: documentation-html
           path: .tox/doc_out/
           retention-days: 7
 
