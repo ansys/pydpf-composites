@@ -120,7 +120,8 @@ class SamplingPoint:
     def element_id(self) -> int:
         """Element label where to sample the laminate.
 
-        Returns -1 if the element id is not set."""
+        Returns -1 if the element id is not set.
+        """
         element_scope = self._result_definition.element_scope
         if len(element_scope) > 1:
             raise RuntimeError("The scope of a Sampling Point can only be one element.")
@@ -132,7 +133,7 @@ class SamplingPoint:
     def element_id(self, value: int) -> None:
         self._result_definition.element_scope = [value]
         self._isuptodate = False
-    
+
     @property
     def spots_per_ply(self) -> int:
         """Access the number of through-the-thickness integration points per ply."""

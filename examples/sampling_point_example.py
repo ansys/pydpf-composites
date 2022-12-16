@@ -127,3 +127,5 @@ fig, axes = sampling_point.get_result_plots(
     spots=[Spot.BOTTOM, Spot.TOP],
     show_failure_modes=True,
 )
+fig.set_figheight(8)
+fig.set_figwidth(12)
