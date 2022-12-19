@@ -68,6 +68,9 @@
       SamplingPoint.e3
       
       
+      SamplingPoint.element_id
+      
+      
       SamplingPoint.failure_modes
       
       

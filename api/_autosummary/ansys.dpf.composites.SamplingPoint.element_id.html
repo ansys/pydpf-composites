@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>failure_modes &#8212; pydpf-composites</title>
+    <title>element_id &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -49,8 +49,8 @@
     <script src="../../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="inverse_reserve_factor" href="ansys.dpf.composites.SamplingPoint.inverse_reserve_factor.html" />
-    <link rel="prev" title="element_id" href="ansys.dpf.composites.SamplingPoint.element_id.html" />
+    <link rel="next" title="failure_modes" href="ansys.dpf.composites.SamplingPoint.failure_modes.html" />
+    <link rel="prev" title="e3" href="ansys.dpf.composites.SamplingPoint.e3.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -162,7 +162,7 @@
           <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
           <li class="nav-item nav-item-2"><a href="../base.html" >Objects and Helpers</a> » </li>
           <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.SamplingPoint.html" accesskey="U">ansys.dpf.composites.SamplingPoint</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">failure_modes</a></li> 
+        <li class="nav-item nav-item-this"><a href="">element_id</a></li> 
       </ul>
     </div>
         </div>
@@ -279,13 +279,13 @@
        e3
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.element_id.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        element_id
       </a>
      </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.failure_modes.html">
        failure_modes
       </a>
      </li>
@@ -425,10 +425,10 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys.dpf.composites.SamplingPoint.failure_modes">
+  <a class="reference internal nav-link" href="#ansys.dpf.composites.SamplingPoint.element_id">
    <code class="docutils literal notranslate">
     <span class="pre">
-     SamplingPoint.failure_modes
+     SamplingPoint.element_id
     </span>
    </code>
   </a>
@@ -452,15 +452,16 @@
               
               <article class="bd-article" role="main">
                 
-  <section id="failure-modes">
-<h1>failure_modes<a class="headerlink" href="#failure-modes" title="Permalink to this heading">#</a></h1>
+  <section id="element-id">
+<h1>element_id<a class="headerlink" href="#element-id" title="Permalink to this heading">#</a></h1>
 <dl class="py property">
-<dt class="sig sig-object py" id="ansys.dpf.composites.SamplingPoint.failure_modes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">failure_modes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.failure_modes" title="Permalink to this definition">#</a></dt>
-<dd><p>Critical failure mode of each ply.</p>
+<dt class="sig sig-object py" id="ansys.dpf.composites.SamplingPoint.element_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">element_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.SamplingPoint.element_id" title="Permalink to this definition">#</a></dt>
+<dd><p>Element label where to sample the laminate.</p>
+<p>Returns -1 if the element id is not set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
