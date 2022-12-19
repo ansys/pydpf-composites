@@ -119,7 +119,6 @@ jobs:
       - name: Generate the documentation with tox
         run: | 
           tox -e doc-linux
-          touch .tox/doc_out/.nojekyll
 
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2
