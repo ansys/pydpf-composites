@@ -416,10 +416,14 @@ class SamplingPoint:
         result = []
 
         for ply_index, crit_index in enumerate(critical_indices):
-            result.append(FailureResult(failure_models[ply_index][crit_index],
-                                        irfs[ply_index][crit_index],
-                                        rfs[ply_index][crit_index],
-                                        mos[ply_index][crit_index]))
+            result.append(
+                FailureResult(
+                    failure_models[ply_index][crit_index],
+                    irfs[ply_index][crit_index],
+                    rfs[ply_index][crit_index],
+                    mos[ply_index][crit_index],
+                )
+            )
 
         return result
 
