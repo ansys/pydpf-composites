@@ -12,7 +12,7 @@ from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
 from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import ResultDefinition
-from ansys.dpf.composites.sampling_point import SamplingPoint
+from ansys.dpf.composites.sampling_point import SamplingPoint, FailureResult
 
 
 def test_sampling_point(dpf_server):
@@ -73,6 +73,16 @@ def test_sampling_point(dpf_server):
     assert indices == ref_indices
     numpy.testing.assert_allclose(offsets, ref_offsets)
     numpy.testing.assert_allclose(scaled_offsets, ref_scaled_offsets)
+
+    """ply-wise max failures"""
+    critical_failures = sampling_point.get_ply_wise_critical_failures()
+    assert len(critical_failures) == sampling_point.number_of_plies
+    ref = [FailureResult(mode='e12', irf=2.248462289571762, rf=0.4447483974438629, mos=-0.5552516025561371),
+           FailureResult(mode='e1t', irf=1.522077660182279, rf=0.6569967000765541, mos=-0.3430032999234459),
+           FailureResult(mode='na', irf=0.0, rf=1000.0, mos=999.0),
+           FailureResult(mode='e12', irf=0.1853588231218358, rf=5.394941460880462, mos=4.394941460880462),
+           FailureResult(mode='s2c', irf=0.3256845400457666, rf=3.07045584619852, mos=2.07045584619852)]
+    assert critical_failures == ref
 
     """Test default plots: result plot and polar plot"""
     fig, axes = sampling_point.get_result_plots(
