@@ -119,7 +119,7 @@ ax1.set_title("e12 and e2")
 # Sample another element
 # ----------------------
 #
-# The element where the sampling is taking place can be easily changed.
+# The element id of the sampling point can be easily changed.
 sampling_point.element_id = 4
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains

@@ -3,7 +3,7 @@
 from collections import namedtuple
 import hashlib
 import json
-from typing import Any, Dict, Sequence, cast
+from typing import Any, Dict, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -117,7 +117,7 @@ class SamplingPoint:
         self._result_definition = value
 
     @property
-    def element_id(self) -> int:
+    def element_id(self) -> Union[int, None]:
         """Element label where to sample the laminate.
 
         Returns -1 if the element id is not set.
@@ -126,7 +126,7 @@ class SamplingPoint:
         if len(element_scope) > 1:
             raise RuntimeError("The scope of a Sampling Point can only be one element.")
         if len(element_scope) == 0:
-            return -1
+            return None
         return element_scope[0]
 
     @element_id.setter
