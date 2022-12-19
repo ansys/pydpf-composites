@@ -136,7 +136,7 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables examples/gallery_examples/filter_composite_data_example and {'json_url': 'composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+     variables examples/gallery_examples/filter_composite_data_example and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
 -->
 
 <script type="text/javascript">
@@ -163,7 +163,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 (function () {
-    $.getJSON("composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
+    $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
         const currentFilePath = "examples/gallery_examples/filter_composite_data_example.html";
         let btn = document.getElementById("version_switcher_button");
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
@@ -410,7 +410,7 @@ Refer to <a class="reference internal" href="../../api/select_indices.html#selec
 <span class="n">add_layup_info_to_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="o">=</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(),</span> <span class="n">data_sources</span><span class="o">=</span><span class="n">composites_data_sources</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>LayupOperators(material_operators=MaterialOperators(material_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7fc3f5317a90&gt;, material_support_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7fc3f5317520&gt;, result_info_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7fc3f5317940&gt;), layup_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7fc3f5317f40&gt;)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>LayupOperators(material_operators=MaterialOperators(material_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7f3f3bb6a070&gt;, material_support_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7f3f3bb4fa60&gt;, result_info_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7f3f3bb4fee0&gt;), layup_provider=&lt;ansys.dpf.core.dpf_operator.Operator object at 0x7f3f3bb6a520&gt;)
 </pre></div>
 </div>
 <p>Get example stress field and mesh</p>
@@ -512,7 +512,7 @@ to get the dpf_material_id from an analysis ply</p>
 <span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">material_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_filter_composite_data_example_003.png" alt="filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.882 seconds)</p>
+<img src="../../_images/sphx_glr_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_filter_composite_data_example_003.png" alt="filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.410 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/04fc7fea6dc636abe288621a4518b9a9/filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">filter_composite_data_example.py</span></code></a></p>

@@ -136,7 +136,7 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables api/_autosummary/ansys.dpf.composites.ElementInfo.dpf_material_ids and {'json_url': 'composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+     variables api/_autosummary/ansys.dpf.composites.ElementInfo.dpf_material_ids and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
 -->
 
 <script type="text/javascript">
@@ -163,7 +163,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 (function () {
-    $.getJSON("composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
+    $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
         const currentFilePath = "api/_autosummary/ansys.dpf.composites.ElementInfo.dpf_material_ids.html";
         let btn = document.getElementById("version_switcher_button");
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
