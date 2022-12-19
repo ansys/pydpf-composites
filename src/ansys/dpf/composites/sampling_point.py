@@ -270,7 +270,7 @@ class SamplingPoint:
         return np.array(self._results[0]["layup"]["polar_properties"]["G12"])
 
     @property
-    def number_of_plies(self):
+    def number_of_plies(self) -> int:
         """Get number of plies."""
         return len(self.analysis_plies)
 
