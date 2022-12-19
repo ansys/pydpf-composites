@@ -1,0 +1,1070 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; pydpf-composites</title>
+    
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    
+        <link href="_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/design-tabs.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    <img src="_static/pyansys-logo-black-cropped.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/pyansys-logo-black-cropped.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="index.html">
+  Pydpf composites
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="api/index.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="examples/index.html">
+  Examples
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <div class="dropdown" id="version_switcher">
+    <button type="button" class="btn btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
+        dev  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+
+<!-- NOTE: this JS must live here (not in our global JS file) because it relies
+     on being processed by Jinja before it is run (specifically for replacing
+     variables genindex and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+-->
+
+<script type="text/javascript">
+// Check if corresponding page path exists in other version of docs
+// and, if so, go there instead of the homepage of the other docs version
+function checkPageExistsAndRedirect(event) {
+    const currentFilePath = "genindex.html",
+          tryUrl = event.target.getAttribute("href");
+    let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
+    $.ajax({
+        type: 'HEAD',
+        url: tryUrl,
+        // if the page exists, go there
+        success: function() {
+            location.href = tryUrl;
+        }
+    }).fail(function() {
+        location.href = otherDocsHomepage;
+    });
+    // this prevents the browser from following the href of the clicked node
+    // (which is fine because this function takes care of redirecting)
+    return false;
+}
+
+// Populate the version switcher from the JSON config file
+(function () {
+    $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
+        const currentFilePath = "genindex.html";
+        let btn = document.getElementById("version_switcher_button");
+        // Set empty strings by default so that these attributes exist and can be used in CSS selectors
+        btn.dataset["activeVersionName"] = "";
+        btn.dataset["activeVersion"] = "";
+        // create links to the corresponding page in the other docs versions
+        $.each(data, function(index, entry) {
+            // if no custom name specified (e.g., "latest"), use version string
+            if (!("name" in entry)) {
+                entry.name = entry.version;
+            }
+            // create the node
+            const node = document.createElement("a");
+            node.setAttribute("class", "list-group-item list-group-item-action py-1");
+            node.textContent = `${entry.name}`;
+            node.setAttribute("href", `${entry.url}${currentFilePath}`);
+            // on click, AJAX calls will check if the linked page exists before
+            // trying to redirect, and if not, will redirect to the homepage
+            // for that version of the docs.
+            node.onclick = checkPageExistsAndRedirect;
+            // Add dataset values for the version and name in case people want
+            // to apply CSS styling based on this information.
+            node.dataset["versionName"] = entry.name;
+            node.dataset["version"] = entry.version;
+
+            $("#version_switcher_menu").append(node);
+            // replace dropdown button text with the preferred display name of
+            // this version, rather than using sphinx's 0.1.dev0 variable.
+            // also highlight the dropdown entry for the currently-viewed
+            // version's entry
+            if (entry.version == "dev") {
+                node.classList.add("active");
+                btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+                btn.dataset["activeVersion"] = entry.version;
+            }
+        });
+    });
+})();
+</script>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/pyansys/pydpf-composites" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+     
+<div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(text => document.getElementById("announcement_msg").innerHTML = text)
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="index.html">pydpf-composites</a> » </li>
+    
+
+        <li class="nav-item nav-item-this"><a href="">Index</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+    
+    
+    
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.active.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.active">active (ansys.dpf.composites.failure_criteria.CoreFailureCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.active.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.active">(ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.active.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.active">(ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.active.html#ansys.dpf.composites.failure_criteria.HashinCriterion.active">(ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.active.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion.active">(ansys.dpf.composites.failure_criteria.HoffmanCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.active.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.active">(ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.active.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.active">(ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.active.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.active">(ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.active.html#ansys.dpf.composites.failure_criteria.PuckCriterion.active">(ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.active.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.active">(ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.active.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion.active">(ansys.dpf.composites.failure_criteria.TsaiHillCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.active.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion.active">(ansys.dpf.composites.failure_criteria.TsaiWuCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.active.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.active">(ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.add_ply_sequence_to_plot.html#ansys.dpf.composites.SamplingPoint.add_ply_sequence_to_plot">add_ply_sequence_to_plot() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.add_results_to_plot.html#ansys.dpf.composites.SamplingPoint.add_results_to_plot">add_results_to_plot() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.analysis_plies.html#ansys.dpf.composites.SamplingPoint.analysis_plies">analysis_plies (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.html#ansys.dpf.composites.AnalysisPlyInfoProvider">AnalysisPlyInfoProvider (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.assembly_mapping_files.html#ansys.dpf.composites.ResultDefinition.assembly_mapping_files">assembly_mapping_files (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.b21.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.b21">b21 (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.b32.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.b32">b32 (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.cfc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cfc">cfc (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.cfps.html#ansys.dpf.composites.failure_criteria.PuckCriterion.cfps">cfps (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.cft.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cft">cft (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.cma.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cma">cma (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmb.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmb">cmb (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmc">cmc (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.combined_failure_criterion.html#ansys.dpf.composites.ResultDefinition.combined_failure_criterion">combined_failure_criterion (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion">CombinedFailureCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.composite_definitions.html#ansys.dpf.composites.ResultDefinition.composite_definitions">composite_definitions (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion">CoreFailureCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion">CuntzeCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.dim.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.dim">dim (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.dim.html#ansys.dpf.composites.failure_criteria.HashinCriterion.dim">(ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.dim.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion.dim">(ansys.dpf.composites.failure_criteria.HoffmanCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.dim.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.dim">(ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.dim.html#ansys.dpf.composites.failure_criteria.PuckCriterion.dim">(ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.dim.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion.dim">(ansys.dpf.composites.failure_criteria.TsaiHillCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.dim.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion.dim">(ansys.dpf.composites.failure_criteria.TsaiWuCriterion property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.dpf_material_ids.html#ansys.dpf.composites.ElementInfo.dpf_material_ids">dpf_material_ids (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e1.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e1">e1 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.e1.html#ansys.dpf.composites.SamplingPoint.e1">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e12.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e12">e12 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.e12.html#ansys.dpf.composites.SamplingPoint.e12">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e13.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e13">e13 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.e13.html#ansys.dpf.composites.SamplingPoint.e13">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e2.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e2">e2 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.e2.html#ansys.dpf.composites.SamplingPoint.e2">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e23.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e23">e23 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.e23.html#ansys.dpf.composites.SamplingPoint.e23">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e3.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e3">e3 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.e3.html#ansys.dpf.composites.SamplingPoint.e3">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.element_id.html#ansys.dpf.composites.SamplingPoint.element_id">element_id (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.element_scope.html#ansys.dpf.composites.ResultDefinition.element_scope">element_scope (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.element_type.html#ansys.dpf.composites.ElementInfo.element_type">element_type (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.html#ansys.dpf.composites.ElementInfo">ElementInfo (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfoProvider.html#ansys.dpf.composites.ElementInfoProvider">ElementInfoProvider (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSxy.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSxy">eSxy (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSxz.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSxz">eSxz (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSyz.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSyz">eSyz (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXc.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXc">eXc (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.expression.html#ansys.dpf.composites.ResultDefinition.expression">expression (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXt.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXt">eXt (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eYc.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eYc">eYc (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eYt.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eYt">eYt (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eZc.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eZc">eZc (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eZt.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eZt">eZt (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion">FaceSheetWrinklingCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.failure_criteria.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.failure_criteria">failure_criteria (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.failure_modes.html#ansys.dpf.composites.SamplingPoint.failure_modes">failure_modes (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.force_global_constants.html#ansys.dpf.composites.failure_criteria.PuckCriterion.force_global_constants">force_global_constants (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.force_global_strain_limits.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.force_global_strain_limits">force_global_strain_limits (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle">fracture_plane_angle (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_all_dpf_material_ids.html#ansys.dpf.composites.get_all_dpf_material_ids">get_all_dpf_material_ids() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.LayupPropertiesProvider.get_analysis_plies.html#ansys.dpf.composites.LayupPropertiesProvider.get_analysis_plies">get_analysis_plies() (ansys.dpf.composites.LayupPropertiesProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_constant_property.html#ansys.dpf.composites.get_constant_property">get_constant_property() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_constant_property_dict.html#ansys.dpf.composites.get_constant_property_dict">get_constant_property_dict() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html#ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map">get_dpf_material_id_by_analyis_ply_map() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfoProvider.get_element_info.html#ansys.dpf.composites.ElementInfoProvider.get_element_info">get_element_info() (ansys.dpf.composites.ElementInfoProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_element_info_provider.html#ansys.dpf.composites.get_element_info_provider">get_element_info_provider() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.LayupPropertiesProvider.get_element_laminate_offset.html#ansys.dpf.composites.LayupPropertiesProvider.get_element_laminate_offset">get_element_laminate_offset() (ansys.dpf.composites.LayupPropertiesProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.get_indices.html#ansys.dpf.composites.SamplingPoint.get_indices">get_indices() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.LayupPropertiesProvider.get_layer_angles.html#ansys.dpf.composites.LayupPropertiesProvider.get_layer_angles">get_layer_angles() (ansys.dpf.composites.LayupPropertiesProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.get_layer_index_by_element_id.html#ansys.dpf.composites.AnalysisPlyInfoProvider.get_layer_index_by_element_id">get_layer_index_by_element_id() (ansys.dpf.composites.AnalysisPlyInfoProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.LayupPropertiesProvider.get_layer_shear_angles.html#ansys.dpf.composites.LayupPropertiesProvider.get_layer_shear_angles">get_layer_shear_angles() (ansys.dpf.composites.LayupPropertiesProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.LayupPropertiesProvider.get_layer_thicknesses.html#ansys.dpf.composites.LayupPropertiesProvider.get_layer_thicknesses">get_layer_thicknesses() (ansys.dpf.composites.LayupPropertiesProvider method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.get_offsets_by_spots.html#ansys.dpf.composites.SamplingPoint.get_offsets_by_spots">get_offsets_by_spots() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.get_polar_plot.html#ansys.dpf.composites.SamplingPoint.get_polar_plot">get_polar_plot() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.get_result_plots.html#ansys.dpf.composites.SamplingPoint.get_result_plots">get_result_plots() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_selected_indices.html#ansys.dpf.composites.get_selected_indices">get_selected_indices() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_selected_indices_by_analysis_ply.html#ansys.dpf.composites.get_selected_indices_by_analysis_ply">get_selected_indices_by_analysis_ply() (in module ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.get_selected_indices_by_dpf_material_ids.html#ansys.dpf.composites.get_selected_indices_by_dpf_material_ids">get_selected_indices_by_dpf_material_ids() (in module ansys.dpf.composites)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.html#ansys.dpf.composites.failure_criteria.HashinCriterion">HashinCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.hd.html#ansys.dpf.composites.failure_criteria.HashinCriterion.hd">hd (ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.hf.html#ansys.dpf.composites.failure_criteria.HashinCriterion.hf">hf (ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.hm.html#ansys.dpf.composites.failure_criteria.HashinCriterion.hm">hm (ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion">HoffmanCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.homogeneous_core_coeff.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.homogeneous_core_coeff">homogeneous_core_coeff (ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.honeycomb_core_coeff.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.honeycomb_core_coeff">honeycomb_core_coeff (ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.id.html#ansys.dpf.composites.ElementInfo.id">id (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.include_ins.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.include_ins">include_ins (ansys.dpf.composites.failure_criteria.CoreFailureCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.ins.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.ins">ins (ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert">insert() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.interface_weakening_factor.html#ansys.dpf.composites.failure_criteria.PuckCriterion.interface_weakening_factor">interface_weakening_factor (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.inverse_reserve_factor.html#ansys.dpf.composites.SamplingPoint.inverse_reserve_factor">inverse_reserve_factor (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.is_layered.html#ansys.dpf.composites.ElementInfo.is_layered">is_layered (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.is_shell.html#ansys.dpf.composites.ElementInfo.is_shell">is_shell (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.iss.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.iss">iss (ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.kc.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.kc">kc (ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.kf.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.kf">kf (ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.html#ansys.dpf.composites.failure_criteria.LaRCCriterion">LaRCCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.LayupPropertiesProvider.html#ansys.dpf.composites.LayupPropertiesProvider">LayupPropertiesProvider (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc">lfc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lft.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lft">lft (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lmc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lmc">lmc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lmt.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lmt">lmt (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.margin_of_safety.html#ansys.dpf.composites.SamplingPoint.margin_of_safety">margin_of_safety (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.material_files.html#ansys.dpf.composites.ResultDefinition.material_files">material_files (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.MaterialProperty.html#ansys.dpf.composites.MaterialProperty">MaterialProperty (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.max_chunk_size.html#ansys.dpf.composites.ResultDefinition.max_chunk_size">max_chunk_size (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion">MaxStrainCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion">MaxStressCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.measures.html#ansys.dpf.composites.ResultDefinition.measures">measures (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.mode_interaction_coeff.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.mode_interaction_coeff">mode_interaction_coeff (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.n_corner_nodes.html#ansys.dpf.composites.ElementInfo.n_corner_nodes">n_corner_nodes (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.n_layers.html#ansys.dpf.composites.ElementInfo.n_layers">n_layers (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.n_spots.html#ansys.dpf.composites.ElementInfo.n_spots">n_spots (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.name.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.name">name (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.name.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.name">(ansys.dpf.composites.failure_criteria.CoreFailureCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.name.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.name">(ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.name.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.name">(ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.name.html#ansys.dpf.composites.failure_criteria.HashinCriterion.name">(ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.name.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion.name">(ansys.dpf.composites.failure_criteria.HoffmanCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.name.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.name">(ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.name.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.name">(ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.name.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.name">(ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.name.html#ansys.dpf.composites.failure_criteria.PuckCriterion.name">(ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.name.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.name">(ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.name.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion.name">(ansys.dpf.composites.failure_criteria.TsaiHillCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.name.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion.name">(ansys.dpf.composites.failure_criteria.TsaiWuCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.name.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.name">(ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.name.html#ansys.dpf.composites.ResultDefinition.name">(ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ElementInfo.number_of_nodes_per_spot_plane.html#ansys.dpf.composites.ElementInfo.number_of_nodes_per_spot_plane">number_of_nodes_per_spot_plane (ansys.dpf.composites.ElementInfo attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.offsets.html#ansys.dpf.composites.SamplingPoint.offsets">offsets (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.p21_neg.html#ansys.dpf.composites.failure_criteria.PuckCriterion.p21_neg">p21_neg (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.p21_pos.html#ansys.dpf.composites.failure_criteria.PuckCriterion.p21_pos">p21_pos (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.p22_neg.html#ansys.dpf.composites.failure_criteria.PuckCriterion.p22_neg">p22_neg (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.p22_pos.html#ansys.dpf.composites.failure_criteria.PuckCriterion.p22_pos">p22_pos (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pd.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pd">pd (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pf.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pf">pf (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.ply_element_ids.html#ansys.dpf.composites.AnalysisPlyInfoProvider.ply_element_ids">ply_element_ids() (ansys.dpf.composites.AnalysisPlyInfoProvider method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.ply_scope.html#ansys.dpf.composites.ResultDefinition.ply_scope">ply_scope (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pma.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pma">pma (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pmb.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pmb">pmb (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pmc.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pmc">pmc (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.polar_properties_E1.html#ansys.dpf.composites.SamplingPoint.polar_properties_E1">polar_properties_E1 (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.polar_properties_E2.html#ansys.dpf.composites.SamplingPoint.polar_properties_E2">polar_properties_E2 (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.polar_properties_G12.html#ansys.dpf.composites.SamplingPoint.polar_properties_G12">polar_properties_G12 (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.html#ansys.dpf.composites.failure_criteria.PuckCriterion">PuckCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove">remove() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.reserve_factor.html#ansys.dpf.composites.SamplingPoint.reserve_factor">reserve_factor (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.result_definition.html#ansys.dpf.composites.SamplingPoint.result_definition">result_definition (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.html#ansys.dpf.composites.ResultDefinition">ResultDefinition (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.results.html#ansys.dpf.composites.SamplingPoint.results">results (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.rst_files.html#ansys.dpf.composites.ResultDefinition.rst_files">rst_files (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.run.html#ansys.dpf.composites.SamplingPoint.run">run() (ansys.dpf.composites.SamplingPoint method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.s.html#ansys.dpf.composites.failure_criteria.PuckCriterion.s">s (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.s1.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.s1">s1 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.s1.html#ansys.dpf.composites.SamplingPoint.s1">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.s12.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.s12">s12 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.s12.html#ansys.dpf.composites.SamplingPoint.s12">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.s13.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.s13">s13 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.s13.html#ansys.dpf.composites.SamplingPoint.s13">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.s2.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.s2">s2 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.s2.html#ansys.dpf.composites.SamplingPoint.s2">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.s23.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.s23">s23 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.s23.html#ansys.dpf.composites.SamplingPoint.s23">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.s3.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.s3">s3 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.s3.html#ansys.dpf.composites.SamplingPoint.s3">(ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.html#ansys.dpf.composites.SamplingPoint">SamplingPoint (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion">ShearCrimpingCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.Spot.html#ansys.dpf.composites.Spot">Spot (class in ansys.dpf.composites)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.SamplingPoint.spots_per_ply.html#ansys.dpf.composites.SamplingPoint.spots_per_ply">spots_per_ply (ansys.dpf.composites.SamplingPoint property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode.html#ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode">stress_strain_eval_mode (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.time.html#ansys.dpf.composites.ResultDefinition.time">time (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict">to_dict() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.to_dict">(ansys.dpf.composites.failure_criteria.CoreFailureCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.to_dict">(ansys.dpf.composites.failure_criteria.CuntzeCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.to_dict">(ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.HashinCriterion.to_dict">(ansys.dpf.composites.failure_criteria.HashinCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion.to_dict">(ansys.dpf.composites.failure_criteria.HoffmanCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.to_dict">(ansys.dpf.composites.failure_criteria.LaRCCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.to_dict">(ansys.dpf.composites.failure_criteria.MaxStrainCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.to_dict">(ansys.dpf.composites.failure_criteria.MaxStressCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.PuckCriterion.to_dict">(ansys.dpf.composites.failure_criteria.PuckCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.to_dict">(ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion.to_dict">(ansys.dpf.composites.failure_criteria.TsaiHillCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion.to_dict">(ansys.dpf.composites.failure_criteria.TsaiWuCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.to_dict">(ansys.dpf.composites.failure_criteria.VonMisesCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.to_dict.html#ansys.dpf.composites.ResultDefinition.to_dict">(ansys.dpf.composites.ResultDefinition method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_json.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_json">to_json() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.to_json.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.to_json">(ansys.dpf.composites.failure_criteria.CoreFailureCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.to_json.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.to_json">(ansys.dpf.composites.failure_criteria.CuntzeCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.to_json.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.to_json">(ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.to_json.html#ansys.dpf.composites.failure_criteria.HashinCriterion.to_json">(ansys.dpf.composites.failure_criteria.HashinCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.to_json.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion.to_json">(ansys.dpf.composites.failure_criteria.HoffmanCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.to_json.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.to_json">(ansys.dpf.composites.failure_criteria.LaRCCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.to_json.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.to_json">(ansys.dpf.composites.failure_criteria.MaxStrainCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.to_json.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.to_json">(ansys.dpf.composites.failure_criteria.MaxStressCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.to_json.html#ansys.dpf.composites.failure_criteria.PuckCriterion.to_json">(ansys.dpf.composites.failure_criteria.PuckCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.to_json.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.to_json">(ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.to_json.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion.to_json">(ansys.dpf.composites.failure_criteria.TsaiHillCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.to_json.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion.to_json">(ansys.dpf.composites.failure_criteria.TsaiWuCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.to_json.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.to_json">(ansys.dpf.composites.failure_criteria.VonMisesCriterion method)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.to_json.html#ansys.dpf.composites.ResultDefinition.to_json">(ansys.dpf.composites.ResultDefinition method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion">TsaiHillCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion">TsaiWuCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme">vme (ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms">vms (ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion">VonMisesCriterion (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.wf.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.wf">wf (ansys.dpf.composites.failure_criteria.CoreFailureCriterion property)</a>
+
+      <ul>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.wf.html#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.wf">(ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HoffmanCriterion.wf.html#ansys.dpf.composites.failure_criteria.HoffmanCriterion.wf">(ansys.dpf.composites.failure_criteria.HoffmanCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.wf.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.wf">(ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiHillCriterion.wf.html#ansys.dpf.composites.failure_criteria.TsaiHillCriterion.wf">(ansys.dpf.composites.failure_criteria.TsaiHillCriterion property)</a>
+</li>
+        <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.TsaiWuCriterion.wf.html#ansys.dpf.composites.failure_criteria.TsaiWuCriterion.wf">(ansys.dpf.composites.failure_criteria.TsaiWuCriterion property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cfc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cfc">wf_cfc (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cft.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cft">wf_cft (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cma.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cma">wf_cma (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmb.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmb">wf_cmb (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmc">wf_cmc (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e1.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e1">wf_e1 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e12.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e12">wf_e12 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e13.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e13">wf_e13 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e2.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e2">wf_e2 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e23.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e23">wf_e23 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e3.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e3">wf_e3 (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hd.html#ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hd">wf_hd (ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hf.html#ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hf">wf_hf (ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hm.html#ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hm">wf_hm (ansys.dpf.composites.failure_criteria.HashinCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lfc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lfc">wf_lfc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lft.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lft">wf_lft (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lmc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lmc">wf_lmc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lmt.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lmt">wf_lmt (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pd.html#ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pd">wf_pd (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pf.html#ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pf">wf_pf (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pma.html#ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pma">wf_pma (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pmb.html#ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pmb">wf_pmb (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pmc.html#ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pmc">wf_pmc (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s1.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s1">wf_s1 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s12.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s12">wf_s12 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s13.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s13">wf_s13 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s2.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s2">wf_s2 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s23.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s23">wf_s23 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s3.html#ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s3">wf_s3 (ansys.dpf.composites.failure_criteria.MaxStressCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme">wf_vme (ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms">wf_vms (ansys.dpf.composites.failure_criteria.VonMisesCriterion property)</a>
+</li>
+      <li><a href="api/_autosummary/ansys.dpf.composites.ResultDefinition.write_data_for_full_element_scope.html#ansys.dpf.composites.ResultDefinition.write_data_for_full_element_scope">write_data_for_full_element_scope (ansys.dpf.composites.ResultDefinition property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+              </article>
+              
+
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>
