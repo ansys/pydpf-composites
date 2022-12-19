@@ -12,6 +12,7 @@ on:
 env:
   MAIN_PYTHON_VERSION: '3.9'
   ANSYS_VERSION: '231'
+  DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -118,24 +119,25 @@ jobs:
       - name: Generate the documentation with tox
         run: | 
           tox -e doc-linux
-          touch .tox/doc_out/.nojekyll
-          echo "dev.composites.dpf.docs.pyansys.com" >> .tox/doc_out/CNAME
 
       - name: Upload HTML Documentation
         uses: actions/upload-artifact@v2
         with:
-          name: Documentation-html
+          name: documentation-html
           path: .tox/doc_out/
           retention-days: 7
 
-
-      - name: Deploy Documentation
-        if: github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+  upload_dev_docs:
+    name: "Upload dev documentation"
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [ docs ]
+    steps:
+      - name: Deploy the latest documentation
+        uses: pyansys/actions/doc-deploy-dev@v2
         with:
-          branch: gh-pages
-          folder: .tox/doc_out/
-          clean: true
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
     name: Build library
