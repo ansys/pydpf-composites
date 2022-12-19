@@ -403,7 +403,6 @@ class SamplingPoint:
 
     def get_ply_wise_critical_failures(self) -> Sequence[FailureResult]:
         """Get the critical failure value and modes per ply."""
-
         num_plies = self.number_of_plies
 
         irfs = self.inverse_reserve_factor.reshape(num_plies, self._spots_per_ply)
