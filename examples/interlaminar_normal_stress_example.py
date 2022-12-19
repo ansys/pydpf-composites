@@ -9,7 +9,9 @@ evaluate the interlaminar normal stresses, in short INS, in layered shells.
 For simple use cases it is preferable to use the composite failure operator
 (:ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`)
 or the composite sampling point operator
-(:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`).
+(:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`). Note, the INS are
+computed automatically in these workflows if required. For instance if a 3D failure criterion is
+activated.
 The :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` example shows how
 helper functions can be used to obtain composite result data.
 
@@ -114,8 +116,6 @@ ins_operator.run()
 # Prepare data for the plotting
 stress_field = stress_operator.outputs.fields_container()[0]
 element_info_provider = get_element_info_provider(mesh_provider.outputs.mesh(), rst_data_source)
-element_ids = stress_field.scoping.ids
-element_infos = [element_info_provider.get_element_info(element_id) for element_id in element_ids]
 
 #%%
 # Plot max s3 of each element
@@ -130,7 +130,7 @@ with max_s3_field.as_local_field() as local_max_s3_field:
         element_info = element_info_provider.get_element_info(element_id)
         assert element_info is not None
         # select all stresses from bottom to top of node 0
-        selected_indices = get_selected_indices(element_info, layers=None, nodes=[0], spots=None)
+        selected_indices = get_selected_indices(element_info, nodes=[0])
 
         # order is bottom, top, mid
         s3 = stress_data[selected_indices, s3_component.value]
