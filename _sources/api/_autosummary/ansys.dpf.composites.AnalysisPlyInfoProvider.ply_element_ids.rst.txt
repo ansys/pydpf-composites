@@ -1,0 +1,6 @@
+ply\_element\_ids
+=================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: AnalysisPlyInfoProvider.ply_element_ids
