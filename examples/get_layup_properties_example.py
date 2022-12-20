@@ -30,7 +30,7 @@ composite_files_on_server = get_continuous_fiber_example_files(server_context, "
 
 #%%
 # Setup composite model
-composite_model = CompositeModel(composite_files_on_server)
+composite_model = CompositeModel(composite_files_on_server, server_context.server)
 
 #%%
 # Get layup properties for all the elements and show the first one as an example

@@ -127,7 +127,7 @@ class LayerProperty(Enum):
 
 
 class FailureMeasure(Enum):
-    """Available layer properties."""
+    """Available Failure Measures."""
 
     inverse_reserve_factor: str = "inverse_reserve_factor"
     margin_of_safety: str = "margin_of_safety"

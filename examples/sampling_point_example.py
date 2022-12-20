@@ -47,7 +47,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 # %%
 # Setup composite model
-composite_model = CompositeModel(composite_files_on_server)
+composite_model = CompositeModel(composite_files_on_server, server_context.server)
 
 # %%
 # Create the sampling point

@@ -4,26 +4,22 @@ from typing import Collection, Dict, Optional, Sequence
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion
+from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy._typing import NDArray
 
-from ansys.dpf.composites import (
-    ElementInfo,
-    LayupPropertiesProvider,
-    MaterialProperty,
-    ResultDefinition,
-    SamplingPoint,
-    get_constant_property_dict,
-    get_element_info_provider,
-)
-from ansys.dpf.composites.add_layup_info_to_mesh import LayupOperators, add_layup_info_to_mesh
-from ansys.dpf.composites.composite_data_sources import (
+from .add_layup_info_to_mesh import LayupOperators, add_layup_info_to_mesh
+from .composite_data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
     get_composites_data_sources,
 )
-from ansys.dpf.composites.enums import FailureMeasure, LayerProperty
-from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion
+from .enums import FailureMeasure, LayerProperty, MaterialProperty
+from .failure_criteria import CombinedFailureCriterion
+from .layup_info import ElementInfo, LayupPropertiesProvider, get_element_info_provider
+from .material_properties import get_constant_property_dict
+from .result_definition import ResultDefinition
+from .sampling_point import SamplingPoint
 
 
 @dataclass(frozen=True)
@@ -55,9 +51,11 @@ class CompositeModel:
 
     """
 
-    def __init__(self, composite_files: ContinuousFiberCompositesFiles):
+    def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
         """Initialize data providers and add composite information to MeshedRegion."""
-        self._core_model = dpf.Model(composite_files.rst)
+        self._core_model = dpf.Model(composite_files.rst, server=server)
+        self._server = server
+
         self._composite_files = composite_files
         self._data_sources = get_composites_data_sources(composite_files)
         self._mesh: MeshedRegion = self._core_model.metadata.mesh_provider.outputs.mesh()
@@ -189,7 +187,7 @@ class CompositeModel:
         sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
         sampling_point_op.inputs.result_definition(rd.to_json())
 
-        return SamplingPoint("Sampling Point", rd)
+        return SamplingPoint("Sampling Point", rd, server=self._server)
 
     def get_element_info(self, element_id: int) -> Optional[ElementInfo]:
         """Get element info for a given element id.
