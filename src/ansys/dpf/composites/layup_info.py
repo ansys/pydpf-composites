@@ -1,14 +1,14 @@
 """LayupInfo Provider."""
 
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Collection, Dict, List, Optional, Union
+from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
 from numpy.typing import NDArray
 
+from ansys.dpf.composites.enums import LayupProperty
 from ansys.dpf.composites.indexer import (
     _FieldIndexerNoDataPointer,
     _FieldIndexerWithDataPointer,
@@ -168,6 +168,10 @@ class AnalysisPlyInfoProvider:
 
         """
         return self._layer_indices.by_id(element_id)
+
+    def ply_element_ids(self) -> Optional[Sequence[np.int64]]:
+        """Return list of element labels of the analysis ply."""
+        return cast(Sequence[np.int64], self.property_field.scoping.ids)
 
 
 def get_dpf_material_id_by_analyis_ply_map(
@@ -421,18 +425,6 @@ def get_element_info_provider(
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
-
-
-class LayupProperty(Enum):
-    """Enum for Layup Properties.
-
-    Values correspond to labels in output container of layup provider.
-    """
-
-    Angle = 0
-    ShearAngle = 1
-    Thickness = 2
-    LaminateOffset = 3
 
 
 class LayupPropertiesProvider:

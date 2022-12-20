@@ -31,9 +31,13 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+
 
 # %%
 # Definition of the combined failure criterion
+# --------------------------------------------
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
@@ -62,13 +66,10 @@ sampling_point = composite_model.get_sampling_point(
 )
 
 # %%
-
-# get the results and convert into JSON Dict
+# Query results and plot them
+# ---------------------------
 results = sampling_point.results
 
-# %%
-
-# Extract failure values and modes and plot them
 element_label = results[0]["element_label"]
 failure_values = results[0]["results"]["failures"]["inverse_reserve_factor"]
 failure_modes = results[0]["results"]["failures"]["failure_modes"]

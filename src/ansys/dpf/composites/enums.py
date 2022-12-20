@@ -38,6 +38,18 @@ class FailureOutput(Enum):
     max_layer_index = 2
 
 
+class LayupProperty(Enum):
+    """Enum for Layup Properties.
+
+    Values correspond to labels in output container of layup provider.
+    """
+
+    Angle = 0
+    ShearAngle = 1
+    Thickness = 2
+    LaminateOffset = 3
+
+
 class MaterialProperty(Enum):
     """Available material properties."""
 

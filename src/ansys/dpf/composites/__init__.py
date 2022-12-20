@@ -1,5 +1,4 @@
 """Module for the post-processing of composite structures."""
-from .material_setup import MaterialOperators
 
 try:
     import importlib.metadata as importlib_metadata
@@ -25,6 +24,7 @@ from .material_properties import (
     get_constant_property,
     get_constant_property_dict,
 )
+from .material_setup import MaterialOperators
 from .result_definition import ResultDefinition
 from .sampling_point import SamplingPoint
 from .select_indices import (
