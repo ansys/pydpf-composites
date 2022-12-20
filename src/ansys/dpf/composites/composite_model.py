@@ -1,6 +1,6 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import Collection, Dict, Optional, Sequence
+from typing import Collection, Dict, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion
@@ -130,7 +130,10 @@ class CompositeModel:
             composite_scope = CompositeScope()
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
-        time_in = 1.0 if composite_scope.time is None else composite_scope.time
+        if composite_scope.time is not None:
+            time_in = composite_scope.time
+        else:
+            time_in = self.get_last_result_time()
 
         if composite_scope.plies is None or len(composite_scope.plies):
             # This is a workaround, because setting the
@@ -162,7 +165,10 @@ class CompositeModel:
             return failure_operator.outputs.fields_containerMin()
 
     def get_sampling_point(
-        self, combined_criteria: CombinedFailureCriterion, element_id: int, time: float = 1.0
+        self,
+        combined_criteria: CombinedFailureCriterion,
+        element_id: int,
+        time: Optional[float] = None,
     ) -> SamplingPoint:
         """Get a sampling point for a given element_id and failure criteria.
 
@@ -175,6 +181,11 @@ class CompositeModel:
         time:
             Time at which sampling point is evaluated
         """
+        if time is None:
+            time_in = self.get_last_result_time()
+        else:
+            time_in = time
+
         rd = ResultDefinition(
             name="combined failure criteria",
             rst_files=[self._composite_files.rst],
@@ -182,7 +193,7 @@ class CompositeModel:
             composite_definitions=[self._composite_files.composite_definitions],
             combined_failure_criterion=combined_criteria,
             element_scope=[element_id],
-            time=time,
+            time=time_in,
         )
         sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
         sampling_point_op.inputs.result_definition(rd.to_json())
@@ -263,3 +274,7 @@ class CompositeModel:
             data_source_or_streams_provider=self.core_model.metadata.streams_provider,
             mesh=self.mesh,
         )
+
+    def get_last_result_time(self) -> float:
+        """Return the last time value in the result file."""
+        return cast(float, self._core_model.metadata.time_freq_support.time_frequencies.data[-1])
