@@ -3,14 +3,14 @@
 from dataclasses import asdict, dataclass
 import os
 import tempfile
-from typing import Dict, Optional, TypeVar, Union, cast
+from typing import Dict, TypeVar, Union, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.load_plugin import load_composites_plugin
 
-from .._typing_helper import PATH as _PATH
+from ..composite_data_sources import ContinuousFiberCompositesFiles, ShortFiberCompositesFiles
 
 EXAMPLE_REPO = "https://github.com/pyansys/example-data/raw/master/pydpf-composites/"
 
@@ -20,24 +20,6 @@ class ServerContext:
     """Server context todo: Add context information."""
 
     server: dpf.server
-
-
-@dataclass
-class ContinuousFiberCompositesFiles:
-    """Container for continuous fiber file paths."""
-
-    rst: _PATH = ""
-    composite_definitions: _PATH = ""
-    engineering_data: _PATH = ""
-
-
-@dataclass
-class ShortFiberCompositesFiles:
-    """Container for short fiber file paths."""
-
-    rst: Optional[_PATH] = ""
-    dsdat: Optional[_PATH] = ""
-    engineering_data: Optional[_PATH] = ""
 
 
 FilesType = TypeVar("FilesType", ShortFiberCompositesFiles, ContinuousFiberCompositesFiles)

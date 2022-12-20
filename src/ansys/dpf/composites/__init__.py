@@ -1,4 +1,5 @@
 """Module for the post-processing of composite structures."""
+from .material_setup import MaterialOperators
 
 try:
     import importlib.metadata as importlib_metadata
@@ -7,6 +8,9 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
+from .add_layup_info_to_mesh import LayupOperators, add_layup_info_to_mesh
+from .composite_data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
+from .composite_model import CompositeModel
 from .enums import MaterialProperty, Spot
 from .layup_info import (
     AnalysisPlyInfoProvider,
@@ -30,6 +34,11 @@ from .select_indices import (
 )
 
 __all__ = [
+    "CompositeModel",
+    "CompositeDataSources",
+    "add_layup_info_to_mesh",
+    "LayupOperators",
+    "MaterialOperators",
     "ResultDefinition",
     "SamplingPoint",
     "Spot",
@@ -47,4 +56,5 @@ __all__ = [
     "get_all_dpf_material_ids",
     "get_constant_property_dict",
     "MaterialProperty",
+    "ContinuousFiberCompositesFiles",
 ]

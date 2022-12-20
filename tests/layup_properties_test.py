@@ -1,10 +1,8 @@
 from ansys.dpf.core import Operator
 import pytest
 
-from ansys.dpf.composites.add_layup_info_to_mesh import (
-    add_layup_info_to_mesh,
-    get_composites_data_sources,
-)
+from ansys.dpf.composites.add_layup_info_to_mesh import add_layup_info_to_mesh
+from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider
 

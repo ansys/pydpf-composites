@@ -2,7 +2,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.add_layup_info_to_mesh import get_composites_data_sources
+from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
 from ansys.dpf.composites.enums import MaterialProperty
 from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
@@ -52,25 +52,6 @@ def test_get_analysis_ply_index_to_name_map(dpf_server):
         4: "P1L1__ud.2",
         5: "P1L1__woven_45.2",
     }
-
-
-def test_material_properties_fail(dpf_server):
-    files = get_basic_shell_files()
-
-    setup_result = setup_operators(dpf_server, files)
-
-    def start():
-
-        element_info_provider = get_element_info_provider(
-            mesh=setup_result.mesh, stream_provider_or_data_source=setup_result.streams_provider
-        )
-        print(element_info_provider)
-
-    import threading
-
-    for i in range(1000):
-        x = threading.Thread(target=start, args=())
-        x.start()
 
 
 def test_material_properties(dpf_server):
