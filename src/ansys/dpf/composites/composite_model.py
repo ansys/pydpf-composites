@@ -6,7 +6,7 @@ import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
-from numpy._typing import NDArray
+from numpy.typing import NDArray
 
 from .add_layup_info_to_mesh import LayupOperators, add_layup_info_to_mesh
 from .composite_data_sources import (
