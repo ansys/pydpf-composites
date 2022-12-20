@@ -401,7 +401,7 @@ class SamplingPoint:
 
         return cast(npt.NDArray[np.float64], offsets[indices])
 
-    def get_ply_wise_critical_failures(self) -> Sequence[FailureResult]:
+    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
         """Get the critical failure value and modes per ply."""
         num_plies = self.number_of_plies
 
