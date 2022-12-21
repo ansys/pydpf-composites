@@ -3,7 +3,7 @@
 from collections import namedtuple
 import hashlib
 import json
-from typing import Any, Dict, Sequence, Union, cast
+from typing import Any, Dict, List, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -401,7 +401,7 @@ class SamplingPoint:
 
         return cast(npt.NDArray[np.float64], offsets[indices])
 
-    def get_ply_wise_critical_failures(self) -> Sequence[FailureResult]:
+    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
         """Get the critical failure value and modes per ply."""
         num_plies = self.number_of_plies
 
