@@ -4,6 +4,7 @@ import pathlib
 import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 import numpy.testing
+import pytest
 
 from ansys.dpf.composites.enums import Spot
 from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
@@ -79,17 +80,29 @@ def test_sampling_point(dpf_server):
     assert len(critical_failures) == sampling_point.number_of_plies
     ref = [
         FailureResult(
-            mode="e12", irf=2.248462289571762, rf=0.4447483974438629, mos=-0.5552516025561371
+            mode="e12",
+            irf=pytest.approx(2.248462289571762),
+            rf=pytest.approx(0.4447483974438629),
+            mos=pytest.approx(-0.5552516025561371),
         ),
         FailureResult(
-            mode="e1t", irf=1.522077660182279, rf=0.6569967000765541, mos=-0.3430032999234459
+            mode="e1t",
+            irf=pytest.approx(1.522077660182279),
+            rf=pytest.approx(0.6569967000765541),
+            mos=pytest.approx(-0.3430032999234459),
         ),
         FailureResult(mode="na", irf=0.0, rf=1000.0, mos=999.0),
         FailureResult(
-            mode="e12", irf=0.1853588231218358, rf=5.394941460880462, mos=4.394941460880462
+            mode="e12",
+            irf=pytest.approx(0.1853588231218358),
+            rf=pytest.approx(5.394941460880462),
+            mos=pytest.approx(4.394941460880462),
         ),
         FailureResult(
-            mode="s2c", irf=0.3256845400457666, rf=3.07045584619852, mos=2.07045584619852
+            mode="s2c",
+            irf=pytest.approx(0.3256845400457666),
+            rf=pytest.approx(3.07045584619852),
+            mos=pytest.approx(2.07045584619852),
         ),
     ]
     assert critical_failures == ref
