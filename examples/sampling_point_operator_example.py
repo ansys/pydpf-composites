@@ -16,7 +16,7 @@ how the sampling point data can be visualized.
 import json
 
 # %%
-# Load ansys libraries
+# Load Ansys libraries and connect to server
 import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 
@@ -33,9 +33,13 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+
 
 # %%
 # Definition of the combined failure criterion
+# --------------------------------------------
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
@@ -49,13 +53,12 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 
 # %%
-# Load dpf plugin
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+# Result Definition
+# -----------------
+#
+# The result definition stores all the inputs and settings which
+# are needed to compute a combined failure criteria.
 
-
-# %%
-# Define the result definition which is used to configure the composite_failure_operator
 rd = ResultDefinition(
     name="combined failure criteria",
     rst_files=[composite_files_on_server.rst],
@@ -65,18 +68,17 @@ rd = ResultDefinition(
     element_scope=[3],
 )
 
+# %%
+# Sampling Point Operator
+# -----------------------
 sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
 sampling_point_op.inputs.result_definition(rd.to_json())
 
 # %%
-
-# get the results and convert into JSON Dict
-
+# Query results and plot them
+# ---------------------------
 results = json.loads(sampling_point_op.outputs.results())
 
-# %%
-
-# Extract failure values and modes and plot them
 element_label = results[0]["element_label"]
 failure_values = results[0]["results"]["failures"]["inverse_reserve_factor"]
 failure_modes = results[0]["results"]["failures"]["failure_modes"]

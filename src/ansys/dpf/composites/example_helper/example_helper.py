@@ -115,7 +115,15 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
             engineering_data="material.engd",
             composite_definitions="ACPCompositeDefinitions.h5",
         ),
-    )
+    ),
+    "ins": _ContinuousFiberExampleLocation(
+        directory="ins",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst="beam_181_analysis_model.rst",
+            engineering_data="materials.xml",
+            composite_definitions="ACPCompositeDefinitions.h5",
+        ),
+    ),
 }
 
 _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
@@ -175,7 +183,7 @@ def _get_example_files(
                 urllib.request.urlretrieve(file_url, local_path)
                 # todo: With 0.7.1 the server will have
                 #  a boolean property 'local_server' that we can use to
-                # determine if files should be uploaded
+                #  determine if files should be uploaded
                 server_path = dpf.upload_file_in_tmp_folder(
                     local_path, server=server_context.server
                 )

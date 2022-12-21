@@ -27,6 +27,7 @@ from ansys.dpf.composites.failure_criteria import (
 
 # %%
 # Definition of the combined failure criterion
+# --------------------------------------------
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
@@ -43,7 +44,8 @@ server_context = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 # %%
-# Configuration of the result definition which is used to configure the composite_failure_operator
+# Configuration of the result definition
+# --------------------------------------
 rd = ResultDefinition(
     name="combined failure criteria",
     rst_files=[composite_files_on_server.rst],
@@ -54,12 +56,16 @@ rd = ResultDefinition(
 )
 
 # %%
-# Create the sampling point and update it
+# Create a Sampling Point object
+# ------------------------------
 sampling_point = SamplingPoint("my first sampling point", rd, server_context.server)
 
 # %%
-# Plot results using preconfigured plots
-
+# Plot Results
+# ------------
+#
+# Use pre-configured plots
+# ''''''''''''''''''''''''
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
@@ -70,12 +76,20 @@ fig.set_figheight(8)
 fig.set_figwidth(12)
 
 # %%
-# Plot polar properties using a preconfigured plot
-
+# Plot polar properties
+# '''''''''''''''''''''
 fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
 # %%
-# Generate a custom plot: plot S13 and S23
+# Custom plots:
+# -------------
+#
+# Plots can be easily customized or build from scratch.
+# Here, matplotlib is used. An alternative is plotly.
+#
+# s13 and s23
+# '''''''''''
+
 
 import matplotlib.pyplot as plt
 
@@ -96,7 +110,8 @@ plt.rcParams["hatch.color"] = "silver"
 sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 
 # %%
-# Another approach to generate a custom plot
+# e12 and e2
+# ''''''''''
 
 interfaces = [Spot.BOTTOM, Spot.TOP]
 core_scale_factor = 1.0
@@ -113,3 +128,19 @@ line = ax1.plot(e2, offsets, label="e2")
 ax1.set_yticks([])
 ax1.legend()
 ax1.set_title("e12 and e2")
+
+
+# %%
+# Sample another element
+# ----------------------
+#
+# The element id of the sampling point can be easily changed.
+sampling_point.element_id = 4
+fig, axes = sampling_point.get_result_plots(
+    strain_components=[],  # do not plot strains
+    core_scale_factor=0.1,
+    spots=[Spot.BOTTOM, Spot.TOP],
+    show_failure_modes=True,
+)
+fig.set_figheight(8)
+fig.set_figwidth(12)
