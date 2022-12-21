@@ -278,3 +278,32 @@ class CompositeModel:
     def get_last_result_time(self) -> float:
         """Return the last time value in the result file."""
         return cast(float, self._core_model.metadata.time_freq_support.time_frequencies.data[-1])
+
+    def add_interlaminar_normal_stresses(
+        self, stresses: FieldsContainer, strains: FieldsContainer
+    ) -> None:
+        """Add interlaminar_normal_stresses to the stresses FieldsContainer.
+
+        Parameters
+        ----------
+        stresses:
+            Stresses FieldsContainer
+            (interlaminar normal stresses are added to this container)
+        strains:
+        """
+        ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
+        ins_operator.inputs.materials_container(
+            self.layup_operators.material_operators.material_provider
+        )
+        ins_operator.inputs.mesh(self.mesh)
+        ins_operator.inputs.mesh_properties_container(
+            self.layup_operators.layup_provider.outputs.mesh_properties_container
+        )
+        # pass inputs by pin because the input name is not set yet.
+        # Will be improved in sever version 2023 R2
+        ins_operator.connect(24, self.layup_operators.layup_provider.outputs.fields_container)
+        ins_operator.connect(0, strains)
+        ins_operator.connect(1, stresses)
+
+        # call run because ins operator has not output
+        ins_operator.run()
