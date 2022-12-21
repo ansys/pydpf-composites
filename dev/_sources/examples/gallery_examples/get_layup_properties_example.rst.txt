@@ -181,7 +181,7 @@ Plot of layup properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.268 seconds)
+   **Total running time of the script:** ( 0 minutes  0.597 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_get_layup_properties_example.py:

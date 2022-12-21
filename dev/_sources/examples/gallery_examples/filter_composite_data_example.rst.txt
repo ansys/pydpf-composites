@@ -123,7 +123,7 @@ Reads the composite definition file and enriches the mesh with the composite lay
  .. code-block:: none
 
 
-    LayupOperators(material_operators=MaterialOperators(material_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f61ae2aa700>, material_support_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f61ae2aa190>, result_info_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f61ae2aa5b0>), layup_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f61ae2aabb0>)
+    LayupOperators(material_operators=MaterialOperators(material_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f68820bc280>, material_support_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f6882099c70>, result_info_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f68820bc130>), layup_provider=<ansys.dpf.core.dpf_operator.Operator object at 0x7f68820bc730>)
 
 
 
@@ -327,7 +327,7 @@ to get the dpf_material_id from an analysis ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.181 seconds)
+   **Total running time of the script:** ( 0 minutes  1.576 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_filter_composite_data_example.py:
