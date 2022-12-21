@@ -27,6 +27,9 @@
       SamplingPoint.get_offsets_by_spots
       
       
+      SamplingPoint.get_ply_wise_critical_failures
+      
+      
       SamplingPoint.get_polar_plot
       
       
@@ -78,6 +81,9 @@
       
       
       SamplingPoint.margin_of_safety
+      
+      
+      SamplingPoint.number_of_plies
       
       
       SamplingPoint.offsets
