@@ -33,23 +33,18 @@ consider also the sampling point operator
 
 Import dependencies
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-30
+.. GENERATED FROM PYTHON SOURCE LINES 16-25
 
 .. code-block:: default
 
-    import ansys.dpf.core as dpf
     from matplotlib import pyplot as plt
     import numpy as np
 
-    from ansys.dpf.composites.add_layup_info_to_mesh import (
-        add_layup_info_to_mesh,
-        get_composites_data_sources,
-    )
+    from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
     from ansys.dpf.composites.example_helper.example_helper import (
         connect_to_or_start_server,
         get_continuous_fiber_example_files,
     )
-    from ansys.dpf.composites.layup_info import LayupPropertiesProvider
 
 
 
@@ -58,11 +53,11 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-32
+.. GENERATED FROM PYTHON SOURCE LINES 26-27
 
 Start server and load example files
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-36
+.. GENERATED FROM PYTHON SOURCE LINES 27-31
 
 .. code-block:: default
 
@@ -77,34 +72,15 @@ Start server and load example files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-38
+.. GENERATED FROM PYTHON SOURCE LINES 32-33
 
-Setup Mesh Provider
+Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-41
-
-.. code-block:: default
-
-    model = dpf.Model(composite_files_on_server.rst)
-    mesh_provider = model.metadata.mesh_provider
-    mesh = mesh_provider.outputs.mesh()
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 42-43
-
-Reads the composite definition file and enriches the mesh with the composite layup information.
-
-.. GENERATED FROM PYTHON SOURCE LINES 43-47
+.. GENERATED FROM PYTHON SOURCE LINES 33-35
 
 .. code-block:: default
 
-    composites_data_sources = get_composites_data_sources(composite_files_on_server)
-    layup_operators = add_layup_info_to_mesh(mesh=mesh, data_sources=composites_data_sources)
+    composite_model = CompositeModel(composite_files_on_server, server_context.server)
 
 
 
@@ -113,24 +89,21 @@ Reads the composite definition file and enriches the mesh with the composite lay
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 48-49
+.. GENERATED FROM PYTHON SOURCE LINES 36-37
 
 Get layup properties for all the elements and show the first one as an example
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-60
+.. GENERATED FROM PYTHON SOURCE LINES 37-46
 
 .. code-block:: default
 
-    properties_provider = LayupPropertiesProvider(
-        layup_provider=layup_operators.layup_provider, mesh=mesh
-    )
+
     element_id = 1
-    thicknesses = properties_provider.get_layer_thicknesses(element_id)
-    offset = properties_provider.get_element_laminate_offset(element_id)
-    angles = properties_provider.get_layer_angles(element_id)
-    shear_angles = properties_provider.get_layer_shear_angles(element_id)
-    analysis_plies = properties_provider.get_analysis_plies(element_id)
+    thicknesses = composite_model.get_layer_property(LayerProperty.thicknesses, element_id)
+    angles = composite_model.get_layer_property(LayerProperty.angles, element_id)
+    shear_angles = composite_model.get_layer_property(LayerProperty.shear_angles, element_id)
+    offset = composite_model.get_element_laminate_offset(element_id)
+    analysis_plies = composite_model.get_analysis_plies(element_id)
 
 
 
@@ -140,11 +113,11 @@ Get layup properties for all the elements and show the first one as an example
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-62
+.. GENERATED FROM PYTHON SOURCE LINES 47-48
 
 Plot of layup properties
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-80
+.. GENERATED FROM PYTHON SOURCE LINES 48-66
 
 .. code-block:: default
 
@@ -181,7 +154,7 @@ Plot of layup properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.252 seconds)
+   **Total running time of the script:** ( 0 minutes  0.679 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_get_layup_properties_example.py:

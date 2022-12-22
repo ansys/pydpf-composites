@@ -13,14 +13,12 @@ The :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py` shows
 how the sampling point data can be visualized.
 
 """
-import json
 
 # %%
-# Load Ansys libraries and connect to server
-import ansys.dpf.core as dpf
+# Load ansys libraries
 import matplotlib.pyplot as plt
 
-from ansys.dpf.composites import ResultDefinition
+from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
     get_continuous_fiber_example_files,
@@ -53,31 +51,24 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 
 # %%
-# Result Definition
-# -----------------
-#
-# The result definition stores all the inputs and settings which
-# are needed to compute a combined failure criteria.
-
-rd = ResultDefinition(
-    name="combined failure criteria",
-    rst_files=[composite_files_on_server.rst],
-    material_files=[composite_files_on_server.engineering_data],
-    composite_definitions=[composite_files_on_server.composite_definitions],
-    combined_failure_criterion=get_combined_failure_criterion(),
-    element_scope=[3],
-)
+# Start server
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 # %%
-# Sampling Point Operator
-# -----------------------
-sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
-sampling_point_op.inputs.result_definition(rd.to_json())
+# Setup composite model
+composite_model = CompositeModel(composite_files_on_server, server_context.server)
+
+# %%
+# Create the sampling point
+sampling_point = composite_model.get_sampling_point(
+    combined_criteria=get_combined_failure_criterion(), element_id=3
+)
 
 # %%
 # Query results and plot them
 # ---------------------------
-results = json.loads(sampling_point_op.outputs.results())
+results = sampling_point.results
 
 element_label = results[0]["element_label"]
 failure_values = results[0]["results"]["failures"]["inverse_reserve_factor"]
@@ -99,6 +90,6 @@ for index, fm in enumerate(failure_modes_middle):
     )
 
 # finalize the plot
-ax1.set_title(f"{rd.name} of element {element_label}")
+ax1.set_title(f"Combined failure criterion of element {element_label}")
 ax1.set_xlabel("Inverse Reserve Factor [-]")
 ax1.set_ylabel("z-Coordinate [length]")

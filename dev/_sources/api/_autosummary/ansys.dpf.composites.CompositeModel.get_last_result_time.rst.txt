@@ -1,0 +1,6 @@
+get\_last\_result\_time
+=======================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: CompositeModel.get_last_result_time

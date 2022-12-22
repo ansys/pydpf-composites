@@ -1,0 +1,6 @@
+add\_interlaminar\_normal\_stresses
+===================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: CompositeModel.add_interlaminar_normal_stresses

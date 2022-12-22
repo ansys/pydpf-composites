@@ -367,18 +367,13 @@ function checkPageExistsAndRedirect(event) {
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup-data-provider">
-   Setup Data Provider
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#inputs-from-the-result-files">
    Inputs from the result files
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#interlaminar-normal-stress-operator">
-   Interlaminar Normal Stress Operator
+  <a class="reference internal nav-link" href="#add-interlaminar-normal-stresses">
+   Add interlaminar normal stresses
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -442,11 +437,7 @@ Note, the INS operator fills the results directly into the stress field.</p>
 <p>Load Ansys libraries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="n">Spot</span><span class="p">,</span> <span class="n">get_element_info_provider</span><span class="p">,</span> <span class="n">get_selected_indices</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.add_layup_info_to_mesh</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">add_layup_info_to_mesh</span><span class="p">,</span>
-    <span class="n">get_composites_data_sources</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="n">CompositeModel</span><span class="p">,</span> <span class="n">Spot</span><span class="p">,</span> <span class="n">get_selected_indices</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">Sym3x3TensorComponent</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">connect_to_or_start_server</span><span class="p">,</span>
@@ -465,31 +456,7 @@ Note, the INS operator fills the results directly into the stress field.</p>
 </section>
 <section id="configure-data-sources">
 <h1>Configure data sources<a class="headerlink" href="#configure-data-sources" title="Permalink to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">)</span>
-<span class="n">rst_data_source</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">DataSources</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">)</span>
-
-<span class="n">eng_data_source</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">DataSources</span><span class="p">()</span>
-<span class="n">eng_data_source</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">engineering_data</span></a><span class="p">,</span> <span class="s2">&quot;EngineeringData&quot;</span><span class="p">)</span>
-
-<span class="n">composite_definitions_source</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">DataSources</span><span class="p">()</span>
-<span class="n">composite_definitions_source</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span>
-    <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">composite_definitions</span></a><span class="p">,</span> <span class="s2">&quot;CompositeDefinitions&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="setup-data-provider">
-<h1>Setup Data Provider<a class="headerlink" href="#setup-data-provider" title="Permalink to this heading">#</a></h1>
-<p>Mesh provider, material and lay-up provider</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_provider</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">mesh_provider</span>
-
-<span class="n">composites_data_sources</span> <span class="o">=</span> <span class="n">get_composites_data_sources</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
-<span class="n">layup_operators</span> <span class="o">=</span> <span class="n">add_layup_info_to_mesh</span><span class="p">(</span>
-    <span class="n">mesh</span><span class="o">=</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(),</span> <span class="n">data_sources</span><span class="o">=</span><span class="n">composites_data_sources</span>
-<span class="p">)</span>
-
-<span class="n">layup_provider</span> <span class="o">=</span> <span class="n">layup_operators</span><span class="o">.</span><span class="n">layup_provider</span>
-<span class="n">material_provider</span> <span class="o">=</span> <span class="n">layup_operators</span><span class="o">.</span><span class="n">material_operators</span><span class="o">.</span><span class="n">material_provider</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server_context</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -498,32 +465,22 @@ Note, the INS operator fills the results directly into the stress field.</p>
 <p>Rotate to global is False because the post-processing engine expects the results to be
 in the element coordinate system ( material coordinate system)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;EPEL&quot;</span><span class="p">)</span>
-<span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+<span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">)</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">stress_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">)</span>
-<span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+<span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">)</span>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="interlaminar-normal-stress-operator">
-<h1>Interlaminar Normal Stress Operator<a class="headerlink" href="#interlaminar-normal-stress-operator" title="Permalink to this heading">#</a></h1>
-<p>Configure the INS operator and set all inputs.
-The s3 stresses are evaluated and stored in the stress
-container on run</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ins_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::interlaminar_normal_stress_operator&quot;</span><span class="p">)</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">materials_container</span><span class="p">(</span><span class="n">material_provider</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh_properties_container</span><span class="p">(</span><span class="n">layup_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh_properties_container</span><span class="p">)</span>
-<span class="c1"># pass inputs by pin because the input name is not set yet.</span>
-<span class="c1"># Will be improved in sever version 2023 R2</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">layup_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
-
-<span class="c1"># call run because ins operator has not output</span>
-<span class="n">ins_operator</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<section id="add-interlaminar-normal-stresses">
+<h1>Add interlaminar normal stresses<a class="headerlink" href="#add-interlaminar-normal-stresses" title="Permalink to this heading">#</a></h1>
+<p>The s3 stresses are evaluated and stored in the stresses container</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span><span class="o">.</span><span class="n">add_interlaminar_normal_stresses</span><span class="p">(</span>
+    <span class="n">stresses</span><span class="o">=</span><span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(),</span>
+    <span class="n">strains</span><span class="o">=</span><span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(),</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -531,7 +488,6 @@ container on run</p>
 <h1>Plot s3 stresses<a class="headerlink" href="#plot-s3-stresses" title="Permalink to this heading">#</a></h1>
 <p>Prepare data for the plotting</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_field</span> <span class="o">=</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">element_info_provider</span> <span class="o">=</span> <span class="n">get_element_info_provider</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(),</span> <span class="n">rst_data_source</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="plot-max-s3-of-each-element">
@@ -542,7 +498,7 @@ container on run</p>
     <span class="n">element_ids</span> <span class="o">=</span> <span class="n">stress_field</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
     <span class="k">for</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">:</span>
         <span class="n">stress_data</span> <span class="o">=</span> <span class="n">stress_field</span><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
-        <span class="n">element_info</span> <span class="o">=</span> <span class="n">element_info_provider</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+        <span class="n">element_info</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
         <span class="k">assert</span> <span class="n">element_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="c1"># select all stresses from bottom to top of node 0</span>
         <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a> <span class="o">=</span> <span class="n">get_selected_indices</span><span class="p">(</span><span class="n">element_info</span><span class="p">,</span> <span class="n">nodes</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -552,23 +508,22 @@ container on run</p>
 
         <span class="n">local_max_s3_field</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="n">s3</span><span class="p">)],</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-<span class="n">mesh</span> <span class="o">=</span> <span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">()</span>
-<span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_s3_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_interlaminar_normal_stress_example_001.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_001.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/></section>
 <section id="plot-s3-of-a-certain-ply">
 <h2>Plot s3 of a certain ply<a class="headerlink" href="#plot-s3-of-a-certain-ply" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_name</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">())</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_name</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a> <span class="o">=</span> <span class="s2">&quot;P3L1__Ply.1&quot;</span>
 
-<span class="n">ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(),</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a><span class="p">)</span>
+<span class="n">ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a><span class="p">)</span>
 <span class="n">p8l1_ply_s3_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">p8l1_ply_s3_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">p8l1_ply_s3_field</span><span class="p">:</span>
     <span class="n">element_ids</span> <span class="o">=</span> <span class="n">ply_info_provider</span><span class="o">.</span><span class="n">ply_element_ids</span><span class="p">()</span>
     <span class="k">for</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">:</span>
         <span class="n">stress_data</span> <span class="o">=</span> <span class="n">stress_field</span><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
-        <span class="n">element_info</span> <span class="o">=</span> <span class="n">element_info_provider</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+        <span class="n">element_info</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
         <span class="k">assert</span> <span class="n">element_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="c1"># select all stresses from bottom to top of node 0</span>
         <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">layer_index</span></a> <span class="o">=</span> <span class="n">ply_info_provider</span><span class="o">.</span><span class="n">get_layer_index_by_element_id</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
@@ -581,10 +536,10 @@ container on run</p>
 
         <span class="n">p8l1_ply_s3_field</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-<span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.239 seconds)</p>
+<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  7.654 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d2765c4de18ca7baa598ec9faaa6b4e7/interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">interlaminar_normal_stress_example.py</span></code></a></p>

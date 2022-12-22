@@ -1,0 +1,6 @@
+data\_sources
+=============
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: CompositeModel.data_sources

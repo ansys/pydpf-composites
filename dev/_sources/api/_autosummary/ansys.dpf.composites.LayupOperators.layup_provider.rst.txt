@@ -1,0 +1,6 @@
+layup\_provider
+===============
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: LayupOperators.layup_provider
