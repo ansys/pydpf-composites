@@ -44,10 +44,10 @@ class LayupProperty(Enum):
     Values correspond to labels in output container of layup provider.
     """
 
-    Angle = 0
-    ShearAngle = 1
-    Thickness = 2
-    LaminateOffset = 3
+    angle = 0
+    shear_angle = 1
+    thickness = 2
+    laminate_offset = 3
 
 
 class MaterialProperty(Enum):

@@ -2,13 +2,13 @@ import os
 import pathlib
 
 import ansys.dpf.core as dpf
-import pytest
 
 from ansys.dpf.composites import MaterialProperty
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.enums import LayerProperty
 from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
-from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStrainCriterion
+from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+from ansys.dpf.composites.layup_info import get_analysis_ply_index_to_name_map
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 
@@ -17,7 +17,11 @@ def get_data_files():
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_dummy_data_files()
+    #  return get_car_data_files()
+    return get_etnz_files()
+
+
+# return get_dummy_data_files()
 
 
 def get_dummy_data_files():
@@ -57,7 +61,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
     timer.add("After Setup model")
 
     combined_failure_criterion = CombinedFailureCriterion(
-        "max strain & max stress", failure_criteria=[MaxStrainCriterion(), MaxStrainCriterion()]
+        "max strain & max stress", failure_criteria=[MaxStressCriterion()]
     )
 
     failure_output = composite_model.evaluate_failure_criteria(
@@ -65,15 +69,9 @@ def test_basic_functionality_of_composite_model(dpf_server):
         composite_scope=CompositeScope(),
     )
 
-    assert failure_output.get_field({"failure_label": 0}).data == pytest.approx(
-        [111.0, 121.0, 140, 140]
-    )
+    ContinuousFiberCompositesFiles()
 
-    properyt_dict = composite_model.get_constant_property_dict(
-        [MaterialProperty.Strain_Limits_eXt, MaterialProperty.Hill_Yield_Criterion_R12]
-    )
-
-    assert properyt_dict[2][MaterialProperty.Strain_Limits_eXt] == pytest.approx(0.0167)
+    properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.Stress_Limits_Xt])
 
     timer.add("After get property dict")
 
@@ -81,8 +79,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
         composite_model.get_element_info(element_id)
         for element_id in composite_model.mesh.elements.scoping.ids
     ]
-
-    assert element_infos[0].element_type == 181
+    get_analysis_ply_index_to_name_map(composite_model.mesh)
 
     timer.add("After getting element_info")
 
@@ -93,9 +90,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
     }
     element_id = 1
     for layer_property, value in expected_values.items():
-        assert composite_model.get_layer_property(layer_property, element_id) == pytest.approx(
-            value
-        )
+        composite_model.get_property_for_all_layers(layer_property, element_id)
 
     assert composite_model.get_element_laminate_offset(element_id) == -0.00305
     analysis_ply_ids = [

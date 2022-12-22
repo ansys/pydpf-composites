@@ -33,14 +33,16 @@ def upload_composite_files_to_server(data_files: FilesType, server: dpf.server) 
     data_files
     server
     """
-    if isinstance(data_files, ShortFiberCompositesFiles):
-        server_files: FilesType = ShortFiberCompositesFiles()
-    else:
-        server_files = ContinuousFiberCompositesFiles()
+    filedict = {}
+
     for key, filename in asdict(data_files).items():
         server_file = dpf.upload_file_in_tmp_folder(filename, server=server)
-        setattr(server_files, key, server_file)
-    return server_files
+        filedict[key] = server_file
+
+    if isinstance(data_files, ShortFiberCompositesFiles):
+        return ShortFiberCompositesFiles(**filedict)  # type:ignore
+    else:
+        return ContinuousFiberCompositesFiles(**filedict)
 
 
 @dataclass
@@ -153,10 +155,8 @@ def _get_example_files(
     server_context: ServerContext,
 ) -> Union[ShortFiberCompositesFiles, ContinuousFiberCompositesFiles]:
     composite_files_on_server: Union[ShortFiberCompositesFiles, ContinuousFiberCompositesFiles]
-    if isinstance(example_files, _ShortFiberExampleLocation):
-        composite_files_on_server = ShortFiberCompositesFiles()
-    else:
-        composite_files_on_server = ContinuousFiberCompositesFiles()
+
+    files_dict = {}
     with tempfile.TemporaryDirectory() as tmpdir:
         for key, filename in asdict(example_files.files).items():
             if filename is not None:
@@ -169,6 +169,9 @@ def _get_example_files(
                 server_path = dpf.upload_file_in_tmp_folder(
                     local_path, server=server_context.server
                 )
-                setattr(composite_files_on_server, key, server_path)
+                files_dict[key] = server_path
 
-    return composite_files_on_server
+    if isinstance(example_files, _ShortFiberExampleLocation):
+        return ShortFiberCompositesFiles(**files_dict)
+    else:
+        return ContinuousFiberCompositesFiles(**files_dict)

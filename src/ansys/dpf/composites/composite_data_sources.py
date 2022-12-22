@@ -1,6 +1,5 @@
 """Composite Data Sources."""
 from dataclasses import dataclass
-from typing import Optional
 
 from ansys.dpf.core import DataSources
 
@@ -11,18 +10,18 @@ from ._typing_helper import PATH as _PATH
 class ContinuousFiberCompositesFiles:
     """Container for continuous fiber file paths."""
 
-    rst: _PATH = ""
-    composite_definitions: _PATH = ""
-    engineering_data: _PATH = ""
+    rst: _PATH
+    composite_definitions: _PATH
+    engineering_data: _PATH
 
 
 @dataclass
 class ShortFiberCompositesFiles:
     """Container for short fiber file paths."""
 
-    rst: Optional[_PATH] = ""
-    dsdat: Optional[_PATH] = ""
-    engineering_data: Optional[_PATH] = ""
+    rst: _PATH
+    dsdat: _PATH
+    engineering_data: _PATH
 
 
 @dataclass(frozen=True)
