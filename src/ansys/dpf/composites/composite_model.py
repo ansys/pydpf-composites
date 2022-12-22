@@ -133,7 +133,7 @@ class CompositeModel:
         if composite_scope.time is not None:
             time_in = composite_scope.time
         else:
-            time_in = self.get_last_result_time()
+            time_in = self.get_result_times_or_frequencies()[-1]
 
         if composite_scope.plies is None or len(composite_scope.plies):
             # This is a workaround, because setting the
@@ -177,12 +177,12 @@ class CompositeModel:
         combined_criteria:
             Combined failiure critieron to evaluate
         element_id:
-            Element id of the sampling point
+            Element Id/Label of the sampling point
         time:
             Time at which sampling point is evaluated
         """
         if time is None:
-            time_in = self.get_last_result_time()
+            time_in = self.get_result_times_or_frequencies()[-1]
         else:
             time_in = time
 
@@ -195,8 +195,6 @@ class CompositeModel:
             element_scope=[element_id],
             time=time_in,
         )
-        sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
-        sampling_point_op.inputs.result_definition(rd.to_json())
 
         return SamplingPoint("Sampling Point", rd, server=self._server)
 
@@ -205,17 +203,20 @@ class CompositeModel:
 
         Returns None if element type is not supported.
 
-        Parameters:
-            element_id:
+        Parameters
+        ----------
+        element_id:
+            Element Id/Label
         """
         return self._element_info_provider.get_element_info(element_id)
 
-    def get_layer_property(
+    def get_property_for_all_layers(
         self, layup_property: LayerProperty, element_id: int
     ) -> Optional[NDArray[np.double]]:
         """Get a layer property for a given element_id.
 
         Returns a numpy array with the values of the property for all the layers.
+        Values are ordered from bottom to top.
         Returns None if the element is not layered
 
         Parameters
@@ -223,7 +224,7 @@ class CompositeModel:
         layup_property:
             Selected layup property
         element_id:
-            Selected element id
+            Selected element Id/Label
         """
         if layup_property == LayerProperty.angles:
             return self._layup_properties_provider.get_layer_angles(element_id)
@@ -239,6 +240,7 @@ class CompositeModel:
         Parameters
         ----------
         element_id:
+            Element Id/Label
         """
         return self._layup_properties_provider.get_analysis_plies(element_id)
 
@@ -247,7 +249,8 @@ class CompositeModel:
 
         Parameters
         ----------
-        element_id
+        element_id:
+            Element Id/Label
         """
         return self._layup_properties_provider.get_element_laminate_offset(element_id)
 
@@ -275,9 +278,11 @@ class CompositeModel:
             mesh=self.mesh,
         )
 
-    def get_last_result_time(self) -> float:
+    def get_result_times_or_frequencies(self) -> NDArray[np.double]:
         """Return the last time value in the result file."""
-        return cast(float, self._core_model.metadata.time_freq_support.time_frequencies.data[-1])
+        return cast(
+            NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
+        )
 
     def add_interlaminar_normal_stresses(
         self, stresses: FieldsContainer, strains: FieldsContainer
