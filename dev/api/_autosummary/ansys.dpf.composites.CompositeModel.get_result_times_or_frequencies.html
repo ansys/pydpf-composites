@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>get_layer_property &#8212; pydpf-composites</title>
+    <title>get_result_times_or_frequencies &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="get_sampling_point" href="ansys.dpf.composites.CompositeModel.get_sampling_point.html" />
-    <link rel="prev" title="get_last_result_time" href="ansys.dpf.composites.CompositeModel.get_last_result_time.html" />
+    <link rel="prev" title="get_property_for_all_layers" href="ansys.dpf.composites.CompositeModel.get_property_for_all_layers.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -136,14 +136,14 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables api/_autosummary/ansys.dpf.composites.CompositeModel.get_layer_property and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+     variables api/_autosummary/ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
 -->
 
 <script type="text/javascript">
 // Check if corresponding page path exists in other version of docs
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
-    const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeModel.get_layer_property.html",
+    const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies.html",
           tryUrl = event.target.getAttribute("href");
     let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
     $.ajax({
@@ -164,7 +164,7 @@ function checkPageExistsAndRedirect(event) {
 // Populate the version switcher from the JSON config file
 (function () {
     $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
-        const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeModel.get_layer_property.html";
+        const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies.html";
         let btn = document.getElementById("version_switcher_button");
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
         btn.dataset["activeVersionName"] = "";
@@ -260,7 +260,7 @@ function checkPageExistsAndRedirect(event) {
           <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
           <li class="nav-item nav-item-2"><a href="../composite_model.html" >Composite Model</a> » </li>
           <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.CompositeModel.html" accesskey="U">ansys.dpf.composites.CompositeModel</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">get_layer_property</a></li> 
+        <li class="nav-item nav-item-this"><a href="">get_result_times_or_frequencies</a></li> 
       </ul>
     </div>
         </div>
@@ -358,13 +358,13 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_last_result_time.html">
-       get_last_result_time
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_property_for_all_layers.html">
+       get_property_for_all_layers
       </a>
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       get_layer_property
+       get_result_times_or_frequencies
       </a>
      </li>
      <li class="toctree-l3">
@@ -423,10 +423,10 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys.dpf.composites.CompositeModel.get_layer_property">
+  <a class="reference internal nav-link" href="#ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies">
    <code class="docutils literal notranslate">
     <span class="pre">
-     CompositeModel.get_layer_property()
+     CompositeModel.get_result_times_or_frequencies()
     </span>
    </code>
   </a>
@@ -450,23 +450,15 @@ function checkPageExistsAndRedirect(event) {
               
               <article class="bd-article" role="main">
                 
-  <section id="get-layer-property">
-<h1>get_layer_property<a class="headerlink" href="#get-layer-property" title="Permalink to this heading">#</a></h1>
+  <section id="get-result-times-or-frequencies">
+<h1>get_result_times_or_frequencies<a class="headerlink" href="#get-result-times-or-frequencies" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
-<dt class="sig sig-object py" id="ansys.dpf.composites.CompositeModel.get_layer_property">
-<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">get_layer_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layup_property</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.get_layer_property" title="Permalink to this definition">#</a></dt>
-<dd><p>Get a layer property for a given element_id.</p>
-<p>Returns a numpy array with the values of the property for all the layers.
-Returns None if the element is not layered</p>
+<dt class="sig sig-object py" id="ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies">
+<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">get_result_times_or_frequencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies" title="Permalink to this definition">#</a></dt>
+<dd><p>Return the last time value in the result file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>layup_property</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">LayerProperty</span></code>) – Selected layup property</p></li>
-<li><p><strong>element_id</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Selected element id</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.25.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code>]]]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.25.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code>]]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -33,10 +33,10 @@
       CompositeModel.get_element_laminate_offset
       
       
-      CompositeModel.get_last_result_time
+      CompositeModel.get_property_for_all_layers
       
       
-      CompositeModel.get_layer_property
+      CompositeModel.get_result_times_or_frequencies
       
       
       CompositeModel.get_sampling_point

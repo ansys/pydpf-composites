@@ -1,0 +1,6 @@
+get\_result\_times\_or\_frequencies
+===================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: CompositeModel.get_result_times_or_frequencies

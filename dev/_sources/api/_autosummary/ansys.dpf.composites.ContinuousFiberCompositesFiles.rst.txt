@@ -25,13 +25,13 @@
       :toctree:
    
       
+      ContinuousFiberCompositesFiles.rst
+      
+      
       ContinuousFiberCompositesFiles.composite_definitions
       
       
       ContinuousFiberCompositesFiles.engineering_data
-      
-      
-      ContinuousFiberCompositesFiles.rst
       
    
    
