@@ -11,8 +11,7 @@ layered element can be accessed, processed and visualized.
 # %%
 # Load ansys libraries
 
-from ansys.dpf.composites import Spot
-from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites import ResultDefinition, SamplingPoint, Spot
 from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
     get_continuous_fiber_example_files,
@@ -25,10 +24,6 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
-# %%
-# Start server
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 # %%
 # Definition of the combined failure criterion
@@ -45,15 +40,25 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
     )
 
 
-# %%
-# Setup composite model
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 # %%
-# Create the sampling point
-sampling_point = composite_model.get_sampling_point(
-    combined_criteria=get_combined_failure_criterion(), element_id=3
+# Configuration of the result definition
+# --------------------------------------
+rd = ResultDefinition(
+    name="combined failure criteria",
+    rst_files=[composite_files_on_server.rst],
+    material_files=[composite_files_on_server.engineering_data],
+    composite_definitions=[composite_files_on_server.composite_definitions],
+    combined_failure_criterion=get_combined_failure_criterion(),
+    element_scope=[3],
 )
+
+# %%
+# Create a Sampling Point object
+# ------------------------------
+sampling_point = SamplingPoint("my first sampling point", rd, server_context.server)
 
 # %%
 # Plot Results

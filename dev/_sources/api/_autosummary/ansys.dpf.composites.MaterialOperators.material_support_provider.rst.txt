@@ -1,6 +1,0 @@
-material\_support\_provider
-===========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialOperators.material_support_provider

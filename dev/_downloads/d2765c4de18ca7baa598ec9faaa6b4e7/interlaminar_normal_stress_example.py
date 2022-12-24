@@ -27,7 +27,11 @@ Note, the INS operator fills the results directly into the stress field.
 # Load Ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites import CompositeModel, Spot, get_selected_indices
+from ansys.dpf.composites import Spot, get_element_info_provider, get_selected_indices
+from ansys.dpf.composites.add_layup_info_to_mesh import (
+    add_layup_info_to_mesh,
+    get_composites_data_sources,
+)
 from ansys.dpf.composites.enums import Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
@@ -44,7 +48,31 @@ composite_files_on_server = get_continuous_fiber_example_files(server_context, "
 #%%
 # Configure data sources
 # -----------------------------
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
+model = dpf.Model(composite_files_on_server.rst)
+rst_data_source = dpf.DataSources(composite_files_on_server.rst)
+
+eng_data_source = dpf.DataSources()
+eng_data_source.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
+
+composite_definitions_source = dpf.DataSources()
+composite_definitions_source.add_file_path(
+    composite_files_on_server.composite_definitions, "CompositeDefinitions"
+)
+
+#%%
+# Setup Data Provider
+# -------------------
+#
+# Mesh provider, material and lay-up provider
+mesh_provider = model.metadata.mesh_provider
+
+composites_data_sources = get_composites_data_sources(composite_files_on_server)
+layup_operators = add_layup_info_to_mesh(
+    mesh=mesh_provider.outputs.mesh(), data_sources=composites_data_sources
+)
+
+layup_provider = layup_operators.layup_provider
+material_provider = layup_operators.material_operators.material_provider
 
 #%%
 # Inputs from the result files
@@ -54,23 +82,32 @@ composite_model = CompositeModel(composite_files_on_server, server_context.serve
 # in the element coordinate system ( material coordinate system)
 
 strain_operator = dpf.Operator("EPEL")
-strain_operator.inputs.data_sources(composite_model.data_sources.rst)
+strain_operator.inputs.data_sources(rst_data_source)
 strain_operator.inputs.bool_rotate_to_global(False)
 
 stress_operator = dpf.Operator("S")
-stress_operator.inputs.data_sources(composite_model.data_sources.rst)
+stress_operator.inputs.data_sources(rst_data_source)
 stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
-# Add interlaminar normal stresses
+# Interlaminar Normal Stress Operator
 # -----------------------------------
 #
-# The s3 stresses are evaluated and stored in the stresses container
-composite_model.add_interlaminar_normal_stresses(
-    stresses=stress_operator.outputs.fields_container(),
-    strains=strain_operator.outputs.fields_container(),
-)
+# Configure the INS operator and set all inputs.
+# The s3 stresses are evaluated and stored in the stress
+# container on run
+ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
+ins_operator.inputs.materials_container(material_provider.outputs)
+ins_operator.inputs.mesh(mesh_provider.outputs.mesh)
+ins_operator.inputs.mesh_properties_container(layup_provider.outputs.mesh_properties_container)
+# pass inputs by pin because the input name is not set yet.
+# Will be improved in sever version 2023 R2
+ins_operator.connect(24, layup_provider.outputs.fields_container)
+ins_operator.connect(0, strain_operator.outputs.fields_container)
+ins_operator.connect(1, stress_operator.outputs.fields_container)
 
+# call run because ins operator has not output
+ins_operator.run()
 
 #%%
 # Plot s3 stresses
@@ -78,6 +115,7 @@ composite_model.add_interlaminar_normal_stresses(
 #
 # Prepare data for the plotting
 stress_field = stress_operator.outputs.fields_container()[0]
+element_info_provider = get_element_info_provider(mesh_provider.outputs.mesh(), rst_data_source)
 
 #%%
 # Plot max s3 of each element
@@ -89,7 +127,7 @@ with max_s3_field.as_local_field() as local_max_s3_field:
     element_ids = stress_field.scoping.ids
     for element_id in element_ids:
         stress_data = stress_field.get_entity_data_by_id(element_id)
-        element_info = composite_model.get_element_info(element_id)
+        element_info = element_info_provider.get_element_info(element_id)
         assert element_info is not None
         # select all stresses from bottom to top of node 0
         selected_indices = get_selected_indices(element_info, nodes=[0])
@@ -99,22 +137,23 @@ with max_s3_field.as_local_field() as local_max_s3_field:
 
         local_max_s3_field.append([max(s3)], element_id)
 
-composite_model.mesh.plot(max_s3_field)
+mesh = mesh_provider.outputs.mesh()
+mesh.plot(max_s3_field)
 
 #%%
 # Plot s3 of a certain ply
 # ''''''''''''''''''''''''
 
-analysis_ply_name = get_all_analysis_ply_names(composite_model.mesh)
+analysis_ply_name = get_all_analysis_ply_names(mesh_provider.outputs.mesh())
 selected_ply = "P3L1__Ply.1"
 
-ply_info_provider = AnalysisPlyInfoProvider(composite_model.mesh, selected_ply)
+ply_info_provider = AnalysisPlyInfoProvider(mesh_provider.outputs.mesh(), selected_ply)
 p8l1_ply_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
     element_ids = ply_info_provider.ply_element_ids()
     for element_id in element_ids:
         stress_data = stress_field.get_entity_data_by_id(element_id)
-        element_info = composite_model.get_element_info(element_id)
+        element_info = element_info_provider.get_element_info(element_id)
         assert element_info is not None
         # select all stresses from bottom to top of node 0
         layer_index = ply_info_provider.get_layer_index_by_element_id(element_id)
@@ -127,4 +166,4 @@ with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
 
         p8l1_ply_s3_field.append(s3, element_id)
 
-composite_model.mesh.plot(p8l1_ply_s3_field)
+mesh.plot(p8l1_ply_s3_field)

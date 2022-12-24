@@ -99,7 +99,13 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../index.html">
-  Pydpf composites
+  pyDPF Composites
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../intro.html">
+  Getting Started
  </a>
 </li>
 
@@ -112,6 +118,12 @@
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../examples/index.html">
   Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../developers_guide.html">
+  Developer’s Guide
  </a>
 </li>
 
@@ -333,11 +345,6 @@ function checkPageExistsAndRedirect(event) {
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../composite_model.html">
-   Composite Model
-  </a>
- </li>
 </ul>
 
     
@@ -399,7 +406,7 @@ function checkPageExistsAndRedirect(event) {
 <span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">get_constant_property_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials_provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_source_or_streams_provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.get_constant_property_dict" title="Permalink to this definition">#</a></dt>
 <dd><p>Get a dictionary with constant properties.</p>
 <p>Returns a dictionary with the dpf_material_id as key and
-a dict with the requested properties as the value. Only constant properties
+the requested property as the value. Only constant properties
 are supported. Variable properties are evaluated at their
 default value.
 This function can be expensive to evaluate and should not

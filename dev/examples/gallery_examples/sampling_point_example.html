@@ -99,7 +99,13 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../index.html">
-  Pydpf composites
+  pyDPF Composites
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../intro.html">
+  Getting Started
  </a>
 </li>
 
@@ -112,6 +118,12 @@
 <li class="toctree-l1 current active nav-item">
  <a class="reference internal nav-link" href="../index.html">
   Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../developers_guide.html">
+  Developer’s Guide
  </a>
 </li>
 
@@ -287,7 +299,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="failure_operator_example.html">
-   How to use the composite failure operator
+   Composite failure operator
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,6 +374,16 @@ function checkPageExistsAndRedirect(event) {
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configuration-of-the-result-definition">
+   Configuration of the result definition
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-a-sampling-point-object">
+   Create a Sampling Point object
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#plot-results">
    Plot Results
   </a>
@@ -429,8 +451,7 @@ to download the full example code</p>
 <p>Example how the lay-up and through-the-thickness results of a
 layered element can be accessed, processed and visualized.</p>
 <p>Load ansys libraries</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="n">Spot</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="n">ResultDefinition</span><span class="p">,</span> <span class="n">SamplingPoint</span><span class="p">,</span> <span class="n">Spot</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">connect_to_or_start_server</span><span class="p">,</span>
     <span class="n">get_continuous_fiber_example_files</span><span class="p">,</span>
@@ -442,11 +463,6 @@ layered element can be accessed, processed and visualized.</p>
     <span class="n">MaxStressCriterion</span><span class="p">,</span>
     <span class="n">VonMisesCriterion</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-<p>Start server</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server_context</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
-<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server_context</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -462,16 +478,29 @@ layered element can be accessed, processed and visualized.</p>
         <span class="n">name</span><span class="o">=</span><span class="s2">&quot;failure of all materials&quot;</span><span class="p">,</span>
         <span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span><span class="n">max_strain</span><span class="p">,</span> <span class="n">max_stress</span><span class="p">,</span> <span class="n">core_failure</span><span class="p">,</span> <span class="n">von_mises_strain_only</span><span class="p">],</span>
     <span class="p">)</span>
+
+
+<span class="n">server_context</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server_context</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Setup composite model</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server_context</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Create the sampling point</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span>
-    <span class="n">combined_criteria</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span> <span class="n">element_id</span><span class="o">=</span><span class="mi">3</span>
+</section>
+<section id="configuration-of-the-result-definition">
+<h1>Configuration of the result definition<a class="headerlink" href="#configuration-of-the-result-definition" title="Permalink to this heading">#</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rd</span> <span class="o">=</span> <span class="n">ResultDefinition</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;combined failure criteria&quot;</span><span class="p">,</span>
+    <span class="n">rst_files</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">],</span>
+    <span class="n">material_files</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">engineering_data</span></a><span class="p">],</span>
+    <span class="n">composite_definitions</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">composite_definitions</span></a><span class="p">],</span>
+    <span class="n">combined_failure_criterion</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span>
+    <span class="n">element_scope</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-a-sampling-point-object">
+<h1>Create a Sampling Point object<a class="headerlink" href="#create-a-sampling-point-object" title="Permalink to this heading">#</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">SamplingPoint</span><span class="p">(</span><span class="s2">&quot;my first sampling point&quot;</span><span class="p">,</span> <span class="n">rd</span><span class="p">,</span> <span class="n">server_context</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -561,7 +590,7 @@ Here, matplotlib is used. An alternative is plotly.</p>
 <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_sampling_point_example_005.png" srcset="../../_images/sphx_glr_sampling_point_example_005.png" alt="Stresses, Failures" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.297 seconds)</p>
+<img src="../../_images/sphx_glr_sampling_point_example_005.png" srcset="../../_images/sphx_glr_sampling_point_example_005.png" alt="Stresses, Failures" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.982 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-sampling-point-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f179ce73dacd6109b726784466d31230/sampling_point_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">sampling_point_example.py</span></code></a></p>
