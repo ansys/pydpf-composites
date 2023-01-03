@@ -77,7 +77,7 @@ def get_constant_property_dict(
     """Get a dictionary with constant properties.
 
     Returns a dictionary with the dpf_material_id as key and
-    the requested property as the value. Only constant properties
+    a dict with the requested properties as the value. Only constant properties
     are supported. Variable properties are evaluated at their
     default value.
     This function can be expensive to evaluate and should not

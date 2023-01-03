@@ -1,7 +1,6 @@
 """LayupInfo Provider."""
 
 from dataclasses import dataclass
-from enum import Enum
 from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
@@ -9,6 +8,7 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
 from numpy.typing import NDArray
 
+from ansys.dpf.composites.enums import LayupProperty
 from ansys.dpf.composites.indexer import (
     _FieldIndexerNoDataPointer,
     _FieldIndexerWithDataPointer,
@@ -163,13 +163,13 @@ class AnalysisPlyInfoProvider:
 
         Parameters
         ----------
-        element_id: int
-            Element id, Element label
+        element_id:
+            Element Id/Label
 
         """
         return self._layer_indices.by_id(element_id)
 
-    def ply_element_ids(self) -> Optional[Sequence[np.int64]]:
+    def ply_element_ids(self) -> Sequence[np.int64]:
         """Return list of element labels of the analysis ply."""
         return cast(Sequence[np.int64], self.property_field.scoping.ids)
 
@@ -194,14 +194,28 @@ def get_dpf_material_id_by_analyis_ply_map(
     element_info_provider = get_element_info_provider(
         mesh=mesh, stream_provider_or_data_source=data_source_or_streams_provider
     )
+    all_element_ids = mesh.elements.scoping.ids
 
     for analysis_ply_name in get_all_analysis_ply_names(mesh):
         analysis_ply_info_provider = AnalysisPlyInfoProvider(mesh, analysis_ply_name)
-        first_element_id = analysis_ply_info_provider.property_field.scoping.ids[0]
-        element_info = element_info_provider.get_element_info(first_element_id)
-        assert element_info is not None
-        layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(first_element_id)
-        analysis_ply_to_material_map[analysis_ply_name] = element_info.dpf_material_ids[layer_index]
+
+        # Note we check if there is any valid elements in this analysis ply
+        # We won't find any elements if all the elements of a ply
+        # were suppressed and therefore the analysis ply is not part
+        # of the mesh anymore. In this case we simply don't
+        # add the ply to the map
+        diff = set(analysis_ply_info_provider.ply_element_ids()).intersection(all_element_ids)
+        for element_id in diff:
+            element_id_int = int(element_id)
+            element_info = element_info_provider.get_element_info(element_id_int)
+            if element_info is not None:
+                layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(
+                    element_id_int
+                )
+                analysis_ply_to_material_map[analysis_ply_name] = element_info.dpf_material_ids[
+                    layer_index
+                ]
+                break
 
     return analysis_ply_to_material_map
 
@@ -427,18 +441,6 @@ def get_element_info_provider(
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
 
 
-class LayupProperty(Enum):
-    """Enum for Layup Properties.
-
-    Values correspond to labels in output container of layup provider.
-    """
-
-    Angle = 0
-    ShearAngle = 1
-    Thickness = 2
-    LaminateOffset = 3
-
-
 class LayupPropertiesProvider:
     """Provider for layup properties.
 
@@ -457,19 +459,19 @@ class LayupPropertiesProvider:
         layup_outputs_container = layup_provider.outputs.fields_container()
         composite_label = layup_outputs_container.labels[0]
         angle_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.Angle.value}
+            {composite_label: LayupProperty.angle.value}
         )
         self._angle_indexer = _FieldIndexerWithDataPointer(angle_field)
         thickness_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.Thickness.value}
+            {composite_label: LayupProperty.thickness.value}
         )
         self._thickness_indexer = _FieldIndexerWithDataPointer(thickness_field)
         shear_angle_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.ShearAngle.value}
+            {composite_label: LayupProperty.shear_angle.value}
         )
         self._shear_angle_indexer = _FieldIndexerWithDataPointer(shear_angle_field)
         offset_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.LaminateOffset.value}
+            {composite_label: LayupProperty.laminate_offset.value}
         )
         self._offset_indexer = _FieldIndexerNoDataPointer(offset_field)
 
@@ -484,7 +486,8 @@ class LayupPropertiesProvider:
 
         Parameters
         ----------
-        element_id
+        element_id:
+            Element Id/Label
         """
         return self._angle_indexer.by_id(element_id)
 
@@ -493,7 +496,9 @@ class LayupPropertiesProvider:
 
         Parameters
         ----------
-        element_id
+        element_id:
+            Element Id/Label
+
         """
         return self._thickness_indexer.by_id(element_id)
 
@@ -502,7 +507,8 @@ class LayupPropertiesProvider:
 
         Parameters
         ----------
-        element_id
+        element_id:
+            Element Id/Label
         """
         return self._shear_angle_indexer.by_id(element_id)
 
@@ -511,7 +517,9 @@ class LayupPropertiesProvider:
 
         Parameters
         ----------
-        element_id
+        element_id:
+            Element Id/Label
+
         """
         return self._offset_indexer.by_id(element_id)
 
@@ -520,7 +528,9 @@ class LayupPropertiesProvider:
 
         Parameters
         ----------
-        element_id
+        element_id:
+            Element Id/Label
+
         """
         indexes = self._analysis_ply_indexer.by_id(element_id)
         if indexes is None:

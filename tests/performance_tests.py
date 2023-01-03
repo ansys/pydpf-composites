@@ -6,10 +6,7 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites import MaterialProperty, get_constant_property_dict
-from ansys.dpf.composites.add_layup_info_to_mesh import (
-    add_layup_info_to_mesh,
-    get_composites_data_sources,
-)
+from ansys.dpf.composites.add_layup_info_to_mesh import add_layup_info_to_mesh
 from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
 from ansys.dpf.composites.indexer import _FieldIndexerWithDataPointer
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, get_element_info_provider

@@ -57,7 +57,11 @@ class _PropertyFieldIndexerNoDataPointer:
     def by_id(self, entity_id: int) -> Optional[np.int64]:
         if entity_id > self._max_id:
             return None
-        return cast(np.int64, self._data[self._indices[entity_id]])
+
+        idx = self._indices[entity_id]
+        if idx < 0:
+            return None
+        return cast(np.int64, self._data[idx])
 
 
 class _FieldIndexerNoDataPointer:
@@ -70,7 +74,10 @@ class _FieldIndexerNoDataPointer:
     def by_id(self, entity_id: int) -> Optional[np.double]:
         if entity_id > self._max_id:
             return None
-        return cast(np.double, self._data[self._indices[entity_id]])
+        idx = self._indices[entity_id]
+        if idx < 0:
+            return None
+        return cast(np.double, self._data[idx])
 
 
 class _PropertyFieldIndexerNoDataPointerNoBoundsCheck:

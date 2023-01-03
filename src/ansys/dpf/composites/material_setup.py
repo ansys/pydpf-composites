@@ -9,19 +9,19 @@ from ansys.dpf.core import DataSources, Operator
 class MaterialOperators:
     """Container for Material related operators.
 
-    Properties
+    Parameters
     ----------
-    material_support_provider: Operator
+    material_support_provider:
         The material support provider takes care of mapping the materials in the rst file to
         the materials in the composite definitions.
         The material support contains all the materials from the rst file. Currently
         the output of this operator cannot be inspected in python.
-    material_provider: Operator
+    material_provider:
         Outputs a material container that can be used to
         evaluate material properties. This MaterialsContainer
         can not be queried in python but it can be passed to other dpf operators,
         which evaluate the properties.
-    result_info_provider: Operator
+    result_info_provider:
         Provides the ResultInfo object
     """
 
