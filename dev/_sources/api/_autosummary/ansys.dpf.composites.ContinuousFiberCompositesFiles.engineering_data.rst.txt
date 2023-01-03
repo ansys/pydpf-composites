@@ -1,0 +1,6 @@
+engineering\_data
+=================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: ContinuousFiberCompositesFiles.engineering_data

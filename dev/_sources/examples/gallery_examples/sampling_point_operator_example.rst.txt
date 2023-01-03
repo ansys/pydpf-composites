@@ -31,31 +31,17 @@ access the data.
 The :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py` shows
 how the sampling point data can be visualized.
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-18
+.. GENERATED FROM PYTHON SOURCE LINES 18-19
+
+Load ansys libraries
+
+.. GENERATED FROM PYTHON SOURCE LINES 19-38
 
 .. code-block:: default
 
-    import json
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 19-20
-
-Load Ansys libraries and connect to server
-
-.. GENERATED FROM PYTHON SOURCE LINES 20-40
-
-.. code-block:: default
-
-    import ansys.dpf.core as dpf
     import matplotlib.pyplot as plt
 
-    from ansys.dpf.composites import ResultDefinition
+    from ansys.dpf.composites.composite_model import CompositeModel
     from ansys.dpf.composites.example_helper.example_helper import (
         connect_to_or_start_server,
         get_continuous_fiber_example_files,
@@ -79,12 +65,12 @@ Load Ansys libraries and connect to server
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-43
+.. GENERATED FROM PYTHON SOURCE LINES 39-41
 
 Definition of the combined failure criterion
 --------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-55
+.. GENERATED FROM PYTHON SOURCE LINES 41-53
 
 .. code-block:: default
 
@@ -107,26 +93,51 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-61
+.. GENERATED FROM PYTHON SOURCE LINES 54-55
 
-Result Definition
------------------
+Start server
 
-The result definition stores all the inputs and settings which
-are needed to compute a combined failure criteria.
-
-.. GENERATED FROM PYTHON SOURCE LINES 61-71
+.. GENERATED FROM PYTHON SOURCE LINES 55-58
 
 .. code-block:: default
 
+    server_context = connect_to_or_start_server()
+    composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
-    rd = ResultDefinition(
-        name="combined failure criteria",
-        rst_files=[composite_files_on_server.rst],
-        material_files=[composite_files_on_server.engineering_data],
-        composite_definitions=[composite_files_on_server.composite_definitions],
-        combined_failure_criterion=get_combined_failure_criterion(),
-        element_scope=[3],
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
+
+Setup composite model
+
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
+
+.. code-block:: default
+
+    composite_model = CompositeModel(composite_files_on_server, server_context.server)
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 63-64
+
+Create the sampling point
+
+.. GENERATED FROM PYTHON SOURCE LINES 64-68
+
+.. code-block:: default
+
+    sampling_point = composite_model.get_sampling_point(
+        combined_criteria=get_combined_failure_criterion(), element_id=3
     )
 
 
@@ -136,35 +147,16 @@ are needed to compute a combined failure criteria.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-74
-
-Sampling Point Operator
------------------------
-
-.. GENERATED FROM PYTHON SOURCE LINES 74-77
-
-.. code-block:: default
-
-    sampling_point_op = dpf.Operator("composite::composite_sampling_point_operator")
-    sampling_point_op.inputs.result_definition(rd.to_json())
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 78-80
+.. GENERATED FROM PYTHON SOURCE LINES 69-71
 
 Query results and plot them
 ---------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-105
+.. GENERATED FROM PYTHON SOURCE LINES 71-96
 
 .. code-block:: default
 
-    results = json.loads(sampling_point_op.outputs.results())
+    results = sampling_point.results
 
     element_label = results[0]["element_label"]
     failure_values = results[0]["results"]["failures"]["inverse_reserve_factor"]
@@ -186,14 +178,14 @@ Query results and plot them
         )
 
     # finalize the plot
-    ax1.set_title(f"{rd.name} of element {element_label}")
+    ax1.set_title(f"Combined failure criterion of element {element_label}")
     ax1.set_xlabel("Inverse Reserve Factor [-]")
     ax1.set_ylabel("z-Coordinate [length]")
 
 
 
 .. image-sg:: /examples/gallery_examples/images/sphx_glr_sampling_point_operator_example_001.png
-   :alt: combined failure criteria of element 3
+   :alt: Combined failure criterion of element 3
    :srcset: /examples/gallery_examples/images/sphx_glr_sampling_point_operator_example_001.png
    :class: sphx-glr-single-img
 
@@ -210,7 +202,7 @@ Query results and plot them
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.600 seconds)
+   **Total running time of the script:** ( 0 minutes  0.398 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_sampling_point_operator_example.py:

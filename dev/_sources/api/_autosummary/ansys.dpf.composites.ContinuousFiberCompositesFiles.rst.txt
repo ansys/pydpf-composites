@@ -1,0 +1,37 @@
+﻿ansys.dpf.composites.ContinuousFiberCompositesFiles
+===================================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: ContinuousFiberCompositesFiles
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      ContinuousFiberCompositesFiles.rst
+      
+      
+      ContinuousFiberCompositesFiles.composite_definitions
+      
+      
+      ContinuousFiberCompositesFiles.engineering_data
+      
+   
+   

@@ -1,0 +1,6 @@
+evaluate\_failure\_criteria
+===========================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: CompositeModel.evaluate_failure_criteria

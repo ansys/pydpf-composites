@@ -1,0 +1,6 @@
+rst
+===
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: ContinuousFiberCompositesFiles.rst

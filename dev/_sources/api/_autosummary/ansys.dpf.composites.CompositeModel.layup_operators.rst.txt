@@ -1,0 +1,6 @@
+layup\_operators
+================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: CompositeModel.layup_operators

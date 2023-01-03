@@ -1,0 +1,34 @@
+﻿ansys.dpf.composites.LayupOperators
+===================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: LayupOperators
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      LayupOperators.material_operators
+      
+      
+      LayupOperators.layup_provider
+      
+   
+   

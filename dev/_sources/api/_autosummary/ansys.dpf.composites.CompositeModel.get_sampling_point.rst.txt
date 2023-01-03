@@ -1,0 +1,6 @@
+get\_sampling\_point
+====================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. automethod:: CompositeModel.get_sampling_point

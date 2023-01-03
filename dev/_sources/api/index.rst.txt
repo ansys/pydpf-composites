@@ -17,3 +17,4 @@ Documentation.
     layup_information
     select_indices
     material_properties
+    composite_model

@@ -1,0 +1,67 @@
+﻿ansys.dpf.composites.CompositeModel
+===================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: CompositeModel
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      CompositeModel.add_interlaminar_normal_stresses
+      
+      
+      CompositeModel.evaluate_failure_criteria
+      
+      
+      CompositeModel.get_analysis_plies
+      
+      
+      CompositeModel.get_constant_property_dict
+      
+      
+      CompositeModel.get_element_info
+      
+      
+      CompositeModel.get_element_laminate_offset
+      
+      
+      CompositeModel.get_property_for_all_layers
+      
+      
+      CompositeModel.get_result_times_or_frequencies
+      
+      
+      CompositeModel.get_sampling_point
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      CompositeModel.core_model
+      
+      
+      CompositeModel.data_sources
+      
+      
+      CompositeModel.layup_operators
+      
+      
+      CompositeModel.mesh
+      
+   
+   
