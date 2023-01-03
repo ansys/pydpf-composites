@@ -148,6 +148,7 @@ class CompositeModel:
             rst_files=[self._composite_files.rst],
             material_files=[self._composite_files.engineering_data],
             composite_definitions=[self._composite_files.composite_definitions],
+            assembly_mapping_files=self._composite_files.mapping_files,
             combined_failure_criterion=combined_criteria,
             element_scope=element_scope_in,
             ply_scope=ply_scope_in,

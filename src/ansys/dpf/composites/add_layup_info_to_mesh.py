@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 from ansys.dpf.core import MeshedRegion, Operator
 
-from ansys.dpf.composites.composite_data_sources import CompositeDataSources
-from ansys.dpf.composites.material_setup import MaterialOperators, get_material_operators
+from .composite_data_sources import CompositeDataSources
+from .material_setup import MaterialOperators, get_material_operators
 
 
 @dataclass(frozen=True)
@@ -34,7 +34,7 @@ def add_layup_info_to_mesh(
     mesh
     """
     material_operators = get_material_operators(
-        rst_data_source=data_sources.rst, engineering_data_source=data_sources.composites_files
+        rst_data_source=data_sources.rst, engineering_data_source=data_sources.engineering_data
     )
 
     # Set up the layup provider.

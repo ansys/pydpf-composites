@@ -4,8 +4,8 @@ from typing import Collection, Dict, Union, cast
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 import numpy as np
 
-from ansys.dpf.composites.enums import MaterialProperty
-from ansys.dpf.composites.layup_info import get_dpf_material_id_by_analyis_ply_map
+from .enums import MaterialProperty
+from .layup_info import get_dpf_material_id_by_analyis_ply_map
 
 
 def get_constant_property(

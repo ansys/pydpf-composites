@@ -4,9 +4,8 @@ from typing import Collection, Optional
 import numpy as np
 from numpy.typing import NDArray
 
-from ansys.dpf.composites import Spot
-from ansys.dpf.composites.enums import get_rst_spot_index
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfo
+from .enums import Spot, get_rst_spot_index
+from .layup_info import AnalysisPlyInfoProvider, ElementInfo
 
 
 def get_selected_indices(
