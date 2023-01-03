@@ -6,10 +6,10 @@ import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
 from ansys.dpf.composites.add_layup_info_to_mesh import add_layup_info_to_mesh
-from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
+from ansys.dpf.composites.composite_data_sources import CompositeFiles, get_composites_data_sources
 from ansys.dpf.composites.example_helper.example_helper import (
     ContinuousFiberCompositesFiles,
-    upload_composite_files_to_server,
+    upload_continuous_fiber_composite_files_to_server,
 )
 
 
@@ -63,7 +63,7 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
     timer = Timer()
 
     if upload:
-        files = upload_composite_files_to_server(data_files=files, server=server)
+        files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=server)
 
     data_sources = get_composites_data_sources(files)
 
@@ -101,5 +101,7 @@ def get_basic_shell_files():
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
-        rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
+        rst=rst_path,
+        composite_files=[CompositeFiles(composite_definitions=h5_path)],
+        engineering_data=material_path,
     )

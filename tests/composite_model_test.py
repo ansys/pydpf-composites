@@ -5,9 +5,12 @@ import ansys.dpf.core as dpf
 import pytest
 
 from ansys.dpf.composites import MaterialProperty
+from ansys.dpf.composites.composite_data_sources import CompositeFiles
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.enums import LayerProperty
-from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
+from ansys.dpf.composites.example_helper.example_helper import (
+    upload_continuous_fiber_composite_files_to_server,
+)
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.layup_info import get_analysis_ply_index_to_name_map
 
@@ -32,9 +35,10 @@ def get_assembly_data_files():
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
         rst=rst_path,
-        composite_definitions=h5_path,
+        composite_files=[
+            CompositeFiles(composite_definitions=h5_path, mapping_files=[mapping_shell_path])
+        ],
         engineering_data=material_path,
-        mapping_files=[mapping_shell_path, mapping_solid_path],
     )
 
 
@@ -45,7 +49,9 @@ def get_dummy_data_files():
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     return ContinuousFiberCompositesFiles(
-        rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
+        rst=rst_path,
+        composite_files=[CompositeFiles(composite_definitions=h5_path)],
+        engineering_data=material_path,
     )
 
 
@@ -68,7 +74,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
     timer = Timer()
 
     files = get_data_files()
-    files = upload_composite_files_to_server(data_files=files, server=dpf_server)
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
     timer.add("After Upload files")
 
     composite_model = CompositeModel(files, server=dpf_server)
@@ -133,7 +139,7 @@ def test_assembly_model(dpf_server):
     timer = Timer()
 
     files = get_assembly_data_files()
-    files = upload_composite_files_to_server(data_files=files, server=dpf_server)
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
     timer.add("After Upload files")
 
     composite_model = CompositeModel(files, server=dpf_server)

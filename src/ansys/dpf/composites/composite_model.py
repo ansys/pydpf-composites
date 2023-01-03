@@ -18,7 +18,7 @@ from .enums import FailureMeasure, LayerProperty, MaterialProperty
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info import ElementInfo, LayupPropertiesProvider, get_element_info_provider
 from .material_properties import get_constant_property_dict
-from .result_definition import ResultDefinition
+from .result_definition import ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
 
 
@@ -143,18 +143,22 @@ class CompositeModel:
             # is irrelevant for cases without a ply scope we set it to False here
             write_data_for_full_element_scope = False
 
-        rd = ResultDefinition(
-            name="combined failure criteria",
-            rst_files=[self._composite_files.rst],
-            material_files=[self._composite_files.engineering_data],
-            composite_definitions=[self._composite_files.composite_definitions],
-            assembly_mapping_files=self._composite_files.mapping_files,
-            combined_failure_criterion=combined_criteria,
+        # todo: Handle multiple scopes
+        scope = ResultDefinitionScope(
+            composite_definition=self._composite_files.composite_files[0].composite_definitions,
+            mapping_files=self._composite_files.composite_files[0].mapping_files,
             element_scope=element_scope_in,
             ply_scope=ply_scope_in,
-            time=time_in,
             write_data_for_full_element_scope=write_data_for_full_element_scope,
-            measures=[measure.value],
+        )
+        rd = ResultDefinition(
+            name="combined failure criteria",
+            rst_file=self._composite_files.rst,
+            material_file=self._composite_files.engineering_data,
+            combined_failure_criterion=combined_criteria,
+            composite_scopes=[scope],
+            time=time_in,
+            measure=measure.value,
         )
         failure_operator = dpf.Operator("composite::composite_failure_operator")
 
@@ -187,14 +191,18 @@ class CompositeModel:
         else:
             time_in = time
 
+        scope = ResultDefinitionScope(
+            composite_definition=self._composite_files.composite_files[0].composite_definitions,
+            element_scope=[element_id],
+            ply_scope=[],
+        )
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_files=[self._composite_files.rst],
-            material_files=[self._composite_files.engineering_data],
-            composite_definitions=[self._composite_files.composite_definitions],
+            rst_file=self._composite_files.rst,
+            material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criteria,
-            element_scope=[element_id],
             time=time_in,
+            composite_scopes=[scope],
         )
 
         return SamplingPoint("Sampling Point", rd, server=self._server)

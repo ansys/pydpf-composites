@@ -42,7 +42,8 @@ def add_layup_info_to_mesh(
     # with the composite layup information.
     layup_provider = Operator("composite::layup_provider_operator")
     layup_provider.inputs.mesh(mesh)
-    layup_provider.inputs.data_sources(data_sources.composites_files)
+    # todo: Handle multiple scopes
+    layup_provider.inputs.data_sources(data_sources.composites_files[0])
     layup_provider.inputs.abstract_field_support(
         material_operators.material_support_provider.outputs.abstract_field_support
     )
