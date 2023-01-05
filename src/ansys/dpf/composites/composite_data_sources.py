@@ -1,6 +1,6 @@
 """Composite Data Sources."""
-from dataclasses import dataclass, field
-from typing import Dict, Sequence
+from dataclasses import dataclass
+from typing import Dict, Optional
 
 from ansys.dpf.core import DataSources
 
@@ -8,11 +8,11 @@ from ._typing_helper import PATH as _PATH
 
 
 @dataclass
-class CompositeFiles:
+class CompositeDefinitionFiles:
     """Container for composite files (per scope)."""
 
-    composite_definitions: _PATH
-    mapping_files: Sequence[_PATH] = field(default_factory=lambda: [])
+    definition: _PATH
+    mapping: Optional[_PATH] = None
 
 
 @dataclass
@@ -20,7 +20,7 @@ class ContinuousFiberCompositesFiles:
     """Container for continuous fiber file paths."""
 
     rst: _PATH
-    composite_files: Dict[str, CompositeFiles]
+    composite: Dict[str, CompositeDefinitionFiles]
     engineering_data: _PATH
 
 
@@ -38,7 +38,7 @@ class CompositeDataSources:
     """Data Sources related to the composite Layup."""
 
     rst: DataSources
-    composites_files: Dict[str, DataSources]
+    composite: Dict[str, DataSources]
     engineering_data: DataSources
 
 
@@ -57,21 +57,19 @@ def get_composites_data_sources(
         continuous_composite_files.engineering_data, "EngineeringData"
     )
     composite_data_sources = {}
-    for key, composite_files in continuous_composite_files.composite_files.items():
+    for key, composite_files in continuous_composite_files.composite.items():
         composite_data_source = DataSources()
-        composite_data_source.add_file_path(
-            composite_files.composite_definitions, "CompositeDefinitions"
-        )
-        for mapping_file in composite_files.mapping_files:
+        composite_data_source.add_file_path(composite_files.definition, "CompositeDefinitions")
+
+        if composite_files.mapping is not None:
             composite_data_source.add_file_path(
-                mapping_file,
-                "MappingCompositeDefinitions",
+                composite_files.mapping, "MappingCompositeDefinitions"
             )
 
         composite_data_sources[key] = composite_data_source
 
     return CompositeDataSources(
         rst=rst_data_source,
-        composites_files=composite_data_sources,
+        composite=composite_data_sources,
         engineering_data=engineering_data_source,
     )

@@ -1,6 +1,6 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import Collection, Dict, Optional, Sequence, cast
+from typing import Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion
@@ -35,7 +35,7 @@ class CompositeScope:
 
 
 class CompositeInfo:
-    """Contains composite data for a given composite definition."""
+    """Contains composite data providers for a given composite definition."""
 
     def __init__(
         self,
@@ -95,7 +95,7 @@ class CompositeModel:
 
         # todo: extract material operators only once
         self._composite_infos: Dict[str, CompositeInfo] = {}
-        for composite_definition_label in self._data_sources.composites_files:
+        for composite_definition_label in self._data_sources.composite:
             self._composite_infos[composite_definition_label] = CompositeInfo(
                 self._data_sources,
                 composite_definition_label,
@@ -109,15 +109,6 @@ class CompositeModel:
         Only relevant for assemblies.
         """
         return list(self._composite_infos.keys())
-
-    def _first_composite_definition_label_if_only_one(self) -> str:
-        if len(self.composite_definition_labels) == 1:
-            return self.composite_definition_labels[0]
-        else:
-            raise RuntimeError(
-                f"Multiple composite definition keys exists: {self.composite_definition_labels}. "
-                f"Please specify a key explicitly."
-            )
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying dpf meshed region.
@@ -195,25 +186,25 @@ class CompositeModel:
             # is irrelevant for cases without a ply scope we set it to False here
             write_data_for_full_element_scope = False
 
-        # todo: Handle multiple scopes
-        composite_composite_definition_label = self._first_composite_definition_label_if_only_one()
-        scope = ResultDefinitionScope(
-            composite_definition=self._composite_files.composite_files[
-                composite_composite_definition_label
-            ].composite_definitions,
-            mapping_files=self._composite_files.composite_files[
-                composite_composite_definition_label
-            ].mapping_files,
-            element_scope=element_scope_in,
-            ply_scope=ply_scope_in,
-            write_data_for_full_element_scope=write_data_for_full_element_scope,
-        )
+        scopes = []
+        for composite_definition_label in self.composite_definition_labels:
+            composite_files = self._composite_files.composite[composite_definition_label]
+            scopes.append(
+                ResultDefinitionScope(
+                    composite_definition=composite_files.definition,
+                    mapping_file=composite_files.mapping,
+                    element_scope=element_scope_in,
+                    ply_scope=ply_scope_in,
+                    write_data_for_full_element_scope=write_data_for_full_element_scope,
+                )
+            )
+
         rd = ResultDefinition(
             name="combined failure criteria",
             rst_file=self._composite_files.rst,
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criteria,
-            composite_scopes=[scope],
+            composite_scopes=scopes,
             time=time_in,
             measure=measure.value,
         )
@@ -231,6 +222,7 @@ class CompositeModel:
         combined_criteria: CombinedFailureCriterion,
         element_id: int,
         time: Optional[float] = None,
+        composite_definition_label: Optional[str] = None,
     ) -> SamplingPoint:
         """Get a sampling point for a given element_id and failure criteria.
 
@@ -242,19 +234,23 @@ class CompositeModel:
             Element Id/Label of the sampling point
         time:
             Time at which sampling point is evaluated
+        composite_definition_label:
+            Label of composite definition
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
+            Only required for assemblies
         """
         if time is None:
             time_in = self.get_result_times_or_frequencies()[-1]
         else:
             time_in = time
 
-        # todo: Handle multiple scopes
-        composite_composite_definition_label = self._first_composite_definition_label_if_only_one()
+        if composite_definition_label is None:
+            composite_definition_label = self._first_composite_definition_label_if_only_one()
 
         scope = ResultDefinitionScope(
-            composite_definition=self._composite_files.composite_files[
-                composite_composite_definition_label
-            ].composite_definitions,
+            composite_definition=self._composite_files.composite[
+                composite_definition_label
+            ].definition,
             element_scope=[element_id],
             ply_scope=[],
         )
@@ -280,6 +276,10 @@ class CompositeModel:
         ----------
         element_id:
             Element Id/Label
+        composite_definition_label:
+            Label of composite definition
+            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
+            Only required for assemblies
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -307,7 +307,7 @@ class CompositeModel:
             Selected element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
             Only required for assemblies
 
         """
@@ -335,7 +335,7 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
             Only required for assemblies
 
         """
@@ -357,7 +357,7 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
             Only required for assemblies
         """
         if composite_definition_label is None:
@@ -399,7 +399,7 @@ class CompositeModel:
                 composite_definition_label
             ).material_operators.material_provider,
             data_source_or_streams_provider=self.core_model.metadata.streams_provider,
-            mesh=self.get_mesh(),
+            mesh=self.get_mesh(composite_definition_label),
         )
 
     def get_result_times_or_frequencies(self) -> NDArray[np.double]:
@@ -424,7 +424,7 @@ class CompositeModel:
         strains:
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
             Only required for assemblies
         """
         if composite_definition_label is None:
@@ -446,3 +446,23 @@ class CompositeModel:
 
         # call run because ins operator has not output
         ins_operator.run()
+
+    def get_all_layered_element_ids_for_composite_definition_label(
+        self, composite_definition_label: str
+    ) -> Sequence[int]:
+        """Get all the layered element ids that belong to a given composite_definition_label."""
+        return cast(
+            List[int],
+            self.get_mesh(composite_definition_label)
+            .property_field("element_layer_indices")
+            .scoping.ids,
+        )
+
+    def _first_composite_definition_label_if_only_one(self) -> str:
+        if len(self.composite_definition_labels) == 1:
+            return self.composite_definition_labels[0]
+        else:
+            raise RuntimeError(
+                f"Multiple composite definition keys exists: {self.composite_definition_labels}. "
+                f"Please specify a key explicitly."
+            )

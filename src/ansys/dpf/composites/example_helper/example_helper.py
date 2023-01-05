@@ -1,16 +1,16 @@
 """Helper to get example files."""
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import os
 import tempfile
-from typing import Collection, Dict, cast
+from typing import Dict, Optional, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
 
 from .._typing_helper import PATH as _PATH
 from ..composite_data_sources import (
-    CompositeFiles,
+    CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
@@ -62,32 +62,33 @@ def upload_continuous_fiber_composite_files_to_server(
         return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
 
     all_composite_files = {}
-    for key, composite_files_by_scope in data_files.composite_files.items():
-        mapping_files = [
-            upload(mapping_file) for mapping_file in composite_files_by_scope.mapping_files
-        ]
-        all_composite_files[key] = CompositeFiles(
-            composite_definitions=upload(composite_files_by_scope.composite_definitions),
-            mapping_files=mapping_files,
+    for key, composite_files_by_scope in data_files.composite.items():
+        composite_definition_files = CompositeDefinitionFiles(
+            definition=upload(composite_files_by_scope.definition),
         )
+
+        if composite_files_by_scope.mapping is not None:
+            composite_definition_files.mapping = upload(composite_files_by_scope.mapping)
+
+        all_composite_files[key] = composite_definition_files
 
     return ContinuousFiberCompositesFiles(
         rst=upload(data_files.rst),
         engineering_data=upload(data_files.engineering_data),
-        composite_files=all_composite_files,
+        composite=all_composite_files,
     )
 
 
 @dataclass
 class _ContinuousFiberCompositeFiles:
-    composite_definitions: str
-    mapping_files: Collection[str] = field(default_factory=lambda: [])
+    definition: str
+    mapping: Optional[str] = None
 
 
 @dataclass
 class _ContinuousFiberCompositesExampleFilenames:
     rst: str
-    composite_files: Dict[str, _ContinuousFiberCompositeFiles]
+    composite: Dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
 
 
@@ -136,9 +137,9 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="shell.rst",
             engineering_data="material.engd",
-            composite_files={
+            composite={
                 "shell": _ContinuousFiberCompositeFiles(
-                    composite_definitions="ACPCompositeDefinitions.h5",
+                    definition="ACPCompositeDefinitions.h5",
                 )
             },
         ),
@@ -148,36 +149,24 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="beam_181_analysis_model.rst",
             engineering_data="materials.xml",
-            composite_files={
-                "shell": _ContinuousFiberCompositeFiles(
-                    composite_definitions="ACPCompositeDefinitions.h5",
-                )
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5")
             },
         ),
     ),
-    "assembly_shell": _ContinuousFiberExampleLocation(
+    "assembly": _ContinuousFiberExampleLocation(
         directory="assembly",
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="file.rst",
             engineering_data="material.engd",
-            composite_files={
-                "shell": _ContinuousFiberCompositeFiles(
-                    composite_definitions="ACPCompositeDefinitions.h5",
-                    mapping_files=["ACPCompositeDefinitions.mapping"],
-                )
-            },
-        ),
-    ),
-    "assembly_solid": _ContinuousFiberExampleLocation(
-        directory="assembly",
-        files=_ContinuousFiberCompositesExampleFilenames(
-            rst="file.rst",
-            engineering_data="material.engd",
-            composite_files={
+            composite={
                 "solid": _ContinuousFiberCompositeFiles(
-                    composite_definitions="ACPSolidModel_SM.h5",
-                    mapping_files=["ACPSolidModel_SM.mapping"],
-                )
+                    definition="ACPSolidModel_SM.h5", mapping="ACPSolidModel_SM.mapping"
+                ),
+                "shell": _ContinuousFiberCompositeFiles(
+                    definition="ACPCompositeDefinitions.h5",
+                    mapping="ACPCompositeDefinitions.mapping",
+                ),
             },
         ),
     ),
@@ -254,21 +243,17 @@ def get_continuous_fiber_example_files(
             )
 
         all_composite_files = {}
-        for key, composite_examples_files_for_scope in example_files.files.composite_files.items():
-            mapping_file_paths = [
-                upload(mapping_file)
-                for mapping_file in composite_examples_files_for_scope.mapping_files
-            ]
-            composite_files = CompositeFiles(
-                composite_definitions=upload(
-                    composite_examples_files_for_scope.composite_definitions
-                ),
-                mapping_files=mapping_file_paths,
+        for key, composite_examples_files_for_scope in example_files.files.composite.items():
+            composite_files = CompositeDefinitionFiles(
+                definition=upload(composite_examples_files_for_scope.definition),
             )
+            if composite_examples_files_for_scope.mapping is not None:
+                composite_files.mapping = upload(composite_examples_files_for_scope.mapping)
+
             all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
             rst=upload(example_files.files.rst),
             engineering_data=upload(example_files.files.engineering_data),
-            composite_files=all_composite_files,
+            composite=all_composite_files,
         )

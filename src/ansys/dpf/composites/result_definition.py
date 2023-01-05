@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 import json
-from typing import Any, Dict, Sequence
+from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
@@ -31,7 +31,7 @@ class ResultDefinitionScope:
     (e.g. due to ply scoping).
     """
     write_data_for_full_element_scope: bool = True
-    mapping_files: Sequence[_PATH] = field(default_factory=lambda: [])
+    mapping_file: Optional[_PATH] = None
 
 
 class ResultDefinition:
@@ -209,10 +209,13 @@ class ResultDefinition:
             result_definition_scope: ResultDefinitionScope, rst_file: _PATH, material_file: _PATH
         ) -> Dict[str, Any]:
             write_for_full_scope = result_definition_scope.write_data_for_full_element_scope
+            mapping_entry = []
+            if result_definition_scope.mapping_file is not None:
+                mapping_entry.append(result_definition_scope.mapping_file)
             return {
                 "datasources": {
                     "composite_definition": [result_definition_scope.composite_definition],
-                    "assembly_mapping_file": result_definition_scope.mapping_files,
+                    "assembly_mapping_file": mapping_entry,
                     "rst_file": [rst_file],
                     "material_file": [material_file],
                 },

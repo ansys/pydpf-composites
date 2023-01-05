@@ -4,14 +4,13 @@
 How to use the composite failure operator for an assembly model
 ---------------------------------------------------------------
 
-This operator computes the minimum and maximum failure
-values and failure modes of a combined failure criterion
+For assemblies
 
 """
 # %%
 # Load ansys libraries
 
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.enums import FailureOutput
 from ansys.dpf.composites.example_helper.example_helper import (
     connect_to_or_start_server,
@@ -20,7 +19,7 @@ from ansys.dpf.composites.example_helper.example_helper import (
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
 server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "assembly_shell")
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "assembly")
 
 # %%
 # Definition of the combined failure criterion
@@ -35,9 +34,8 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 # %%
 # Setup composite model
 composite_model = CompositeModel(composite_files_on_server, server_context.server)
-shell_scope = CompositeScope(elements=[1, 2])
 output_all_elements = composite_model.evaluate_failure_criteria(
-    combined_criteria=get_combined_failure_criterion(), composite_scope=shell_scope
+    combined_criteria=get_combined_failure_criterion()
 )
 
 #%%
@@ -47,19 +45,16 @@ output_all_elements = composite_model.evaluate_failure_criteria(
 irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
 irf_field.plot()
 
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "assembly_solid")
-# todo: check if results are correct
-
-# %%
-# Setup composite model
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
-output_all_elements = composite_model.evaluate_failure_criteria(
-    combined_criteria=get_combined_failure_criterion(),
-)
 
 #%%
-# Plot the max IRF per element
+# In the assembly exist two composite definition, one with the label "shell" and one
+# with the label "solid". To query the layup properties we have to query the
+# properties with the correct composite_definition_label.
+# For example to get the ElementInfo for all layered elements
 #
-
-irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
-irf_field.plot()
+element_infos = []
+for composite_label in composite_model.composite_definition_labels:
+    for element_id in composite_model.get_all_layered_element_ids_for_composite_definition_label(
+        composite_label
+    ):
+        element_infos.append(composite_model.get_element_info(element_id, composite_label))

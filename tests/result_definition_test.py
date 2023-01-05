@@ -55,9 +55,9 @@ def test_result_definition():
         assert rd.measure == v
 
     assert len(rd.scopes) == 1
-    rd.scopes[0].mapping_files = [r"\\workdir\solid_model.mapping"]
+    rd.scopes[0].mapping_file = r"\\workdir\solid_model.mapping"
     assert rd.scopes[0].composite_definition == r"\\workdir\ACPCompositeDefinitions.h5"
-    assert rd.scopes[0].mapping_files == [r"\\workdir\solid_model.mapping"]
+    assert rd.scopes[0].mapping_file == r"\\workdir\solid_model.mapping"
     assert rd.rst_file == r"\\workdir\file.rst"
     assert rd.material_file == r"\\workdir\engd.xml"
 

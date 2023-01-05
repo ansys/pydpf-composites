@@ -36,10 +36,10 @@ def add_layup_info_to_mesh(
     data_sources
     mesh
     composite_definition_label:
-        Label of composite definition (dictionary key in CompositeDataSources.composites_files)
+        Label of composite definition (dictionary key in CompositeDataSources.composite)
     """
     if composite_definition_label is None:
-        composite_definition_labels = list(data_sources.composites_files.keys())
+        composite_definition_labels = list(data_sources.composite.keys())
         if len(composite_definition_labels) == 1:
             composite_definition_label = composite_definition_labels[0]
         else:
@@ -58,7 +58,7 @@ def add_layup_info_to_mesh(
     layup_provider = Operator("composite::layup_provider_operator")
     layup_provider.inputs.mesh(mesh)
     # todo: Handle multiple scopes
-    layup_provider.inputs.data_sources(data_sources.composites_files[composite_definition_label])
+    layup_provider.inputs.data_sources(data_sources.composite[composite_definition_label])
     layup_provider.inputs.abstract_field_support(
         material_operators.material_support_provider.outputs.abstract_field_support
     )
