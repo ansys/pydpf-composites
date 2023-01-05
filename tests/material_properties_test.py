@@ -56,25 +56,6 @@ def test_get_analysis_ply_index_to_name_map(dpf_server):
     }
 
 
-def test_material_properties_fail(dpf_server):
-    files = get_basic_shell_files()
-
-    setup_result = setup_operators(dpf_server, files)
-
-    def start():
-
-        element_info_provider = get_element_info_provider(
-            mesh=setup_result.mesh, stream_provider_or_data_source=setup_result.streams_provider
-        )
-        print(element_info_provider)
-
-    import threading
-
-    for i in range(1000):
-        x = threading.Thread(target=start, args=())
-        x.start()
-
-
 def test_material_properties(dpf_server):
     """
     Test evaluation of material properties to compute a user defined failure criterion

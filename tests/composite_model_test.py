@@ -35,9 +35,11 @@ def get_assembly_data_files():
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
         rst=rst_path,
-        composite_files=[
-            CompositeFiles(composite_definitions=h5_path, mapping_files=[mapping_shell_path])
-        ],
+        composite_files={
+            "shell": CompositeFiles(
+                composite_definitions=h5_path, mapping_files=[mapping_shell_path]
+            )
+        },
         engineering_data=material_path,
     )
 
@@ -50,7 +52,7 @@ def get_dummy_data_files():
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     return ContinuousFiberCompositesFiles(
         rst=rst_path,
-        composite_files=[CompositeFiles(composite_definitions=h5_path)],
+        composite_files={"shell": CompositeFiles(composite_definitions=h5_path)},
         engineering_data=material_path,
     )
 
@@ -95,9 +97,9 @@ def test_basic_functionality_of_composite_model(dpf_server):
 
     element_infos = [
         composite_model.get_element_info(element_id)
-        for element_id in composite_model.mesh.elements.scoping.ids
+        for element_id in composite_model.get_mesh().elements.scoping.ids
     ]
-    get_analysis_ply_index_to_name_map(composite_model.mesh)
+    get_analysis_ply_index_to_name_map(composite_model.get_mesh())
 
     timer.add("After getting element_info")
 
@@ -122,7 +124,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
     assert composite_model.get_analysis_plies(element_id) == analysis_ply_ids
 
     assert composite_model.core_model is not None
-    assert composite_model.mesh is not None
+    assert composite_model.get_mesh() is not None
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
         combined_criteria=combined_failure_criterion, element_id=1
@@ -166,7 +168,7 @@ def test_assembly_model(dpf_server):
 
     assert element_info.element_type == 181
 
-    analysis_ply_map = get_analysis_ply_index_to_name_map(composite_model.mesh)
+    analysis_ply_map = get_analysis_ply_index_to_name_map(composite_model.get_mesh())
     assert analysis_ply_map[0] == "P1L1__woven_45"
 
     timer.add("After getting element_info")
@@ -191,7 +193,7 @@ def test_assembly_model(dpf_server):
     assert composite_model.get_analysis_plies(element_id) == analysis_ply_ids
 
     assert composite_model.core_model is not None
-    assert composite_model.mesh is not None
+    assert composite_model.get_mesh() is not None
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
         combined_criteria=combined_failure_criterion, element_id=1

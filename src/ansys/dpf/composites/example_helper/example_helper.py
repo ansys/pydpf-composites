@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 import os
 import tempfile
-from typing import Collection, Dict, Sequence, cast
+from typing import Collection, Dict, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -61,16 +61,14 @@ def upload_continuous_fiber_composite_files_to_server(
     def upload(filename: _PATH) -> str:
         return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
 
-    all_composite_files = []
-    for composite_files_by_scope in data_files.composite_files:
+    all_composite_files = {}
+    for key, composite_files_by_scope in data_files.composite_files.items():
         mapping_files = [
             upload(mapping_file) for mapping_file in composite_files_by_scope.mapping_files
         ]
-        all_composite_files.append(
-            CompositeFiles(
-                composite_definitions=upload(composite_files_by_scope.composite_definitions),
-                mapping_files=mapping_files,
-            )
+        all_composite_files[key] = CompositeFiles(
+            composite_definitions=upload(composite_files_by_scope.composite_definitions),
+            mapping_files=mapping_files,
         )
 
     return ContinuousFiberCompositesFiles(
@@ -89,7 +87,7 @@ class _ContinuousFiberCompositeFiles:
 @dataclass
 class _ContinuousFiberCompositesExampleFilenames:
     rst: str
-    composite_files: Sequence[_ContinuousFiberCompositeFiles]
+    composite_files: Dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
 
 
@@ -138,11 +136,11 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="shell.rst",
             engineering_data="material.engd",
-            composite_files=[
-                _ContinuousFiberCompositeFiles(
+            composite_files={
+                "shell": _ContinuousFiberCompositeFiles(
                     composite_definitions="ACPCompositeDefinitions.h5",
                 )
-            ],
+            },
         ),
     ),
     "ins": _ContinuousFiberExampleLocation(
@@ -150,11 +148,11 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="beam_181_analysis_model.rst",
             engineering_data="materials.xml",
-            composite_files=[
-                _ContinuousFiberCompositeFiles(
+            composite_files={
+                "shell": _ContinuousFiberCompositeFiles(
                     composite_definitions="ACPCompositeDefinitions.h5",
                 )
-            ],
+            },
         ),
     ),
     "assembly_shell": _ContinuousFiberExampleLocation(
@@ -162,12 +160,12 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="file.rst",
             engineering_data="material.engd",
-            composite_files=[
-                _ContinuousFiberCompositeFiles(
+            composite_files={
+                "shell": _ContinuousFiberCompositeFiles(
                     composite_definitions="ACPCompositeDefinitions.h5",
                     mapping_files=["ACPCompositeDefinitions.mapping"],
                 )
-            ],
+            },
         ),
     ),
     "assembly_solid": _ContinuousFiberExampleLocation(
@@ -175,12 +173,12 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="file.rst",
             engineering_data="material.engd",
-            composite_files=[
-                _ContinuousFiberCompositeFiles(
+            composite_files={
+                "solid": _ContinuousFiberCompositeFiles(
                     composite_definitions="ACPSolidModel_SM.h5",
                     mapping_files=["ACPSolidModel_SM.mapping"],
                 )
-            ],
+            },
         ),
     ),
 }
@@ -223,8 +221,8 @@ def _download_and_upload_file(
 
 
 def get_short_fiber_example_files(
-    example_key: str,
     server_context: ServerContext,
+    example_key: str,
 ) -> ShortFiberCompositesFiles:
     """Get short fiber example file by example key."""
     example_files = _short_fiber_examples[example_key]
@@ -235,16 +233,16 @@ def get_short_fiber_example_files(
                 example_files.directory, filename, tmpdir, server_context.server
             )
 
-    return ShortFiberCompositesFiles(
-        rst=upload(example_files.files.rst),
-        dsdat=upload(example_files.files.dsdat),
-        engineering_data=upload(example_files.files.engineering_data),
-    )
+        return ShortFiberCompositesFiles(
+            rst=upload(example_files.files.rst),
+            dsdat=upload(example_files.files.dsdat),
+            engineering_data=upload(example_files.files.engineering_data),
+        )
 
 
 def get_continuous_fiber_example_files(
-    example_key: str,
     server_context: ServerContext,
+    example_key: str,
 ) -> ContinuousFiberCompositesFiles:
     """Get continuous fiber example file by example key."""
     example_files = _continuous_fiber_examples[example_key]
@@ -255,8 +253,8 @@ def get_continuous_fiber_example_files(
                 example_files.directory, filename, tmpdir, server_context.server
             )
 
-        all_composite_files = []
-        for composite_examples_files_for_scope in example_files.files.composite_files:
+        all_composite_files = {}
+        for key, composite_examples_files_for_scope in example_files.files.composite_files.items():
             mapping_file_paths = [
                 upload(mapping_file)
                 for mapping_file in composite_examples_files_for_scope.mapping_files
@@ -267,7 +265,7 @@ def get_continuous_fiber_example_files(
                 ),
                 mapping_files=mapping_file_paths,
             )
-            all_composite_files.append(composite_files)
+            all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
             rst=upload(example_files.files.rst),

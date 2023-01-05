@@ -102,6 +102,6 @@ def get_basic_shell_files():
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
         rst=rst_path,
-        composite_files=[CompositeFiles(composite_definitions=h5_path)],
+        composite_files={"shell": CompositeFiles(composite_definitions=h5_path)},
         engineering_data=material_path,
     )

@@ -48,6 +48,7 @@ irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failur
 irf_field.plot()
 
 composite_files_on_server = get_continuous_fiber_example_files(server_context, "assembly_solid")
+# todo: check if results are correct
 
 # %%
 # Setup composite model

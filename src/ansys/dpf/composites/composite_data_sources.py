@@ -1,6 +1,6 @@
 """Composite Data Sources."""
 from dataclasses import dataclass, field
-from typing import Sequence
+from typing import Dict, Sequence
 
 from ansys.dpf.core import DataSources
 
@@ -20,7 +20,7 @@ class ContinuousFiberCompositesFiles:
     """Container for continuous fiber file paths."""
 
     rst: _PATH
-    composite_files: Sequence[CompositeFiles]
+    composite_files: Dict[str, CompositeFiles]
     engineering_data: _PATH
 
 
@@ -38,7 +38,7 @@ class CompositeDataSources:
     """Data Sources related to the composite Layup."""
 
     rst: DataSources
-    composites_files: Sequence[DataSources]
+    composites_files: Dict[str, DataSources]
     engineering_data: DataSources
 
 
@@ -56,8 +56,8 @@ def get_composites_data_sources(
     engineering_data_source.add_file_path(
         continuous_composite_files.engineering_data, "EngineeringData"
     )
-    composite_data_sources = []
-    for composite_files in continuous_composite_files.composite_files:
+    composite_data_sources = {}
+    for key, composite_files in continuous_composite_files.composite_files.items():
         composite_data_source = DataSources()
         composite_data_source.add_file_path(
             composite_files.composite_definitions, "CompositeDefinitions"
@@ -68,7 +68,7 @@ def get_composites_data_sources(
                 "MappingCompositeDefinitions",
             )
 
-        composite_data_sources.append(composite_data_source)
+        composite_data_sources[key] = composite_data_source
 
     return CompositeDataSources(
         rst=rst_data_source,
