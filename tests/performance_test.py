@@ -16,6 +16,7 @@ from ansys.dpf.composites.example_helper.example_helper import (
 )
 from ansys.dpf.composites.indexer import _FieldIndexerWithDataPointer
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, get_element_info_provider
+from ansys.dpf.composites.material_setup import get_material_operators
 
 from .helper import ContinuousFiberCompositesFiles, Timer, setup_operators
 
@@ -274,12 +275,17 @@ def test_performance_property_dict(dpf_server):
 
     timer.add("Load data")
 
-    layup_operators = add_layup_info_to_mesh(data_sources, mesh)
+    material_operators = get_material_operators(
+        rst_data_source=data_sources.rst, engineering_data_source=data_sources.engineering_data
+    )
+    layup_operators = add_layup_info_to_mesh(
+        data_sources=data_sources, mesh=mesh, material_operators=material_operators
+    )
     timer.add("After enrich mesh")
 
     property_dict = get_constant_property_dict(
         material_properties=[MaterialProperty.Strain_Limits_eXt],
-        materials_provider=layup_operators.material_operators.material_provider,
+        materials_provider=material_operators.material_provider,
         data_source_or_streams_provider=data_sources.rst,
         mesh=mesh,
     )

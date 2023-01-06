@@ -3,12 +3,13 @@ from dataclasses import dataclass
 from typing import Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import FieldsContainer, MeshedRegion
+from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .add_layup_info_to_mesh import LayupOperators, add_layup_info_to_mesh
+from . import MaterialOperators
+from .add_layup_info_to_mesh import add_layup_info_to_mesh
 from .composite_data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
@@ -18,6 +19,7 @@ from .enums import FailureMeasure, LayerProperty, MaterialProperty
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info import ElementInfo, LayupPropertiesProvider, get_element_info_provider
 from .material_properties import get_constant_property_dict
+from .material_setup import get_material_operators
 from .result_definition import ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
 
@@ -42,15 +44,17 @@ class CompositeInfo:
         data_sources: CompositeDataSources,
         composite_definition_label: str,
         streams_provider: dpf.Operator,
+        material_operators: MaterialOperators,
     ):
         """Initialize CompositeInfo and add enrich mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
         mesh_provider.inputs.data_sources(data_sources.rst)
         self.mesh = mesh_provider.outputs.mesh()
 
-        self.layup_operators = add_layup_info_to_mesh(
+        self.layup_provider = add_layup_info_to_mesh(
             mesh=self.mesh,
             data_sources=data_sources,
+            material_operators=material_operators,
             composite_definition_label=composite_definition_label,
         )
 
@@ -59,7 +63,7 @@ class CompositeInfo:
             stream_provider_or_data_source=streams_provider,
         )
         self.layup_properties_provider = LayupPropertiesProvider(
-            layup_provider=self.layup_operators.layup_provider, mesh=self.mesh
+            layup_provider=self.layup_provider, mesh=self.mesh
         )
 
 
@@ -99,14 +103,18 @@ class CompositeModel:
 
         self._composite_files = composite_files
         self._data_sources = get_composites_data_sources(composite_files)
+        self._material_operators = get_material_operators(
+            rst_data_source=self._data_sources.rst,
+            engineering_data_source=self._data_sources.engineering_data,
+        )
 
-        # todo: extract material operators only once
         self._composite_infos: Dict[str, CompositeInfo] = {}
         for composite_definition_label in self._data_sources.composite:
             self._composite_infos[composite_definition_label] = CompositeInfo(
                 self._data_sources,
                 composite_definition_label,
                 self._core_model.metadata.streams_provider,
+                material_operators=self._material_operators,
             )
 
     @property
@@ -136,13 +144,25 @@ class CompositeModel:
         """Get the underlying dpf core Model."""
         return self._core_model
 
-    def get_layup_operators(
-        self, composite_definition_label: Optional[str] = None
-    ) -> LayupOperators:
-        """Get the layup operators."""
+    @property
+    def material_operators(self) -> MaterialOperators:
+        """Get the Material operators."""
+        return self._material_operators
+
+    def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
+        """Get the layup operators.
+
+        Parameters
+        ----------
+        composite_definition_label:
+            Label of composite definition
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
+            Only required for assemblies. See "Note on assemblies" in class docstring.
+
+        """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
-        return self._composite_infos[composite_definition_label].layup_operators
+        return self._composite_infos[composite_definition_label].layup_provider
 
     def evaluate_failure_criteria(
         self,
@@ -244,7 +264,7 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies
+            Only required for assemblies. See "Note on assemblies" in class docstring.
         """
         if time is None:
             time_in = self.get_result_times_or_frequencies()[-1]
@@ -252,6 +272,13 @@ class CompositeModel:
             time_in = time
 
         if composite_definition_label is None:
+            # jvonrick: Jan 2023: We could also try to determine composite_definition_label
+            # based on the element_id and
+            # self.get_all_layered_element_ids_for_composite_definition_label.
+            # But the element_id of the sampling point can be changed later
+            # In this case it is complicated switch to the correct composite definition, so
+            # it is probably better to make it explicit that the sampling point is tied to
+            # a composite definition
             composite_definition_label = self._first_composite_definition_label_if_only_one()
 
         scope = ResultDefinitionScope(
@@ -402,9 +429,7 @@ class CompositeModel:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
         return get_constant_property_dict(
             material_properties=material_properties,
-            materials_provider=self.get_layup_operators(
-                composite_definition_label
-            ).material_operators.material_provider,
+            materials_provider=self.material_operators.material_provider,
             data_source_or_streams_provider=self.core_model.metadata.streams_provider,
             mesh=self.get_mesh(composite_definition_label),
         )
@@ -438,7 +463,7 @@ class CompositeModel:
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
-        layup_operators = self._composite_infos[composite_definition_label].layup_operators
+        layup_operators = self._composite_infos[composite_definition_label].layup_provider
         ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
         ins_operator.inputs.materials_container(
             layup_operators.material_operators.material_provider
