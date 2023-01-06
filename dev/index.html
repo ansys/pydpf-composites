@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Pydpf composites &#8212; pydpf-composites</title>
+    <title>pyDPF Composites &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -51,7 +51,7 @@
     <script src="_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="api/index.html" />
+    <link rel="next" title="Getting Started" href="intro.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -98,7 +98,13 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 current active nav-item">
  <a class="current reference internal nav-link" href="#">
-  Pydpf composites
+  pyDPF Composites
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="intro.html">
+  Getting Started
  </a>
 </li>
 
@@ -111,6 +117,12 @@
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="examples/index.html">
   Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="developers_guide.html">
+  PyDPF Composites
  </a>
 </li>
 
@@ -254,7 +266,7 @@ function checkPageExistsAndRedirect(event) {
     
     
 
-        <li class="nav-item nav-item-this"><a href="">Pydpf composites</a></li> 
+        <li class="nav-item nav-item-this"><a href="">pyDPF Composites</a></li> 
       </ul>
     </div>
         </div>
@@ -301,30 +313,8 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#developer-setup">
-   Developer Setup
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#build-environment">
-   Build environment
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#testing">
-     Testing
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#build-documentation">
-   Build documentation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#run-style-checks">
-   Run style checks
+  <a class="reference internal nav-link" href="#key-features">
+   Key features
   </a>
  </li>
 </ul>
@@ -349,110 +339,65 @@ function checkPageExistsAndRedirect(event) {
   <div class="toctree-wrapper compound">
 </div>
 <section id="pydpf-composites">
-<h1>Pydpf composites<a class="headerlink" href="#pydpf-composites" title="Permalink to this heading">#</a></h1>
-<p><a class="reference external" href="https://docs.pyansys.com/"><img alt="PyAnsys" src="https://img.shields.io/badge/Py-Ansys-ffc107.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABDklEQVQ4jWNgoDfg5mD8vE7q/3bpVyskbW0sMRUwofHD7Dh5OBkZGBgW7/3W2tZpa2tLQEOyOzeEsfumlK2tbVpaGj4N6jIs1lpsDAwMJ278sveMY2BgCA0NFRISwqkhyQ1q/Nyd3zg4OBgYGNjZ2ePi4rB5loGBhZnhxTLJ/9ulv26Q4uVk1NXV/f///////69du4Zdg78lx//t0v+3S88rFISInD59GqIH2esIJ8G9O2/XVwhjzpw5EAam1xkkBJn/bJX+v1365hxxuCAfH9+3b9/+////48cPuNehNsS7cDEzMTAwMMzb+Q2u4dOnT2vWrMHu9ZtzxP9vl/69RVpCkBlZ3N7enoDXBwEAAA+YYitOilMVAAAAAElFTkSuQmCC" /></a> <a class="reference external" href="https://pypi.org/project/pydpf-composites/"><img alt="Python" src="https://img.shields.io/badge/Python-%3E%3D3.7-blue" /></a> <a class="reference external" href="https://pypi.org/project/pydpf-composites"><img alt="PyPI" src="https://img.shields.io/pypi/v/pydpf-composites.svg?logo=python&amp;logoColor=white" /></a> <a class="reference external" href="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml"><img alt="GH-CI" src="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg" /></a> <a class="reference external" href="https://codecov.io/gh/pyansys/pydpf-composites"><img alt="Codecov" src="https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a> <a class="reference external" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat" /></a></p>
-<p>A Python wrapper for Ansys dpf composites. It implements a few classes on top of the
+<h1>pyDPF Composites<a class="headerlink" href="#pydpf-composites" title="Permalink to this heading">#</a></h1>
+<p>A Python wrapper for Ansys dpf composites. It implements classes on top of the
 DPF Composites operators and data accessors for short fiber and layered composites
-(layered shell and solid elements). This module can be used to post-process these structures,
-and to implement custom failure criteria and computation.
-For instance fatigue analysis. See <a class="reference external" href="examples/index.html">Examples</a>.</p>
-<p>Key features:</p>
+(layered shell and solid elements). This module can be used to post-process fiber
+reinforced plastics and layered composites, and to implement custom failure
+criteria and computation.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-rocket" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M14.064 0a8.75 8.75 0 00-6.187 2.563l-.459.458c-.314.314-.616.641-.904.979H3.31a1.75 1.75 0 00-1.49.833L.11 7.607a.75.75 0 00.418 1.11l3.102.954c.037.051.079.1.124.145l2.429 2.428c.046.046.094.088.145.125l.954 3.102a.75.75 0 001.11.418l2.774-1.707a1.75 1.75 0 00.833-1.49V9.485c.338-.288.665-.59.979-.904l.458-.459A8.75 8.75 0 0016 1.936V1.75A1.75 1.75 0 0014.25 0h-.186zM10.5 10.625c-.088.06-.177.118-.266.175l-2.35 1.521.548 1.783 1.949-1.2a.25.25 0 00.119-.213v-2.066zM3.678 8.116L5.2 5.766c.058-.09.117-.178.176-.266H3.309a.25.25 0 00-.213.119l-1.2 1.95 1.782.547zm5.26-4.493A7.25 7.25 0 0114.063 1.5h.186a.25.25 0 01.25.25v.186a7.25 7.25 0 01-2.123 5.127l-.459.458a15.21 15.21 0 01-2.499 2.02l-2.317 1.5-2.143-2.143 1.5-2.317a15.25 15.25 0 012.02-2.5l.458-.458h.002zM12 5a1 1 0 11-2 0 1 1 0 012 0zm-8.44 9.56a1.5 1.5 0 10-2.12-2.12c-.734.73-1.047 2.332-1.15 3.003a.23.23 0 00.265.265c.671-.103 2.273-.416 3.005-1.148z"></path></svg> Getting Started</div>
+<p class="sd-card-text">Installation, load model and failure plot.</p>
+</div>
+<a class="sd-stretched-link reference internal" href="intro.html"><span class="doc"></span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-play" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zM6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z"></path></svg> Examples</div>
+<p class="sd-card-text">Collection of examples.</p>
+</div>
+<a class="sd-stretched-link reference internal" href="examples/index.html"><span class="doc"></span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-file-code" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0114.25 15h-9a.75.75 0 010-1.5h9a.25.25 0 00.25-.25V6h-2.75A1.75 1.75 0 0110 4.25V1.5H5.75a.25.25 0 00-.25.25v2.5a.75.75 0 01-1.5 0v-2.5zm7.5-.188V4.25c0 .138.112.25.25.25h2.688a.252.252 0 00-.011-.013l-2.914-2.914a.272.272 0 00-.013-.011zM5.72 6.72a.75.75 0 000 1.06l1.47 1.47-1.47 1.47a.75.75 0 101.06 1.06l2-2a.75.75 0 000-1.06l-2-2a.75.75 0 00-1.06 0zM3.28 7.78a.75.75 0 00-1.06-1.06l-2 2a.75.75 0 000 1.06l2 2a.75.75 0 001.06-1.06L1.81 9.25l1.47-1.47z"></path></svg> API Reference</div>
+<p class="sd-card-text">Reference for the public Python classes, methods and functions.</p>
+</div>
+<a class="sd-stretched-link reference internal" href="api/index.html"><span class="doc"></span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-code" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"></path></svg> Developer’s Guide</div>
+<p class="sd-card-text">Contributing to pyDPF Composites.</p>
+</div>
+<a class="sd-stretched-link reference internal" href="developers_guide.html"><span class="doc"></span></a></div>
+</div>
+</div>
+</div>
+<section id="key-features">
+<h2>Key features<a class="headerlink" href="#key-features" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Result Definition object to configure combined failure criteria.</p></li>
-<li><p>Sampling Point object to extract and visualize results from the bottom to the top of a laminate.</p></li>
+<li><p>Failure criteria evaluator.
+See this <a class="reference internal" href="examples/gallery_examples/failure_operator_example.html"><span class="doc">Example</span></a>.</p></li>
+<li><p><a class="reference internal" href="api/_autosummary/ansys.dpf.composites.SamplingPoint.html"><span class="doc">Sampling Point</span></a> to
+extract and visualize result over the entire thickness of the laminate.
+<a class="reference internal" href="examples/gallery_examples/sampling_point_example.html"><span class="doc">Here</span></a> is an example.</p></li>
+<li><p><a class="reference internal" href="api/_autosummary/ansys.dpf.composites.ResultDefinition.html"><span class="doc">Result Definition</span></a> to configure
+combined failure criteria and scopes.</p></li>
 <li><p>Exposure of material properties (elasticity, strength limits et).</p></li>
 <li><p>Accessors to extract ply-wise results and material properties.</p></li>
 </ul>
-<section id="developer-setup">
-<h2>Developer Setup<a class="headerlink" href="#developer-setup" title="Permalink to this heading">#</a></h2>
-<p>Installing Pydpf composites in developer mode allows
-you to modify the source and enhance it.</p>
-<p>Before contributing to the project, please refer to the <a class="reference external" href="https://dev.docs.pyansys.com/">PyAnsys Developer’s guide</a>.</p>
-<ol class="arabic">
-<li><p>Clone the repository:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/pyansys/pydpf-composites
-<span class="nb">cd</span> pydpf-composites
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Install dependencies:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install pipx
-pipx ensurepath
-pipx install poetry
-pipx install pip
-pipx install tox
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ol>
-</section>
-<section id="build-environment">
-<h2>Build environment<a class="headerlink" href="#build-environment" title="Permalink to this heading">#</a></h2>
-<p># Build package and install into the local env</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry install -E build
-poetry build
-python -m pip install dist<span class="se">\a</span>nsys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
-</pre></div>
-</div>
-<p>Use tox to create a virtual env for the development. Activate this env to run tests and scripts
-(<em>&lt;root&gt;\.tox\dev\Scripts\activate</em>).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox -e dev
-</pre></div>
-</div>
-<section id="testing">
-<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">#</a></h3>
-<ol class="arabic">
-<li><p>Run tests with a docker container:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
-pytest .
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Run tests with a local Grpc server executable:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ol>
-<p>This currently works only on windows and with the directory structure of dpf_composites. (The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder)</p>
-</section>
-</section>
-<section id="build-documentation">
-<h2>Build documentation<a class="headerlink" href="#build-documentation" title="Permalink to this heading">#</a></h2>
-<ol class="arabic">
-<li><p>Windows:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
-docker run -d -p <span class="m">21002</span>:50052  ghcr.io/pyansys/pydpf-composites:latest
-tox -e doc-windows
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Linux:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
-docker run -d -p <span class="m">21002</span>:50052  ghcr.io/pyansys/pydpf-composites:latest
-tox -e doc-linux
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ol>
-</section>
-<section id="run-style-checks">
-<h2>Run style checks<a class="headerlink" href="#run-style-checks" title="Permalink to this heading">#</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox -e style
-</pre></div>
-</div>
 </section>
 </section>
 

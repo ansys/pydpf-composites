@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>How to use the composite failure operator &#8212; pydpf-composites</title>
+    <title>Composite failure operator &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -99,7 +99,13 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../index.html">
-  Pydpf composites
+  pyDPF Composites
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../intro.html">
+  Getting Started
  </a>
 </li>
 
@@ -112,6 +118,12 @@
 <li class="toctree-l1 current active nav-item">
  <a class="reference internal nav-link" href="../index.html">
   Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../developers_guide.html">
+  PyDPF Composites
  </a>
 </li>
 
@@ -258,7 +270,7 @@ function checkPageExistsAndRedirect(event) {
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">How to use the composite failure operator</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Composite failure operator</a></li> 
       </ul>
     </div>
         </div>
@@ -287,7 +299,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   How to use the composite failure operator
+   Composite failure operator
   </a>
  </li>
  <li class="toctree-l1">
@@ -370,10 +382,14 @@ function checkPageExistsAndRedirect(event) {
 <p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-failure-operator-example-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="how-to-use-the-composite-failure-operator">
-<span id="failure-operator-example"></span><span id="sphx-glr-examples-gallery-examples-failure-operator-example-py"></span><h1>How to use the composite failure operator<a class="headerlink" href="#how-to-use-the-composite-failure-operator" title="Permalink to this heading">#</a></h1>
-<p>This operator computes the minimum and maximum failure
-values and failure modes of a combined failure criterion</p>
+<section class="sphx-glr-example-title" id="composite-failure-operator">
+<span id="failure-operator-example"></span><span id="sphx-glr-examples-gallery-examples-failure-operator-example-py"></span><h1>Composite failure operator<a class="headerlink" href="#composite-failure-operator" title="Permalink to this heading">#</a></h1>
+<p>This operator computes the minimum and maximum failure values and failure modes
+of a combined failure criterion. A combined failure criterion is a selection of
+failure criteria such as Puck, Tsai-Wu, Face Sheet Wrinkling…</p>
+<p>The combined failure criterion allows you to assess different type of materials
+and failure modes at once. The scoping enables to evaluate of the min and max
+failure per element, or to select a list of materials or plies.</p>
 <p>Load ansys libraries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span><span class="p">,</span> <span class="n">CompositeScope</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
@@ -436,7 +452,7 @@ values and failure modes of a combined failure criterion</p>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_failure_operator_example_003.png" srcset="../../_images/sphx_glr_failure_operator_example_003.png" alt="failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.028 seconds)</p>
+<img src="../../_images/sphx_glr_failure_operator_example_003.png" srcset="../../_images/sphx_glr_failure_operator_example_003.png" alt="failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.971 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-failure-operator-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/53550da7d710b90f295d971d334d40bd/failure_operator_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">failure_operator_example.py</span></code></a></p>

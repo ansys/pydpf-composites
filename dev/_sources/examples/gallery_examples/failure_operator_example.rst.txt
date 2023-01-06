@@ -20,17 +20,22 @@
 
 .. _failure_operator_example:
 
-How to use the composite failure operator
------------------------------------------
+Composite failure operator
+--------------------------
 
-This operator computes the minimum and maximum failure
-values and failure modes of a combined failure criterion
+This operator computes the minimum and maximum failure values and failure modes
+of a combined failure criterion. A combined failure criterion is a selection of
+failure criteria such as Puck, Tsai-Wu, Face Sheet Wrinkling...
 
-.. GENERATED FROM PYTHON SOURCE LINES 12-13
+The combined failure criterion allows you to assess different type of materials
+and failure modes at once. The scoping enables to evaluate of the min and max
+failure per element, or to select a list of materials or plies.
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-18
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 13-31
+.. GENERATED FROM PYTHON SOURCE LINES 18-36
 
 .. code-block:: default
 
@@ -59,11 +64,11 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-33
+.. GENERATED FROM PYTHON SOURCE LINES 37-38
 
 Definition of the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-45
+.. GENERATED FROM PYTHON SOURCE LINES 38-50
 
 .. code-block:: default
 
@@ -86,11 +91,11 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-47
+.. GENERATED FROM PYTHON SOURCE LINES 51-52
 
 Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-52
+.. GENERATED FROM PYTHON SOURCE LINES 52-57
 
 .. code-block:: default
 
@@ -106,12 +111,12 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-55
+.. GENERATED FROM PYTHON SOURCE LINES 58-60
 
 Plot the max IRF per element
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-59
+.. GENERATED FROM PYTHON SOURCE LINES 60-64
 
 .. code-block:: default
 
@@ -131,11 +136,11 @@ Plot the max IRF per element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-61
+.. GENERATED FROM PYTHON SOURCE LINES 65-66
 
 Scope failure evaluation to certain element scope
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-68
+.. GENERATED FROM PYTHON SOURCE LINES 66-73
 
 .. code-block:: default
 
@@ -158,11 +163,11 @@ Scope failure evaluation to certain element scope
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-70
+.. GENERATED FROM PYTHON SOURCE LINES 74-75
 
 Scope by plies
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-76
+.. GENERATED FROM PYTHON SOURCE LINES 75-81
 
 .. code-block:: default
 
@@ -187,7 +192,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.028 seconds)
+   **Total running time of the script:** ( 0 minutes  1.971 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_failure_operator_example.py:
