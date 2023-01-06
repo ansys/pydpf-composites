@@ -3,7 +3,7 @@
 from collections import namedtuple
 import hashlib
 import json
-from typing import Any, Dict, Sequence, Union, cast
+from typing import Any, Dict, List, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -18,6 +18,7 @@ from .load_plugin import load_composites_plugin
 from .result_definition import ResultDefinition
 
 SamplingPointFigure = namedtuple("SamplingPointFigure", ("figure", "axes"))
+FailureResult = namedtuple("FailureResult", "mode irf rf mos")
 
 
 class SamplingPoint:
@@ -286,6 +287,11 @@ class SamplingPoint:
 
         return np.array(self._results[0]["layup"]["polar_properties"]["G12"])
 
+    @property
+    def number_of_plies(self) -> int:
+        """Get number of plies."""
+        return len(self.analysis_plies)
+
     def run(self) -> None:
         """Run the DPF operator and caches the results."""
         if self.result_definition:
@@ -357,9 +363,8 @@ class SamplingPoint:
         ply_wise_indices.sort()
         indices = []
         if self.analysis_plies:
-            num_plies = len(self.analysis_plies)
 
-            for ply_index in range(0, num_plies):
+            for ply_index in range(0, self.number_of_plies):
                 indices.extend(
                     [ply_index * self._spots_per_ply + index for index in ply_wise_indices]
                 )
@@ -413,6 +418,31 @@ class SamplingPoint:
                 offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
 
         return cast(npt.NDArray[np.float64], offsets[indices])
+
+    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
+        """Get the critical failure value and modes per ply."""
+        num_plies = self.number_of_plies
+
+        irfs = self.inverse_reserve_factor.reshape(num_plies, self._spots_per_ply)
+        mos = self.margin_of_safety.reshape(num_plies, self._spots_per_ply)
+        rfs = self.reserve_factor.reshape(num_plies, self._spots_per_ply)
+        failure_models = np.array(self.failure_modes).reshape(num_plies, self._spots_per_ply)
+
+        critical_indices = irfs.argmax(1)
+
+        result = []
+
+        for ply_index, crit_index in enumerate(critical_indices):
+            result.append(
+                FailureResult(
+                    failure_models[ply_index][crit_index],
+                    irfs[ply_index][crit_index],
+                    rfs[ply_index][crit_index],
+                    mos[ply_index][crit_index],
+                )
+            )
+
+        return result
 
     def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
         """Create a standard polar plot to visualize the polar properties of the laminate.
@@ -587,63 +617,61 @@ class SamplingPoint:
 
             axes[0].set_yticks(ticks=ticks, labels=labels)
 
-            index = 0
+            axes_index = 0
             if create_laminate_plot:
                 plt.rcParams["hatch.linewidth"] = 0.2
                 plt.rcParams["hatch.color"] = "silver"
-                self.add_ply_sequence_to_plot(axes[index], core_scale_factor)
-                axes[index].set_xticks([])
-                index += 1
+                self.add_ply_sequence_to_plot(axes[axes_index], core_scale_factor)
+                axes[axes_index].set_xticks([])
+                axes_index += 1
 
                 plt.rcParams["hatch.linewidth"] = 1.0
                 plt.rcParams["hatch.color"] = "black"
 
             if len(strain_components) > 0:
                 self.add_results_to_plot(
-                    axes[index], strain_components, spots, core_scale_factor, "Strains", "[-]"
+                    axes[axes_index], strain_components, spots, core_scale_factor, "Strains", "[-]"
                 )
-                index += 1
+                axes_index += 1
 
             if len(stress_components) > 0:
                 self.add_results_to_plot(
-                    axes[index],
+                    axes[axes_index],
                     stress_components,
                     spots,
                     core_scale_factor,
                     "Stresses",
                     "[force/area]",
                 )
-                index += 1
+                axes_index += 1
 
             if len(failure_components) > 0:
 
-                failure_plot = axes[index]
-                failure_components = [self.FAILURE_MODES[v] for v in failure_components]
+                failure_plot = axes[axes_index]
+                internal_fc = [self.FAILURE_MODES[v] for v in failure_components]
                 self.add_results_to_plot(
-                    axes[index], failure_components, spots, core_scale_factor, "Failures", "[-]"
+                    axes[axes_index], internal_fc, spots, core_scale_factor, "Failures", "[-]"
                 )
-
-                # todo: extract the failure mode of the critical value (separate function)
-                middle_indices = self.get_indices([Spot.MIDDLE])
-                middle_offsets = self.get_offsets_by_spots(
-                    spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
-                )
-                all_measures = [
-                    np.array(getattr(self, v))[middle_indices] for v in failure_components
-                ]
 
                 if show_failure_modes:
-                    raw_data = self.failure_modes
-                    modes = [raw_data[i] for i in middle_indices]
-                    for index, fm in enumerate(modes):
-                        for values in all_measures:
+
+                    middle_offsets = self.get_offsets_by_spots(
+                        spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
+                    )
+                    critical_failures = self.get_ply_wise_critical_failures()
+
+                    if len(critical_failures) != len(middle_offsets):
+                        raise IndexError("Sizes of failures and offsets mismatch.")
+
+                    for index, offset in enumerate(middle_offsets):
+                        for fc in failure_components:
                             failure_plot.annotate(
-                                fm,
-                                xy=(values[index], middle_offsets[index]),
-                                xytext=(values[index], middle_offsets[index]),
+                                getattr(critical_failures[index], "mode"),
+                                xy=(getattr(critical_failures[index], fc), offset),
+                                xytext=(getattr(critical_failures[index], fc), offset),
                             )
 
-                index += 1
+                axes_index += 1
 
         return SamplingPointFigure(fig, axes)
 

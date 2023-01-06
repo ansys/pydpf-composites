@@ -30,6 +30,26 @@ class Sym3x3TensorComponent(Enum):
     tensor32 = 4
 
 
+class FailureOutput(Enum):
+    """Failure output type. The enum value corresponds to the index in the fields container."""
+
+    failure_mode = 0
+    failure_value = 1
+    max_layer_index = 2
+
+
+class LayupProperty(Enum):
+    """Enum for Layup Properties.
+
+    Values correspond to labels in output container of layup provider.
+    """
+
+    angle = 0
+    shear_angle = 1
+    thickness = 2
+    laminate_offset = 3
+
+
 class MaterialProperty(Enum):
     """Available material properties."""
 
@@ -96,3 +116,19 @@ class MaterialProperty(Enum):
     Larc_Constants_fracture_toughness_ratio = "fracture_toughness_ratio_larc_constants"
     Larc_Constants_fracture_toughness_mode_1 = "longitudinal_friction_coefficient_larc_constants"
     Larc_Constants_fracture_toughness_mode_2 = "transverse_friction_coefficient_larc_constants"
+
+
+class LayerProperty(Enum):
+    """Available layer properties."""
+
+    thicknesses = 0
+    angles = 1
+    shear_angles = 2
+
+
+class FailureMeasure(Enum):
+    """Available Failure Measures."""
+
+    inverse_reserve_factor: str = "inverse_reserve_factor"
+    margin_of_safety: str = "margin_of_safety"
+    reserve_factor: str = "reserve_factor"

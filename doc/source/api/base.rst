@@ -9,3 +9,7 @@ Objects and Helpers
     ResultDefinition
     SamplingPoint
     Spot
+    CompositeDataSources
+    LayupOperators
+    MaterialOperators
+    ContinuousFiberCompositesFiles
