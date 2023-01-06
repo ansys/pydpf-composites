@@ -469,18 +469,17 @@ class CompositeModel:
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
-        layup_operators = self._composite_infos[composite_definition_label].layup_provider
+
+        layup_provider = self._composite_infos[composite_definition_label].layup_provider
         ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
-        ins_operator.inputs.materials_container(
-            layup_operators.material_operators.material_provider
-        )
+        ins_operator.inputs.materials_container(self._material_operators.material_provider)
         ins_operator.inputs.mesh(self.get_mesh(composite_definition_label))
         ins_operator.inputs.mesh_properties_container(
-            layup_operators.layup_provider.outputs.mesh_properties_container
+            layup_provider.outputs.mesh_properties_container
         )
         # pass inputs by pin because the input name is not set yet.
         # Will be improved in sever version 2023 R2
-        ins_operator.connect(24, layup_operators.layup_provider.outputs.fields_container)
+        ins_operator.connect(24, layup_provider.outputs.fields_container)
         ins_operator.connect(0, strains)
         ins_operator.connect(1, stresses)
 

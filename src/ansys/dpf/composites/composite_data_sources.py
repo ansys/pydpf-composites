@@ -9,7 +9,7 @@ from ._typing_helper import PATH as _PATH
 
 @dataclass
 class CompositeDefinitionFiles:
-    """Container for composite files (per scope)."""
+    """Container for composite files."""
 
     definition: _PATH
     mapping: Optional[_PATH] = None

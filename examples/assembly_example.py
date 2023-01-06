@@ -4,7 +4,8 @@
 How to use the CompositeModel for an assembly model
 ---------------------------------------------------------------
 
-For assemblies it is possible that multiple composite definitions exist.
+This example shows how an assembly of a shell and solid composite
+model can be post-processed.
 
 """
 # %%
