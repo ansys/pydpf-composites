@@ -84,7 +84,7 @@ class CompositeModel:
     correct composite_definition_label. The layered elements that got information from a given
     composite_definition_label can be determined by calling
     self.get_all_layered_element_ids_for_composite_definition_label.
-     All the elements which are not part of a composite definition are either homogeneous
+    All the elements which are not part of a composite definition are either homogeneous
     solids or layered models defined outside of an ACP model.
     self.composite_definition_labels returns
     All the available composite_definition_labels.
@@ -92,7 +92,6 @@ class CompositeModel:
     Parameters
     ----------
     composite_files:
-
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
@@ -128,6 +127,13 @@ class CompositeModel:
         """Get the underlying dpf meshed region.
 
         The meshed region also contains the layup information
+
+        Parameters
+        ----------
+        composite_definition_label:
+            Label of composite definition
+            (dictionary key in ContinuousFiberCompositesFiles.composite).
+            Only required for assemblies. See "Note on assemblies" in class docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -259,7 +265,8 @@ class CompositeModel:
         element_id:
             Element Id/Label of the sampling point
         time:
-            Time at which sampling point is evaluated
+            Time at which sampling point is evaluated. If None, the last
+            time/frequency in the result file is used.
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite).
