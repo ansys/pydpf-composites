@@ -1,11 +1,16 @@
 """
 .. _failure_operator_example:
 
-How to use the composite failure operator
------------------------------------------
+Composite failure operator
+--------------------------
 
-This operator computes the minimum and maximum failure
-values and failure modes of a combined failure criterion
+This operator computes the minimum and maximum failure values and failure modes
+of a combined failure criterion. A combined failure criterion is a selection of
+failure criteria such as Puck, Tsai-Wu, Face Sheet Wrinkling...
+
+The combined failure criterion allows you to assess different type of materials
+and failure modes at once. The scoping enables to evaluate of the min and max
+failure per element, or to select a list of materials or plies.
 
 """
 # %%
