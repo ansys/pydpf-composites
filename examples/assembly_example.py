@@ -1,10 +1,10 @@
 """
 .. _assembly_example:
 
-How to use the composite failure operator for an assembly model
+How to use the CompositeModel for an assembly model
 ---------------------------------------------------------------
 
-For assemblies
+For assemblies it is possible that multiple composite definitions exist.
 
 """
 # %%
@@ -21,10 +21,10 @@ from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxS
 server_context = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server_context, "assembly")
 
+
 # %%
 # Definition of the combined failure criterion
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
-
     return CombinedFailureCriterion(
         name="failure of all materials",
         failure_criteria=[MaxStressCriterion()],
@@ -38,7 +38,7 @@ output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=get_combined_failure_criterion()
 )
 
-#%%
+# %%
 # Plot the max IRF per element
 #
 
@@ -46,11 +46,11 @@ irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failur
 irf_field.plot()
 
 
-#%%
+# %%
 # In the assembly exist two composite definition, one with the label "shell" and one
 # with the label "solid". To query the layup properties we have to query the
 # properties with the correct composite_definition_label.
-# For example to get the ElementInfo for all layered elements
+# This example shows how to get ElementInfo for all layered elements
 #
 element_infos = []
 for composite_label in composite_model.composite_definition_labels:

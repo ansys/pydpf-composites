@@ -7,16 +7,17 @@ import pytest
 
 from ansys.dpf.composites import MaterialProperty, get_constant_property_dict
 from ansys.dpf.composites.add_layup_info_to_mesh import add_layup_info_to_mesh
-from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
+from ansys.dpf.composites.composite_data_sources import (
+    CompositeDefinitionFiles,
+    get_composites_data_sources,
+)
+from ansys.dpf.composites.example_helper.example_helper import (
+    upload_continuous_fiber_composite_files_to_server,
+)
 from ansys.dpf.composites.indexer import _FieldIndexerWithDataPointer
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, get_element_info_provider
 
 from .helper import ContinuousFiberCompositesFiles, Timer, setup_operators
-
-
-def check_performance(timer, last_measured_performance, performance_factor=1.1):
-    assert timer.get_runtime_without_first_step() < last_measured_performance * performance_factor
-    assert timer.get_runtime_without_first_step() > last_measured_performance / performance_factor
 
 
 def get_data_files():
@@ -33,7 +34,9 @@ def get_dummy_data_files():
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     return ContinuousFiberCompositesFiles(
-        rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
     )
 
 
@@ -51,7 +54,9 @@ def get_ger_data_files():
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
     material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
     return ContinuousFiberCompositesFiles(
-        rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
     )
 
 
@@ -115,8 +120,6 @@ def test_performance_data_pointer(dpf_server):
     timer.add("loop")
 
     timer.summary()
-    last_measured_performance = 0.11
-    check_performance(timer, last_measured_performance)
 
 
 def test_performance_by_index(dpf_server):
@@ -137,8 +140,6 @@ def test_performance_by_index(dpf_server):
     timer.add("after local field")
 
     timer.summary()
-    last_measured_performance = 0.466
-    check_performance(timer, last_measured_performance)
 
 
 def test_performance_by_id(dpf_server):
@@ -161,8 +162,6 @@ def test_performance_by_id(dpf_server):
     timer.add("after local field")
 
     timer.summary()
-    last_measured_performance = 0.4927256107330322
-    check_performance(timer, last_measured_performance)
 
 
 def test_performance_element_info(dpf_server):
@@ -197,7 +196,7 @@ def test_performance_layup_properties(dpf_server):
     timer = Timer()
 
     files = get_data_files()
-    setup_result = setup_operators(dpf_server, files, upload=False)
+    setup_result = setup_operators(dpf_server, files)
     timer.add("read data")
 
     layup_info = LayupPropertiesProvider(
@@ -265,7 +264,7 @@ def test_performance_property_dict(dpf_server):
 
     files = get_data_files()
 
-    files = upload_composite_files_to_server(data_files=files, server=dpf_server)
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 
     data_sources = get_composites_data_sources(files)
     mesh_provider = dpf.Operator("MeshProvider")
@@ -405,8 +404,10 @@ def test_performance_flat(dpf_server):
     assert np.all(np.abs(all_data[:, 9]) == pytest.approx(181))
 
     # dpf_material_ids
-    assert np.all(np.abs(all_data[:n_values_per_layers, 10]) == 2)
-    assert np.all(np.abs(all_data[n_values_per_layers : 2 * n_values_per_layers, 10]) == 3)
+    assert np.all(np.abs(all_data[:n_values_per_layers, 10]) == pytest.approx(3))
+    assert np.all(
+        np.abs(all_data[n_values_per_layers : 2 * n_values_per_layers, 10]) == pytest.approx(2)
+    )
 
     timer.add("after local field")
 

@@ -67,17 +67,24 @@ class CompositeModel:
     """Provides access to the basic composite post-processing functionality.
 
     On initialization, the CompositeModel automatically adds the composite layup information
-    to the meshed region. It prepares the provider for different layup properties
+    to the meshed region(s). It prepares the providers for different layup properties
     so they can be efficiently evaluated.
 
-    Note 1: When creating a CompositeModel, several providers are created and
-    the layup information is added the the dpf meshed region. Depending on the use
+    Note on performance: When creating a CompositeModel, several providers are created and
+    the layup information is added the dpf meshed regions. Depending on the use
     case it can be more efficient to create the providers separately.
 
-    Note 2: For assemblies with multiple composite definition files, separate meshes and
-    layup operators are generated (wrapped with a CompositeInfo). This is needed because the
+    Note on assemblies: For assemblies with multiple composite definition files, separate meshes and
+    layup operators are generated (wrapped by CompositeInfo). This is needed because the
     layup provider can currently only add the data of a single composite definitions file
-    to a mesh.
+    to a mesh. All functions which depend on composite definitions have to be called with the
+    correct composite_definition_label. The layered elements that got information from a given
+    composite_definition_label can be determined by calling
+    self.get_all_layered_element_ids_for_composite_definition_label.
+     All the elements which are not part of a composite definition are either homogeneous
+    solids or layered models defined outside of an ACP model.
+    self.composite_definition_labels returns
+    All the available composite_definition_labels.
 
     Parameters
     ----------
@@ -279,7 +286,7 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite_files).
-            Only required for assemblies
+            Only required for assemblies. See "Note on assemblies" in class docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -308,8 +315,7 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies
-
+            Only required for assemblies. See "Note on assemblies" in class docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -336,8 +342,8 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies
-
+            Only required for assemblies. See "Note on assemblies" in class docstring.
+            The dict will only contain the analysis plies in the specified composite definition.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -358,7 +364,7 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies
+            Only required for assemblies. See "Note on assemblies" in class docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -388,8 +394,9 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite_files).
-            Only required for assemblies
-
+            Only required for assemblies. See "Note on assemblies" in class docstring.
+            The dict will only contain the materials of the analysis plies defined
+            in the specified composite definition.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -403,7 +410,7 @@ class CompositeModel:
         )
 
     def get_result_times_or_frequencies(self) -> NDArray[np.double]:
-        """Return the last time value in the result file."""
+        """Return the available times/frequencies in the result file."""
         return cast(
             NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
         )
@@ -425,7 +432,9 @@ class CompositeModel:
         composite_definition_label:
             Label of composite definition
             (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies
+            Only required for assemblies. See "Note on assemblies" in class docstring.
+            Interlaminar normal stresses are only added to the layered elements defined
+            in the specified composite definition.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
