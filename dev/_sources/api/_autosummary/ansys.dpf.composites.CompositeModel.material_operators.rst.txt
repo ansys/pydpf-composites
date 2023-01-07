@@ -3,4 +3,4 @@ material\_operators
 
 .. currentmodule:: ansys.dpf.composites
 
-.. autoattribute:: LayupOperators.material_operators
+.. autoproperty:: CompositeModel.material_operators

@@ -293,6 +293,11 @@ function checkPageExistsAndRedirect(event) {
     
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="assembly_example.html">
+   How to use the CompositeModel for an assembly model
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="basic_example.html">
    Basic example of setting up a composite failure workflow.
   </a>
@@ -520,16 +525,16 @@ in the element coordinate system ( material coordinate system)</p>
 
         <span class="n">local_max_s3_field</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="n">s3</span><span class="p">)],</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_s3_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_interlaminar_normal_stress_example_001.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_001.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/></section>
 <section id="plot-s3-of-a-certain-ply">
 <h2>Plot s3 of a certain ply<a class="headerlink" href="#plot-s3-of-a-certain-ply" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_name</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_name</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a> <span class="o">=</span> <span class="s2">&quot;P3L1__Ply.1&quot;</span>
 
-<span class="n">ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a><span class="p">)</span>
+<span class="n">ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a><span class="p">)</span>
 <span class="n">p8l1_ply_s3_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">p8l1_ply_s3_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">p8l1_ply_s3_field</span><span class="p">:</span>
     <span class="n">element_ids</span> <span class="o">=</span> <span class="n">ply_info_provider</span><span class="o">.</span><span class="n">ply_element_ids</span><span class="p">()</span>
@@ -548,10 +553,10 @@ in the element coordinate system ( material coordinate system)</p>
 
         <span class="n">p8l1_ply_s3_field</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  7.716 seconds)</p>
+<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.057 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d2765c4de18ca7baa598ec9faaa6b4e7/interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">interlaminar_normal_stress_example.py</span></code></a></p>

@@ -31,46 +31,34 @@
       :toctree:
    
       
-      ResultDefinition.assembly_mapping_files
-      
-      
       ResultDefinition.combined_failure_criterion
-      
-      
-      ResultDefinition.composite_definitions
-      
-      
-      ResultDefinition.element_scope
       
       
       ResultDefinition.expression
       
       
-      ResultDefinition.material_files
+      ResultDefinition.material_file
       
       
       ResultDefinition.max_chunk_size
       
       
-      ResultDefinition.measures
+      ResultDefinition.measure
       
       
       ResultDefinition.name
       
       
-      ResultDefinition.ply_scope
+      ResultDefinition.rst_file
       
       
-      ResultDefinition.rst_files
+      ResultDefinition.scopes
       
       
       ResultDefinition.stress_strain_eval_mode
       
       
       ResultDefinition.time
-      
-      
-      ResultDefinition.write_data_for_full_element_scope
       
    
    

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>layup_operators &#8212; pydpf-composites</title>
+    <title>How to use the CompositeModel for an assembly model &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -51,8 +51,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="mesh" href="ansys.dpf.composites.CompositeModel.mesh.html" />
-    <link rel="prev" title="data_sources" href="ansys.dpf.composites.CompositeModel.data_sources.html" />
+    <link rel="next" title="Basic example of setting up a composite failure workflow." href="basic_example.html" />
+    <link rel="prev" title="Examples" href="../index.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -109,14 +109,14 @@
  </a>
 </li>
 
-<li class="toctree-l1 current active nav-item">
- <a class="reference internal nav-link" href="../index.html">
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../api/index.html">
   API Reference
  </a>
 </li>
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../examples/index.html">
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
   Examples
  </a>
 </li>
@@ -148,14 +148,14 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables api/_autosummary/ansys.dpf.composites.CompositeModel.layup_operators and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+     variables examples/gallery_examples/assembly_example and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
 -->
 
 <script type="text/javascript">
 // Check if corresponding page path exists in other version of docs
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
-    const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeModel.layup_operators.html",
+    const currentFilePath = "examples/gallery_examples/assembly_example.html",
           tryUrl = event.target.getAttribute("href");
     let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
     $.ajax({
@@ -176,7 +176,7 @@ function checkPageExistsAndRedirect(event) {
 // Populate the version switcher from the JSON config file
 (function () {
     $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
-        const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeModel.layup_operators.html";
+        const currentFilePath = "examples/gallery_examples/assembly_example.html";
         let btn = document.getElementById("version_switcher_button");
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
         btn.dataset["activeVersionName"] = "";
@@ -269,10 +269,8 @@ function checkPageExistsAndRedirect(event) {
         <li class="nav-item nav-item-0"><a href="../../index.html">pydpf-composites</a> » </li>
     
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../composite_model.html" >Composite Model</a> » </li>
-          <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.CompositeModel.html" accesskey="U">ansys.dpf.composites.CompositeModel</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">layup_operators</a></li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">How to use the CompositeModel for an assembly model</a></li> 
       </ul>
     </div>
         </div>
@@ -294,119 +292,55 @@ function checkPageExistsAndRedirect(event) {
   <div class="bd-toc-item active">
     
     <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../base.html">
-   Objects and Helpers
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   How to use the CompositeModel for an assembly model
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../failure_criteria.html">
-   Failure Criteria
+  <a class="reference internal" href="basic_example.html">
+   Basic example of setting up a composite failure workflow.
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../layup_information.html">
-   Layup Information
+  <a class="reference internal" href="failure_operator_example.html">
+   Composite failure operator
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../select_indices.html">
-   Select Elementary Indices
+  <a class="reference internal" href="filter_composite_data_example.html">
+   Filter result data by different criteria
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../material_properties.html">
-   Material Properties
+  <a class="reference internal" href="get_layup_properties_example.html">
+   Get Layup Properties
   </a>
  </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="../composite_model.html">
-   Composite Model
+ <li class="toctree-l1">
+  <a class="reference internal" href="get_material_properties_example.html">
+   Get Material Properties and evaluate basic failure criterion
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2 current active has-children">
-    <a class="reference internal" href="ansys.dpf.composites.CompositeModel.html">
-     ansys.dpf.composites.CompositeModel
-    </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.add_interlaminar_normal_stresses.html">
-       add_interlaminar_normal_stresses
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.evaluate_failure_criteria.html">
-       evaluate_failure_criteria
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_analysis_plies.html">
-       get_analysis_plies
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_constant_property_dict.html">
-       get_constant_property_dict
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_element_info.html">
-       get_element_info
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_element_laminate_offset.html">
-       get_element_laminate_offset
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_property_for_all_layers.html">
-       get_property_for_all_layers
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies.html">
-       get_result_times_or_frequencies
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_sampling_point.html">
-       get_sampling_point
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.core_model.html">
-       core_model
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.data_sources.html">
-       data_sources
-      </a>
-     </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
-       layup_operators
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.mesh.html">
-       mesh
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="interlaminar_normal_stress_example.html">
+   Interlaminar Normal Stresses in Layered Shells
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sampling_point_example.html">
+   Sampling Point - Processing and visualization of laminate results
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sampling_point_operator_example.html">
+   Basic example for a Sampling Point Operator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="short_fiber_example.html">
+   Basic example for a short fiber failure analysis
+  </a>
  </li>
 </ul>
 
@@ -428,23 +362,9 @@ function checkPageExistsAndRedirect(event) {
     
     <div class="toc-item">
       
-<div class="tocsection onthispage mt-5 pt-1 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
 
 <nav id="bd-toc-nav">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys.dpf.composites.CompositeModel.layup_operators">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     CompositeModel.layup_operators
-    </span>
-   </code>
-  </a>
- </li>
-</ul>
-
+    
 </nav>
     </div>
     
@@ -462,19 +382,70 @@ function checkPageExistsAndRedirect(event) {
               
               <article class="bd-article" role="main">
                 
-  <section id="layup-operators">
-<h1>layup_operators<a class="headerlink" href="#layup-operators" title="Permalink to this heading">#</a></h1>
-<dl class="py property">
-<dt class="sig sig-object py" id="ansys.dpf.composites.CompositeModel.layup_operators">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">layup_operators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="ansys.dpf.composites.LayupOperators.html#ansys.dpf.composites.LayupOperators" title="ansys.dpf.composites.add_layup_info_to_mesh.LayupOperators"><span class="pre">LayupOperators</span></a></em><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.layup_operators" title="Permalink to this definition">#</a></dt>
-<dd><p>Get the layup operators.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ansys.dpf.composites.LayupOperators.html#ansys.dpf.composites.LayupOperators" title="ansys.dpf.composites.add_layup_info_to_mesh.LayupOperators"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayupOperators</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-assembly-example-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="how-to-use-the-compositemodel-for-an-assembly-model">
+<span id="assembly-example"></span><span id="sphx-glr-examples-gallery-examples-assembly-example-py"></span><h1>How to use the CompositeModel for an assembly model<a class="headerlink" href="#how-to-use-the-compositemodel-for-an-assembly-model" title="Permalink to this heading">#</a></h1>
+<p>This example shows how an assembly of a shell and solid composite
+model can be post-processed.</p>
+<p>Load ansys libraries</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">connect_to_or_start_server</span><span class="p">,</span>
+    <span class="n">get_continuous_fiber_example_files</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="n">CombinedFailureCriterion</span><span class="p">,</span> <span class="n">MaxStressCriterion</span>
 
+<span class="n">server_context</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server_context</span><span class="p">,</span> <span class="s2">&quot;assembly&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Definition of the combined failure criterion</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_combined_failure_criterion</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">CombinedFailureCriterion</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;failure of all materials&quot;</span><span class="p">,</span>
+        <span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span><span class="n">MaxStressCriterion</span><span class="p">()],</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Setup composite model</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server_context</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+<span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span>
+    <span class="n">combined_criteria</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot the max IRF per element</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_all_elements</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FailureOutput</span><span class="o">.</span><span class="n">failure_value</span><span class="o">.</span><span class="n">value</span></a><span class="p">})</span>
+<span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_assembly_example_001.png" srcset="../../_images/sphx_glr_assembly_example_001.png" alt="assembly example" class = "sphx-glr-single-img"/><p>In the assembly exist two composite definition, one with the label “shell” and one
+with the label “solid”. To query the layup properties we have to query the
+properties with the correct composite_definition_label.
+This example shows how to get ElementInfo for all layered elements</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">composite_definition_labels</span><span class="p">:</span>
+    <span class="k">for</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_all_layered_element_ids_for_composite_definition_label</span><span class="p">(</span>
+        <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a>
+    <span class="p">):</span>
+        <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a><span class="p">))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.346 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-assembly-example-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/ef03c6eb07e906ca22fac47f3df1708a/assembly_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">assembly_example.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/4a4418e1bebde1bec103a80aea0dfe66/assembly_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">assembly_example.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
 </section>
 
 

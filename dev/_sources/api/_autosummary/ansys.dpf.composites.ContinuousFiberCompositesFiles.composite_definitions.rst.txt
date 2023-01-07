@@ -1,6 +1,0 @@
-composite\_definitions
-======================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: ContinuousFiberCompositesFiles.composite_definitions

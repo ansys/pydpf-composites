@@ -10,6 +10,5 @@ Objects and Helpers
     SamplingPoint
     Spot
     CompositeDataSources
-    LayupOperators
     MaterialOperators
     ContinuousFiberCompositesFiles

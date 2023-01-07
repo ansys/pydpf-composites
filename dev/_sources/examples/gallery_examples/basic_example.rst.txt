@@ -110,7 +110,7 @@ Load ansys libraries
 
     composite_definitions_source = dpf.DataSources()
     composite_definitions_source.add_file_path(
-        composite_files_on_server.composite_definitions, "CompositeDefinitions"
+        composite_files_on_server.composite["shell"].definition, "CompositeDefinitions"
     )
 
 
@@ -332,7 +332,7 @@ Plot the max and the minimum value for each value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.372 seconds)
+   **Total running time of the script:** ( 0 minutes  0.847 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_basic_example.py:

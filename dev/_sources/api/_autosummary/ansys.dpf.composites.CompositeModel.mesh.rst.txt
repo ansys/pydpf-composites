@@ -1,6 +1,0 @@
-mesh
-====
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: CompositeModel.mesh

@@ -1,6 +1,0 @@
-write\_data\_for\_full\_element\_scope
-======================================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: ResultDefinition.write_data_for_full_element_scope
