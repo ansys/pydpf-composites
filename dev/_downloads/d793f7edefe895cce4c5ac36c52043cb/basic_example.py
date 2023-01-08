@@ -76,7 +76,7 @@ eng_data_source.add_file_path(composite_files_on_server.engineering_data, "Engin
 
 composite_definitions_source = dpf.DataSources()
 composite_definitions_source.add_file_path(
-    composite_files_on_server.composite["shell"].definition, "CompositeDefinitions"
+    composite_files_on_server.composite_definitions, "CompositeDefinitions"
 )
 
 #%%

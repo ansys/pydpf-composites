@@ -28,10 +28,7 @@
       CompositeDataSources.rst
       
       
-      CompositeDataSources.composite
-      
-      
-      CompositeDataSources.engineering_data
+      CompositeDataSources.composites_files
       
    
    

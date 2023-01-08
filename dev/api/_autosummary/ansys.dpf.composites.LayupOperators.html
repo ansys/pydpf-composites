@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>scopes &#8212; pydpf-composites</title>
+    <title>ansys.dpf.composites.LayupOperators &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -51,8 +51,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="stress_strain_eval_mode" href="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode.html" />
-    <link rel="prev" title="rst_file" href="ansys.dpf.composites.ResultDefinition.rst_file.html" />
+    <link rel="next" title="material_operators" href="ansys.dpf.composites.LayupOperators.material_operators.html" />
+    <link rel="prev" title="composites_files" href="ansys.dpf.composites.CompositeDataSources.composites_files.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -148,14 +148,14 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables api/_autosummary/ansys.dpf.composites.ResultDefinition.scopes and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+     variables api/_autosummary/ansys.dpf.composites.LayupOperators and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
 -->
 
 <script type="text/javascript">
 // Check if corresponding page path exists in other version of docs
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
-    const currentFilePath = "api/_autosummary/ansys.dpf.composites.ResultDefinition.scopes.html",
+    const currentFilePath = "api/_autosummary/ansys.dpf.composites.LayupOperators.html",
           tryUrl = event.target.getAttribute("href");
     let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
     $.ajax({
@@ -176,7 +176,7 @@ function checkPageExistsAndRedirect(event) {
 // Populate the version switcher from the JSON config file
 (function () {
     $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
-        const currentFilePath = "api/_autosummary/ansys.dpf.composites.ResultDefinition.scopes.html";
+        const currentFilePath = "api/_autosummary/ansys.dpf.composites.LayupOperators.html";
         let btn = document.getElementById("version_switcher_button");
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
         btn.dataset["activeVersionName"] = "";
@@ -270,9 +270,8 @@ function checkPageExistsAndRedirect(event) {
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../base.html" >Objects and Helpers</a> » </li>
-          <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.ResultDefinition.html" accesskey="U">ansys.dpf.composites.ResultDefinition</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">scopes</a></li> 
+          <li class="nav-item nav-item-2"><a href="../base.html" accesskey="U">Objects and Helpers</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">ansys.dpf.composites.LayupOperators</a></li> 
       </ul>
     </div>
         </div>
@@ -304,77 +303,10 @@ function checkPageExistsAndRedirect(event) {
    </i>
   </label>
   <ul class="current">
-   <li class="toctree-l2 current active has-children">
+   <li class="toctree-l2">
     <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.html">
      ansys.dpf.composites.ResultDefinition
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.to_dict.html">
-       to_dict
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.to_json.html">
-       to_json
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.combined_failure_criterion.html">
-       combined_failure_criterion
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.expression.html">
-       expression
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.material_file.html">
-       material_file
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.max_chunk_size.html">
-       max_chunk_size
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.measure.html">
-       measure
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.name.html">
-       name
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.rst_file.html">
-       rst_file
-      </a>
-     </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
-       scopes
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode.html">
-       stress_strain_eval_mode
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.time.html">
-       time
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.html">
@@ -390,6 +322,28 @@ function checkPageExistsAndRedirect(event) {
     <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html">
      ansys.dpf.composites.CompositeDataSources
     </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="current reference internal" href="#">
+     ansys.dpf.composites.LayupOperators
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupOperators.material_operators.html">
+       material_operators
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupOperators.layup_provider.html">
+       layup_provider
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html">
@@ -455,10 +409,10 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys.dpf.composites.ResultDefinition.scopes">
+  <a class="reference internal nav-link" href="#ansys.dpf.composites.LayupOperators">
    <code class="docutils literal notranslate">
     <span class="pre">
-     ResultDefinition.scopes
+     LayupOperators
     </span>
    </code>
   </a>
@@ -482,17 +436,37 @@ function checkPageExistsAndRedirect(event) {
               
               <article class="bd-article" role="main">
                 
-  <section id="scopes">
-<h1>scopes<a class="headerlink" href="#scopes" title="Permalink to this heading">#</a></h1>
-<dl class="py property">
-<dt class="sig sig-object py" id="ansys.dpf.composites.ResultDefinition.scopes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ResultDefinition.</span></span><span class="sig-name descname"><span class="pre">scopes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ResultDefinitionScope</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.ResultDefinition.scopes" title="Permalink to this definition">#</a></dt>
-<dd><p>Get the different scopes of the result definition.</p>
+  <section id="ansys-dpf-composites-layupoperators">
+<h1>ansys.dpf.composites.LayupOperators<a class="headerlink" href="#ansys-dpf-composites-layupoperators" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys.dpf.composites.LayupOperators">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">LayupOperators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_operators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layup_provider</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.LayupOperators" title="Permalink to this definition">#</a></dt>
+<dd><p>Operators related to the composite Layup.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ResultDefinitionScope</span></code>]</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material_operators</strong> (<a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.material_setup.MaterialOperators"><em>ansys.dpf.composites.material_setup.MaterialOperators</em></a>) – </p></li>
+<li><p><strong>layup_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – Layup provider operator. When run, adds composite information to
+the dpf MeshedRegion.</p></li>
+</ul>
 </dd>
 </dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.LayupOperators.material_operators.html#ansys.dpf.composites.LayupOperators.material_operators" title="ansys.dpf.composites.LayupOperators.material_operators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupOperators.material_operators</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.LayupOperators.layup_provider.html#ansys.dpf.composites.LayupOperators.layup_provider" title="ansys.dpf.composites.LayupOperators.layup_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupOperators.layup_provider</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </section>

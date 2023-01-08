@@ -28,7 +28,7 @@
       ContinuousFiberCompositesFiles.rst
       
       
-      ContinuousFiberCompositesFiles.composite
+      ContinuousFiberCompositesFiles.composite_definitions
       
       
       ContinuousFiberCompositesFiles.engineering_data

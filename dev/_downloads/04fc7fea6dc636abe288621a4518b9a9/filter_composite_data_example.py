@@ -72,11 +72,11 @@ with result_field.as_local_field() as local_result_field:
         value = stress_data[selected_indices][:, component.value]
         local_result_field.append(value, element_id)
 
-composite_model.get_mesh().plot(result_field)
+composite_model.mesh.plot(result_field)
 
 #%%
 # List all the available analysis plies
-all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
+all_ply_names = get_all_analysis_ply_names(composite_model.mesh)
 all_ply_names
 
 #%%
@@ -85,7 +85,7 @@ all_ply_names
 component = Sym3x3TensorComponent.tensor11
 
 analysis_ply_info_provider = AnalysisPlyInfoProvider(
-    mesh=composite_model.get_mesh(), name="P1L1__ud_patch ns1"
+    mesh=composite_model.mesh, name="P1L1__ud_patch ns1"
 )
 ply_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with ply_result_field.as_local_field() as local_result_field:
@@ -103,7 +103,7 @@ with ply_result_field.as_local_field() as local_result_field:
         local_result_field.append([value], element_id)
 
 
-composite_model.get_mesh().plot(ply_result_field)
+composite_model.mesh.plot(ply_result_field)
 
 #%%
 # Loop all elements and get maximum stress in material direction
@@ -112,7 +112,7 @@ composite_model.get_mesh().plot(ply_result_field)
 # given material name. It is only possible
 # to get the dpf_material_id from an analysis ply
 material_map = get_dpf_material_id_by_analyis_ply_map(
-    composite_model.get_mesh(), data_source_or_streams_provider=composite_model.data_sources.rst
+    composite_model.mesh, data_source_or_streams_provider=composite_model.data_sources.rst
 )
 ud_material_id = material_map["P1L1__ud_patch ns1"]
 component = Sym3x3TensorComponent.tensor11
@@ -132,4 +132,4 @@ with material_result_field.as_local_field() as local_result_field:
         local_result_field.append([value], element_id)
 
 
-composite_model.get_mesh().plot(material_result_field)
+composite_model.mesh.plot(material_result_field)
