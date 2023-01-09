@@ -17,21 +17,19 @@ class ResultDefinitionScope:
     """Result Definition Scope."""
 
     composite_definition: _PATH
-    """Assembly files which define the mapping of the labels (optional).
-
+    element_scope: Sequence[int] = field(default_factory=lambda: [])
+    ply_scope: Sequence[str] = field(default_factory=lambda: [])
+    """Assembly files which define the mapping of the labels
     This input is needed if multiple parts are assembled in WB / Mechanical to map the
     local element and node labels to the global ones.
     """
-    element_scope: Sequence[int] = field(default_factory=lambda: [])
-    ply_scope: Sequence[str] = field(default_factory=lambda: [])
-    """Write the data for all element labels in element_scoping.
-
+    mapping_file: Optional[_PATH] = None
+    """Write the data for all element labels in element_scope.
     This makes sense if the user explicitly requests an element scope
     but the actual scope where postprocessing has happened is smaller
     (e.g. due to ply scoping).
     """
     write_data_for_full_element_scope: bool = True
-    mapping_file: Optional[_PATH] = None
 
 
 class ResultDefinition:
