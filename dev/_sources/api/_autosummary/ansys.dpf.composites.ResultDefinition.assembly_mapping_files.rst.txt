@@ -1,6 +1,0 @@
-assembly\_mapping\_files
-========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: ResultDefinition.assembly_mapping_files

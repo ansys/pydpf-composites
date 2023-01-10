@@ -293,6 +293,11 @@ function checkPageExistsAndRedirect(event) {
     
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="assembly_example.html">
+   How to use the CompositeModel for an assembly model
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="basic_example.html">
    Basic example of setting up a composite failure workflow.
   </a>
@@ -450,11 +455,11 @@ Refer to <a class="reference internal" href="../../api/select_indices.html#selec
         <span class="n">value</span> <span class="o">=</span> <span class="n">stress_data</span><span class="p">[</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a><span class="p">][:,</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">component</span><span class="o">.</span><span class="n">value</span></a><span class="p">]</span>
         <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result_field</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_filter_composite_data_example_001.png" srcset="../../_images/sphx_glr_filter_composite_data_example_001.png" alt="filter composite data example" class = "sphx-glr-single-img"/><p>List all the available analysis plies</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a>
 </pre></div>
 </div>
@@ -466,7 +471,7 @@ in material direction in that ply</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">tensor11</span>
 
 <span class="n">analysis_ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span>
-    <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span>
+    <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span>
 <span class="p">)</span>
 <span class="n">ply_result_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">ply_result_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
@@ -484,7 +489,7 @@ in material direction in that ply</p>
         <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
 
-<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ply_result_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ply_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_filter_composite_data_example_002.png" srcset="../../_images/sphx_glr_filter_composite_data_example_002.png" alt="filter composite data example" class = "sphx-glr-single-img"/><p>Loop all elements and get maximum stress in material direction
@@ -493,7 +498,7 @@ Note: It is currently not possible to get a dpf_material_id for a
 given material name. It is only possible
 to get the dpf_material_id from an analysis ply</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a> <span class="o">=</span> <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">(</span>
-    <span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span> <span class="n">data_source_or_streams_provider</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span>
+    <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">data_source_or_streams_provider</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span>
 <span class="p">)</span>
 <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">ud_material_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a><span class="p">[</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span><span class="p">]</span>
 <span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">tensor11</span>
@@ -513,10 +518,10 @@ to get the dpf_material_id from an analysis ply</p>
         <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
 
-<span class="n">composite_model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">material_result_field</span><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">material_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_filter_composite_data_example_003.png" alt="filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.998 seconds)</p>
+<img src="../../_images/sphx_glr_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_filter_composite_data_example_003.png" alt="filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.360 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/04fc7fea6dc636abe288621a4518b9a9/filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">filter_composite_data_example.py</span></code></a></p>
