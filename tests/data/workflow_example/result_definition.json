@@ -1,0 +1,108 @@
+{
+   "accumulator" : "max",
+   "expression" : "composite_failure",
+   "failure_criteria_definition" : {
+      "criteria" : {
+         "core_failure" : {
+            "active" : true,
+            "include_ins" : false,
+            "wf" : 1
+         },
+         "face_sheet_wrinkling" : {
+            "active" : true,
+            "homogeneous_core_coeff" : 0.5,
+            "honeycomb_core_coeff" : 0.33000000000000002,
+            "wf" : 1
+         },
+         "max_stress" : {
+            "active" : true,
+            "s1" : true,
+            "s12" : true,
+            "s13" : false,
+            "s2" : true,
+            "s23" : false,
+            "s3" : false,
+            "wf_s1" : 1,
+            "wf_s12" : 1,
+            "wf_s13" : 1,
+            "wf_s2" : 1,
+            "wf_s23" : 1,
+            "wf_s3" : 1
+         },
+         "puck" : {
+            "M" : 0.5,
+            "active" : true,
+            "cfps" : false,
+            "dim" : 2,
+            "force_global_constants" : false,
+            "interface_weakening_factor" : 0.80000000000000004,
+            "p21_neg" : 0.27500000000000002,
+            "p21_pos" : 0.32500000000000001,
+            "p22_neg" : 0.22500000000000001,
+            "p22_pos" : 0.22500000000000001,
+            "pd" : false,
+            "pf" : true,
+            "pma" : true,
+            "pmb" : true,
+            "pmc" : true,
+            "s" : 0.5,
+            "wf_pd" : 1,
+            "wf_pf" : 1,
+            "wf_pma" : 1,
+            "wf_pmb" : 1,
+            "wf_pmc" : 1
+         },
+         "shear_crimping" : {
+            "active" : true,
+            "kc" : 1,
+            "kf" : 0,
+            "wf" : 1
+         }
+      }
+   },
+   "measures" : [ "inverse_reserve_factor" ],
+   "scopes" : [
+      {
+         "datasources" : {
+            "acph5_file" : [
+               "D:/ANSYSDev\\dpf_composites\\test_data\\workflow_example\\workflow_example_files\\dp0\\SYS-2\\MECH\\Setup 3\\ACP-Pre.acph5"
+            ],
+            "assembly_mapping_file" : [
+               "D:/ANSYSDev/dpf_composites/test_data/workflow_example/workflow_example_files/dp0/SYS-2/MECH/Setup 3/ACPSolidModel_SM.mapping"
+            ],
+            "composite_definition" : [
+               "D:/ANSYSDev\\dpf_composites\\test_data\\workflow_example\\workflow_example_files\\dp0\\SYS-2\\MECH\\Setup 3\\ACPSolidModel_SM.h5"
+            ],
+            "material_file" : [
+               "D:/ANSYSDev/dpf_composites/test_data/workflow_example/workflow_example_files/dp0/SYS-2/MECH/MatML.xml"
+            ],
+            "rst_file" : [
+               "D:/ANSYSDev/dpf_composites/test_data/workflow_example/workflow_example_files/dp0/SYS-2/MECH/file.rst"
+            ]
+         },
+         "elements" : [ 5, 6, 7, 8, 9, 10 ]
+      },
+      {
+         "datasources" : {
+            "acph5_file" : [
+               "D:/ANSYSDev\\dpf_composites\\test_data\\workflow_example\\workflow_example_files\\dp0\\SYS-2\\MECH\\Setup 4\\ACP-Pre.acph5"
+            ],
+            "assembly_mapping_file" : [
+               "D:/ANSYSDev/dpf_composites/test_data/workflow_example/workflow_example_files/dp0/SYS-2/MECH/Setup 4/ACPCompositeDefinitions.mapping"
+            ],
+            "composite_definition" : [
+               "D:/ANSYSDev\\dpf_composites\\test_data\\workflow_example\\workflow_example_files\\dp0\\SYS-2\\MECH\\Setup 4\\ACPCompositeDefinitions.h5"
+            ],
+            "material_file" : [
+               "D:/ANSYSDev/dpf_composites/test_data/workflow_example/workflow_example_files/dp0/SYS-2/MECH/MatML.xml"
+            ],
+            "rst_file" : [
+               "D:/ANSYSDev/dpf_composites/test_data/workflow_example/workflow_example_files/dp0/SYS-2/MECH/file.rst"
+            ]
+         },
+         "elements" : [ 1, 2 ]
+      }
+   ],
+   "stress_strain_eval_mode" : "rst_file",
+   "time" : 1
+}

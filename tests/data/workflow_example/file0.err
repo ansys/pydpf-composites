@@ -1,0 +1,17 @@
+/COM,ANSYS RELEASE 2023 R2           BUILD 23.2BETA  UP20230102       14:42:24
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ The allowable tensile fiber (x) stress for material 5 is input as 0.0   
+ and will be set to a very large number.                                 
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ The allowable tensile matrix (y) stress for material 5 is input as 0.0  
+ and will be set to a very large number.                                 
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ The allowable in-plane shear (xy) stress for material 5 is input as 0.0 
+ and will be set to a very large number.                                 

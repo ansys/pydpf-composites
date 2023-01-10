@@ -1,0 +1,764 @@
+
+ Ansys Mechanical Enterprise                       
+
+
+ *------------------------------------------------------------------*
+ |                                                                  |
+ |   W E L C O M E   T O   T H E   A N S Y S (R)  P R O G R A M     |
+ |                                                                  |
+ *------------------------------------------------------------------*
+
+
+
+
+ ***************************************************************
+ *         ANSYS MAPDL 2023 R2          LEGAL NOTICES          *
+ ***************************************************************
+ *                                                             *
+ * Copyright 1971-2023 Ansys, Inc.  All rights reserved.       *
+ * Unauthorized use, distribution or duplication is            *
+ * prohibited.                                                 *
+ *                                                             *
+ * Ansys is a registered trademark of Ansys, Inc. or its       *
+ * subsidiaries in the United States or other countries.       *
+ * See the Ansys, Inc. online documentation or the Ansys, Inc. *
+ * documentation CD or online help for the complete Legal      *
+ * Notice.                                                     *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * THIS ANSYS SOFTWARE PRODUCT AND PROGRAM DOCUMENTATION       *
+ * INCLUDE TRADE SECRETS AND CONFIDENTIAL AND PROPRIETARY      *
+ * PRODUCTS OF ANSYS, INC., ITS SUBSIDIARIES, OR LICENSORS.    *
+ * The software products and documentation are furnished by    *
+ * Ansys, Inc. or its subsidiaries under a software license    *
+ * agreement that contains provisions concerning               *
+ * non-disclosure, copying, length and nature of use,          *
+ * compliance with exporting laws, warranties, disclaimers,    *
+ * limitations of liability, and remedies, and other           *
+ * provisions.  The software products and documentation may be *
+ * used, disclosed, transferred, or copied only in accordance  *
+ * with the terms and conditions of that software license      *
+ * agreement.                                                  *
+ *                                                             *
+ * Ansys, Inc. is a UL registered                              *
+ * ISO 9001:2015 company.                                      *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * This product is subject to U.S. laws governing export and   *
+ * re-export.                                                  *
+ *                                                             *
+ * For U.S. Government users, except as specifically granted   *
+ * by the Ansys, Inc. software license agreement, the use,     *
+ * duplication, or disclosure by the United States Government  *
+ * is subject to restrictions stated in the Ansys, Inc.        *
+ * software license agreement and FAR 12.212 (for non-DOD      *
+ * licenses).                                                  *
+ *                                                             *
+ ***************************************************************
+
+ 2023 R2 
+     
+ Point Releases and Patches installed:   
+     
+ ANSYS, Inc. License Manager 2023 R2 
+ Mechanical Products 2023 R2 
+ SpaceClaim 2023 R2  
+ ACIS Geometry Interface 2023 R2 
+ AutoCAD Geometry Interface 2023 R2  
+ Catia, Version 4 Geometry Interface 2023 R2 
+ Catia, Version 5 Geometry Interface 2023 R2 
+ Catia, Version 6 Geometry Interface 2023 R2 
+ Creo Elements/Direct Modeling Geometry Interface 2023 R2
+ Creo Parametric Geometry Interface 2023 R2  
+ Inventor Geometry Interface 2023 R2 
+ JTOpen Geometry Interface 2023 R2   
+ NX Geometry Interface 2023 R2   
+ Parasolid Geometry Interface  2023 R2   
+ Solid Edge Geometry Interface 2023 R2   
+ SOLIDWORKS Geometry Interface 2023 R2   
+
+
+          *****  MAPDL COMMAND LINE ARGUMENTS  *****
+  BATCH MODE REQUESTED (-b)    = NOLIST
+  INPUT FILE COPY MODE (-c)    = COPY
+  DISTRIBUTED MEMORY PARALLEL REQUESTED
+       4 PARALLEL PROCESSES REQUESTED WITH SINGLE THREAD PER PROCESS
+    TOTAL OF     4 CORES REQUESTED
+  INPUT FILE NAME              = D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA\dummy.dat
+  OUTPUT FILE NAME             = D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA\solve.out
+  START-UP FILE MODE           = NOREAD
+  STOP FILE MODE               = NOREAD
+
+ RELEASE= 2023 R2              BUILD= 23.2BETA  UP20230102   VERSION=WINDOWS x64 
+ CURRENT JOBNAME=file0  14:42:24  JAN 10, 2023 CP=      0.031
+
+
+ PARAMETER _DS_PROGRESS =     999.0000000    
+
+ /INPUT FILE= ds.dat  LINE=       0
+
+
+
+ *** NOTE ***                            CP =       0.125   TIME= 14:42:25
+ The /CONFIG,NOELDB command is not valid in a distributed memory         
+ parallel solution.  Command is ignored.                                 
+
+ *GET  _WALLSTRT  FROM  ACTI  ITEM=TIME WALL  VALUE=  14.7069444    
+
+ TITLE= 
+ workflow_example--Static Structural (F3)                                      
+
+  ACT Extensions:
+      LSDYNA, 2023.1
+      5f463412-bd3e-484b-87e7-cbc0a665e474, wbex
+ /COM,     ANSYSMotion, 2023.2
+      20180725-3f81-49eb-9f31-41364844c769, wbex
+  
+
+ SET PARAMETER DIMENSIONS ON  _WB_PROJECTSCRATCH_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_PROJECTSCRATCH_DIR(1) = D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA\
+
+ SET PARAMETER DIMENSIONS ON  _WB_SOLVERFILES_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_SOLVERFILES_DIR(1) = D:\ANSYSDev\dpf_composites\test_data\workflow_example\workflow_example_files\dp0\SYS-2\MECH\
+
+ SET PARAMETER DIMENSIONS ON  _WB_USERFILES_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_USERFILES_DIR(1) = D:\ANSYSDev\dpf_composites\test_data\workflow_example\workflow_example_files\user_files\
+ --- Data in consistent MKS units. See Solving Units in the help system for more
+
+ MKS UNITS SPECIFIED FOR INTERNAL    
+  LENGTH        (l)  = METER (M)
+  MASS          (M)  = KILOGRAM (KG)
+  TIME          (t)  = SECOND (SEC)
+  TEMPERATURE   (T)  = CELSIUS (C)
+  TOFFSET            = 273.0
+  CHARGE        (Q)  = COULOMB
+  FORCE         (f)  = NEWTON (N) (KG-M/SEC2)
+  HEAT               = JOULE (N-M)
+
+  PRESSURE           = PASCAL (NEWTON/M**2)
+  ENERGY        (W)  = JOULE (N-M)
+  POWER         (P)  = WATT (N-M/SEC)
+  CURRENT       (i)  = AMPERE (COULOMBS/SEC)
+  CAPACITANCE   (C)  = FARAD
+  INDUCTANCE    (L)  = HENRY
+  MAGNETIC FLUX      = WEBER
+  RESISTANCE    (R)  = OHM
+  ELECTRIC POTENTIAL = VOLT
+
+ INPUT  UNITS ARE ALSO SET TO MKS 
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2023 R2          23.2BETA ***
+ Ansys Mechanical Enterprise                       
+ 00000016  VERSION=WINDOWS x64   14:42:25  JAN 10, 2023 CP=      0.156
+
+ workflow_example--Static Structural (F3)                                      
+
+
+
+ ** WARNING: PRE-RELEASE VERSION OF MAPDL 23.2BETA
+  ANSYS,INC TESTING IS NOT COMPLETE - CHECK RESULTS CAREFULLY **
+
+          ***** MAPDL ANALYSIS DEFINITION (PREP7) *****
+ *********** Nodes for the whole assembly ***********
+ *********** Elements for Body 1 "Surface(Assembly_Shell)" ***********
+ *********** Elements for Body 2 "SM" ***********
+ *********** Send User Defined Coordinate System(s) ***********
+ *********** Set Reference Temperature ***********
+ *********** Send Materials ***********
+ *********** Send Sheet Properties ***********
+ *********** Sending Coordinate Systems for External Layered Section***********
+ *********** Sending Materials for External Layered Section***********
+ *********** Send External Layered Section Properties ***********
+ *********** Create Contact "Bonded - edge12(Assembly_Shell) To SM_EDGE12_WALL(A
+             Real Constant Set For Above Contact Is 12 & 11
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Send Named Selection as Node Component ***********
+ *********** Fixed Supports ***********
+ ******* Constant Zero Displacement Y *******
+
+
+ ***** ROUTINE COMPLETED *****  CP =         0.219
+
+
+ --- Number of total nodes = 30
+ --- Number of contact elements = 9
+ --- Number of spring elements = 0
+ --- Number of bearing elements = 0
+ --- Number of solid elements = 8
+ --- Number of condensed parts = 0
+ --- Number of total elements = 17
+
+ *GET  _WALLBSOL  FROM  ACTI  ITEM=TIME WALL  VALUE=  14.7069444    
+ ****************************************************************************
+ *************************    SOLUTION       ********************************
+ ****************************************************************************
+
+ *****  MAPDL SOLUTION ROUTINE  *****
+
+
+ PERFORM A STATIC ANALYSIS
+  THIS WILL BE A NEW ANALYSIS
+
+ PARAMETER _THICKRATIO =     0.000000000    
+
+ USE SPARSE MATRIX DIRECT SOLVER
+
+ CONTACT INFORMATION PRINTOUT LEVEL       1
+
+ DO NOT COMBINE ELEMENT MATRIX FILES (.emat) AFTER DISTRIBUTED PARALLEL SOLUTION
+
+ DO NOT COMBINE ELEMENT SAVE DATA FILES (.esav) AFTER DISTRIBUTED PARALLEL SOLUTION
+
+ NLDIAG: Nonlinear diagnostics CONT option is set to ON. 
+         Writing frequency : each ITERATION.
+
+ DO NOT SAVE ANY RESTART FILES AT ALL
+ ****************************************************
+ ******************* SOLVE FOR LS 1 OF 1 ****************
+ *** Set Displacements ***
+ CMBLOCK read of NODE component _CM114UX_XP  completed
+
+ SELECT      COMPONENT _CM114UX_XP                                                                                                                                                                                                                                                     
+
+ SPECIFIED CONSTRAINT UX   FOR SELECTED NODES            1 TO          36 BY           1
+ REAL= 5.000000000E-04   IMAG=  0.00000000    
+
+ ALL SELECT   FOR ITEM=NODE COMPONENT=    
+  IN RANGE         1 TO         36 STEP          1
+
+         30  NODES (OF         30  DEFINED) SELECTED BY NSEL  COMMAND.
+ *** Component For All Non-Zero UX Displacements ***
+
+ SELECT      COMPONENT _CM114UX_XP                                                                                                                                                                                                                                                     
+
+ DEFINITION OF COMPONENT = _DISPNONZEROUX  ENTITY=NODE
+
+ ALL SELECT   FOR ITEM=NODE COMPONENT=    
+  IN RANGE         1 TO         36 STEP          1
+
+         30  NODES (OF         30  DEFINED) SELECTED BY NSEL  COMMAND.
+
+ PRINTOUT RESUMED BY /GOP
+
+ USE       1 SUBSTEPS INITIALLY THIS LOAD STEP FOR ALL  DEGREES OF FREEDOM
+ FOR AUTOMATIC TIME STEPPING:
+   USE      1 SUBSTEPS AS A MAXIMUM
+   USE      1 SUBSTEPS AS A MINIMUM
+
+ TIME=  1.0000    
+
+ ERASE THE CURRENT DATABASE OUTPUT CONTROL TABLE.
+
+
+ WRITE ALL  ITEMS TO THE DATABASE WITH A FREQUENCY OF NONE
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE NSOL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE RSOL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EANG ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE ETMP ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE VENG ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE STRS ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EPEL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EPPL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE CONT ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ *GET  ANSINTER_  FROM  ACTI  ITEM=INT        VALUE=  0.00000000    
+
+ *IF  ANSINTER_                         ( =   0.00000     )  NE  
+      0                                 ( =   0.00000     )  THEN    
+
+ *ENDIF
+
+ *** NOTE ***                            CP =       0.281   TIME= 14:42:25
+ The automatic domain decomposition logic has selected the MESH domain   
+ decomposition method with 4 processes per solution.                     
+
+ *****  MAPDL SOLVE    COMMAND  *****
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** NOTE ***                            CP =       0.281   TIME= 14:42:25
+ The model data was checked and warning messages were found.             
+  Please review output or errors file (                                  
+ D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\S 
+ Scr95EA\file0.err ) for these warning messages.                         
+
+ *** SELECTION OF ELEMENT TECHNOLOGIES FOR APPLICABLE ELEMENTS ***
+      --- GIVE SUGGESTIONS AND RESET THE KEY OPTIONS ---
+
+ ELEMENT TYPE         1 IS SHELL181. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8) IS ALREADY SET AS SUGGESTED. KEYOPT(3)=2 
+ IS SUGGESTED FOR HIGHER ACCURACY OF MEMBRANE STRESSES; OTHERWISE,
+ KEYOPT(3)=0 IS SUGGESTED. KEYOPT(3) CAN NOT BE RESET HERE. PLEASE RESET 
+ IT MANUALLY IF NECESSARY.
+
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2023 R2          23.2BETA ***
+ Ansys Mechanical Enterprise                       
+ 00000016  VERSION=WINDOWS x64   14:42:25  JAN 10, 2023 CP=      0.281
+
+ workflow_example--Static Structural (F3)                                      
+
+
+
+ ** WARNING: PRE-RELEASE VERSION OF MAPDL 23.2BETA
+  ANSYS,INC TESTING IS NOT COMPLETE - CHECK RESULTS CAREFULLY **
+
+                       S O L U T I O N   O P T I O N S
+
+   PROBLEM DIMENSIONALITY. . . . . . . . . . . . .3-D                  
+   DEGREES OF FREEDOM. . . . . . UX   UY   UZ   ROTX ROTY ROTZ
+   ANALYSIS TYPE . . . . . . . . . . . . . . . . .STATIC (STEADY-STATE)
+   OFFSET TEMPERATURE FROM ABSOLUTE ZERO . . . . .  273.15    
+   EQUATION SOLVER OPTION. . . . . . . . . . . . .SPARSE             
+   GLOBALLY ASSEMBLED MATRIX . . . . . . . . . . .SYMMETRIC  
+
+ *** NOTE ***                            CP =       0.281   TIME= 14:42:25
+ Poisson's ratio PR input has been converted to NU input.                
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ The allowable tensile fiber (x) stress for material 5 is input as 0.0   
+ and will be set to a very large number.                                 
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ The allowable tensile matrix (y) stress for material 5 is input as 0.0  
+ and will be set to a very large number.                                 
+
+ *** WARNING ***                         CP =       0.281   TIME= 14:42:25
+ The allowable in-plane shear (xy) stress for material 5 is input as 0.0 
+ and will be set to a very large number.                                 
+
+ *** NOTE ***                            CP =       0.281   TIME= 14:42:25
+ The step data was checked and warning messages were found.              
+  Please review output or errors file (                                  
+ D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\S 
+ Scr95EA\file0.err ) for these warning messages.                         
+
+ *** NOTE ***                            CP =       0.281   TIME= 14:42:25
+ The conditions for direct assembly have been met.  No .emat or .erot    
+ files will be produced.                                                 
+
+ *** NOTE ***                            CP =       0.328   TIME= 14:42:25
+ Deformable-deformable contact pair identified by real constant set 11   
+ and contact element type 11 has been set up.                            
+ Node-surface contact pair is defined
+ Contact force based contact model
+ Linear contact is defined
+ Contact algorithm: Augmented Lagrange method
+ Contact detection at: nodal point (normal to target surface)
+ Contact stiffness factor FKN                  10.000    
+ The resulting initial contact stiffness      0.51434E+11
+ Default penetration tolerance factor FTOLN   0.10000    
+ The resulting penetration tolerance          0.10607E-02
+ Default opening contact stiffness OPSF will be used.
+ Default tangent stiffness factor FKT          1.0000    
+ Use constant contact stiffness
+ Default Max. friction stress TAUMAX          0.10000E+21
+ Average contact surface length               0.10607E-01
+ Average contact pair depth                   0.10607E-01
+ Average target surface length                0.85167E-02
+ Default pinball region factor PINB           0.25000    
+ The resulting pinball region                 0.26517E-02
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =       0.328   TIME= 14:42:25
+ Max.  Initial penetration 0 was detected between contact element 33 and 
+ target element 36.                                                      
+ ****************************************
+  
+  
+  
+
+ *** NOTE ***                            CP =       0.328   TIME= 14:42:25
+ Only 1 process can be used for the distributed memory parallel solution 
+ for this model due to the presence of the contact elements in this      
+ particular model.  Distributed parallel processing has been             
+ temporarily disabled.                                                   
+
+                      L O A D   S T E P   O P T I O N S
+
+   LOAD STEP NUMBER. . . . . . . . . . . . . . . .     1
+   TIME AT END OF THE LOAD STEP. . . . . . . . . .  1.0000    
+   NUMBER OF SUBSTEPS. . . . . . . . . . . . . . .     1
+   STEP CHANGE BOUNDARY CONDITIONS . . . . . . . .    NO
+   PRINT OUTPUT CONTROLS . . . . . . . . . . . . .NO PRINTOUT
+   DATABASE OUTPUT CONTROLS
+      ITEM     FREQUENCY   COMPONENT
+       ALL       NONE               
+      NSOL        ALL               
+      RSOL        ALL               
+      EANG        ALL               
+      ETMP        ALL               
+      VENG        ALL               
+      STRS        ALL               
+      EPEL        ALL               
+      EPPL        ALL               
+      CONT        ALL               
+
+
+ SOLUTION MONITORING INFO IS WRITTEN TO FILE= file.mntr                                                                                                                                                                                                                                                           
+
+ *** NOTE ***                            CP =       0.516   TIME= 14:42:25
+ Deformable-deformable contact pair identified by real constant set 11   
+ and contact element type 11 has been set up.                            
+ Node-surface contact pair is defined
+ Contact force based contact model
+ Linear contact is defined
+ Contact algorithm: Augmented Lagrange method
+ Contact detection at: nodal point (normal to target surface)
+ Contact stiffness factor FKN                  10.000    
+ The resulting initial contact stiffness      0.51434E+11
+ Default penetration tolerance factor FTOLN   0.10000    
+ The resulting penetration tolerance          0.10607E-02
+ Default opening contact stiffness OPSF will be used.
+ Default tangent stiffness factor FKT          1.0000    
+ Use constant contact stiffness
+ Default Max. friction stress TAUMAX          0.10000E+21
+ Average contact surface length               0.10607E-01
+ Average contact pair depth                   0.10607E-01
+ Average target surface length                0.85167E-02
+ Default pinball region factor PINB           0.25000    
+ The resulting pinball region                 0.26517E-02
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =       0.516   TIME= 14:42:25
+ Max.  Initial penetration 0 was detected between contact element 33 and 
+ target element 36.                                                      
+ ****************************************
+  
+  
+  
+
+ *** NOTE ***                            CP =       0.516   TIME= 14:42:25
+ Predictor is ON by default for structural elements with rotational      
+ degrees of freedom.  Use the PRED,OFF command to turn the predictor     
+ OFF if it adversely affects the convergence.                            
+
+  
+ *************************************************
+  SUMMARY FOR CONTACT PAIR IDENTIFIED BY REAL CONSTANT SET          11
+ Max.  Penetration of 0 has been detected between contact element 33 and 
+ target element 36.                                                      
+ For total 3 contact elements, there are 3 elements are in contact.      
+ There are 3 elements are in sticking.                                   
+ Contacting area 3.                                                      
+ Max.  Pinball distance 2.651650429E-03.                                 
+ One of the contact searching regions contains at least 6 target         
+ elements.                                                               
+ Max.  Pressure/force 4.845339025E-07.                                   
+ Max.  Normal stiffness 5.143369103E+10.                                 
+ Min.  Normal stiffness 5.143369103E+10.                                 
+ Max.  Tangential stiffness 3.857526827E+10.                             
+ Min.  Tangential stiffness 3.857526827E+10.                             
+ *************************************************
+
+
+                         ***********  PRECISE MASS SUMMARY  ***********
+
+   TOTAL RIGID BODY MASS MATRIX ABOUT ORIGIN
+               Translational mass               |   Coupled translational/rotational mass
+        0.13805E-02    0.0000        0.0000     |     0.0000       0.20708E-04  -0.39216E-05
+         0.0000       0.13805E-02    0.0000     |   -0.20708E-04    0.0000       0.16586E-04
+         0.0000        0.0000       0.13805E-02 |    0.39216E-05  -0.16586E-04    0.0000    
+     ------------------------------------------ | ------------------------------------------
+                                                |         Rotational mass (inertia)
+                                                |    0.43402E-06  -0.48174E-07  -0.24879E-06
+                                                |   -0.48174E-07   0.68612E-06  -0.58825E-07
+                                                |   -0.24879E-06  -0.58825E-07   0.29183E-06
+
+   TOTAL MASS = 0.13805E-02
+     The mass principal axes coincide with the global Cartesian axes
+
+   CENTER OF MASS (X,Y,Z)=   0.12014E-01   0.28407E-02   0.15000E-01
+
+   TOTAL INERTIA ABOUT CENTER OF MASS
+        0.11226E-06  -0.10586E-08   0.75360E-23
+       -0.10586E-08   0.17623E-06  -0.64672E-23
+        0.75360E-23  -0.64672E-23   0.81415E-07
+
+   PRINCIPAL INERTIAS =   0.11224E-06   0.17625E-06   0.81415E-07
+   ORIENTATION VECTORS OF THE INERTIA PRINCIPAL AXES IN GLOBAL CARTESIAN
+     ( 1.000, 0.017, 0.000) (-0.017, 1.000,-0.000) (-0.000, 0.000, 1.000) 
+
+
+  *** MASS SUMMARY BY ELEMENT TYPE ***
+
+  TYPE      MASS
+     1  0.774675E-03
+     2  0.605850E-03
+
+ Range of element maximum matrix coefficients in global coordinates
+ Maximum = 5.143369103E+10 at element 33.                                
+ Minimum = 904636.81 at element 7.                                       
+
+   *** ELEMENT MATRIX FORMULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1         2  SHELL181      0.000   0.000000
+        2         6  SOLSH190      0.000   0.000000
+       11         3  CONTA175      0.000   0.000000
+       12         6  TARGE170      0.000   0.000000
+ Time at end of element matrix formulation CP = 0.578125.                
+
+ SPARSE MATRIX DIRECT SOLVER.
+  Number of equations =          66,    Maximum wavefront =     42
+  Memory allocated for solver              =     0.095 MB
+  Memory required for in-core solution     =     0.091 MB
+  Memory required for out-of-core solution =     0.091 MB
+
+ *** NOTE ***                            CP =       0.641   TIME= 14:42:25
+ The Sparse Matrix Solver is currently running in the in-core memory     
+ mode.  This memory mode uses the most amount of memory in order to      
+ avoid using the hard drive as much as possible, which most often        
+ results in the fastest solution time.  This mode is recommended if      
+ enough physical memory is present to accommodate all of the solver      
+ data.                                                                   
+ Sparse solver maximum pivot= 5.146715321E+10 at node 3 UX.              
+ Sparse solver minimum pivot= 5.028218455E-02 at node 2 ROTY.            
+ Sparse solver minimum pivot in absolute value= 5.028218455E-02 at node  
+ 2 ROTY.                                                                 
+
+   *** ELEMENT RESULT CALCULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1         2  SHELL181      0.000   0.000000
+        2         6  SOLSH190      0.000   0.000000
+       11         3  CONTA175      0.000   0.000000
+
+   *** NODAL LOAD CALCULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1         2  SHELL181      0.000   0.000000
+        2         6  SOLSH190      0.000   0.000000
+       11         3  CONTA175      0.000   0.000000
+ *** LOAD STEP     1   SUBSTEP     1  COMPLETED.    CUM ITER =      1
+ *** TIME =   1.00000         TIME INC =   1.00000      NEW TRIANG MATRIX
+
+
+ *** MAPDL BINARY FILE STATISTICS
+  BUFFER SIZE USED= 16384
+        0.188 MB WRITTEN ON ELEMENT SAVED DATA FILE: file.esav
+        0.062 MB WRITTEN ON ASSEMBLED MATRIX FILE: file.full
+        0.312 MB WRITTEN ON RESULTS FILE: file.rst
+ *************** Write FE CONNECTORS *********
+
+ WRITE OUT CONSTRAINT EQUATIONS TO FILE= file.ce                                                                                                                                                                                                                                                             
+ ****************************************************
+ *************** FINISHED SOLVE FOR LS 1 *************
+
+ *GET  _WALLASOL  FROM  ACTI  ITEM=TIME WALL  VALUE=  14.7069444    
+
+ PRINTOUT RESUMED BY /GOP
+
+ FINISH SOLUTION PROCESSING
+
+ *** NOTE ***                            CP =       0.812   TIME= 14:42:25
+ Distributed parallel processing has been reactivated.                   
+
+
+ ***** ROUTINE COMPLETED *****  CP =         0.812
+
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2023 R2          23.2BETA ***
+ Ansys Mechanical Enterprise                       
+ 00000016  VERSION=WINDOWS x64   14:42:25  JAN 10, 2023 CP=      0.812
+
+ workflow_example--Static Structural (F3)                                      
+
+
+
+ ** WARNING: PRE-RELEASE VERSION OF MAPDL 23.2BETA
+  ANSYS,INC TESTING IS NOT COMPLETE - CHECK RESULTS CAREFULLY **
+
+          ***** MAPDL RESULTS INTERPRETATION (POST1) *****
+
+ *** NOTE ***                            CP =       0.812   TIME= 14:42:25
+ Reading results into the database (SET command) will update the current 
+ displacement and force boundary conditions in the database with the     
+ values from the results file for that load set.  Note that any          
+ subsequent solutions will use these values unless action is taken to    
+ either SAVE the current values or not overwrite them (/EXIT,NOSAVE).    
+
+ Set Encoding of XML File to:ISO-8859-1
+
+ Set Output of XML File to:
+     PARM,     ,     ,     ,     ,     ,     ,     ,     ,     ,     ,     ,
+         ,     ,     ,     ,     ,     ,     ,
+
+ DATABASE WRITTEN ON FILE  parm.xml                                                                                                                                                                                                                                                            
+
+ EXIT THE MAPDL POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         0.812
+
+
+
+ PRINTOUT RESUMED BY /GOP
+
+ *GET  _WALLDONE  FROM  ACTI  ITEM=TIME WALL  VALUE=  14.7069444    
+
+ PARAMETER _PREPTIME =     0.000000000    
+
+ PARAMETER _SOLVTIME =     0.000000000    
+
+ PARAMETER _POSTTIME =     0.000000000    
+
+ PARAMETER _TOTALTIM =     0.000000000    
+
+ *GET  _DLBRATIO  FROM  ACTI  ITEM=SOLU DLBR  VALUE=  0.00000000    
+
+ *GET  _COMBTIME  FROM  ACTI  ITEM=SOLU COMB  VALUE=  0.00000000    
+
+ *GET  _SSMODE   FROM  ACTI  ITEM=SOLU SSMM  VALUE=  2.00000000    
+
+ *GET  _NDOFS    FROM  ACTI  ITEM=SOLU NDOF  VALUE=  66.0000000    
+
+ *GET  _SOL_END_TIME  FROM  ACTI  ITEM=SET  TIME  VALUE=  1.00000000    
+
+ *IF  _sol_end_time                     ( =   1.00000     )  EQ  
+      1.000000                          ( =   1.00000     )  THEN    
+
+ /FCLEAN COMMAND REMOVING ALL LOCAL FILES
+
+ *ENDIF
+ --- Total number of nodes = 30
+ --- Total number of elements = 17
+ --- Element load balance ratio = 0
+ --- Time to combine distributed files = 0
+ --- Sparse memory mode = 2
+ --- Number of DOF = 66
+
+ EXIT MAPDL WITHOUT SAVING DATABASE
+
+
+ NUMBER OF WARNING MESSAGES ENCOUNTERED=          4
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=          0
+
++--------------------- M A P D L   S T A T I S T I C S ------------------------+
+
+Release: 2023 R2            Build: 23.2BETA   Update: UP20230102   Platform: WINDOWS x64 
+Date Run: 01/10/2023   Time: 14:42     Process ID: 36940
+Operating System: Windows 10  (Build: 19044)
+
+Processor Model: 12th Gen Intel(R) Core(TM) i7-12850HX
+
+Compiler: Intel(R) Fortran Compiler Version 19.0.5  (Build: 20190815)
+          Intel(R) C/C++ Compiler Version 19.0.5  (Build: 20190815)
+          Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191125
+          BLAS Library supplied by Intel(R) MKL
+
+Number of machines requested            :    1
+Total number of cores available         :   24
+Number of physical cores available      :   16
+Number of processes requested           :    4
+Number of threads per process requested :    1
+Total number of cores requested         :    4 (Distributed Memory Parallel)               
+MPI Type: INTELMPI
+MPI Version: Intel(R) MPI Library 2021.5 for Windows* OS
+
+
+GPU Acceleration: Not Requested
+
+Job Name: file0
+Input File: dummy.dat
+
+  Core                Machine Name   Working Directory
+ -----------------------------------------------------
+     0             AAPHHGHotrcPfbA   D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA
+     1             AAPHHGHotrcPfbA   D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA
+     2             AAPHHGHotrcPfbA   D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA
+     3             AAPHHGHotrcPfbA   D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA
+ 
+Latency time from master to core     1 =    2.445 microseconds
+Latency time from master to core     2 =    2.535 microseconds
+Latency time from master to core     3 =    4.560 microseconds
+ 
+Communication speed from master to core     1 = 10551.86 MB/sec
+Communication speed from master to core     2 = 11732.79 MB/sec
+Communication speed from master to core     3 =  6457.55 MB/sec
+
+Total CPU time for main thread                    :        0.7 seconds
+Total CPU time summed for all threads             :        1.2 seconds
+
+Elapsed time spent obtaining a license            :        0.3 seconds
+Elapsed time spent pre-processing model (/PREP7)  :        0.0 seconds
+Elapsed time spent solution - preprocessing       :        0.0 seconds
+Elapsed time spent computing solution             :        0.1 seconds
+Elapsed time spent solution - postprocessing      :        0.0 seconds
+Elapsed time spent post-processing model (/POST1) :        0.0 seconds
+ 
+Equation solver used                              :            Sparse (symmetric)
+
+Sum of memory used on all processes               :       57.0 MB
+Sum of memory allocated on all processes          :     5184.0 MB
+Physical memory available                         :         64 GB
+
+Total amount of I/O written to disk               :        0.0 GB
+Total amount of I/O read from disk                :        0.0 GB
+
++------------------ E N D   M A P D L   S T A T I S T I C S -------------------+
+
+
+ *-----------------------------------------------------------------------------*
+ |                                                                             |
+ |                               RUN COMPLETED                                 |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |  Ansys MAPDL 2023 R2         Build 23.2BETA     UP20230102    WINDOWS x64   |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |  Database Requested(-db)     1024 MB     Scratch Memory Requested   1024 MB |
+ |  Max Database Used(Master)      1 MB     Max Scratch Used(Master)     41 MB |
+ |  Max Database Used(Workers)     1 MB     Max Scratch Used(Workers)     4 MB |
+ |  Sum Database Used(All)         4 MB     Sum Scratch Used(All)        53 MB |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |        CP Time      (sec) =          1.188       Time  =  14:42:25          |
+ |        Elapsed Time (sec) =          2.000       Date  =  01/10/2023        |
+ |                                                                             |
+ *-----------------------------------------------------------------------------*
