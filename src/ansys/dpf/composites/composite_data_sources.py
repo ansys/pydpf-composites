@@ -102,7 +102,50 @@ def _get_single_filepath_with_predicate(
     return files[0]
 
 
-def get_composite_files_from_result_folder(result_folder: _PATH) -> ContinuousFiberCompositesFiles:
+def _add_composite_definitons_from_setup_folder(
+    setup_folder: pathlib.Path, composite_files: ContinuousFiberCompositesFiles
+) -> None:
+    composite_definition = _get_single_filepath_with_predicate(
+        _is_composite_definition_file, "composites_definition", setup_folder, accept_empty=True
+    )
+
+    solid_model_definition = _get_single_filepath_with_predicate(
+        _is_solid_model_composite_definition_file,
+        "solid_model_definition",
+        setup_folder,
+        accept_empty=True,
+    )
+
+    def get_composite_definitions_files(
+        composite_definition_path: pathlib.Path,
+    ) -> CompositeDefinitionFiles:
+        mapping_path = _get_mapping_path_file_from_definitions_path_if_exists(
+            composite_definition_path
+        )
+        return CompositeDefinitionFiles(
+            definition=composite_definition_path.resolve(),
+            mapping=mapping_path.resolve() if mapping_path is not None else None,
+        )
+
+    if composite_definition is not None:
+        definition_files = get_composite_definitions_files(composite_definition)
+        key = os.path.basename(setup_folder) + "_shell"
+        if key in composite_files.composite:
+            raise RuntimeError(f"Definition with key already exists {key}")
+        composite_files.composite[key] = definition_files
+
+    if solid_model_definition is not None:
+        definition_files = get_composite_definitions_files(solid_model_definition)
+        key = os.path.basename(setup_folder) + "_solid"
+
+        if key in composite_files.composite:
+            raise RuntimeError(f"Definition with key already exists {key}")
+        composite_files.composite[key] = definition_files
+
+
+def get_composite_files_from_result_folder(
+    result_folder: _PATH, ensure_composite_definitions_found: bool = True
+) -> ContinuousFiberCompositesFiles:
     """Get a ContinuousFiberCompositesFiles object from a result_folder.
 
     This function assumes
@@ -178,6 +221,8 @@ def get_composite_files_from_result_folder(result_folder: _PATH) -> ContinuousFi
     result_folder:
        Result folder of the solution. Right-click on the "Solution" item in the Mechanical tree and
        choose "Open Solver Files Directory" to obtain the result_folder.
+    ensure_composite_definitions_found:
+        If True, checks that at least on composite definition (shell or solid) has been found.
     """
     result_folder_path = pathlib.Path(result_folder)
 
@@ -194,57 +239,26 @@ def get_composite_files_from_result_folder(result_folder: _PATH) -> ContinuousFi
     assert matml_path is not None
     assert rst_path is not None
 
-    composite_files = ContinuousFiberCompositesFiles(
+    continuous_fiber_composite_files = ContinuousFiberCompositesFiles(
         rst=rst_path.resolve(),
         composite={},
         engineering_data=matml_path.resolve(),
     )
+
     for setup_folder in setup_folders:
-        composite_definition = _get_single_filepath_with_predicate(
-            _is_composite_definition_file, "composites_definition", setup_folder, accept_empty=True
+        _add_composite_definitons_from_setup_folder(setup_folder, continuous_fiber_composite_files)
+
+    if (
+        ensure_composite_definitions_found
+        and len(list(continuous_fiber_composite_files.composite.keys())) == 0
+    ):
+        raise RuntimeError(
+            f"No composite definitions found. Set "
+            f"ensure_composite_definitions_found argument"
+            f" to False to skip this check."
         )
 
-        solid_model_definition = _get_single_filepath_with_predicate(
-            _is_solid_model_composite_definition_file,
-            "solid_model_definition",
-            setup_folder,
-            accept_empty=True,
-        )
-
-        if composite_definition is None and solid_model_definition is None:
-            raise RuntimeError(
-                f"No composite definition or solid definition "
-                f"file found. Available files:  "
-                f"{os.listdir(setup_folder)}"
-            )
-
-        def get_composite_definitions_files(
-            composite_definition_path: pathlib.Path,
-        ) -> CompositeDefinitionFiles:
-            mapping_path = _get_mapping_path_file_from_definitions_path_if_exists(
-                composite_definition_path
-            )
-            return CompositeDefinitionFiles(
-                definition=composite_definition_path.resolve(),
-                mapping=mapping_path.resolve() if mapping_path is not None else None,
-            )
-
-        if composite_definition is not None:
-            definition_files = get_composite_definitions_files(composite_definition)
-            key = os.path.basename(setup_folder) + "_shell"
-            if key in composite_files.composite:
-                raise RuntimeError(f"Definition with key already exists {key}")
-            composite_files.composite[key] = definition_files
-
-        if solid_model_definition is not None:
-            definition_files = get_composite_definitions_files(solid_model_definition)
-            key = os.path.basename(setup_folder) + "_solid"
-
-            if key in composite_files.composite:
-                raise RuntimeError(f"Definition with key already exists {key}")
-            composite_files.composite[key] = definition_files
-
-    return composite_files
+    return continuous_fiber_composite_files
 
 
 def get_composites_data_sources(
