@@ -1,10 +1,20 @@
 """Composite Data Sources."""
 from dataclasses import dataclass
-from typing import Dict, Optional
+import os
+import pathlib
+from typing import Callable, Dict, Optional
 
 from ansys.dpf.core import DataSources
 
 from ._typing_helper import PATH as _PATH
+
+SOLID_MODEL_PREFIX = "ACPSolidModel"
+COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
+SETUP_FOLDER_PREFIX = "Setup"
+H5_SUFFIX = ".h5"
+MATML_FILENAME = "MatML.xml"
+RST_SUFFIX = ".rst"
+MAPPING_SUFFIX = ".mapping"
 
 
 @dataclass
@@ -40,6 +50,201 @@ class CompositeDataSources:
     rst: DataSources
     composite: Dict[str, DataSources]
     engineering_data: DataSources
+
+
+def _get_mapping_path_file_from_definitions_path_if_exists(
+    definition_path: pathlib.Path,
+) -> Optional[pathlib.Path]:
+    mapping_path = definition_path.parent / (definition_path.stem + MAPPING_SUFFIX)
+    return mapping_path if mapping_path.is_file() else None
+
+
+def _is_rst_file(path: pathlib.Path) -> bool:
+    return path.suffix == RST_SUFFIX and path.is_file()
+
+
+def _is_matml_file(path: pathlib.Path) -> bool:
+    return path.name == MATML_FILENAME and path.is_file()
+
+
+def _is_composite_definition_file(path: pathlib.Path) -> bool:
+    is_composite_def = path.name.startswith(COMPOSITE_DEFINITIONS_PREFIX)
+    return path.suffix == H5_SUFFIX and path.is_file() and is_composite_def
+
+
+def _is_solid_model_composite_definition_file(path: pathlib.Path) -> bool:
+    is_h5 = path.suffix == H5_SUFFIX
+    is_file = path.is_file()
+    is_def = path.name.startswith(SOLID_MODEL_PREFIX)
+    return is_h5 and is_file and is_def
+
+
+def _get_single_filepath_with_predicate(
+    predicate: Callable[[pathlib.Path], bool],
+    name: str,
+    folder: pathlib.Path,
+    accept_empty: bool = False,
+) -> Optional[pathlib.Path]:
+    files = [
+        file_or_folder_path
+        for file_or_folder_path in folder.iterdir()
+        if predicate(file_or_folder_path)
+    ]
+
+    if len(files) == 0:
+        if accept_empty:
+            return None
+        raise RuntimeError(f"No {name} file found. Available files:  {os.listdir(folder)}")
+
+    if len(files) > 1:
+        raise RuntimeError(f"More than one {name} file detected {files}")
+
+    return files[0]
+
+
+def get_composite_files_from_result_folder(result_folder: _PATH) -> ContinuousFiberCompositesFiles:
+    """Get a ContinuousFiberCompositesFiles object from a result_folder.
+
+    This function assumes
+    a typical workbench folder structure for a composite simulation.
+
+    If this function is not able to build a ContinuousFiberCompositesFiles
+    object the following steps can
+    be followed:
+
+    In main workbench window, activate the files panel by ticking
+    "Files" in the "View" menu. This shows
+    the file location of all the files used in the workbench project.
+    Determine the different attributes of ContinuousFiberCompositesFiles:
+
+        rst: The *.rst file which belongs to the CellId of the Solution
+        you are interested to post-process.
+
+        engineering_data: The MatML.xml file in the same folder as the rst file.
+
+        composite:
+
+        There can be multiple composite definitions,
+        one definition for each ACP System if shell data is transferred
+        and one definition for each solid model if solid data is transferred.
+        All the ACPCompositeDefinitions.h5 and ACPSolidModel*.h5
+        files that are used in the solution have to be added.
+        to the ContinuousFiberCompositesFiles.composite dictionary.
+        The key can be chosen freely. Next to the ACPCompositeDefinitions.h5
+        and ACPSolidModel*.h5 files, corresponding ACPCompositeDefinitions.mapping and
+        ACPSolidModel*.mapping files can be found (optional).
+        If they exist, they have to be added as well.
+
+        The following example shows how a
+        ContinuousFiberCompositesFiles object can be built:
+        The project has two ACP Pre systems, one that exports
+        shell information and one that exports solid information.
+
+        The files are located in the following locations.
+
+        Result file:
+        project_root_folder/dp0/SYS/MECH/file.rst
+
+        Engineering data file:
+        project_root_folder/dp0/SYS/MECH/MatML.xml
+
+        Composite definitions and mapping for solid model:
+        project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5
+        project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping
+
+        Composite definitions and mapping for shell model:
+        project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5
+        project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping
+
+        The corresponding ContinuousFiberCompositesFiles object would be created like this:
+
+        ContinuousFiberCompositesFiles(
+            rst="project_root_folder/dp0/SYS/MECH/file.rst",
+            composite={
+               "solid": CompositeDefinitionFiles(
+                    definition="project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5",
+                    mapping="project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping"
+                ),
+               "shell": CompositeDefinitionFiles(
+                    definition="project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5",
+                    mapping="project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping"
+                )
+            },
+            engineering_data="project_root_folder/dp0/SYS/MECH/MatML.xml"
+        )
+
+    Parameters
+    ----------
+    result_folder:
+       Result folder of the solution. Right-click on the "Solution" item in the Mechanical tree and
+       choose "Open Solver Files Directory" to obtain the result_folder.
+    """
+    result_folder_path = pathlib.Path(result_folder)
+
+    setup_folders = [
+        folder_path
+        for folder_path in result_folder_path.iterdir()
+        if folder_path.is_dir() and folder_path.name.startswith(SETUP_FOLDER_PREFIX)
+    ]
+
+    rst_path = _get_single_filepath_with_predicate(_is_rst_file, "rst", result_folder_path)
+
+    matml_path = _get_single_filepath_with_predicate(_is_matml_file, "matml", result_folder_path)
+
+    assert matml_path is not None
+    assert rst_path is not None
+
+    composite_files = ContinuousFiberCompositesFiles(
+        rst=rst_path.resolve(),
+        composite={},
+        engineering_data=matml_path.resolve(),
+    )
+    for setup_folder in setup_folders:
+        composite_definition = _get_single_filepath_with_predicate(
+            _is_composite_definition_file, "composites_definition", setup_folder, accept_empty=True
+        )
+
+        solid_model_definition = _get_single_filepath_with_predicate(
+            _is_solid_model_composite_definition_file,
+            "solid_model_definition",
+            setup_folder,
+            accept_empty=True,
+        )
+
+        if composite_definition is None and solid_model_definition is None:
+            raise RuntimeError(
+                f"No composite definition or solid definition "
+                f"file found. Available files:  "
+                f"{os.listdir(setup_folder)}"
+            )
+
+        def get_composite_definitions_files(
+            composite_definition_path: pathlib.Path,
+        ) -> CompositeDefinitionFiles:
+            mapping_path = _get_mapping_path_file_from_definitions_path_if_exists(
+                composite_definition_path
+            )
+            return CompositeDefinitionFiles(
+                definition=composite_definition_path.resolve(),
+                mapping=mapping_path.resolve() if mapping_path is not None else None,
+            )
+
+        if composite_definition is not None:
+            definition_files = get_composite_definitions_files(composite_definition)
+            key = os.path.basename(setup_folder) + "_shell"
+            if key in composite_files.composite:
+                raise RuntimeError(f"Definition with key already exists {key}")
+            composite_files.composite[key] = definition_files
+
+        if solid_model_definition is not None:
+            definition_files = get_composite_definitions_files(solid_model_definition)
+            key = os.path.basename(setup_folder) + "_solid"
+
+            if key in composite_files.composite:
+                raise RuntimeError(f"Definition with key already exists {key}")
+            composite_files.composite[key] = definition_files
+
+    return composite_files
 
 
 def get_composites_data_sources(
