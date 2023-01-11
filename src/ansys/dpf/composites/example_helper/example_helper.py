@@ -298,7 +298,7 @@ def get_continuous_fiber_example_files(
     example_files = _continuous_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
-        def get_sever_path(filename: str) -> str:
+        def get_server_path(filename: str) -> str:
             return _download_and_upload_file(
                 example_files.directory, filename, tmpdir, server_context.server
             )
@@ -306,15 +306,17 @@ def get_continuous_fiber_example_files(
         all_composite_files = {}
         for key, composite_examples_files_for_scope in example_files.files.composite.items():
             composite_files = CompositeDefinitionFiles(
-                definition=get_sever_path(composite_examples_files_for_scope.definition),
+                definition=get_server_path(composite_examples_files_for_scope.definition),
             )
             if composite_examples_files_for_scope.mapping is not None:
-                composite_files.mapping = get_sever_path(composite_examples_files_for_scope.mapping)
+                composite_files.mapping = get_server_path(
+                    composite_examples_files_for_scope.mapping
+                )
 
             all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
-            rst=get_sever_path(example_files.files.rst),
-            engineering_data=get_sever_path(example_files.files.engineering_data),
+            rst=get_server_path(example_files.files.rst),
+            engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
         )
