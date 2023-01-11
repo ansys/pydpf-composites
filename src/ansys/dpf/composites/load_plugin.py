@@ -6,11 +6,20 @@ import ansys.dpf.core as dpf
 
 
 def load_composites_plugin(server: dpf.server, ansys_path: Optional[str] = None) -> None:
-    """Load composites plugins and its dependencies."""
+    r"""Load composites plugins and its dependencies.
+
+    Parameters
+    ----------
+    server:
+    ansys_path:
+        Ansys root path, for example C:\Program Files\ANSYS Inc\v231.
+        If None, it is assumed that all the plugins and their dependencies
+        are found in the PATH/LD_LIBRARY_PATH. If ansys_path
+        is set, the composite_operators and
+        Ans.Dpf.EngineeringData plugins are loaded from their location
+        in the installer.
+    """
     libs = [
-        "Ans.Dpf.Native",
-        "mapdlOperatorsCore",
-        "Ans.Dpf.FEMutils",
         "composite_operators",
         "Ans.Dpf.EngineeringData",
     ]

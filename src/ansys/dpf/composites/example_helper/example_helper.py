@@ -222,6 +222,9 @@ def connect_to_or_start_server(
         server = dpf.server.start_local_server(ansys_path=ansys_path)
 
     _wait_until_server_is_up(server)
+    # Note: server.ansys_path contains the computed ansys path from
+    # dpf.server.start_local_server. It is None if
+    # we connect to an existing server.
     load_composites_plugin(server, ansys_path=server.ansys_path)
     return ServerContext(server=server)
 
