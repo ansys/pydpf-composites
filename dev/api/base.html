@@ -323,6 +323,11 @@ function checkPageExistsAndRedirect(event) {
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.LayupOperators.html">
+     ansys.dpf.composites.LayupOperators
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="_autosummary/ansys.dpf.composites.MaterialOperators.html">
      ansys.dpf.composites.MaterialOperators
     </a>
@@ -403,7 +408,7 @@ function checkPageExistsAndRedirect(event) {
 <h1>Objects and Helpers<a class="headerlink" href="#objects-and-helpers" title="Permalink to this heading">#</a></h1>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ResultDefinition.html#ansys.dpf.composites.ResultDefinition" title="ansys.dpf.composites.ResultDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a>(name, ...[, measure, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ResultDefinition.html#ansys.dpf.composites.ResultDefinition" title="ansys.dpf.composites.ResultDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a>(name, ...[, ...])</p></td>
 <td><p>Represents the result definition of DPF Composites.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.SamplingPoint.html#ansys.dpf.composites.SamplingPoint" title="ansys.dpf.composites.SamplingPoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint</span></code></a>(name, result_definition[, server])</p></td>
@@ -412,13 +417,16 @@ function checkPageExistsAndRedirect(event) {
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.Spot.html#ansys.dpf.composites.Spot" title="ansys.dpf.composites.Spot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spot</span></code></a>(value)</p></td>
 <td><p>Implements an interface to access the spots of the results of layered elements.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeDataSources.html#ansys.dpf.composites.CompositeDataSources" title="ansys.dpf.composites.CompositeDataSources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources</span></code></a>(rst, composite, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeDataSources.html#ansys.dpf.composites.CompositeDataSources" title="ansys.dpf.composites.CompositeDataSources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources</span></code></a>(rst, composites_files)</p></td>
 <td><p>Data Sources related to the composite Layup.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.MaterialOperators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators</span></code></a>(material_provider, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.LayupOperators.html#ansys.dpf.composites.LayupOperators" title="ansys.dpf.composites.LayupOperators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupOperators</span></code></a>(material_operators, ...)</p></td>
+<td><p>Operators related to the composite Layup.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.MaterialOperators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators</span></code></a>(material_provider, ...)</p></td>
 <td><p>Container for Material related operators.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.ContinuousFiberCompositesFiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>(rst, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.ContinuousFiberCompositesFiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>(rst, ...)</p></td>
 <td><p>Container for continuous fiber file paths.</p></td>
 </tr>
 </tbody>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>engineering_data &#8212; pydpf-composites</title>
+    <title>material_operators &#8212; pydpf-composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -51,8 +51,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ansys.dpf.composites.MaterialOperators" href="ansys.dpf.composites.MaterialOperators.html" />
-    <link rel="prev" title="composite" href="ansys.dpf.composites.CompositeDataSources.composite.html" />
+    <link rel="next" title="layup_provider" href="ansys.dpf.composites.LayupOperators.layup_provider.html" />
+    <link rel="prev" title="ansys.dpf.composites.LayupOperators" href="ansys.dpf.composites.LayupOperators.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -148,14 +148,14 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables api/_autosummary/ansys.dpf.composites.CompositeDataSources.engineering_data and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
+     variables api/_autosummary/ansys.dpf.composites.LayupOperators.material_operators and {'json_url': 'https://composites.dpf.docs.pyansys.com/release/versions.json', 'version_match': 'dev'}.
 -->
 
 <script type="text/javascript">
 // Check if corresponding page path exists in other version of docs
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
-    const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeDataSources.engineering_data.html",
+    const currentFilePath = "api/_autosummary/ansys.dpf.composites.LayupOperators.material_operators.html",
           tryUrl = event.target.getAttribute("href");
     let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
     $.ajax({
@@ -176,7 +176,7 @@ function checkPageExistsAndRedirect(event) {
 // Populate the version switcher from the JSON config file
 (function () {
     $.getJSON("https://composites.dpf.docs.pyansys.com/release/versions.json", function(data, textStatus, jqXHR) {
-        const currentFilePath = "api/_autosummary/ansys.dpf.composites.CompositeDataSources.engineering_data.html";
+        const currentFilePath = "api/_autosummary/ansys.dpf.composites.LayupOperators.material_operators.html";
         let btn = document.getElementById("version_switcher_button");
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
         btn.dataset["activeVersionName"] = "";
@@ -271,8 +271,8 @@ function checkPageExistsAndRedirect(event) {
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
           <li class="nav-item nav-item-2"><a href="../base.html" >Objects and Helpers</a> » </li>
-          <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.CompositeDataSources.html" accesskey="U">ansys.dpf.composites.CompositeDataSources</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">engineering_data</a></li> 
+          <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.LayupOperators.html" accesskey="U">ansys.dpf.composites.LayupOperators</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">material_operators</a></li> 
       </ul>
     </div>
         </div>
@@ -319,9 +319,14 @@ function checkPageExistsAndRedirect(event) {
      ansys.dpf.composites.Spot
     </a>
    </li>
-   <li class="toctree-l2 current active has-children">
+   <li class="toctree-l2">
     <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html">
      ansys.dpf.composites.CompositeDataSources
+    </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="ansys.dpf.composites.LayupOperators.html">
+     ansys.dpf.composites.LayupOperators
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
     <label for="toctree-checkbox-2">
@@ -329,19 +334,14 @@ function checkPageExistsAndRedirect(event) {
      </i>
     </label>
     <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.rst.html">
-       rst
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.composite.html">
-       composite
-      </a>
-     </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       engineering_data
+       material_operators
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupOperators.layup_provider.html">
+       layup_provider
       </a>
      </li>
     </ul>
@@ -410,10 +410,10 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys.dpf.composites.CompositeDataSources.engineering_data">
+  <a class="reference internal nav-link" href="#ansys.dpf.composites.LayupOperators.material_operators">
    <code class="docutils literal notranslate">
     <span class="pre">
-     CompositeDataSources.engineering_data
+     LayupOperators.material_operators
     </span>
    </code>
   </a>
@@ -437,11 +437,11 @@ function checkPageExistsAndRedirect(event) {
               
               <article class="bd-article" role="main">
                 
-  <section id="engineering-data">
-<h1>engineering_data<a class="headerlink" href="#engineering-data" title="Permalink to this heading">#</a></h1>
+  <section id="material-operators">
+<h1>material_operators<a class="headerlink" href="#material-operators" title="Permalink to this heading">#</a></h1>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ansys.dpf.composites.CompositeDataSources.engineering_data">
-<span class="sig-prename descclassname"><span class="pre">CompositeDataSources.</span></span><span class="sig-name descname"><span class="pre">engineering_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.data_sources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.7.1)"><span class="pre">DataSources</span></a></em><a class="headerlink" href="#ansys.dpf.composites.CompositeDataSources.engineering_data" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ansys.dpf.composites.LayupOperators.material_operators">
+<span class="sig-prename descclassname"><span class="pre">LayupOperators.</span></span><span class="sig-name descname"><span class="pre">material_operators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.material_setup.MaterialOperators"><span class="pre">MaterialOperators</span></a></em><a class="headerlink" href="#ansys.dpf.composites.LayupOperators.material_operators" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>

@@ -350,11 +350,6 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_all_layered_element_ids_for_composite_definition_label.html">
-       get_all_layered_element_ids_for_composite_definition_label
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_analysis_plies.html">
        get_analysis_plies
       </a>
@@ -375,16 +370,6 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_layup_operator.html">
-       get_layup_operator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_mesh.html">
-       get_mesh
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_property_for_all_layers.html">
        get_property_for_all_layers
       </a>
@@ -400,11 +385,6 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.composite_definition_labels.html">
-       composite_definition_labels
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.CompositeModel.core_model.html">
        core_model
       </a>
@@ -415,8 +395,13 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.material_operators.html">
-       material_operators
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.layup_operators.html">
+       layup_operators
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.mesh.html">
+       mesh
       </a>
      </li>
     </ul>
@@ -481,7 +466,7 @@ function checkPageExistsAndRedirect(event) {
 <h1>add_interlaminar_normal_stresses<a class="headerlink" href="#add-interlaminar-normal-stresses" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.CompositeModel.add_interlaminar_normal_stresses">
-<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">add_interlaminar_normal_stresses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strains</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.add_interlaminar_normal_stresses" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">add_interlaminar_normal_stresses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strains</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.add_interlaminar_normal_stresses" title="Permalink to this definition">#</a></dt>
 <dd><p>Add interlaminar_normal_stresses to the stresses FieldsContainer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -489,11 +474,6 @@ function checkPageExistsAndRedirect(event) {
 <li><p><strong>stresses</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldsContainer</span></code></a>) – Stresses FieldsContainer
 (interlaminar normal stresses are added to this container)</p></li>
 <li><p><strong>strains</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldsContainer</span></code></a>) – </p></li>
-<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of composite definition
-(dictionary key in ContinuousFiberCompositesFiles.composite).
-Only required for assemblies. See “Note on assemblies” in class docstring.
-Interlaminar normal stresses are only added to the layered elements defined
-in the specified composite definition.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

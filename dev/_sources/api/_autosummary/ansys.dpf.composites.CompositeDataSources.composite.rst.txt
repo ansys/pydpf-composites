@@ -1,6 +1,0 @@
-composite
-=========
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: CompositeDataSources.composite

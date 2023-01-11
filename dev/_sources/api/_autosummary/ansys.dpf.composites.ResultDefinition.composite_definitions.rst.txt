@@ -1,0 +1,6 @@
+composite\_definitions
+======================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoproperty:: ResultDefinition.composite_definitions

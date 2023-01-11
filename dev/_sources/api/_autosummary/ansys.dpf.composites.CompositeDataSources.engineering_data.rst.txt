@@ -1,6 +1,0 @@
-engineering\_data
-=================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: CompositeDataSources.engineering_data

@@ -350,11 +350,6 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_all_layered_element_ids_for_composite_definition_label.html">
-       get_all_layered_element_ids_for_composite_definition_label
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_analysis_plies.html">
        get_analysis_plies
       </a>
@@ -375,16 +370,6 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_layup_operator.html">
-       get_layup_operator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_mesh.html">
-       get_mesh
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_property_for_all_layers.html">
        get_property_for_all_layers
       </a>
@@ -400,11 +385,6 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.composite_definition_labels.html">
-       composite_definition_labels
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.CompositeModel.core_model.html">
        core_model
       </a>
@@ -415,8 +395,13 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.material_operators.html">
-       material_operators
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.layup_operators.html">
+       layup_operators
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.mesh.html">
+       mesh
       </a>
      </li>
     </ul>
@@ -481,7 +466,7 @@ function checkPageExistsAndRedirect(event) {
 <h1>get_constant_property_dict<a class="headerlink" href="#get-constant-property-dict" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.CompositeModel.get_constant_property_dict">
-<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">get_constant_property_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.get_constant_property_dict" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">get_constant_property_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.CompositeModel.get_constant_property_dict" title="Permalink to this definition">#</a></dt>
 <dd><p>Get a dictionary with constant properties.</p>
 <p>Returns a dictionary with the dpf_material_id as key and
 a dict with the requested properties as the value. Only constant properties
@@ -491,14 +476,7 @@ This function can be expensive to evaluate and should not
 be called in a loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>material_properties</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.MaterialProperty.html#ansys.dpf.composites.MaterialProperty" title="ansys.dpf.composites.enums.MaterialProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>]) – A list of the requested material properties</p></li>
-<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of composite definition
-(dictionary key in ContinuousFiberCompositesFiles.composite_files).
-Only required for assemblies. See “Note on assemblies” in class docstring.
-The dict will only contain the materials of the analysis plies defined
-in the specified composite definition.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>material_properties</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.MaterialProperty.html#ansys.dpf.composites.MaterialProperty" title="ansys.dpf.composites.enums.MaterialProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>]) – A list of the requested material properties</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int64</span></code>, <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.MaterialProperty.html#ansys.dpf.composites.MaterialProperty" title="ansys.dpf.composites.enums.MaterialProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>

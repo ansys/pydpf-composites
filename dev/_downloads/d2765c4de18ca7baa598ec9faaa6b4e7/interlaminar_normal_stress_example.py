@@ -99,16 +99,16 @@ with max_s3_field.as_local_field() as local_max_s3_field:
 
         local_max_s3_field.append([max(s3)], element_id)
 
-composite_model.get_mesh().plot(max_s3_field)
+composite_model.mesh.plot(max_s3_field)
 
 #%%
 # Plot s3 of a certain ply
 # ''''''''''''''''''''''''
 
-analysis_ply_name = get_all_analysis_ply_names(composite_model.get_mesh())
+analysis_ply_name = get_all_analysis_ply_names(composite_model.mesh)
 selected_ply = "P3L1__Ply.1"
 
-ply_info_provider = AnalysisPlyInfoProvider(composite_model.get_mesh(), selected_ply)
+ply_info_provider = AnalysisPlyInfoProvider(composite_model.mesh, selected_ply)
 p8l1_ply_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
     element_ids = ply_info_provider.ply_element_ids()
@@ -127,4 +127,4 @@ with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
 
         p8l1_ply_s3_field.append(s3, element_id)
 
-composite_model.get_mesh().plot(p8l1_ply_s3_field)
+composite_model.mesh.plot(p8l1_ply_s3_field)
