@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 import os
 import tempfile
-from typing import Any, Callable, Dict, Optional, cast
+from typing import Any, Callable, Dict, Optional, Union, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -209,15 +209,35 @@ _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
 
 
 def connect_to_or_start_server(
-    port: Optional[int] = None, ansys_path: Optional[str] = None
+    port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None
 ) -> ServerContext:
-    """Connect to or start a dpf server."""
+    r"""Connect to or start a dpf server.
+
+    Note: If port or ip are set, this function will try to
+    connect to a server and the ansys_path is ignored.
+    I no arguments are passed a local server from the latest available installer
+    is started.
+
+    Parameters
+    ----------
+    port:
+    ip:
+    ansys_path:
+        Ansys root path, for example C:\Program Files\ANSYS Inc\v231.
+        Ignored if either port or ip are set.
+    """
     port_in_env = os.environ.get("PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT")
     if port_in_env is not None:
         port = int(port_in_env)
 
+    connect_kwargs: Dict[str, Union[int, str]] = {}
     if port is not None:
-        server = dpf.server.connect_to_server("127.0.0.1", port=port)
+        connect_kwargs["port"] = port
+    if ip is not None:
+        connect_kwargs["ip"] = ip
+
+    if len(list(connect_kwargs.keys())) > 0:
+        server = dpf.server.connect_to_server(**connect_kwargs)
     else:
         server = dpf.server.start_local_server(ansys_path=ansys_path)
 
