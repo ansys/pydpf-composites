@@ -146,60 +146,59 @@ def _add_composite_definitons_from_setup_folder(
 def get_composite_files_from_result_folder(
     result_folder: _PATH, ensure_composite_definitions_found: bool = True
 ) -> ContinuousFiberCompositesFiles:
-    """Get a ContinuousFiberCompositesFiles object from a result_folder.
+    r"""Get a ContinuousFiberCompositesFiles object from a result_folder.
 
     This function assumes
     a typical workbench folder structure for a composite simulation.
-
     If this function is not able to build a ContinuousFiberCompositesFiles
     object the following steps can
-    be followed:
-
-    In main workbench window, activate the files panel by ticking
+    be followed: In main workbench window, activate the files panel by ticking
     "Files" in the "View" menu. This shows
     the file location of all the files used in the workbench project.
     Determine the different attributes of ContinuousFiberCompositesFiles:
 
-        rst: The *.rst file which belongs to the CellId of the Solution
+    -   rst: The \*.rst file which belongs to the CellId of the Solution
         you are interested to post-process.
 
-        engineering_data: The MatML.xml file in the same folder as the rst file.
+    -   engineering_data: The MatML.xml file in the same folder as the rst file.
 
-        composite:
-
-        There can be multiple composite definitions,
+    -   composite: There can be multiple composite definitions,
         one definition for each ACP System if shell data is transferred
         and one definition for each solid model if solid data is transferred.
         All the ACPCompositeDefinitions.h5 and ACPSolidModel*.h5
         files that are used in the solution have to be added.
         to the ContinuousFiberCompositesFiles.composite dictionary.
         The key can be chosen freely. Next to the ACPCompositeDefinitions.h5
-        and ACPSolidModel*.h5 files, corresponding ACPCompositeDefinitions.mapping and
+        and ACPSolidModel\*.h5 files, corresponding ACPCompositeDefinitions.mapping and
         ACPSolidModel*.mapping files can be found (optional).
         If they exist, they have to be added as well.
 
-        The following example shows how a
-        ContinuousFiberCompositesFiles object can be built:
-        The project has two ACP Pre systems, one that exports
-        shell information and one that exports solid information.
+    The following example shows how a
+    ContinuousFiberCompositesFiles object can be built:
+    The project has two ACP Pre systems, one that exports
+    shell information and one that exports solid information.
 
-        The files are located in the following locations.
+    The files are located in the following locations.
 
-        Result file:
-        project_root_folder/dp0/SYS/MECH/file.rst
+    Result file:
 
-        Engineering data file:
-        project_root_folder/dp0/SYS/MECH/MatML.xml
+    - project_root_folder/dp0/SYS/MECH/file.rst
 
-        Composite definitions and mapping for solid model:
-        project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5
-        project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping
+    Engineering data file:
 
-        Composite definitions and mapping for shell model:
-        project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5
-        project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping
+    - project_root_folder/dp0/SYS/MECH/MatML.xml
 
-        The corresponding ContinuousFiberCompositesFiles object would be created like this:
+    Composite definitions and mapping for solid model:
+
+    - project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5
+    - project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping
+
+    Composite definitions and mapping for shell model:
+
+    - project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5
+    - project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping
+
+    The corresponding ContinuousFiberCompositesFiles object would be created like this::
 
         ContinuousFiberCompositesFiles(
             rst="project_root_folder/dp0/SYS/MECH/file.rst",
