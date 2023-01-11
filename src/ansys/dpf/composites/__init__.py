@@ -11,7 +11,7 @@ from .add_layup_info_to_mesh import add_layup_info_to_mesh
 from .composite_data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
-    get_composite_files_from_result_folder,
+    get_composite_files_from_workbench_result_folder,
 )
 from .composite_model import CompositeModel
 from .enums import MaterialProperty, Spot
@@ -60,5 +60,5 @@ __all__ = [
     "get_constant_property_dict",
     "MaterialProperty",
     "ContinuousFiberCompositesFiles",
-    "get_composite_files_from_result_folder",
+    "get_composite_files_from_workbench_result_folder",
 ]

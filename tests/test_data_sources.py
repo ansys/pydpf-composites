@@ -1,12 +1,14 @@
 import pathlib
 
-from ansys.dpf.composites.composite_data_sources import get_composite_files_from_result_folder
+from ansys.dpf.composites.composite_data_sources import (
+    get_composite_files_from_workbench_result_folder,
+)
 
 
 def test_get_files_from_result_folder(dpf_server):
     WORKFLOW_EXAMPLE_ROOT = pathlib.Path(__file__).parent / "data" / "workflow_example"
 
-    files = get_composite_files_from_result_folder(WORKFLOW_EXAMPLE_ROOT)
+    files = get_composite_files_from_workbench_result_folder(WORKFLOW_EXAMPLE_ROOT)
 
     assert (
         files.composite["Setup 3_solid"].definition

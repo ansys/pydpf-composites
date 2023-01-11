@@ -7,7 +7,7 @@ import pytest
 from ansys.dpf.composites import MaterialProperty
 from ansys.dpf.composites.composite_data_sources import (
     CompositeDefinitionFiles,
-    get_composite_files_from_result_folder,
+    get_composite_files_from_workbench_result_folder,
 )
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.enums import LayerProperty
@@ -145,7 +145,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
 def test_assembly_model(dpf_server):
     timer = Timer()
 
-    files = get_composite_files_from_result_folder(
+    files = get_composite_files_from_workbench_result_folder(
         pathlib.Path(__file__).parent / "data" / "workflow_example"
     )
 
