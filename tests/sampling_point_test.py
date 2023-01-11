@@ -12,7 +12,7 @@ from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
 )
 from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
-from ansys.dpf.composites.result_definition import ResultDefinition
+from ansys.dpf.composites.result_definition import ResultDefinition, ResultDefinitionScope
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
 
 
@@ -31,13 +31,14 @@ def test_sampling_point(dpf_server):
     cfc.insert(MaxStrainCriterion())
     cfc.insert(MaxStressCriterion())
 
+    scope = ResultDefinitionScope(composite_definition=h5_server_path, element_scope=[3])
+
     rd = ResultDefinition(
         name="my first result definition",
         combined_failure_criterion=cfc,
-        composite_definitions=[h5_server_path],
-        rst_files=[rst_server_path],
-        material_files=[material_server_path],
-        element_scope=[3],
+        rst_file=rst_server_path,
+        material_file=material_server_path,
+        composite_scopes=[scope],
     )
 
     sampling_point = SamplingPoint(name="my first SP", result_definition=rd, server=dpf_server)

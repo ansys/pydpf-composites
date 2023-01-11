@@ -1,7 +1,8 @@
 """Object to represent the Result Definition used by Failure Operator in DPF Composites."""
 
+from dataclasses import dataclass, field
 import json
-from typing import Any, Dict, Sequence
+from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
@@ -9,6 +10,26 @@ from .failure_criteria.combined_failure_criterion import CombinedFailureCriterio
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
 _SUPPORTED_MEASURES = ["inverse_reserve_factor", "safety_factor", "safety_margin"]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
+
+
+@dataclass
+class ResultDefinitionScope:
+    """Result Definition Scope."""
+
+    composite_definition: _PATH
+    element_scope: Sequence[int] = field(default_factory=lambda: [])
+    ply_scope: Sequence[str] = field(default_factory=lambda: [])
+    """Assembly files which define the mapping of the labels
+    This input is needed if multiple parts are assembled in WB / Mechanical to map the
+    local element and node labels to the global ones.
+    """
+    mapping_file: Optional[_PATH] = None
+    """Write the data for all element labels in element_scope.
+    This makes sense if the user explicitly requests an element scope
+    but the actual scope where postprocessing has happened is smaller
+    (e.g. due to ply scoping).
+    """
+    write_data_for_full_element_scope: bool = True
 
 
 class ResultDefinition:
@@ -21,25 +42,14 @@ class ResultDefinition:
     _VERSION = 1
     _ACCUMULATOR = "max"
 
-    # todo: TBD: measures, composite_definitions, material_files are of type list
-    # where we just support one file.
-    # should this class work with lists or just single entries?
-
-    # todo: which object should upload the files to the server? Or is this a user task?
-    # for instance: rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=server)
-
     def __init__(
         self,
         name: str,
         combined_failure_criterion: CombinedFailureCriterion,
-        composite_definitions: Sequence[_PATH],
-        rst_files: Sequence[_PATH],
-        material_files: Sequence[_PATH],
-        assembly_mapping_files: Sequence[_PATH] = [],
-        measures: Sequence[str] = ["inverse_reserve_factor"],
-        write_data_for_full_element_scope: bool = True,
-        element_scope: Sequence[int] = [],
-        ply_scope: Sequence[str] = [],
+        composite_scopes: Sequence[ResultDefinitionScope],
+        rst_file: _PATH,
+        material_file: _PATH,
+        measure: str = "inverse_reserve_factor",
         stress_strain_eval_mode: str = "rst_file",
         time: float = 1.0,
         expression: str = "composite_failure",
@@ -49,14 +59,10 @@ class ResultDefinition:
         self._name = name
         self._expression = expression
         self._combined_failure_criterion = combined_failure_criterion
-        self._measures = measures
-        self._composite_definitions = composite_definitions
-        self._assembly_mapping_files = assembly_mapping_files
-        self._rst_files = rst_files
-        self._material_files = material_files
-        self._write_data_for_full_element_scope = write_data_for_full_element_scope
-        self._element_scope = element_scope
-        self._ply_scope = ply_scope
+        self._measure = measure
+        self._composite_scopes = composite_scopes
+        self._material_file = material_file
+        self._rst_file = rst_file
         self._stress_strain_eval_mode = stress_strain_eval_mode
         # todo: is 1 a good default? Shouldn't it be last?
         self._time = time
@@ -94,107 +100,50 @@ class ResultDefinition:
         self._combined_failure_criterion = cfc
 
     @property
-    def measures(self) -> Sequence[str]:
+    def measure(self) -> str:
         """Define the return type of the failure values.
 
         Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin".
         """
-        return self._measures
+        return self._measure
 
-    @measures.setter
-    def measures(self, value: Sequence[str]) -> None:
-        for v in value:
-            if v not in _SUPPORTED_MEASURES:
-                values = ", ".join([v for v in _SUPPORTED_MEASURES])
-                raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
+    @measure.setter
+    def measure(self, value: str) -> None:
+        if value not in _SUPPORTED_MEASURES:
+            values = ", ".join([v for v in _SUPPORTED_MEASURES])
+            raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
         else:
-            self._measures = value
+            self._measure = value
 
     @property
-    def composite_definitions(self) -> Sequence[_PATH]:
-        """File path of the composite definitions file of ACP.
+    def scopes(self) -> Sequence[ResultDefinitionScope]:
+        """Get the different scopes of the result definition."""
+        return self._composite_scopes
 
-        This file includes the section data such as ply material, angle and thickness.
-        """
-        return self._composite_definitions
-
-    @composite_definitions.setter
-    def composite_definitions(self, value: Sequence[_PATH]) -> None:
-        if len(value) > 1:
-            raise ValueError("Currently only 1 composite definition is supported!")
-        self._composite_definitions = value
+    @scopes.setter
+    def scopes(self, value: Sequence[ResultDefinitionScope]) -> None:
+        self._composite_scopes = value
 
     @property
-    def assembly_mapping_files(self) -> Sequence[_PATH]:
-        """Assembly files which define the mapping of the labels (optional).
-
-        This input is needed if multiple parts are assembled in WB / Mechanical to map the
-        local element and node labels to the global ones.
-        """
-        return self._assembly_mapping_files
-
-    @assembly_mapping_files.setter
-    def assembly_mapping_files(self, value: Sequence[_PATH]) -> None:
-        self._assembly_mapping_files = value
-
-    @property
-    def rst_files(self) -> Sequence[_PATH]:
+    def rst_file(self) -> _PATH:
         """Path of the result files (.rst)."""
-        return self._rst_files
+        return self._rst_file
 
-    @rst_files.setter
-    def rst_files(self, value: Sequence[_PATH]) -> None:
-        self._rst_files = value
+    @rst_file.setter
+    def rst_file(self, value: _PATH) -> None:
+        self._rst_file = value
 
     @property
-    def material_files(self) -> Sequence[_PATH]:
+    def material_file(self) -> _PATH:
         """Path of material files which store the material properties.
 
         Supported formats are XML and ENGD.
         """
-        return self._material_files
+        return self._material_file
 
-    @material_files.setter
-    def material_files(self, value: Sequence[_PATH]) -> None:
-        self._material_files = value
-
-    @property
-    def write_data_for_full_element_scope(self) -> bool:
-        """Write the data for all element labels in element_scoping.
-
-        This makes sense if the user explicitly requests an element scope
-        but the actual scope where postprocessing has happened is smaller
-        (e.g. due to ply scoping).
-        """
-        return self._write_data_for_full_element_scope
-
-    @write_data_for_full_element_scope.setter
-    def write_data_for_full_element_scope(self, value: bool) -> None:
-        self._write_data_for_full_element_scope = value
-
-    @property
-    def element_scope(self) -> Sequence[int]:
-        """Define the scope through a list of element labels.
-
-        All elements are selected if element_scope is an empty list.
-        """
-        return self._element_scope
-
-    @element_scope.setter
-    def element_scope(self, value: Sequence[int]) -> None:
-        self._element_scope = value
-
-    @property
-    def ply_scope(self) -> Sequence[str]:
-        """List of plies for ply-wise post-processing (optional).
-
-        Is used in combination with element_scope.
-        """
-        return self._ply_scope
-
-    @ply_scope.setter
-    def ply_scope(self, value: Sequence[str]) -> None:
-        self._ply_scope = value
+    @material_file.setter
+    def material_file(self, value: _PATH) -> None:
+        self._material_file = value
 
     @property
     def stress_strain_eval_mode(self) -> str:
@@ -248,25 +197,35 @@ class ResultDefinition:
             "accumulator": "max",
             "expression": f"{self.expression}",
             "failure_criteria_definition": {cfc.JSON_DICT_KEY: cfc.to_dict()},
-            "measures": self.measures,
+            "measures": [self.measure],
             "stress_strain_eval_mode": f"{self.stress_strain_eval_mode}",
             "time": self.time,
             "max_chunk_size": self.max_chunk_size,
         }
 
+        def get_scope(
+            result_definition_scope: ResultDefinitionScope, rst_file: _PATH, material_file: _PATH
+        ) -> Dict[str, Any]:
+            write_for_full_scope = result_definition_scope.write_data_for_full_element_scope
+            mapping_entry = []
+            if result_definition_scope.mapping_file is not None:
+                mapping_entry.append(result_definition_scope.mapping_file)
+            return {
+                "datasources": {
+                    "composite_definition": [result_definition_scope.composite_definition],
+                    "assembly_mapping_file": mapping_entry,
+                    "rst_file": [rst_file],
+                    "material_file": [material_file],
+                },
+                "write_data_for_full_element_scope": write_for_full_scope,
+                "elements": result_definition_scope.element_scope,
+                "ply_ids": result_definition_scope.ply_scope,
+            }
+
         scopes = {
             "scopes": [
-                {
-                    "datasources": {
-                        "composite_definition": self.composite_definitions,
-                        "assembly_mapping_file": self.assembly_mapping_files,
-                        "rst_file": self.rst_files,
-                        "material_file": self.material_files,
-                    },
-                    "write_data_for_full_element_scope": self.write_data_for_full_element_scope,
-                    "elements": self.element_scope,
-                    "ply_ids": self.ply_scope,
-                }
+                get_scope(scope, self.rst_file, self.material_file)
+                for scope in self._composite_scopes
             ]
         }
 

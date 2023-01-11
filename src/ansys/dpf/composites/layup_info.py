@@ -8,8 +8,8 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
 from numpy.typing import NDArray
 
-from ansys.dpf.composites.enums import LayupProperty
-from ansys.dpf.composites.indexer import (
+from .enums import LayupProperty
+from .indexer import (
     _FieldIndexerNoDataPointer,
     _FieldIndexerWithDataPointer,
     _PropertyFieldIndexerArrayValue,

@@ -6,11 +6,15 @@ import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
 from ansys.dpf.composites.add_layup_info_to_mesh import add_layup_info_to_mesh
-from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
+from ansys.dpf.composites.composite_data_sources import (
+    CompositeDefinitionFiles,
+    get_composites_data_sources,
+)
 from ansys.dpf.composites.example_helper.example_helper import (
     ContinuousFiberCompositesFiles,
-    upload_composite_files_to_server,
+    upload_continuous_fiber_composite_files_to_server,
 )
+from ansys.dpf.composites.material_setup import get_material_operators
 
 
 class Timer:
@@ -63,7 +67,7 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
     timer = Timer()
 
     if upload:
-        files = upload_composite_files_to_server(data_files=files, server=server)
+        files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=server)
 
     data_sources = get_composites_data_sources(files)
 
@@ -82,15 +86,18 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
     mesh = mesh_provider.outputs.mesh()
     timer.add("mesh")
 
-    layup_operators = add_layup_info_to_mesh(data_sources=data_sources, mesh=mesh)
+    material_operators = get_material_operators(data_sources.rst, data_sources.engineering_data)
+    layup_provider = add_layup_info_to_mesh(
+        data_sources=data_sources, mesh=mesh, material_operators=material_operators
+    )
 
     return SetupResult(
         field=fields_container[0],
         mesh=mesh,
         rst_data_source=data_sources.rst,
-        material_provider=layup_operators.material_operators.material_provider,
+        material_provider=material_operators.material_provider,
         streams_provider=streams_provider,
-        layup_provider=layup_operators.layup_provider,
+        layup_provider=layup_provider,
     )
 
 
@@ -101,5 +108,7 @@ def get_basic_shell_files():
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
-        rst=rst_path, composite_definitions=h5_path, engineering_data=material_path
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
     )

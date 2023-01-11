@@ -21,6 +21,15 @@ SamplingPointFigure = namedtuple("SamplingPointFigure", ("figure", "axes"))
 FailureResult = namedtuple("FailureResult", "mode irf rf mos")
 
 
+def _check_result_definition_has_single_scope(result_definition: ResultDefinition) -> None:
+    if len(result_definition.scopes) != 1:
+        raise RuntimeError(
+            "Error when creating a sampling point: "
+            "Result definition needs to have exactly one"
+            "scope."
+        )
+
+
 class SamplingPoint:
     """Implements the Sampling Point object which wraps the DPF sampling point operator.
 
@@ -88,6 +97,7 @@ class SamplingPoint:
         self.name = name
         self._result_definition = result_definition
 
+        _check_result_definition_has_single_scope(result_definition)
         # specifies the server. Creates a new one if needed
         used_server = get_or_create_server(server)
         if not used_server:
@@ -114,7 +124,9 @@ class SamplingPoint:
 
     @result_definition.setter
     def result_definition(self, value: ResultDefinition) -> None:
+        _check_result_definition_has_single_scope(value)
         self._isuptodate = False
+
         self._result_definition = value
 
     @property
@@ -123,7 +135,7 @@ class SamplingPoint:
 
         Returns -1 if the element id is not set.
         """
-        element_scope = self._result_definition.element_scope
+        element_scope = self._result_definition.scopes[0].element_scope
         if len(element_scope) > 1:
             raise RuntimeError("The scope of a Sampling Point can only be one element.")
         if len(element_scope) == 0:
@@ -132,7 +144,7 @@ class SamplingPoint:
 
     @element_id.setter
     def element_id(self, value: int) -> None:
-        self._result_definition.element_scope = [value]
+        self._result_definition.scopes[0].element_scope = [value]
         self._isuptodate = False
 
     @property

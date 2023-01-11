@@ -1,16 +1,20 @@
 """Helper to get example files."""
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 import os
 import tempfile
-from typing import Dict, TypeVar, Union, cast
+from typing import Dict, Optional, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.load_plugin import load_composites_plugin
-
-from ..composite_data_sources import ContinuousFiberCompositesFiles, ShortFiberCompositesFiles
+from .._typing_helper import PATH as _PATH
+from ..composite_data_sources import (
+    CompositeDefinitionFiles,
+    ContinuousFiberCompositesFiles,
+    ShortFiberCompositesFiles,
+)
+from ..load_plugin import load_composites_plugin
 
 EXAMPLE_REPO = "https://github.com/pyansys/example-data/raw/master/pydpf-composites/"
 
@@ -22,33 +26,69 @@ class ServerContext:
     server: dpf.server
 
 
-FilesType = TypeVar("FilesType", ShortFiberCompositesFiles, ContinuousFiberCompositesFiles)
-
-
-def upload_composite_files_to_server(data_files: FilesType, server: dpf.server) -> FilesType:
-    """Upload composites files to server.
+def upload_short_fiber_composite_files_to_server(
+    data_files: ShortFiberCompositesFiles, server: dpf.server
+) -> ShortFiberCompositesFiles:
+    """Upload short fiber composites files to server.
 
     Parameters
     ----------
     data_files
     server
     """
-    filedict = {}
 
-    for key, filename in asdict(data_files).items():
-        server_file = dpf.upload_file_in_tmp_folder(filename, server=server)
-        filedict[key] = server_file
+    def upload(filename: _PATH) -> str:
+        return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
 
-    if isinstance(data_files, ShortFiberCompositesFiles):
-        return ShortFiberCompositesFiles(**filedict)  # type:ignore
-    else:
-        return ContinuousFiberCompositesFiles(**filedict)
+    return ShortFiberCompositesFiles(
+        rst=upload(data_files.engineering_data),
+        dsdat=upload(data_files.dsdat),
+        engineering_data=upload(data_files.engineering_data),
+    )
+
+
+def upload_continuous_fiber_composite_files_to_server(
+    data_files: ContinuousFiberCompositesFiles, server: dpf.server
+) -> ContinuousFiberCompositesFiles:
+    """Upload short fiber composites files to server.
+
+    Parameters
+    ----------
+    data_files
+    server
+    """
+
+    def upload(filename: _PATH) -> str:
+        return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
+
+    all_composite_files = {}
+    for key, composite_files_by_scope in data_files.composite.items():
+        composite_definition_files = CompositeDefinitionFiles(
+            definition=upload(composite_files_by_scope.definition),
+        )
+
+        if composite_files_by_scope.mapping is not None:
+            composite_definition_files.mapping = upload(composite_files_by_scope.mapping)
+
+        all_composite_files[key] = composite_definition_files
+
+    return ContinuousFiberCompositesFiles(
+        rst=upload(data_files.rst),
+        engineering_data=upload(data_files.engineering_data),
+        composite=all_composite_files,
+    )
+
+
+@dataclass
+class _ContinuousFiberCompositeFiles:
+    definition: str
+    mapping: Optional[str] = None
 
 
 @dataclass
 class _ContinuousFiberCompositesExampleFilenames:
     rst: str
-    composite_definitions: str
+    composite: Dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
 
 
@@ -97,7 +137,11 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="shell.rst",
             engineering_data="material.engd",
-            composite_definitions="ACPCompositeDefinitions.h5",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(
+                    definition="ACPCompositeDefinitions.h5",
+                )
+            },
         ),
     ),
     "ins": _ContinuousFiberExampleLocation(
@@ -105,7 +149,25 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=_ContinuousFiberCompositesExampleFilenames(
             rst="beam_181_analysis_model.rst",
             engineering_data="materials.xml",
-            composite_definitions="ACPCompositeDefinitions.h5",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5")
+            },
+        ),
+    ),
+    "assembly": _ContinuousFiberExampleLocation(
+        directory="assembly",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst="file.rst",
+            engineering_data="material.engd",
+            composite={
+                "solid": _ContinuousFiberCompositeFiles(
+                    definition="ACPSolidModel_SM.h5", mapping="ACPSolidModel_SM.mapping"
+                ),
+                "shell": _ContinuousFiberCompositeFiles(
+                    definition="ACPCompositeDefinitions.h5",
+                    mapping="ACPCompositeDefinitions.mapping",
+                ),
+            },
         ),
     ),
 }
@@ -134,44 +196,64 @@ def _get_file_url(directory: str, filename: str) -> str:
     return EXAMPLE_REPO + "/".join([directory, filename])
 
 
-def get_continuous_fiber_example_files(
-    server_context: ServerContext, example_key: str
-) -> ContinuousFiberCompositesFiles:
-    """Get continuous fiber example file by example key."""
-    example_files = _continuous_fiber_examples[example_key]
-    return cast(ContinuousFiberCompositesFiles, _get_example_files(example_files, server_context))
+def _download_and_upload_file(
+    directory: str, filename: str, tmpdir: str, server: dpf.server
+) -> str:
+    """Download example file from example_data repo and and upload it the the dpf server."""
+    file_url = _get_file_url(directory, filename)
+    local_path = os.path.join(tmpdir, filename)
+    urllib.request.urlretrieve(file_url, local_path)
+    # todo: With 0.7.1 the server will have
+    #  a boolean property 'local_server' that we can use to
+    #  determine if files should be uploaded
+    return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
 
 
 def get_short_fiber_example_files(
-    server_context: ServerContext, example_key: str
+    server_context: ServerContext,
+    example_key: str,
 ) -> ShortFiberCompositesFiles:
     """Get short fiber example file by example key."""
     example_files = _short_fiber_examples[example_key]
-    return cast(ShortFiberCompositesFiles, _get_example_files(example_files, server_context))
-
-
-def _get_example_files(
-    example_files: Union[_ShortFiberExampleLocation, _ContinuousFiberExampleLocation],
-    server_context: ServerContext,
-) -> Union[ShortFiberCompositesFiles, ContinuousFiberCompositesFiles]:
-    composite_files_on_server: Union[ShortFiberCompositesFiles, ContinuousFiberCompositesFiles]
-
-    files_dict = {}
     with tempfile.TemporaryDirectory() as tmpdir:
-        for key, filename in asdict(example_files.files).items():
-            if filename is not None:
-                file_url = _get_file_url(example_files.directory, filename)
-                local_path = os.path.join(tmpdir, filename)
-                urllib.request.urlretrieve(file_url, local_path)
-                # todo: With 0.7.1 the server will have
-                #  a boolean property 'local_server' that we can use to
-                #  determine if files should be uploaded
-                server_path = dpf.upload_file_in_tmp_folder(
-                    local_path, server=server_context.server
-                )
-                files_dict[key] = server_path
 
-    if isinstance(example_files, _ShortFiberExampleLocation):
-        return ShortFiberCompositesFiles(**files_dict)
-    else:
-        return ContinuousFiberCompositesFiles(**files_dict)
+        def upload(filename: str) -> str:
+            return _download_and_upload_file(
+                example_files.directory, filename, tmpdir, server_context.server
+            )
+
+        return ShortFiberCompositesFiles(
+            rst=upload(example_files.files.rst),
+            dsdat=upload(example_files.files.dsdat),
+            engineering_data=upload(example_files.files.engineering_data),
+        )
+
+
+def get_continuous_fiber_example_files(
+    server_context: ServerContext,
+    example_key: str,
+) -> ContinuousFiberCompositesFiles:
+    """Get continuous fiber example file by example key."""
+    example_files = _continuous_fiber_examples[example_key]
+    with tempfile.TemporaryDirectory() as tmpdir:
+
+        def upload(filename: str) -> str:
+            return _download_and_upload_file(
+                example_files.directory, filename, tmpdir, server_context.server
+            )
+
+        all_composite_files = {}
+        for key, composite_examples_files_for_scope in example_files.files.composite.items():
+            composite_files = CompositeDefinitionFiles(
+                definition=upload(composite_examples_files_for_scope.definition),
+            )
+            if composite_examples_files_for_scope.mapping is not None:
+                composite_files.mapping = upload(composite_examples_files_for_scope.mapping)
+
+            all_composite_files[key] = composite_files
+
+        return ContinuousFiberCompositesFiles(
+            rst=upload(example_files.files.rst),
+            engineering_data=upload(example_files.files.engineering_data),
+            composite=all_composite_files,
+        )

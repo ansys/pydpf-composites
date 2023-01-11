@@ -3,24 +3,32 @@ import pytest
 
 from ansys.dpf.composites.add_layup_info_to_mesh import add_layup_info_to_mesh
 from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
-from ansys.dpf.composites.example_helper.example_helper import upload_composite_files_to_server
+from ansys.dpf.composites.example_helper.example_helper import (
+    upload_continuous_fiber_composite_files_to_server,
+)
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider
+from ansys.dpf.composites.material_setup import get_material_operators
 
 from .helper import get_basic_shell_files
 
 
 def test_layup_properties(dpf_server):
     files = get_basic_shell_files()
-    server_files = upload_composite_files_to_server(files, dpf_server)
+    server_files = upload_continuous_fiber_composite_files_to_server(files, dpf_server)
 
     composite_data_sources = get_composites_data_sources(server_files)
     mesh_provider = Operator("MeshProvider")
     mesh_provider.inputs.data_sources(composite_data_sources.rst)
     mesh = mesh_provider.outputs.mesh()
 
-    layup_operators = add_layup_info_to_mesh(composite_data_sources, mesh=mesh)
+    material_operators = get_material_operators(
+        composite_data_sources.rst, composite_data_sources.engineering_data
+    )
+    layup_provider = add_layup_info_to_mesh(
+        composite_data_sources, mesh=mesh, material_operators=material_operators
+    )
 
-    properties_provider = LayupPropertiesProvider(layup_operators.layup_provider, mesh=mesh)
+    properties_provider = LayupPropertiesProvider(layup_provider, mesh=mesh)
 
     angles_by_element = [
         properties_provider.get_layer_angles(element_id) for element_id in mesh.elements.scoping.ids
