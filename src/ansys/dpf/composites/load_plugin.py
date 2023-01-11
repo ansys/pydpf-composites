@@ -19,7 +19,17 @@ def load_composites_plugin(server: dpf.server, ansys_path: Optional[str] = None)
         Ans.Dpf.EngineeringData plugins are loaded from their location
         in the installer.
     """
+    # The native plugins need to be loaded because currently,
+    # they are not automatically loaded
+    # in the docker container.
+    # Once we use the dpf core container, that probably already
+    # loads these plugins by default,
+    # we only need to load composite_operators
+    # and Ans.Dpf.EngineeringData.
     libs = [
+        "Ans.Dpf.Native",
+        "mapdlOperatorsCore",
+        "Ans.Dpf.FEMutils",
         "composite_operators",
         "Ans.Dpf.EngineeringData",
     ]
