@@ -27,6 +27,28 @@ def get_data_files():
     return get_dummy_data_files()
 
 
+def get_assembly_data_files():
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "assembly"
+
+    rst_path = TEST_DATA_ROOT_DIR / "file.rst"
+    h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
+    solid_definitions = TEST_DATA_ROOT_DIR / "ACPSolidModel_SM.h5"
+    mapping_shell_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.mapping"
+    mapping_solid_path = TEST_DATA_ROOT_DIR / "ACPSolidModel_SM.mapping"
+
+    material_path = TEST_DATA_ROOT_DIR / "material.engd"
+    return ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={
+            "shell": CompositeDefinitionFiles(definition=h5_path, mapping=mapping_shell_path),
+            "solid": CompositeDefinitionFiles(
+                definition=solid_definitions, mapping=mapping_solid_path
+            ),
+        },
+        engineering_data=material_path,
+    )
+
+
 def get_dummy_data_files():
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
