@@ -14,6 +14,10 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
+from ansys.dpf.composites.example_helper.example_helper import (
+    _try_until_timeout,
+    _wait_until_server_is_up,
+)
 from ansys.dpf.composites.load_plugin import load_composites_plugin
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
@@ -222,32 +226,6 @@ def _find_free_port() -> int:
         return sock.getsockname()[1]  # type: ignore
 
 
-def try_until_timeout(fun, timeout=10):
-    """
-    Try to run a function until a timeout is reached.
-    Before the timeout is reached,
-    all exceptions are ignored and a retry happens.
-    """
-    import time
-
-    tstart = time.time()
-    while (time.time() - tstart) < timeout:
-        time.sleep(0.001)
-        try:
-            return fun()
-        except Exception as e:
-            pass
-    return fun()
-
-
-def wait_until_server_is_up(server):
-    # Small hack to check if the server is up
-    # The dpf server should check this in connect_to_server but that's currently not the case
-    # https://github.com/pyansys/pydpf-core/issues/414
-    # We use the fact that server.version throws if the server is not yet connected
-    try_until_timeout(lambda: server.version)
-
-
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
 
@@ -295,9 +273,9 @@ def dpf_server(request: pytest.FixtureRequest):
         def start_server():
             return dpf.server.connect_to_server(port=server_process.port)
 
-        server = try_until_timeout(start_server)
+        server = _try_until_timeout(start_server)
 
-        wait_until_server_is_up(server)
+        _wait_until_server_is_up(server)
         load_composites_plugin(server)
 
         yield server
