@@ -15,7 +15,6 @@ H5_SUFFIX = ".h5"
 MATML_FILENAME = "MatML.xml"
 RST_SUFFIX = ".rst"
 MAPPING_SUFFIX = ".mapping"
-MAPPING_COPY_SUFFIX = ".copy.mapping"
 
 
 @dataclass
@@ -56,13 +55,8 @@ class CompositeDataSources:
 def _get_mapping_path_file_from_definitions_path_if_exists(
     definition_path: pathlib.Path,
 ) -> Optional[pathlib.Path]:
-    # The mapping file has either a MAPPING_SUFFIX, MAPPING_COPY_SUFFIX
-    # If we find one of the two we return the filename
-    for suffix in [MAPPING_SUFFIX, MAPPING_COPY_SUFFIX]:
-        mapping_path = definition_path.parent / (definition_path.stem + suffix)
-        if mapping_path.is_file():
-            return mapping_path
-    return None
+    mapping_path = definition_path.parent / (definition_path.stem + MAPPING_SUFFIX)
+    return mapping_path if mapping_path.is_file() else None
 
 
 def _is_rst_file(path: pathlib.Path) -> bool:
