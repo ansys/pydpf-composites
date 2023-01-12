@@ -385,19 +385,19 @@ you to modify the source and enhance it.</p>
 <ol class="arabic">
 <li><p>Clone the repository:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/pyansys/pydpf-composites
-<span class="nb">cd</span> pydpf-composites
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pyansys/pydpf-composites
+<span class="nb">cd</span><span class="w"> </span>pydpf-composites
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Install dependencies:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install pipx
-pipx ensurepath
-pipx install poetry
-pipx install pip
-pipx install tox
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pipx
+pipx<span class="w"> </span>ensurepath
+pipx<span class="w"> </span>install<span class="w"> </span>poetry
+pipx<span class="w"> </span>install<span class="w"> </span>pip
+pipx<span class="w"> </span>install<span class="w"> </span>tox
 </pre></div>
 </div>
 </div></blockquote>
@@ -407,14 +407,14 @@ pipx install tox
 <section id="build-environment">
 <h3>Build environment<a class="headerlink" href="#build-environment" title="Permalink to this heading">#</a></h3>
 <p># Build package and install into the local env</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry install -E build
-poetry build
-python -m pip install dist<span class="se">\a</span>nsys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install<span class="w"> </span>-E<span class="w"> </span>build
+poetry<span class="w"> </span>build
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>dist<span class="se">\a</span>nsys_dpf_composites-0.1.dev0-py3-none-any.whl<span class="w"> </span>--force-reinstall
 </pre></div>
 </div>
 <p>Use tox to create a virtual env for the development. Activate this env to run tests and scripts
 (<em>&lt;root&gt;\.tox\dev\Scripts\activate</em>).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox -e dev
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>dev
 </pre></div>
 </div>
 <section id="testing">
@@ -422,15 +422,15 @@ python -m pip install dist<span class="se">\a</span>nsys_dpf_composites-0.1.dev0
 <ol class="arabic">
 <li><p>Run tests with a docker container:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
-pytest .
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+pytest<span class="w"> </span>.
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Run tests with a local Grpc server executable:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--server-bin<span class="w"> </span>dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
 </pre></div>
 </div>
 </div></blockquote>
@@ -444,18 +444,18 @@ pytest .
 <ol class="arabic">
 <li><p>Windows:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
-docker run -d -p <span class="m">21002</span>:50052  ghcr.io/pyansys/pydpf-composites:latest
-tox -e doc-windows
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:latest
+tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Linux:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/pyansys/pydpf-composites:latest
-docker run -d -p <span class="m">21002</span>:50052  ghcr.io/pyansys/pydpf-composites:latest
-tox -e doc-linux
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:latest
+tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 </pre></div>
 </div>
 </div></blockquote>
@@ -464,7 +464,7 @@ tox -e doc-linux
 </section>
 <section id="run-style-checks">
 <h3>Run style checks<a class="headerlink" href="#run-style-checks" title="Permalink to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox -e style
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>style
 </pre></div>
 </div>
 </section>
