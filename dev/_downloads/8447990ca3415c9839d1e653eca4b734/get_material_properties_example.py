@@ -75,4 +75,4 @@ with result_field.as_local_field() as local_result_field:
         local_result_field.append([element_max], element_id)
 
 
-composite_model.mesh.plot(result_field)
+composite_model.get_mesh().plot(result_field)

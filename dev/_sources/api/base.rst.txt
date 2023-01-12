@@ -10,6 +10,6 @@ Objects and Helpers
     SamplingPoint
     Spot
     CompositeDataSources
-    LayupOperators
     MaterialOperators
     ContinuousFiberCompositesFiles
+    get_composite_files_from_workbench_result_folder

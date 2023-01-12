@@ -324,23 +324,8 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.assembly_mapping_files.html">
-       assembly_mapping_files
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.combined_failure_criterion.html">
        combined_failure_criterion
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.composite_definitions.html">
-       composite_definitions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.element_scope.html">
-       element_scope
       </a>
      </li>
      <li class="toctree-l3">
@@ -349,8 +334,8 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.material_files.html">
-       material_files
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.material_file.html">
+       material_file
       </a>
      </li>
      <li class="toctree-l3">
@@ -359,8 +344,8 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.measures.html">
-       measures
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.measure.html">
+       measure
       </a>
      </li>
      <li class="toctree-l3">
@@ -369,13 +354,13 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.ply_scope.html">
-       ply_scope
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.rst_file.html">
+       rst_file
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.rst_files.html">
-       rst_files
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.scopes.html">
+       scopes
       </a>
      </li>
      <li class="toctree-l3">
@@ -386,11 +371,6 @@ function checkPageExistsAndRedirect(event) {
      <li class="toctree-l3">
       <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.time.html">
        time
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.write_data_for_full_element_scope.html">
-       write_data_for_full_element_scope
       </a>
      </li>
     </ul>
@@ -411,11 +391,6 @@ function checkPageExistsAndRedirect(event) {
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.LayupOperators.html">
-     ansys.dpf.composites.LayupOperators
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html">
      ansys.dpf.composites.MaterialOperators
     </a>
@@ -423,6 +398,11 @@ function checkPageExistsAndRedirect(event) {
    <li class="toctree-l2">
     <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.html">
      ansys.dpf.composites.ContinuousFiberCompositesFiles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html">
+     get_composite_files_from_workbench_result_folder
     </a>
    </li>
   </ul>
@@ -510,7 +490,7 @@ function checkPageExistsAndRedirect(event) {
 <h1>ansys.dpf.composites.ResultDefinition<a class="headerlink" href="#ansys-dpf-composites-resultdefinition" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.ResultDefinition">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">ResultDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined_failure_criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definitions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rst_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_mapping_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['inverse_reserve_factor']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_data_for_full_element_scope</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_scope</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ply_scope</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stress_strain_eval_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rst_file'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'composite_failure'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.ResultDefinition" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">ResultDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined_failure_criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_scopes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rst_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inverse_reserve_factor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stress_strain_eval_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rst_file'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'composite_failure'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.ResultDefinition" title="Permalink to this definition">#</a></dt>
 <dd><p>Represents the result definition of DPF Composites.</p>
 <p>It is used to configure the DPF operators composite::failure_evaluator
 and composite::sampling_point_evaluator.</p>
@@ -528,47 +508,35 @@ and composite::sampling_point_evaluator.</p>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.assembly_mapping_files.html#ansys.dpf.composites.ResultDefinition.assembly_mapping_files" title="ansys.dpf.composites.ResultDefinition.assembly_mapping_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.assembly_mapping_files</span></code></a></p></td>
-<td><p>Assembly files which define the mapping of the labels (optional).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.combined_failure_criterion.html#ansys.dpf.composites.ResultDefinition.combined_failure_criterion" title="ansys.dpf.composites.ResultDefinition.combined_failure_criterion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.combined_failure_criterion</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.combined_failure_criterion.html#ansys.dpf.composites.ResultDefinition.combined_failure_criterion" title="ansys.dpf.composites.ResultDefinition.combined_failure_criterion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.combined_failure_criterion</span></code></a></p></td>
 <td><p>Configure of the failure criteria such as Max Stress, Puck and Wrinkling.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.composite_definitions.html#ansys.dpf.composites.ResultDefinition.composite_definitions" title="ansys.dpf.composites.ResultDefinition.composite_definitions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.composite_definitions</span></code></a></p></td>
-<td><p>File path of the composite definitions file of ACP.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.element_scope.html#ansys.dpf.composites.ResultDefinition.element_scope" title="ansys.dpf.composites.ResultDefinition.element_scope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.element_scope</span></code></a></p></td>
-<td><p>Define the scope through a list of element labels.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.expression.html#ansys.dpf.composites.ResultDefinition.expression" title="ansys.dpf.composites.ResultDefinition.expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.expression</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.expression.html#ansys.dpf.composites.ResultDefinition.expression" title="ansys.dpf.composites.ResultDefinition.expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.expression</span></code></a></p></td>
 <td><p>Define the type of the result.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.material_files.html#ansys.dpf.composites.ResultDefinition.material_files" title="ansys.dpf.composites.ResultDefinition.material_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.material_files</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.material_file.html#ansys.dpf.composites.ResultDefinition.material_file" title="ansys.dpf.composites.ResultDefinition.material_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.material_file</span></code></a></p></td>
 <td><p>Path of material files which store the material properties.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.max_chunk_size.html#ansys.dpf.composites.ResultDefinition.max_chunk_size" title="ansys.dpf.composites.ResultDefinition.max_chunk_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.max_chunk_size</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.max_chunk_size.html#ansys.dpf.composites.ResultDefinition.max_chunk_size" title="ansys.dpf.composites.ResultDefinition.max_chunk_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.max_chunk_size</span></code></a></p></td>
 <td><p>Define the chunk size (number of elements) for the result evaluation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.measures.html#ansys.dpf.composites.ResultDefinition.measures" title="ansys.dpf.composites.ResultDefinition.measures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.measures</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.measure.html#ansys.dpf.composites.ResultDefinition.measure" title="ansys.dpf.composites.ResultDefinition.measure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.measure</span></code></a></p></td>
 <td><p>Define the return type of the failure values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.name.html#ansys.dpf.composites.ResultDefinition.name" title="ansys.dpf.composites.ResultDefinition.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.name</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.name.html#ansys.dpf.composites.ResultDefinition.name" title="ansys.dpf.composites.ResultDefinition.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.name</span></code></a></p></td>
 <td><p>Define a custom name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.ply_scope.html#ansys.dpf.composites.ResultDefinition.ply_scope" title="ansys.dpf.composites.ResultDefinition.ply_scope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.ply_scope</span></code></a></p></td>
-<td><p>List of plies for ply-wise post-processing (optional).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.rst_files.html#ansys.dpf.composites.ResultDefinition.rst_files" title="ansys.dpf.composites.ResultDefinition.rst_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.rst_files</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.rst_file.html#ansys.dpf.composites.ResultDefinition.rst_file" title="ansys.dpf.composites.ResultDefinition.rst_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.rst_file</span></code></a></p></td>
 <td><p>Path of the result files (.rst).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode.html#ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode" title="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.stress_strain_eval_mode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.scopes.html#ansys.dpf.composites.ResultDefinition.scopes" title="ansys.dpf.composites.ResultDefinition.scopes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.scopes</span></code></a></p></td>
+<td><p>Get the different scopes of the result definition.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode.html#ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode" title="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.stress_strain_eval_mode</span></code></a></p></td>
 <td><p>Results are loaded from a result file by default (&quot;rst_file&quot;).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.time.html#ansys.dpf.composites.ResultDefinition.time" title="ansys.dpf.composites.ResultDefinition.time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.time</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.time.html#ansys.dpf.composites.ResultDefinition.time" title="ansys.dpf.composites.ResultDefinition.time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.time</span></code></a></p></td>
 <td><p>Select time / solution step.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.ResultDefinition.write_data_for_full_element_scope.html#ansys.dpf.composites.ResultDefinition.write_data_for_full_element_scope" title="ansys.dpf.composites.ResultDefinition.write_data_for_full_element_scope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.write_data_for_full_element_scope</span></code></a></p></td>
-<td><p>Write the data for all element labels in element_scoping.</p></td>
 </tr>
 </tbody>
 </table>
