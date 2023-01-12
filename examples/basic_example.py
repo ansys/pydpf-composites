@@ -18,10 +18,8 @@ helper functions can be used to obtain composite result data.
 # Load ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.example_helper.example_helper import (
-    connect_to_or_start_server,
-    get_continuous_fiber_example_files,
-)
+from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
+from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,

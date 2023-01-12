@@ -14,16 +14,9 @@ from ..composite_data_sources import (
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
-from ..load_plugin import load_composites_plugin
+from ..connect_to_or_start_server import ServerContext
 
 EXAMPLE_REPO = "https://github.com/pyansys/example-data/raw/master/pydpf-composites/"
-
-
-@dataclass(frozen=True)
-class ServerContext:
-    """Server context todo: Add context information."""
-
-    server: dpf.server
 
 
 def upload_short_fiber_composite_files_to_server(
@@ -117,13 +110,13 @@ class _ContinuousFiberExampleLocation:
 
 @dataclass
 class _ShortFiberExampleLocation:
-    """Location of the a given short fiber example in the example_data repo.
+    """Location of a given short fiber example in the example_data repo.
 
     Parameters
     ----------
-    directory
+    directory:
         Directory in example_data/pydpf-composites
-    files
+    files:
         Example files in directory
     """
 
@@ -182,16 +175,6 @@ _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
 }
 
 
-def connect_to_or_start_server() -> ServerContext:
-    """Connect to or start a dpf server."""
-    # Todo: add different modes to start or get the server
-    # Currently just connects to a hardcoded port
-
-    server = dpf.server.connect_to_server("127.0.0.1", port=21002)
-    load_composites_plugin(server)
-    return ServerContext(server=server)
-
-
 def _get_file_url(directory: str, filename: str) -> str:
     return EXAMPLE_REPO + "/".join([directory, filename])
 
@@ -199,13 +182,17 @@ def _get_file_url(directory: str, filename: str) -> str:
 def _download_and_upload_file(
     directory: str, filename: str, tmpdir: str, server: dpf.server
 ) -> str:
-    """Download example file from example_data repo and and upload it the the dpf server."""
+    """Download example file from example_data repo and upload it the dpf server."""
     file_url = _get_file_url(directory, filename)
     local_path = os.path.join(tmpdir, filename)
+    if server.local_server:
+        local_path = os.path.join(os.getcwd(), filename)
     urllib.request.urlretrieve(file_url, local_path)
     # todo: With 0.7.1 the server will have
     #  a boolean property 'local_server' that we can use to
     #  determine if files should be uploaded
+    if server.local_server:
+        return local_path
     return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
 
 
@@ -217,15 +204,15 @@ def get_short_fiber_example_files(
     example_files = _short_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
-        def upload(filename: str) -> str:
+        def get_server_path(filename: str) -> str:
             return _download_and_upload_file(
                 example_files.directory, filename, tmpdir, server_context.server
             )
 
         return ShortFiberCompositesFiles(
-            rst=upload(example_files.files.rst),
-            dsdat=upload(example_files.files.dsdat),
-            engineering_data=upload(example_files.files.engineering_data),
+            rst=get_server_path(example_files.files.rst),
+            dsdat=get_server_path(example_files.files.dsdat),
+            engineering_data=get_server_path(example_files.files.engineering_data),
         )
 
 
@@ -237,7 +224,7 @@ def get_continuous_fiber_example_files(
     example_files = _continuous_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
-        def upload(filename: str) -> str:
+        def get_server_path(filename: str) -> str:
             return _download_and_upload_file(
                 example_files.directory, filename, tmpdir, server_context.server
             )
@@ -245,15 +232,17 @@ def get_continuous_fiber_example_files(
         all_composite_files = {}
         for key, composite_examples_files_for_scope in example_files.files.composite.items():
             composite_files = CompositeDefinitionFiles(
-                definition=upload(composite_examples_files_for_scope.definition),
+                definition=get_server_path(composite_examples_files_for_scope.definition),
             )
             if composite_examples_files_for_scope.mapping is not None:
-                composite_files.mapping = upload(composite_examples_files_for_scope.mapping)
+                composite_files.mapping = get_server_path(
+                    composite_examples_files_for_scope.mapping
+                )
 
             all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
-            rst=upload(example_files.files.rst),
-            engineering_data=upload(example_files.files.engineering_data),
+            rst=get_server_path(example_files.files.rst),
+            engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
         )

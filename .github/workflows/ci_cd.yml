@@ -13,6 +13,7 @@ env:
   MAIN_PYTHON_VERSION: '3.9'
   ANSYS_VERSION: '231'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
+  PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "21002"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
