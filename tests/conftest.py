@@ -14,7 +14,7 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
-from ansys.dpf.composites.example_helper.example_helper import (
+from ansys.dpf.composites.connect_to_or_start_server import (
     _try_until_timeout,
     _wait_until_server_is_up,
 )
@@ -273,7 +273,7 @@ def dpf_server(request: pytest.FixtureRequest):
         def start_server():
             return dpf.server.connect_to_server(port=server_process.port)
 
-        server = _try_until_timeout(start_server)
+        server = _try_until_timeout(start_server, "Failed to start server.")
 
         _wait_until_server_is_up(server)
         load_composites_plugin(server)
