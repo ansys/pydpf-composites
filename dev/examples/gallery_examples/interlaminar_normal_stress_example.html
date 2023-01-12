@@ -455,11 +455,9 @@ Note, the INS operator fills the results directly into the stress field.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="n">CompositeModel</span><span class="p">,</span> <span class="n">Spot</span><span class="p">,</span> <span class="n">get_selected_indices</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.connect_to_or_start_server</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">Sym3x3TensorComponent</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">connect_to_or_start_server</span><span class="p">,</span>
-    <span class="n">get_continuous_fiber_example_files</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info</span> <span class="kn">import</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">,</span> <span class="n">get_all_analysis_ply_names</span>
 </pre></div>
 </div>
@@ -556,7 +554,7 @@ in the element coordinate system ( material coordinate system)</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.578 seconds)</p>
+<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  8.766 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d2765c4de18ca7baa598ec9faaa6b4e7/interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">interlaminar_normal_stress_example.py</span></code></a></p>

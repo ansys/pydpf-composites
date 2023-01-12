@@ -35,17 +35,15 @@ how the sampling point data can be visualized.
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-38
+.. GENERATED FROM PYTHON SOURCE LINES 19-36
 
 .. code-block:: default
 
     import matplotlib.pyplot as plt
 
     from ansys.dpf.composites.composite_model import CompositeModel
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_continuous_fiber_example_files,
-    )
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
+    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.failure_criteria import (
         CombinedFailureCriterion,
         CoreFailureCriterion,
@@ -65,12 +63,12 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 37-39
 
 Definition of the combined failure criterion
 --------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-53
+.. GENERATED FROM PYTHON SOURCE LINES 39-51
 
 .. code-block:: default
 
@@ -93,11 +91,11 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-55
+.. GENERATED FROM PYTHON SOURCE LINES 52-53
 
 Start server
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-58
+.. GENERATED FROM PYTHON SOURCE LINES 53-56
 
 .. code-block:: default
 
@@ -111,11 +109,11 @@ Start server
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-60
+.. GENERATED FROM PYTHON SOURCE LINES 57-58
 
 Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-62
+.. GENERATED FROM PYTHON SOURCE LINES 58-60
 
 .. code-block:: default
 
@@ -128,11 +126,11 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-64
+.. GENERATED FROM PYTHON SOURCE LINES 61-62
 
 Create the sampling point
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-68
+.. GENERATED FROM PYTHON SOURCE LINES 62-66
 
 .. code-block:: default
 
@@ -147,12 +145,12 @@ Create the sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-71
+.. GENERATED FROM PYTHON SOURCE LINES 67-69
 
 Query results and plot them
 ---------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-96
+.. GENERATED FROM PYTHON SOURCE LINES 69-94
 
 .. code-block:: default
 
@@ -202,7 +200,7 @@ Query results and plot them
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.332 seconds)
+   **Total running time of the script:** ( 0 minutes  1.545 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_sampling_point_operator_example.py:

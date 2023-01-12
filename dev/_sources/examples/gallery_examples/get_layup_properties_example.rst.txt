@@ -33,7 +33,7 @@ consider also the sampling point operator
 
 Import dependencies
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-25
+.. GENERATED FROM PYTHON SOURCE LINES 16-23
 
 .. code-block:: default
 
@@ -41,10 +41,8 @@ Import dependencies
     import numpy as np
 
     from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_continuous_fiber_example_files,
-    )
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
+    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 
 
 
@@ -53,11 +51,11 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-27
+.. GENERATED FROM PYTHON SOURCE LINES 24-25
 
 Start server and load example files
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-31
+.. GENERATED FROM PYTHON SOURCE LINES 25-29
 
 .. code-block:: default
 
@@ -72,11 +70,11 @@ Start server and load example files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-33
+.. GENERATED FROM PYTHON SOURCE LINES 30-31
 
 Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-35
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
 .. code-block:: default
 
@@ -89,11 +87,11 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-37
+.. GENERATED FROM PYTHON SOURCE LINES 34-35
 
 Get layup properties for all the elements and show the first one as an example
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-46
+.. GENERATED FROM PYTHON SOURCE LINES 35-44
 
 .. code-block:: default
 
@@ -113,11 +111,11 @@ Get layup properties for all the elements and show the first one as an example
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-48
+.. GENERATED FROM PYTHON SOURCE LINES 45-46
 
 Plot of layup properties
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-66
+.. GENERATED FROM PYTHON SOURCE LINES 46-64
 
 .. code-block:: default
 
@@ -154,7 +152,7 @@ Plot of layup properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.686 seconds)
+   **Total running time of the script:** ( 0 minutes  0.745 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_get_layup_properties_example.py:

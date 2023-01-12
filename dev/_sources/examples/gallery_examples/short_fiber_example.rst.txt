@@ -27,16 +27,14 @@ Basic example for a short fiber failure analysis
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 11-18
+.. GENERATED FROM PYTHON SOURCE LINES 11-16
 
 .. code-block:: default
 
     import ansys.dpf.core as dpf
 
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_short_fiber_example_files,
-    )
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
+    from ansys.dpf.composites.example_helper.example_helper import get_short_fiber_example_files
 
 
 
@@ -45,7 +43,7 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-23
+.. GENERATED FROM PYTHON SOURCE LINES 17-21
 
 .. code-block:: default
 
@@ -60,11 +58,11 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-25
+.. GENERATED FROM PYTHON SOURCE LINES 22-23
 
 Setup data sources
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-30
+.. GENERATED FROM PYTHON SOURCE LINES 23-28
 
 .. code-block:: default
 
@@ -80,11 +78,11 @@ Setup data sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-32
+.. GENERATED FROM PYTHON SOURCE LINES 29-30
 
 Create dpf model and mesh provider
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-34
+.. GENERATED FROM PYTHON SOURCE LINES 30-32
 
 .. code-block:: default
 
@@ -97,11 +95,11 @@ Create dpf model and mesh provider
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-36
+.. GENERATED FROM PYTHON SOURCE LINES 33-34
 
 Short Fiber Failure Criterion Evaluator
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-53
+.. GENERATED FROM PYTHON SOURCE LINES 34-51
 
 .. code-block:: default
 
@@ -137,7 +135,7 @@ Short Fiber Failure Criterion Evaluator
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.213 seconds)
+   **Total running time of the script:** ( 0 minutes  2.528 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_short_fiber_example.py:

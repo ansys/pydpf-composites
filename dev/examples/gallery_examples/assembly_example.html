@@ -393,11 +393,9 @@ to download the full example code</p>
 model can be post-processed.</p>
 <p>Load ansys libraries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.connect_to_or_start_server</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">connect_to_or_start_server</span><span class="p">,</span>
-    <span class="n">get_continuous_fiber_example_files</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="n">CombinedFailureCriterion</span><span class="p">,</span> <span class="n">MaxStressCriterion</span>
 
 <span class="n">server_context</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
@@ -436,7 +434,7 @@ This example shows how to get ElementInfo for all layered elements</p>
         <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  6.284 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  8.320 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-assembly-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ef03c6eb07e906ca22fac47f3df1708a/assembly_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">assembly_example.py</span></code></a></p>

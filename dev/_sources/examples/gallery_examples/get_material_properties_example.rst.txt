@@ -31,7 +31,7 @@ are currently supported.
 
 Import dependencies
 
-.. GENERATED FROM PYTHON SOURCE LINES 14-25
+.. GENERATED FROM PYTHON SOURCE LINES 14-23
 
 .. code-block:: default
 
@@ -40,11 +40,9 @@ Import dependencies
 
     from ansys.dpf.composites import MaterialProperty, get_selected_indices
     from ansys.dpf.composites.composite_model import CompositeModel
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
     from ansys.dpf.composites.enums import Sym3x3TensorComponent
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_continuous_fiber_example_files,
-    )
+    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 
 
 
@@ -53,11 +51,11 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-27
+.. GENERATED FROM PYTHON SOURCE LINES 24-25
 
 Start server and load example files
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-31
+.. GENERATED FROM PYTHON SOURCE LINES 25-29
 
 .. code-block:: default
 
@@ -72,11 +70,11 @@ Start server and load example files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-33
+.. GENERATED FROM PYTHON SOURCE LINES 30-31
 
 Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-35
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
 .. code-block:: default
 
@@ -89,7 +87,7 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-41
+.. GENERATED FROM PYTHON SOURCE LINES 34-39
 
 Get dictionary that maps dpf_material_id to properties
 The creation of the dictionary is currently quite expensive and
@@ -97,7 +95,7 @@ should be done before using the properties in a loop.
 Currently only constant properties are supported.
 For variable material properties, the default value is returned.
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-46
+.. GENERATED FROM PYTHON SOURCE LINES 39-44
 
 .. code-block:: default
 
@@ -113,11 +111,11 @@ For variable material properties, the default value is returned.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-48
+.. GENERATED FROM PYTHON SOURCE LINES 45-46
 
 Get example strain field
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-54
+.. GENERATED FROM PYTHON SOURCE LINES 46-52
 
 .. code-block:: default
 
@@ -134,11 +132,11 @@ Get example strain field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-56
+.. GENERATED FROM PYTHON SOURCE LINES 53-54
 
 Evaluate basic max strain failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-79
+.. GENERATED FROM PYTHON SOURCE LINES 54-77
 
 .. code-block:: default
 
@@ -180,7 +178,7 @@ Evaluate basic max strain failure criterion
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.153 seconds)
+   **Total running time of the script:** ( 0 minutes  1.322 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_get_material_properties_example.py:

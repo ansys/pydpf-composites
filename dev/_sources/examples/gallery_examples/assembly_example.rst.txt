@@ -30,17 +30,15 @@ model can be post-processed.
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 13-26
+.. GENERATED FROM PYTHON SOURCE LINES 13-24
 
 .. code-block:: default
 
 
     from ansys.dpf.composites.composite_model import CompositeModel
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
     from ansys.dpf.composites.enums import FailureOutput
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_continuous_fiber_example_files,
-    )
+    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
     server_context = connect_to_or_start_server()
@@ -54,11 +52,11 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-28
+.. GENERATED FROM PYTHON SOURCE LINES 25-26
 
 Definition of the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-35
+.. GENERATED FROM PYTHON SOURCE LINES 26-33
 
 .. code-block:: default
 
@@ -76,11 +74,11 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-37
+.. GENERATED FROM PYTHON SOURCE LINES 34-35
 
 Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-42
+.. GENERATED FROM PYTHON SOURCE LINES 35-40
 
 .. code-block:: default
 
@@ -96,12 +94,12 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-45
+.. GENERATED FROM PYTHON SOURCE LINES 41-43
 
 Plot the max IRF per element
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-50
+.. GENERATED FROM PYTHON SOURCE LINES 43-48
 
 .. code-block:: default
 
@@ -122,7 +120,7 @@ Plot the max IRF per element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-56
+.. GENERATED FROM PYTHON SOURCE LINES 49-54
 
 In the assembly exist two composite definition, one with the label "shell" and one
 with the label "solid". To query the layup properties we have to query the
@@ -130,7 +128,7 @@ properties with the correct composite_definition_label.
 This example shows how to get ElementInfo for all layered elements
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-62
+.. GENERATED FROM PYTHON SOURCE LINES 54-60
 
 .. code-block:: default
 
@@ -150,7 +148,7 @@ This example shows how to get ElementInfo for all layered elements
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.284 seconds)
+   **Total running time of the script:** ( 0 minutes  8.320 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_assembly_example.py:

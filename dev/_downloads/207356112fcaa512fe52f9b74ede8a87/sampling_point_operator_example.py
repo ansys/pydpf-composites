@@ -19,10 +19,8 @@ how the sampling point data can be visualized.
 import matplotlib.pyplot as plt
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.example_helper.example_helper import (
-    connect_to_or_start_server,
-    get_continuous_fiber_example_files,
-)
+from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
+from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,

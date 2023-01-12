@@ -35,17 +35,15 @@ failure per element, or to select a list of materials or plies.
 
 Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-36
+.. GENERATED FROM PYTHON SOURCE LINES 18-34
 
 .. code-block:: default
 
 
     from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
     from ansys.dpf.composites.enums import FailureOutput
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_continuous_fiber_example_files,
-    )
+    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.failure_criteria import (
         CombinedFailureCriterion,
         CoreFailureCriterion,
@@ -64,11 +62,11 @@ Load ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-38
+.. GENERATED FROM PYTHON SOURCE LINES 35-36
 
 Definition of the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-50
+.. GENERATED FROM PYTHON SOURCE LINES 36-48
 
 .. code-block:: default
 
@@ -91,11 +89,11 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-52
+.. GENERATED FROM PYTHON SOURCE LINES 49-50
 
 Setup composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-57
+.. GENERATED FROM PYTHON SOURCE LINES 50-55
 
 .. code-block:: default
 
@@ -111,12 +109,12 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-60
+.. GENERATED FROM PYTHON SOURCE LINES 56-58
 
 Plot the max IRF per element
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-64
+.. GENERATED FROM PYTHON SOURCE LINES 58-62
 
 .. code-block:: default
 
@@ -136,11 +134,11 @@ Plot the max IRF per element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-66
+.. GENERATED FROM PYTHON SOURCE LINES 63-64
 
 Scope failure evaluation to certain element scope
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-73
+.. GENERATED FROM PYTHON SOURCE LINES 64-71
 
 .. code-block:: default
 
@@ -163,11 +161,11 @@ Scope failure evaluation to certain element scope
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-75
+.. GENERATED FROM PYTHON SOURCE LINES 72-73
 
 Scope by plies
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-81
+.. GENERATED FROM PYTHON SOURCE LINES 73-79
 
 .. code-block:: default
 
@@ -192,7 +190,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.747 seconds)
+   **Total running time of the script:** ( 0 minutes  2.077 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_failure_operator_example.py:

@@ -45,18 +45,16 @@ Note, the INS operator fills the results directly into the stress field.
 
 Load Ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-38
+.. GENERATED FROM PYTHON SOURCE LINES 28-36
 
 .. code-block:: default
 
     import ansys.dpf.core as dpf
 
     from ansys.dpf.composites import CompositeModel, Spot, get_selected_indices
+    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
     from ansys.dpf.composites.enums import Sym3x3TensorComponent
-    from ansys.dpf.composites.example_helper.example_helper import (
-        connect_to_or_start_server,
-        get_continuous_fiber_example_files,
-    )
+    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
 
@@ -66,12 +64,12 @@ Load Ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 37-39
 
 Start Server and upload files
 -----------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-44
+.. GENERATED FROM PYTHON SOURCE LINES 39-42
 
 .. code-block:: default
 
@@ -85,12 +83,12 @@ Start Server and upload files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-47
+.. GENERATED FROM PYTHON SOURCE LINES 43-45
 
 Configure data sources
 -----------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-49
+.. GENERATED FROM PYTHON SOURCE LINES 45-47
 
 .. code-block:: default
 
@@ -103,7 +101,7 @@ Configure data sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-55
+.. GENERATED FROM PYTHON SOURCE LINES 48-53
 
 Inputs from the result files
 ----------------------------
@@ -111,7 +109,7 @@ Inputs from the result files
 Rotate to global is False because the post-processing engine expects the results to be
 in the element coordinate system ( material coordinate system)
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-64
+.. GENERATED FROM PYTHON SOURCE LINES 53-62
 
 .. code-block:: default
 
@@ -131,14 +129,14 @@ in the element coordinate system ( material coordinate system)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-69
+.. GENERATED FROM PYTHON SOURCE LINES 63-67
 
 Add interlaminar normal stresses
 -----------------------------------
 
 The s3 stresses are evaluated and stored in the stresses container
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-75
+.. GENERATED FROM PYTHON SOURCE LINES 67-73
 
 .. code-block:: default
 
@@ -155,14 +153,14 @@ The s3 stresses are evaluated and stored in the stresses container
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-80
+.. GENERATED FROM PYTHON SOURCE LINES 74-78
 
 Plot s3 stresses
 ----------------
 
 Prepare data for the plotting
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-82
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
 
 .. code-block:: default
 
@@ -175,12 +173,12 @@ Prepare data for the plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-85
+.. GENERATED FROM PYTHON SOURCE LINES 81-83
 
 Plot max s3 of each element
 '''''''''''''''''''''''''''
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-104
+.. GENERATED FROM PYTHON SOURCE LINES 83-102
 
 .. code-block:: default
 
@@ -215,12 +213,12 @@ Plot max s3 of each element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-107
+.. GENERATED FROM PYTHON SOURCE LINES 103-105
 
 Plot s3 of a certain ply
 ''''''''''''''''''''''''
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-131
+.. GENERATED FROM PYTHON SOURCE LINES 105-129
 
 .. code-block:: default
 
@@ -263,7 +261,7 @@ Plot s3 of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.578 seconds)
+   **Total running time of the script:** ( 0 minutes  8.766 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_interlaminar_normal_stress_example.py:

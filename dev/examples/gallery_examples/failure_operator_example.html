@@ -397,11 +397,9 @@ and failure modes at once. The scoping enables to evaluate of the min and max
 failure per element, or to select a list of materials or plies.</p>
 <p>Load ansys libraries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span><span class="p">,</span> <span class="n">CompositeScope</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.connect_to_or_start_server</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">connect_to_or_start_server</span><span class="p">,</span>
-    <span class="n">get_continuous_fiber_example_files</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CombinedFailureCriterion</span><span class="p">,</span>
     <span class="n">CoreFailureCriterion</span><span class="p">,</span>
@@ -457,7 +455,7 @@ failure per element, or to select a list of materials or plies.</p>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_failure_operator_example_003.png" srcset="../../_images/sphx_glr_failure_operator_example_003.png" alt="failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.747 seconds)</p>
+<img src="../../_images/sphx_glr_failure_operator_example_003.png" srcset="../../_images/sphx_glr_failure_operator_example_003.png" alt="failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.077 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-failure-operator-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/53550da7d710b90f295d971d334d40bd/failure_operator_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">failure_operator_example.py</span></code></a></p>
