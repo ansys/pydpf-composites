@@ -1,0 +1,554 @@
+/batch
+/config,noeldb,1     ! force off writing results to database
+*get,_wallstrt,active,,time,wall
+! ANSYS input file written by Workbench version 2023 R2
+! ! File used for geometry attach: D:\ANSYSDev\dpf_composites\test_data\workflow_example\workflow_example_files\dp0\global\MECH\SYS-2\AssembledModel\SYS-2.pmdb
+/title,workflow_example--Static Structural (F3)
+! ****** Begin Custom Load Command Snippet ******
+/COM, ACT Extensions:
+/COM,     LSDYNA, 2023.1
+/COM,     5f463412-bd3e-484b-87e7-cbc0a665e474, wbex
+/COM,/COM,     ANSYSMotion, 2023.2
+/COM,     20180725-3f81-49eb-9f31-41364844c769, wbex
+/COM,
+! ****** End   Custom Load Command Snippet ******
+*DIM,_wb_ProjectScratch_dir,string,248
+_wb_ProjectScratch_dir(1) = 'D:\ANSYSDev\dpf_composites\test_data\workflow_example\_ProjectScratch\Scr95EA\'
+*DIM,_wb_SolverFiles_dir,string,248
+_wb_SolverFiles_dir(1) = 'D:\ANSYSDev\dpf_composites\test_data\workflow_example\workflow_example_files\dp0\SYS-2\MECH\'
+*DIM,_wb_userfiles_dir,string,248
+_wb_userfiles_dir(1) = 'D:\ANSYSDev\dpf_composites\test_data\workflow_example\workflow_example_files\user_files\'
+/com,--- Data in consistent MKS units. See Solving Units in the help system for more information.
+/units,MKS
+/nopr
+/wb,file,start              !  signify a WB generated input file
+/prep7
+! Turn off shape checking because checks already performed inside WB mesher.
+! See help system for more information.
+SHPP,OFF,,NOWARN
+/nolist
+etcon,set             ! allow ANSYS to choose best KEYOP's for 180x elements, resets any applicable keyopt to MAPDL defaults
+/com,*********** Nodes for the whole assembly ***********
+nblock,3,,33
+(1i9,3e20.9e3)
+        1     1.000000000E-02     0.000000000E+00     3.000000000E-02
+        2     1.000000000E-02     0.000000000E+00     0.000000000E+00
+        3     1.000000000E-02     0.000000000E+00     1.500000000E-02
+        4     2.500000000E-02     0.000000000E+00     0.000000000E+00
+        5     2.500000000E-02     0.000000000E+00     3.000000000E-02
+        6     2.500000000E-02     0.000000000E+00     1.500000000E-02
+       13     0.000000000E+00     0.000000000E+00     1.500000000E-02
+       14     0.000000000E+00     0.000000000E+00     3.000000000E-02
+       15     1.000000000E-02     0.000000000E+00     3.000000000E-02
+       16     1.000000000E-02     0.000000000E+00     1.500000000E-02
+       17     0.000000000E+00     6.500000000E-04     1.500000000E-02
+       18     0.000000000E+00     6.500000000E-04     3.000000000E-02
+       19     1.000000000E-02     6.500000000E-04     3.000000000E-02
+       20     1.000000000E-02     6.500000000E-04     1.500000000E-02
+       21     1.000000000E-02     0.000000000E+00     0.000000000E+00
+       22     0.000000000E+00     0.000000000E+00     0.000000000E+00
+       23     1.000000000E-02     6.500000000E-04     0.000000000E+00
+       24     0.000000000E+00     6.500000000E-04     0.000000000E+00
+       25     0.000000000E+00     5.650000000E-03     1.500000000E-02
+       26     0.000000000E+00     5.650000000E-03     3.000000000E-02
+       27     1.000000000E-02     5.650000000E-03     3.000000000E-02
+       28     1.000000000E-02     5.650000000E-03     1.500000000E-02
+       29     1.000000000E-02     5.650000000E-03     0.000000000E+00
+       30     0.000000000E+00     5.650000000E-03     0.000000000E+00
+       31     0.000000000E+00     6.100000000E-03     1.500000000E-02
+       32     0.000000000E+00     6.100000000E-03     3.000000000E-02
+       33     1.000000000E-02     6.100000000E-03     3.000000000E-02
+       34     1.000000000E-02     6.100000000E-03     1.500000000E-02
+       35     1.000000000E-02     6.100000000E-03     0.000000000E+00
+       36     0.000000000E+00     6.100000000E-03     0.000000000E+00
+-1
+/wb,elem,start            !  set before creation of elements
+/com,*********** Elements for Body 1 "Surface(Assembly_Shell)" ***********
+et,1,181
+keyo,1,1,0       ! bending and membrane stiffness
+keyo,1,3,2
+keyo,1,8,2       ! set Layer data storage
+eblock,19,solid,,2
+(19i9)
+        1        1        1        1        0        0        0        0        4        0        1        3        1        5        6
+        1        1        1        1        0        0        0        0        4        0        2        6        4        2        3
+-1
+!Material Id = {3509BA07-5319-4EDB-8BBE-537B66173A22}
+/com,*********** Elements for Body 2 "SM" ***********
+et,2,190
+keyo,2,8,1          ! set Layer data storage
+eblock,19,solid,,6
+(19i9)
+        2        2        2        2        0        0        0        0        8        0        5       13       14       15       16       17       18       19       20
+        2        2        2        2        0        0        0        0        8        0        6       16       21       22       13       20       23       24       17
+        2        2        2        2        0        0        0        0        8        0        7       17       18       19       20       25       26       27       28
+        2        2        2        2        0        0        0        0        8        0        8       20       23       24       17       28       29       30       25
+        2        2        2        2        0        0        0        0        8        0        9       25       26       27       28       31       32       33       34
+        2        2        2        2        0        0        0        0        8        0       10       28       29       30       25       34       35       36       31
+-1
+!Material Id = {28D03926-2CB7-4AB8-939E-9DF47CB951D7}
+sectype,2,shell
+secdata,1.0                ! dummy shell thickness so SOLH190 can use a section to handle multiple integration points
+/wb,elem,end               !  done creating elements
+/com,*********** Send User Defined Coordinate System(s) ***********
+local,12,0,0.,0.,0.,0.,0.,0.
+csys,0
+toffst,273.15,  ! Temperature offset from absolute zero
+/com,*********** Set Reference Temperature ***********
+tref,22.
+/wb,mat,start              !  starting to send materials
+/com,*********** Send Materials ***********
+MP,DENS,1,1490,	! kg m^-3
+MP,EX,1,121000000000,	! Pa
+MP,EY,1,8600000000,	! Pa
+MP,EZ,1,8600000000,	! Pa
+MP,PRXY,1,0.27,
+MP,PRYZ,1,0.4,
+MP,PRXZ,1,0.27,
+MP,GXY,1,4700000000,	! Pa
+MP,GYZ,1,3100000000,	! Pa
+MP,GXZ,1,4700000000,	! Pa
+
+TB,FCLI,1,1,9,2
+TBDATA,1,0.0167,-0.0108,0.0032,-0.0192,0.0032,-0.0192
+TBDATA,7,0.012,0.011
+MP,ALPX,1,-4.7e-07,	! C^-1
+MP,ALPY,1,3e-05,	! C^-1
+MP,ALPZ,1,3e-05,	! C^-1
+MP,KXX,1,2,	! W m^-1 C^-1
+
+TB,FCLI,1,1,20,1
+TBDATA,1,2231000000
+TBDATA,2,-1082000000
+TBDATA,3,29000000
+TBDATA,4,-100000000
+TBDATA,5,29000000
+TBDATA,6,-100000000
+TBDATA,7,60000000
+TBDATA,8,32000000
+TBDATA,9,60000000
+TBDATA,10,-1
+TBDATA,11,-1
+TBDATA,12,-1
+TBDATA,13,0.35
+TBDATA,14,0.3
+TBDATA,15,0.25
+TBDATA,16,0.25
+MP,UVID,1,2b1ddcf4-d4a0-4be9-be73-47b0072b1494
+MP,UMID,1,e236c55c-e4b2-423c-8262-2cbd5ec4377b
+
+MP,DENS,2,1490,	! kg m^-3
+MP,EX,2,121000000000,	! Pa
+MP,EY,2,8600000000,	! Pa
+MP,EZ,2,8600000000,	! Pa
+MP,PRXY,2,0.27,
+MP,PRYZ,2,0.4,
+MP,PRXZ,2,0.27,
+MP,GXY,2,4700000000,	! Pa
+MP,GYZ,2,3100000000,	! Pa
+MP,GXZ,2,4700000000,	! Pa
+
+TB,FCLI,2,1,9,2
+TBDATA,1,0.0167,-0.0108,0.0032,-0.0192,0.0032,-0.0192
+TBDATA,7,0.012,0.011
+MP,ALPX,2,-4.7e-07,	! C^-1
+MP,ALPY,2,3e-05,	! C^-1
+MP,ALPZ,2,3e-05,	! C^-1
+MP,KXX,2,2,	! W m^-1 C^-1
+
+TB,FCLI,2,1,20,1
+TBDATA,1,2231000000
+TBDATA,2,-1082000000
+TBDATA,3,29000000
+TBDATA,4,-100000000
+TBDATA,5,29000000
+TBDATA,6,-100000000
+TBDATA,7,60000000
+TBDATA,8,32000000
+TBDATA,9,60000000
+TBDATA,10,-1
+TBDATA,11,-1
+TBDATA,12,-1
+TBDATA,13,0.35
+TBDATA,14,0.3
+TBDATA,15,0.25
+TBDATA,16,0.25
+MP,UVID,2,2b1ddcf4-d4a0-4be9-be73-47b0072b1494
+MP,UMID,2,e236c55c-e4b2-423c-8262-2cbd5ec4377b
+
+/wb,mat,end                !  done sending materials
+/com,*********** Send Sheet Properties ***********
+sectype,1,shell
+secdata,1.e-005
+secoff,mid
+
+
+/com,*********** Sending Coordinate Systems for External Layered Section***********
+local,13,0,5.e-003,3.25e-004,2.25e-002,-90.,-90.,-90.
+local,14,0,1.75e-002,0.,2.25e-002,-90.,-90.,-90.
+csys,0
+
+/com,*********** Sending Materials for External Layered Section***********
+MP,DENS,3,1451,	! kg m^-3
+MP,EX,3,59160000000,	! Pa
+MP,EY,3,59160000000,	! Pa
+MP,EZ,3,7500000000,	! Pa
+MP,PRXY,3,0.04,
+MP,PRYZ,3,0.3,
+MP,PRXZ,3,0.3,
+MP,GXY,3,3300000000,	! Pa
+MP,GYZ,3,2700000000,	! Pa
+MP,GXZ,3,2700000000,	! Pa
+
+TB,FCLI,3,1,9,2
+TBDATA,1,0.0092,-0.0084,0.0092,-0.0084,0.0078,-0.011
+TBDATA,7,0.02,0.015
+MP,ALPX,3,2.2e-06,	! C^-1
+MP,ALPY,3,2.2e-06,	! C^-1
+MP,ALPZ,3,1e-05,	! C^-1
+MP,KXX,3,2,	! W m^-1 C^-1
+
+TB,FCLI,3,1,20,1
+TBDATA,1,513000000
+TBDATA,2,-437000000
+TBDATA,3,513000000
+TBDATA,4,-437000000
+TBDATA,5,50000000
+TBDATA,6,-150000000
+TBDATA,7,120000000
+TBDATA,8,55000000
+TBDATA,9,55000000
+TBDATA,10,-1
+TBDATA,11,-1
+TBDATA,12,-1
+MP,UVID,3,c9d22e4e-18c9-42aa-8d9b-9d330f980ddd
+MP,UMID,3,7ab9c060-4547-4561-aab3-d3fd3c4952ed
+
+MP,DENS,4,1490,	! kg m^-3
+MP,EX,4,121000000000,	! Pa
+MP,EY,4,8600000000,	! Pa
+MP,EZ,4,8600000000,	! Pa
+MP,PRXY,4,0.27,
+MP,PRYZ,4,0.4,
+MP,PRXZ,4,0.27,
+MP,GXY,4,4700000000,	! Pa
+MP,GYZ,4,3100000000,	! Pa
+MP,GXZ,4,4700000000,	! Pa
+
+TB,FCLI,4,1,9,2
+TBDATA,1,0.0167,-0.0108,0.0032,-0.0192,0.0032,-0.0192
+TBDATA,7,0.012,0.011
+MP,ALPX,4,-4.7e-07,	! C^-1
+MP,ALPY,4,3e-05,	! C^-1
+MP,ALPZ,4,3e-05,	! C^-1
+MP,KXX,4,2,	! W m^-1 C^-1
+
+TB,FCLI,4,1,20,1
+TBDATA,1,2231000000
+TBDATA,2,-1082000000
+TBDATA,3,29000000
+TBDATA,4,-100000000
+TBDATA,5,29000000
+TBDATA,6,-100000000
+TBDATA,7,60000000
+TBDATA,8,32000000
+TBDATA,9,60000000
+TBDATA,10,-1
+TBDATA,11,-1
+TBDATA,12,-1
+TBDATA,13,0.35
+TBDATA,14,0.3
+TBDATA,15,0.25
+TBDATA,16,0.25
+MP,UVID,4,2b1ddcf4-d4a0-4be9-be73-47b0072b1494
+MP,UMID,4,e236c55c-e4b2-423c-8262-2cbd5ec4377b
+
+MP,DENS,5,80,	! kg m^-3
+MP,EX,5,1000000,	! Pa
+MP,EY,5,1000000,	! Pa
+MP,EZ,5,255000000,	! Pa
+MP,PRXY,5,0.49,
+MP,PRYZ,5,0.001,
+MP,PRXZ,5,0.001,
+MP,GXY,5,1,	! Pa
+MP,GYZ,5,37000000,	! Pa
+MP,GXZ,5,70000000,	! Pa
+MP,KXX,5,2,	! W m^-1 C^-1
+
+TB,FCLI,5,1,20,1
+TBDATA,1,0
+TBDATA,2,0
+TBDATA,3,0
+TBDATA,4,0
+TBDATA,5,5310000
+TBDATA,6,-5310000
+TBDATA,7,0
+TBDATA,8,1210000
+TBDATA,9,2240000
+MP,UVID,5,d6be5592-8963-4fa0-9583-ea30785bd301
+MP,UMID,5,7c43386c-d57e-4169-bf28-1674ece809c5
+
+
+/com,*********** Send External Layered Section Properties ***********
+CMBLOCK,_CM_EXT_SEC_0,ELEM,        2
+(8i10)
+         5         6
+sectype,6,shell
+secdata,0.00025,3,45
+secdata,0.0002,4,0
+secdata,0.0002,4,0
+secoff,mid
+emod,_cm_ext_sec_0,secnum,6
+emod,5,esys,13
+emod,6,esys,13
+
+CMBLOCK,_CM_EXT_SEC_1,ELEM,        2
+(8i10)
+         7         8
+sectype,7,shell
+secdata,0.005,5,0
+secoff,mid
+emod,_cm_ext_sec_1,secnum,7
+emod,7,esys,13
+emod,8,esys,13
+
+CMBLOCK,_CM_EXT_SEC_2,ELEM,        2
+(8i10)
+         9        10
+sectype,8,shell
+secdata,0.0002,4,0
+secdata,0.00025,3,45
+secoff,mid
+emod,_cm_ext_sec_2,secnum,8
+emod,9,esys,13
+emod,10,esys,13
+
+CMBLOCK,_CM_EXT_SEC_3,ELEM,        2
+(8i10)
+         1         2
+sectype,9,shell
+secdata,0.00025,3,45
+secdata,0.0002,4,0
+secdata,0.005,5,0
+secdata,0.0002,4,0
+secdata,0.00025,3,45
+secoff,bottom
+emod,_cm_ext_sec_3,secnum,9
+emod,1,esys,14
+emod,2,esys,14
+
+!************************* Model Summary ********************
+!Surface(Assembly_Shell),	Epoxy Carbon UD (230 GPa) Prepreg,	matid,	1
+!SM,	Epoxy Carbon UD (230 GPa) Prepreg,	matid,	2
+!************************* End Model Summary ********************
+! get the diagonal of the bounding box. Needed later for other things
+*get,_xmin,node,,mnloc,x
+*get,_ymin,node,,mnloc,y
+*get,_zmin,node,,mnloc,z
+*get,_xmax,node,,mxloc,x
+*get,_ymax,node,,mxloc,y
+*get,_zmax,node,,mxloc,z
+_ASMDIAG=(_xmax-_xmin)*(_xmax-_xmin)+(_ymax-_ymin)*(_ymax-_ymin)+(_zmax-_zmin)*(_zmax-_zmin)
+_ASMDIAG=SQRT(_ASMDIAG)
+/wb,contact,start          !  starting to send contact
+/com,*********** Create Contact "Bonded - edge12(Assembly_Shell) To SM_EDGE12_WALL(Assembly_Solid)" ***********
+/com,            Real Constant Set For Above Contact Is 12 & 11 
+*set,tid,12
+*set,cid,11
+r,tid
+r,cid
+et,tid,170
+et,cid,175
+mat,11
+real,11
+type,11
+en,33,1
+en,34,2
+en,35,3
+eblock,10,,,6
+(15i9)
+       36       12       11       12        0       15       16       20       19
+       37       12       11       12        0       16       21       23       20
+       38       12       11       12        0       19       20       28       27
+       39       12       11       12        0       20       23       29       28
+       40       12       11       12        0       27       28       34       33
+       41       12       11       12        0       28       29       35       34
+-1
+keyo,cid,10,0              ! adjust contact stiffness each NR iteration (from Program Controlled setting)
+keyo,cid,12,5              ! bonded always
+keyo,cid,18,1              ! small sliding turned on by application
+keyo,cid,2,0               ! augmented Lagrange (from Program Controlled setting)
+keyo,cid,9,1               ! ignore initial gaps/penetration
+keyo,cid,7,0               ! No Prediction
+rmod,cid,3,10.      ! FKN
+rmod,cid,5,0.       ! ICONT
+rmod,cid,6,0.       ! PINB
+rmod,cid,10,0.      ! CNOF
+rmod,cid,12,0.      ! FKT
+rmod,cid,36,32      ! WB DSID
+nsel,all
+esel,all
+/wb,contact,end            !  done creating contacts
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,SM_EDGE1_WALL_ASSEMBLY_SOLID_,NODE,       12
+(8i10)
+        13        14        17        18        22        24        25        26
+        30        31        32        36
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,SM_EDGE12_WALL_ASSEMBLY_SOLID_,NODE,       12
+(8i10)
+        15        16        19        20        21        23        27        28
+        29        33        34        35
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,SM_ALL_ELEMENTS_BOT_ASSEMBLY_SOL,NODE,        6
+(8i10)
+        13        14        15        16        21        22
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,SM_NS1_BOT_ASSEMBLY_SOLID_,NODE,        6
+(8i10)
+        13        14        15        16        21        22
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,SM_ALL_ELEMENTS_TOP_ASSEMBLY_SOL,NODE,        6
+(8i10)
+        31        32        33        34        35        36
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,SM_NS1_TOP_ASSEMBLY_SOLID_,NODE,        6
+(8i10)
+        31        32        33        34        35        36
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,NS2_ASSEMBLY_SHELL_,NODE,        6
+(8i10)
+         1         2         3         4         5         6
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,EDGE12_ASSEMBLY_SHELL_,NODE,        3
+(8i10)
+         1         2         3
+/com,*********** Send Named Selection as Node Component ***********
+CMBLOCK,EDGE2_ASSEMBLY_SHELL_,NODE,        3
+(8i10)
+         4         5         6
+/golist
+/wb,load,start             !  starting to send loads
+/com,*********** Fixed Supports ***********
+CMBLOCK,_FIXEDSU,NODE,       12
+(8i10)
+        13        14        17        18        22        24        25        26
+        30        31        32        36
+cmsel,s,_FIXEDSU
+d,all,all
+nsel,all
+/com,******* Constant Zero Displacement Y *******
+CMBLOCK,_DISPZEROUY,NODE,        3
+(8i10)
+         4         5         6
+cmsel,s,_DISPZEROUY
+d,all,uy,0
+nsel,all
+/gst,on,on
+fini
+*get,_numnode,node,0,count
+*get,_numelem,elem,0,count
+*get, _MAXELEMNUM, elem, 0, NUM, MAX
+*get, _MAXNODENUM, node, 0, NUM, MAX
+*get, _MAXELEMTYPE, etyp, 0, NUM, MAX
+*get, _MAXREALCONST, rcon, 0, NUM, MAX
+/go
+/wb,load,end               !  done creating loads
+/com,--- Number of total nodes = %_numnode%
+/com,--- Number of contact elements = 9
+/com,--- Number of spring elements = 0
+/com,--- Number of bearing elements = 0
+/com,--- Number of solid elements = 8
+/com,--- Number of condensed parts = 0
+/com,--- Number of total elements = %_numelem%
+*get,_wallbsol,active,,time,wall
+/com,****************************************************************************
+/com,*************************    SOLUTION       ********************************
+/com,****************************************************************************
+/solu
+antype,0                   ! static analysis
+_thickRatio=  0     ! Ratio of thick parts in the model
+eqsl,sparse,,,,,1
+cntr,print,1               ! print out contact info and also make no initial contact an error
+dmpoption,emat,no             ! Don't combine emat file for DANSYS
+dmpoption,esav,no             ! Don't combine esav file for DANSYS
+nldiag,cont,iter           ! print out contact info each equilibrium iteration
+rescontrol,,none                 ! Do not keep any restart files
+/com,****************************************************
+/com,******************* SOLVE FOR LS 1 OF 1 ****************
+/com,*** Set Displacements ***
+CMBLOCK,_CM114UX_XP,NODE,        3
+(8i10)
+         4         5         6
+cmsel,s,_CM114UX_XP
+d,all,ux,5.e-004
+nsel,all
+
+/com,*** Component For All Non-Zero UX Displacements ***
+cmsel,s,_CM114ux_xp
+cm,_DISPNONZEROUX,NODE
+nsel,all
+
+/nopr
+/gopr
+nsub,1,1,1
+time,1.
+outres,erase
+outres,all,none
+outres,nsol,all,
+outres,rsol,all
+outres,eangl,all
+outres,etmp,all
+outres,veng,all
+outres,strs,all,
+outres,epel,all,
+outres,eppl,all,
+outres,cont,all,
+! *********** WB SOLVE COMMAND ***********
+! check interactive state
+*get,ANSINTER_,active,,int
+*if,ANSINTER_,ne,0,then
+/eof
+*endif
+solve
+/com *************** Write FE CONNECTORS ********* 
+CEWRITE,file,ce,,INTE
+/com,****************************************************
+/com,*************** FINISHED SOLVE FOR LS 1 *************
+*get,_wallasol,active,,time,wall
+/nopr
+*get,_numnode,node,0,count
+*get,_numelem,elem,0,count
+*get, _MAXELEMNUM, elem, 0, NUM, MAX
+*get, _MAXNODENUM, node, 0, NUM, MAX,,,INTERNAL
+*get, _MAXELEMTYPE, etyp, 0, NUM, MAX
+*get, _MAXREALCONST, rcon, 0, NUM, MAX
+*get,_NSOLTHREADS,active,0,ntfs
+*get,_NSOLPROCESSES,active,0,npfs
+/gopr
+/post1
+xmlo,ENCODING,ISO-8859-1
+xmlo,parm
+/xml,parm,xml
+fini
+/gopr
+*get,_walldone,active,,time,wall
+_preptime=(_wallbsol-_wallstrt)*3600
+_solvtime=(_wallasol-_wallbsol)*3600
+_posttime=(_walldone-_wallasol)*3600
+_totaltim=(_walldone-_wallstrt)*3600
+*get,_dlbratio,active,0,solu,dlbr
+*get,_combtime,active,0,solu,comb
+*get,_ssmode,active,0,solu,ssmm
+*get,_ndofs,active,0,solu,ndof
+*get,_sol_end_time,active,0,set,time
+*if,_sol_end_time,eq,1.000000,then
+/fclean				!clean distributed files
+*endif
+/com,--- Total number of nodes = %_numnode%
+/com,--- Total number of elements = %_numelem%
+/com,--- Element load balance ratio = %_dlbratio%
+/com,--- Time to combine distributed files = %_combtime%
+/com,--- Sparse memory mode = %_ssmode%
+/com,--- Number of DOF = %_ndofs%
+/wb,file,end               ! done with WB generated input
