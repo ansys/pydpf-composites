@@ -8,8 +8,8 @@ from ansys.dpf.core import DataSources
 
 from ._typing_helper import PATH as _PATH
 
-SOLID_MODEL_PREFIX = "ACPSolidModel"
-COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
+SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
+SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
 SETUP_FOLDER_PREFIX = "Setup"
 H5_SUFFIX = ".h5"
 MATML_FILENAME = "MatML.xml"
@@ -68,21 +68,21 @@ def _is_matml_file(path: pathlib.Path) -> bool:
 
 
 def _is_composite_definition_file(path: pathlib.Path) -> bool:
-    is_composite_def = path.name.startswith(COMPOSITE_DEFINITIONS_PREFIX)
+    is_composite_def = path.name.startswith(SHELL_COMPOSITE_DEFINITIONS_PREFIX)
     return path.suffix == H5_SUFFIX and path.is_file() and is_composite_def
 
 
 def _is_solid_model_composite_definition_file(path: pathlib.Path) -> bool:
     is_h5 = path.suffix == H5_SUFFIX
     is_file = path.is_file()
-    is_def = path.name.startswith(SOLID_MODEL_PREFIX)
+    is_def = path.name.startswith(SOLID_COMPOSITE_DEFINITIONS_PREFIX)
     return is_h5 and is_file and is_def
 
 
 def _get_single_filepath_with_predicate(
     predicate: Callable[[pathlib.Path], bool],
-    name: str,
     folder: pathlib.Path,
+    descriptive_name: str,
     accept_empty: bool = False,
 ) -> Optional[pathlib.Path]:
     files = [
@@ -94,10 +94,12 @@ def _get_single_filepath_with_predicate(
     if len(files) == 0:
         if accept_empty:
             return None
-        raise RuntimeError(f"No {name} file found. Available files:  {os.listdir(folder)}")
+        raise RuntimeError(
+            f"No {descriptive_name} file found. Available files:  {os.listdir(folder)}"
+        )
 
     if len(files) > 1:
-        raise RuntimeError(f"More than one {name} file detected {files}")
+        raise RuntimeError(f"More than one {descriptive_name} file detected {files}")
 
     return files[0]
 
@@ -106,13 +108,13 @@ def _add_composite_definitons_from_setup_folder(
     setup_folder: pathlib.Path, composite_files: ContinuousFiberCompositesFiles
 ) -> None:
     composite_definition = _get_single_filepath_with_predicate(
-        _is_composite_definition_file, "composites_definition", setup_folder, accept_empty=True
+        _is_composite_definition_file, setup_folder, "composites_definition", accept_empty=True
     )
 
     solid_model_definition = _get_single_filepath_with_predicate(
         _is_solid_model_composite_definition_file,
-        "solid_model_definition",
         setup_folder,
+        "solid_model_definition",
         accept_empty=True,
     )
 
@@ -143,7 +145,7 @@ def _add_composite_definitons_from_setup_folder(
         composite_files.composite[key] = definition_files
 
 
-def get_composite_files_from_result_folder(
+def get_composite_files_from_workbench_result_folder(
     result_folder: _PATH, ensure_composite_definitions_found: bool = True
 ) -> ContinuousFiberCompositesFiles:
     r"""Get a ContinuousFiberCompositesFiles object from a result_folder.
@@ -231,9 +233,9 @@ def get_composite_files_from_result_folder(
         if folder_path.is_dir() and folder_path.name.startswith(SETUP_FOLDER_PREFIX)
     ]
 
-    rst_path = _get_single_filepath_with_predicate(_is_rst_file, "rst", result_folder_path)
+    rst_path = _get_single_filepath_with_predicate(_is_rst_file, result_folder_path, "rst")
 
-    matml_path = _get_single_filepath_with_predicate(_is_matml_file, "matml", result_folder_path)
+    matml_path = _get_single_filepath_with_predicate(_is_matml_file, result_folder_path, "matml")
 
     assert matml_path is not None
     assert rst_path is not None
