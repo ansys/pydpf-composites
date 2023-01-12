@@ -28,11 +28,9 @@ Note, the INS operator fills the results directly into the stress field.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites import CompositeModel, Spot, get_selected_indices
+from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.enums import Sym3x3TensorComponent
-from ansys.dpf.composites.example_helper.example_helper import (
-    connect_to_or_start_server,
-    get_continuous_fiber_example_files,
-)
+from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
 #%%
