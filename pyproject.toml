@@ -52,7 +52,7 @@ mypy-extensions = {version = "^0.4.3", optional = true}
 ansys-dpf-core = "^0.6.0"
 vtk = {version = "*"}
 matplotlib = {version = "*"}
-pyvista = {version = "^0.36.1", optional = true}
+pyvista = {version = "^0.36.1"}
 pre-commit = {version = "*", optional = true}
 sphinx-autodoc-typehints = {version = "^1.19", optional = true}
 
@@ -69,19 +69,17 @@ all = [
     "pytest-cov",
     "twine",
     "build",
-    "pyvista",
     "mypy",
     "mypy-extensions",
     "pre-commit",
     "pypandoc",
-    "numpy",
     "sphinx-autodoc-typehints",
 ]
-docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "pyvista",
+docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
     "pypandoc", "sphinx-autodoc-typehints", "sphinx-design"]
-test = ["pytest", "pytest-cov", "pyvista"]
+test = ["pytest", "pytest-cov"]
 build = ["build", "twine"]
-pre-commit = ["pre-commit", "mypy", "mypy-extensions", "numpy"]
+pre-commit = ["pre-commit", "mypy", "mypy-extensions"]
 
 
 [tool.black]
