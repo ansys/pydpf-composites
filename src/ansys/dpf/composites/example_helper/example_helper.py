@@ -182,7 +182,7 @@ def _get_file_url(directory: str, filename: str) -> str:
 def _download_and_upload_file(
     directory: str, filename: str, tmpdir: str, server: dpf.server
 ) -> str:
-    """Download example file from example_data repo and and upload it the the dpf server."""
+    """Download example file from example_data repo and upload it the dpf server."""
     file_url = _get_file_url(directory, filename)
     local_path = os.path.join(tmpdir, filename)
     if server.local_server:

@@ -66,18 +66,18 @@ all = [
     "pytest-cov",
     "twine",
     "build",
-    "ansys-dpf-core",
     "pyvista",
     "mypy",
     "mypy-extensions",
     "pre-commit",
     "pypandoc",
     "numpy",
-    "sphinx-autodoc-typehints"
+    "sphinx-autodoc-typehints",
+    "vtk"
 ]
-docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "ansys-dpf-core", "pyvista",
+docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery", "pyvista",
     "pypandoc", "sphinx-autodoc-typehints", "sphinx-design"]
-test = ["pytest", "pytest-cov","ansys-dpf-core", "pyvista"]
+test = ["pytest", "pytest-cov", "pyvista"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "numpy"]
 
