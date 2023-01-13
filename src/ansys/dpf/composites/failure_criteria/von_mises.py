@@ -14,8 +14,7 @@ class VonMisesCriterion(FailureCriterionBase):
         vms: bool = True,
         wf_vme: float = 1.0,
         wf_vms: float = 1.0,
-        iss: bool = True,
-        ins: bool = False,
+        eval_ins: bool = False,
     ):
         """Create a von Mises criterion for isotropic materials."""
         super().__init__(name="Von Mises", active=True)
@@ -47,17 +46,11 @@ class VonMisesCriterion(FailureCriterionBase):
     def _set_wf_vms(self, value: float) -> None:
         self._wf_vms = value
 
-    def _get_iss(self) -> bool:
-        return self._iss
+    def _get_eval_ins(self) -> bool:
+        return self._eval_ins
 
-    def _set_iss(self, value: bool) -> None:
-        self._iss = value
-
-    def _get_ins(self) -> bool:
-        return self._ins
-
-    def _set_ins(self, value: bool) -> None:
-        self._ins = value
+    def _set_eval_ins(self, value: bool) -> None:
+        self._eval_ins = value
 
     vme = property(_get_vme, _set_vme, doc="Activates the von Mises strain criterion.")
     vms = property(_get_vms, _set_vms, doc="Activates the von Mises stress criterion.")
@@ -65,15 +58,11 @@ class VonMisesCriterion(FailureCriterionBase):
     wf_vms = property(
         _get_wf_vms, _set_wf_vms, doc="Weighting factor of the stress criterion (vms)."
     )
-    iss = property(
-        _get_iss,
-        _set_iss,
-        doc="Whether to consider the interlaminar shear stresses in the stress criterion.",
-    )
-    ins = property(
-        _get_ins,
-        _set_ins,
-        doc="Whether to consider the interlaminar normal stress in the stress criterion.",
+
+    eval_ins = property(
+        _get_eval_ins,
+        _set_eval_ins,
+        doc="Whether to consider s3 (compute s3 for layered shells).",
     )
 
 
