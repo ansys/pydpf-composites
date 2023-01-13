@@ -209,13 +209,13 @@ class ResultDefinition:
             write_for_full_scope = result_definition_scope.write_data_for_full_element_scope
             mapping_entry = []
             if result_definition_scope.mapping_file is not None:
-                mapping_entry.append(result_definition_scope.mapping_file)
+                mapping_entry.append(str(result_definition_scope.mapping_file))
             return {
                 "datasources": {
-                    "composite_definition": [result_definition_scope.composite_definition],
+                    "composite_definition": [str(result_definition_scope.composite_definition)],
                     "assembly_mapping_file": mapping_entry,
-                    "rst_file": [rst_file],
-                    "material_file": [material_file],
+                    "rst_file": [str(rst_file)],
+                    "material_file": [str(material_file)],
                 },
                 "write_data_for_full_element_scope": write_for_full_scope,
                 "elements": result_definition_scope.element_scope,
