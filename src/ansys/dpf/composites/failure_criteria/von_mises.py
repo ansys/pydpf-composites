@@ -62,7 +62,7 @@ class VonMisesCriterion(FailureCriterionBase):
     eval_ins = property(
         _get_eval_ins,
         _set_eval_ins,
-        doc="Whether to consider s3 (compute s3 for layered shells).",
+        doc="Whether to consider interlaminar normal stresses (s3) and compute them for layered shells.",
     )
 
 
