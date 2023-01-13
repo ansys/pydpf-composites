@@ -6,7 +6,7 @@
    intro
    api/index
    examples/index
-   developers_guide
+   Developer's Guide <developers_guide>
 
 pyDPF Composites
 ----------------

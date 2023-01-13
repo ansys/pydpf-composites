@@ -12,4 +12,5 @@ Objects and Helpers
     CompositeDataSources
     MaterialOperators
     ContinuousFiberCompositesFiles
+    connect_to_or_start_server
     get_composite_files_from_workbench_result_folder

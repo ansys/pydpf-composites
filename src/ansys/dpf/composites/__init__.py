@@ -14,6 +14,7 @@ from .composite_data_sources import (
     get_composite_files_from_workbench_result_folder,
 )
 from .composite_model import CompositeModel
+from .connect_to_or_start_server import connect_to_or_start_server
 from .enums import MaterialProperty, Spot
 from .layup_info import (
     AnalysisPlyInfoProvider,
@@ -61,4 +62,5 @@ __all__ = [
     "MaterialProperty",
     "ContinuousFiberCompositesFiles",
     "get_composite_files_from_workbench_result_folder",
+    "connect_to_or_start_server",
 ]
