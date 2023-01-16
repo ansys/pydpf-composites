@@ -1,6 +1,6 @@
 from ansys.dpf.composites.failure_criteria.von_mises import ATTRS_VON_MISES, VonMisesCriterion
 
-defaults = dict(zip(ATTRS_VON_MISES, [True, True, 1.0, 1.0, True, False]))
+defaults = dict(zip(ATTRS_VON_MISES, [True, True, 1.0, 1.0, False]))
 
 
 def test_von_mises_criterion():
@@ -19,7 +19,7 @@ def test_von_mises_criterion():
         assert value == defaults_dict[key]
 
     json_dumps = (
-        '{"active": true, "ins": false, "iss": true, "vme": true, "vms": true, '
+        '{"active": true, "eval_ins": false, "vme": true, "vms": true, '
         '"wf_vme": 1.0, "wf_vms": 1.0}'
     )
 

@@ -292,6 +292,7 @@ class CompositeModel:
             composite_definition=self._composite_files.composite[
                 composite_definition_label
             ].definition,
+            mapping_file=self._composite_files.composite[composite_definition_label].mapping,
             element_scope=[element_id],
             ply_scope=[],
         )
