@@ -17,6 +17,7 @@ Whenever you call the function connect_to_or_start_server you have to pass the l
  with the ansys_path argument:
 
 .. code::
+
     connect_to_or_start_server(ansys_path=os.environ["AWP_ROOT231"])
 
 Otherwise, the dpf server will be started with the latest installer it finds, which probably is 232.

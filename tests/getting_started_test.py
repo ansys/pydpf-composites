@@ -1,7 +1,13 @@
 import pathlib
 
+import ansys.dpf.core as dpf
 
-def test_getting_started(dpf_server):
+from ansys.dpf.composites.example_helper.example_helper import (
+    upload_continuous_fiber_composite_files_to_server,
+)
+
+
+def test_getting_started(dpf_server: dpf.server):
     """ "
     Caution: This test is identical to the getting_started example.
     Whenever this test needs to be adjusted also the getting started example has to be modified.
@@ -12,9 +18,9 @@ def test_getting_started(dpf_server):
 
     from ansys.dpf.composites import (
         CompositeModel,
-        connect_to_or_start_server,
         get_composite_files_from_workbench_result_folder,
     )
+    from ansys.dpf.composites import connect_to_or_start_server  # noqa:  F401
     from ansys.dpf.composites.enums import FailureOutput
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
@@ -28,7 +34,13 @@ def test_getting_started(dpf_server):
 
     # Start the server. By default this will start
     # a new local server and load the composites plugin
-    server = connect_to_or_start_server()
+
+    # In the test we use the dpf server and upload the files to the server.
+    # For the getting started example comment the next two lines and
+    # uncomment serer = connect_to_or_start_server()
+    server = dpf_server
+    composite_files = upload_continuous_fiber_composite_files_to_server(composite_files, server)
+    # server = connect_to_or_start_server()
 
     # Create a composite model
     composite_model = CompositeModel(composite_files, server)
