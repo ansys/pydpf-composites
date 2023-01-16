@@ -250,7 +250,7 @@ def test_assembly_model(dpf_server):
     ]
 
     assert (
-        composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
+            composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
     )
 
     assert composite_model.core_model is not None
@@ -262,6 +262,15 @@ def test_assembly_model(dpf_server):
         element_id=shell_element_id,
         composite_definition_label=shell_label,
     )
+
+    # ensure that the rd is complete
+    rd = sampling_point.result_definition.to_dict()
+    assert len(rd["scopes"]) == 1
+    composite_files = rd["scopes"][0]["datasources"]
+    assert len(composite_files["assembly_mapping_file"]) == 1
+    assert len(composite_files["composite_definition"]) == 1
+    assert len(composite_files["material_file"]) == 1
+    assert len(composite_files["rst_file"]) == 1
 
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids_shell
 
@@ -275,7 +284,7 @@ def test_assembly_model(dpf_server):
     ]
 
     assert (
-        composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
+            composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
     )
 
     timer.add("After getting properties")
