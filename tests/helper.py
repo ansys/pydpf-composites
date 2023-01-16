@@ -62,11 +62,11 @@ class SetupResult:
     layup_provider: Operator
 
 
-def setup_operators(server, files: ContinuousFiberCompositesFiles, upload=True):
+def setup_operators(server, files: ContinuousFiberCompositesFiles):
 
     timer = Timer()
 
-    if upload:
+    if not server.local_server:
         files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=server)
 
     data_sources = get_composites_data_sources(files)

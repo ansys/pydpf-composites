@@ -61,8 +61,8 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
     )
 
 
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+server = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 #%%
 

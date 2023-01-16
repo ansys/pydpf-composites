@@ -1,5 +1,4 @@
 """Helpers to connect to or start a dpf server with the composites plugin."""
-from dataclasses import dataclass
 import os
 from typing import Any, Callable, Dict, Optional, Union
 
@@ -34,16 +33,9 @@ def _wait_until_server_is_up(server: dpf.server) -> Any:
     _try_until_timeout(lambda: server.version, "Failed to connect to server before timeout.")
 
 
-@dataclass(frozen=True)
-class ServerContext:
-    """Server context todo: Add context information."""
-
-    server: dpf.server
-
-
 def connect_to_or_start_server(
     port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None
-) -> ServerContext:
+) -> dpf.server:
     r"""Connect to or start a dpf server.
 
     Note: If port or ip are set, this function will try to
@@ -85,4 +77,4 @@ def connect_to_or_start_server(
     # dpf.server.start_local_server. It is None if
     # we connect to an existing server.
     load_composites_plugin(server, ansys_path=server.ansys_path)
-    return ServerContext(server=server)
+    return server

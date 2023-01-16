@@ -28,17 +28,17 @@ def test_getting_started():
 
     # Start the server. By default this will start
     # a new local server and load the composites plugin
-    server_context = connect_to_or_start_server()
+    server = connect_to_or_start_server()
 
     # Create a composite model
-    composite_model = CompositeModel(composite_files, server_context.server)
+    composite_model = CompositeModel(composite_files, server)
 
     # Evaluate combined failure criterion
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
     irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value.value})
-    irf_field.plot()
+    # irf_field.plot()
 
     # Show sampling point for element with id/label 1
     element_id = 1
@@ -47,4 +47,3 @@ def test_getting_started():
     )
 
     fig, axes = sampling_point.get_result_plots()
-    fig.show()

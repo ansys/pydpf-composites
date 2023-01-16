@@ -64,8 +64,8 @@ detailed output for a sampling point.
 
     from ansys.dpf.composites import (
         CompositeModel,
+        connect_to_or_start_server,
         get_composite_files_from_workbench_result_folder,
-        connect_to_or_start_server
     )
     from ansys.dpf.composites.enums import FailureOutput
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
@@ -80,15 +80,13 @@ detailed output for a sampling point.
 
     # Start the server. By default this will start
     # a new local server and load the composites plugin
-    server_context = connect_to_or_start_server()
+    server = connect_to_or_start_server()
 
     # Create a composite model
-    composite_model = CompositeModel(composite_files, server_context.server)
+    composite_model = CompositeModel(composite_files, server)
 
     # Evaluate combined failure criterion
-    combined_failure_criterion = CombinedFailureCriterion(
-        failure_criteria=[MaxStressCriterion()]
-    )
+    combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
     irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value.value})
@@ -99,6 +97,6 @@ detailed output for a sampling point.
     sampling_point = composite_model.get_sampling_point(
         combined_criteria=combined_failure_criterion, element_id=element_id
     )
+
     fig, axes = sampling_point.get_result_plots()
     fig.show()
-
