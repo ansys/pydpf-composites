@@ -1,7 +1,7 @@
 import pathlib
 
 
-def test_getting_started():
+def test_getting_started(dpf_server):
     """ "
     Caution: This test is identical to the getting_started example.
     Whenever this test needs to be adjusted also the getting started example has to be modified.

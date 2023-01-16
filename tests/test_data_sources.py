@@ -6,7 +6,7 @@ from ansys.dpf.composites.composite_data_sources import (
 
 
 def test_get_files_from_result_folder(dpf_server):
-    WORKFLOW_EXAMPLE_ROOT = pathlib.Path(__file__).parent / "data" / "workflow_example"
+    WORKFLOW_EXAMPLE_ROOT = pathlib.Path(__file__).parent / "data" / "assembly" / "workflow_example"
 
     files = get_composite_files_from_workbench_result_folder(WORKFLOW_EXAMPLE_ROOT)
 
