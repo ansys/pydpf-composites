@@ -49,7 +49,7 @@ def load_composites_plugin(server: dpf.server, ansys_path: Optional[str] = None)
         },
         "Ans.Dpf.EngineeringData": {
             "nt": ["dpf", "bin", "winx64"],
-            "posix": ["dpf", "dll", "linx64"],
+            "posix": ["dpf", "bin", "linx64"],
         },
     }
 
