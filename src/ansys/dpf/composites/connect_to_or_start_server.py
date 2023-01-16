@@ -74,6 +74,12 @@ def connect_to_or_start_server(
     else:
         server = dpf.server.start_local_server(ansys_path=ansys_path)
 
+    server.check_version(
+        "5.0",
+        f"The composites plugin requires at least server version 5.0 (Ansys 2023R1)"
+        f" Your version is currently {server.version}",
+    )
+
     _wait_until_server_is_up(server)
     # Note: server.ansys_path contains the computed ansys path from
     # dpf.server.start_local_server. It is None if
