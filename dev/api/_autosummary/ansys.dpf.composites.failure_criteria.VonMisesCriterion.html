@@ -399,13 +399,8 @@ function checkPageExistsAndRedirect(event) {
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.ins.html">
-       ins
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.iss.html">
-       iss
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.eval_ins.html">
+       eval_ins
       </a>
      </li>
      <li class="toctree-l3">
@@ -515,7 +510,7 @@ function checkPageExistsAndRedirect(event) {
 <h1>ansys.dpf.composites.failure_criteria.VonMisesCriterion<a class="headerlink" href="#ansys-dpf-composites-failure-criteria-vonmisescriterion" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.failure_criteria.VonMisesCriterion">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.failure_criteria.</span></span><span class="sig-name descname"><span class="pre">VonMisesCriterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_vme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_vms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.VonMisesCriterion" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.failure_criteria.</span></span><span class="sig-name descname"><span class="pre">VonMisesCriterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_vme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_vms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_ins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.VonMisesCriterion" title="Permalink to this definition">#</a></dt>
 <dd><p>Defines the von Mises criterion for isotropic materials.</p>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
@@ -544,25 +539,22 @@ function checkPageExistsAndRedirect(event) {
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.active.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.active" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.active</span></code></a></p></td>
 <td><p>The failure criterion is suppressed if active is False.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.ins.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.ins" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.ins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.ins</span></code></a></p></td>
-<td><p>Whether to consider the interlaminar normal stress in the stress criterion.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.eval_ins.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.eval_ins" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.eval_ins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.eval_ins</span></code></a></p></td>
+<td><p>Whether to consider interlaminar normal stresses (s3) and compute them for layered shells.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.iss.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.iss" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.iss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.iss</span></code></a></p></td>
-<td><p>Whether to consider the interlaminar shear stresses in the stress criterion.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.name.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.name" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.name</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.name.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.name" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.name</span></code></a></p></td>
 <td><p>Name of the failure criterion.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.vme</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.vme</span></code></a></p></td>
 <td><p>Activates the von Mises strain criterion.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.vms</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.vms</span></code></a></p></td>
 <td><p>Activates the von Mises stress criterion.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.wf_vme</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.wf_vme</span></code></a></p></td>
 <td><p>Weighting factor of strain criterion (vme).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.wf_vms</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms.html#ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms" title="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VonMisesCriterion.wf_vms</span></code></a></p></td>
 <td><p>Weighting factor of the stress criterion (vms).</p></td>
 </tr>
 </tbody>

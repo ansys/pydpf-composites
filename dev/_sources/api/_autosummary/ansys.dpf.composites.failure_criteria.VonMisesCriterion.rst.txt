@@ -34,10 +34,7 @@
       VonMisesCriterion.active
       
       
-      VonMisesCriterion.ins
-      
-      
-      VonMisesCriterion.iss
+      VonMisesCriterion.eval_ins
       
       
       VonMisesCriterion.name
