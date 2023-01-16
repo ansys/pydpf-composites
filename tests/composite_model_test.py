@@ -250,7 +250,7 @@ def test_assembly_model(dpf_server):
     ]
 
     assert (
-            composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
+        composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
     )
 
     assert composite_model.core_model is not None
@@ -284,7 +284,7 @@ def test_assembly_model(dpf_server):
     ]
 
     assert (
-            composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
+        composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
     )
 
     timer.add("After getting properties")
