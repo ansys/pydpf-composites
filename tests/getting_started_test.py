@@ -12,9 +12,9 @@ def test_getting_started():
 
     from ansys.dpf.composites import (
         CompositeModel,
+        connect_to_or_start_server,
         get_composite_files_from_workbench_result_folder,
     )
-    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
     from ansys.dpf.composites.enums import FailureOutput
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 

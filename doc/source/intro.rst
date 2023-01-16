@@ -62,10 +62,11 @@ detailed output for a sampling point.
 
 .. code::
 
-    from ansys.dpf.composites import get_composite_files_from_workbench_result_folder
-    from ansys.dpf.composites import CompositeModel
-    from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-
+    from ansys.dpf.composites import (
+        CompositeModel,
+        get_composite_files_from_workbench_result_folder,
+        connect_to_or_start_server
+    )
     from ansys.dpf.composites.enums import FailureOutput
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
