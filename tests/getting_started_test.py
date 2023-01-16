@@ -11,9 +11,12 @@ def test_getting_started(dpf_server: dpf.server):
     """ "
     Caution: This test is identical to the getting_started example.
     Whenever this test needs to be adjusted also the getting started example has to be modified.
-    Copy all the code below this comment and replace the code that sets the result_folder
-    (by an example results folder).
-    Make sure there are no imports except import pathlib outside the current function.
+    Copy all the code below this comment and make the following adjustments:
+    - replace the code that sets the result_folder (by an example results folder).
+    - Make sure no additional imports have been added on the top of the file.
+    - Remove the noqa: F401 comment in the import statement
+    - Read the comment above the line server = dpf_server and make the corresponding changes.
+    - Uncomment the irf_field.plot() line
     """
 
     from ansys.dpf.composites import (
@@ -50,6 +53,8 @@ def test_getting_started(dpf_server: dpf.server):
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
     irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value.value})
+    # Commented because it blocks execution. Uncomment this
+    # line when you copy this code the the getting started example
     # irf_field.plot()
 
     # Show sampling point for element with id/label 1
