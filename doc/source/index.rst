@@ -51,7 +51,7 @@ Key features
   See this :doc:`Example </examples/gallery_examples/1_failure_operator_example>`.
 * :doc:`Sampling Point <api/_autosummary/ansys.dpf.composites.SamplingPoint>` to
   extract and visualize result over the entire thickness of the laminate.
-  :doc:`Here <examples/gallery_examples/sampling_point_example>` is an example.
+  :doc:`Here <examples/gallery_examples/2_sampling_point_example>` is an example.
 * :doc:`Result Definition <api/_autosummary/ansys.dpf.composites.ResultDefinition>` to configure
   combined failure criteria and scopes.
 * Exposure of material properties (elasticity, strength limits et).
