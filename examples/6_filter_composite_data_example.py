@@ -1,10 +1,13 @@
 """
 .. _filter_composite_data:
 
-Filter result data by different criteria
-----------------------------------------------------------
+Filter Result Data by Different Criteria
+----------------------------------------
 
-Filter data by layer, spot and node as well as material or analysis_ply id.
+Example how to filter strains and stresses by material, layer or analysis ply.
+
+Filter data by layer, spot and node as well as material or analysis_ply id is important for
+custom post-processing of layered composites.
 Refer to :ref:`select_indices` to learn more about how layered result data is organized.
 
 """

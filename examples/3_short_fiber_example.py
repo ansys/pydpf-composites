@@ -1,9 +1,14 @@
 """
 .. _short_fiber_example:
 
-Basic example for a short fiber failure analysis
-------------------------------------------------
+Short Fiber Failure Analysis
+----------------------------
 
+Failure analysis for a short fiber-reinforced part.
+
+This example shows how to configure the DPF operator
+*short_fiber_failure_criterion_evaluator* which enables the failure evaluation
+of short fiber composites.
 
 """
 # %%

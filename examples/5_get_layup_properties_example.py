@@ -1,14 +1,19 @@
 """
 .. _layup_properties_plot:
 
-Get Layup Properties
-----------------------------------------------------------
+Get Lay-up Properties
+---------------------
 
-This example shows how to access basic layup properties such as layer
+Extract elemental layered properties such as thickness and material.
+
+This example shows how to access basic lay-up properties such as layer
 thicknesses, angles and analysis ply names. These properties can be queried
-very efficiently. To get the full layup information of an element including results
-consider also the sampling point operator
-(:ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py`)
+very efficiently. To get the full lay-up information of an element including results
+consider also :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>`.
+
+Element layered properties are typically used for layer-wise post-processing and
+data filtering.
+
 """
 
 #%%

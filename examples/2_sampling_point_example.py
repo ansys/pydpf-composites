@@ -1,13 +1,21 @@
 """
 .. _sampling_point_example:
 
-Sampling Point - Processing and visualization of laminate results
------------------------------------------------------------------
+Sampling Point
+--------------
 
-Example how the lay-up and through-the-thickness results of a
-layered element can be accessed, processed and visualized.
+Extract ply-wise laminate properties and results.
+
+The :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>` is feature
+to extract through-the-thickness data of laminate. For instance, ply-wise properties
+strains and stresses.
+Besides that, it implements basic visualization to plot the laminate.
+
+This example uses the :class:`Composite Model <ansys.dpf.composites.CompositeModel>` to
+scope a Sampling Point to a certain element and to visualize the laminate.
 
 """
+
 # %%
 # Load ansys libraries
 

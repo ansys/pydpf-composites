@@ -1,12 +1,14 @@
 """
 .. _sampling_point_operator_example:
 
-Basic example for a Sampling Point Operator
--------------------------------------------
+DPF Sampling Point Operator
+---------------------------
+
+Setup
 
 Sampling Point Operator returns the through-the-thickness results
 of a layered element and lay-up information (ply material, thickness).
-This basic example shows how the configure the operator and how to
+This basic example shows how to configure the operator and how to
 access the data.
 
 The :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py` shows

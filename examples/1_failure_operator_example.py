@@ -1,17 +1,19 @@
 """
 .. _failure_operator_example:
 
-Composite failure operator
+Composite Failure Analysis
 --------------------------
 
-This operator computes the minimum and maximum failure values and failure modes
-of a combined failure criterion. A combined failure criterion is a selection of
-failure criteria such as Puck, Tsai-Wu, Face Sheet Wrinkling...
+Analyse a composite structure by a combined failure criterion.
 
-The combined failure criterion allows you to assess different type of materials
-and failure modes at once. The scoping enables to evaluate of the min and max
-failure per element, or to select a list of materials or plies.
+The failure operator of DPF Composites computes the minimum and maximum failure values
+and failure modes of a combined failure criterion. A combined failure criterion is a selection of
+failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Ref to :ref:`failure_criteria`
+to get the full list of failure criteria.
 
+The :class:`Combined Failure Criterion <ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
+allows you to assess different type of materials and failure modes at once.
+The scoping enables to evaluate of the min and max failure per element, or to select a list of materials or plies.
 """
 # %%
 # Load ansys libraries
