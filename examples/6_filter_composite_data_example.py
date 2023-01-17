@@ -13,6 +13,9 @@ Refer to :ref:`select_indices` to learn more about how layered result data is or
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Import dependencies
 import ansys.dpf.core as dpf
 import numpy as np

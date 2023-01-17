@@ -26,6 +26,9 @@ the lay-up.
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Load Ansys libraries
 import ansys.dpf.core as dpf
 

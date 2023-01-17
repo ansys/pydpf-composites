@@ -17,7 +17,10 @@ scope a Sampling Point to a certain element and to visualize the laminate.
 """
 
 # %%
-# Load ansys libraries
+# Script
+# ~~~~~~
+#
+# Load Ansys libraries
 
 from ansys.dpf.composites import Spot
 from ansys.dpf.composites.composite_model import CompositeModel

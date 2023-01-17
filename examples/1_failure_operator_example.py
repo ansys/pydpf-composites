@@ -13,9 +13,13 @@ to get the full list of failure criteria.
 
 The :class:`Combined Failure Criterion <ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
 allows you to assess different type of materials and failure modes at once.
-The scoping enables to evaluate of the min and max failure per element, or to select a list of materials or plies.
+The scoping enables to evaluate of the min and max failure per element,
+or to select a list of materials or plies.
 """
 # %%
+# Script
+# ~~~~~~
+#
 # Load ansys libraries
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope

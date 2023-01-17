@@ -12,6 +12,9 @@ helps to operator on the individual parts and to access all the data.
 
 """
 # %%
+# Script
+# ~~~~~~
+#
 # Load ansys libraries
 
 from ansys.dpf.composites.composite_model import CompositeModel

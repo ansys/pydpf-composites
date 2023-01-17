@@ -12,7 +12,10 @@ of short fiber composites.
 
 """
 # %%
-# Load ansys libraries
+# Script
+# ~~~~~~
+#
+# Load Ansys libraries
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server

@@ -14,6 +14,9 @@ Note: Only constant material properties are currently supported.
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Import dependencies
 import ansys.dpf.core as dpf
 import numpy as np
