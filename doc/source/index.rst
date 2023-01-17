@@ -48,7 +48,7 @@ Key features
 ''''''''''''
 
 * Failure criteria evaluator.
-  See this :doc:`Example </examples/gallery_examples/failure_operator_example>`.
+  See this :doc:`Example </examples/gallery_examples/1_failure_operator_example>`.
 * :doc:`Sampling Point <api/_autosummary/ansys.dpf.composites.SamplingPoint>` to
   extract and visualize result over the entire thickness of the laminate.
   :doc:`Here <examples/gallery_examples/sampling_point_example>` is an example.
