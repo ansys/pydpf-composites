@@ -26,7 +26,8 @@ def get_constant_property(
         material property
     dpf_material_id:
     materials_provider:
-        Dpf Materials provider operator
+        Dpf Materials provider operator. Available from CompositeModel:
+        :class:`CompositeModel.material_operators`
     data_source_or_streams_provider:
         Data source or streams provider that contains a rst file
     """
