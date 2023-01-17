@@ -464,14 +464,14 @@ Note, the INS operator fills the results directly into the stress field.</p>
 </section>
 <section id="start-server-and-upload-files">
 <h1>Start Server and upload files<a class="headerlink" href="#start-server-and-upload-files" title="Permalink to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
-<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;ins&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server_context</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server_context</span><span class="p">,</span> <span class="s2">&quot;ins&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="configure-data-sources">
 <h1>Configure data sources<a class="headerlink" href="#configure-data-sources" title="Permalink to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server_context</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -554,7 +554,7 @@ in the element coordinate system ( material coordinate system)</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.343 seconds)</p>
+<img src="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_interlaminar_normal_stress_example_002.png" alt="interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  6.369 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d2765c4de18ca7baa598ec9faaa6b4e7/interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">interlaminar_normal_stress_example.py</span></code></a></p>

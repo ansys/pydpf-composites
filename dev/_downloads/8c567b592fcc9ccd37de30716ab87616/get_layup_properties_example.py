@@ -23,12 +23,12 @@ from ansys.dpf.composites.example_helper.example_helper import get_continuous_fi
 #%%
 # Start server and load example files
 
-server = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
 
 #%%
 # Setup composite model
-composite_model = CompositeModel(composite_files_on_server, server)
+composite_model = CompositeModel(composite_files_on_server, server_context.server)
 
 #%%
 # Get layup properties for all the elements and show the first one as an example

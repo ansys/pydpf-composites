@@ -14,8 +14,8 @@ from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_
 from ansys.dpf.composites.example_helper.example_helper import get_short_fiber_example_files
 
 # %%
-server = connect_to_or_start_server()
-composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
+server_context = connect_to_or_start_server()
+composite_files_on_server = get_short_fiber_example_files(server_context, "short_fiber")
 
 
 # %%
