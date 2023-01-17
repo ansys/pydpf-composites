@@ -100,7 +100,7 @@ with max_s3_field.as_local_field() as local_max_s3_field:
 composite_model.get_mesh().plot(max_s3_field)
 
 #%%
-# Plot s3 of the mid-plane of a certain ply
+# Plot s3 at the mid-plane of a certain ply
 
 analysis_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 selected_ply = "P3L1__Ply.1"

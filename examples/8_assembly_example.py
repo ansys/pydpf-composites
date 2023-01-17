@@ -15,7 +15,7 @@ helps to operator on the individual parts and to access all the data.
 # Script
 # ~~~~~~
 #
-# Load ansys libraries
+# Load Ansys libraries
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
@@ -36,7 +36,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 
 # %%
-# Setup composite model
+# Set up composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%

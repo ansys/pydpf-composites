@@ -40,6 +40,8 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
 # Configure the combined failure criterion
+
+
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
@@ -53,7 +55,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 
 # %%
-# Setup composite model
+# Set up composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%

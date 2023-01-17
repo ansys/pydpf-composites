@@ -86,11 +86,11 @@ composite_definitions_source.add_file_path(
 )
 
 #%%
-# Setup Mesh Provider
+# Set up Mesh Provider
 mesh_provider = model.metadata.mesh_provider
 
 #%%
-# Setup Material Provider
+# Set up Material Provider
 # The material support provider takes care of mapping the materials in the rst file to
 # the materials in the composite definitions.
 # The material support contains all the materials from the rst file.

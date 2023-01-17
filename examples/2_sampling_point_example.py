@@ -54,7 +54,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 
 # %%
-# Setup composite model
+# Set up composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%

@@ -27,7 +27,7 @@ composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
 
 
 # %%
-# Setup data sources
+# Set up data sources
 data_sources = dpf.DataSources()
 data_sources.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
 data_sources.add_file_path(composite_files_on_server.dsdat, "dat")
