@@ -132,8 +132,9 @@ class CompositeModel:
         ----------
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -161,8 +162,9 @@ class CompositeModel:
         ----------
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies. See "Note on assemblies"
+            in :class:`CompositeModel` docstring.
 
         """
         if composite_definition_label is None:
@@ -269,8 +271,9 @@ class CompositeModel:
             time/frequency in the result file is used.
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
         if time is None:
             time_in = self.get_result_times_or_frequencies()[-1]
@@ -319,8 +322,9 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -348,8 +352,9 @@ class CompositeModel:
             Selected element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -375,8 +380,9 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
             The dict will only contain the analysis plies in the specified composite definition.
         """
         if composite_definition_label is None:
@@ -397,8 +403,9 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -427,8 +434,9 @@ class CompositeModel:
             A list of the requested material properties
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite_files).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
             The dict will only contain the materials of the analysis plies defined
             in the specified composite definition.
         """
@@ -463,8 +471,9 @@ class CompositeModel:
         strains:
         composite_definition_label:
             Label of composite definition
-            (dictionary key in ContinuousFiberCompositesFiles.composite).
-            Only required for assemblies. See "Note on assemblies" in class docstring.
+            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            Only required for assemblies.
+            See "Note on assemblies" in :class:`CompositeModel` docstring.
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """

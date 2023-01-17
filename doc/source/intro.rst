@@ -13,8 +13,10 @@ Since the module is not yet public, please install from github:
 
     pip install git+https://github.com/pyansys/pydpf-composites.git
 
+
+
 Whenever you call the function connect_to_or_start_server you have to pass the location of the 231 installer
- with the ansys_path argument:
+with the ansys_path argument:
 
 .. code::
 
@@ -101,3 +103,12 @@ detailed output for a sampling point.
 
     fig, axes = sampling_point.get_result_plots()
     fig.show()
+
+
+.. image:: _static/boat_irf.png
+  :width: 750
+  :alt: IRF plot on boat
+
+.. image:: _static/boat_sampling_point.png
+  :width: 750
+  :alt: Sampling Point on Boat

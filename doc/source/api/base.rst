@@ -9,6 +9,8 @@ Objects and Helpers
     ResultDefinition
     SamplingPoint
     Spot
+    CompositeScope
+    FailureMeasure
     CompositeDataSources
     MaterialOperators
     ContinuousFiberCompositesFiles
