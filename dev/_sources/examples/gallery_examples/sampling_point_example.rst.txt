@@ -319,7 +319,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.816 seconds)
+   **Total running time of the script:** ( 0 minutes  1.104 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_sampling_point_example.py:

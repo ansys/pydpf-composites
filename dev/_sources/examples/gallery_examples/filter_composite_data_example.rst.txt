@@ -295,7 +295,7 @@ to get the dpf_material_id from an analysis ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.719 seconds)
+   **Total running time of the script:** ( 0 minutes  1.356 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_filter_composite_data_example.py:
