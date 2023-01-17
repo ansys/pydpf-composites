@@ -50,12 +50,12 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 # %%
 # Start server
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+server = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
 # Setup composite model
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
+composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
 # Create the sampling point

@@ -36,13 +36,13 @@ from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_ana
 #%%
 # Start Server and upload files
 # -----------------------------
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "ins")
+server = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server, "ins")
 
 #%%
 # Configure data sources
 # -----------------------------
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
+composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
 # Inputs from the result files

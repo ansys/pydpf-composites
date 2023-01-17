@@ -99,8 +99,8 @@ Start server
 
 .. code-block:: default
 
-    server_context = connect_to_or_start_server()
-    composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+    server = connect_to_or_start_server()
+    composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 
 
@@ -117,7 +117,7 @@ Setup composite model
 
 .. code-block:: default
 
-    composite_model = CompositeModel(composite_files_on_server, server_context.server)
+    composite_model = CompositeModel(composite_files_on_server, server)
 
 
 
@@ -200,7 +200,7 @@ Query results and plot them
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.429 seconds)
+   **Total running time of the script:** ( 0 minutes  0.966 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_sampling_point_operator_example.py:

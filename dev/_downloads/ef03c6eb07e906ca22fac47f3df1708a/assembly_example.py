@@ -17,8 +17,8 @@ from ansys.dpf.composites.enums import FailureOutput
 from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "assembly")
+server = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server, "assembly")
 
 
 # %%
@@ -32,7 +32,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
 
 # %%
 # Setup composite model
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
+composite_model = CompositeModel(composite_files_on_server, server)
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=get_combined_failure_criterion()
 )
