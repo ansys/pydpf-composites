@@ -6,4 +6,15 @@ Composite Model
 .. autosummary::
     :toctree: _autosummary
 
+      get_composite_files_from_workbench_result_folder
+      CompositeDataSources
       CompositeModel
+      CompositeScope
+      ContinuousFiberCompositesFiles
+      FailureMeasure
+      MaterialOperators
+      ResultDefinition
+      SamplingPoint
+
+
+
