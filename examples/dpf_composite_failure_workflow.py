@@ -4,6 +4,8 @@
 DPF Composite Failure Workflow
 ------------------------------
 
+Use of native DPF Python interface to configure and run composite failure evaluator.
+
 This example shows how to connect the different dpf operators that are needed to
 evaluate composite failure criteria. For simple use cases it is preferable
 to use the composite failure operator

@@ -4,12 +4,12 @@
 Filter Result Data by Different Criteria
 ----------------------------------------
 
-Example how to filter strains and stresses by material, layer or analysis ply.
+Filter strains and stresses by material, layer or analysis ply.
 
-Filter data by layer, spot and node as well as material or analysis_ply id is important for
-custom post-processing of layered composites.
-Refer to :ref:`select_indices` to learn more about how layered result data is organized.
-
+This example shows how to filter data by layer, spot and node as well as material
+or analysis_ply id. This is example can be of help for custom post-processing of
+layered composites. Refer to :ref:`select_indices` to learn more about how layered
+result data is organized.
 """
 
 #%%
