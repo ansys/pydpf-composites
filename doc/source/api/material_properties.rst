@@ -9,7 +9,7 @@ of a given element. The dpf_material_id for a given analysis ply can be obtained
 by calling :func:`~ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map`. A lookup by
 material name is currently not available.
 The :ref:`sphx_glr_examples_gallery_examples_4_get_material_properties_example.py`
- example shows how to evaluate material properties.
+example shows how to evaluate material properties.
 
 .. currentmodule:: ansys.dpf.composites
 
