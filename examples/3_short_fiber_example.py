@@ -34,11 +34,11 @@ data_sources.add_file_path(composite_files_on_server.dsdat, "dat")
 data_sources.set_result_file_path(composite_files_on_server.rst)
 
 # %%
-# Create dpf model and mesh provider
+# Initialize DPF model
 model = dpf.Model(composite_files_on_server.rst)
 
 # %%
-# Short Fiber Failure Criterion Evaluator
+# Configure the Short Fiber Failure Criterion Evaluator
 sf_op = dpf.Operator("composite::short_fiber_failure_criterion_evaluator")
 sf_op.inputs.data_sources(data_sources)
 sf_op.inputs.stress_limit_type("ultimate")  # "yield" or "ultimate" (default)

@@ -20,7 +20,7 @@ helper functions can be used to obtain composite result data.
 # Script
 # ~~~~~~
 #
-# Load ansys libraries
+# Load Ansys libraries
 #
 import ansys.dpf.core as dpf
 
@@ -39,7 +39,8 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
-
+#%%
+# Configure the combined failure criterion
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
@@ -66,12 +67,13 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
         ],
     )
 
-
+#%%
+# Start server and prepare files
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 #%%
-
+# Initialize DPF model and data sources
 model = dpf.Model(composite_files_on_server.rst)
 rst_data_source = dpf.DataSources(composite_files_on_server.rst)
 
@@ -127,7 +129,7 @@ layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.re
 layup_provider.run()
 
 #%%
-# Setup the result operators: strains and stresses
+# Set up the result operators: strains and stresses
 # Rotate to global is False because the post-processing engine expects the results to be
 # in the element coordinate system ( material coordinate system)
 #
@@ -140,7 +142,7 @@ stress_operator.inputs.data_sources(rst_data_source)
 stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
-# Setup the failure evaluator. Combines the results and evaluates all the failure criteria.
+# Set up the failure evaluator. Combines the results and evaluates all the failure criteria.
 # The output contains the maximum failure criteria for each integration point.
 #
 failure_criteria_definition = get_combined_failure_criterion()

@@ -29,7 +29,6 @@ from ansys.dpf.composites.example_helper.example_helper import get_continuous_fi
 
 #%%
 # Start server and load example files
-
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
@@ -49,7 +48,7 @@ property_dict = composite_model.get_constant_property_dict([material_property])
 
 
 #%%
-# Get example strain field
+# Get strain field
 strain_operator = dpf.Operator("EPEL")
 strain_operator.inputs.data_sources(composite_model.data_sources.rst)
 strain_operator.inputs.bool_rotate_to_global(False)
@@ -57,7 +56,7 @@ strain_field = strain_operator.get_output(pin=0, output_type=dpf.types.fields_co
 
 
 #%%
-# Evaluate basic max strain failure criterion
+# Implement a custom failure criterion: basic max strain
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
 with result_field.as_local_field() as local_result_field:
