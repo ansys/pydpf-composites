@@ -452,7 +452,8 @@ class LayupPropertiesProvider:
 
     Parameters
     ----------
-    layup_provider
+    layup_provider:
+        Use :func:`~add_layup_info_to_mesh` to obtain a layup provider.
     mesh
     """
 

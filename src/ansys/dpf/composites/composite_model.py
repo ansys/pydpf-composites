@@ -88,10 +88,13 @@ class CompositeModel:
     solids or layered models defined outside of an ACP model.
     self.composite_definition_labels returns
     All the available composite_definition_labels.
+    See also: :ref:`sphx_glr_examples_gallery_examples_8_assembly_example.py`
 
     Parameters
     ----------
     composite_files:
+        Use :func:`ansys.dpf.composites.get_composite_files_from_workbench_result_folder`
+        to obtain ContinuousFiberCompositesFiles object.
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
@@ -462,6 +465,9 @@ class CompositeModel:
         composite_definition_label: Optional[str] = None,
     ) -> None:
         """Add interlaminar_normal_stresses to the stresses FieldsContainer.
+
+        See also:
+        :ref:`sphx_glr_examples_gallery_examples_7_interlaminar_normal_stress_example.py`
 
         Parameters
         ----------

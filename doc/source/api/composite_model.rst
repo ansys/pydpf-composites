@@ -8,6 +8,7 @@ Composite Model
 
       get_composite_files_from_workbench_result_folder
       CompositeDataSources
+      CompositeDefinitionFiles
       CompositeModel
       CompositeScope
       ContinuousFiberCompositesFiles

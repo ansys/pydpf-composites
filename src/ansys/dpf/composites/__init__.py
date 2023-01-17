@@ -10,6 +10,7 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 from .add_layup_info_to_mesh import add_layup_info_to_mesh
 from .composite_data_sources import (
     CompositeDataSources,
+    CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     get_composite_files_from_workbench_result_folder,
 )
@@ -41,6 +42,7 @@ from .select_indices import (
 __all__ = [
     "CompositeModel",
     "CompositeScope",
+    "CompositeDefinitionFiles",
     "CompositeDataSources",
     "add_layup_info_to_mesh",
     "MaterialOperators",

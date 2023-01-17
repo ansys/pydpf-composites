@@ -36,7 +36,7 @@ def _wait_until_server_is_up(server: dpf.server) -> Any:
 def connect_to_or_start_server(
     port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None
 ) -> dpf.server:
-    r"""Connect to or start a dpf server.
+    r"""Connect to or start a dpf server with the composites plugin loaded.
 
     Note: If port or ip are set, this function will try to
     connect to a server and the ansys_path is ignored.
