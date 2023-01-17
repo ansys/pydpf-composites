@@ -51,7 +51,7 @@
     <script src="../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="How to use the CompositeModel for an assembly model" href="gallery_examples/assembly_example.html" />
+    <link rel="next" title="Composite Failure Analysis" href="gallery_examples/1_failure_operator_example.html" />
     <link rel="prev" title="material_operators" href="../api/_autosummary/ansys.dpf.composites.CompositeModel.material_operators.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
@@ -292,53 +292,48 @@ function checkPageExistsAndRedirect(event) {
     
     <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/assembly_example.html">
-   How to use the CompositeModel for an assembly model
+  <a class="reference internal" href="gallery_examples/1_failure_operator_example.html">
+   Composite Failure Analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/basic_example.html">
-   Basic example of setting up a composite failure workflow.
+  <a class="reference internal" href="gallery_examples/2_sampling_point_example.html">
+   Sampling Point
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/failure_operator_example.html">
-   Composite failure operator
+  <a class="reference internal" href="gallery_examples/3_short_fiber_example.html">
+   Short Fiber Failure Analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/filter_composite_data_example.html">
-   Filter result data by different criteria
+  <a class="reference internal" href="gallery_examples/4_get_material_properties_example.html">
+   Material Properties and Custom Failure Criterion
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/get_layup_properties_example.html">
-   Get Layup Properties
+  <a class="reference internal" href="gallery_examples/5_get_layup_properties_example.html">
+   Get Lay-up Properties
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/get_material_properties_example.html">
-   Get Material Properties and evaluate basic failure criterion
+  <a class="reference internal" href="gallery_examples/6_filter_composite_data_example.html">
+   Filter Result Data by Different Criteria
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/interlaminar_normal_stress_example.html">
-   Interlaminar Normal Stresses in Layered Shells
+  <a class="reference internal" href="gallery_examples/7_interlaminar_normal_stress_example.html">
+   Interlaminar Normal Stresses
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/sampling_point_example.html">
-   Sampling Point - Processing and visualization of laminate results
+  <a class="reference internal" href="gallery_examples/8_assembly_example.html">
+   Post-process an Assembly
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/sampling_point_operator_example.html">
-   Basic example for a Sampling Point Operator
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gallery_examples/short_fiber_example.html">
-   Basic example for a short fiber failure analysis
+  <a class="reference internal" href="gallery_examples/dpf_composite_failure_workflow.html">
+   DPF Composite Failure Workflow
   </a>
  </li>
 </ul>
@@ -384,36 +379,33 @@ function checkPageExistsAndRedirect(event) {
   <span class="target" id="ref-examples"></span><section id="examples">
 <span id="gallery"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h1>
 <p>These examples demonstrate the behavior and usage of pyDPF-composites.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how an assembly of a shell and solid composite model can be post-processed."><img alt="How to use the CompositeModel for an assembly model" src="../_images/sphx_glr_assembly_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/assembly_example.html#sphx-glr-examples-gallery-examples-assembly-example-py"><span class="std std-ref">How to use the CompositeModel for an assembly model</span></a></p>
-  <div class="sphx-glr-thumbnail-title">How to use the CompositeModel for an assembly model</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to connect the different dpf operators that are needed to evaluate compo..."><img alt="Basic example of setting up a composite failure workflow." src="../_images/sphx_glr_basic_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/basic_example.html#sphx-glr-examples-gallery-examples-basic-example-py"><span class="std std-ref">Basic example of setting up a composite failure workflow.</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Basic example of setting up a composite failure workflow.</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This operator computes the minimum and maximum failure values and failure modes of a combined f..."><img alt="Composite failure operator" src="../_images/sphx_glr_failure_operator_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/failure_operator_example.html#sphx-glr-examples-gallery-examples-failure-operator-example-py"><span class="std std-ref">Composite failure operator</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Composite failure operator</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Filter data by layer, spot and node as well as material or analysis_ply id. Refer to select_ind..."><img alt="Filter result data by different criteria" src="../_images/sphx_glr_filter_composite_data_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/filter_composite_data_example.html#sphx-glr-examples-gallery-examples-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Filter result data by different criteria</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to access basic layup properties such as layer thicknesses, angles and a..."><img alt="Get Layup Properties" src="../_images/sphx_glr_get_layup_properties_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/get_layup_properties_example.html#sphx-glr-examples-gallery-examples-get-layup-properties-example-py"><span class="std std-ref">Get Layup Properties</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Get Layup Properties</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to access constant material properties and evaluate a basic strain limit..."><img alt="Get Material Properties and evaluate basic failure criterion" src="../_images/sphx_glr_get_material_properties_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/get_material_properties_example.html#sphx-glr-examples-gallery-examples-get-material-properties-example-py"><span class="std std-ref">Get Material Properties and evaluate basic failure criterion</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Get Material Properties and evaluate basic failure criterion</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to connect the different dpf operators that are needed to evaluate the i..."><img alt="Interlaminar Normal Stresses in Layered Shells" src="../_images/sphx_glr_interlaminar_normal_stress_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/interlaminar_normal_stress_example.html#sphx-glr-examples-gallery-examples-interlaminar-normal-stress-example-py"><span class="std std-ref">Interlaminar Normal Stresses in Layered Shells</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Interlaminar Normal Stresses in Layered Shells</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Example how the lay-up and through-the-thickness results of a layered element can be accessed, ..."><img alt="Sampling Point - Processing and visualization of laminate results" src="../_images/sphx_glr_sampling_point_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/sampling_point_example.html#sphx-glr-examples-gallery-examples-sampling-point-example-py"><span class="std std-ref">Sampling Point - Processing and visualization of laminate results</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Sampling Point - Processing and visualization of laminate results</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Sampling Point Operator returns the through-the-thickness results of a layered element and lay-..."><img alt="Basic example for a Sampling Point Operator" src="../_images/sphx_glr_sampling_point_operator_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/sampling_point_operator_example.html#sphx-glr-examples-gallery-examples-sampling-point-operator-example-py"><span class="std std-ref">Basic example for a Sampling Point Operator</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Basic example for a Sampling Point Operator</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Basic example for a short fiber failure analysis"><img alt="Basic example for a short fiber failure analysis" src="../_images/sphx_glr_short_fiber_example_thumb.png" />
-<p><a class="reference internal" href="gallery_examples/short_fiber_example.html#sphx-glr-examples-gallery-examples-short-fiber-example-py"><span class="std std-ref">Basic example for a short fiber failure analysis</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Basic example for a short fiber failure analysis</div>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Analyse a composite structure by a combined failure criterion."><img alt="Composite Failure Analysis" src="../_images/sphx_glr_1_failure_operator_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite Failure Analysis</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Composite Failure Analysis</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Extract ply-wise laminate properties and results."><img alt="Sampling Point" src="../_images/sphx_glr_2_sampling_point_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling Point</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Sampling Point</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Failure analysis for a short fiber-reinforced part."><img alt="Short Fiber Failure Analysis" src="../_images/sphx_glr_3_short_fiber_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/3_short_fiber_example.html#sphx-glr-examples-gallery-examples-3-short-fiber-example-py"><span class="std std-ref">Short Fiber Failure Analysis</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Short Fiber Failure Analysis</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Access material properties and implement a custom failure criterion."><img alt="Material Properties and Custom Failure Criterion" src="../_images/sphx_glr_4_get_material_properties_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/4_get_material_properties_example.html#sphx-glr-examples-gallery-examples-4-get-material-properties-example-py"><span class="std std-ref">Material Properties and Custom Failure Criterion</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Material Properties and Custom Failure Criterion</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Extract elemental layered properties such as thickness and material."><img alt="Get Lay-up Properties" src="../_images/sphx_glr_5_get_layup_properties_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/5_get_layup_properties_example.html#sphx-glr-examples-gallery-examples-5-get-layup-properties-example-py"><span class="std std-ref">Get Lay-up Properties</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Get Lay-up Properties</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Filter strains and stresses by material, layer or analysis ply."><img alt="Filter Result Data by Different Criteria" src="../_images/sphx_glr_6_filter_composite_data_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/6_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"><span class="std std-ref">Filter Result Data by Different Criteria</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Filter Result Data by Different Criteria</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Compute interlaminar normal stresses for layered shells."><img alt="Interlaminar Normal Stresses" src="../_images/sphx_glr_7_interlaminar_normal_stress_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/7_interlaminar_normal_stress_example.html#sphx-glr-examples-gallery-examples-7-interlaminar-normal-stress-example-py"><span class="std std-ref">Interlaminar Normal Stresses</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Interlaminar Normal Stresses</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Post-process an assembly with multiple composite parts."><img alt="Post-process an Assembly" src="../_images/sphx_glr_8_assembly_example_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/8_assembly_example.html#sphx-glr-examples-gallery-examples-8-assembly-example-py"><span class="std std-ref">Post-process an Assembly</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Post-process an Assembly</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Use of native DPF Python interface to configure and run composite failure evaluator."><img alt="DPF Composite Failure Workflow" src="../_images/sphx_glr_dpf_composite_failure_workflow_thumb.png" />
+<p><a class="reference internal" href="gallery_examples/dpf_composite_failure_workflow.html#sphx-glr-examples-gallery-examples-dpf-composite-failure-workflow-py"><span class="std std-ref">DPF Composite Failure Workflow</span></a></p>
+  <div class="sphx-glr-thumbnail-title">DPF Composite Failure Workflow</div>
 </div></div><div class="toctree-wrapper compound">
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
