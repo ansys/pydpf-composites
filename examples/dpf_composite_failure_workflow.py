@@ -39,6 +39,7 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
+
 #%%
 # Configure the combined failure criterion
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
@@ -66,6 +67,7 @@ def get_combined_failure_criterion() -> CombinedFailureCriterion:
             von_mises_strain_only,
         ],
     )
+
 
 #%%
 # Start server and prepare files
