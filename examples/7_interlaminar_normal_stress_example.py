@@ -1,29 +1,34 @@
 """
 .. _interlaminar_normal_stress_example:
 
-Interlaminar Normal Stresses in Layered Shells
-----------------------------------------------
+Interlaminar Normal Stresses
+----------------------------
 
-This example shows how to connect the different dpf operators that are needed to
-evaluate the interlaminar normal stresses, in short INS, in layered shells.
+Compute interlaminar normal stresses for layered shells.
+
+This example shows how to enrich the stresses of layered shells by
+interlaminar normal stresses, in short INS. INS can be of importance in thick
+and curved laminates.
+
 For simple use cases it is preferable to use the composite failure operator
-(:ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`)
+(:ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`)
 or the composite sampling point operator
-(:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`). Note, the INS are
+(:ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`). Note, the INS are
 computed automatically in these workflows if required. For instance if a 3D failure criterion is
 activated.
-The :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` example shows how
+The :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py` example shows how
 helper functions can be used to obtain composite result data.
 
 INS are typically not available if layered shell elements are
 used. The INS operator recomputes s3 based on the laminate strains, the geometrical curvature and
 the lay-up.
 
-The input of the INS operator are strains, stresses, material data, and lay-up data.
-Note, the INS operator fills the results directly into the stress field.
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Load Ansys libraries
 import ansys.dpf.core as dpf
 
@@ -35,21 +40,18 @@ from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_ana
 
 #%%
 # Start Server and upload files
-# -----------------------------
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "ins")
 
 #%%
 # Configure data sources
-# -----------------------------
 composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
 # Inputs from the result files
-# ----------------------------
 #
 # Rotate to global is False because the post-processing engine expects the results to be
-# in the element coordinate system ( material coordinate system)
+# in the element coordinate system ( material coordinate system).
 
 strain_operator = dpf.Operator("EPEL")
 strain_operator.inputs.data_sources(composite_model.data_sources.rst)
@@ -60,10 +62,10 @@ stress_operator.inputs.data_sources(composite_model.data_sources.rst)
 stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
-# Add interlaminar normal stresses
-# -----------------------------------
+# Compute interlaminar normal stresses
+# """"""""""""""""""""""""""""""""""""
 #
-# The s3 stresses are evaluated and stored in the stresses container
+# The s3 stresses are evaluated and stored in the stresses container.
 composite_model.add_interlaminar_normal_stresses(
     stresses=stress_operator.outputs.fields_container(),
     strains=strain_operator.outputs.fields_container(),
@@ -72,14 +74,13 @@ composite_model.add_interlaminar_normal_stresses(
 
 #%%
 # Plot s3 stresses
-# ----------------
+# """"""""""""""""
 #
 # Prepare data for the plotting
 stress_field = stress_operator.outputs.fields_container()[0]
 
 #%%
 # Plot max s3 of each element
-# '''''''''''''''''''''''''''
 
 s3_component = Sym3x3TensorComponent.tensor33
 max_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
@@ -101,7 +102,6 @@ composite_model.get_mesh().plot(max_s3_field)
 
 #%%
 # Plot s3 of a certain ply
-# ''''''''''''''''''''''''
 
 analysis_ply_name = get_all_analysis_ply_names(composite_model.get_mesh())
 selected_ply = "P3L1__Ply.1"

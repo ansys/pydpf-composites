@@ -1,15 +1,21 @@
 """
 .. _filter_composite_data:
 
-Filter result data by different criteria
-----------------------------------------------------------
+Filter Result Data by Different Criteria
+----------------------------------------
 
-Filter data by layer, spot and node as well as material or analysis_ply id.
-Refer to :ref:`select_indices` to learn more about how layered result data is organized.
+Filter strains and stresses by material, layer or analysis ply.
 
+This example shows how to filter data by layer, spot and node as well as material
+or analysis_ply id. This is example can be of help for custom post-processing of
+layered composites. Refer to :ref:`select_indices` to learn more about how layered
+result data is organized.
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Import dependencies
 import ansys.dpf.core as dpf
 import numpy as np

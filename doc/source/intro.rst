@@ -46,8 +46,8 @@ Examples
 
 Get started with some basic :doc:`examples/index` :
 
-* :ref:`sphx_glr_examples_gallery_examples_sampling_point_example.py`
-* :ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`
+* :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
+* :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
 
 
 In the end of each example, there is a button to download the python source code of the example.
