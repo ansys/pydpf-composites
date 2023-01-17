@@ -32,12 +32,12 @@ from ansys.dpf.composites.layup_info import (
 #%%
 # Start server and load example files
 
-server_context = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server_context, "shell")
+server = connect_to_or_start_server()
+composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 #%%
 # Setup composite model
-composite_model = CompositeModel(composite_files_on_server, server_context.server)
+composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
 # Get example stress field

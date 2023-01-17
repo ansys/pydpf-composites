@@ -14,7 +14,6 @@ from ..composite_data_sources import (
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
-from ..connect_to_or_start_server import ServerContext
 
 EXAMPLE_REPO = "https://github.com/pyansys/example-data/raw/master/pydpf-composites/"
 
@@ -197,7 +196,7 @@ def _download_and_upload_file(
 
 
 def get_short_fiber_example_files(
-    server_context: ServerContext,
+    server: dpf.server,
     example_key: str,
 ) -> ShortFiberCompositesFiles:
     """Get short fiber example file by example key."""
@@ -205,9 +204,7 @@ def get_short_fiber_example_files(
     with tempfile.TemporaryDirectory() as tmpdir:
 
         def get_server_path(filename: str) -> str:
-            return _download_and_upload_file(
-                example_files.directory, filename, tmpdir, server_context.server
-            )
+            return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         return ShortFiberCompositesFiles(
             rst=get_server_path(example_files.files.rst),
@@ -217,7 +214,7 @@ def get_short_fiber_example_files(
 
 
 def get_continuous_fiber_example_files(
-    server_context: ServerContext,
+    server: dpf.server,
     example_key: str,
 ) -> ContinuousFiberCompositesFiles:
     """Get continuous fiber example file by example key."""
@@ -225,9 +222,7 @@ def get_continuous_fiber_example_files(
     with tempfile.TemporaryDirectory() as tmpdir:
 
         def get_server_path(filename: str) -> str:
-            return _download_and_upload_file(
-                example_files.directory, filename, tmpdir, server_context.server
-            )
+            return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         all_composite_files = {}
         for key, composite_examples_files_for_scope in example_files.files.composite.items():

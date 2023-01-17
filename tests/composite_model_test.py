@@ -146,7 +146,7 @@ def test_assembly_model(dpf_server):
     timer = Timer()
 
     files = get_composite_files_from_workbench_result_folder(
-        pathlib.Path(__file__).parent / "data" / "workflow_example"
+        pathlib.Path(__file__).parent / "data" / "workflow_example" / "assembly"
     )
 
     solid_label = "Setup 3_solid"

@@ -303,7 +303,7 @@ def test_performance_flat(dpf_server):
     timer = Timer()
 
     files = get_data_files()
-    setup_result = setup_operators(dpf_server, files, upload=True)
+    setup_result = setup_operators(dpf_server, files)
     timer.add("read data")
 
     layup_info = get_element_info_provider(

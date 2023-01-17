@@ -14,7 +14,8 @@ from .helper import get_basic_shell_files
 
 def test_layup_properties(dpf_server):
     files = get_basic_shell_files()
-    server_files = upload_continuous_fiber_composite_files_to_server(files, dpf_server)
+    if not dpf_server.local_server:
+        server_files = upload_continuous_fiber_composite_files_to_server(files, dpf_server)
 
     composite_data_sources = get_composites_data_sources(server_files)
     mesh_provider = Operator("MeshProvider")
