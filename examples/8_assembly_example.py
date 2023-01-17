@@ -1,8 +1,8 @@
 """
 .. _assembly_example:
 
-CompositeModel for an Assembly Model
-------------------------------------
+Post-process an Assembly
+------------------------
 
 Post-process an assembly with multiple composite parts.
 

@@ -51,7 +51,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Inputs from the result files
 #
 # Rotate to global is False because the post-processing engine expects the results to be
-# in the element coordinate system ( material coordinate system)
+# in the element coordinate system ( material coordinate system).
 
 strain_operator = dpf.Operator("EPEL")
 strain_operator.inputs.data_sources(composite_model.data_sources.rst)
@@ -63,9 +63,9 @@ stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
 # Compute interlaminar normal stresses
-# ------------------------------------
+# """"""""""""""""""""""""""""""""""""
 #
-# The s3 stresses are evaluated and stored in the stresses container
+# The s3 stresses are evaluated and stored in the stresses container.
 composite_model.add_interlaminar_normal_stresses(
     stresses=stress_operator.outputs.fields_container(),
     strains=strain_operator.outputs.fields_container(),
@@ -74,7 +74,7 @@ composite_model.add_interlaminar_normal_stresses(
 
 #%%
 # Plot s3 stresses
-# ----------------
+# """"""""""""""""
 #
 # Prepare data for the plotting
 stress_field = stress_operator.outputs.fields_container()[0]

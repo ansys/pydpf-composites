@@ -11,7 +11,8 @@ and failure modes of a combined failure criterion. A combined failure criterion 
 failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Ref to :ref:`failure_criteria`
 to get the full list of failure criteria.
 
-The :class:`Combined Failure Criterion <ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
+The :class:`Combined Failure Criterion
+<ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
 allows you to assess different type of materials and failure modes at once.
 The scoping enables to evaluate of the min and max failure per element,
 or to select a list of materials or plies.

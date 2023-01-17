@@ -41,7 +41,6 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
 # Definition of the combined failure criterion
-# --------------------------------------------
 def get_combined_failure_criterion() -> CombinedFailureCriterion:
     max_strain = MaxStrainCriterion()
     max_stress = MaxStressCriterion()
@@ -66,10 +65,9 @@ sampling_point = composite_model.get_sampling_point(
 
 # %%
 # Plot Results
-# ------------
+# """"""""""""
 #
 # Use pre-configured plots
-# ''''''''''''''''''''''''
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
@@ -81,18 +79,15 @@ fig.set_figwidth(12)
 
 # %%
 # Plot polar properties
-# '''''''''''''''''''''
 fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
 # %%
 # Custom plots:
-# -------------
 #
 # Plots can be easily customized or build from scratch.
 # Here, matplotlib is used. An alternative is plotly.
 #
 # s13 and s23
-# '''''''''''
 
 
 import matplotlib.pyplot as plt
@@ -114,8 +109,7 @@ plt.rcParams["hatch.color"] = "silver"
 sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 
 # %%
-# e12 and e2
-# ''''''''''
+# Plot e12 and e2
 
 interfaces = [Spot.BOTTOM, Spot.TOP]
 core_scale_factor = 1.0
@@ -136,7 +130,7 @@ ax1.set_title("e12 and e2")
 
 # %%
 # Sample another element
-# ----------------------
+# """"""""""""""""""""""
 #
 # The element id of the sampling point can be easily changed.
 sampling_point.element_id = 4
