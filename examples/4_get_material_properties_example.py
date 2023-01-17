@@ -1,15 +1,22 @@
 """
 .. _material_properties:
 
-Get Material Properties and evaluate basic failure criterion
--------------------------------------------------------------
+Material Properties and Custom Failure Criterion
+------------------------------------------------
 
-This example shows how to access constant material properties and
-evaluate a basic strain limit failure criterion. Note: Only constant material properties
-are currently supported.
+Access material properties and implement a custom failure criterion.
+
+This example shows how to access constant material properties and how to
+implement a custom failure criterion. The failure criterion is computed for
+all layers and integration points. Finally, the elemental maximum is computed and shown.
+
+Note: Only constant material properties are currently supported.
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Import dependencies
 import ansys.dpf.core as dpf
 import numpy as np

@@ -1,21 +1,27 @@
 """
 .. _basic_example:
 
-Basic example of setting up a composite failure workflow.
-----------------------------------------------------------
+DPF Composite Failure Workflow
+------------------------------
+
+Use of native DPF Python interface to configure and run composite failure evaluator.
 
 This example shows how to connect the different dpf operators that are needed to
 evaluate composite failure criteria. For simple use cases it is preferable
 to use the composite failure operator
-(:ref:`sphx_glr_examples_gallery_examples_failure_operator_example.py`)
+(:ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`)
 or the composite sampling point operator
-(:ref:`sphx_glr_examples_gallery_examples_sampling_point_operator_example.py`).
-The :ref:`sphx_glr_examples_gallery_examples_filter_composite_data_example.py` example shows how
+(:ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`).
+The :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py` example shows how
 helper functions can be used to obtain composite result data.
 """
 
 #%%
+# Script
+# ~~~~~~
+#
 # Load ansys libraries
+#
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server

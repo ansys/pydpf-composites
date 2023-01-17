@@ -1,14 +1,20 @@
 """
 .. _assembly_example:
 
-How to use the CompositeModel for an assembly model
----------------------------------------------------------------
+Post-process an Assembly
+------------------------
+
+Post-process an assembly with multiple composite parts.
 
 This example shows how an assembly of a shell and solid composite
-model can be post-processed.
+model can be post-processed. The :class:`Composite Model <ansys.dpf.composites.CompositeModel>`
+helps to operator on the individual parts and to access all the data.
 
 """
 # %%
+# Script
+# ~~~~~~
+#
 # Load ansys libraries
 
 from ansys.dpf.composites.composite_model import CompositeModel

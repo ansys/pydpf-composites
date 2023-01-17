@@ -1,3 +1,5 @@
+.. _failure_criteria:
+
 Failure Criteria
 ----------------
 
