@@ -417,7 +417,7 @@ all layers and integration points. Finally, the elemental maximum is computed an
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Setup composite model</p>
+<p>Set up composite model</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -430,14 +430,14 @@ For variable material properties, the default value is returned.</p>
 <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">property_dict</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_constant_property_dict</span><span class="p">([</span><span class="n">material_property</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Get example strain field</p>
+<p>Get strain field</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;EPEL&quot;</span><span class="p">)</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">)</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">strain_field</span> <span class="o">=</span> <span class="n">strain_operator</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span><span class="n">pin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Evaluate basic max strain failure criterion</p>
+<p>Implement a custom failure criterion: basic max strain</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">result_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
@@ -463,7 +463,7 @@ For variable material properties, the default value is returned.</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_4_get_material_properties_example_001.png" srcset="../../_images/sphx_glr_4_get_material_properties_example_001.png" alt="4 get material properties example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.210 seconds)</p>
+<img src="../../_images/sphx_glr_4_get_material_properties_example_001.png" srcset="../../_images/sphx_glr_4_get_material_properties_example_001.png" alt="4 get material properties example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.020 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-4-get-material-properties-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/182734e7babe023574be666ab4d0c279/4_get_material_properties_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">4_get_material_properties_example.py</span></code></a></p>

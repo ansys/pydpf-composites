@@ -426,11 +426,11 @@ result data is organized.</p>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Setup composite model</p>
+<p>Set up composite model</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Get example stress field</p>
+<p>Get stress field</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">)</span>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">)</span>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -440,7 +440,6 @@ result data is organized.</p>
 <p>Get element infos for all the elements and show the first one as an example</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">stress_field</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span> <span class="k">for</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">]</span>
-
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -504,7 +503,7 @@ in material direction in that ply</p>
 for all plies that have the material with dpf_material_id.
 Note: It is currently not possible to get a dpf_material_id for a
 given material name. It is only possible
-to get the dpf_material_id from an analysis ply</p>
+to get the dpf_material_id from an analysis ply.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a> <span class="o">=</span> <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">(</span>
     <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">data_source_or_streams_provider</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span>
 <span class="p">)</span>
@@ -525,11 +524,10 @@ to get the dpf_material_id from an analysis ply</p>
         <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">stress_data</span><span class="p">[</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a><span class="p">][:,</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">component</span><span class="o">.</span><span class="n">value</span></a><span class="p">])</span>
         <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">material_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_6_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_003.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.972 seconds)</p>
+<img src="../../_images/sphx_glr_6_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_003.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.650 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-6-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e05f846beb0a8299ac35fefa3ea22a53/6_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">6_filter_composite_data_example.py</span></code></a></p>

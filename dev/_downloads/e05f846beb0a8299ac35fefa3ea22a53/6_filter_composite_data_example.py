@@ -37,16 +37,15 @@ from ansys.dpf.composites.layup_info import (
 
 #%%
 # Start server and load example files
-
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 #%%
-# Setup composite model
+# Set up composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
-# Get example stress field
+# Get stress field
 stress_operator = dpf.Operator("S")
 stress_operator.inputs.data_sources(composite_model.data_sources.rst)
 stress_operator.inputs.bool_rotate_to_global(False)
@@ -56,7 +55,6 @@ stress_field = stress_operator.get_output(pin=0, output_type=dpf.types.fields_co
 # Get element infos for all the elements and show the first one as an example
 element_ids = stress_field.scoping.ids
 element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
-
 element_infos[0]
 
 #%%
@@ -114,7 +112,7 @@ composite_model.get_mesh().plot(ply_result_field)
 # for all plies that have the material with dpf_material_id.
 # Note: It is currently not possible to get a dpf_material_id for a
 # given material name. It is only possible
-# to get the dpf_material_id from an analysis ply
+# to get the dpf_material_id from an analysis ply.
 material_map = get_dpf_material_id_by_analyis_ply_map(
     composite_model.get_mesh(), data_source_or_streams_provider=composite_model.data_sources.rst
 )
@@ -134,6 +132,5 @@ with material_result_field.as_local_field() as local_result_field:
 
         value = np.max(stress_data[selected_indices][:, component.value])
         local_result_field.append([value], element_id)
-
 
 composite_model.get_mesh().plot(material_result_field)

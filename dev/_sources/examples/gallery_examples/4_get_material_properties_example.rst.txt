@@ -62,10 +62,9 @@ Import dependencies
 
 Start server and load example files
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-36
+.. GENERATED FROM PYTHON SOURCE LINES 32-35
 
 .. code-block:: default
-
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
@@ -77,11 +76,11 @@ Start server and load example files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-38
+.. GENERATED FROM PYTHON SOURCE LINES 36-37
 
-Setup composite model
+Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-40
+.. GENERATED FROM PYTHON SOURCE LINES 37-39
 
 .. code-block:: default
 
@@ -94,7 +93,7 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-46
+.. GENERATED FROM PYTHON SOURCE LINES 40-45
 
 Get dictionary that maps dpf_material_id to properties
 The creation of the dictionary is currently quite expensive and
@@ -102,7 +101,7 @@ should be done before using the properties in a loop.
 Currently only constant properties are supported.
 For variable material properties, the default value is returned.
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-51
+.. GENERATED FROM PYTHON SOURCE LINES 45-50
 
 .. code-block:: default
 
@@ -118,11 +117,11 @@ For variable material properties, the default value is returned.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-53
+.. GENERATED FROM PYTHON SOURCE LINES 51-52
 
-Get example strain field
+Get strain field
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-59
+.. GENERATED FROM PYTHON SOURCE LINES 52-58
 
 .. code-block:: default
 
@@ -139,11 +138,11 @@ Get example strain field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-61
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
 
-Evaluate basic max strain failure criterion
+Implement a custom failure criterion: basic max strain
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-84
+.. GENERATED FROM PYTHON SOURCE LINES 60-83
 
 .. code-block:: default
 
@@ -185,7 +184,7 @@ Evaluate basic max strain failure criterion
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.210 seconds)
+   **Total running time of the script:** ( 0 minutes  1.020 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_4_get_material_properties_example.py:

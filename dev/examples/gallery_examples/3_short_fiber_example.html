@@ -411,18 +411,18 @@ of short fiber composites.</p>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_short_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;short_fiber&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Setup data sources</p>
+<p>Set up data sources</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">DataSources</span><span class="p">()</span>
 <span class="n">data_sources</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">engineering_data</span></a><span class="p">,</span> <span class="s2">&quot;EngineeringData&quot;</span><span class="p">)</span>
 <span class="n">data_sources</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">dsdat</span></a><span class="p">,</span> <span class="s2">&quot;dat&quot;</span><span class="p">)</span>
 <span class="n">data_sources</span><span class="o">.</span><span class="n">set_result_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<p>Create dpf model and mesh provider</p>
+<p>Initialize DPF model</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<p>Short Fiber Failure Criterion Evaluator</p>
+<p>Configure the Short Fiber Failure Criterion Evaluator</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sf_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::short_fiber_failure_criterion_evaluator&quot;</span><span class="p">)</span>
 <span class="n">sf_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">data_sources</span><span class="p">)</span>
 <span class="n">sf_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">stress_limit_type</span><span class="p">(</span><span class="s2">&quot;ultimate&quot;</span><span class="p">)</span>  <span class="c1"># &quot;yield&quot; or &quot;ultimate&quot; (default)</span>
@@ -442,7 +442,7 @@ of short fiber composites.</p>
 <span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fc_value</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_3_short_fiber_example_001.png" srcset="../../_images/sphx_glr_3_short_fiber_example_001.png" alt="3 short fiber example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.291 seconds)</p>
+<img src="../../_images/sphx_glr_3_short_fiber_example_001.png" srcset="../../_images/sphx_glr_3_short_fiber_example_001.png" alt="3 short fiber example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.137 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-3-short-fiber-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e79424f559efb4dcca51af7a09973e19/3_short_fiber_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">3_short_fiber_example.py</span></code></a></p>

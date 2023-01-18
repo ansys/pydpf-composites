@@ -72,11 +72,13 @@ Load ansys libraries
 
 .. GENERATED FROM PYTHON SOURCE LINES 42-43
 
-Definition of the combined failure criterion
+Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-55
+.. GENERATED FROM PYTHON SOURCE LINES 43-57
 
 .. code-block:: default
+
+
 
     def get_combined_failure_criterion() -> CombinedFailureCriterion:
         max_strain = MaxStrainCriterion()
@@ -97,18 +99,15 @@ Definition of the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-57
+.. GENERATED FROM PYTHON SOURCE LINES 58-59
 
-Setup composite model
+Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-62
+.. GENERATED FROM PYTHON SOURCE LINES 59-61
 
 .. code-block:: default
 
     composite_model = CompositeModel(composite_files_on_server, server)
-    output_all_elements = composite_model.evaluate_failure_criteria(
-        combined_criteria=get_combined_failure_criterion(),
-    )
 
 
 
@@ -117,16 +116,17 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-65
+.. GENERATED FROM PYTHON SOURCE LINES 62-63
 
-Plot the max IRF per element
+Failure evaluation for the entire model
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 65-69
+.. GENERATED FROM PYTHON SOURCE LINES 63-69
 
 .. code-block:: default
 
-
+    output_all_elements = composite_model.evaluate_failure_criteria(
+        combined_criteria=get_combined_failure_criterion(),
+    )
     irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
     irf_field.plot()
 
@@ -144,7 +144,7 @@ Plot the max IRF per element
 
 .. GENERATED FROM PYTHON SOURCE LINES 70-71
 
-Scope failure evaluation to certain element scope
+Scope failure evaluation to a certain element scope
 
 .. GENERATED FROM PYTHON SOURCE LINES 71-78
 
@@ -198,7 +198,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.129 seconds)
+   **Total running time of the script:** ( 0 minutes  3.634 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_1_failure_operator_example.py:

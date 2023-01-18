@@ -66,7 +66,7 @@ Load Ansys libraries
 
 .. GENERATED FROM PYTHON SOURCE LINES 38-39
 
-Start server
+Start server and get files
 
 .. GENERATED FROM PYTHON SOURCE LINES 39-42
 
@@ -84,7 +84,7 @@ Start server
 
 .. GENERATED FROM PYTHON SOURCE LINES 43-44
 
-Definition of the combined failure criterion
+Configure the combined failure criterion
 
 .. GENERATED FROM PYTHON SOURCE LINES 44-56
 
@@ -111,7 +111,7 @@ Definition of the combined failure criterion
 
 .. GENERATED FROM PYTHON SOURCE LINES 57-58
 
-Setup composite model
+Set up composite model
 
 .. GENERATED FROM PYTHON SOURCE LINES 58-60
 
@@ -128,7 +128,7 @@ Setup composite model
 
 .. GENERATED FROM PYTHON SOURCE LINES 61-62
 
-Create the sampling point
+Create a sampling point
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-66
 
@@ -323,7 +323,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.877 seconds)
+   **Total running time of the script:** ( 0 minutes  1.426 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_2_sampling_point_example.py:

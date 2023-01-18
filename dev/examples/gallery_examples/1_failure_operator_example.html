@@ -422,7 +422,7 @@ or to select a list of materials or plies.</p>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Definition of the combined failure criterion</p>
+<p>Configure the combined failure criterion</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_combined_failure_criterion</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">CombinedFailureCriterion</span><span class="p">:</span>
     <span class="n">max_strain</span> <span class="o">=</span> <span class="n">MaxStrainCriterion</span><span class="p">()</span>
     <span class="n">max_stress</span> <span class="o">=</span> <span class="n">MaxStressCriterion</span><span class="p">()</span>
@@ -435,19 +435,19 @@ or to select a list of materials or plies.</p>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p>Setup composite model</p>
+<p>Set up composite model</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
-<span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span>
-    <span class="n">combined_criteria</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span>
-<span class="p">)</span>
 </pre></div>
 </div>
-<p>Plot the max IRF per element</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_all_elements</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FailureOutput</span><span class="o">.</span><span class="n">failure_value</span><span class="o">.</span><span class="n">value</span></a><span class="p">})</span>
+<p>Failure evaluation for the entire model</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span>
+    <span class="n">combined_criteria</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_all_elements</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FailureOutput</span><span class="o">.</span><span class="n">failure_value</span><span class="o">.</span><span class="n">value</span></a><span class="p">})</span>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_1_failure_operator_example_001.png" srcset="../../_images/sphx_glr_1_failure_operator_example_001.png" alt="1 failure operator example" class = "sphx-glr-single-img"/><p>Scope failure evaluation to certain element scope</p>
+<img src="../../_images/sphx_glr_1_failure_operator_example_001.png" srcset="../../_images/sphx_glr_1_failure_operator_example_001.png" alt="1 failure operator example" class = "sphx-glr-single-img"/><p>Scope failure evaluation to a certain element scope</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output_two_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span>
     <span class="n">combined_criteria</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span>
     <span class="n">composite_scope</span><span class="o">=</span><span class="n">CompositeScope</span><span class="p">(</span><span class="n">elements</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
@@ -465,7 +465,7 @@ or to select a list of materials or plies.</p>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_1_failure_operator_example_003.png" srcset="../../_images/sphx_glr_1_failure_operator_example_003.png" alt="1 failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.129 seconds)</p>
+<img src="../../_images/sphx_glr_1_failure_operator_example_003.png" srcset="../../_images/sphx_glr_1_failure_operator_example_003.png" alt="1 failure operator example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.634 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-1-failure-operator-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d8ea217109bc4b7c7ba4e3aaa13216ef/1_failure_operator_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">1_failure_operator_example.py</span></code></a></p>

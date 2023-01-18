@@ -105,10 +105,10 @@ Configure data sources
 
 .. GENERATED FROM PYTHON SOURCE LINES 51-55
 
-Inputs from the result files
+Prepare inputs for the INS operator
 
 Rotate to global is False because the post-processing engine expects the results to be
-in the element coordinate system ( material coordinate system).
+in the element coordinate system (material coordinate system).
 
 .. GENERATED FROM PYTHON SOURCE LINES 55-64
 
@@ -135,9 +135,9 @@ in the element coordinate system ( material coordinate system).
 Compute interlaminar normal stresses
 """"""""""""""""""""""""""""""""""""
 
-The s3 stresses are evaluated and stored in the stresses container.
+Note: the INS operator stores the stresses in the provided stressed field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-75
+.. GENERATED FROM PYTHON SOURCE LINES 69-74
 
 .. code-block:: default
 
@@ -153,15 +153,14 @@ The s3 stresses are evaluated and stored in the stresses container.
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 76-80
+.. GENERATED FROM PYTHON SOURCE LINES 75-79
 
 Plot s3 stresses
 """"""""""""""""
 
-Prepare data for the plotting
+Get the first stress field
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-82
+.. GENERATED FROM PYTHON SOURCE LINES 79-81
 
 .. code-block:: default
 
@@ -174,11 +173,11 @@ Prepare data for the plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-84
+.. GENERATED FROM PYTHON SOURCE LINES 82-83
 
 Plot max s3 of each element
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-103
+.. GENERATED FROM PYTHON SOURCE LINES 83-102
 
 .. code-block:: default
 
@@ -213,16 +212,16 @@ Plot max s3 of each element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-105
+.. GENERATED FROM PYTHON SOURCE LINES 103-104
 
-Plot s3 of a certain ply
+Plot s3 at the mid-plane of a certain ply
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-129
+.. GENERATED FROM PYTHON SOURCE LINES 104-128
 
 .. code-block:: default
 
 
-    analysis_ply_name = get_all_analysis_ply_names(composite_model.get_mesh())
+    analysis_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
     selected_ply = "P3L1__Ply.1"
 
     ply_info_provider = AnalysisPlyInfoProvider(composite_model.get_mesh(), selected_ply)
@@ -260,7 +259,7 @@ Plot s3 of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.786 seconds)
+   **Total running time of the script:** ( 0 minutes  6.262 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:

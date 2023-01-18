@@ -62,10 +62,9 @@ Import dependencies
 
 Start server and load example files
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-37
+.. GENERATED FROM PYTHON SOURCE LINES 33-36
 
 .. code-block:: default
-
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
@@ -77,11 +76,11 @@ Start server and load example files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-39
+.. GENERATED FROM PYTHON SOURCE LINES 37-38
 
-Setup composite model
+Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
 
 .. code-block:: default
 
@@ -94,14 +93,13 @@ Setup composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-43
+.. GENERATED FROM PYTHON SOURCE LINES 41-42
 
 Get layup properties for all the elements and show the first one as an example
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-52
+.. GENERATED FROM PYTHON SOURCE LINES 42-50
 
 .. code-block:: default
-
 
     element_id = 1
     thicknesses = composite_model.get_property_for_all_layers(LayerProperty.thicknesses, element_id)
@@ -118,11 +116,11 @@ Get layup properties for all the elements and show the first one as an example
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-54
+.. GENERATED FROM PYTHON SOURCE LINES 51-52
 
-Plot of layup properties
+Plot lay-up properties
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-72
+.. GENERATED FROM PYTHON SOURCE LINES 52-70
 
 .. code-block:: default
 
@@ -159,7 +157,7 @@ Plot of layup properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.535 seconds)
+   **Total running time of the script:** ( 0 minutes  0.692 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_5_get_layup_properties_example.py:

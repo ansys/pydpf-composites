@@ -429,12 +429,12 @@ scope a Sampling Point to a certain element and to visualize the laminate.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Start server</p>
+<p>Start server and get files</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Definition of the combined failure criterion</p>
+<p>Configure the combined failure criterion</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_combined_failure_criterion</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">CombinedFailureCriterion</span><span class="p">:</span>
     <span class="n">max_strain</span> <span class="o">=</span> <span class="n">MaxStrainCriterion</span><span class="p">()</span>
     <span class="n">max_stress</span> <span class="o">=</span> <span class="n">MaxStressCriterion</span><span class="p">()</span>
@@ -447,11 +447,11 @@ scope a Sampling Point to a certain element and to visualize the laminate.</p>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p>Setup composite model</p>
+<p>Set up composite model</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Create the sampling point</p>
+<p>Create a sampling point</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span>
     <span class="n">combined_criteria</span><span class="o">=</span><span class="n">get_combined_failure_criterion</span><span class="p">(),</span> <span class="n">element_id</span><span class="o">=</span><span class="mi">3</span>
 <span class="p">)</span>
@@ -533,7 +533,7 @@ Here, matplotlib is used. An alternative is plotly.</p>
 <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_2_sampling_point_example_005.png" srcset="../../_images/sphx_glr_2_sampling_point_example_005.png" alt="Stresses, Failures" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.877 seconds)</p>
+<img src="../../_images/sphx_glr_2_sampling_point_example_005.png" srcset="../../_images/sphx_glr_2_sampling_point_example_005.png" alt="Stresses, Failures" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.426 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-2-sampling-point-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/7e9cf296843a413f05366030fec0953f/2_sampling_point_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">2_sampling_point_example.py</span></code></a></p>

@@ -442,9 +442,9 @@ the lay-up.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Inputs from the result files</p>
+<p>Prepare inputs for the INS operator</p>
 <p>Rotate to global is False because the post-processing engine expects the results to be
-in the element coordinate system ( material coordinate system).</p>
+in the element coordinate system (material coordinate system).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;EPEL&quot;</span><span class="p">)</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">)</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -456,7 +456,7 @@ in the element coordinate system ( material coordinate system).</p>
 </div>
 <section id="compute-interlaminar-normal-stresses">
 <h3>Compute interlaminar normal stresses<a class="headerlink" href="#compute-interlaminar-normal-stresses" title="Permalink to this heading">#</a></h3>
-<p>The s3 stresses are evaluated and stored in the stresses container.</p>
+<p>Note: the INS operator stores the stresses in the provided stressed field.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span><span class="o">.</span><span class="n">add_interlaminar_normal_stresses</span><span class="p">(</span>
     <span class="n">stresses</span><span class="o">=</span><span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(),</span>
     <span class="n">strains</span><span class="o">=</span><span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(),</span>
@@ -466,7 +466,7 @@ in the element coordinate system ( material coordinate system).</p>
 </section>
 <section id="plot-s3-stresses">
 <h3>Plot s3 stresses<a class="headerlink" href="#plot-s3-stresses" title="Permalink to this heading">#</a></h3>
-<p>Prepare data for the plotting</p>
+<p>Get the first stress field</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_field</span> <span class="o">=</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -490,8 +490,8 @@ in the element coordinate system ( material coordinate system).</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p>Plot s3 of a certain ply</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_name</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
+<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p>Plot s3 at the mid-plane of a certain ply</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a> <span class="o">=</span> <span class="s2">&quot;P3L1__Ply.1&quot;</span>
 
 <span class="n">ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a><span class="p">)</span>
@@ -516,7 +516,7 @@ in the element coordinate system ( material coordinate system).</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  7.786 seconds)</p>
+<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  6.262 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-7-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/aacf4e81e7cf567a4fea4a631f9c6861/7_interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">7_interlaminar_normal_stress_example.py</span></code></a></p>
