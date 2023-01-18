@@ -51,8 +51,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="get_composite_files_from_workbench_result_folder" href="ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html" />
-    <link rel="prev" title="engineering_data" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.engineering_data.html" />
+    <link rel="next" title="Failure Criteria" href="../failure_criteria.html" />
+    <link rel="prev" title="Server Helper" href="../server_helper.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -270,7 +270,7 @@ function checkPageExistsAndRedirect(event) {
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API Reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../base.html" accesskey="U">Objects and Helpers</a> » </li>
+          <li class="nav-item nav-item-2"><a href="../server_helper.html" accesskey="U">Server Helper</a> » </li>
         <li class="nav-item nav-item-this"><a href="">connect_to_or_start_server</a></li> 
       </ul>
     </div>
@@ -293,9 +293,14 @@ function checkPageExistsAndRedirect(event) {
   <div class="bd-toc-item active">
     
     <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../composite_model.html">
+   Composite Model
+  </a>
+ </li>
  <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="../base.html">
-   Objects and Helpers
+  <a class="reference internal" href="../server_helper.html">
+   Server Helper
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -303,44 +308,9 @@ function checkPageExistsAndRedirect(event) {
    </i>
   </label>
   <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.html">
-     ansys.dpf.composites.ResultDefinition
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.html">
-     ansys.dpf.composites.SamplingPoint
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.Spot.html">
-     ansys.dpf.composites.Spot
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html">
-     ansys.dpf.composites.CompositeDataSources
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html">
-     ansys.dpf.composites.MaterialOperators
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.html">
-     ansys.dpf.composites.ContinuousFiberCompositesFiles
-    </a>
-   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      connect_to_or_start_server
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html">
-     get_composite_files_from_workbench_result_folder
     </a>
    </li>
   </ul>
@@ -363,11 +333,6 @@ function checkPageExistsAndRedirect(event) {
  <li class="toctree-l1">
   <a class="reference internal" href="../material_properties.html">
    Material Properties
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../composite_model.html">
-   Composite Model
   </a>
  </li>
 </ul>
@@ -429,7 +394,7 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.connect_to_or_start_server">
 <span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">connect_to_or_start_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ansys_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.connect_to_or_start_server" title="Permalink to this definition">#</a></dt>
-<dd><p>Connect to or start a dpf server.</p>
+<dd><p>Connect to or start a dpf server with the composites plugin loaded.</p>
 <p>Note: If port or ip are set, this function will try to
 connect to a server and the ansys_path is ignored.
 I no arguments are passed a local server from the latest available installer

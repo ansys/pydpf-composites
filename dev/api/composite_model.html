@@ -51,8 +51,8 @@
     <script src="../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ansys.dpf.composites.CompositeModel" href="_autosummary/ansys.dpf.composites.CompositeModel.html" />
-    <link rel="prev" title="ansys.dpf.composites.MaterialProperty" href="_autosummary/ansys.dpf.composites.MaterialProperty.html" />
+    <link rel="next" title="get_composite_files_from_workbench_result_folder" href="_autosummary/ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html" />
+    <link rel="prev" title="API Reference" href="index.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -292,9 +292,71 @@ function checkPageExistsAndRedirect(event) {
   <div class="bd-toc-item active">
     
     <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="current reference internal" href="#">
+   Composite Model
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html">
+     get_composite_files_from_workbench_result_folder
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeDataSources.html">
+     ansys.dpf.composites.CompositeDataSources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeDefinitionFiles.html">
+     ansys.dpf.composites.CompositeDefinitionFiles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeModel.html">
+     ansys.dpf.composites.CompositeModel
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeScope.html">
+     ansys.dpf.composites.CompositeScope
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.ContinuousFiberCompositesFiles.html">
+     ansys.dpf.composites.ContinuousFiberCompositesFiles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.FailureMeasure.html">
+     ansys.dpf.composites.FailureMeasure
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.MaterialOperators.html">
+     ansys.dpf.composites.MaterialOperators
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.ResultDefinition.html">
+     ansys.dpf.composites.ResultDefinition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.SamplingPoint.html">
+     ansys.dpf.composites.SamplingPoint
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="base.html">
-   Objects and Helpers
+  <a class="reference internal" href="server_helper.html">
+   Server Helper
   </a>
  </li>
  <li class="toctree-l1">
@@ -316,23 +378,6 @@ function checkPageExistsAndRedirect(event) {
   <a class="reference internal" href="material_properties.html">
    Material Properties
   </a>
- </li>
- <li class="toctree-l1 current active has-children">
-  <a class="current reference internal" href="#">
-   Composite Model
-  </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeModel.html">
-     ansys.dpf.composites.CompositeModel
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -378,8 +423,35 @@ function checkPageExistsAndRedirect(event) {
 <h1>Composite Model<a class="headerlink" href="#composite-model" title="Permalink to this heading">#</a></h1>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeModel.html#ansys.dpf.composites.CompositeModel" title="ansys.dpf.composites.CompositeModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>(composite_files, server)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.get_composite_files_from_workbench_result_folder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder</span></code></a>(...)</p></td>
+<td><p>Get a ContinuousFiberCompositesFiles object from a result_folder.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeDataSources.html#ansys.dpf.composites.CompositeDataSources" title="ansys.dpf.composites.CompositeDataSources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources</span></code></a>(rst, composite, ...)</p></td>
+<td><p>Data Sources related to the composite Layup.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeDefinitionFiles.html#ansys.dpf.composites.CompositeDefinitionFiles" title="ansys.dpf.composites.CompositeDefinitionFiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDefinitionFiles</span></code></a>(definition[, mapping])</p></td>
+<td><p>Container for composite files.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeModel.html#ansys.dpf.composites.CompositeModel" title="ansys.dpf.composites.CompositeModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>(composite_files, server)</p></td>
 <td><p>Provides access to the basic composite post-processing functionality.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.CompositeScope.html#ansys.dpf.composites.CompositeScope" title="ansys.dpf.composites.CompositeScope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeScope</span></code></a>([elements, plies, time])</p></td>
+<td><p>Composite scope.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.ContinuousFiberCompositesFiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>(rst, ...)</p></td>
+<td><p>Container for continuous fiber file paths.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.FailureMeasure.html#ansys.dpf.composites.FailureMeasure" title="ansys.dpf.composites.FailureMeasure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FailureMeasure</span></code></a>(value)</p></td>
+<td><p>Available Failure Measures.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.MaterialOperators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators</span></code></a>(material_provider, ...)</p></td>
+<td><p>Container for Material related operators.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ResultDefinition.html#ansys.dpf.composites.ResultDefinition" title="ansys.dpf.composites.ResultDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a>(name, ...[, measure, ...])</p></td>
+<td><p>Represents the result definition of DPF Composites.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.SamplingPoint.html#ansys.dpf.composites.SamplingPoint" title="ansys.dpf.composites.SamplingPoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint</span></code></a>(name, result_definition[, server])</p></td>
+<td><p>Implements the Sampling Point object which wraps the DPF sampling point operator.</p></td>
 </tr>
 </tbody>
 </table>

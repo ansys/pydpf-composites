@@ -1,0 +1,30 @@
+﻿ansys.dpf.composites.FailureMeasure
+===================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: FailureMeasure
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      FailureMeasure.inverse_reserve_factor
+      
+      
+      FailureMeasure.margin_of_safety
+      
+      
+      FailureMeasure.reserve_factor
+      
+   
+   

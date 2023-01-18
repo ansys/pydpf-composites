@@ -1,0 +1,6 @@
+mapping
+=======
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: CompositeDefinitionFiles.mapping

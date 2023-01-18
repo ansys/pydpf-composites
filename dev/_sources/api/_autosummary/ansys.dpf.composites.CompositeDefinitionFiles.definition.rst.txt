@@ -1,0 +1,6 @@
+definition
+==========
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: CompositeDefinitionFiles.definition

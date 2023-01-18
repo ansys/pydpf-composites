@@ -294,8 +294,13 @@ function checkPageExistsAndRedirect(event) {
     
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../base.html">
-   Objects and Helpers
+  <a class="reference internal" href="../composite_model.html">
+   Composite Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../server_helper.html">
+   Server Helper
   </a>
  </li>
  <li class="toctree-l1">
@@ -360,11 +365,6 @@ function checkPageExistsAndRedirect(event) {
    Material Properties
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../composite_model.html">
-   Composite Model
-  </a>
- </li>
 </ul>
 
     
@@ -425,17 +425,21 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="ansys.dpf.composites.add_layup_info_to_mesh">
 <span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.</span></span><span class="sig-name descname"><span class="pre">add_layup_info_to_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_operators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.add_layup_info_to_mesh" title="Permalink to this definition">#</a></dt>
 <dd><p>Add layup information to the mesh.</p>
+<p>Creates a Layup Provider Operator which is run and returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data_sources</strong> (<a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html#ansys.dpf.composites.CompositeDataSources" title="ansys.dpf.composites.composite_data_sources.CompositeDataSources"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeDataSources</span></code></a>) – </p></li>
-<li><p><strong>mesh</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.meshed_region.html#ansys.dpf.core.meshed_region.MeshedRegion" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeshedRegion</span></code></a>) – </p></li>
-<li><p><strong>material_operators</strong> (<a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.material_setup.MaterialOperators"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialOperators</span></code></a>) – </p></li>
-<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of composite definition (dictionary key in CompositeDataSources.composite)</p></li>
+<li><p><strong>data_sources</strong> (<a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html#ansys.dpf.composites.CompositeDataSources" title="ansys.dpf.composites.composite_data_sources.CompositeDataSources"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeDataSources</span></code></a>) – Dpf DataSources object available from CompositeModel: <a class="reference internal" href="ansys.dpf.composites.CompositeModel.data_sources.html#ansys.dpf.composites.CompositeModel.data_sources" title="ansys.dpf.composites.CompositeModel.data_sources"><code class="xref py py-class docutils literal notranslate"><span class="pre">data_sources</span></code></a></p></li>
+<li><p><strong>mesh</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.meshed_region.html#ansys.dpf.core.meshed_region.MeshedRegion" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeshedRegion</span></code></a>) – Dpf MeshedRegion object available from CompositeModel: <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_mesh.html#ansys.dpf.composites.CompositeModel.get_mesh" title="ansys.dpf.composites.CompositeModel.get_mesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">get_mesh</span></code></a></p></li>
+<li><p><strong>material_operators</strong> (<a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html#ansys.dpf.composites.MaterialOperators" title="ansys.dpf.composites.material_setup.MaterialOperators"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialOperators</span></code></a>) – MaterialOperators object available from
+CompositeModel: <a class="reference internal" href="ansys.dpf.composites.CompositeModel.material_operators.html#ansys.dpf.composites.CompositeModel.material_operators" title="ansys.dpf.composites.CompositeModel.material_operators"><code class="xref py py-class docutils literal notranslate"><span class="pre">material_operators</span></code></a></p></li>
+<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of composite definition
+(dictionary key in <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.composite.html#ansys.dpf.composites.ContinuousFiberCompositesFiles.composite" title="ansys.dpf.composites.ContinuousFiberCompositesFiles.composite"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles.composite</span></code></a>).
+Only required for assemblies. See “Note on assemblies” in <a class="reference internal" href="ansys.dpf.composites.CompositeModel.html#ansys.dpf.composites.CompositeModel" title="ansys.dpf.composites.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></p>
+<dd class="field-even"><p>Layup Provider Operator</p>
 </dd>
 </dl>
 </dd></dl>

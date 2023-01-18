@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="add_interlaminar_normal_stresses" href="ansys.dpf.composites.CompositeModel.add_interlaminar_normal_stresses.html" />
-    <link rel="prev" title="Composite Model" href="../composite_model.html" />
+    <link rel="prev" title="definition" href="ansys.dpf.composites.CompositeDefinitionFiles.definition.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -293,31 +293,6 @@ function checkPageExistsAndRedirect(event) {
   <div class="bd-toc-item active">
     
     <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../base.html">
-   Objects and Helpers
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../failure_criteria.html">
-   Failure Criteria
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../layup_information.html">
-   Layup Information
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../select_indices.html">
-   Select Elementary Indices
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../material_properties.html">
-   Material Properties
-  </a>
- </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../composite_model.html">
    Composite Model
@@ -328,6 +303,21 @@ function checkPageExistsAndRedirect(event) {
    </i>
   </label>
   <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html">
+     get_composite_files_from_workbench_result_folder
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html">
+     ansys.dpf.composites.CompositeDataSources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeDefinitionFiles.html">
+     ansys.dpf.composites.CompositeDefinitionFiles
+    </a>
+   </li>
    <li class="toctree-l2 current active has-children">
     <a class="current reference internal" href="#">
      ansys.dpf.composites.CompositeModel
@@ -420,7 +410,62 @@ function checkPageExistsAndRedirect(event) {
      </li>
     </ul>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeScope.html">
+     ansys.dpf.composites.CompositeScope
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.html">
+     ansys.dpf.composites.ContinuousFiberCompositesFiles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.FailureMeasure.html">
+     ansys.dpf.composites.FailureMeasure
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html">
+     ansys.dpf.composites.MaterialOperators
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.html">
+     ansys.dpf.composites.ResultDefinition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.html">
+     ansys.dpf.composites.SamplingPoint
+    </a>
+   </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../server_helper.html">
+   Server Helper
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../failure_criteria.html">
+   Failure Criteria
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../layup_information.html">
+   Layup Information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../select_indices.html">
+   Select Elementary Indices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../material_properties.html">
+   Material Properties
+  </a>
  </li>
 </ul>
 
@@ -498,10 +543,12 @@ self.get_all_layered_element_ids_for_composite_definition_label.
 All the elements which are not part of a composite definition are either homogeneous
 solids or layered models defined outside of an ACP model.
 self.composite_definition_labels returns
-All the available composite_definition_labels.</p>
+All the available composite_definition_labels.
+See also: <a class="reference internal" href="../../examples/gallery_examples/8_assembly_example.html#sphx-glr-examples-gallery-examples-8-assembly-example-py"><span class="std std-ref">Post-process an Assembly</span></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>composite_files</strong> (<a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.composite_data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>) – </p>
+<dd class="field-odd"><p><strong>composite_files</strong> (<a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.composite_data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>) – Use <a class="reference internal" href="ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">ansys.dpf.composites.get_composite_files_from_workbench_result_folder()</span></code></a>
+to obtain ContinuousFiberCompositesFiles object.</p>
 </dd>
 </dl>
 <p class="rubric">Methods</p>

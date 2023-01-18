@@ -1,0 +1,6 @@
+elements
+========
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: CompositeScope.elements

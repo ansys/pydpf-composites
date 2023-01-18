@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="get_constant_property" href="_autosummary/ansys.dpf.composites.get_constant_property.html" />
-    <link rel="prev" title="get_selected_indices_by_analysis_ply" href="_autosummary/ansys.dpf.composites.get_selected_indices_by_analysis_ply.html" />
+    <link rel="prev" title="ansys.dpf.composites.Spot" href="_autosummary/ansys.dpf.composites.Spot.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -293,8 +293,13 @@ function checkPageExistsAndRedirect(event) {
     
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="base.html">
-   Objects and Helpers
+  <a class="reference internal" href="composite_model.html">
+   Composite Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="server_helper.html">
+   Server Helper
   </a>
  </li>
  <li class="toctree-l1">
@@ -343,11 +348,6 @@ function checkPageExistsAndRedirect(event) {
     </a>
    </li>
   </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="composite_model.html">
-   Composite Model
-  </a>
  </li>
 </ul>
 
@@ -398,7 +398,9 @@ The dpf_material_id can be different from the material id used in the solver.
 <a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfo.html#ansys.dpf.composites.ElementInfo" title="ansys.dpf.composites.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a> contains the dpf_material_id for the materials
 of a given element. The dpf_material_id for a given analysis ply can be obtained
 by calling <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html#ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map" title="ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_dpf_material_id_by_analyis_ply_map()</span></code></a>. A lookup by
-material name is currently not available.</p>
+material name is currently not available.
+The <a class="reference internal" href="../examples/gallery_examples/4_get_material_properties_example.html#sphx-glr-examples-gallery-examples-4-get-material-properties-example-py"><span class="std std-ref">Material Properties and Custom Failure Criterion</span></a>
+example shows how to evaluate material properties.</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_constant_property.html#ansys.dpf.composites.get_constant_property" title="ansys.dpf.composites.get_constant_property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_constant_property</span></code></a>(material_property, ...)</p></td>

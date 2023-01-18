@@ -48,3 +48,4 @@ section for complete usage examples.
     get_selected_indices
     get_selected_indices_by_dpf_material_ids
     get_selected_indices_by_analysis_ply
+    Spot
