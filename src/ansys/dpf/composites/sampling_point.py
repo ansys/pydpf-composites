@@ -513,7 +513,7 @@ class SamplingPoint:
             )
             mat = ply["material"]
             th = ply["thickness"]
-            text = f"{mat}\nangle={angle}, th={th}"
+            text = f"{mat}\nangle={angle}, th={th:.3}"
             axes.annotate(
                 text=text,
                 xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
@@ -624,7 +624,7 @@ class SamplingPoint:
                 labels = []
                 axes[0].set_ylabel("z-Coordinates (scaled)")
             else:
-                labels = [str(t) for t in ticks]
+                labels = [f"{t:.3}" for t in ticks]
                 axes[0].set_ylabel("z-Coordinates [length]")
 
             axes[0].set_yticks(ticks=ticks, labels=labels)

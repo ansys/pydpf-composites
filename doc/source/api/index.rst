@@ -12,9 +12,9 @@ Documentation.
 .. toctree::
     :maxdepth: 2
 
-    base
+    composite_model
+    server_helper
     failure_criteria
     layup_information
     select_indices
     material_properties
-    composite_model
