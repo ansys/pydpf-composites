@@ -10,12 +10,13 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 from .add_layup_info_to_mesh import add_layup_info_to_mesh
 from .composite_data_sources import (
     CompositeDataSources,
+    CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     get_composite_files_from_workbench_result_folder,
 )
-from .composite_model import CompositeModel
+from .composite_model import CompositeModel, CompositeScope
 from .connect_to_or_start_server import connect_to_or_start_server
-from .enums import MaterialProperty, Spot
+from .enums import FailureMeasure, MaterialProperty, Spot
 from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfo,
@@ -40,12 +41,15 @@ from .select_indices import (
 
 __all__ = [
     "CompositeModel",
+    "CompositeScope",
+    "CompositeDefinitionFiles",
     "CompositeDataSources",
     "add_layup_info_to_mesh",
     "MaterialOperators",
     "ResultDefinition",
     "SamplingPoint",
     "Spot",
+    "FailureMeasure",
     "ResultDefinition",
     "ElementInfoProvider",
     "ElementInfo",

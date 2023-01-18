@@ -15,13 +15,24 @@ def add_layup_info_to_mesh(
 ) -> Operator:
     """Add layup information to the mesh.
 
+    Creates a Layup Provider Operator which is run and returned.
+
     Parameters
     ----------
     data_sources:
+        Dpf DataSources object available from CompositeModel: :class:`~CompositeModel.data_sources`
     mesh:
+        Dpf MeshedRegion object available from CompositeModel: :class:`~CompositeModel.get_mesh`
     material_operators:
+       MaterialOperators object available from
+       CompositeModel: :class:`~CompositeModel.material_operators`
     composite_definition_label:
-        Label of composite definition (dictionary key in CompositeDataSources.composite)
+        Label of composite definition
+        (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+        Only required for assemblies. See "Note on assemblies" in :class:`~CompositeModel`.
+    Returns
+    -------
+    Layup Provider Operator
     """
     if composite_definition_label is None:
         composite_definition_labels = list(data_sources.composite.keys())
