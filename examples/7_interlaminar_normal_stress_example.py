@@ -48,10 +48,10 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "ins")
 composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
-# Inputs from the result files
+# Prepare inputs for the INS operator
 #
 # Rotate to global is False because the post-processing engine expects the results to be
-# in the element coordinate system ( material coordinate system).
+# in the element coordinate system (material coordinate system).
 
 strain_operator = dpf.Operator("EPEL")
 strain_operator.inputs.data_sources(composite_model.data_sources.rst)
@@ -65,18 +65,17 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # Compute interlaminar normal stresses
 # """"""""""""""""""""""""""""""""""""
 #
-# The s3 stresses are evaluated and stored in the stresses container.
+# Note: the INS operator stores the stresses in the provided stressed field.
 composite_model.add_interlaminar_normal_stresses(
     stresses=stress_operator.outputs.fields_container(),
     strains=strain_operator.outputs.fields_container(),
 )
 
-
 #%%
 # Plot s3 stresses
 # """"""""""""""""
 #
-# Prepare data for the plotting
+# Get the first stress field
 stress_field = stress_operator.outputs.fields_container()[0]
 
 #%%
@@ -101,9 +100,9 @@ with max_s3_field.as_local_field() as local_max_s3_field:
 composite_model.get_mesh().plot(max_s3_field)
 
 #%%
-# Plot s3 of a certain ply
+# Plot s3 at the mid-plane of a certain ply
 
-analysis_ply_name = get_all_analysis_ply_names(composite_model.get_mesh())
+analysis_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 selected_ply = "P3L1__Ply.1"
 
 ply_info_provider = AnalysisPlyInfoProvider(composite_model.get_mesh(), selected_ply)
