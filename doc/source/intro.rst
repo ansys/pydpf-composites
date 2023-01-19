@@ -48,12 +48,10 @@ Get started with some basic :doc:`examples/index` :
 In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.
 
-Most of the examples use the
-:class:`CompositeModel <ansys.dpf.composites.CompositeModel>` to run a standard failure analysis
-and to access lay-up data. It could make sense to use the base classes and functions
-(:ref:`Layup Information classes <layup_information_classes>` and
-:ref:`DPF Field Indexer <select_indices>`) to implement a customer failure analysis
-because of performance.
+For larger models it can be expensive to initialize a
+:class:`CompositeModel <ansys.dpf.composites.CompositeModel>`, because it automatically
+creates many different providers that are not needed in all the workflows. Consider using the
+:ref:`Layup Information classes <layup_information_classes>` directly.
 
 Start from a local Ansys Workbench project
 """"""""""""""""""""""""""""""""""""""""""
