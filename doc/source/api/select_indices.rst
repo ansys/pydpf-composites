@@ -46,6 +46,6 @@ section for complete usage examples.
     :toctree: _autosummary
 
     get_selected_indices
-    get_selected_indices_by_dpf_material_ids
     get_selected_indices_by_analysis_ply
+    get_selected_indices_by_dpf_material_ids
     Spot
