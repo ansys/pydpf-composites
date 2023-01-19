@@ -41,17 +41,15 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
 # Configure the combined failure criterion
-def get_combined_failure_criterion() -> CombinedFailureCriterion:
-    max_strain = MaxStrainCriterion()
-    max_stress = MaxStressCriterion()
-    core_failure = CoreFailureCriterion()
-    von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-    return CombinedFailureCriterion(
-        name="failure of all materials",
-        failure_criteria=[max_strain, max_stress, core_failure, von_mises_strain_only],
-    )
-
+combined_fc = CombinedFailureCriterion(
+    name="failure of all materials",
+    failure_criteria=[
+        MaxStrainCriterion(),
+        MaxStressCriterion(),
+        CoreFailureCriterion(),
+        VonMisesCriterion(vme=True, vms=False),
+    ],
+)
 
 # %%
 # Set up composite model
@@ -59,9 +57,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
 # Create a sampling point
-sampling_point = composite_model.get_sampling_point(
-    combined_criteria=get_combined_failure_criterion(), element_id=3
-)
+sampling_point = composite_model.get_sampling_point(combined_criteria=combined_fc, element_id=3)
 
 # %%
 # Plot Results
@@ -71,7 +67,7 @@ sampling_point = composite_model.get_sampling_point(
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=[Spot.BOTTOM, Spot.TOP],
+    spots=[Spot.bottom, Spot.top],
     show_failure_modes=True,
 )
 fig.set_figheight(8)
@@ -98,7 +94,7 @@ core_scale_factor = 0.5
 sampling_point.add_results_to_plot(
     ax1,
     ["s13", "s23"],
-    [Spot.BOTTOM, Spot.TOP],
+    [Spot.bottom, Spot.top],
     core_scale_factor,
     "Out-of-plane shear stresses",
     "MPA",
@@ -111,7 +107,7 @@ sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 # %%
 # Plot e12 and e2
 
-interfaces = [Spot.BOTTOM, Spot.TOP]
+interfaces = [Spot.bottom, Spot.top]
 core_scale_factor = 1.0
 indices = sampling_point.get_indices(interfaces)
 offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
@@ -137,7 +133,7 @@ sampling_point.element_id = 4
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=[Spot.BOTTOM, Spot.TOP],
+    spots=[Spot.bottom, Spot.top],
     show_failure_modes=True,
 )
 fig.set_figheight(8)

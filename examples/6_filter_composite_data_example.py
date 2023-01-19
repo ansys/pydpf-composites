@@ -68,7 +68,7 @@ with result_field.as_local_field() as local_result_field:
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
         selected_indices = get_selected_indices(
-            element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.TOP]
+            element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.top]
         )
 
         value = stress_data[selected_indices][:, component.value]

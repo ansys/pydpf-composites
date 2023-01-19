@@ -71,7 +71,7 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
         input_field=setup_result.field,
         layers=[5],
         corner_nodes=[3],
-        spots=[Spot.MIDDLE],
+        spots=[Spot.middle],
         element_ids=[1],
     )
     assert result_field.get_entity_data_by_id(1) == pytest.approx(3.05458950e-03)
@@ -81,7 +81,7 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
         element_info_provider=element_info_provider,
         input_field=setup_result.field,
         layers=[0],
-        spots=[Spot.MIDDLE],
+        spots=[Spot.middle],
         element_ids=[1],
     )
     assert result_field.get_entity_data_by_id(1) == pytest.approx(
