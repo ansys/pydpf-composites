@@ -96,7 +96,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
         composite_scope=CompositeScope(),
     )
 
-    properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.Stress_Limits_Xt])
+    properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.stress_limits_xt])
 
     timer.add("After get property dict")
 
@@ -183,11 +183,11 @@ def test_assembly_model(dpf_server):
         assert failure_output[1].get_entity_data_by_id(element_id) == pytest.approx(expected_value)
 
     properyt_dict = composite_model.get_constant_property_dict(
-        [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label
+        [MaterialProperty.stress_limits_xt], composite_definition_label=solid_label
     )
     timer.add("After get property dict")
 
-    assert properyt_dict[2][MaterialProperty.Stress_Limits_Xt] == pytest.approx(513000000.0)
+    assert properyt_dict[2][MaterialProperty.stress_limits_xt] == pytest.approx(513000000.0)
 
     expected_element_info = {
         solid_label: {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190},

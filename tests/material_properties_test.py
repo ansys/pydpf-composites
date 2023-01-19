@@ -64,7 +64,7 @@ def test_material_properties(dpf_server):
 
     setup_result = setup_operators(dpf_server, files)
 
-    material_property = MaterialProperty.Strain_Limits_eXt
+    material_property = MaterialProperty.strain_limits_ext
 
     property_dict = get_constant_property_dict(
         material_properties=[material_property],
@@ -118,7 +118,7 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
         rst_data_source=data_sources.rst, engineering_data_source=data_sources.rst
     )
 
-    material_property = MaterialProperty.Strain_Limits_eXt
+    material_property = MaterialProperty.stress_limits_xt
 
     with pytest.raises(RuntimeError) as exc_info:
         get_constant_property_dict(
