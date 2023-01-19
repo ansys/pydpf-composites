@@ -41,17 +41,15 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
 # Configure the combined failure criterion
-def get_combined_failure_criterion() -> CombinedFailureCriterion:
-    max_strain = MaxStrainCriterion()
-    max_stress = MaxStressCriterion()
-    core_failure = CoreFailureCriterion()
-    von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-    return CombinedFailureCriterion(
-        name="failure of all materials",
-        failure_criteria=[max_strain, max_stress, core_failure, von_mises_strain_only],
-    )
-
+combined_fc = CombinedFailureCriterion(
+    name="failure of all materials",
+    failure_criteria=[
+        MaxStrainCriterion(),
+        MaxStressCriterion(),
+        CoreFailureCriterion(),
+        VonMisesCriterion(vme=True, vms=False),
+    ],
+)
 
 # %%
 # Set up composite model
@@ -59,9 +57,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
 # Create a sampling point
-sampling_point = composite_model.get_sampling_point(
-    combined_criteria=get_combined_failure_criterion(), element_id=3
-)
+sampling_point = composite_model.get_sampling_point(combined_criteria=combined_fc, element_id=3)
 
 # %%
 # Plot Results

@@ -39,34 +39,22 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
-
 #%%
 # Configure the combined failure criterion
-def get_combined_failure_criterion() -> CombinedFailureCriterion:
-    max_strain = MaxStrainCriterion()
-    max_stress = MaxStressCriterion()
-    tsai_hill = TsaiHillCriterion()
-    tsai_wu = TsaiWuCriterion()
-    hoffman = HoffmanCriterion()
-    hashin = HashinCriterion()
-    cuntze = CuntzeCriterion()
-    core_failure = CoreFailureCriterion()
-    von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-    return CombinedFailureCriterion(
-        name="My Failure Criteria",
-        failure_criteria=[
-            max_strain,
-            max_stress,
-            tsai_hill,
-            tsai_wu,
-            hoffman,
-            hashin,
-            cuntze,
-            core_failure,
-            von_mises_strain_only,
-        ],
-    )
+combined_fc = CombinedFailureCriterion(
+    name="My Failure Criteria",
+    failure_criteria=[
+        MaxStrainCriterion(),
+        MaxStressCriterion(),
+        TsaiHillCriterion(),
+        TsaiWuCriterion(),
+        HoffmanCriterion(),
+        HashinCriterion(),
+        CuntzeCriterion(),
+        CoreFailureCriterion(),
+        VonMisesCriterion(vme=True, vms=False),
+    ],
+)
 
 
 #%%
@@ -147,10 +135,9 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # Set up the failure evaluator. Combines the results and evaluates all the failure criteria.
 # The output contains the maximum failure criteria for each integration point.
 #
-failure_criteria_definition = get_combined_failure_criterion()
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-failure_evaluator.inputs.configuration(failure_criteria_definition.to_json())
+failure_evaluator.inputs.configuration(combined_fc.to_json())
 failure_evaluator.inputs.materials_container(material_provider.outputs)
 failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
