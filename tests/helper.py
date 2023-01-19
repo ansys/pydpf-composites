@@ -74,7 +74,7 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles):
     streams_provider = dpf.operators.metadata.streams_provider()
     streams_provider.inputs.data_sources.connect(data_sources.rst)
 
-    strain_operator = dpf.operator.result.elastic_strain()
+    strain_operator = dpf.operators.result.elastic_strain()
     strain_operator.inputs.streams_container(streams_provider)
     strain_operator.inputs.bool_rotate_to_global(False)
     fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
