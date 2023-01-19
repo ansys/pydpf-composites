@@ -16,7 +16,15 @@ from .composite_data_sources import (
 )
 from .composite_model import CompositeModel, CompositeScope
 from .connect_to_or_start_server import connect_to_or_start_server
-from .enums import FailureMeasure, MaterialProperty, Spot
+from .enums import (
+    FailureMeasure,
+    FailureOutput,
+    LayerProperty,
+    LayupProperty,
+    MaterialProperty,
+    Spot,
+    Sym3x3TensorComponent,
+)
 from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfo,
@@ -67,4 +75,8 @@ __all__ = [
     "ContinuousFiberCompositesFiles",
     "get_composite_files_from_workbench_result_folder",
     "connect_to_or_start_server",
+    "LayupProperty",
+    "FailureOutput",
+    "Sym3x3TensorComponent",
+    "LayerProperty",
 ]
