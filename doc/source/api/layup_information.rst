@@ -1,3 +1,5 @@
+.. _layup_information_classes:
+
 Layup Information
 -----------------
 General functionality to access information on the composite layup.
