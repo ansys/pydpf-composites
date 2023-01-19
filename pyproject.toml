@@ -54,7 +54,8 @@ vtk = {version = "*"}
 matplotlib = {version = "*"}
 pyvista = {version = "^0.36.1"}
 pre-commit = {version = "*", optional = true}
-sphinx-autodoc-typehints = {version = "^1.19", optional = true}
+# Upper bound because there is a problem with examples in versions > 1.20.1
+sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
 
 
 [tool.poetry.extras]
