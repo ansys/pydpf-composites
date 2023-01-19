@@ -1,0 +1,6 @@
+fabric\_fiber\_angle\_phi
+=========================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.fabric_fiber_angle_phi

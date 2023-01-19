@@ -61,15 +61,14 @@ Load Ansys libraries
 
 Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-38
+.. GENERATED FROM PYTHON SOURCE LINES 31-36
 
 .. code-block:: default
 
-    def get_combined_failure_criterion() -> CombinedFailureCriterion:
-        return CombinedFailureCriterion(
-            name="failure of all materials",
-            failure_criteria=[MaxStressCriterion()],
-        )
+    combined_fc = CombinedFailureCriterion(
+        name="failure of all materials",
+        failure_criteria=[MaxStressCriterion()],
+    )
 
 
 
@@ -78,12 +77,11 @@ Configure the combined failure criterion
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 39-40
+.. GENERATED FROM PYTHON SOURCE LINES 37-38
 
 Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-42
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
 
 .. code-block:: default
 
@@ -96,18 +94,16 @@ Set up composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-45
+.. GENERATED FROM PYTHON SOURCE LINES 41-43
 
 Plot the max IRF per element
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-51
+.. GENERATED FROM PYTHON SOURCE LINES 43-47
 
 .. code-block:: default
 
-    output_all_elements = composite_model.evaluate_failure_criteria(
-        combined_criteria=get_combined_failure_criterion()
-    )
+    output_all_elements = composite_model.evaluate_failure_criteria(combined_criteria=combined_fc)
     irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
     irf_field.plot()
 
@@ -123,7 +119,7 @@ Plot the max IRF per element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-57
+.. GENERATED FROM PYTHON SOURCE LINES 48-53
 
 In the assembly exist two composite definition, one with the label "shell" and one
 with the label "solid". To query the layup properties we have to query the
@@ -131,7 +127,7 @@ properties with the correct composite_definition_label.
 This example shows how to get ElementInfo for all layered elements
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-63
+.. GENERATED FROM PYTHON SOURCE LINES 53-59
 
 .. code-block:: default
 
@@ -151,7 +147,7 @@ This example shows how to get ElementInfo for all layered elements
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.765 seconds)
+   **Total running time of the script:** ( 0 minutes  3.970 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_8_assembly_example.py:

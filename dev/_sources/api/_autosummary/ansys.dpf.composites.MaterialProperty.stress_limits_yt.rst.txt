@@ -1,0 +1,6 @@
+stress\_limits\_yt
+==================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.stress_limits_yt

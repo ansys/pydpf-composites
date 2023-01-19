@@ -43,7 +43,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Currently only constant properties are supported.
 # For variable material properties, the default value is returned.
 
-material_property = MaterialProperty.Strain_Limits_eXt
+material_property = MaterialProperty.strain_limits_ext
 property_dict = composite_model.get_constant_property_dict([material_property])
 
 

@@ -1,0 +1,6 @@
+engineering\_constants\_nu13
+============================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.engineering_constants_nu13

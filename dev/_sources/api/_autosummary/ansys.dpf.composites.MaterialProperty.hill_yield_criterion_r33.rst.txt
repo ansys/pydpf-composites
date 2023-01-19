@@ -1,0 +1,6 @@
+hill\_yield\_criterion\_r33
+===========================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.hill_yield_criterion_r33

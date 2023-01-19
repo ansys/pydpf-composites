@@ -317,16 +317,6 @@ function checkPageExistsAndRedirect(event) {
    Key features
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pre-requisites-and-compatibility">
-   Pre-Requisites and Compatibility
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#limitations">
-   Limitations
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -405,30 +395,8 @@ extract and visualize result over the entire thickness of the laminate.
 <a class="reference internal" href="examples/gallery_examples/2_sampling_point_example.html"><span class="doc">Here</span></a> is an example.</p></li>
 <li><p><a class="reference internal" href="api/_autosummary/ansys.dpf.composites.ResultDefinition.html"><span class="doc">Result Definition</span></a> to configure
 combined failure criteria and scopes.</p></li>
-<li><p>Accessors to lay-up data such as plies and materials. Refer to the examples
-<a class="reference internal" href="examples/gallery_examples/5_get_layup_properties_example.html"><span class="doc">Lay-up Properties</span></a>
-and <a class="reference internal" href="examples/gallery_examples/4_get_material_properties_example.html"><span class="doc">Material Properties</span></a>.</p></li>
-<li><p>Interface to implement custom failure criteria and analysis as shown in this
-<a class="reference internal" href="examples/gallery_examples/4_get_material_properties_example.html"><span class="doc">Example</span></a>.</p></li>
-<li><p>Post-processing of homogeneous elements.</p></li>
-</ul>
-</section>
-<section id="pre-requisites-and-compatibility">
-<h2>Pre-Requisites and Compatibility<a class="headerlink" href="#pre-requisites-and-compatibility" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Installation of <a class="reference external" href="https://download.ansys.com/Current%20Release">Ansys Workbench</a>.</p></li>
-<li><p>ACP model or short fiber composite model.</p></li>
-<li><p>pyDPF Composites supports Ansys 2023 R1 or newer. More details can be found on
-the DPF help about <a class="reference external" href="https://dpf.docs.pyansys.com/getting_started/compatibility.html">Compatibility</a>.</p></li>
-</ul>
-</section>
-<section id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Layered elements (section data) which have not been pre-processed with ACP are not supported.
-Refer to the Section <a class="reference external" href="https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html">Import Legacy Models</a> on the official Ansys help.
-to learn how to convert legacy models.</p></li>
-<li><p>Other solvers than MAPDL.</p></li>
+<li><p>Exposure of material properties (elasticity, strength limits et).</p></li>
+<li><p>Accessors to extract ply-wise results and material properties.</p></li>
 </ul>
 </section>
 </section>

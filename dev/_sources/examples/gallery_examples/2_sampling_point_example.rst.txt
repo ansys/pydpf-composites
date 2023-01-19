@@ -86,21 +86,19 @@ Start server and get files
 
 Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-56
+.. GENERATED FROM PYTHON SOURCE LINES 44-54
 
 .. code-block:: default
 
-    def get_combined_failure_criterion() -> CombinedFailureCriterion:
-        max_strain = MaxStrainCriterion()
-        max_stress = MaxStressCriterion()
-        core_failure = CoreFailureCriterion()
-        von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-        return CombinedFailureCriterion(
-            name="failure of all materials",
-            failure_criteria=[max_strain, max_stress, core_failure, von_mises_strain_only],
-        )
-
+    combined_fc = CombinedFailureCriterion(
+        name="failure of all materials",
+        failure_criteria=[
+            MaxStrainCriterion(),
+            MaxStressCriterion(),
+            CoreFailureCriterion(),
+            VonMisesCriterion(vme=True, vms=False),
+        ],
+    )
 
 
 
@@ -109,11 +107,11 @@ Configure the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-58
+.. GENERATED FROM PYTHON SOURCE LINES 55-56
 
 Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-60
+.. GENERATED FROM PYTHON SOURCE LINES 56-58
 
 .. code-block:: default
 
@@ -126,17 +124,15 @@ Set up composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-62
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
 
 Create a sampling point
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-66
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
 
 .. code-block:: default
 
-    sampling_point = composite_model.get_sampling_point(
-        combined_criteria=get_combined_failure_criterion(), element_id=3
-    )
+    sampling_point = composite_model.get_sampling_point(combined_criteria=combined_fc, element_id=3)
 
 
 
@@ -145,21 +141,21 @@ Create a sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-71
+.. GENERATED FROM PYTHON SOURCE LINES 63-67
 
 Plot Results
 """"""""""""
 
 Use pre-configured plots
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-80
+.. GENERATED FROM PYTHON SOURCE LINES 67-76
 
 .. code-block:: default
 
     fig, axes = sampling_point.get_result_plots(
         strain_components=[],  # do not plot strains
         core_scale_factor=0.1,
-        spots=[Spot.BOTTOM, Spot.TOP],
+        spots=[Spot.bottom, Spot.top],
         show_failure_modes=True,
     )
     fig.set_figheight(8)
@@ -177,11 +173,11 @@ Use pre-configured plots
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-82
+.. GENERATED FROM PYTHON SOURCE LINES 77-78
 
 Plot polar properties
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-84
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
 
 .. code-block:: default
 
@@ -199,7 +195,7 @@ Plot polar properties
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-91
+.. GENERATED FROM PYTHON SOURCE LINES 81-87
 
 Custom plots:
 
@@ -208,7 +204,7 @@ Here, matplotlib is used. An alternative is plotly.
 
 s13 and s23
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-111
+.. GENERATED FROM PYTHON SOURCE LINES 87-107
 
 .. code-block:: default
 
@@ -222,7 +218,7 @@ s13 and s23
     sampling_point.add_results_to_plot(
         ax1,
         ["s13", "s23"],
-        [Spot.BOTTOM, Spot.TOP],
+        [Spot.bottom, Spot.top],
         core_scale_factor,
         "Out-of-plane shear stresses",
         "MPA",
@@ -244,16 +240,16 @@ s13 and s23
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-113
+.. GENERATED FROM PYTHON SOURCE LINES 108-109
 
 Plot e12 and e2
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-131
+.. GENERATED FROM PYTHON SOURCE LINES 109-127
 
 .. code-block:: default
 
 
-    interfaces = [Spot.BOTTOM, Spot.TOP]
+    interfaces = [Spot.bottom, Spot.top]
     core_scale_factor = 1.0
     indices = sampling_point.get_indices(interfaces)
     offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
@@ -288,14 +284,14 @@ Plot e12 and e2
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-136
+.. GENERATED FROM PYTHON SOURCE LINES 128-132
 
 Sample another element
 """"""""""""""""""""""
 
 The element id of the sampling point can be easily changed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-145
+.. GENERATED FROM PYTHON SOURCE LINES 132-141
 
 .. code-block:: default
 
@@ -303,7 +299,7 @@ The element id of the sampling point can be easily changed.
     fig, axes = sampling_point.get_result_plots(
         strain_components=[],  # do not plot strains
         core_scale_factor=0.1,
-        spots=[Spot.BOTTOM, Spot.TOP],
+        spots=[Spot.bottom, Spot.top],
         show_failure_modes=True,
     )
     fig.set_figheight(8)
@@ -323,7 +319,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.636 seconds)
+   **Total running time of the script:** ( 0 minutes  1.866 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_2_sampling_point_example.py:

@@ -1,0 +1,30 @@
+﻿ansys.dpf.composites.FailureOutput
+==================================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoclass:: FailureOutput
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      FailureOutput.failure_mode
+      
+      
+      FailureOutput.failure_value
+      
+      
+      FailureOutput.max_layer_index
+      
+   
+   

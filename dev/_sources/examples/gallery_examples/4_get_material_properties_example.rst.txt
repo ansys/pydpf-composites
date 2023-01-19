@@ -106,7 +106,7 @@ For variable material properties, the default value is returned.
 .. code-block:: default
 
 
-    material_property = MaterialProperty.Strain_Limits_eXt
+    material_property = MaterialProperty.strain_limits_ext
     property_dict = composite_model.get_constant_property_dict([material_property])
 
 
@@ -184,7 +184,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.029 seconds)
+   **Total running time of the script:** ( 0 minutes  0.939 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_4_get_material_properties_example.py:

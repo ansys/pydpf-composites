@@ -1,0 +1,6 @@
+strain\_limits\_exc
+===================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.strain_limits_exc

@@ -54,27 +54,5 @@ Key features
   :doc:`Here <examples/gallery_examples/2_sampling_point_example>` is an example.
 * :doc:`Result Definition <api/_autosummary/ansys.dpf.composites.ResultDefinition>` to configure
   combined failure criteria and scopes.
-* Accessors to lay-up data such as plies and materials. Refer to the examples
-  :doc:`Lay-up Properties <examples/gallery_examples/5_get_layup_properties_example>`
-  and :doc:`Material Properties <examples/gallery_examples/4_get_material_properties_example>`.
-* Interface to implement custom failure criteria and analysis as shown in this
-  :doc:`Example <examples/gallery_examples/4_get_material_properties_example>`.
-* Post-processing of homogeneous elements.
-
-Pre-Requisites and Compatibility
-''''''''''''''''''''''''''''''''
-- Installation of `Ansys Workbench`_.
-- ACP model or short fiber composite model.
-- pyDPF Composites supports Ansys 2023 R1 or newer. More details can be found on
-  the DPF help about `Compatibility`_.
-
-Limitations
-'''''''''''
-- Layered elements (section data) which have not been pre-processed with ACP are not supported.
-  Refer to the Section `Import Legacy Models`_ on the official Ansys help.
-  to learn how to convert legacy models.
-- Other solvers than MAPDL.
-
-.. _Ansys Workbench: https://download.ansys.com/Current%20Release
-.. _Import Legacy Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html
-.. _Compatibility: https://dpf.docs.pyansys.com/getting_started/compatibility.html
+* Exposure of material properties (elasticity, strength limits et).
+* Accessors to extract ply-wise results and material properties.

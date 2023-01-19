@@ -42,7 +42,7 @@ Script
 Load Ansys libraries
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-43
+.. GENERATED FROM PYTHON SOURCE LINES 25-42
 
 .. code-block:: default
 
@@ -70,40 +70,28 @@ Load Ansys libraries
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 44-45
+.. GENERATED FROM PYTHON SOURCE LINES 43-44
 
 Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-72
+.. GENERATED FROM PYTHON SOURCE LINES 44-60
 
 .. code-block:: default
 
-    def get_combined_failure_criterion() -> CombinedFailureCriterion:
-        max_strain = MaxStrainCriterion()
-        max_stress = MaxStressCriterion()
-        tsai_hill = TsaiHillCriterion()
-        tsai_wu = TsaiWuCriterion()
-        hoffman = HoffmanCriterion()
-        hashin = HashinCriterion()
-        cuntze = CuntzeCriterion()
-        core_failure = CoreFailureCriterion()
-        von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-        return CombinedFailureCriterion(
-            name="My Failure Criteria",
-            failure_criteria=[
-                max_strain,
-                max_stress,
-                tsai_hill,
-                tsai_wu,
-                hoffman,
-                hashin,
-                cuntze,
-                core_failure,
-                von_mises_strain_only,
-            ],
-        )
+    combined_fc = CombinedFailureCriterion(
+        name="My Failure Criteria",
+        failure_criteria=[
+            MaxStrainCriterion(),
+            MaxStressCriterion(),
+            TsaiHillCriterion(),
+            TsaiWuCriterion(),
+            HoffmanCriterion(),
+            HashinCriterion(),
+            CuntzeCriterion(),
+            CoreFailureCriterion(),
+            VonMisesCriterion(vme=True, vms=False),
+        ],
+    )
 
 
 
@@ -113,11 +101,11 @@ Configure the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-74
+.. GENERATED FROM PYTHON SOURCE LINES 61-62
 
 Start server and prepare files
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-77
+.. GENERATED FROM PYTHON SOURCE LINES 62-65
 
 .. code-block:: default
 
@@ -131,11 +119,11 @@ Start server and prepare files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-79
+.. GENERATED FROM PYTHON SOURCE LINES 66-67
 
 Initialize DPF model and data sources
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-90
+.. GENERATED FROM PYTHON SOURCE LINES 67-78
 
 .. code-block:: default
 
@@ -157,11 +145,11 @@ Initialize DPF model and data sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-92
+.. GENERATED FROM PYTHON SOURCE LINES 79-80
 
 Set up Mesh Provider
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-94
+.. GENERATED FROM PYTHON SOURCE LINES 80-82
 
 .. code-block:: default
 
@@ -174,14 +162,14 @@ Set up Mesh Provider
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-99
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
 
 Set up Material Provider
 The material support provider takes care of mapping the materials in the rst file to
 the materials in the composite definitions.
 The material support contains all the materials from the rst file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-103
+.. GENERATED FROM PYTHON SOURCE LINES 87-91
 
 .. code-block:: default
 
@@ -196,12 +184,12 @@ The material support contains all the materials from the rst file.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-106
+.. GENERATED FROM PYTHON SOURCE LINES 92-94
 
 Get Result Info
 This is needed provides the unit system from the rst file
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-109
+.. GENERATED FROM PYTHON SOURCE LINES 94-97
 
 .. code-block:: default
 
@@ -215,14 +203,14 @@ This is needed provides the unit system from the rst file
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-114
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
 
 Set up material provider
 Combines the material support the engineering data xml file and the unit_system.
 It's output can be used
 to evaluate material properties
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-121
+.. GENERATED FROM PYTHON SOURCE LINES 102-109
 
 .. code-block:: default
 
@@ -240,12 +228,12 @@ to evaluate material properties
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-124
+.. GENERATED FROM PYTHON SOURCE LINES 110-112
 
 Set up the layup provider
 Read the composite definition file and enriches the mesh with the composite layup information.
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-133
+.. GENERATED FROM PYTHON SOURCE LINES 112-121
 
 .. code-block:: default
 
@@ -265,14 +253,14 @@ Read the composite definition file and enriches the mesh with the composite layu
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-138
+.. GENERATED FROM PYTHON SOURCE LINES 122-126
 
 Set up the result operators: strains and stresses
 Rotate to global is False because the post-processing engine expects the results to be
 in the element coordinate system ( material coordinate system)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-146
+.. GENERATED FROM PYTHON SOURCE LINES 126-134
 
 .. code-block:: default
 
@@ -291,20 +279,19 @@ in the element coordinate system ( material coordinate system)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-150
+.. GENERATED FROM PYTHON SOURCE LINES 135-138
 
 Set up the failure evaluator. Combines the results and evaluates all the failure criteria.
 The output contains the maximum failure criteria for each integration point.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-159
+.. GENERATED FROM PYTHON SOURCE LINES 138-146
 
 .. code-block:: default
 
-    failure_criteria_definition = get_combined_failure_criterion()
 
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-    failure_evaluator.inputs.configuration(failure_criteria_definition.to_json())
+    failure_evaluator.inputs.configuration(combined_fc.to_json())
     failure_evaluator.inputs.materials_container(material_provider.outputs)
     failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
     failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
@@ -317,13 +304,13 @@ The output contains the maximum failure criteria for each integration point.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-163
+.. GENERATED FROM PYTHON SOURCE LINES 147-150
 
 Uses the output of the multiple_failure_criteria_operator
 to compute the min and max failure criteria for each element
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-172
+.. GENERATED FROM PYTHON SOURCE LINES 150-159
 
 .. code-block:: default
 
@@ -343,12 +330,12 @@ to compute the min and max failure criteria for each element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-175
+.. GENERATED FROM PYTHON SOURCE LINES 160-162
 
 Plot the max and the minimum value for each value
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 175-177
+.. GENERATED FROM PYTHON SOURCE LINES 162-164
 
 .. code-block:: default
 
@@ -369,7 +356,7 @@ Plot the max and the minimum value for each value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.883 seconds)
+   **Total running time of the script:** ( 0 minutes  0.924 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_dpf_composite_failure_workflow.py:

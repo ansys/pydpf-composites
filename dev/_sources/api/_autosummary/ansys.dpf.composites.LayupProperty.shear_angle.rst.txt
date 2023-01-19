@@ -1,0 +1,6 @@
+shear\_angle
+============
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: LayupProperty.shear_angle

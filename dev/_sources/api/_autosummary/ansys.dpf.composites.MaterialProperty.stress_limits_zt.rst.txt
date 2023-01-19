@@ -1,0 +1,6 @@
+stress\_limits\_zt
+==================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.stress_limits_zt

@@ -74,22 +74,20 @@ Load ansys libraries
 
 Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-57
+.. GENERATED FROM PYTHON SOURCE LINES 43-54
 
 .. code-block:: default
 
 
-
-    def get_combined_failure_criterion() -> CombinedFailureCriterion:
-        max_strain = MaxStrainCriterion()
-        max_stress = MaxStressCriterion()
-        core_failure = CoreFailureCriterion()
-        von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-        return CombinedFailureCriterion(
-            name="failure of all materials",
-            failure_criteria=[max_strain, max_stress, core_failure, von_mises_strain_only],
-        )
+    combined_fc = CombinedFailureCriterion(
+        name="failure of all materials",
+        failure_criteria=[
+            MaxStrainCriterion(),
+            MaxStressCriterion(),
+            CoreFailureCriterion(),
+            VonMisesCriterion(vme=True, vms=False),
+        ],
+    )
 
 
 
@@ -98,12 +96,11 @@ Configure the combined failure criterion
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 58-59
+.. GENERATED FROM PYTHON SOURCE LINES 55-56
 
 Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-61
+.. GENERATED FROM PYTHON SOURCE LINES 56-58
 
 .. code-block:: default
 
@@ -116,16 +113,16 @@ Set up composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-63
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
 
 Failure evaluation for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-69
+.. GENERATED FROM PYTHON SOURCE LINES 60-66
 
 .. code-block:: default
 
     output_all_elements = composite_model.evaluate_failure_criteria(
-        combined_criteria=get_combined_failure_criterion(),
+        combined_criteria=combined_fc,
     )
     irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
     irf_field.plot()
@@ -142,16 +139,16 @@ Failure evaluation for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-71
+.. GENERATED FROM PYTHON SOURCE LINES 67-68
 
 Scope failure evaluation to a certain element scope
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-78
+.. GENERATED FROM PYTHON SOURCE LINES 68-75
 
 .. code-block:: default
 
     output_two_elements = composite_model.evaluate_failure_criteria(
-        combined_criteria=get_combined_failure_criterion(),
+        combined_criteria=combined_fc,
         composite_scope=CompositeScope(elements=[1, 3]),
     )
     irf_field = output_two_elements.get_field({"failure_label": FailureOutput.failure_value.value})
@@ -169,16 +166,16 @@ Scope failure evaluation to a certain element scope
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-80
+.. GENERATED FROM PYTHON SOURCE LINES 76-77
 
 Scope by plies
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-86
+.. GENERATED FROM PYTHON SOURCE LINES 77-83
 
 .. code-block:: default
 
     output_woven_plies = composite_model.evaluate_failure_criteria(
-        combined_criteria=get_combined_failure_criterion(),
+        combined_criteria=combined_fc,
         composite_scope=CompositeScope(plies=["P1L1__ud_patch ns1"]),
     )
     irf_field = output_woven_plies.get_field({"failure_label": FailureOutput.failure_value.value})
@@ -198,7 +195,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.054 seconds)
+   **Total running time of the script:** ( 0 minutes  5.834 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_1_failure_operator_example.py:

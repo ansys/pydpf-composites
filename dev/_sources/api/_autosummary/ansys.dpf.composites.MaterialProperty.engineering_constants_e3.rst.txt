@@ -1,0 +1,6 @@
+engineering\_constants\_e3
+==========================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.engineering_constants_e3

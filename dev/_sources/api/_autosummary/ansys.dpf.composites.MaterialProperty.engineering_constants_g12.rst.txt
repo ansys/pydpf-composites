@@ -1,0 +1,6 @@
+engineering\_constants\_g12
+===========================
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: MaterialProperty.engineering_constants_g12
