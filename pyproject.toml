@@ -49,7 +49,7 @@ pytest = {version = "^7.1.2", optional = true}
 pytest-cov = {version = "^3.0.0", optional = true}
 mypy = {version = "^0.931", optional = true}
 mypy-extensions = {version = "^0.4.3", optional = true}
-ansys-dpf-core = "^0.6.0"
+ansys-dpf-core = "^0.7.0"
 vtk = {version = "*"}
 matplotlib = {version = "*"}
 pyvista = {version = "^0.36.1"}
