@@ -67,7 +67,7 @@ def get_test_data(dpf_server):
 
     rst_data_source = dpf.DataSources(rst_path)
 
-    strain_operator = dpf.Operator("EPEL")
+    strain_operator = dpf.operator.result.elastic_strain()
     strain_operator.inputs.data_sources(rst_data_source)
     strain_operator.inputs.bool_rotate_to_global(False)
 
