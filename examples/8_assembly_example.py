@@ -28,12 +28,10 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "assembly
 
 # %%
 # Configure the combined failure criterion
-def get_combined_failure_criterion() -> CombinedFailureCriterion:
-    return CombinedFailureCriterion(
-        name="failure of all materials",
-        failure_criteria=[MaxStressCriterion()],
-    )
-
+combined_fc = CombinedFailureCriterion(
+    name="failure of all materials",
+    failure_criteria=[MaxStressCriterion()],
+)
 
 # %%
 # Set up composite model
@@ -42,9 +40,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # %%
 # Plot the max IRF per element
 #
-output_all_elements = composite_model.evaluate_failure_criteria(
-    combined_criteria=get_combined_failure_criterion()
-)
+output_all_elements = composite_model.evaluate_failure_criteria(combined_criteria=combined_fc)
 irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
 irf_field.plot()
 

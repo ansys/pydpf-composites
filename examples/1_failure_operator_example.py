@@ -41,18 +41,15 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 # %%
 # Configure the combined failure criterion
 
-
-def get_combined_failure_criterion() -> CombinedFailureCriterion:
-    max_strain = MaxStrainCriterion()
-    max_stress = MaxStressCriterion()
-    core_failure = CoreFailureCriterion()
-    von_mises_strain_only = VonMisesCriterion(vme=True, vms=False)
-
-    return CombinedFailureCriterion(
-        name="failure of all materials",
-        failure_criteria=[max_strain, max_stress, core_failure, von_mises_strain_only],
-    )
-
+combined_fc = CombinedFailureCriterion(
+    name="failure of all materials",
+    failure_criteria=[
+        MaxStrainCriterion(),
+        MaxStressCriterion(),
+        CoreFailureCriterion(),
+        VonMisesCriterion(vme=True, vms=False),
+    ],
+)
 
 # %%
 # Set up composite model
@@ -61,7 +58,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 #%%
 # Failure evaluation for the entire model
 output_all_elements = composite_model.evaluate_failure_criteria(
-    combined_criteria=get_combined_failure_criterion(),
+    combined_criteria=combined_fc,
 )
 irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
 irf_field.plot()
@@ -69,7 +66,7 @@ irf_field.plot()
 # %%
 # Scope failure evaluation to a certain element scope
 output_two_elements = composite_model.evaluate_failure_criteria(
-    combined_criteria=get_combined_failure_criterion(),
+    combined_criteria=combined_fc,
     composite_scope=CompositeScope(elements=[1, 3]),
 )
 irf_field = output_two_elements.get_field({"failure_label": FailureOutput.failure_value.value})
@@ -78,7 +75,7 @@ irf_field.plot()
 # %%
 # Scope by plies
 output_woven_plies = composite_model.evaluate_failure_criteria(
-    combined_criteria=get_combined_failure_criterion(),
+    combined_criteria=combined_fc,
     composite_scope=CompositeScope(plies=["P1L1__ud_patch ns1"]),
 )
 irf_field = output_woven_plies.get_field({"failure_label": FailureOutput.failure_value.value})
