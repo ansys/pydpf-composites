@@ -51,7 +51,7 @@
     <script src="../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ansys.dpf.composites.ElementInfoProvider" href="_autosummary/ansys.dpf.composites.ElementInfoProvider.html" />
+    <link rel="next" title="add_layup_info_to_mesh" href="_autosummary/ansys.dpf.composites.add_layup_info_to_mesh.html" />
     <link rel="prev" title="wf_vms" href="_autosummary/ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
@@ -318,6 +318,26 @@ function checkPageExistsAndRedirect(event) {
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.add_layup_info_to_mesh.html">
+     add_layup_info_to_mesh
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_element_info_provider.html">
+     get_element_info_provider
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html">
+     get_dpf_material_id_by_analyis_ply_map
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.html">
+     ansys.dpf.composites.AnalysisPlyInfoProvider
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfoProvider.html">
      ansys.dpf.composites.ElementInfoProvider
     </a>
@@ -328,28 +348,8 @@ function checkPageExistsAndRedirect(event) {
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.html">
-     ansys.dpf.composites.AnalysisPlyInfoProvider
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_element_info_provider.html">
-     get_element_info_provider
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="_autosummary/ansys.dpf.composites.LayupPropertiesProvider.html">
      ansys.dpf.composites.LayupPropertiesProvider
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html">
-     get_dpf_material_id_by_analyis_ply_map
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="_autosummary/ansys.dpf.composites.add_layup_info_to_mesh.html">
-     add_layup_info_to_mesh
     </a>
    </li>
   </ul>
@@ -405,30 +405,30 @@ function checkPageExistsAndRedirect(event) {
               <article class="bd-article" role="main">
                 
   <section id="layup-information">
-<h1>Layup Information<a class="headerlink" href="#layup-information" title="Permalink to this heading">#</a></h1>
+<span id="layup-information-classes"></span><h1>Layup Information<a class="headerlink" href="#layup-information" title="Permalink to this heading">#</a></h1>
 <p>General functionality to access information on the composite layup.</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.add_layup_info_to_mesh.html#ansys.dpf.composites.add_layup_info_to_mesh" title="ansys.dpf.composites.add_layup_info_to_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_layup_info_to_mesh</span></code></a>(data_sources, ...[, ...])</p></td>
+<td><p>Add layup information to the mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_element_info_provider.html#ansys.dpf.composites.get_element_info_provider" title="ansys.dpf.composites.get_element_info_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_element_info_provider</span></code></a>(mesh, ...[, ...])</p></td>
+<td><p>Get <a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfoProvider.html#ansys.dpf.composites.ElementInfoProvider" title="ansys.dpf.composites.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> Object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html#ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map" title="ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dpf_material_id_by_analyis_ply_map</span></code></a>(mesh, ...)</p></td>
+<td><p>Get Dict that maps analysis ply names to dpf_material_ids.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.html#ansys.dpf.composites.AnalysisPlyInfoProvider" title="ansys.dpf.composites.AnalysisPlyInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnalysisPlyInfoProvider</span></code></a>(mesh, name)</p></td>
+<td><p>AnalysisPlyInfoProvider.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfoProvider.html#ansys.dpf.composites.ElementInfoProvider" title="ansys.dpf.composites.ElementInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a>(mesh, layer_indices, ...)</p></td>
 <td><p>Provider for <a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfo.html#ansys.dpf.composites.ElementInfo" title="ansys.dpf.composites.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfo.html#ansys.dpf.composites.ElementInfo" title="ansys.dpf.composites.ElementInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>(id, n_layers, n_corner_nodes, ...)</p></td>
 <td><p>Layup information for a given element.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.AnalysisPlyInfoProvider.html#ansys.dpf.composites.AnalysisPlyInfoProvider" title="ansys.dpf.composites.AnalysisPlyInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnalysisPlyInfoProvider</span></code></a>(mesh, name)</p></td>
-<td><p>AnalysisPlyInfoProvider.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_element_info_provider.html#ansys.dpf.composites.get_element_info_provider" title="ansys.dpf.composites.get_element_info_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_element_info_provider</span></code></a>(mesh, ...[, ...])</p></td>
-<td><p>Get <a class="reference internal" href="_autosummary/ansys.dpf.composites.ElementInfoProvider.html#ansys.dpf.composites.ElementInfoProvider" title="ansys.dpf.composites.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> Object.</p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.LayupPropertiesProvider.html#ansys.dpf.composites.LayupPropertiesProvider" title="ansys.dpf.composites.LayupPropertiesProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupPropertiesProvider</span></code></a>(layup_provider, mesh)</p></td>
 <td><p>Provider for layup properties.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html#ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map" title="ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dpf_material_id_by_analyis_ply_map</span></code></a>(mesh, ...)</p></td>
-<td><p>Get Dict that maps analysis ply names to dpf_material_ids.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.add_layup_info_to_mesh.html#ansys.dpf.composites.add_layup_info_to_mesh" title="ansys.dpf.composites.add_layup_info_to_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_layup_info_to_mesh</span></code></a>(data_sources, ...[, ...])</p></td>
-<td><p>Add layup information to the mesh.</p></td>
 </tr>
 </tbody>
 </table>

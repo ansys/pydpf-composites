@@ -329,11 +329,13 @@ function checkPageExistsAndRedirect(event) {
   <a class="reference internal nav-link" href="#examples">
    Examples
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#start-from-a-local-ansys-workbench-project">
-   Start from a local Ansys Workbench project
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#start-from-a-local-ansys-workbench-project">
+     Start from a local Ansys Workbench project
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -384,14 +386,17 @@ to keep Python packages isolated from your system Python.</p>
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
 <p>Get started with some basic <a class="reference internal" href="examples/index.html"><span class="doc">Examples</span></a> :</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="examples/gallery_examples/2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling Point</span></a></p></li>
 <li><p><a class="reference internal" href="examples/gallery_examples/1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite Failure Analysis</span></a></p></li>
+<li><p><a class="reference internal" href="examples/gallery_examples/2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling Point</span></a></p></li>
 </ul>
 <p>In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.</p>
-</section>
+<p>For larger models it can be expensive to initialize a
+<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.CompositeModel.html#ansys.dpf.composites.CompositeModel" title="ansys.dpf.composites.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>, because it automatically
+creates many different providers that are not needed in all the workflows. Consider using the
+<a class="reference internal" href="api/layup_information.html#layup-information-classes"><span class="std std-ref">Layup Information classes</span></a> directly.</p>
 <section id="start-from-a-local-ansys-workbench-project">
-<h2>Start from a local Ansys Workbench project<a class="headerlink" href="#start-from-a-local-ansys-workbench-project" title="Permalink to this heading">#</a></h2>
+<h3>Start from a local Ansys Workbench project<a class="headerlink" href="#start-from-a-local-ansys-workbench-project" title="Permalink to this heading">#</a></h3>
 <p>To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
 object in Mechanical and selecting “Open Solver Files Directory”. Then call the
 <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">ansys.dpf.composites.get_composite_files_from_workbench_result_folder()</span></code></a> function with that folder.
@@ -439,6 +444,7 @@ detailed output for a sampling point.</p>
 </div>
 <a class="reference internal image-reference" href="_images/boat_irf.png"><img alt="IRF plot on boat" src="_images/boat_irf.png" style="width: 750px;" /></a>
 <a class="reference internal image-reference" href="_images/boat_sampling_point.png"><img alt="Sampling Point on Boat" src="_images/boat_sampling_point.png" style="width: 750px;" /></a>
+</section>
 </section>
 </section>
 

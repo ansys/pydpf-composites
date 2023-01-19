@@ -2,9 +2,8 @@
 Getting Started
 ---------------
 
-
 Testing session (to be removed)
-'''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Most of the documentation below is still valid for the ansys internal testing session with following exceptions:
 
 Since the module is not yet public, please install from github:
@@ -12,8 +11,6 @@ Since the module is not yet public, please install from github:
 .. code::
 
     pip install git+https://github.com/pyansys/pydpf-composites.git
-
-
 
 Whenever you call the function connect_to_or_start_server you have to pass the location of the 231 installer
 with the ansys_path argument:
@@ -25,9 +22,8 @@ with the ansys_path argument:
 Otherwise, the dpf server will be started with the latest installer it finds, which probably is 232.
 
 
-
 Installation
-''''''''''''
+^^^^^^^^^^^^
 
 ansys-dpf-composites supports Ansys version 23.1 and later. Make sure you have licensed copy of Ansys installed.
 Install the ansys-dpf-composites module from pip:
@@ -42,20 +38,23 @@ to keep Python packages isolated from your system Python.
 
 
 Examples
-''''''''
+^^^^^^^^
 
 Get started with some basic :doc:`examples/index` :
 
-* :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
 * :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
-
+* :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
 
 In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.
 
+For larger models it can be expensive to initialize a
+:class:`CompositeModel <ansys.dpf.composites.CompositeModel>`, because it automatically
+creates many different providers that are not needed in all the workflows. Consider using the
+:ref:`Layup Information classes <layup_information_classes>` directly.
 
 Start from a local Ansys Workbench project
-''''''''''''''''''''''''''''''''''''''''''
+""""""""""""""""""""""""""""""""""""""""""
 
 To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
 object in Mechanical and selecting "Open Solver Files Directory". Then call the

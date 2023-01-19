@@ -16,7 +16,7 @@ example shows how to evaluate material properties.
 .. autosummary::
     :toctree: _autosummary
 
-    get_constant_property
     get_all_dpf_material_ids
+    get_constant_property
     get_constant_property_dict
     MaterialProperty
