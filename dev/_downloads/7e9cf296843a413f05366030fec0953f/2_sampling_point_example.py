@@ -71,7 +71,7 @@ sampling_point = composite_model.get_sampling_point(
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=[Spot.bottom, Spot.top],
+    spots=[Spot.BOTTOM, Spot.TOP],
     show_failure_modes=True,
 )
 fig.set_figheight(8)
@@ -98,7 +98,7 @@ core_scale_factor = 0.5
 sampling_point.add_results_to_plot(
     ax1,
     ["s13", "s23"],
-    [Spot.bottom, Spot.top],
+    [Spot.BOTTOM, Spot.TOP],
     core_scale_factor,
     "Out-of-plane shear stresses",
     "MPA",
@@ -111,7 +111,7 @@ sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 # %%
 # Plot e12 and e2
 
-interfaces = [Spot.bottom, Spot.top]
+interfaces = [Spot.BOTTOM, Spot.TOP]
 core_scale_factor = 1.0
 indices = sampling_point.get_indices(interfaces)
 offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
@@ -137,7 +137,7 @@ sampling_point.element_id = 4
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=[Spot.bottom, Spot.top],
+    spots=[Spot.BOTTOM, Spot.TOP],
     show_failure_modes=True,
 )
 fig.set_figheight(8)

@@ -116,7 +116,7 @@ with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
         # select all stresses from bottom to top of node 0
         layer_index = ply_info_provider.get_layer_index_by_element_id(element_id)
         selected_indices = get_selected_indices(
-            element_info, layers=[layer_index], nodes=[0], spots=[Spot.middle]
+            element_info, layers=[layer_index], nodes=[0], spots=[Spot.MIDDLE]
         )
 
         # order is bottom, top, mid

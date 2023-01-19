@@ -1,6 +1,0 @@
-puck\_constants\_p\_21\_pos
-===========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.puck_constants_p_21_pos

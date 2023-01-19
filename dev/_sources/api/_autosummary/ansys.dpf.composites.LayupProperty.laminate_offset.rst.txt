@@ -1,6 +1,0 @@
-laminate\_offset
-================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: LayupProperty.laminate_offset

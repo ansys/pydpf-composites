@@ -1,6 +1,0 @@
-thickness
-=========
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: LayupProperty.thickness

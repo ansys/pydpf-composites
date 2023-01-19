@@ -1,6 +1,0 @@
-thermal\_expansion\_coefficients\_ax
-====================================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.thermal_expansion_coefficients_ax

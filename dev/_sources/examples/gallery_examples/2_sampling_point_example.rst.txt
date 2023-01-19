@@ -159,7 +159,7 @@ Use pre-configured plots
     fig, axes = sampling_point.get_result_plots(
         strain_components=[],  # do not plot strains
         core_scale_factor=0.1,
-        spots=[Spot.bottom, Spot.top],
+        spots=[Spot.BOTTOM, Spot.TOP],
         show_failure_modes=True,
     )
     fig.set_figheight(8)
@@ -222,7 +222,7 @@ s13 and s23
     sampling_point.add_results_to_plot(
         ax1,
         ["s13", "s23"],
-        [Spot.bottom, Spot.top],
+        [Spot.BOTTOM, Spot.TOP],
         core_scale_factor,
         "Out-of-plane shear stresses",
         "MPA",
@@ -253,7 +253,7 @@ Plot e12 and e2
 .. code-block:: default
 
 
-    interfaces = [Spot.bottom, Spot.top]
+    interfaces = [Spot.BOTTOM, Spot.TOP]
     core_scale_factor = 1.0
     indices = sampling_point.get_indices(interfaces)
     offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
@@ -303,7 +303,7 @@ The element id of the sampling point can be easily changed.
     fig, axes = sampling_point.get_result_plots(
         strain_components=[],  # do not plot strains
         core_scale_factor=0.1,
-        spots=[Spot.bottom, Spot.top],
+        spots=[Spot.BOTTOM, Spot.TOP],
         show_failure_modes=True,
     )
     fig.set_figheight(8)
@@ -323,7 +323,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.051 seconds)
+   **Total running time of the script:** ( 0 minutes  1.636 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_2_sampling_point_example.py:

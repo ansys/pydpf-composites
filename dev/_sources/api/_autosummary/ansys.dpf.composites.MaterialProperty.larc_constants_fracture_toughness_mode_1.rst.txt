@@ -1,6 +1,0 @@
-larc\_constants\_fracture\_toughness\_mode\_1
-=============================================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.larc_constants_fracture_toughness_mode_1

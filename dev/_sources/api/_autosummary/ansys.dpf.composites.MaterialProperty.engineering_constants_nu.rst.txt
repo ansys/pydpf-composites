@@ -1,6 +1,0 @@
-engineering\_constants\_nu
-==========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.engineering_constants_nu

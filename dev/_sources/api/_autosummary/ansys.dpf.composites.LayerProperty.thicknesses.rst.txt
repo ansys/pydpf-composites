@@ -1,6 +1,0 @@
-thicknesses
-===========
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: LayerProperty.thicknesses
