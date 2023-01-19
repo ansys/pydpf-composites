@@ -1,0 +1,6 @@
+top
+===
+
+.. currentmodule:: ansys.dpf.composites
+
+.. autoattribute:: Spot.top

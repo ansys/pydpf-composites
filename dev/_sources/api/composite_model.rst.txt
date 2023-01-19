@@ -16,6 +16,10 @@ Composite Model
       MaterialOperators
       ResultDefinition
       SamplingPoint
+      LayupProperty
+      FailureOutput
+      Sym3x3TensorComponent
+      LayerProperty
 
 
 
