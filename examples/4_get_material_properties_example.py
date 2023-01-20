@@ -38,7 +38,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
 # Get dictionary that maps dpf_material_id to properties
-# The creation of the dictionary is currently quite expensive and
+# The creation of the dictionary is currently quite slow and
 # should be done before using the properties in a loop.
 # Currently only constant properties are supported.
 # For variable material properties, the default value is returned.

@@ -172,7 +172,7 @@ def test_performance_element_info(dpf_server):
     setup_result = setup_operators(dpf_server, files)
     timer.add("read data")
 
-    # This is currently expensive because
+    # This is currently slow because
     # getting the keyoptions is slow.
     # We could implement the option to pass keyoptions directly if
     # they are known
