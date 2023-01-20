@@ -8,18 +8,17 @@ Failure Criteria
 .. autosummary::
     :toctree: _autosummary
 
-    MaxStrainCriterion
-    MaxStressCriterion
     CombinedFailureCriterion
-    TsaiWuCriterion
-    TsaiHillCriterion
-    HoffmanCriterion
     CoreFailureCriterion
     CuntzeCriterion
     FaceSheetWrinklingCriterion
     HashinCriterion
+    HoffmanCriterion
     LaRCCriterion
+    MaxStrainCriterion
+    MaxStressCriterion
     PuckCriterion
     ShearCrimpingCriterion
+    TsaiHillCriterion
+    TsaiWuCriterion
     VonMisesCriterion
-
