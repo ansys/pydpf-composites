@@ -187,9 +187,6 @@ def _download_and_upload_file(
     if server.local_server:
         local_path = os.path.join(os.getcwd(), filename)
     urllib.request.urlretrieve(file_url, local_path)
-    # todo: With 0.7.1 the server will have
-    #  a boolean property 'local_server' that we can use to
-    #  determine if files should be uploaded
     if server.local_server:
         return local_path
     return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
