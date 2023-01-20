@@ -55,7 +55,7 @@ combined_fc = CombinedFailureCriterion(
 # Set up composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
-#%%
+# %%
 # Failure evaluation for the entire model
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=combined_fc,
