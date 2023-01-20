@@ -2,8 +2,7 @@
 from datetime import datetime
 import os
 
-from ansys_sphinx_theme import get_version_match
-from ansys_sphinx_theme import pyansys_logo_black as logo
+from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
 import pyvista
 from sphinx_gallery.sorting import FileNameSortKey
 
@@ -25,7 +24,8 @@ author = "ANSYS, Inc."
 release = version = __version__
 
 # Select desired logo, theme, and declare the html title
-html_logo = logo
+html_logo = pyansys_logo_black
+html_favicon = ansys_favicon
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "pydpf-composites"
 
@@ -134,6 +134,10 @@ exclude_patterns = [
 
 # static path
 html_static_path = ["_static"]
+
+html_css_files = [
+    "pydpf_composite.css",
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
