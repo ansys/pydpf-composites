@@ -431,8 +431,7 @@ For variable material properties, the default value is returned.</p>
 </pre></div>
 </div>
 <p>Get strain field</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;EPEL&quot;</span><span class="p">)</span>
-<span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">elastic_strain</span><span class="p">()</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">strain_field</span> <span class="o">=</span> <span class="n">strain_operator</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span><span class="n">pin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
@@ -463,7 +462,7 @@ For variable material properties, the default value is returned.</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_4_get_material_properties_example_001.png" srcset="../../_images/sphx_glr_4_get_material_properties_example_001.png" alt="4 get material properties example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.737 seconds)</p>
+<img src="../../_images/sphx_glr_4_get_material_properties_example_001.png" srcset="../../_images/sphx_glr_4_get_material_properties_example_001.png" alt="4 get material properties example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.048 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-4-get-material-properties-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/182734e7babe023574be666ab4d0c279/4_get_material_properties_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">4_get_material_properties_example.py</span></code></a></p>

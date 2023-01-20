@@ -105,12 +105,11 @@ Set up composite model
 
 Get stress field
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-54
+.. GENERATED FROM PYTHON SOURCE LINES 49-53
 
 .. code-block:: default
 
-    stress_operator = dpf.Operator("S")
-    stress_operator.inputs.data_sources(composite_model.data_sources.rst)
+    stress_operator = composite_model.core_model.results.stress()
     stress_operator.inputs.bool_rotate_to_global(False)
     stress_field = stress_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
 
@@ -121,11 +120,11 @@ Get stress field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-56
+.. GENERATED FROM PYTHON SOURCE LINES 54-55
 
 Get element infos for all the elements and show the first one as an example
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-60
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 .. code-block:: default
 
@@ -146,11 +145,11 @@ Get element infos for all the elements and show the first one as an example
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-62
+.. GENERATED FROM PYTHON SOURCE LINES 60-61
 
 Plot stress values in material direction for the top layer, first node and "top" spot
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-79
+.. GENERATED FROM PYTHON SOURCE LINES 61-78
 
 .. code-block:: default
 
@@ -183,11 +182,11 @@ Plot stress values in material direction for the top layer, first node and "top"
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-81
+.. GENERATED FROM PYTHON SOURCE LINES 79-80
 
 List all the available analysis plies
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-84
+.. GENERATED FROM PYTHON SOURCE LINES 80-83
 
 .. code-block:: default
 
@@ -207,12 +206,12 @@ List all the available analysis plies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-87
+.. GENERATED FROM PYTHON SOURCE LINES 84-86
 
 Loop all elements that contain a given ply and plot the maximum stress value
 in material direction in that ply
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-110
+.. GENERATED FROM PYTHON SOURCE LINES 86-109
 
 .. code-block:: default
 
@@ -251,7 +250,7 @@ in material direction in that ply
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-116
+.. GENERATED FROM PYTHON SOURCE LINES 110-115
 
 Loop all elements and get maximum stress in material direction
 for all plies that have the material with dpf_material_id.
@@ -259,7 +258,7 @@ Note: It is currently not possible to get a dpf_material_id for a
 given material name. It is only possible
 to get the dpf_material_id from an analysis ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-137
+.. GENERATED FROM PYTHON SOURCE LINES 115-136
 
 .. code-block:: default
 
@@ -299,7 +298,7 @@ to get the dpf_material_id from an analysis ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.352 seconds)
+   **Total running time of the script:** ( 0 minutes  1.770 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_6_filter_composite_data_example.py:

@@ -121,12 +121,11 @@ For variable material properties, the default value is returned.
 
 Get strain field
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-58
+.. GENERATED FROM PYTHON SOURCE LINES 52-57
 
 .. code-block:: default
 
-    strain_operator = dpf.Operator("EPEL")
-    strain_operator.inputs.data_sources(composite_model.data_sources.rst)
+    strain_operator = composite_model.core_model.results.elastic_strain()
     strain_operator.inputs.bool_rotate_to_global(False)
     strain_field = strain_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
 
@@ -138,11 +137,11 @@ Get strain field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-60
+.. GENERATED FROM PYTHON SOURCE LINES 58-59
 
 Implement a custom failure criterion: basic max strain
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-83
+.. GENERATED FROM PYTHON SOURCE LINES 59-82
 
 .. code-block:: default
 
@@ -184,7 +183,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.737 seconds)
+   **Total running time of the script:** ( 0 minutes  1.048 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_4_get_material_properties_example.py:
