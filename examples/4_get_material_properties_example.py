@@ -49,8 +49,7 @@ property_dict = composite_model.get_constant_property_dict([material_property])
 
 #%%
 # Get strain field
-strain_operator = dpf.Operator("EPEL")
-strain_operator.inputs.data_sources(composite_model.data_sources.rst)
+strain_operator = composite_model.core_model.results.elastic_strain()
 strain_operator.inputs.bool_rotate_to_global(False)
 strain_field = strain_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
 

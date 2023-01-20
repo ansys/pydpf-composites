@@ -58,11 +58,11 @@ def test_basic_workflow(dpf_server):
     layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
     layup_provider.run()
 
-    strain_operator = dpf.Operator("EPEL")
+    strain_operator = dpf.operators.result.elastic_strain()
     strain_operator.inputs.data_sources(rst_data_source)
     strain_operator.inputs.bool_rotate_to_global(False)
 
-    stress_operator = dpf.Operator("S")
+    stress_operator = dpf.operators.result.stress()
     stress_operator.inputs.data_sources(rst_data_source)
     stress_operator.inputs.bool_rotate_to_global(False)
 

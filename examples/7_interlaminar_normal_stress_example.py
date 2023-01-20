@@ -53,12 +53,10 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Rotate to global is False because the post-processing engine expects the results to be
 # in the element coordinate system (material coordinate system).
 
-strain_operator = dpf.Operator("EPEL")
-strain_operator.inputs.data_sources(composite_model.data_sources.rst)
+strain_operator = composite_model.core_model.results.elastic_strain()
 strain_operator.inputs.bool_rotate_to_global(False)
 
-stress_operator = dpf.Operator("S")
-stress_operator.inputs.data_sources(composite_model.data_sources.rst)
+stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
 
 #%%
