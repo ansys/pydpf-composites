@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
 
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
@@ -49,6 +50,7 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/design-tabs.js"></script>
+    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="strain_limits_esxz" href="ansys.dpf.composites.MaterialProperty.strain_limits_esxz.html" />
@@ -292,39 +294,1877 @@ function checkPageExistsAndRedirect(event) {
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    
     <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../composite_model.html">
    Composite Model
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html">
+     get_composite_files_from_workbench_result_folder
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.html">
+     ansys.dpf.composites.CompositeDataSources
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.rst.html">
+       rst
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.composite.html">
+       composite
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeDataSources.engineering_data.html">
+       engineering_data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeDefinitionFiles.html">
+     ansys.dpf.composites.CompositeDefinitionFiles
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeDefinitionFiles.mapping.html">
+       mapping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeDefinitionFiles.definition.html">
+       definition
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeModel.html">
+     ansys.dpf.composites.CompositeModel
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.add_interlaminar_normal_stresses.html">
+       add_interlaminar_normal_stresses
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.evaluate_failure_criteria.html">
+       evaluate_failure_criteria
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_all_layered_element_ids_for_composite_definition_label.html">
+       get_all_layered_element_ids_for_composite_definition_label
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_analysis_plies.html">
+       get_analysis_plies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_constant_property_dict.html">
+       get_constant_property_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_element_info.html">
+       get_element_info
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_element_laminate_offset.html">
+       get_element_laminate_offset
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_layup_operator.html">
+       get_layup_operator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_mesh.html">
+       get_mesh
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_property_for_all_layers.html">
+       get_property_for_all_layers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_result_times_or_frequencies.html">
+       get_result_times_or_frequencies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.get_sampling_point.html">
+       get_sampling_point
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.composite_definition_labels.html">
+       composite_definition_labels
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.core_model.html">
+       core_model
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.data_sources.html">
+       data_sources
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeModel.material_operators.html">
+       material_operators
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.CompositeScope.html">
+     ansys.dpf.composites.CompositeScope
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeScope.elements.html">
+       elements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeScope.plies.html">
+       plies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.CompositeScope.time.html">
+       time
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.html">
+     ansys.dpf.composites.ContinuousFiberCompositesFiles
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.rst.html">
+       rst
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.composite.html">
+       composite
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ContinuousFiberCompositesFiles.engineering_data.html">
+       engineering_data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.FailureMeasure.html">
+     ansys.dpf.composites.FailureMeasure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.FailureMeasure.inverse_reserve_factor.html">
+       inverse_reserve_factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.FailureMeasure.margin_of_safety.html">
+       margin_of_safety
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.FailureMeasure.reserve_factor.html">
+       reserve_factor
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.html">
+     ansys.dpf.composites.MaterialOperators
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.material_provider.html">
+       material_provider
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.material_support_provider.html">
+       material_support_provider
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.MaterialOperators.result_info_provider.html">
+       result_info_provider
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.html">
+     ansys.dpf.composites.ResultDefinition
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.combined_failure_criterion.html">
+       combined_failure_criterion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.expression.html">
+       expression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.material_file.html">
+       material_file
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.max_chunk_size.html">
+       max_chunk_size
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.measure.html">
+       measure
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.rst_file.html">
+       rst_file
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.scopes.html">
+       scopes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.stress_strain_eval_mode.html">
+       stress_strain_eval_mode
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ResultDefinition.time.html">
+       time
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.html">
+     ansys.dpf.composites.SamplingPoint
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.add_ply_sequence_to_plot.html">
+       add_ply_sequence_to_plot
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.add_results_to_plot.html">
+       add_results_to_plot
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.get_indices.html">
+       get_indices
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.get_offsets_by_spots.html">
+       get_offsets_by_spots
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.get_ply_wise_critical_failures.html">
+       get_ply_wise_critical_failures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.get_polar_plot.html">
+       get_polar_plot
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.get_result_plots.html">
+       get_result_plots
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.run.html">
+       run
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.analysis_plies.html">
+       analysis_plies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.e1.html">
+       e1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.e12.html">
+       e12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.e13.html">
+       e13
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.e2.html">
+       e2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.e23.html">
+       e23
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.e3.html">
+       e3
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.element_id.html">
+       element_id
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.failure_modes.html">
+       failure_modes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.inverse_reserve_factor.html">
+       inverse_reserve_factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.margin_of_safety.html">
+       margin_of_safety
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.number_of_plies.html">
+       number_of_plies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.offsets.html">
+       offsets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.polar_properties_E1.html">
+       polar_properties_E1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.polar_properties_E2.html">
+       polar_properties_E2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.polar_properties_G12.html">
+       polar_properties_G12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.reserve_factor.html">
+       reserve_factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.result_definition.html">
+       result_definition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.results.html">
+       results
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.s1.html">
+       s1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.s12.html">
+       s12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.s13.html">
+       s13
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.s2.html">
+       s2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.s23.html">
+       s23
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.s3.html">
+       s3
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.SamplingPoint.spots_per_ply.html">
+       spots_per_ply
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.LayupProperty.html">
+     ansys.dpf.composites.LayupProperty
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupProperty.angle.html">
+       angle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupProperty.shear_angle.html">
+       shear_angle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupProperty.thickness.html">
+       thickness
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupProperty.laminate_offset.html">
+       laminate_offset
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.FailureOutput.html">
+     ansys.dpf.composites.FailureOutput
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.FailureOutput.failure_mode.html">
+       failure_mode
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.FailureOutput.failure_value.html">
+       failure_value
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.FailureOutput.max_layer_index.html">
+       max_layer_index
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.html">
+     ansys.dpf.composites.Sym3x3TensorComponent
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.tensor11.html">
+       tensor11
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.tensor22.html">
+       tensor22
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.tensor33.html">
+       tensor33
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.tensor21.html">
+       tensor21
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.tensor31.html">
+       tensor31
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Sym3x3TensorComponent.tensor32.html">
+       tensor32
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.LayerProperty.html">
+     ansys.dpf.composites.LayerProperty
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayerProperty.thicknesses.html">
+       thicknesses
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayerProperty.angles.html">
+       angles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayerProperty.shear_angles.html">
+       shear_angles
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../server_helper.html">
    Server Helper
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.connect_to_or_start_server.html">
+     connect_to_or_start_server
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../failure_criteria.html">
    Failure Criteria
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.html">
+     ansys.dpf.composites.failure_criteria.CombinedFailureCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert.html">
+       insert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove.html">
+       remove
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.failure_criteria.html">
+       failure_criteria
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.name.html">
+       name
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.html">
+     ansys.dpf.composites.failure_criteria.CoreFailureCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.include_ins.html">
+       include_ins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CoreFailureCriterion.wf.html">
+       wf
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.html">
+     ansys.dpf.composites.failure_criteria.CuntzeCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.b21.html">
+       b21
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.b32.html">
+       b32
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cfc.html">
+       cfc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cft.html">
+       cft
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cma.html">
+       cma
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmb.html">
+       cmb
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmc.html">
+       cmc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle.html">
+       fracture_plane_angle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.mode_interaction_coeff.html">
+       mode_interaction_coeff
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cfc.html">
+       wf_cfc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cft.html">
+       wf_cft
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cma.html">
+       wf_cma
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmb.html">
+       wf_cmb
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmc.html">
+       wf_cmc
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.html">
+     ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.homogeneous_core_coeff.html">
+       homogeneous_core_coeff
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.honeycomb_core_coeff.html">
+       honeycomb_core_coeff
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion.wf.html">
+       wf
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.html">
+     ansys.dpf.composites.failure_criteria.HashinCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.hd.html">
+       hd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.hf.html">
+       hf
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.hm.html">
+       hm
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hd.html">
+       wf_hd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hf.html">
+       wf_hf
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hm.html">
+       wf_hm
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.html">
+     ansys.dpf.composites.failure_criteria.HoffmanCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.HoffmanCriterion.wf.html">
+       wf
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.html">
+     ansys.dpf.composites.failure_criteria.LaRCCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc.html">
+       lfc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.lft.html">
+       lft
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.lmc.html">
+       lmc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.lmt.html">
+       lmt
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lfc.html">
+       wf_lfc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lft.html">
+       wf_lft
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lmc.html">
+       wf_lmc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.LaRCCriterion.wf_lmt.html">
+       wf_lmt
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.html">
+     ansys.dpf.composites.failure_criteria.MaxStrainCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e1.html">
+       e1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e12.html">
+       e12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e13.html">
+       e13
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e2.html">
+       e2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e23.html">
+       e23
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.e3.html">
+       e3
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSxy.html">
+       eSxy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSxz.html">
+       eSxz
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eSyz.html">
+       eSyz
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXc.html">
+       eXc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXt.html">
+       eXt
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eYc.html">
+       eYc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eYt.html">
+       eYt
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eZc.html">
+       eZc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eZt.html">
+       eZt
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.force_global_strain_limits.html">
+       force_global_strain_limits
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e1.html">
+       wf_e1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e12.html">
+       wf_e12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e13.html">
+       wf_e13
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e2.html">
+       wf_e2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e23.html">
+       wf_e23
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStrainCriterion.wf_e3.html">
+       wf_e3
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.html">
+     ansys.dpf.composites.failure_criteria.MaxStressCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.s1.html">
+       s1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.s12.html">
+       s12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.s13.html">
+       s13
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.s2.html">
+       s2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.s23.html">
+       s23
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.s3.html">
+       s3
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s1.html">
+       wf_s1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s12.html">
+       wf_s12
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s13.html">
+       wf_s13
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s2.html">
+       wf_s2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s23.html">
+       wf_s23
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.MaxStressCriterion.wf_s3.html">
+       wf_s3
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.html">
+     ansys.dpf.composites.failure_criteria.PuckCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.cfps.html">
+       cfps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.force_global_constants.html">
+       force_global_constants
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.interface_weakening_factor.html">
+       interface_weakening_factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.p21_neg.html">
+       p21_neg
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.p21_pos.html">
+       p21_pos
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.p22_neg.html">
+       p22_neg
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.p22_pos.html">
+       p22_pos
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.pd.html">
+       pd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.pf.html">
+       pf
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.pma.html">
+       pma
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.pmb.html">
+       pmb
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.pmc.html">
+       pmc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.s.html">
+       s
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pd.html">
+       wf_pd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pf.html">
+       wf_pf
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pma.html">
+       wf_pma
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pmb.html">
+       wf_pmb
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.PuckCriterion.wf_pmc.html">
+       wf_pmc
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.html">
+     ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.kc.html">
+       kc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.kf.html">
+       kf
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.wf.html">
+       wf
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.html">
+     ansys.dpf.composites.failure_criteria.TsaiHillCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+    <label for="toctree-checkbox-28">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiHillCriterion.wf.html">
+       wf
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.html">
+     ansys.dpf.composites.failure_criteria.TsaiWuCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
+    <label for="toctree-checkbox-29">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.dim.html">
+       dim
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.TsaiWuCriterion.wf.html">
+       wf
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.html">
+     ansys.dpf.composites.failure_criteria.VonMisesCriterion
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
+    <label for="toctree-checkbox-30">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.to_dict.html">
+       to_dict
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.to_json.html">
+       to_json
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.active.html">
+       active
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.eval_ins.html">
+       eval_ins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.name.html">
+       name
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vme.html">
+       vme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.vms.html">
+       vms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vme.html">
+       wf_vme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.failure_criteria.VonMisesCriterion.wf_vms.html">
+       wf_vms
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_information.html">
    Layup Information
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" type="checkbox"/>
+  <label for="toctree-checkbox-31">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.add_layup_info_to_mesh.html">
+     add_layup_info_to_mesh
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_element_info_provider.html">
+     get_element_info_provider
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_dpf_material_id_by_analyis_ply_map.html">
+     get_dpf_material_id_by_analyis_ply_map
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.AnalysisPlyInfoProvider.html">
+     ansys.dpf.composites.AnalysisPlyInfoProvider
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/>
+    <label for="toctree-checkbox-32">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.AnalysisPlyInfoProvider.get_layer_index_by_element_id.html">
+       get_layer_index_by_element_id
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.AnalysisPlyInfoProvider.ply_element_ids.html">
+       ply_element_ids
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.ElementInfoProvider.html">
+     ansys.dpf.composites.ElementInfoProvider
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/>
+    <label for="toctree-checkbox-33">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfoProvider.get_element_info.html">
+       get_element_info
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.ElementInfo.html">
+     ansys.dpf.composites.ElementInfo
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/>
+    <label for="toctree-checkbox-34">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.id.html">
+       id
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.n_layers.html">
+       n_layers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.n_corner_nodes.html">
+       n_corner_nodes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.n_spots.html">
+       n_spots
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.is_layered.html">
+       is_layered
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.element_type.html">
+       element_type
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.dpf_material_ids.html">
+       dpf_material_ids
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.is_shell.html">
+       is_shell
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.ElementInfo.number_of_nodes_per_spot_plane.html">
+       number_of_nodes_per_spot_plane
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.LayupPropertiesProvider.html">
+     ansys.dpf.composites.LayupPropertiesProvider
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/>
+    <label for="toctree-checkbox-35">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupPropertiesProvider.get_analysis_plies.html">
+       get_analysis_plies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupPropertiesProvider.get_element_laminate_offset.html">
+       get_element_laminate_offset
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupPropertiesProvider.get_layer_angles.html">
+       get_layer_angles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupPropertiesProvider.get_layer_shear_angles.html">
+       get_layer_shear_angles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.LayupPropertiesProvider.get_layer_thicknesses.html">
+       get_layer_thicknesses
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../select_indices.html">
    Select Elementary Indices
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" type="checkbox"/>
+  <label for="toctree-checkbox-36">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_selected_indices.html">
+     get_selected_indices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_selected_indices_by_analysis_ply.html">
+     get_selected_indices_by_analysis_ply
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ansys.dpf.composites.get_selected_indices_by_dpf_material_ids.html">
+     get_selected_indices_by_dpf_material_ids
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="ansys.dpf.composites.Spot.html">
+     ansys.dpf.composites.Spot
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/>
+    <label for="toctree-checkbox-37">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Spot.bottom.html">
+       bottom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Spot.middle.html">
+       middle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys.dpf.composites.Spot.top.html">
+       top
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../material_properties.html">
    Material Properties
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" type="checkbox"/>
+  <label for="toctree-checkbox-38">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -348,8 +2188,8 @@ function checkPageExistsAndRedirect(event) {
     <a class="reference internal" href="ansys.dpf.composites.MaterialProperty.html">
      ansys.dpf.composites.MaterialProperty
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" type="checkbox"/>
+    <label for="toctree-checkbox-39">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -665,8 +2505,6 @@ function checkPageExistsAndRedirect(event) {
  </li>
 </ul>
 
-    
-    
   </div>
 </nav>
   </div>
