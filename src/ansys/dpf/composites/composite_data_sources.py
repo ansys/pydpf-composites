@@ -186,7 +186,7 @@ def get_composite_files_from_workbench_result_folder(
 
     Result file:
 
-    - project_root_folder/dp0/SYS/MECH/file.rst
+    - project_root_folder/dp0/SYS/MECH/file.rst.
 
     Engineering data file:
 
@@ -237,6 +237,9 @@ def get_composite_files_from_workbench_result_folder(
 
     rst_path = _get_single_filepath_with_predicate(_is_rst_file, result_folder_path, "rst")
     matml_path = _get_single_filepath_with_predicate(_is_matml_file, result_folder_path, "matml")
+
+    assert matml_path is not None
+    assert rst_path is not None
 
     continuous_fiber_composite_files = ContinuousFiberCompositesFiles(
         rst=rst_path.resolve(),
