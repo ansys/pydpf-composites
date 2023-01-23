@@ -132,5 +132,5 @@ class FailureMeasure(Enum):
     """Available Failure Measures."""
 
     inverse_reserve_factor: str = "inverse_reserve_factor"
-    margin_of_safety: str = "margin_of_safety"
-    reserve_factor: str = "reserve_factor"
+    margin_of_safety: str = "safety_margin"
+    reserve_factor: str = "safety_factor"

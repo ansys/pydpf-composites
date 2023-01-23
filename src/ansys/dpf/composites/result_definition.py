@@ -5,10 +5,11 @@ import json
 from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
+from .enums import FailureMeasure
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
-_SUPPORTED_MEASURES = ["inverse_reserve_factor", "safety_factor", "safety_margin"]
+_SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
@@ -191,6 +192,10 @@ class ResultDefinition:
         cfc = self.combined_failure_criterion
         if not cfc:
             raise ValueError("Combined failure criterion is not defined!")
+
+        if self.measure not in _SUPPORTED_MEASURES:
+            values = ", ".join([v for v in _SUPPORTED_MEASURES])
+            raise ValueError(f"Unknown measure `{self.measure}`. Supported are {values}")
 
         result_definition = {
             "version": self._VERSION,

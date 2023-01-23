@@ -23,7 +23,7 @@ class CombinedFailureCriterion:
     def __init__(
         self,
         name: str = "CombinedFailureCriterion",
-        failure_criteria: Sequence[FailureCriterionBase] = [],
+        failure_criteria: Sequence[FailureCriterionBase] = (),
     ):
         """Create a new combined failure criterion.
 

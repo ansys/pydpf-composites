@@ -36,7 +36,7 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
     property_field_name = ANALYSIS_PLY_PREFIX + name
 
-    # This tests can be expensive so it can be skipped
+    # This tests can be slow so it can be skipped
     if not skip_check and property_field_name not in mesh.available_property_fields:
         available_analysis_plies = get_all_analysis_ply_names(mesh)
         raise RuntimeError(
