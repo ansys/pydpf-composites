@@ -461,9 +461,7 @@ class LayupPropertiesProvider:
         """Initialize LayupProperties provider."""
         layup_outputs_container = layup_provider.outputs.fields_container()
         composite_label = layup_outputs_container.labels[0]
-        angle_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.angle}
-        )
+        angle_field = layup_outputs_container.get_field({composite_label: LayupProperty.angle})
         self._angle_indexer = _FieldIndexerWithDataPointer(angle_field)
         thickness_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.thickness}
