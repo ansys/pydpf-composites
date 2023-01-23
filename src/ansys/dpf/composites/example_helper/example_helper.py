@@ -158,7 +158,7 @@ def _get_file_url(directory: str, filename: str) -> str:
 
 def _download_and_upload_file(
     directory: str, filename: str, tmpdir: str, server: dpf.server
-) -> str:
+) -> _PATH:
     """Download example file from example_data repo and upload it the dpf server."""
     file_url = _get_file_url(directory, filename)
     local_path = os.path.join(tmpdir, filename)
@@ -214,7 +214,7 @@ def get_continuous_fiber_example_files(
     example_files = _continuous_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
-        def get_server_path(filename: str) -> str:
+        def get_server_path(filename: _PATH) -> _PATH:
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         all_composite_files = {}
