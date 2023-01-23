@@ -10,7 +10,7 @@ from ansys.dpf.composites.composite_data_sources import (
     get_composite_files_from_workbench_result_folder,
 )
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.enums import FailureMeasure, LayerProperty
+from ansys.dpf.composites.enums import FailureMeasure, FailureOutput, LayerProperty
 from ansys.dpf.composites.example_helper.example_helper import (
     upload_continuous_fiber_composite_files_to_server,
 )
@@ -95,6 +95,8 @@ def test_basic_functionality_of_composite_model(dpf_server):
         combined_criteria=combined_failure_criterion,
         composite_scope=CompositeScope(),
     )
+    irf_field = failure_output.get_field({"failure_label": FailureOutput.failure_value})
+    fm_field = failure_output.get_field({"failure_label": FailureOutput.failure_mode})
 
     properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.stress_limits_xt])
 

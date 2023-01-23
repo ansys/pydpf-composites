@@ -92,7 +92,7 @@ with max_s3_field.as_local_field() as local_max_s3_field:
         selected_indices = get_selected_indices(element_info, nodes=[0])
 
         # order is bottom, top, mid
-        s3 = stress_data[selected_indices, s3_component.value]
+        s3 = stress_data[selected_indices, s3_component]
 
         local_max_s3_field.append([max(s3)], element_id)
 
@@ -119,7 +119,7 @@ with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
         )
 
         # order is bottom, top, mid
-        s3 = stress_data[selected_indices, s3_component.value]
+        s3 = stress_data[selected_indices, s3_component]
 
         p8l1_ply_s3_field.append(s3, element_id)
 
