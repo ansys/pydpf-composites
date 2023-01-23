@@ -37,7 +37,7 @@ combined_fc = CombinedFailureCriterion(
 )
 
 # %%
-# Set up composite model
+# Set up the composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%

@@ -43,6 +43,7 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
 # Set up composite model
+
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%

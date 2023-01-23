@@ -8,11 +8,12 @@ Analyse a composite structure by a combined failure criterion.
 
 The failure operator of DPF Composites computes the minimum and maximum failure values
 and failure modes of a combined failure criterion. A combined failure criterion is a selection of
-failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Ref to :ref:`failure_criteria`
-to get the full list of failure criteria.
+failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Refer to
+:ref:`the Failure Criteria API Reference <failure_criteria>` to get the full list of
+failure criteria.
 
 The :class:`Combined Failure Criterion
-<ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
+<.failure_criteria.CombinedFailureCriterion>`
 allows you to assess different type of materials and failure modes at once.
 The scoping enables to evaluate of the min and max failure per element,
 or to select a list of materials or plies.
@@ -21,7 +22,8 @@ or to select a list of materials or plies.
 # Script
 # ~~~~~~
 #
-# Load ansys libraries
+# Load ansys libraries, connect to the DPF server, and retrieve the example
+# files.
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
@@ -55,7 +57,7 @@ combined_fc = CombinedFailureCriterion(
 )
 
 # %%
-# Set up composite model
+# Set up the composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
