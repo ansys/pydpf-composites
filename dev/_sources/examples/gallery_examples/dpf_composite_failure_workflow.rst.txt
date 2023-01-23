@@ -186,8 +186,8 @@ The material support contains all the materials from the rst file.
 
 .. GENERATED FROM PYTHON SOURCE LINES 92-94
 
-Get Result Info
-This is needed provides the unit system from the rst file
+Get Result Info which
+provides the unit system from the rst file
 
 .. GENERATED FROM PYTHON SOURCE LINES 94-97
 
@@ -356,7 +356,7 @@ Plot the max and the minimum value for each value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.687 seconds)
+   **Total running time of the script:** ( 0 minutes  0.884 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_dpf_composite_failure_workflow.py:

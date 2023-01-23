@@ -27,25 +27,23 @@ Analyse a composite structure by a combined failure criterion.
 
 The failure operator of DPF Composites computes the minimum and maximum failure values
 and failure modes of a combined failure criterion. A combined failure criterion is a selection of
-failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Refer to
-:ref:`the Failure Criteria API Reference <failure_criteria>` to get the full list of
-failure criteria.
+failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Ref to :ref:`failure_criteria`
+to get the full list of failure criteria.
 
 The :class:`Combined Failure Criterion
-<.failure_criteria.CombinedFailureCriterion>`
+<ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
 allows you to assess different type of materials and failure modes at once.
 The scoping enables to evaluate of the min and max failure per element,
 or to select a list of materials or plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-27
+.. GENERATED FROM PYTHON SOURCE LINES 21-25
 
 Script
 ~~~~~~
 
-Load ansys libraries, connect to the DPF server, and retrieve the example
-files.
+Load ansys libraries
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-43
+.. GENERATED FROM PYTHON SOURCE LINES 25-38
 
 .. code-block:: default
 
@@ -62,6 +60,22 @@ files.
         VonMisesCriterion,
     )
 
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 39-41
+
+Start a server and get the examples files.
+This will copy the example files into the current working directory.
+
+.. GENERATED FROM PYTHON SOURCE LINES 41-44
+
+.. code-block:: default
+
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
@@ -72,11 +86,11 @@ files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-45
+.. GENERATED FROM PYTHON SOURCE LINES 45-46
 
 Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-56
+.. GENERATED FROM PYTHON SOURCE LINES 46-57
 
 .. code-block:: default
 
@@ -98,11 +112,11 @@ Configure the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-58
+.. GENERATED FROM PYTHON SOURCE LINES 58-59
 
-Set up the composite model
+Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-60
+.. GENERATED FROM PYTHON SOURCE LINES 59-61
 
 .. code-block:: default
 
@@ -115,11 +129,11 @@ Set up the composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-62
+.. GENERATED FROM PYTHON SOURCE LINES 62-63
 
 Failure evaluation for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-68
+.. GENERATED FROM PYTHON SOURCE LINES 63-69
 
 .. code-block:: default
 
@@ -141,11 +155,11 @@ Failure evaluation for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-70
+.. GENERATED FROM PYTHON SOURCE LINES 70-71
 
 Scope failure evaluation to a certain element scope
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-77
+.. GENERATED FROM PYTHON SOURCE LINES 71-78
 
 .. code-block:: default
 
@@ -168,11 +182,11 @@ Scope failure evaluation to a certain element scope
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-79
+.. GENERATED FROM PYTHON SOURCE LINES 79-80
 
 Scope by plies
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-85
+.. GENERATED FROM PYTHON SOURCE LINES 80-86
 
 .. code-block:: default
 
@@ -197,7 +211,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.764 seconds)
+   **Total running time of the script:** ( 0 minutes  4.623 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_1_failure_operator_example.py:

@@ -99,7 +99,7 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../index.html">
-  PyDPF Composites
+  pyDPF Composites
  </a>
 </li>
 
@@ -563,9 +563,8 @@ empty, the criteria is evaluated on the full model.</p></li>
 even for elements which are not part of composite_scope.plies.
 If no element scope is specified (composite_scope.elements),
 a (potentially zero) failure value is written for all elements.
-Note: Due to a current limitation, it is sometimes needed to set
-write_data_for_full_element_scope to False, in particular if
-special element types such as beams are used in the model.</p></li>
+Note: For some special element types such as beams,
+write_data_for_full_element_scope == True is not supported.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

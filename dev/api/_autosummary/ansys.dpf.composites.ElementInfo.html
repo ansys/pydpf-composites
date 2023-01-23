@@ -99,7 +99,7 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../index.html">
-  PyDPF Composites
+  pyDPF Composites
  </a>
 </li>
 
@@ -486,7 +486,7 @@ function checkPageExistsAndRedirect(event) {
 <li><p><strong>n_corner_nodes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of corner nodes (without midside nodes).</p></li>
 <li><p><strong>n_spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – number of spots (through-the-thickness integration points) per layer</p></li>
 <li><p><strong>element_type</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Apdl element type (e.g. 181 for layered shells)</p></li>
-<li><p><strong>dpf_material_ids</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>numpy.ndarray</em></a><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.24)"><em>numpy.dtype</em></a><em>[</em><em>numpy.int64</em><em>]</em><em>]</em>) – List of dpf_material_ids for all layers</p></li>
+<li><p><strong>dpf_material_ids</strong> (<a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><em>numpy.ndarray</em></a><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.25.dev0)"><em>numpy.dtype</em></a><em>[</em><em>numpy.int64</em><em>]</em><em>]</em>) – List of dpf_material_ids for all layers</p></li>
 <li><p><strong>is_shell</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – True if the element is a shell element</p></li>
 <li><p><strong>number_of_nodes_per_spot_plane</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of nodes per output plane.
 Equal to n_corner_nodes for shell elements and n_corner_nodes / 2

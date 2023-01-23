@@ -68,11 +68,12 @@ Load Ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-43
+.. GENERATED FROM PYTHON SOURCE LINES 42-44
 
-Start Server and upload files
+Start a server and get the examples files.
+This will copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-46
+.. GENERATED FROM PYTHON SOURCE LINES 44-47
 
 .. code-block:: default
 
@@ -86,11 +87,11 @@ Start Server and upload files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-48
+.. GENERATED FROM PYTHON SOURCE LINES 48-49
 
 Configure data sources
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-50
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 .. code-block:: default
 
@@ -103,14 +104,14 @@ Configure data sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-55
+.. GENERATED FROM PYTHON SOURCE LINES 52-56
 
 Prepare inputs for the INS operator
 
 Rotate to global is False because the post-processing engine expects the results to be
 in the element coordinate system (material coordinate system).
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-62
+.. GENERATED FROM PYTHON SOURCE LINES 56-63
 
 .. code-block:: default
 
@@ -128,14 +129,14 @@ in the element coordinate system (material coordinate system).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-67
+.. GENERATED FROM PYTHON SOURCE LINES 64-68
 
 Compute interlaminar normal stresses
 """"""""""""""""""""""""""""""""""""
 
 Note: the INS operator stores the stresses in the provided stressed field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-72
+.. GENERATED FROM PYTHON SOURCE LINES 68-73
 
 .. code-block:: default
 
@@ -151,14 +152,14 @@ Note: the INS operator stores the stresses in the provided stressed field.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-77
+.. GENERATED FROM PYTHON SOURCE LINES 74-78
 
 Plot s3 stresses
 """"""""""""""""
 
 Get the first stress field
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-79
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
 
 .. code-block:: default
 
@@ -171,11 +172,11 @@ Get the first stress field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-81
+.. GENERATED FROM PYTHON SOURCE LINES 81-82
 
 Plot max s3 of each element
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-100
+.. GENERATED FROM PYTHON SOURCE LINES 82-101
 
 .. code-block:: default
 
@@ -210,11 +211,11 @@ Plot max s3 of each element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-102
+.. GENERATED FROM PYTHON SOURCE LINES 102-103
 
 Plot s3 at the mid-plane of a certain ply
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-126
+.. GENERATED FROM PYTHON SOURCE LINES 103-127
 
 .. code-block:: default
 
@@ -257,7 +258,7 @@ Plot s3 at the mid-plane of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.679 seconds)
+   **Total running time of the script:** ( 0 minutes  4.833 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:

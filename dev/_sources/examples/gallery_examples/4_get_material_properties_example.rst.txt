@@ -58,11 +58,12 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-32
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
-Start server and load example files
+Start a server and get the examples files.
+This will copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-35
+.. GENERATED FROM PYTHON SOURCE LINES 33-36
 
 .. code-block:: default
 
@@ -76,11 +77,11 @@ Start server and load example files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-37
+.. GENERATED FROM PYTHON SOURCE LINES 37-38
 
-Set up the composite model
+Set up composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-39
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
 
 .. code-block:: default
 
@@ -93,15 +94,15 @@ Set up the composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-45
+.. GENERATED FROM PYTHON SOURCE LINES 41-46
 
 Get dictionary that maps dpf_material_id to properties
-The creation of the dictionary is currently quite slow and
+The creation of the dictionary is currently quite expensive and
 should be done before using the properties in a loop.
 Currently only constant properties are supported.
 For variable material properties, the default value is returned.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-50
+.. GENERATED FROM PYTHON SOURCE LINES 46-51
 
 .. code-block:: default
 
@@ -117,11 +118,11 @@ For variable material properties, the default value is returned.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-52
+.. GENERATED FROM PYTHON SOURCE LINES 52-53
 
 Get strain field
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-57
+.. GENERATED FROM PYTHON SOURCE LINES 53-58
 
 .. code-block:: default
 
@@ -137,11 +138,11 @@ Get strain field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-59
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
 
 Implement a custom failure criterion: basic max strain
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-82
+.. GENERATED FROM PYTHON SOURCE LINES 60-83
 
 .. code-block:: default
 
@@ -183,7 +184,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.800 seconds)
+   **Total running time of the script:** ( 0 minutes  1.113 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_4_get_material_properties_example.py:

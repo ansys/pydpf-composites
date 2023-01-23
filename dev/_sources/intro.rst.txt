@@ -48,7 +48,7 @@ Get started with some basic :doc:`examples/index` :
 In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.
 
-For larger models it can be slow to initialize a
+For larger models it can be expensive to initialize a
 :class:`CompositeModel <ansys.dpf.composites.CompositeModel>`, because it automatically
 creates many different providers that are not needed in all the workflows. Consider using the
 :ref:`Layup Information classes <layup_information_classes>` directly.

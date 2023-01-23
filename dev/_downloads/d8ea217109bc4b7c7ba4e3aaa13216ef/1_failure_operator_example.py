@@ -8,12 +8,11 @@ Analyse a composite structure by a combined failure criterion.
 
 The failure operator of DPF Composites computes the minimum and maximum failure values
 and failure modes of a combined failure criterion. A combined failure criterion is a selection of
-failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Refer to
-:ref:`the Failure Criteria API Reference <failure_criteria>` to get the full list of
-failure criteria.
+failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Ref to :ref:`failure_criteria`
+to get the full list of failure criteria.
 
 The :class:`Combined Failure Criterion
-<.failure_criteria.CombinedFailureCriterion>`
+<ansys.dpf.composites.failure_criteria.CombinedFailureCriterion>`
 allows you to assess different type of materials and failure modes at once.
 The scoping enables to evaluate of the min and max failure per element,
 or to select a list of materials or plies.
@@ -22,8 +21,7 @@ or to select a list of materials or plies.
 # Script
 # ~~~~~~
 #
-# Load ansys libraries, connect to the DPF server, and retrieve the example
-# files.
+# Load ansys libraries
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
@@ -37,6 +35,9 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
+# %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
@@ -54,10 +55,10 @@ combined_fc = CombinedFailureCriterion(
 )
 
 # %%
-# Set up the composite model
+# Set up composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
-#%%
+# %%
 # Failure evaluation for the entire model
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=combined_fc,
