@@ -202,9 +202,8 @@ class CompositeModel:
             even for elements which are not part of composite_scope.plies.
             If no element scope is specified (composite_scope.elements),
             a (potentially zero) failure value is written for all elements.
-            Note: Due to a current limitation, it is sometimes needed to set
-            write_data_for_full_element_scope to False, in particular if
-            special element types such as beams are used in the model.
+            Note: For some special element types such as beams,
+            write_data_for_full_element_scope == True is not supported.
         """
         if composite_scope is None:
             composite_scope = CompositeScope()
