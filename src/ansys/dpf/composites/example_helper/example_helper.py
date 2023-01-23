@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 import os
 import tempfile
-from typing import Dict, Optional, cast
+from typing import Dict, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -72,26 +72,6 @@ def upload_continuous_fiber_composite_files_to_server(
 
 
 @dataclass
-class _ContinuousFiberCompositeFiles:
-    definition: str
-    mapping: Optional[str] = None
-
-
-@dataclass
-class _ContinuousFiberCompositesExampleFilenames:
-    rst: str
-    composite: Dict[str, _ContinuousFiberCompositeFiles]
-    engineering_data: str
-
-
-@dataclass
-class _ShortFiberCompositesExampleFilenames:
-    rst: str
-    dsdat: str
-    engineering_data: str
-
-
-@dataclass
 class _ContinuousFiberExampleLocation:
     """Location of the a given continuous fiber example in the example_data repo.
 
@@ -104,7 +84,7 @@ class _ContinuousFiberExampleLocation:
     """
 
     directory: str
-    files: _ContinuousFiberCompositesExampleFilenames
+    files: ContinuousFiberCompositesFiles
 
 
 @dataclass
@@ -120,17 +100,17 @@ class _ShortFiberExampleLocation:
     """
 
     directory: str
-    files: _ShortFiberCompositesExampleFilenames
+    files: ShortFiberCompositesFiles
 
 
 _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     "shell": _ContinuousFiberExampleLocation(
         directory="shell",
-        files=_ContinuousFiberCompositesExampleFilenames(
+        files=ContinuousFiberCompositesFiles(
             rst="shell.rst",
             engineering_data="material.engd",
             composite={
-                "shell": _ContinuousFiberCompositeFiles(
+                "shell": CompositeDefinitionFiles(
                     definition="ACPCompositeDefinitions.h5",
                 )
             },
@@ -138,24 +118,24 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     ),
     "ins": _ContinuousFiberExampleLocation(
         directory="ins",
-        files=_ContinuousFiberCompositesExampleFilenames(
+        files=ContinuousFiberCompositesFiles(
             rst="beam_181_analysis_model.rst",
             engineering_data="materials.xml",
             composite={
-                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5")
+                "shell": CompositeDefinitionFiles(definition="ACPCompositeDefinitions.h5")
             },
         ),
     ),
     "assembly": _ContinuousFiberExampleLocation(
         directory="assembly",
-        files=_ContinuousFiberCompositesExampleFilenames(
+        files=ContinuousFiberCompositesFiles(
             rst="file.rst",
             engineering_data="material.engd",
             composite={
-                "solid": _ContinuousFiberCompositeFiles(
+                "solid": CompositeDefinitionFiles(
                     definition="ACPSolidModel_SM.h5", mapping="ACPSolidModel_SM.mapping"
                 ),
-                "shell": _ContinuousFiberCompositeFiles(
+                "shell": CompositeDefinitionFiles(
                     definition="ACPCompositeDefinitions.h5",
                     mapping="ACPCompositeDefinitions.mapping",
                 ),
@@ -167,7 +147,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
 _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
     "short_fiber": _ShortFiberExampleLocation(
         directory="short_fiber",
-        files=_ShortFiberCompositesExampleFilenames(
+        files=ShortFiberCompositesFiles(
             rst="file.rst", engineering_data="MatML.xml", dsdat="ds.dat"
         ),
     )
