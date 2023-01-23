@@ -187,7 +187,7 @@ def get_short_fiber_example_files(
     example_files = _short_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
-        def get_server_path(filename: str) -> str:
+        def get_server_path(filename: _PATH) -> _PATH:
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         return ShortFiberCompositesFiles(
