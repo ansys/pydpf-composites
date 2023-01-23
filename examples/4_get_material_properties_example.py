@@ -70,7 +70,7 @@ with result_field.as_local_field() as local_result_field:
             tensile_strain_limit_1 = property_dict[dpf_material_id][material_property]
             selected_indices = get_selected_indices(element_info, layers=[layer_index])
             # Tensile max strain criteria in 1 direction
-            layer_strain_values = strain_data[selected_indices][:, component.value]
+            layer_strain_values = strain_data[selected_indices][:, component]
             if tensile_strain_limit_1 > 0:
                 layer_max = np.max(layer_strain_values)
                 element_max = max(element_max, layer_max / tensile_strain_limit_1)

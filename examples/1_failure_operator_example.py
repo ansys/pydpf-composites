@@ -65,7 +65,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=combined_fc,
 )
-irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
+irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value})
 irf_field.plot()
 
 # %%
@@ -74,7 +74,7 @@ output_two_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=combined_fc,
     composite_scope=CompositeScope(elements=[1, 3]),
 )
-irf_field = output_two_elements.get_field({"failure_label": FailureOutput.failure_value.value})
+irf_field = output_two_elements.get_field({"failure_label": FailureOutput.failure_value})
 irf_field.plot()
 
 # %%
@@ -83,5 +83,5 @@ output_woven_plies = composite_model.evaluate_failure_criteria(
     combined_criteria=combined_fc,
     composite_scope=CompositeScope(plies=["P1L1__ud_patch ns1"]),
 )
-irf_field = output_woven_plies.get_field({"failure_label": FailureOutput.failure_value.value})
+irf_field = output_woven_plies.get_field({"failure_label": FailureOutput.failure_value})
 irf_field.plot()
