@@ -81,7 +81,7 @@ def get_constant_property_dict(
     a dict with the requested properties as the value. Only constant properties
     are supported. Variable properties are evaluated at their
     default value.
-    This function can be expensive to evaluate and should not
+    This function can be slow to evaluate and should not
     be called in a loop.
 
     Parameters
