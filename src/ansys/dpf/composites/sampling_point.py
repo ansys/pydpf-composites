@@ -503,7 +503,7 @@ class SamplingPoint:
         width = x_bound[1] - x_bound[0]
 
         for index, ply in enumerate(self.analysis_plies):
-            angle = ply["angle"]
+            angle = float(ply["angle"])
             hatch = "x" if ply["is_core"] else ""
 
             height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
@@ -512,8 +512,8 @@ class SamplingPoint:
                 Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch)
             )
             mat = ply["material"]
-            th = ply["thickness"]
-            text = f"{mat}\nangle={angle}, th={th:.3}"
+            th = float(ply["thickness"])
+            text = f"{mat}\nangle={angle:.3}, th={th:.3}"
             axes.annotate(
                 text=text,
                 xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
