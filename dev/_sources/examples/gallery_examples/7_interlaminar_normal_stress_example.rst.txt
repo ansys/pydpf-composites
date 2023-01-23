@@ -193,7 +193,7 @@ Plot max s3 of each element
             selected_indices = get_selected_indices(element_info, nodes=[0])
 
             # order is bottom, top, mid
-            s3 = stress_data[selected_indices, s3_component.value]
+            s3 = stress_data[selected_indices, s3_component]
 
             local_max_s3_field.append([max(s3)], element_id)
 
@@ -238,7 +238,7 @@ Plot s3 at the mid-plane of a certain ply
             )
 
             # order is bottom, top, mid
-            s3 = stress_data[selected_indices, s3_component.value]
+            s3 = stress_data[selected_indices, s3_component]
 
             p8l1_ply_s3_field.append(s3, element_id)
 
@@ -258,7 +258,7 @@ Plot s3 at the mid-plane of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.209 seconds)
+   **Total running time of the script:** ( 0 minutes  6.045 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:

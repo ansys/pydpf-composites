@@ -159,7 +159,7 @@ Implement a custom failure criterion: basic max strain
                 tensile_strain_limit_1 = property_dict[dpf_material_id][material_property]
                 selected_indices = get_selected_indices(element_info, layers=[layer_index])
                 # Tensile max strain criteria in 1 direction
-                layer_strain_values = strain_data[selected_indices][:, component.value]
+                layer_strain_values = strain_data[selected_indices][:, component]
                 if tensile_strain_limit_1 > 0:
                     layer_max = np.max(layer_strain_values)
                     element_max = max(element_max, layer_max / tensile_strain_limit_1)
@@ -184,7 +184,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.261 seconds)
+   **Total running time of the script:** ( 0 minutes  1.240 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_4_get_material_properties_example.py:
