@@ -124,7 +124,7 @@ def test_result_definition():
                 },
             }
         },
-        "measures": ["safety_margin"],
+        "measures": ["safety_factor"],
         "stress_strain_eval_mode": "rst_file",
         "time": 2.3,
         "max_chunk_size": 7,
