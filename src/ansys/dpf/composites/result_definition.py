@@ -223,7 +223,7 @@ class ResultDefinition:
                     "material_file": [str(material_file)],
                 },
                 "write_data_for_full_element_scope": write_for_full_scope,
-                "elements": result_definition_scope.element_scope,
+                "elements": [int(v) for v in result_definition_scope.element_scope],
                 "ply_ids": result_definition_scope.ply_scope,
             }
 

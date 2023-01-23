@@ -17,6 +17,7 @@ from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import ResultDefinition, ResultDefinitionScope
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
+from ansys.dpf.composites.example_helper.example_helper import upload_continuous_fiber_composite_files_to_server
 
 
 def test_sampling_point(dpf_server):
@@ -159,14 +160,13 @@ def test_sampling_point_with_numpy_types(dpf_server):
         engineering_data=material_path,
     )
 
+    files = upload_continuous_fiber_composite_files_to_server(data_files=composite_files, server=dpf_server)
     cfc = CombinedFailureCriterion("max strain & max stress",
                                    [MaxStrainCriterion(), MaxStressCriterion()])
-
-    composite_model = CompositeModel(composite_files, server=dpf_server)
+    composite_model = CompositeModel(files, server=dpf_server)
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
     irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value.value})
     critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
-    sp = composite_model(cfc, critical_element_id)
-    s1 = sp.s1
-    assert max(s1) > 1e9
+    sp = composite_model.get_sampling_point(cfc, critical_element_id)
+    assert max(sp.s1) == pytest.approx(2840894080.0, 1e-8)

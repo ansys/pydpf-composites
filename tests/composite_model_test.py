@@ -326,8 +326,8 @@ def test_composite_model_element_scope(dpf_server):
     max_id = irfs.scoping.ids[np.argmax(irfs.data)]
 
     composite_scope = CompositeScope(elements=[min_id, max_id])
-    max_container = composite_model.evaluate_failure_criteria(cfc,composite_scope)
+    max_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
     max_irfs = max_container.get_field({"failure_label": FailureOutput.failure_value.value})
     assert len(max_irfs.data) == 2
-    assert max_irfs.get_entity_data_by_id(min_id) == pytest.approx(np.argmin(irfs.data), 1e-8)
-    assert max_irfs.get_entity_data_by_id(max_id) == pytest.approx(np.argmax(irfs.data), 1e-8)
+    assert max_irfs.get_entity_data_by_id(min_id)[0] == pytest.approx(min(irfs.data), 1e-8)
+    assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
