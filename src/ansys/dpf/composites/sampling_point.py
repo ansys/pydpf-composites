@@ -144,7 +144,7 @@ class SamplingPoint:
 
     @element_id.setter
     def element_id(self, value: int) -> None:
-        self._result_definition.scopes[0].element_scope = [value]
+        self._result_definition.scopes[0].element_scope = [int(value)]
         self._isuptodate = False
 
     @property

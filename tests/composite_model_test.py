@@ -1,6 +1,6 @@
 import os
 import pathlib
-
+import numpy as np
 import ansys.dpf.core as dpf
 import pytest
 
@@ -10,7 +10,7 @@ from ansys.dpf.composites.composite_data_sources import (
     get_composite_files_from_workbench_result_folder,
 )
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.enums import FailureMeasure, LayerProperty
+from ansys.dpf.composites.enums import FailureMeasure, FailureOutput, LayerProperty
 from ansys.dpf.composites.example_helper.example_helper import (
     upload_continuous_fiber_composite_files_to_server,
 )
@@ -293,7 +293,7 @@ def test_assembly_model(dpf_server):
 
 
 def test_failure_measures(dpf_server):
-
+    """Verify that all failure measure names are compatible with the backend"""
     files = get_data_files()
     files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 
@@ -308,3 +308,26 @@ def test_failure_measures(dpf_server):
             composite_scope=CompositeScope(),
             measure=v,
         )
+
+
+def test_composite_model_element_scope(dpf_server):
+    """Ensure that the element IDs of the scope can be of any type (e.g. np.int)"""
+    files = get_data_files()
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
+
+    composite_model = CompositeModel(files, server=dpf_server)
+    cfc = CombinedFailureCriterion(
+        "max stress", failure_criteria=[MaxStressCriterion()]
+    )
+
+    failure_container = composite_model.evaluate_failure_criteria(cfc)
+    irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value.value})
+    min_id = irfs.scoping.ids[np.argmin(irfs.data)]
+    max_id = irfs.scoping.ids[np.argmax(irfs.data)]
+
+    composite_scope = CompositeScope(elements=[min_id, max_id])
+    max_container = composite_model.evaluate_failure_criteria(cfc,composite_scope)
+    max_irfs = max_container.get_field({"failure_label": FailureOutput.failure_value.value})
+    assert len(max_irfs.data) == 2
+    assert max_irfs.get_entity_data_by_id(min_id) == pytest.approx(np.argmin(irfs.data), 1e-8)
+    assert max_irfs.get_entity_data_by_id(max_id) == pytest.approx(np.argmax(irfs.data), 1e-8)

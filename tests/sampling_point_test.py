@@ -166,7 +166,7 @@ def test_sampling_point_with_numpy_types(dpf_server):
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
     irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value.value})
-    critical_element_id = np.argmax(irfs.data)
+    critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
     sp = composite_model(cfc, critical_element_id)
     s1 = sp.s1
     assert max(s1) > 1e9
