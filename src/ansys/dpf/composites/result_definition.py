@@ -5,8 +5,8 @@ import json
 from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
-from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
 from .enums import FailureMeasure
+from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
 _SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
