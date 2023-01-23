@@ -123,11 +123,11 @@ layup_provider.run()
 # Rotate to global is False because the post-processing engine expects the results to be
 # in the element coordinate system ( material coordinate system)
 #
-strain_operator = dpf.Operator("EPEL")
+strain_operator = dpf.operators.result.elastic_strain()
 strain_operator.inputs.data_sources(rst_data_source)
 strain_operator.inputs.bool_rotate_to_global(False)
 
-stress_operator = dpf.Operator("S")
+stress_operator = dpf.operators.result.stress()
 stress_operator.inputs.data_sources(rst_data_source)
 stress_operator.inputs.bool_rotate_to_global(False)
 
