@@ -99,7 +99,7 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../index.html">
-  pyDPF Composites
+  PyDPF Composites
  </a>
 </li>
 
@@ -421,7 +421,7 @@ This will copy the example files into the current working directory.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Set up composite model</p>
+<p>Set up the composite model</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -437,13 +437,13 @@ properties with the correct composite_definition_label.
 This example shows how to get ElementInfo for all layered elements</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">composite_definition_labels</span><span class="p">:</span>
-    <span class="k">for</span> <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_all_layered_element_ids_for_composite_definition_label</span><span class="p">(</span>
+    <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_all_layered_element_ids_for_composite_definition_label</span><span class="p">(</span>
         <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a>
     <span class="p">):</span>
-        <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a><span class="p">))</span>
+        <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.913 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.607 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-8-assembly-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/834844dd5f9fb735dc47d160776f651c/8_assembly_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">8_assembly_example.py</span></code></a></p>

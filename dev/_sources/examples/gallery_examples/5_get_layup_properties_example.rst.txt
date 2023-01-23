@@ -79,7 +79,7 @@ This will copy the example files into the current working directory.
 
 .. GENERATED FROM PYTHON SOURCE LINES 38-39
 
-Set up composite model
+Set up the composite model
 
 .. GENERATED FROM PYTHON SOURCE LINES 39-41
 
@@ -158,7 +158,7 @@ Plot lay-up properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.709 seconds)
+   **Total running time of the script:** ( 0 minutes  0.296 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_5_get_layup_properties_example.py:

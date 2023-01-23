@@ -110,7 +110,7 @@ Configure the combined failure criterion
 
 .. GENERATED FROM PYTHON SOURCE LINES 56-57
 
-Set up composite model
+Set up the composite model
 
 .. GENERATED FROM PYTHON SOURCE LINES 57-59
 
@@ -200,7 +200,7 @@ Plot polar properties
 
 Custom plots:
 
-Plots can be easily customized or build from scratch.
+Plots can be easily customized or built from scratch.
 Here, matplotlib is used. An alternative is plotly.
 
 s13 and s23
@@ -320,7 +320,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.403 seconds)
+   **Total running time of the script:** ( 0 minutes  1.084 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_2_sampling_point_example.py:

@@ -8,7 +8,7 @@
    examples/index
    Developer's Guide <developers_guide>
 
-pyDPF Composites
+PyDPF Composites
 ----------------
 
 A Python wrapper for Ansys dpf composites. It implements classes on top of the
@@ -42,7 +42,7 @@ criteria and computation.
         :link: developers_guide
         :link-type: doc
 
-        Contributing to pyDPF Composites.
+        Contributing to PyDPF Composites.
 
 Key features
 ''''''''''''
@@ -65,7 +65,7 @@ Pre-Requisites and Compatibility
 ''''''''''''''''''''''''''''''''
 - Installation of `Ansys Workbench`_.
 - ACP model or short fiber composite model.
-- pyDPF Composites supports Ansys 2023 R1 or newer. More details can be found on
+- PyDPF Composites supports Ansys 2023 R1 or newer. More details can be found on
   the DPF help about `Compatibility`_.
 
 Limitations
