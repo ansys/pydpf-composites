@@ -123,7 +123,7 @@ def test_all_element_types(dpf_server):
         mesh.set_property_field("element_layered_material_ids", material_property_field)
         mesh.set_property_field("element_layer_indices", layer_indices_property_field)
 
-        strain_operator = dpf.Operator("EPEL")
+        strain_operator = dpf.operators.result.elastic_strain()
         strain_operator.inputs.data_sources(rst_data_source)
         strain_operator.inputs.bool_rotate_to_global(False)
 

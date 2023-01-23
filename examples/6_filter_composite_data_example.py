@@ -47,8 +47,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
 # Get stress field
-stress_operator = dpf.Operator("S")
-stress_operator.inputs.data_sources(composite_model.data_sources.rst)
+stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
 stress_field = stress_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
 
