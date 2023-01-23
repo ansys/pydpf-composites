@@ -163,7 +163,7 @@ class SamplingPoint:
     def analysis_plies(self) -> Sequence[Dict]:
         """List of analysis plies from the bottom to the top.
 
-        Returns a list of dicts ply data such as angle, thickness and material name.
+        Returns a list of ply data such as angle, thickness and material name.
         """
         self._update_and_check_results()
 
