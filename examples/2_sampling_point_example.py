@@ -6,7 +6,7 @@ Sampling Point
 
 Extract ply-wise laminate properties and results.
 
-The :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>` is feature
+The :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>` is a feature
 to extract through-the-thickness data of laminate. For instance, ply-wise properties
 strains and stresses.
 Besides that, it implements basic visualization to plot the laminate.
@@ -35,7 +35,8 @@ from ansys.dpf.composites.failure_criteria import (
 )
 
 # %%
-# Start server and get files
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
@@ -63,7 +64,7 @@ sampling_point = composite_model.get_sampling_point(combined_criteria=combined_f
 # Plot Results
 # """"""""""""
 #
-# Use pre-configured plots
+# Use pre-configured plots. See also :class:`~ansys.dpf.composites.SamplingPoint.get_result_plots`.
 fig, axes = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,

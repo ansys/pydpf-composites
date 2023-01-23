@@ -37,6 +37,9 @@ from ansys.dpf.composites.failure_criteria import (
     VonMisesCriterion,
 )
 
+# %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
@@ -57,7 +60,7 @@ combined_fc = CombinedFailureCriterion(
 # Set up the composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
-#%%
+# %%
 # Failure evaluation for the entire model
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criteria=combined_fc,

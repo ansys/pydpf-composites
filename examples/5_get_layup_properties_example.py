@@ -28,8 +28,9 @@ from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 
-#%%
-# Start server and load example files
+# %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 

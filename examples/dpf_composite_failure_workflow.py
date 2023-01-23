@@ -57,12 +57,12 @@ combined_fc = CombinedFailureCriterion(
 )
 
 
-#%%
+# %%
 # Start server and prepare files
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
-#%%
+# %%
 # Initialize DPF model and data sources
 model = dpf.Model(composite_files_on_server.rst)
 rst_data_source = dpf.DataSources(composite_files_on_server.rst)
@@ -75,11 +75,11 @@ composite_definitions_source.add_file_path(
     composite_files_on_server.composite["shell"].definition, "CompositeDefinitions"
 )
 
-#%%
+# %%
 # Set up Mesh Provider
 mesh_provider = model.metadata.mesh_provider
 
-#%%
+# %%
 # Set up Material Provider
 # The material support provider takes care of mapping the materials in the rst file to
 # the materials in the composite definitions.
@@ -88,13 +88,13 @@ material_support_provider = dpf.Operator("support_provider")
 material_support_provider.inputs.property("mat")
 material_support_provider.inputs.data_sources(rst_data_source)
 
-#%%
-# Get Result Info
-# This is needed provides the unit system from the rst file
+# %%
+# Get Result Info which
+# provides the unit system from the rst file
 result_info_provider = dpf.Operator("ResultInfoProvider")
 result_info_provider.inputs.data_sources(rst_data_source)
 
-#%%
+# %%
 # Set up material provider
 # Combines the material support the engineering data xml file and the unit_system.
 # It's output can be used
@@ -106,7 +106,7 @@ material_provider.inputs.abstract_field_support(
     material_support_provider.outputs.abstract_field_support
 )
 material_provider.inputs.Engineering_data_file(eng_data_source)
-#%%
+# %%
 # Set up the layup provider
 # Read the composite definition file and enriches the mesh with the composite layup information.
 layup_provider = dpf.Operator("composite::layup_provider_operator")
@@ -118,7 +118,7 @@ layup_provider.inputs.abstract_field_support(
 layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
 layup_provider.run()
 
-#%%
+# %%
 # Set up the result operators: strains and stresses
 # Rotate to global is False because the post-processing engine expects the results to be
 # in the element coordinate system ( material coordinate system)
@@ -131,7 +131,7 @@ stress_operator = dpf.operators.result.stress()
 stress_operator.inputs.data_sources(rst_data_source)
 stress_operator.inputs.bool_rotate_to_global(False)
 
-#%%
+# %%
 # Set up the failure evaluator. Combines the results and evaluates all the failure criteria.
 # The output contains the maximum failure criteria for each integration point.
 #
@@ -143,7 +143,7 @@ failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
-#%%
+# %%
 # Uses the output of the multiple_failure_criteria_operator
 # to compute the min and max failure criteria for each element
 #
@@ -156,7 +156,7 @@ minmax_per_element.inputs.abstract_field_support(
 
 output = minmax_per_element.outputs.field_max()
 
-#%%
+# %%
 # Plot the max and the minimum value for each value
 #
 value_index = 1

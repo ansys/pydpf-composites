@@ -8,7 +8,7 @@ Post-process an assembly with multiple composite parts.
 
 This example shows how an assembly of a shell and solid composite
 model can be post-processed. The :class:`Composite Model <ansys.dpf.composites.CompositeModel>`
-helps to operator on the individual parts and to access all the data.
+helps to access the data of the different parts.
 
 """
 # %%
@@ -23,6 +23,9 @@ from ansys.dpf.composites.enums import FailureOutput
 from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
+# %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "assembly")
 
@@ -45,7 +48,7 @@ irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failur
 irf_field.plot()
 
 # %%
-# In the assembly exist two composite definition, one with the label "shell" and one
+# In the assembly exist two composite definitions, one with the label "shell" and one
 # with the label "solid". To query the layup properties we have to query the
 # properties with the correct composite_definition_label.
 # This example shows how to get ElementInfo for all layered elements

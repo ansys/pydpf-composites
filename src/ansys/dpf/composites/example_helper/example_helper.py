@@ -187,9 +187,6 @@ def _download_and_upload_file(
     if server.local_server:
         local_path = os.path.join(os.getcwd(), filename)
     urllib.request.urlretrieve(file_url, local_path)
-    # todo: With 0.7.1 the server will have
-    #  a boolean property 'local_server' that we can use to
-    #  determine if files should be uploaded
     if server.local_server:
         return local_path
     return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
@@ -199,7 +196,16 @@ def get_short_fiber_example_files(
     server: dpf.server,
     example_key: str,
 ) -> ShortFiberCompositesFiles:
-    """Get short fiber example file by example key."""
+    """Get short fiber example file by example key.
+
+    This will copy the example files into the current working directory, if the
+    server is local.
+
+    Parameters
+    ----------
+    server:
+    example_key:
+    """
     example_files = _short_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
@@ -217,7 +223,16 @@ def get_continuous_fiber_example_files(
     server: dpf.server,
     example_key: str,
 ) -> ContinuousFiberCompositesFiles:
-    """Get continuous fiber example file by example key."""
+    """Get continuous fiber example file by example key.
+
+    This will copy the example files into the current working directory, if the
+    server is local.
+
+    Parameters
+    ----------
+    server:
+    example_key:
+    """
     example_files = _continuous_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
