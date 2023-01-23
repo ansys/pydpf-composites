@@ -157,7 +157,7 @@ def _get_file_url(directory: str, filename: str) -> str:
 
 
 def _download_and_upload_file(
-    directory: str, filename: str, tmpdir: str, server: dpf.server
+    directory: str, filename: _PATH, tmpdir: str, server: dpf.server
 ) -> _PATH:
     """Download example file from example_data repo and upload it the dpf server."""
     file_url = _get_file_url(directory, filename)
