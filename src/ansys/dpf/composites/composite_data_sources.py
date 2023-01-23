@@ -255,9 +255,9 @@ def get_composite_files_from_workbench_result_folder(
         and len(list(continuous_fiber_composite_files.composite.keys())) == 0
     ):
         raise RuntimeError(
-            f"No composite definitions found. Set "
-            f"ensure_composite_definitions_found argument"
-            f" to False to skip this check."
+            "No composite definitions found. Set "
+            "ensure_composite_definitions_found argument"
+            " to False to skip this check."
         )
 
     return continuous_fiber_composite_files
