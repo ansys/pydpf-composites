@@ -153,7 +153,7 @@ _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
 
 
 def _get_file_url(directory: _PATH, filename: _PATH) -> str:
-    return cast(str, EXAMPLE_REPO + "/".join([directory, filename]))
+    return EXAMPLE_REPO + "/".join([str(directory), str(filename)])
 
 
 def _download_and_upload_file(
