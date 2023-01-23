@@ -171,13 +171,14 @@ class SamplingPoint:
         if len(raw_data) == 0:
             raise RuntimeError("No plies are found for the selected element!")
 
-        types = {"angle": float,
-                 "thickness": float,
-                 "global_ply_number": int,
-                 "id": str,
-                 "is_core": bool,
-                 "material": str
-                 }
+        types = {
+            "angle": float,
+            "thickness": float,
+            "global_ply_number": int,
+            "id": str,
+            "is_core": bool,
+            "material": str,
+        }
 
         plies = []
         for raw_ply in raw_data:
