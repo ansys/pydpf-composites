@@ -92,7 +92,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
     )
 
     failure_output = composite_model.evaluate_failure_criteria(
-        combined_criteria=combined_failure_criterion,
+        combined_criterion=combined_failure_criterion,
         composite_scope=CompositeScope(),
     )
 
@@ -132,7 +132,7 @@ def test_basic_functionality_of_composite_model(dpf_server):
     assert composite_model.get_mesh() is not None
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
-        combined_criteria=combined_failure_criterion, element_id=1
+        combined_criterion=combined_failure_criterion, element_id=1
     )
 
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids
@@ -163,7 +163,7 @@ def test_assembly_model(dpf_server):
     )
 
     failure_output = composite_model.evaluate_failure_criteria(
-        combined_criteria=combined_failure_criterion,
+        combined_criterion=combined_failure_criterion,
         composite_scope=CompositeScope(),
     )
     timer.add("After get failure output")
@@ -258,7 +258,7 @@ def test_assembly_model(dpf_server):
     assert composite_model.get_mesh(solid_label) is not None
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
-        combined_criteria=combined_failure_criterion,
+        combined_criterion=combined_failure_criterion,
         element_id=shell_element_id,
         composite_definition_label=shell_label,
     )
@@ -304,7 +304,7 @@ def test_failure_measures(dpf_server):
 
     for v in FailureMeasure:
         failure_output = composite_model.evaluate_failure_criteria(
-            combined_criteria=combined_failure_criterion,
+            combined_criterion=combined_failure_criterion,
             composite_scope=CompositeScope(),
             measure=v,
         )

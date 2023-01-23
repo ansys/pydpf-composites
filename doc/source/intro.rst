@@ -97,7 +97,7 @@ detailed output for a sampling point.
     # Show sampling point for element with id/label 1
     element_id = 1
     sampling_point = composite_model.get_sampling_point(
-        combined_criteria=combined_failure_criterion, element_id=element_id
+        combined_criterion=combined_failure_criterion, element_id=element_id
     )
 
     sampling_point.get_result_plots()

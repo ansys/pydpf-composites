@@ -58,7 +58,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
 # Create a sampling point
-sampling_point = composite_model.get_sampling_point(combined_criteria=combined_fc, element_id=3)
+sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=3)
 
 # %%
 # Plot Results
