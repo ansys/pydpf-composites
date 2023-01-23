@@ -152,7 +152,7 @@ _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
 }
 
 
-def _get_file_url(directory: str, filename: str) -> str:
+def _get_file_url(directory: str, filename: _PATH) -> _PATH:
     return EXAMPLE_REPO + "/".join([directory, filename])
 
 
