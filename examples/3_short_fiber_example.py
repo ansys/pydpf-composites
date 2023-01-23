@@ -22,6 +22,8 @@ from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_
 from ansys.dpf.composites.example_helper.example_helper import get_short_fiber_example_files
 
 # %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
 

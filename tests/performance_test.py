@@ -67,7 +67,7 @@ def get_test_data(dpf_server):
 
     rst_data_source = dpf.DataSources(rst_path)
 
-    strain_operator = dpf.Operator("EPEL")
+    strain_operator = dpf.operators.result.elastic_strain()
     strain_operator.inputs.data_sources(rst_data_source)
     strain_operator.inputs.bool_rotate_to_global(False)
 
@@ -172,7 +172,7 @@ def test_performance_element_info(dpf_server):
     setup_result = setup_operators(dpf_server, files)
     timer.add("read data")
 
-    # This is currently expensive because
+    # This is currently slow because
     # getting the keyoptions is slow.
     # We could implement the option to pass keyoptions directly if
     # they are known
