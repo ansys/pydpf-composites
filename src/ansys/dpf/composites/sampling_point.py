@@ -3,7 +3,7 @@
 from collections import namedtuple
 import hashlib
 import json
-from typing import Any, Collection, Dict, List, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Sequence, TypedDict, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -28,6 +28,15 @@ def _check_result_definition_has_single_scope(result_definition: ResultDefinitio
             "Result definition needs to have exactly one"
             "scope."
         )
+
+
+class AnalysisPly(TypedDict):
+    angle: float
+    global_ply_number: int
+    id: str
+    is_core: bool
+    material: str
+    thickness: float
 
 
 class SamplingPoint:
@@ -160,7 +169,7 @@ class SamplingPoint:
         return self._results
 
     @property
-    def analysis_plies(self) -> Sequence[Dict]:
+    def analysis_plies(self) -> Sequence[AnalysisPly]:
         """List of analysis plies from the bottom to the top.
 
         Returns a list of ply data such as angle, thickness and material name.
@@ -171,21 +180,9 @@ class SamplingPoint:
         if len(raw_data) == 0:
             raise RuntimeError("No plies are found for the selected element!")
 
-        types = {
-            "angle": float,
-            "thickness": float,
-            "global_ply_number": int,
-            "id": str,
-            "is_core": bool,
-            "material": str,
-        }
-
         plies = []
         for raw_ply in raw_data:
-            ply = {}
-            for name, value in raw_ply.items():
-                ply[name] = types[name](raw_ply[name])
-
+            ply: AnalysisPly = raw_ply
             plies.append(ply)
 
         return plies
