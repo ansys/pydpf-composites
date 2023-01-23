@@ -526,7 +526,7 @@ class SamplingPoint:
         self,
         axes: Any,
         components: Sequence[str],
-        spots: Sequence[Spot] = (Spot.bottom, Spot.top),
+        spots: Collection[Spot] = (Spot.bottom, Spot.top),
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
