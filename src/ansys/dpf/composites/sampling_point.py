@@ -29,6 +29,7 @@ def _check_result_definition_has_single_scope(result_definition: ResultDefinitio
             "scope."
         )
 
+
 class SamplingPoint:
     """Implements the Sampling Point object which wraps the DPF sampling point operator.
 
