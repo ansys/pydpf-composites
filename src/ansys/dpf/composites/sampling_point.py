@@ -351,7 +351,7 @@ class SamplingPoint:
         self._isuptodate = True
 
     def get_indices(
-        self, spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top]
+        self, spots: Sequence[Spot] = (Spot.bottom, Spot.middle, Spot.top)
     ) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
 
@@ -385,7 +385,7 @@ class SamplingPoint:
 
     def get_offsets_by_spots(
         self,
-        spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top],
+        spots: Sequence[Spot] = (Spot.bottom, Spot.middle, Spot.top),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected interfaces for each ply.
@@ -456,7 +456,7 @@ class SamplingPoint:
 
         return result
 
-    def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
+    def get_polar_plot(self, components: Sequence[str] = ("E1", "E2", "G12")) -> Any:
         """Create a standard polar plot to visualize the polar properties of the laminate.
 
         Parameters
@@ -526,7 +526,7 @@ class SamplingPoint:
         self,
         axes: Any,
         components: Sequence[str],
-        spots: Sequence[Spot] = [Spot.bottom, Spot.top],
+        spots: Sequence[Spot] = (Spot.bottom, Spot.top),
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
