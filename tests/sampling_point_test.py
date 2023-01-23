@@ -1,23 +1,28 @@
 import os
 import pathlib
-import matplotlib.pyplot as plt
-import numpy.testing
-import pytest
-import numpy as np
 
 import ansys.dpf.core as dpf
-from ansys.dpf.composites.composite_data_sources import ContinuousFiberCompositesFiles
-from ansys.dpf.composites.composite_data_sources import CompositeDefinitionFiles
-from ansys.dpf.composites.enums import Spot, FailureOutput
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy.testing
+import pytest
+
+from ansys.dpf.composites.composite_data_sources import (
+    CompositeDefinitionFiles,
+    ContinuousFiberCompositesFiles,
+)
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.enums import FailureOutput, Spot
+from ansys.dpf.composites.example_helper.example_helper import (
+    upload_continuous_fiber_composite_files_to_server,
+)
 from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
     CombinedFailureCriterion,
 )
-from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
 from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import ResultDefinition, ResultDefinitionScope
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
-from ansys.dpf.composites.example_helper.example_helper import upload_continuous_fiber_composite_files_to_server
 
 
 def test_sampling_point(dpf_server):
@@ -160,9 +165,12 @@ def test_sampling_point_with_numpy_types(dpf_server):
         engineering_data=material_path,
     )
 
-    files = upload_continuous_fiber_composite_files_to_server(data_files=composite_files, server=dpf_server)
-    cfc = CombinedFailureCriterion("max strain & max stress",
-                                   [MaxStrainCriterion(), MaxStressCriterion()])
+    files = upload_continuous_fiber_composite_files_to_server(
+        data_files=composite_files, server=dpf_server
+    )
+    cfc = CombinedFailureCriterion(
+        "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
+    )
     composite_model = CompositeModel(files, server=dpf_server)
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)

@@ -1,7 +1,8 @@
 import os
 import pathlib
-import numpy as np
+
 import ansys.dpf.core as dpf
+import numpy as np
 import pytest
 
 from ansys.dpf.composites import MaterialProperty
@@ -316,9 +317,7 @@ def test_composite_model_element_scope(dpf_server):
     files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 
     composite_model = CompositeModel(files, server=dpf_server)
-    cfc = CombinedFailureCriterion(
-        "max stress", failure_criteria=[MaxStressCriterion()]
-    )
+    cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
     irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value.value})
