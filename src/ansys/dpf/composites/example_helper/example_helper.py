@@ -121,9 +121,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
         files=ContinuousFiberCompositesFiles(
             rst="beam_181_analysis_model.rst",
             engineering_data="materials.xml",
-            composite={
-                "shell": CompositeDefinitionFiles(definition="ACPCompositeDefinitions.h5")
-            },
+            composite={"shell": CompositeDefinitionFiles(definition="ACPCompositeDefinitions.h5")},
         ),
     ),
     "assembly": _ContinuousFiberExampleLocation(
