@@ -167,7 +167,7 @@ class SamplingPoint:
         """
         self._update_and_check_results()
 
-        raw_data = cast(Sequence[Dict], self._results[0]["layup"]["analysis_plies"])
+        raw_data = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
         if len(raw_data) == 0:
             raise RuntimeError("No plies are found for the selected element!")
 
