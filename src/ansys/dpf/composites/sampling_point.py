@@ -3,7 +3,7 @@
 from collections import namedtuple
 import hashlib
 import json
-from typing import Any, Dict, List, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -351,7 +351,7 @@ class SamplingPoint:
         self._isuptodate = True
 
     def get_indices(
-        self, spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top]
+        self, spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top)
     ) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
 
@@ -385,7 +385,7 @@ class SamplingPoint:
 
     def get_offsets_by_spots(
         self,
-        spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top],
+        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected interfaces for each ply.
@@ -456,7 +456,7 @@ class SamplingPoint:
 
         return result
 
-    def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
+    def get_polar_plot(self, components: Sequence[str] = ("E1", "E2", "G12")) -> Any:
         """Create a standard polar plot to visualize the polar properties of the laminate.
 
         Parameters
@@ -526,7 +526,7 @@ class SamplingPoint:
         self,
         axes: Any,
         components: Sequence[str],
-        spots: Sequence[Spot] = [Spot.bottom, Spot.top],
+        spots: Collection[Spot] = (Spot.bottom, Spot.top),
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
@@ -571,13 +571,13 @@ class SamplingPoint:
 
     def get_result_plots(
         self,
-        strain_components: Sequence[str] = ["e1", "e2", "e3", "e12", "e13", "e23"],
-        stress_components: Sequence[str] = ["s1", "s2", "s3", "s12", "s13", "s23"],
-        failure_components: Sequence[str] = ["irf", "rf", "mos"],
+        strain_components: Sequence[str] = ("e1", "e2", "e3", "e12", "e13", "e23"),
+        stress_components: Sequence[str] = ("s1", "s2", "s3", "s12", "s13", "s23"),
+        failure_components: Sequence[str] = ("irf", "rf", "mos"),
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top],
+        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
     ) -> Any:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 

@@ -10,7 +10,7 @@ from ansys.dpf.composites.composite_data_sources import (
     get_composite_files_from_workbench_result_folder,
 )
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.enums import LayerProperty
+from ansys.dpf.composites.enums import FailureMeasure, LayerProperty
 from ansys.dpf.composites.example_helper.example_helper import (
     upload_continuous_fiber_composite_files_to_server,
 )
@@ -290,3 +290,21 @@ def test_assembly_model(dpf_server):
     timer.add("After getting properties")
 
     timer.summary()
+
+
+def test_failure_measures(dpf_server):
+
+    files = get_data_files()
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
+
+    composite_model = CompositeModel(files, server=dpf_server)
+    combined_failure_criterion = CombinedFailureCriterion(
+        "max stress", failure_criteria=[MaxStressCriterion()]
+    )
+
+    for v in FailureMeasure:
+        failure_output = composite_model.evaluate_failure_criteria(
+            combined_criteria=combined_failure_criterion,
+            composite_scope=CompositeScope(),
+            measure=v,
+        )
