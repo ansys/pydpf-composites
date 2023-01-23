@@ -96,6 +96,8 @@ def test_basic_functionality_of_composite_model(dpf_server):
         combined_criteria=combined_failure_criterion,
         composite_scope=CompositeScope(),
     )
+    irf_field = failure_output.get_field({"failure_label": FailureOutput.failure_value})
+    fm_field = failure_output.get_field({"failure_label": FailureOutput.failure_mode})
 
     properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.stress_limits_xt])
 
