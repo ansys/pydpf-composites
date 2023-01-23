@@ -174,7 +174,7 @@ def test_sampling_point_with_numpy_types(dpf_server):
     composite_model = CompositeModel(files, server=dpf_server)
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value.value})
+    irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value})
     critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
     sp = composite_model.get_sampling_point(cfc, critical_element_id)
     assert max(sp.s1) == pytest.approx(2840894080.0, 1e-8)
