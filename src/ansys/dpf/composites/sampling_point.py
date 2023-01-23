@@ -351,7 +351,7 @@ class SamplingPoint:
         self._isuptodate = True
 
     def get_indices(
-        self, spots: Sequence[Spot] = (Spot.bottom, Spot.middle, Spot.top)
+        self, spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top)
     ) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
 
@@ -385,7 +385,7 @@ class SamplingPoint:
 
     def get_offsets_by_spots(
         self,
-        spots: Sequence[Spot] = (Spot.bottom, Spot.middle, Spot.top),
+        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected interfaces for each ply.
