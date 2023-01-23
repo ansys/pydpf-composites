@@ -52,7 +52,7 @@ combined_fc = CombinedFailureCriterion(
 )
 
 # %%
-# Set up composite model
+# Set up the composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
@@ -80,7 +80,7 @@ fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
 # %%
 # Custom plots:
 #
-# Plots can be easily customized or build from scratch.
+# Plots can be easily customized or built from scratch.
 # Here, matplotlib is used. An alternative is plotly.
 #
 # s13 and s23
