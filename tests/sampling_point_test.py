@@ -109,7 +109,7 @@ def test_sampling_point(dpf_server):
     assert critical_failures == ref
 
     """Test default plots: result plot and polar plot"""
-    fig, axes = sampling_point.get_result_plots(
+    sampling_point.get_result_plots(
         strain_components=["e1", "e12"],
         stress_components=["s13", "s23"],
         failure_components=["rf"],
@@ -119,7 +119,7 @@ def test_sampling_point(dpf_server):
         spots=[Spot.bottom, Spot.top],
     )
 
-    fig, axis = sampling_point.get_polar_plot(["E1", "G12"])
+    sampling_point.get_polar_plot(["E1", "G12"])
 
     """Test manually created plots using the provided helpers"""
     spots = [Spot.bottom, Spot.top]
