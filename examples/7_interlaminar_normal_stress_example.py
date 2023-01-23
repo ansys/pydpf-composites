@@ -25,7 +25,7 @@ the lay-up.
 
 """
 
-#%%
+# %%
 # Script
 # ~~~~~~
 #
@@ -38,16 +38,17 @@ from ansys.dpf.composites.enums import Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
-#%%
-# Start Server and upload files
+# %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "ins")
 
-#%%
+# %%
 # Configure data sources
 composite_model = CompositeModel(composite_files_on_server, server)
 
-#%%
+# %%
 # Prepare inputs for the INS operator
 #
 # Rotate to global is False because the post-processing engine expects the results to be
@@ -61,7 +62,7 @@ stress_operator = dpf.Operator("S")
 stress_operator.inputs.data_sources(composite_model.data_sources.rst)
 stress_operator.inputs.bool_rotate_to_global(False)
 
-#%%
+# %%
 # Compute interlaminar normal stresses
 # """"""""""""""""""""""""""""""""""""
 #
@@ -71,14 +72,14 @@ composite_model.add_interlaminar_normal_stresses(
     strains=strain_operator.outputs.fields_container(),
 )
 
-#%%
+# %%
 # Plot s3 stresses
 # """"""""""""""""
 #
 # Get the first stress field
 stress_field = stress_operator.outputs.fields_container()[0]
 
-#%%
+# %%
 # Plot max s3 of each element
 
 s3_component = Sym3x3TensorComponent.tensor33
@@ -99,7 +100,7 @@ with max_s3_field.as_local_field() as local_max_s3_field:
 
 composite_model.get_mesh().plot(max_s3_field)
 
-#%%
+# %%
 # Plot s3 at the mid-plane of a certain ply
 
 analysis_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())

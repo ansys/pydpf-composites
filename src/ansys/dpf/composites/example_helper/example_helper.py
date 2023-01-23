@@ -196,7 +196,16 @@ def get_short_fiber_example_files(
     server: dpf.server,
     example_key: str,
 ) -> ShortFiberCompositesFiles:
-    """Get short fiber example file by example key."""
+    """Get short fiber example file by example key.
+
+    This will copy the example files into the current working directory, if the
+    server is local.
+
+    Parameters
+    ----------
+    server:
+    example_key:
+    """
     example_files = _short_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 
@@ -214,7 +223,16 @@ def get_continuous_fiber_example_files(
     server: dpf.server,
     example_key: str,
 ) -> ContinuousFiberCompositesFiles:
-    """Get continuous fiber example file by example key."""
+    """Get continuous fiber example file by example key.
+
+    This will copy the example files into the current working directory, if the
+    server is local.
+
+    Parameters
+    ----------
+    server:
+    example_key:
+    """
     example_files = _continuous_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
 

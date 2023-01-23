@@ -23,6 +23,9 @@ from ansys.dpf.composites.enums import FailureOutput
 from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
+# %%
+# Start a server and get the examples files.
+# This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "assembly")
 
