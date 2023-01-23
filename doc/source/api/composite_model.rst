@@ -13,13 +13,16 @@ Composite Model
       CompositeScope
       ContinuousFiberCompositesFiles
       FailureMeasure
+      FailureResult
       MaterialOperators
       ResultDefinition
       SamplingPoint
       LayupProperty
       FailureOutput
+      SamplingPointFigure
       Sym3x3TensorComponent
       LayerProperty
+
 
 
 

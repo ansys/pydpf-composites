@@ -40,7 +40,7 @@ from .material_properties import (
 )
 from .material_setup import MaterialOperators
 from .result_definition import ResultDefinition
-from .sampling_point import SamplingPoint
+from .sampling_point import FailureResult, SamplingPoint, SamplingPointFigure
 from .select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
@@ -79,4 +79,6 @@ __all__ = [
     "FailureOutput",
     "Sym3x3TensorComponent",
     "LayerProperty",
+    "FailureResult",
+    "SamplingPointFigure",
 ]

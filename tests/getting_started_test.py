@@ -63,4 +63,4 @@ def test_getting_started(dpf_server: dpf.server):
         combined_criteria=combined_failure_criterion, element_id=element_id
     )
 
-    fig, axes = sampling_point.get_result_plots()
+    sampling_point.get_result_plots()

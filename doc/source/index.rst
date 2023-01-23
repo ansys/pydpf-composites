@@ -71,7 +71,7 @@ Pre-Requisites and Compatibility
 Limitations
 '''''''''''
 - Layered elements (section data) which have not been pre-processed with ACP are not supported.
-  Refer to the Section `Import Legacy Models`_ on the official Ansys help.
+  Refer to the Section `Import Legacy Models`_ on the official Ansys help
   to learn how to convert legacy models.
 - Other solvers than MAPDL.
 
