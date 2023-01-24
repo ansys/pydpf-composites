@@ -37,9 +37,7 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
-    connect_to_or_start_server,
-)
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 #%%
 # Configure the combined failure criterion

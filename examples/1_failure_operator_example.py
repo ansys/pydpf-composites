@@ -35,9 +35,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
-    connect_to_or_start_server,
-)
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.

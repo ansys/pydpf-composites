@@ -33,9 +33,7 @@ from ansys.dpf.composites.layup_info import (
     get_all_analysis_ply_names,
     get_dpf_material_id_by_analyis_ply_map,
 )
-from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
-    connect_to_or_start_server,
-)
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.

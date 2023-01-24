@@ -13,14 +13,6 @@ class Spot(IntEnum):
     top = 3
 
 
-def get_rst_spot_index(spot: Spot) -> int:
-    """Return the spot in index in the rst file.
-
-    The order in the rst file is always bottom, top, (mid)
-    """
-    return [-1, 0, 2, 1][spot]
-
-
 class Sym3x3TensorComponent(IntEnum):
     """Tensor indices for symmetrical 3x3 tensors."""
 
