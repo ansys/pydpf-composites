@@ -2568,9 +2568,12 @@ failure criterion of the same type already exists.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>combined_failure = CombinedFailureCriterion(“max_stress 3D”)
-max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
-combined_failure.insert(max_stress)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">combined_failure</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span><span class="s2">&quot;max_stress 3D&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_stress</span> <span class="o">=</span> <span class="n">MaxStressCriterion</span><span class="p">(</span><span class="n">s1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s3</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="go">                                    s12=True, s13=True, s23=True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined_failure</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">max_stress</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
