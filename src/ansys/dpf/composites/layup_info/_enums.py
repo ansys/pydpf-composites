@@ -7,15 +7,15 @@ class LayupProperty(IntEnum):
     Values correspond to labels in output container of layup provider.
     """
 
-    angle = 0
-    shear_angle = 1
-    thickness = 2
-    laminate_offset = 3
+    ANGLE = 0
+    SHEAR_ANGLE = 1
+    THICKNESS = 2
+    LAMINATE_OFFSET = 3
 
 
 class LayerProperty(IntEnum):
     """Available layer properties."""
 
-    thicknesses = 0
-    angles = 1
-    shear_angles = 2
+    THICKNESSES = 0
+    ANGLES = 1
+    SHEAR_ANGLES = 2
