@@ -3,7 +3,7 @@
 import inspect
 import math
 
-from .failure_criterion_base import FailureCriterionBase
+from ._failure_criterion_base import FailureCriterionBase
 
 
 class CuntzeCriterion(FailureCriterionBase):

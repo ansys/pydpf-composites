@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.core_failure import (
+from ansys.dpf.composites.failure_criteria._core_failure import (
     ATTRS_CORE_FAILURE,
     CoreFailureCriterion,
 )

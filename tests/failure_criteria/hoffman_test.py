@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.hoffman import HoffmanCriterion
+from ansys.dpf.composites.failure_criteria._hoffman import HoffmanCriterion
 
 defaults = {"wf": 1.0, "dim": 2}
 ATTRS = ["wf", "dim"]

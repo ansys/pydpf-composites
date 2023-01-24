@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.tsai_wu import TsaiWuCriterion
+from ansys.dpf.composites.failure_criteria._tsai_wu import TsaiWuCriterion
 
 defaults = {"wf": 1.0, "dim": 2}
 ATTRS = ["wf", "dim"]
