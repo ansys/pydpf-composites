@@ -8,15 +8,15 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
 from numpy.typing import NDArray
 
-from ..indexer import (
-    _FieldIndexerNoDataPointer,
-    _FieldIndexerWithDataPointer,
-    _PropertyFieldIndexerArrayValue,
-    _PropertyFieldIndexerNoDataPointer,
-    _PropertyFieldIndexerNoDataPointerNoBoundsCheck,
-    _PropertyFieldIndexerSingleValue,
-    _PropertyFieldIndexerWithDataPointer,
-    _PropertyFieldIndexerWithDataPointerNoBoundsCheck,
+from .._indexer import (
+    FieldIndexerNoDataPointer,
+    FieldIndexerWithDataPointer,
+    PropertyFieldIndexerArrayValue,
+    PropertyFieldIndexerNoDataPointer,
+    PropertyFieldIndexerNoDataPointerNoBoundsCheck,
+    PropertyFieldIndexerSingleValue,
+    PropertyFieldIndexerWithDataPointer,
+    PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
 from ._enums import LayupProperty
 
@@ -156,7 +156,7 @@ class AnalysisPlyInfoProvider:
         """Initialize AnalysisPlyProvider."""
         self.name = name
         self.property_field = _get_analysis_ply(mesh, name)
-        self._layer_indices = _PropertyFieldIndexerNoDataPointer(self.property_field)
+        self._layer_indices = PropertyFieldIndexerNoDataPointer(self.property_field)
 
     def get_layer_index_by_element_id(self, element_id: int) -> Optional[np.int64]:
         """Get the layer index for the analysis ply in a given element.
@@ -294,21 +294,21 @@ class ElementInfoProvider:
         # focused on the most important properties. We can add different providers
         # for other properties (such as thickness and angles)
 
-        def get_indexer_with_data_pointer(field: PropertyField) -> _PropertyFieldIndexerArrayValue:
+        def get_indexer_with_data_pointer(field: PropertyField) -> PropertyFieldIndexerArrayValue:
             if no_bounds_checks:
-                return _PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
+                return PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
             else:
-                return _PropertyFieldIndexerWithDataPointer(field)
+                return PropertyFieldIndexerWithDataPointer(field)
 
-        def get_indexer_no_data_pointer(field: PropertyField) -> _PropertyFieldIndexerSingleValue:
+        def get_indexer_no_data_pointer(field: PropertyField) -> PropertyFieldIndexerSingleValue:
             if no_bounds_checks:
-                return _PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
+                return PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
             else:
-                return _PropertyFieldIndexerNoDataPointer(field)
+                return PropertyFieldIndexerNoDataPointer(field)
 
         # Has to be always with bounds checks because it does not contain
         # data for all the elements
-        self.layer_indices = _PropertyFieldIndexerWithDataPointer(layer_indices)
+        self.layer_indices = PropertyFieldIndexerWithDataPointer(layer_indices)
         self.layer_materials = get_indexer_with_data_pointer(material_ids)
 
         self.apdl_element_types = get_indexer_no_data_pointer(element_types_apdl)
@@ -462,23 +462,23 @@ class LayupPropertiesProvider:
         layup_outputs_container = layup_provider.outputs.fields_container()
         composite_label = layup_outputs_container.labels[0]
         angle_field = layup_outputs_container.get_field({composite_label: LayupProperty.angle})
-        self._angle_indexer = _FieldIndexerWithDataPointer(angle_field)
+        self._angle_indexer = FieldIndexerWithDataPointer(angle_field)
         thickness_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.thickness}
         )
-        self._thickness_indexer = _FieldIndexerWithDataPointer(thickness_field)
+        self._thickness_indexer = FieldIndexerWithDataPointer(thickness_field)
         shear_angle_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.shear_angle}
         )
-        self._shear_angle_indexer = _FieldIndexerWithDataPointer(shear_angle_field)
+        self._shear_angle_indexer = FieldIndexerWithDataPointer(shear_angle_field)
         offset_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.laminate_offset}
         )
-        self._offset_indexer = _FieldIndexerNoDataPointer(offset_field)
+        self._offset_indexer = FieldIndexerNoDataPointer(offset_field)
 
         self._index_to_name_map = get_analysis_ply_index_to_name_map(mesh)
 
-        self._analysis_ply_indexer = _PropertyFieldIndexerWithDataPointer(
+        self._analysis_ply_indexer = PropertyFieldIndexerWithDataPointer(
             mesh.property_field("layer_to_analysis_ply")
         )
 

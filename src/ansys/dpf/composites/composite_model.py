@@ -13,7 +13,6 @@ from .data_sources import (
     ContinuousFiberCompositesFiles,
     get_composites_data_sources,
 )
-from .enums import FailureMeasure
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
@@ -24,8 +23,10 @@ from .layup_info import (
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
-from .result_definition import ResultDefinition, ResultDefinitionScope
+from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
+
+__all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 
 
 @dataclass(frozen=True)

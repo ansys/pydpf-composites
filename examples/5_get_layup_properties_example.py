@@ -25,8 +25,10 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
+    connect_to_or_start_server,
+)
 
 # %%
 # Start a server and get the examples files.

@@ -1,6 +1,8 @@
-"""Collection of enums."""
+"""Collection of constants used across PyDPF Composites."""
 
-from enum import Enum, IntEnum
+from enum import IntEnum
+
+__all__ = ("Spot", "Sym3x3TensorComponent", "FailureOutput")
 
 
 class Spot(IntEnum):
@@ -36,11 +38,3 @@ class FailureOutput(IntEnum):
     failure_mode = 0
     failure_value = 1
     max_layer_index = 2
-
-
-class FailureMeasure(Enum):
-    """Available Failure Measures."""
-
-    inverse_reserve_factor: str = "inverse_reserve_factor"
-    margin_of_safety: str = "safety_margin"
-    reserve_factor: str = "safety_factor"

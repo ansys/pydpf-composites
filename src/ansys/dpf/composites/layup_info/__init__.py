@@ -1,3 +1,5 @@
+"""Provides methods for reading the composite layup information."""
+
 from . import material_operators, material_properties
 from ._add_layup_info_to_mesh import add_layup_info_to_mesh
 from ._enums import LayerProperty, LayupProperty

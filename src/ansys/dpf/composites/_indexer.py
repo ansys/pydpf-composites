@@ -14,25 +14,25 @@ from numpy.typing import NDArray
 
 
 @dataclass(frozen=True)
-class _IndexToId:
+class IndexToId:
     mapping: NDArray[np.int64]
     max_id: int
 
 
-def _setup_index_by_id(scoping: Scoping) -> _IndexToId:
+def setup_index_by_id(scoping: Scoping) -> IndexToId:
     # Setup array that can be indexed by id to get the index.
     # For ids which are not present in the scoping the array has a value of -1
     indices: NDArray[np.int64] = np.full(max(scoping.ids) + 1, -1, dtype=np.int64)
     indices[scoping.ids] = np.arange(len(scoping.ids))
-    return _IndexToId(mapping=indices, max_id=len(indices) - 1)
+    return IndexToId(mapping=indices, max_id=len(indices) - 1)
 
 
-class _PropertyFieldIndexerSingleValue(Protocol):
+class PropertyFieldIndexerSingleValue(Protocol):
     def by_id(self, entity_id: int) -> Optional[np.int64]:
         pass
 
 
-class _PropertyFieldIndexerArrayValue(Protocol):
+class PropertyFieldIndexerArrayValue(Protocol):
     def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         pass
 
@@ -47,9 +47,9 @@ class _PropertyFieldIndexerArrayValue(Protocol):
 # array
 
 
-class _PropertyFieldIndexerNoDataPointer:
+class PropertyFieldIndexerNoDataPointer:
     def __init__(self, field: PropertyField):
-        index_by_id = _setup_index_by_id(field.scoping)
+        index_by_id = setup_index_by_id(field.scoping)
         self._indices = index_by_id.mapping
         self._max_id = index_by_id.max_id
         self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
@@ -64,9 +64,9 @@ class _PropertyFieldIndexerNoDataPointer:
         return cast(np.int64, self._data[idx])
 
 
-class _FieldIndexerNoDataPointer:
+class FieldIndexerNoDataPointer:
     def __init__(self, field: Field):
-        index_by_id = _setup_index_by_id(field.scoping)
+        index_by_id = setup_index_by_id(field.scoping)
         self._indices = index_by_id.mapping
         self._max_id = index_by_id.max_id
         self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
@@ -80,9 +80,9 @@ class _FieldIndexerNoDataPointer:
         return cast(np.double, self._data[idx])
 
 
-class _PropertyFieldIndexerNoDataPointerNoBoundsCheck:
+class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
     def __init__(self, field: PropertyField):
-        index_by_id = _setup_index_by_id(field.scoping)
+        index_by_id = setup_index_by_id(field.scoping)
         self._indices = index_by_id.mapping
         self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
 
@@ -90,9 +90,9 @@ class _PropertyFieldIndexerNoDataPointerNoBoundsCheck:
         return cast(np.int64, self._data[self._indices[entity_id]])
 
 
-class _PropertyFieldIndexerWithDataPointer:
+class PropertyFieldIndexerWithDataPointer:
     def __init__(self, field: PropertyField):
-        index_by_id = _setup_index_by_id(field.scoping)
+        index_by_id = setup_index_by_id(field.scoping)
         self._indices = index_by_id.mapping
         self._max_id = index_by_id.max_id
 
@@ -120,9 +120,9 @@ class _PropertyFieldIndexerWithDataPointer:
         )
 
 
-class _FieldIndexerWithDataPointer:
+class FieldIndexerWithDataPointer:
     def __init__(self, field: Field):
-        index_by_id = _setup_index_by_id(field.scoping)
+        index_by_id = setup_index_by_id(field.scoping)
         self._indices = index_by_id.mapping
         self._max_id = index_by_id.max_id
 
@@ -150,9 +150,9 @@ class _FieldIndexerWithDataPointer:
         )
 
 
-class _PropertyFieldIndexerWithDataPointerNoBoundsCheck:
+class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
     def __init__(self, field: PropertyField):
-        index_by_id = _setup_index_by_id(field.scoping)
+        index_by_id = setup_index_by_id(field.scoping)
         self._indices = index_by_id.mapping
 
         self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)

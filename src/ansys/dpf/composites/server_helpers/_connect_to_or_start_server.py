@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Optional, Union
 
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.load_plugin import load_composites_plugin
+from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
 
 def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int = 10) -> Any:

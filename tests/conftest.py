@@ -14,11 +14,11 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
-from ansys.dpf.composites.connect_to_or_start_server import (
+from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
     _try_until_timeout,
     _wait_until_server_is_up,
 )
-from ansys.dpf.composites.load_plugin import load_composites_plugin
+from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
