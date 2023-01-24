@@ -2569,8 +2569,10 @@ be followed: In main workbench window, activate the files panel by ticking
 the file location of all the files used in the workbench project.
 Determine the different attributes of ContinuousFiberCompositesFiles:</p>
 <ul class="simple">
-<li><p>rst: The *.rst file which belongs to the CellId of the Solution
-you are interested to post-process.</p></li>
+<li><p>rst: The file.rst file which belongs to the CellId of the Solution
+you are interested to post-process. Multiple result files are not supported yet.
+Please ensure that ‘Combine Distributed Result Files’ is activated if the solution
+was solved in ‘Distributed’ mode.</p></li>
 <li><p>engineering_data: The MatML.xml file in the same folder as the rst file.</p></li>
 <li><p>composite: There can be multiple composite definitions,
 one definition for each ACP System if shell data is transferred
@@ -2590,7 +2592,7 @@ shell information and one that exports solid information.</p>
 <p>The files are located in the following locations.</p>
 <p>Result file:</p>
 <ul class="simple">
-<li><p>project_root_folder/dp0/SYS/MECH/file.rst</p></li>
+<li><p>project_root_folder/dp0/SYS/MECH/file.rst.</p></li>
 </ul>
 <p>Engineering data file:</p>
 <ul class="simple">
