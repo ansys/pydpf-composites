@@ -1,6 +1,0 @@
-composite\_definition\_labels
-=============================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: CompositeModel.composite_definition_labels

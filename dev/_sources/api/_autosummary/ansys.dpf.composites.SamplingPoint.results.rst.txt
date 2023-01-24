@@ -1,6 +1,0 @@
-results
-=======
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: SamplingPoint.results

@@ -1,6 +1,0 @@
-failure\_modes
-==============
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: SamplingPoint.failure_modes

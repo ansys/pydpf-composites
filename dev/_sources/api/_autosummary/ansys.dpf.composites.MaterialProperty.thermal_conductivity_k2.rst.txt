@@ -1,6 +1,0 @@
-thermal\_conductivity\_k2
-=========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.thermal_conductivity_k2

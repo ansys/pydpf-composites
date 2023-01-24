@@ -1,0 +1,6 @@
+reserve\_factor
+===============
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoattribute:: FailureMeasure.reserve_factor

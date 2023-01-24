@@ -305,7 +305,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3_short_fiber_example.html">
-   Short Fiber Failure Analysis
+   Failure Analysis for Short Fiber Composites
   </a>
  </li>
  <li class="toctree-l1">
@@ -404,20 +404,20 @@ result data is organized.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">Spot</span><span class="p">,</span> <span class="n">Sym3x3TensorComponent</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">AnalysisPlyInfoProvider</span><span class="p">,</span>
+    <span class="n">get_all_analysis_ply_names</span><span class="p">,</span>
+    <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.select_indices</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">get_selected_indices</span><span class="p">,</span>
     <span class="n">get_selected_indices_by_analysis_ply</span><span class="p">,</span>
     <span class="n">get_selected_indices_by_dpf_material_ids</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.connect_to_or_start_server</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">Spot</span><span class="p">,</span> <span class="n">Sym3x3TensorComponent</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">get_all_analysis_ply_names</span><span class="p">,</span>
-    <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
 </div>
 <p>Start a server and get the examples files.
@@ -526,7 +526,7 @@ to get the dpf_material_id from an analysis ply.</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">material_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_6_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_003.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.306 seconds)</p>
+<img src="../../_images/sphx_glr_6_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_003.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.660 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-6-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e05f846beb0a8299ac35fefa3ea22a53/6_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">6_filter_composite_data_example.py</span></code></a></p>

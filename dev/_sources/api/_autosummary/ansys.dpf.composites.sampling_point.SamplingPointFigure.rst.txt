@@ -1,0 +1,34 @@
+﻿ansys.dpf.composites.sampling\_point.SamplingPointFigure
+========================================================
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. autoclass:: SamplingPointFigure
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      SamplingPointFigure.figure
+      
+      
+      SamplingPointFigure.axes
+      
+   
+   

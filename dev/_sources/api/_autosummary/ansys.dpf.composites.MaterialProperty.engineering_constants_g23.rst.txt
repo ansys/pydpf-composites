@@ -1,6 +1,0 @@
-engineering\_constants\_g23
-===========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.engineering_constants_g23

@@ -1,6 +1,0 @@
-get\_polar\_plot
-================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: SamplingPoint.get_polar_plot

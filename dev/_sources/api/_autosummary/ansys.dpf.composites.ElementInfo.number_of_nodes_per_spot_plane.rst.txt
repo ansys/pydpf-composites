@@ -1,6 +1,0 @@
-number\_of\_nodes\_per\_spot\_plane
-===================================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: ElementInfo.number_of_nodes_per_spot_plane

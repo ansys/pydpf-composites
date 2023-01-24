@@ -1,6 +1,0 @@
-strain\_limits\_eyt
-===================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.strain_limits_eyt

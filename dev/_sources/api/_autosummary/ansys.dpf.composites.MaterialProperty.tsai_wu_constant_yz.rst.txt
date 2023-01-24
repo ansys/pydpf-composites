@@ -1,6 +1,0 @@
-tsai\_wu\_constant\_yz
-======================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: MaterialProperty.tsai_wu_constant_yz

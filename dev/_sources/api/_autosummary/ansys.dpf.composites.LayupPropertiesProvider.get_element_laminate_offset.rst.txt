@@ -1,6 +1,0 @@
-get\_element\_laminate\_offset
-==============================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: LayupPropertiesProvider.get_element_laminate_offset

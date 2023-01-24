@@ -1,6 +1,0 @@
-is\_layered
-===========
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: ElementInfo.is_layered

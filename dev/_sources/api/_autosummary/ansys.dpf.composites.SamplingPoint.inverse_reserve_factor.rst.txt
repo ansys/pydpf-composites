@@ -1,6 +1,0 @@
-inverse\_reserve\_factor
-========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: SamplingPoint.inverse_reserve_factor

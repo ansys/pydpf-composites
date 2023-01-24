@@ -1,6 +1,0 @@
-stress\_strain\_eval\_mode
-==========================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: ResultDefinition.stress_strain_eval_mode

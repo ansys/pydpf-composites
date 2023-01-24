@@ -1,6 +1,0 @@
-name
-====
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: ResultDefinition.name

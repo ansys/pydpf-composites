@@ -1,6 +1,0 @@
-get\_element\_info
-==================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: ElementInfoProvider.get_element_info

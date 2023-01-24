@@ -1,6 +1,0 @@
-get\_layer\_index\_by\_element\_id
-==================================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: AnalysisPlyInfoProvider.get_layer_index_by_element_id

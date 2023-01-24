@@ -1,6 +1,0 @@
-add\_ply\_sequence\_to\_plot
-============================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: SamplingPoint.add_ply_sequence_to_plot

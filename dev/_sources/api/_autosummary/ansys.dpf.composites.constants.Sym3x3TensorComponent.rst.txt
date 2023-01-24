@@ -1,0 +1,39 @@
+﻿ansys.dpf.composites.constants.Sym3x3TensorComponent
+====================================================
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoclass:: Sym3x3TensorComponent
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      Sym3x3TensorComponent.tensor11
+      
+      
+      Sym3x3TensorComponent.tensor22
+      
+      
+      Sym3x3TensorComponent.tensor33
+      
+      
+      Sym3x3TensorComponent.tensor21
+      
+      
+      Sym3x3TensorComponent.tensor31
+      
+      
+      Sym3x3TensorComponent.tensor32
+      
+   
+   

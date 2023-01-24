@@ -1,6 +1,0 @@
-to\_json
-========
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: ResultDefinition.to_json

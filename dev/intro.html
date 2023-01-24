@@ -364,16 +364,16 @@ function checkPageExistsAndRedirect(event) {
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pyansys</span><span class="o">/</span><span class="n">pydpf</span><span class="o">-</span><span class="n">composites</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
-<p>Whenever you call the function connect_to_or_start_server you have to pass the location of the 231 installer
+<p>Whenever you call the function connect_to_or_start_server you have to pass the location of the 23.1 installer
 with the ansys_path argument:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connect_to_or_start_server</span><span class="p">(</span><span class="n">ansys_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AWP_ROOT231&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Otherwise, the dpf server will be started with the latest installer it finds, which probably is 232.</p>
+<p>Otherwise, the dpf server will be started with the latest installer it finds, which probably is 23.2.</p>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<p>ansys-dpf-composites supports Ansys version 23.1 and later. Make sure you have licensed copy of Ansys installed.
+<p>ansys-dpf-composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
 Install the ansys-dpf-composites module from pip:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ansys</span><span class="o">-</span><span class="n">dpf</span><span class="o">-</span><span class="n">composites</span>
 </pre></div>
@@ -391,23 +391,21 @@ to keep Python packages isolated from your system Python.</p>
 <p>In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.</p>
 <p>For larger models it can be slow to initialize a
-<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.CompositeModel.html#ansys.dpf.composites.CompositeModel" title="ansys.dpf.composites.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>, because it automatically
+<code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code>, because it automatically
 creates many different providers that are not needed in all the workflows. Consider using the
-<a class="reference internal" href="api/layup_information.html#layup-information-classes"><span class="std std-ref">Layup Information classes</span></a> directly.</p>
+<a class="reference internal" href="api/layup_info.html#layup-information-classes"><span class="std std-ref">Layup Information classes</span></a> directly.</p>
 <section id="start-from-a-local-ansys-workbench-project">
 <h3>Start from a local Ansys Workbench project<a class="headerlink" href="#start-from-a-local-ansys-workbench-project" title="Permalink to this heading">#</a></h3>
 <p>To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
 object in Mechanical and selecting “Open Solver Files Directory”. Then call the
-<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">ansys.dpf.composites.get_composite_files_from_workbench_result_folder()</span></code></a> function with that folder.
+<code class="xref py py-func docutils literal notranslate"><span class="pre">ansys.dpf.composites.get_composite_files_from_workbench_result_folder()</span></code> function with that folder.
 The following  example shows how to setup a project from workbench, create a basic failure plot and display
 detailed output for a sampling point.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CompositeModel</span><span class="p">,</span>
-    <span class="n">connect_to_or_start_server</span><span class="p">,</span>
-    <span class="n">get_composite_files_from_workbench_result_folder</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.data_sources</span> <span class="kn">import</span> <span class="n">get_composite_files_from_workbench_result_folder</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="n">CombinedFailureCriterion</span><span class="p">,</span> <span class="n">MaxStressCriterion</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 
 <span class="c1"># Folder that opens after clicking &quot;Open Solver Files Directory&quot;</span>
 <span class="n">result_folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;D:\simulations\my_simulation_files\dp0\SYS\MECH&quot;</span>
@@ -434,11 +432,10 @@ detailed output for a sampling point.</p>
 <span class="c1"># Show sampling point for element with id/label 1</span>
 <span class="n">element_id</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span>
-    <span class="n">combined_criteria</span><span class="o">=</span><span class="n">combined_failure_criterion</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span>
+    <span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_failure_criterion</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span>
 <span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">()</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/boat_irf.png"><img alt="IRF plot on boat" src="_images/boat_irf.png" style="width: 750px;" /></a>

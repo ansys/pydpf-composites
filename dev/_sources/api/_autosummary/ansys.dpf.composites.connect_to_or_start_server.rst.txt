@@ -1,6 +1,0 @@
-﻿connect\_to\_or\_start\_server
-==============================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autofunction:: connect_to_or_start_server

@@ -1,6 +1,0 @@
-tensor31
-========
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: Sym3x3TensorComponent.tensor31

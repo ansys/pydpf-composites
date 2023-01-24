@@ -1,6 +1,0 @@
-add\_results\_to\_plot
-======================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: SamplingPoint.add_results_to_plot

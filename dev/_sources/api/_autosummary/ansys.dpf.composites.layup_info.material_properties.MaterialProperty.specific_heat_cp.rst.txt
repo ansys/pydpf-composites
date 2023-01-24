@@ -1,0 +1,6 @@
+specific\_heat\_cp
+==================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.specific_heat_cp

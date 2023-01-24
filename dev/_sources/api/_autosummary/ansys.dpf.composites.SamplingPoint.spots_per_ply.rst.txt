@@ -1,6 +1,0 @@
-spots\_per\_ply
-===============
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: SamplingPoint.spots_per_ply

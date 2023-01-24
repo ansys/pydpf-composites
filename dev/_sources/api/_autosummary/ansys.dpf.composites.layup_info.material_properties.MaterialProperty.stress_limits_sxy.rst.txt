@@ -1,0 +1,6 @@
+stress\_limits\_sxy
+===================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.stress_limits_sxy

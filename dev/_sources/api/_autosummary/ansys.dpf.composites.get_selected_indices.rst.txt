@@ -1,6 +1,0 @@
-﻿get\_selected\_indices
-======================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autofunction:: get_selected_indices

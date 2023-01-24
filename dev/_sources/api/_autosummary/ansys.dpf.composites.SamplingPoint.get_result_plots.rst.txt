@@ -1,6 +1,0 @@
-get\_result\_plots
-==================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: SamplingPoint.get_result_plots

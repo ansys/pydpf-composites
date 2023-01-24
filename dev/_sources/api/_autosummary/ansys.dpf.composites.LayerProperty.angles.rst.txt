@@ -1,6 +1,0 @@
-angles
-======
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: LayerProperty.angles

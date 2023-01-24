@@ -305,7 +305,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3_short_fiber_example.html">
-   Short Fiber Failure Analysis
+   Failure Analysis for Short Fiber Composites
   </a>
  </li>
  <li class="toctree-l1">
@@ -395,16 +395,16 @@ to download the full example code</p>
 <span id="assembly-example"></span><span id="sphx-glr-examples-gallery-examples-8-assembly-example-py"></span><h1>Post-process an Assembly<a class="headerlink" href="#post-process-an-assembly" title="Permalink to this heading">#</a></h1>
 <p>Post-process an assembly with multiple composite parts.</p>
 <p>This example shows how an assembly of a shell and solid composite
-model can be post-processed. The <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.CompositeModel.html#ansys.dpf.composites.CompositeModel" title="ansys.dpf.composites.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Model</span></code></a>
+model can be post-processed. The <code class="xref py py-class docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Model</span></code>
 helps to access the data of the different parts.</p>
 <section id="script">
 <h2>Script<a class="headerlink" href="#script" title="Permalink to this heading">#</a></h2>
 <p>Load Ansys libraries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.connect_to_or_start_server</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.enums</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="n">CombinedFailureCriterion</span><span class="p">,</span> <span class="n">MaxStressCriterion</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
 </div>
 <p>Start a server and get the examples files.
@@ -425,7 +425,7 @@ This will copy the example files into the current working directory.</p>
 </pre></div>
 </div>
 <p>Plot the max IRF per element</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span><span class="n">combined_criteria</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">)</span>
 <span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_all_elements</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">failure_value</span><span class="p">})</span>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
@@ -442,7 +442,7 @@ This example shows how to get ElementInfo for all layered elements</p>
         <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.907 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.022 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-8-assembly-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/834844dd5f9fb735dc47d160776f651c/8_assembly_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">8_assembly_example.py</span></code></a></p>

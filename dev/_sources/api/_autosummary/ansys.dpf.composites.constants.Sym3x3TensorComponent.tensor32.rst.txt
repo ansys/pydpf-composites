@@ -1,0 +1,6 @@
+tensor32
+========
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: Sym3x3TensorComponent.tensor32

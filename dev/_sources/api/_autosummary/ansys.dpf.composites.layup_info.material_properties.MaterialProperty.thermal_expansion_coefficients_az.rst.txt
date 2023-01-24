@@ -1,0 +1,6 @@
+thermal\_expansion\_coefficients\_az
+====================================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.thermal_expansion_coefficients_az

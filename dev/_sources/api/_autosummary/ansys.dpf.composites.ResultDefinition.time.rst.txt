@@ -1,6 +1,0 @@
-time
-====
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: ResultDefinition.time

@@ -1,6 +1,0 @@
-angle
-=====
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoattribute:: LayupProperty.angle

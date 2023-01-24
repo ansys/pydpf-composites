@@ -1,0 +1,37 @@
+﻿ansys.dpf.composites.data\_sources.CompositeDataSources
+=======================================================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoclass:: CompositeDataSources
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      CompositeDataSources.rst
+      
+      
+      CompositeDataSources.composite
+      
+      
+      CompositeDataSources.engineering_data
+      
+   
+   

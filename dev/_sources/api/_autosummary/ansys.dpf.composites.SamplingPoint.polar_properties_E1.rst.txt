@@ -1,6 +1,0 @@
-polar\_properties\_E1
-=====================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: SamplingPoint.polar_properties_E1

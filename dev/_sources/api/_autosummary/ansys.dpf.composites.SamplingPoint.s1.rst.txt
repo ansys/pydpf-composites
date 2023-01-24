@@ -1,6 +1,0 @@
-s1
-==
-
-.. currentmodule:: ansys.dpf.composites
-
-.. autoproperty:: SamplingPoint.s1

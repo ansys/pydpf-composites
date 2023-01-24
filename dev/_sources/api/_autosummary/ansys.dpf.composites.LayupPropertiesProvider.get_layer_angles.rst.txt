@@ -1,6 +1,0 @@
-get\_layer\_angles
-==================
-
-.. currentmodule:: ansys.dpf.composites
-
-.. automethod:: LayupPropertiesProvider.get_layer_angles
