@@ -58,7 +58,7 @@ Load Ansys libraries
     from ansys.dpf.composites import CompositeModel, Spot, get_selected_indices
     from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
     from ansys.dpf.composites.enums import Sym3x3TensorComponent
-    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+    from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
 
@@ -258,7 +258,7 @@ Plot s3 at the mid-plane of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.985 seconds)
+   **Total running time of the script:** ( 0 minutes  6.235 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:

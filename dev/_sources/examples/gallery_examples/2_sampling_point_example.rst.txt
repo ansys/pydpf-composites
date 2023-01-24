@@ -48,7 +48,7 @@ Load Ansys libraries
     from ansys.dpf.composites import Spot
     from ansys.dpf.composites.composite_model import CompositeModel
     from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-    from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+    from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.failure_criteria import (
         CombinedFailureCriterion,
         CoreFailureCriterion,
@@ -320,7 +320,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.395 seconds)
+   **Total running time of the script:** ( 0 minutes  1.416 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_2_sampling_point_example.py:
