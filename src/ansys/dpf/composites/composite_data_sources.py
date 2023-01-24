@@ -13,7 +13,7 @@ SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
 SETUP_FOLDER_PREFIX = "Setup"
 H5_SUFFIX = ".h5"
 MATML_FILENAME = "MatML.xml"
-RST_SUFFIX = ".rst"
+RST_FILENAME = "file.rst"
 MAPPING_SUFFIX = ".mapping"
 
 
@@ -60,7 +60,7 @@ def _get_mapping_path_file_from_definitions_path_if_exists(
 
 
 def _is_rst_file(path: pathlib.Path) -> bool:
-    return path.suffix == RST_SUFFIX and path.is_file()
+    return path.name == RST_FILENAME and path.is_file()
 
 
 def _is_matml_file(path: pathlib.Path) -> bool:
@@ -159,8 +159,10 @@ def get_composite_files_from_workbench_result_folder(
     the file location of all the files used in the workbench project.
     Determine the different attributes of ContinuousFiberCompositesFiles:
 
-    -   rst: The \*.rst file which belongs to the CellId of the Solution
-        you are interested to post-process.
+    -   rst: The file.rst file which belongs to the CellId of the Solution
+        you are interested to post-process. Multiple result files are not supported yet.
+        Please ensure that 'Combine Distributed Result Files' is activated if the solution
+        was solved in 'Distributed' mode.
 
     -   engineering_data: The MatML.xml file in the same folder as the rst file.
 
@@ -184,7 +186,7 @@ def get_composite_files_from_workbench_result_folder(
 
     Result file:
 
-    - project_root_folder/dp0/SYS/MECH/file.rst
+    - project_root_folder/dp0/SYS/MECH/file.rst.
 
     Engineering data file:
 
@@ -234,7 +236,6 @@ def get_composite_files_from_workbench_result_folder(
     ]
 
     rst_path = _get_single_filepath_with_predicate(_is_rst_file, result_folder_path, "rst")
-
     matml_path = _get_single_filepath_with_predicate(_is_matml_file, result_folder_path, "matml")
 
     assert matml_path is not None
