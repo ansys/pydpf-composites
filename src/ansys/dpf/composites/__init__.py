@@ -15,6 +15,7 @@ from . import (
     layup_info,
     result_definition,
     sampling_point,
+    select_indices,
     server_helpers,
 )
 
@@ -27,4 +28,5 @@ __all__ = (
     "result_definition",
     "sampling_point",
     "server_helpers",
+    "select_indices",
 )
