@@ -1,6 +1,5 @@
 """Wrapper for the Sampling Point Operator."""
-
-from collections import namedtuple
+import dataclasses
 import hashlib
 import json
 from typing import Any, Collection, Dict, List, Sequence, Union, cast
@@ -23,8 +22,23 @@ __all__ = (
     "SamplingPoint",
 )
 
-SamplingPointFigure = namedtuple("SamplingPointFigure", ("figure", "axes"))
-FailureResult = namedtuple("FailureResult", "mode irf rf mos")
+
+@dataclasses.dataclass(frozen=True)
+class SamplingPointFigure:
+    """Sampling Point Figure and Axes."""
+
+    figure: Any
+    axes: Any
+
+
+@dataclasses.dataclass(frozen=True)
+class FailureResult:
+    """Components of a failure result."""
+
+    mode: str
+    irf: float
+    rf: float
+    mos: float
 
 
 def _check_result_definition_has_single_scope(result_definition: ResultDefinition) -> None:
@@ -480,7 +494,9 @@ class SamplingPoint:
 
         return result
 
-    def get_polar_plot(self, components: Sequence[str] = ("E1", "E2", "G12")) -> Any:
+    def get_polar_plot(
+        self, components: Sequence[str] = ("E1", "E2", "G12")
+    ) -> SamplingPointFigure:
         """Create a standard polar plot to visualize the polar properties of the laminate.
 
         Parameters
@@ -605,7 +621,7 @@ class SamplingPoint:
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
         spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
-    ) -> Any:
+    ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
         Parameters

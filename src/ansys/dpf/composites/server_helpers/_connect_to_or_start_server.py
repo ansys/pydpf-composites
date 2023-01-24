@@ -2,7 +2,9 @@
 import os
 from typing import Any, Callable, Dict, Optional, Union
 
-import ansys.dpf.core as dpf
+from ansys.dpf.core import connect_to_server
+from ansys.dpf.core import server as _dpf_server
+from ansys.dpf.core import start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
@@ -25,7 +27,7 @@ def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int 
     raise TimeoutError(f"Timeout is reached: {error_message}")
 
 
-def _wait_until_server_is_up(server: dpf.server) -> Any:
+def _wait_until_server_is_up(server: _dpf_server) -> Any:
     # Small hack to check if the server is up
     # The dpf server should check this in connect_to_server but that's currently not the case
     # https://github.com/pyansys/pydpf-core/issues/414
@@ -35,12 +37,12 @@ def _wait_until_server_is_up(server: dpf.server) -> Any:
 
 def connect_to_or_start_server(
     port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None
-) -> dpf.server:
+) -> Any:
     r"""Connect to or start a dpf server with the composites plugin loaded.
 
     Note: If port or ip are set, this function will try to
     connect to a server and the ansys_path is ignored.
-    I no arguments are passed a local server from the latest available installer
+    If no arguments are passed a local server from the latest available installer
     is started.
 
     Parameters
@@ -48,8 +50,11 @@ def connect_to_or_start_server(
     port:
     ip:
     ansys_path:
-        Ansys root path, for example C:\Program Files\ANSYS Inc\v231.
+        Ansys root path, for example C:\\Program Files\\ANSYS Inc\\v231.
         Ignored if either port or ip are set.
+    Returns
+    -------
+        dpf server
     """
     port_in_env = os.environ.get("PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT")
     if port_in_env is not None:
@@ -62,9 +67,9 @@ def connect_to_or_start_server(
         connect_kwargs["ip"] = ip
 
     if len(list(connect_kwargs.keys())) > 0:
-        server = dpf.server.connect_to_server(**connect_kwargs)
+        server = connect_to_server(**connect_kwargs)
     else:
-        server = dpf.server.start_local_server(ansys_path=ansys_path)
+        server = start_local_server(ansys_path=ansys_path)
 
     server.check_version(
         "5.0",

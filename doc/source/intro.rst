@@ -12,20 +12,20 @@ Since the module is not yet public, please install from github:
 
     pip install git+https://github.com/pyansys/pydpf-composites.git
 
-Whenever you call the function connect_to_or_start_server you have to pass the location of the 231 installer
+Whenever you call the function connect_to_or_start_server you have to pass the location of the 23.1 installer
 with the ansys_path argument:
 
 .. code::
 
     connect_to_or_start_server(ansys_path=os.environ["AWP_ROOT231"])
 
-Otherwise, the dpf server will be started with the latest installer it finds, which probably is 232.
+Otherwise, the dpf server will be started with the latest installer it finds, which probably is 23.2.
 
 
 Installation
 ^^^^^^^^^^^^
 
-ansys-dpf-composites supports Ansys version 23.1 and later. Make sure you have licensed copy of Ansys installed.
+ansys-dpf-composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
 Install the ansys-dpf-composites module from pip:
 
 .. code::
@@ -95,11 +95,10 @@ detailed output for a sampling point.
     # Show sampling point for element with id/label 1
     element_id = 1
     sampling_point = composite_model.get_sampling_point(
-        combined_criteria=combined_failure_criterion, element_id=element_id
+        combined_criterion=combined_failure_criterion, element_id=element_id
     )
 
-    fig, axes = sampling_point.get_result_plots()
-    fig.show()
+    sampling_point.get_result_plots()
 
 
 .. image:: _static/boat_irf.png

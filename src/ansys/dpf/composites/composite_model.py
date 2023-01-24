@@ -182,7 +182,7 @@ class CompositeModel:
 
     def evaluate_failure_criteria(
         self,
-        combined_criteria: CombinedFailureCriterion,
+        combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasure = FailureMeasure.inverse_reserve_factor,
         write_data_for_full_element_scope: bool = True,
@@ -195,7 +195,7 @@ class CompositeModel:
 
         Parameters
         ----------
-        combined_criteria:
+        combined_criterion:
             Combined failure criterion to evaluate
         composite_scope:
             Composite scope on which the failure criteria are evaluated. If
@@ -245,7 +245,7 @@ class CompositeModel:
             name="combined failure criteria",
             rst_file=self._composite_files.rst,
             material_file=self._composite_files.engineering_data,
-            combined_failure_criterion=combined_criteria,
+            combined_failure_criterion=combined_criterion,
             composite_scopes=scopes,
             time=time_in,
             measure=measure.value,
@@ -261,7 +261,7 @@ class CompositeModel:
 
     def get_sampling_point(
         self,
-        combined_criteria: CombinedFailureCriterion,
+        combined_criterion: CombinedFailureCriterion,
         element_id: int,
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
@@ -270,7 +270,7 @@ class CompositeModel:
 
         Parameters
         ----------
-        combined_criteria:
+        combined_criterion:
             Combined failure criterion to evaluate
         element_id:
             Element Id/Label of the sampling point
@@ -310,7 +310,7 @@ class CompositeModel:
             name="combined failure criteria",
             rst_file=self._composite_files.rst,
             material_file=self._composite_files.engineering_data,
-            combined_failure_criterion=combined_criteria,
+            combined_failure_criterion=combined_criterion,
             time=time_in,
             composite_scopes=[scope],
         )
