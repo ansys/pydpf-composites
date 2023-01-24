@@ -9,7 +9,7 @@ import urllib.request
 import ansys.dpf.core as dpf
 
 from .._typing_helper import PATH as _PATH
-from ..composite_data_sources import (
+from ..data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,

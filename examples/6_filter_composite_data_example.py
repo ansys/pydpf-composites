@@ -20,20 +20,20 @@ result data is organized.
 import ansys.dpf.core as dpf
 import numpy as np
 
-from ansys.dpf.composites import (
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
+    get_all_analysis_ply_names,
+    get_dpf_material_id_by_analyis_ply_map,
+)
+from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
     get_selected_indices_by_dpf_material_ids,
 )
-from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
-from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.layup_info import (
-    get_all_analysis_ply_names,
-    get_dpf_material_id_by_analyis_ply_map,
-)
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.

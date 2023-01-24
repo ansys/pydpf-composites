@@ -64,13 +64,11 @@ detailed output for a sampling point.
 
 .. code::
 
-    from ansys.dpf.composites import (
-        CompositeModel,
-        connect_to_or_start_server,
-        get_composite_files_from_workbench_result_folder,
-    )
-    from ansys.dpf.composites.enums import FailureOutput
+    from ansys.dpf.composites.composite_model import CompositeModel
+    from ansys.dpf.composites.constants import FailureOutput
+    from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+    from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
     # Folder that opens after clicking "Open Solver Files Directory"
     result_folder = r"D:\simulations\my_simulation_files\dp0\SYS\MECH"

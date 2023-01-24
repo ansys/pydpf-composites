@@ -3,7 +3,7 @@
 import json
 from typing import Any, Dict, Sequence
 
-from .failure_criterion_base import FailureCriterionBase
+from ._failure_criterion_base import FailureCriterionBase
 
 
 class CombinedFailureCriterion:

@@ -5,16 +5,17 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites import MaterialProperty
-from ansys.dpf.composites.composite_data_sources import (
+from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     get_composite_files_from_workbench_result_folder,
 )
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.enums import FailureMeasure, FailureOutput, LayerProperty
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-from ansys.dpf.composites.layup_info import get_analysis_ply_index_to_name_map
+from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
+from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
+from ansys.dpf.composites.result_definition import FailureMeasure
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 

@@ -49,11 +49,10 @@ Key features
 
 * Failure criteria evaluator.
   See this :doc:`Example </examples/gallery_examples/1_failure_operator_example>`.
-* :doc:`Sampling Point <api/_autosummary/ansys.dpf.composites.SamplingPoint>` to
-  extract and visualize result over the entire thickness of the laminate.
+* :doc:`Sampling Point <api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint>` to extract and visualize result over the
+  entire thickness of the laminate.
   :doc:`Here <examples/gallery_examples/2_sampling_point_example>` is an example.
-* :doc:`Result Definition <api/_autosummary/ansys.dpf.composites.ResultDefinition>` to configure
-  combined failure criteria and scopes.
+* :doc:`Result Definition <api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition>` to configure combined failure criteria and scopes.
 * Accessors to lay-up data such as plies and materials. Refer to the examples
   :doc:`Lay-up Properties <examples/gallery_examples/5_get_layup_properties_example>`
   and :doc:`Material Properties <examples/gallery_examples/4_get_material_properties_example>`.

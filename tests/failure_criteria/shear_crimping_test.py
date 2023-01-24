@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.shear_crimping import (
+from ansys.dpf.composites.failure_criteria._shear_crimping import (
     ATTRS_SHEAR_CRIMPING,
     ShearCrimpingCriterion,
 )

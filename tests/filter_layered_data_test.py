@@ -5,8 +5,12 @@ from ansys.dpf.core import Field
 import numpy as np
 import pytest
 
-from ansys.dpf.composites import Spot, get_element_info_provider
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider
+from ansys.dpf.composites.constants import Spot
+from ansys.dpf.composites.layup_info import (
+    AnalysisPlyInfoProvider,
+    ElementInfoProvider,
+    get_element_info_provider,
+)
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,

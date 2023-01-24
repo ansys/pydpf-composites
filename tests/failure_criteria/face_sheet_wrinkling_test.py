@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.face_sheet_wrinkling import (
+from ansys.dpf.composites.failure_criteria._face_sheet_wrinkling import (
     ATTRS_WRINKLING,
     FaceSheetWrinklingCriterion,
 )

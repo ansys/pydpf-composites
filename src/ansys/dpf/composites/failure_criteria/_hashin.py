@@ -1,7 +1,7 @@
 """Hashin Failure Criterion."""
 import inspect
 
-from .failure_criterion_base import FailureCriterionBase
+from ._failure_criterion_base import FailureCriterionBase
 
 
 class HashinCriterion(FailureCriterionBase):

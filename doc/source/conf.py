@@ -91,7 +91,11 @@ numpydoc_validate = True
 numpydoc_validation_checks = {
     "GL06",  # Found unknown section
     "GL07",  # Sections are in the wrong order.
-    "GL08",  # The object does not have a docstring
+    # The 'GL08' check produces false positives for dataclasses whose
+    # fields are documented with a docstring following their definition,
+    # because this syntax doesn't set the '__doc__' attribute; but the
+    # documentation renders correctly.
+    # "GL08",  # The object does not have a docstring
     "GL09",  # Deprecation warning should precede extended summary
     "GL10",  # reST directives {directives} must be followed by two colons
     "SS01",  # No summary found

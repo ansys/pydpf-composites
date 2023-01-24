@@ -8,13 +8,22 @@ from ansys.dpf.core import DataSources
 
 from ._typing_helper import PATH as _PATH
 
-SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
-SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
-SETUP_FOLDER_PREFIX = "Setup"
-H5_SUFFIX = ".h5"
-MATML_FILENAME = "MatML.xml"
-RST_FILENAME = "file.rst"
-MAPPING_SUFFIX = ".mapping"
+__all__ = (
+    "CompositeDefinitionFiles",
+    "ContinuousFiberCompositesFiles",
+    "ShortFiberCompositesFiles",
+    "CompositeDataSources",
+    "get_composite_files_from_workbench_result_folder",
+    "get_composites_data_sources",
+)
+
+_SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
+_SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
+_SETUP_FOLDER_PREFIX = "Setup"
+_H5_SUFFIX = ".h5"
+_MATML_FILENAME = "MatML.xml"
+_RST_FILENAME = "file.rst"
+_MAPPING_SUFFIX = ".mapping"
 
 
 @dataclass
@@ -55,27 +64,27 @@ class CompositeDataSources:
 def _get_mapping_path_file_from_definitions_path_if_exists(
     definition_path: pathlib.Path,
 ) -> Optional[pathlib.Path]:
-    mapping_path = definition_path.parent / (definition_path.stem + MAPPING_SUFFIX)
+    mapping_path = definition_path.parent / (definition_path.stem + _MAPPING_SUFFIX)
     return mapping_path if mapping_path.is_file() else None
 
 
 def _is_rst_file(path: pathlib.Path) -> bool:
-    return path.name == RST_FILENAME and path.is_file()
+    return path.name == _RST_FILENAME and path.is_file()
 
 
 def _is_matml_file(path: pathlib.Path) -> bool:
-    return path.name == MATML_FILENAME and path.is_file()
+    return path.name == _MATML_FILENAME and path.is_file()
 
 
 def _is_composite_definition_file(path: pathlib.Path) -> bool:
-    is_composite_def = path.name.startswith(SHELL_COMPOSITE_DEFINITIONS_PREFIX)
-    return path.suffix == H5_SUFFIX and path.is_file() and is_composite_def
+    is_composite_def = path.name.startswith(_SHELL_COMPOSITE_DEFINITIONS_PREFIX)
+    return path.suffix == _H5_SUFFIX and path.is_file() and is_composite_def
 
 
 def _is_solid_model_composite_definition_file(path: pathlib.Path) -> bool:
-    is_h5 = path.suffix == H5_SUFFIX
+    is_h5 = path.suffix == _H5_SUFFIX
     is_file = path.is_file()
-    is_def = path.name.startswith(SOLID_COMPOSITE_DEFINITIONS_PREFIX)
+    is_def = path.name.startswith(_SOLID_COMPOSITE_DEFINITIONS_PREFIX)
     return is_h5 and is_file and is_def
 
 
@@ -232,7 +241,7 @@ def get_composite_files_from_workbench_result_folder(
     setup_folders = [
         folder_path
         for folder_path in result_folder_path.iterdir()
-        if folder_path.is_dir() and folder_path.name.startswith(SETUP_FOLDER_PREFIX)
+        if folder_path.is_dir() and folder_path.name.startswith(_SETUP_FOLDER_PREFIX)
     ]
 
     rst_path = _get_single_filepath_with_predicate(_is_rst_file, result_folder_path, "rst")

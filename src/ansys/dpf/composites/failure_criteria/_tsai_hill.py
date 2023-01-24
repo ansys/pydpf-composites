@@ -1,6 +1,6 @@
 """Tsai-Hill Failure Criterion."""
 
-from .quadratic_failure_criterion import QuadraticFailureCriterion
+from ._quadratic_failure_criterion import QuadraticFailureCriterion
 
 
 class TsaiHillCriterion(QuadraticFailureCriterion):

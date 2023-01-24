@@ -2,9 +2,11 @@
 import os
 from typing import Any, Callable, Dict, Optional, Union
 
-from ansys.dpf.core import connect_to_server, server, start_local_server
+from ansys.dpf.core import connect_to_server
+from ansys.dpf.core import server as _dpf_server
+from ansys.dpf.core import start_local_server
 
-from ansys.dpf.composites.load_plugin import load_composites_plugin
+from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
 
 def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int = 10) -> Any:
@@ -25,7 +27,7 @@ def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int 
     raise TimeoutError(f"Timeout is reached: {error_message}")
 
 
-def _wait_until_server_is_up(server: server) -> Any:
+def _wait_until_server_is_up(server: _dpf_server) -> Any:
     # Small hack to check if the server is up
     # The dpf server should check this in connect_to_server but that's currently not the case
     # https://github.com/pyansys/pydpf-core/issues/414

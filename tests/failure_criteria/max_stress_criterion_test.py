@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.max_stress import ATTRS_MAX_STRESS, MaxStressCriterion
+from ansys.dpf.composites.failure_criteria._max_stress import ATTRS_MAX_STRESS, MaxStressCriterion
 
 defaults = dict(
     zip(ATTRS_MAX_STRESS, [True, True, False, True, False, False, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])

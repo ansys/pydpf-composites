@@ -21,9 +21,9 @@ fiber reinforced thermoplastic injection molded from both sides.
 # Load Ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.enums import FailureOutput
+from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_short_fiber_example_files
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.
@@ -82,5 +82,5 @@ minmax_per_element.inputs.mesh(mesh)
 minmax_per_element.inputs.abstract_field_support(mat_support_operator)
 
 max_failure = minmax_per_element.outputs.field_max.get_data()
-max_failure_value = max_failure.get_field({"failure_label": FailureOutput.failure_value.value})
+max_failure_value = max_failure.get_field({"failure_label": FailureOutput.failure_value})
 mesh.plot(max_failure_value, show_edges=True)
