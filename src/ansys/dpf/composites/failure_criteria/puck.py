@@ -242,20 +242,20 @@ class PuckCriterion(FailureCriterionBase):
     p21_neg = property(
         _get_p21_neg,
         _set_p21_neg,
-        doc=f"Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0",
+        doc="Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0",
     )
     p21_pos = property(
-        _get_p21_pos, _set_p21_pos, doc=f"Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
+        _get_p21_pos, _set_p21_pos, doc="Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
     )
     p22_neg = property(
         _get_p22_neg,
         _set_p22_neg,
-        doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.",
+        doc="Global inclination factor of the fracture plane \u27c2 \u27c2.",
     )
     p22_pos = property(
         _get_p22_pos,
         _set_p22_pos,
-        doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.",
+        doc="Global inclination factor of the fracture plane \u27c2 \u27c2.",
     )
 
 

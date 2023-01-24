@@ -115,12 +115,12 @@ def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.i
 
     try:
         return n_spots_by_element_type_and_keyopt_dict[int(apdl_element_type)][int(keyopt_8)]
-    except KeyError:
+    except KeyError as exc:
         raise RuntimeError(
             f"Unsupported element type keyopt8 combination "
             f"Apdl Element Type: {apdl_element_type} "
             f"keyopt8: {keyopt_8}."
-        )
+        ) from exc
 
 
 def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:

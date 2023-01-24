@@ -106,7 +106,7 @@ class CombinedFailureCriterion:
         of the DPF Composites Failure Operator
         """
         criteria = {}
-        for k, fc in self.failure_criteria.items():
+        for _, fc in self.failure_criteria.items():
             # returns a dict of all attributes
             attr_dict = fc.to_dict()
             # get the name and use it as key to add the attrs
