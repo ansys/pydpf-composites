@@ -67,7 +67,8 @@ class CombinedFailureCriterion:
         Examples
         --------
             >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
-            >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+            >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+                                                s12=True, s13=True, s23=True)
             >>> combined_failure.insert(max_stress)
 
         """
