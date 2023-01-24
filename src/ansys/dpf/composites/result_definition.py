@@ -1,12 +1,23 @@
 """Object to represent the Result Definition used by Failure Operator in DPF Composites."""
 
 from dataclasses import dataclass, field
+from enum import Enum
 import json
 from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
-from .enums import FailureMeasure
-from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
+from .failure_criteria._combined_failure_criterion import CombinedFailureCriterion
+
+__all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
+
+
+class FailureMeasure(Enum):
+    """Available Failure Measures."""
+
+    inverse_reserve_factor: str = "inverse_reserve_factor"
+    margin_of_safety: str = "safety_margin"
+    reserve_factor: str = "safety_factor"
+
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
 _SUPPORTED_MEASURES = [v.value for v in FailureMeasure]

@@ -14,9 +14,15 @@ import numpy as np
 if TYPE_CHECKING:
     import numpy.typing as npt
 
-from .enums import Spot
-from .load_plugin import load_composites_plugin
+from .constants import Spot
 from .result_definition import ResultDefinition
+from .server_helpers._load_plugin import load_composites_plugin
+
+__all__ = (
+    "SamplingPointFigure",
+    "FailureResult",
+    "SamplingPoint",
+)
 
 
 @dataclasses.dataclass(frozen=True)

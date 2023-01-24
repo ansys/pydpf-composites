@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.max_strain import ATTRS_MAX_STRAIN, MaxStrainCriterion
+from ansys.dpf.composites.failure_criteria._max_strain import ATTRS_MAX_STRAIN, MaxStrainCriterion
 
 defaults = dict(
     zip(

@@ -1,7 +1,7 @@
 """Defines the MaxStrain failure criterion."""
 import inspect
 
-from .failure_criterion_base import FailureCriterionBase
+from ._failure_criterion_base import FailureCriterionBase
 
 
 class MaxStrainCriterion(FailureCriterionBase):

@@ -1,6 +1,6 @@
 import pytest
 
-from ansys.dpf.composites.failure_criteria.cuntze import ATTRS_CUNTZE, CuntzeCriterion
+from ansys.dpf.composites.failure_criteria._cuntze import ATTRS_CUNTZE, CuntzeCriterion
 
 defaults = dict(
     zip(

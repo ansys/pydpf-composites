@@ -6,8 +6,22 @@ import numpy as np
 if TYPE_CHECKING:
     from numpy.typing import NDArray
 
-from .enums import Spot, get_rst_spot_index
+from .constants import Spot
 from .layup_info import AnalysisPlyInfoProvider, ElementInfo
+
+__all__ = (
+    "get_selected_indices",
+    "get_selected_indices_by_dpf_material_ids",
+    "get_selected_indices_by_analysis_ply",
+)
+
+
+def _get_rst_spot_index(spot: Spot) -> int:
+    """Return the spot in index in the rst file.
+
+    The order in the rst file is always bottom, top, (mid)
+    """
+    return [-1, 0, 2, 1][spot]
 
 
 def get_selected_indices(
@@ -61,7 +75,7 @@ def get_selected_indices(
     else:
         if len(spots) == 0:
             return np.array([])
-        spot_indices = [get_rst_spot_index(spot) for spot in spots]
+        spot_indices = [_get_rst_spot_index(spot) for spot in spots]
 
     if not disable_checks:
         if not element_info.is_layered:

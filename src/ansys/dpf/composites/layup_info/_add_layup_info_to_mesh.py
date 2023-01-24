@@ -3,8 +3,8 @@ from typing import Optional
 
 from ansys.dpf.core import MeshedRegion, Operator
 
-from .composite_data_sources import CompositeDataSources
-from .material_setup import MaterialOperators
+from ..data_sources import CompositeDataSources
+from .material_operators import MaterialOperators
 
 
 def add_layup_info_to_mesh(

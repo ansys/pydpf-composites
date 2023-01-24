@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.puck import ATTRS_PUCK, PuckCriterion
+from ansys.dpf.composites.failure_criteria._puck import ATTRS_PUCK, PuckCriterion
 
 defaults = dict(
     zip(

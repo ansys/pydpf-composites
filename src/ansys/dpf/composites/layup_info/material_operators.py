@@ -4,6 +4,8 @@ from dataclasses import dataclass
 
 from ansys.dpf.core import DataSources, Operator
 
+__all__ = ("MaterialOperators", "get_material_operators")
+
 
 @dataclass(frozen=True)
 class MaterialOperators:

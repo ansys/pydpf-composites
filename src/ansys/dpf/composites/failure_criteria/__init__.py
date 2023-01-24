@@ -1,20 +1,19 @@
 """Module of failure criteria."""
 
-from .combined_failure_criterion import CombinedFailureCriterion
-from .core_failure import CoreFailureCriterion
-from .cuntze import CuntzeCriterion
-from .face_sheet_wrinkling import FaceSheetWrinklingCriterion
-from .failure_criterion_base import FailureCriterionBase
-from .hashin import HashinCriterion
-from .hoffman import HoffmanCriterion
-from .larc import LaRCCriterion
-from .max_strain import MaxStrainCriterion
-from .max_stress import MaxStressCriterion
-from .puck import PuckCriterion
-from .shear_crimping import ShearCrimpingCriterion
-from .tsai_hill import TsaiHillCriterion
-from .tsai_wu import TsaiWuCriterion
-from .von_mises import VonMisesCriterion
+from ._combined_failure_criterion import CombinedFailureCriterion
+from ._core_failure import CoreFailureCriterion
+from ._cuntze import CuntzeCriterion
+from ._face_sheet_wrinkling import FaceSheetWrinklingCriterion
+from ._hashin import HashinCriterion
+from ._hoffman import HoffmanCriterion
+from ._larc import LaRCCriterion
+from ._max_strain import MaxStrainCriterion
+from ._max_stress import MaxStressCriterion
+from ._puck import PuckCriterion
+from ._shear_crimping import ShearCrimpingCriterion
+from ._tsai_hill import TsaiHillCriterion
+from ._tsai_wu import TsaiWuCriterion
+from ._von_mises import VonMisesCriterion
 
 __all__ = [
     "MaxStrainCriterion",

@@ -2,8 +2,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
-from ansys.dpf.composites.enums import MaterialProperty
+from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
@@ -12,8 +11,11 @@ from ansys.dpf.composites.layup_info import (
     get_dpf_material_id_by_analyis_ply_map,
     get_element_info_provider,
 )
-from ansys.dpf.composites.material_properties import get_constant_property_dict
-from ansys.dpf.composites.material_setup import get_material_operators
+from ansys.dpf.composites.layup_info.material_operators import get_material_operators
+from ansys.dpf.composites.layup_info.material_properties import (
+    MaterialProperty,
+    get_constant_property_dict,
+)
 from ansys.dpf.composites.select_indices import get_selected_indices
 
 from .helper import get_basic_shell_files, setup_operators
