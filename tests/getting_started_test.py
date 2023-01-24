@@ -2,9 +2,7 @@ import pathlib
 
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.example_helper.example_helper import (
-    upload_continuous_fiber_composite_files_to_server,
-)
+from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 
 
 def test_getting_started(dpf_server: dpf.server):

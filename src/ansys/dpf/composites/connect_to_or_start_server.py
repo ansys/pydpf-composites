@@ -20,7 +20,7 @@ def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int 
         time.sleep(0.001)
         try:
             return fun()
-        except Exception as e:
+        except Exception:  # pylint: disable=broad-except
             pass
     raise TimeoutError(f"Timeout is reached: {error_message}")
 

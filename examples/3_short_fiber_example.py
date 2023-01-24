@@ -19,7 +19,7 @@ of short fiber composites.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.example_helper.example_helper import get_short_fiber_example_files
+from ansys.dpf.composites.example_helper import get_short_fiber_example_files
 
 # %%
 # Start a server and get the examples files.

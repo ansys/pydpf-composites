@@ -56,6 +56,7 @@ pyvista = {version = "^0.36.1"}
 pre-commit = {version = "*", optional = true}
 # Upper bound because there is a problem with examples in versions > 1.20.1
 sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
+pylint = {version = "^2.13", optional = true}
 
 
 [tool.poetry.extras]
@@ -72,6 +73,7 @@ all = [
     "build",
     "mypy",
     "mypy-extensions",
+    "pylint",
     "pre-commit",
     "pypandoc",
     "sphinx-autodoc-typehints",
@@ -80,7 +82,7 @@ docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx
     "pypandoc", "sphinx-autodoc-typehints", "sphinx-design"]
 test = ["pytest", "pytest-cov"]
 build = ["build", "twine"]
-pre-commit = ["pre-commit", "mypy", "mypy-extensions"]
+pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
 
 
 [tool.black]
@@ -98,6 +100,24 @@ source = ["ansys.dpf"]
 
 [tool.coverage.report]
 show_missing = true
+
+[tool.pylint.messages_control]
+disable = [
+    "C",
+    "R",
+    # The 'attribute-defined-outside-init' and 'unused_argument' checks
+    # produce too many false positives from constructors which go over
+    # a pre-defined list of attributes (e.g. ATTRS_PUCK).
+    "attribute-defined-outside-init",
+    "unused-argument",
+    "eval-used",
+    "fixme",
+]
+[tool.pylint.typecheck]
+ignored-classes = [
+    "ansys.dpf.core.inputs.Inputs",
+    "ansys.dpf.core.outputs.Outputs"
+]
 
 [tool.mypy]
 python_version = 3.7

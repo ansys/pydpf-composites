@@ -10,7 +10,7 @@ from ansys.dpf.composites.composite_data_sources import (
     CompositeDefinitionFiles,
     get_composites_data_sources,
 )
-from ansys.dpf.composites.example_helper.example_helper import (
+from ansys.dpf.composites.example_helper import (
     ContinuousFiberCompositesFiles,
     upload_continuous_fiber_composite_files_to_server,
 )

@@ -29,7 +29,7 @@ from ansys.dpf.composites import (
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
-from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import (
     get_all_analysis_ply_names,
     get_dpf_material_id_by_analyis_ply_map,
