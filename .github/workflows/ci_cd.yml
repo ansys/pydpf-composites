@@ -141,7 +141,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox
-          # Use dev version of poetry because the stable version fails to resolve all dependencies
           python -m pip install --upgrade poetry
       - name: Generate the documentation with tox
         run: | 
