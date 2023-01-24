@@ -111,10 +111,10 @@ class PuckCriterion(FailureCriterionBase):
     def _set_wf_pd(self, value: float) -> None:
         self._wf_pd = value
 
-    def _get_cfps(self) -> float:
+    def _get_cfps(self) -> bool:
         return self._cfps
 
-    def _set_cfps(self, value: float) -> None:
+    def _set_cfps(self, value: bool) -> None:
         self._cfps = value
 
     def _get_s(self) -> float:

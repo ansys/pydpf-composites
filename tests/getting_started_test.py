@@ -52,13 +52,13 @@ def test_getting_started(dpf_server: dpf.server):
 
     irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value})
     # Commented because it blocks execution. Uncomment this
-    # line when you copy this code the the getting started example
+    # line when you copy this code the getting started example
     # irf_field.plot()
 
     # Show sampling point for element with id/label 1
     element_id = 1
     sampling_point = composite_model.get_sampling_point(
-        combined_criteria=combined_failure_criterion, element_id=element_id
+        combined_criterion=combined_failure_criterion, element_id=element_id
     )
 
-    fig, axes = sampling_point.get_result_plots()
+    sampling_point.get_result_plots()
