@@ -7,11 +7,11 @@ import numpy as np
 import numpy.testing
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import (
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
 )
-from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.enums import FailureOutput, Spot
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.failure_criteria._combined_failure_criterion import (

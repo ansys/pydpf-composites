@@ -1,7 +1,7 @@
 from ansys.dpf.core import Operator
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
+from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, add_layup_info_to_mesh
 from ansys.dpf.composites.layup_info.material_operators import get_material_operators

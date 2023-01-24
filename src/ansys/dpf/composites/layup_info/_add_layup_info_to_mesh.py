@@ -3,7 +3,7 @@ from typing import Optional
 
 from ansys.dpf.core import MeshedRegion, Operator
 
-from ..composite_data_sources import CompositeDataSources
+from ..data_sources import CompositeDataSources
 from .material_operators import MaterialOperators
 
 

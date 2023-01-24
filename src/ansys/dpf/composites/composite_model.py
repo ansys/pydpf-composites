@@ -8,7 +8,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .composite_data_sources import (
+from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
     get_composites_data_sources,

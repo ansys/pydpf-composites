@@ -2,7 +2,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
+from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,

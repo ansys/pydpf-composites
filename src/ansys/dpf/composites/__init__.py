@@ -7,14 +7,14 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
-from .composite_data_sources import (
+from .composite_model import CompositeModel, CompositeScope
+from .connect_to_or_start_server import connect_to_or_start_server
+from .data_sources import (
     CompositeDataSources,
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     get_composite_files_from_workbench_result_folder,
 )
-from .composite_model import CompositeModel, CompositeScope
-from .connect_to_or_start_server import connect_to_or_start_server
 from .enums import FailureMeasure, FailureOutput, Spot, Sym3x3TensorComponent
 from .layup_info import (
     AnalysisPlyInfoProvider,

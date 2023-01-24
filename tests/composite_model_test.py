@@ -5,11 +5,11 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import (
+from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     get_composite_files_from_workbench_result_folder,
 )
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.enums import FailureMeasure, FailureOutput
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
