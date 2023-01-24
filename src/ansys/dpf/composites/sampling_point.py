@@ -366,7 +366,8 @@ class SamplingPoint:
 
         Examples
         --------
-        ply_top_indices = sampling_point.get_indices([Spot.TOP])
+            >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
+
         """
         if not self._isuptodate or not self._results:
             self.run()
@@ -466,7 +467,7 @@ class SamplingPoint:
 
         Examples
         --------
-        sampling_point.get_polar_plot(components=["E1", "G12"])
+            >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
         """
         if not self._isuptodate or not self._results:
             self.run()
@@ -550,9 +551,12 @@ class SamplingPoint:
 
         Examples
         --------
-        fig, ax1 = plt.subplots()
-        sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], [Spot.BOTTOM, Spot.TOP],
-        0.1, "Interlaminar Stresses", "[MPa]")
+            >>> import matplotlib.pyplot as plt
+            >>> fig, ax1 = plt.subplots()
+            >>> sampling_point.add_results_to_plot(ax1,
+                                                  ["s13", "s23", "s3"],
+                                                  [Spot.BOTTOM, Spot.TOP],
+                                                  0.1, "Interlaminar Stresses", "[MPa]")
         """
         indices = self.get_indices(spots)
         offsets = self.get_offsets_by_spots(spots, core_scale_factor)
@@ -606,7 +610,8 @@ class SamplingPoint:
 
         Examples
         --------
-        sampling_point.get_result_plots()
+            >>> figure, axes = sampling_point.get_result_plots()
+
         """
         num_active_plots = int(create_laminate_plot)
         num_active_plots += 1 if len(strain_components) > 0 else 0
