@@ -7,7 +7,6 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
-from .add_layup_info_to_mesh import add_layup_info_to_mesh
 from .composite_data_sources import (
     CompositeDataSources,
     CompositeDefinitionFiles,
@@ -16,29 +15,22 @@ from .composite_data_sources import (
 )
 from .composite_model import CompositeModel, CompositeScope
 from .connect_to_or_start_server import connect_to_or_start_server
-from .enums import (
-    FailureMeasure,
-    FailureOutput,
-    LayerProperty,
-    LayupProperty,
-    MaterialProperty,
-    Spot,
-    Sym3x3TensorComponent,
-)
+from .enums import FailureMeasure, FailureOutput, Spot, Sym3x3TensorComponent
 from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfo,
     ElementInfoProvider,
     LayupPropertiesProvider,
+    add_layup_info_to_mesh,
     get_dpf_material_id_by_analyis_ply_map,
     get_element_info_provider,
 )
-from .material_properties import (
+from .layup_info.material_operators import MaterialOperators
+from .layup_info.material_properties import (
     get_all_dpf_material_ids,
     get_constant_property,
     get_constant_property_dict,
 )
-from .material_setup import MaterialOperators
 from .result_definition import ResultDefinition
 from .sampling_point import SamplingPoint
 from .select_indices import (
@@ -71,12 +63,10 @@ __all__ = [
     "get_constant_property",
     "get_all_dpf_material_ids",
     "get_constant_property_dict",
-    "MaterialProperty",
+    # "MaterialProperty",
     "ContinuousFiberCompositesFiles",
     "get_composite_files_from_workbench_result_folder",
     "connect_to_or_start_server",
-    "LayupProperty",
     "FailureOutput",
     "Sym3x3TensorComponent",
-    "LayerProperty",
 ]

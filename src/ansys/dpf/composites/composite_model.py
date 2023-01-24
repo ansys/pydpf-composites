@@ -8,17 +8,22 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .add_layup_info_to_mesh import add_layup_info_to_mesh
 from .composite_data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
     get_composites_data_sources,
 )
-from .enums import FailureMeasure, LayerProperty, MaterialProperty
+from .enums import FailureMeasure
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayupPropertiesProvider, get_element_info_provider
-from .material_properties import get_constant_property_dict
-from .material_setup import MaterialOperators, get_material_operators
+from .layup_info import (
+    ElementInfo,
+    LayerProperty,
+    LayupPropertiesProvider,
+    add_layup_info_to_mesh,
+    get_element_info_provider,
+)
+from .layup_info.material_operators import MaterialOperators, get_material_operators
+from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
 

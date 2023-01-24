@@ -8,8 +8,7 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
 from numpy.typing import NDArray
 
-from .enums import LayupProperty
-from .indexer import (
+from ..indexer import (
     _FieldIndexerNoDataPointer,
     _FieldIndexerWithDataPointer,
     _PropertyFieldIndexerArrayValue,
@@ -19,6 +18,7 @@ from .indexer import (
     _PropertyFieldIndexerWithDataPointer,
     _PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
+from ._enums import LayupProperty
 
 _ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
@@ -91,7 +91,7 @@ _supported_element_types = [181, 281, 185, 186, 187, 190]
 Map of keyopt_8 to number of spots.
 Example: Element 181 with keyopt8==1 has two spots
 """
-n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
+_n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
     181: {0: 0, 1: 2, 2: 3},
     281: {0: 0, 1: 2, 2: 3},
     185: {0: 0, 1: 2},
@@ -114,7 +114,7 @@ def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.i
             return 0
 
     try:
-        return n_spots_by_element_type_and_keyopt_dict[int(apdl_element_type)][int(keyopt_8)]
+        return _n_spots_by_element_type_and_keyopt_dict[int(apdl_element_type)][int(keyopt_8)]
     except KeyError as exc:
         raise RuntimeError(
             f"Unsupported element type keyopt8 combination "
