@@ -161,12 +161,29 @@ class SamplingPoint:
 
     @property
     def analysis_plies(self) -> Sequence[Any]:
-        """List of analysis plies from the bottom to the top."""
+        """List of analysis plies from the bottom to the top.
+
+        Returns a list of ply data as dict such as angle, thickness and material name.
+        """
         self._update_and_check_results()
 
-        plies = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
-        if len(plies) == 0:
+        raw_data = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
+        if len(raw_data) == 0:
             raise RuntimeError("No plies are found for the selected element!")
+
+        types = {
+            "angle": float,
+            "global_ply_number": int,
+            "id": str,
+            "is_core": bool,
+            "material": str,
+            "thickness": float,
+        }
+
+        plies = []
+        for raw_ply in raw_data:
+            plies.append({k: types[k](v) for k, v in raw_ply.items()})
+
         return plies
 
     @property
