@@ -175,12 +175,29 @@ class SamplingPoint:
 
     @property
     def analysis_plies(self) -> Sequence[Any]:
-        """List of analysis plies from the bottom to the top."""
+        """List of analysis plies from the bottom to the top.
+
+        Returns a list of ply data as dict such as angle, thickness and material name.
+        """
         self._update_and_check_results()
 
-        plies = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
-        if len(plies) == 0:
+        raw_data = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
+        if len(raw_data) == 0:
             raise RuntimeError("No plies are found for the selected element!")
+
+        types = {
+            "angle": float,
+            "global_ply_number": int,
+            "id": str,
+            "is_core": bool,
+            "material": str,
+            "thickness": float,
+        }
+
+        plies = []
+        for raw_ply in raw_data:
+            plies.append({k: types[k](v) for k, v in raw_ply.items()})
+
         return plies
 
     @property
@@ -380,7 +397,8 @@ class SamplingPoint:
 
         Examples
         --------
-        ply_top_indices = sampling_point.get_indices([Spot.TOP])
+            >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
+
         """
         if not self._isuptodate or not self._results:
             self.run()
@@ -482,7 +500,7 @@ class SamplingPoint:
 
         Examples
         --------
-        sampling_point.get_polar_plot(components=["E1", "G12"])
+            >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
         """
         if not self._isuptodate or not self._results:
             self.run()
@@ -519,7 +537,7 @@ class SamplingPoint:
         width = x_bound[1] - x_bound[0]
 
         for index, ply in enumerate(self.analysis_plies):
-            angle = ply["angle"]
+            angle = float(ply["angle"])
             hatch = "x" if ply["is_core"] else ""
 
             height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
@@ -528,8 +546,8 @@ class SamplingPoint:
                 Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch)
             )
             mat = ply["material"]
-            th = ply["thickness"]
-            text = f"{mat}\nangle={angle}, th={th:.3}"
+            th = float(ply["thickness"])
+            text = f"{mat}\nangle={angle:.3}, th={th:.3}"
             axes.annotate(
                 text=text,
                 xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
@@ -566,9 +584,12 @@ class SamplingPoint:
 
         Examples
         --------
-        fig, ax1 = plt.subplots()
-        sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], [Spot.BOTTOM, Spot.TOP],
-        0.1, "Interlaminar Stresses", "[MPa]")
+            >>> import matplotlib.pyplot as plt
+            >>> fig, ax1 = plt.subplots()
+            >>> sampling_point.add_results_to_plot(ax1,
+                                                  ["s13", "s23", "s3"],
+                                                  [Spot.BOTTOM, Spot.TOP],
+                                                  0.1, "Interlaminar Stresses", "[MPa]")
         """
         indices = self.get_indices(spots)
         offsets = self.get_offsets_by_spots(spots, core_scale_factor)
@@ -622,7 +643,8 @@ class SamplingPoint:
 
         Examples
         --------
-        sampling_point.get_result_plots()
+            >>> figure, axes = sampling_point.get_result_plots()
+
         """
         num_active_plots = int(create_laminate_plot)
         num_active_plots += 1 if len(strain_components) > 0 else 0

@@ -461,20 +461,18 @@ class LayupPropertiesProvider:
         """Initialize LayupProperties provider."""
         layup_outputs_container = layup_provider.outputs.fields_container()
         composite_label = layup_outputs_container.labels[0]
-        angle_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.angle.value}
-        )
+        angle_field = layup_outputs_container.get_field({composite_label: LayupProperty.angle})
         self._angle_indexer = _FieldIndexerWithDataPointer(angle_field)
         thickness_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.thickness.value}
+            {composite_label: LayupProperty.thickness}
         )
         self._thickness_indexer = _FieldIndexerWithDataPointer(thickness_field)
         shear_angle_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.shear_angle.value}
+            {composite_label: LayupProperty.shear_angle}
         )
         self._shear_angle_indexer = _FieldIndexerWithDataPointer(shear_angle_field)
         offset_field = layup_outputs_container.get_field(
-            {composite_label: LayupProperty.laminate_offset.value}
+            {composite_label: LayupProperty.laminate_offset}
         )
         self._offset_indexer = _FieldIndexerNoDataPointer(offset_field)
 

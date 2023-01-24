@@ -29,6 +29,9 @@ html_favicon = ansys_favicon
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "pydpf-composites"
 
+# If true, the current module name will be prepended to all description
+# unit titles (such as .. function::).
+add_module_names = False
 
 # specify the location of your github repo
 cname = os.environ.get("DOCUMENTATION_CNAME", "composites.dpf.docs.pyansys.com")

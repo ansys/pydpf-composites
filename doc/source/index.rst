@@ -73,7 +73,7 @@ Limitations
 - Layered elements (section data) which have not been pre-processed with ACP are not supported.
   Refer to the Section `Import Legacy Models`_ on the official Ansys help
   to learn how to convert legacy models.
-- Other solvers than MAPDL.
+- Other solvers than MAPDL are not supported.
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
 .. _Import Legacy Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html

@@ -3,10 +3,19 @@ import pathlib
 
 import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
+import numpy as np
 import numpy.testing
 import pytest
 
-from ansys.dpf.composites.enums import Spot
+from ansys.dpf.composites.composite_data_sources import (
+    CompositeDefinitionFiles,
+    ContinuousFiberCompositesFiles,
+)
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.enums import FailureOutput, Spot
+from ansys.dpf.composites.example_helper.example_helper import (
+    upload_continuous_fiber_composite_files_to_server,
+)
 from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
     CombinedFailureCriterion,
 )
@@ -143,3 +152,29 @@ def test_sampling_point(dpf_server):
     ax1.legend()
     plt.rcParams["hatch.linewidth"] = 0.2
     sampling_point.add_ply_sequence_to_plot(ax1, 0.5)
+
+
+def test_sampling_point_with_numpy_types(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    composite_files = ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+
+    files = upload_continuous_fiber_composite_files_to_server(
+        data_files=composite_files, server=dpf_server
+    )
+    cfc = CombinedFailureCriterion(
+        "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
+    )
+    composite_model = CompositeModel(files, server=dpf_server)
+
+    failure_container = composite_model.evaluate_failure_criteria(cfc)
+    irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value})
+    critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
+    sp = composite_model.get_sampling_point(cfc, critical_element_id)
+    assert max(sp.s1) == pytest.approx(2840894080.0, 1e-8)
