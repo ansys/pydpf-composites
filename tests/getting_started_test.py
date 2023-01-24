@@ -2,9 +2,7 @@ import pathlib
 
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.example_helper.example_helper import (
-    upload_continuous_fiber_composite_files_to_server,
-)
+from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 
 
 def test_getting_started(dpf_server: dpf.server):
@@ -52,15 +50,15 @@ def test_getting_started(dpf_server: dpf.server):
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
-    irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value.value})
+    irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value})
     # Commented because it blocks execution. Uncomment this
-    # line when you copy this code the the getting started example
+    # line when you copy this code the getting started example
     # irf_field.plot()
 
     # Show sampling point for element with id/label 1
     element_id = 1
     sampling_point = composite_model.get_sampling_point(
-        combined_criteria=combined_failure_criterion, element_id=element_id
+        combined_criterion=combined_failure_criterion, element_id=element_id
     )
 
-    fig, axes = sampling_point.get_result_plots()
+    sampling_point.get_result_plots()

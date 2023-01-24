@@ -29,7 +29,7 @@ from ansys.dpf.composites import (
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.enums import Spot, Sym3x3TensorComponent
-from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import (
     get_all_analysis_ply_names,
     get_dpf_material_id_by_analyis_ply_map,
@@ -72,7 +72,7 @@ with result_field.as_local_field() as local_result_field:
             element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.top]
         )
 
-        value = stress_data[selected_indices][:, component.value]
+        value = stress_data[selected_indices][:, component]
         local_result_field.append(value, element_id)
 
 composite_model.get_mesh().plot(result_field)
@@ -102,7 +102,7 @@ with ply_result_field.as_local_field() as local_result_field:
             analysis_ply_info_provider, element_info
         )
 
-        value = np.max(stress_data[selected_indices][:, component.value])
+        value = np.max(stress_data[selected_indices][:, component])
         local_result_field.append([value], element_id)
 
 
@@ -131,7 +131,7 @@ with material_result_field.as_local_field() as local_result_field:
 
         selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [ud_material_id])
 
-        value = np.max(stress_data[selected_indices][:, component.value])
+        value = np.max(stress_data[selected_indices][:, component])
         local_result_field.append([value], element_id)
 
 composite_model.get_mesh().plot(material_result_field)

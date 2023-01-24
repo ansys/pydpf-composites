@@ -13,9 +13,10 @@ class CombinedFailureCriterion:
 
     Examples
     --------
-    combined_failure = CombinedFailureCriterion("max_stress 3D")
-    max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
-    combined_failure.insert(max_stress)
+        >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+        >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+        >>> combined_failure.insert(max_stress)
+
     """
 
     JSON_DICT_KEY = "criteria"
@@ -23,7 +24,7 @@ class CombinedFailureCriterion:
     def __init__(
         self,
         name: str = "CombinedFailureCriterion",
-        failure_criteria: Sequence[FailureCriterionBase] = [],
+        failure_criteria: Sequence[FailureCriterionBase] = (),
     ):
         """Create a new combined failure criterion.
 
@@ -65,9 +66,11 @@ class CombinedFailureCriterion:
 
         Examples
         --------
-        combined_failure = CombinedFailureCriterion("max_stress 3D")
-        max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
-        combined_failure.insert(max_stress)
+            >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+            >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+                                                s12=True, s13=True, s23=True)
+            >>> combined_failure.insert(max_stress)
+
         """
         if fc is not None:
             self._failure_criteria[fc.name] = fc
@@ -86,7 +89,8 @@ class CombinedFailureCriterion:
 
         Examples
         --------
-        combined_failure.remove("Max Stress")
+            >>> combined_failure.remove("Max Stress")
+
         """
         if not key in self._failure_criteria.keys():
             raise KeyError(f"{key} does not exist in the list of failure criteria!")
@@ -102,7 +106,7 @@ class CombinedFailureCriterion:
         of the DPF Composites Failure Operator
         """
         criteria = {}
-        for k, fc in self.failure_criteria.items():
+        for _, fc in self.failure_criteria.items():
             # returns a dict of all attributes
             attr_dict = fc.to_dict()
             # get the name and use it as key to add the attrs

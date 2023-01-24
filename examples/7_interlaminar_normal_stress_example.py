@@ -35,7 +35,7 @@ import ansys.dpf.core as dpf
 from ansys.dpf.composites import CompositeModel, Spot, get_selected_indices
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.enums import Sym3x3TensorComponent
-from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 
 # %%
@@ -92,7 +92,7 @@ with max_s3_field.as_local_field() as local_max_s3_field:
         selected_indices = get_selected_indices(element_info, nodes=[0])
 
         # order is bottom, top, mid
-        s3 = stress_data[selected_indices, s3_component.value]
+        s3 = stress_data[selected_indices, s3_component]
 
         local_max_s3_field.append([max(s3)], element_id)
 
@@ -119,7 +119,7 @@ with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
         )
 
         # order is bottom, top, mid
-        s3 = stress_data[selected_indices, s3_component.value]
+        s3 = stress_data[selected_indices, s3_component]
 
         p8l1_ply_s3_field.append(s3, element_id)
 

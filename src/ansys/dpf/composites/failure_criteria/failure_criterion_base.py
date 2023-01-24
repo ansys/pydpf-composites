@@ -43,7 +43,7 @@ class FailureCriterionBase:
         """
         return json.dumps(self.to_dict())
 
-    def _get_properties(self, exclude: Sequence[str] = []) -> Sequence[Any]:
+    def _get_properties(self, exclude: Sequence[str] = tuple()) -> Sequence[Any]:
         properties = [
             attr
             for attr in dir(self)

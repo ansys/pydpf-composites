@@ -111,10 +111,10 @@ class PuckCriterion(FailureCriterionBase):
     def _set_wf_pd(self, value: float) -> None:
         self._wf_pd = value
 
-    def _get_cfps(self) -> float:
+    def _get_cfps(self) -> bool:
         return self._cfps
 
-    def _set_cfps(self, value: float) -> None:
+    def _set_cfps(self, value: bool) -> None:
         self._cfps = value
 
     def _get_s(self) -> float:
@@ -242,20 +242,20 @@ class PuckCriterion(FailureCriterionBase):
     p21_neg = property(
         _get_p21_neg,
         _set_p21_neg,
-        doc=f"Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0",
+        doc="Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0",
     )
     p21_pos = property(
-        _get_p21_pos, _set_p21_pos, doc=f"Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
+        _get_p21_pos, _set_p21_pos, doc="Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
     )
     p22_neg = property(
         _get_p22_neg,
         _set_p22_neg,
-        doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.",
+        doc="Global inclination factor of the fracture plane \u27c2 \u27c2.",
     )
     p22_pos = property(
         _get_p22_pos,
         _set_p22_pos,
-        doc=f"Global inclination factor of the fracture plane \u27c2 \u27c2.",
+        doc="Global inclination factor of the fracture plane \u27c2 \u27c2.",
     )
 
 

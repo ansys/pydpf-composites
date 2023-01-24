@@ -25,7 +25,7 @@ scope a Sampling Point to a certain element and to visualize the laminate.
 from ansys.dpf.composites import Spot
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -58,25 +58,25 @@ composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
 # Create a sampling point
-sampling_point = composite_model.get_sampling_point(combined_criteria=combined_fc, element_id=3)
+sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=3)
 
 # %%
 # Plot Results
 # """"""""""""
 #
 # Use pre-configured plots. See also :class:`~ansys.dpf.composites.SamplingPoint.get_result_plots`.
-fig, axes = sampling_point.get_result_plots(
+sampling_point_plot = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
     spots=[Spot.bottom, Spot.top],
     show_failure_modes=True,
 )
-fig.set_figheight(8)
-fig.set_figwidth(12)
+sampling_point_plot.figure.set_figheight(8)
+sampling_point_plot.figure.set_figwidth(12)
 
 # %%
 # Plot polar properties
-fig, polar_plot = sampling_point.get_polar_plot(["E1", "G12"])
+sampling_point_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
 # %%
 # Custom plots:
@@ -131,11 +131,11 @@ ax1.set_title("e12 and e2")
 #
 # The element id of the sampling point can be easily changed.
 sampling_point.element_id = 4
-fig, axes = sampling_point.get_result_plots(
+sampling_point_plot = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
     spots=[Spot.bottom, Spot.top],
     show_failure_modes=True,
 )
-fig.set_figheight(8)
-fig.set_figwidth(12)
+sampling_point_plot.figure.set_figheight(8)
+sampling_point_plot.figure.set_figwidth(12)

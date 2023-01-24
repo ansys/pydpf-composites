@@ -1,9 +1,8 @@
 """Wrapper for the Sampling Point Operator."""
-
-from collections import namedtuple
+import dataclasses
 import hashlib
 import json
-from typing import Any, Dict, List, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
@@ -17,8 +16,23 @@ from .enums import Spot
 from .load_plugin import load_composites_plugin
 from .result_definition import ResultDefinition
 
-SamplingPointFigure = namedtuple("SamplingPointFigure", ("figure", "axes"))
-FailureResult = namedtuple("FailureResult", "mode irf rf mos")
+
+@dataclasses.dataclass(frozen=True)
+class SamplingPointFigure:
+    """Sampling Point Figure and Axes."""
+
+    figure: Any
+    axes: Any
+
+
+@dataclasses.dataclass(frozen=True)
+class FailureResult:
+    """Components of a failure result."""
+
+    mode: str
+    irf: float
+    rf: float
+    mos: float
 
 
 def _check_result_definition_has_single_scope(result_definition: ResultDefinition) -> None:
@@ -161,12 +175,29 @@ class SamplingPoint:
 
     @property
     def analysis_plies(self) -> Sequence[Any]:
-        """List of analysis plies from the bottom to the top."""
+        """List of analysis plies from the bottom to the top.
+
+        Returns a list of ply data as dict such as angle, thickness and material name.
+        """
         self._update_and_check_results()
 
-        plies = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
-        if len(plies) == 0:
+        raw_data = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
+        if len(raw_data) == 0:
             raise RuntimeError("No plies are found for the selected element!")
+
+        types = {
+            "angle": float,
+            "global_ply_number": int,
+            "id": str,
+            "is_core": bool,
+            "material": str,
+            "thickness": float,
+        }
+
+        plies = []
+        for raw_ply in raw_data:
+            plies.append({k: types[k](v) for k, v in raw_ply.items()})
+
         return plies
 
     @property
@@ -351,7 +382,7 @@ class SamplingPoint:
         self._isuptodate = True
 
     def get_indices(
-        self, spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top]
+        self, spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top)
     ) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
 
@@ -366,7 +397,8 @@ class SamplingPoint:
 
         Examples
         --------
-        ply_top_indices = sampling_point.get_indices([Spot.TOP])
+            >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
+
         """
         if not self._isuptodate or not self._results:
             self.run()
@@ -385,7 +417,7 @@ class SamplingPoint:
 
     def get_offsets_by_spots(
         self,
-        spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top],
+        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected interfaces for each ply.
@@ -456,7 +488,9 @@ class SamplingPoint:
 
         return result
 
-    def get_polar_plot(self, components: Sequence[str] = ["E1", "E2", "G12"]) -> Any:
+    def get_polar_plot(
+        self, components: Sequence[str] = ("E1", "E2", "G12")
+    ) -> SamplingPointFigure:
         """Create a standard polar plot to visualize the polar properties of the laminate.
 
         Parameters
@@ -466,7 +500,7 @@ class SamplingPoint:
 
         Examples
         --------
-        sampling_point.get_polar_plot(components=["E1", "G12"])
+            >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
         """
         if not self._isuptodate or not self._results:
             self.run()
@@ -503,7 +537,7 @@ class SamplingPoint:
         width = x_bound[1] - x_bound[0]
 
         for index, ply in enumerate(self.analysis_plies):
-            angle = ply["angle"]
+            angle = float(ply["angle"])
             hatch = "x" if ply["is_core"] else ""
 
             height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
@@ -512,8 +546,8 @@ class SamplingPoint:
                 Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch)
             )
             mat = ply["material"]
-            th = ply["thickness"]
-            text = f"{mat}\nangle={angle}, th={th:.3}"
+            th = float(ply["thickness"])
+            text = f"{mat}\nangle={angle:.3}, th={th:.3}"
             axes.annotate(
                 text=text,
                 xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
@@ -526,7 +560,7 @@ class SamplingPoint:
         self,
         axes: Any,
         components: Sequence[str],
-        spots: Sequence[Spot] = [Spot.bottom, Spot.top],
+        spots: Collection[Spot] = (Spot.bottom, Spot.top),
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
@@ -550,9 +584,12 @@ class SamplingPoint:
 
         Examples
         --------
-        fig, ax1 = plt.subplots()
-        sampling_point.add_results_to_plot(ax1, ["s13", "s23", "s3"], [Spot.BOTTOM, Spot.TOP],
-        0.1, "Interlaminar Stresses", "[MPa]")
+            >>> import matplotlib.pyplot as plt
+            >>> fig, ax1 = plt.subplots()
+            >>> sampling_point.add_results_to_plot(ax1,
+                                                  ["s13", "s23", "s3"],
+                                                  [Spot.BOTTOM, Spot.TOP],
+                                                  0.1, "Interlaminar Stresses", "[MPa]")
         """
         indices = self.get_indices(spots)
         offsets = self.get_offsets_by_spots(spots, core_scale_factor)
@@ -571,14 +608,14 @@ class SamplingPoint:
 
     def get_result_plots(
         self,
-        strain_components: Sequence[str] = ["e1", "e2", "e3", "e12", "e13", "e23"],
-        stress_components: Sequence[str] = ["s1", "s2", "s3", "s12", "s13", "s23"],
-        failure_components: Sequence[str] = ["irf", "rf", "mos"],
+        strain_components: Sequence[str] = ("e1", "e2", "e3", "e12", "e13", "e23"),
+        stress_components: Sequence[str] = ("s1", "s2", "s3", "s12", "s13", "s23"),
+        failure_components: Sequence[str] = ("irf", "rf", "mos"),
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Sequence[Spot] = [Spot.bottom, Spot.middle, Spot.top],
-    ) -> Any:
+        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
+    ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
         Parameters
@@ -606,7 +643,8 @@ class SamplingPoint:
 
         Examples
         --------
-        sampling_point.get_result_plots()
+            >>> figure, axes = sampling_point.get_result_plots()
+
         """
         num_active_plots = int(create_laminate_plot)
         num_active_plots += 1 if len(strain_components) > 0 else 0

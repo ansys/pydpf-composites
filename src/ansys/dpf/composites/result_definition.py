@@ -5,10 +5,11 @@ import json
 from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
+from .enums import FailureMeasure
 from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
-_SUPPORTED_MEASURES = ["inverse_reserve_factor", "safety_factor", "safety_margin"]
+_SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
@@ -192,6 +193,10 @@ class ResultDefinition:
         if not cfc:
             raise ValueError("Combined failure criterion is not defined!")
 
+        if self.measure not in _SUPPORTED_MEASURES:
+            values = ", ".join([v for v in _SUPPORTED_MEASURES])
+            raise ValueError(f"Unknown measure `{self.measure}`. Supported are {values}")
+
         result_definition = {
             "version": self._VERSION,
             "accumulator": "max",
@@ -218,7 +223,7 @@ class ResultDefinition:
                     "material_file": [str(material_file)],
                 },
                 "write_data_for_full_element_scope": write_for_full_scope,
-                "elements": result_definition_scope.element_scope,
+                "elements": [int(v) for v in result_definition_scope.element_scope],
                 "ply_ids": result_definition_scope.ply_scope,
             }
 
@@ -236,7 +241,7 @@ class ResultDefinition:
         """Convert the dict representation of the result definition into a JSON Dict."""
         return json.dumps(self.to_dict())
 
-    def _get_properties(self, exclude: Sequence[str] = []) -> Sequence[Any]:
+    def _get_properties(self, exclude: Sequence[str] = tuple()) -> Sequence[Any]:
         properties = [
             attr
             for attr in dir(self)

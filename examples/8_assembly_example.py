@@ -20,7 +20,7 @@ helps to access the data of the different parts.
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
 from ansys.dpf.composites.enums import FailureOutput
-from ansys.dpf.composites.example_helper.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 
 # %%
@@ -43,8 +43,8 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # %%
 # Plot the max IRF per element
 #
-output_all_elements = composite_model.evaluate_failure_criteria(combined_criteria=combined_fc)
-irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value.value})
+output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
+irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value})
 irf_field.plot()
 
 # %%

@@ -1,9 +1,9 @@
 """Collection of enums."""
 
-from enum import Enum
+from enum import Enum, IntEnum
 
 
-class Spot(Enum):
+class Spot(IntEnum):
     """Implements an interface to access the spots of the results of layered elements."""
 
     bottom = 1
@@ -16,10 +16,10 @@ def get_rst_spot_index(spot: Spot) -> int:
 
     The order in the rst file is always bottom, top, (mid)
     """
-    return [-1, 0, 2, 1][spot.value]
+    return [-1, 0, 2, 1][spot]
 
 
-class Sym3x3TensorComponent(Enum):
+class Sym3x3TensorComponent(IntEnum):
     """Tensor indices for symmetrical 3x3 tensors."""
 
     tensor11 = 0
@@ -30,7 +30,7 @@ class Sym3x3TensorComponent(Enum):
     tensor32 = 4
 
 
-class FailureOutput(Enum):
+class FailureOutput(IntEnum):
     """Failure output type. The enum value corresponds to the index in the fields container."""
 
     failure_mode = 0
@@ -38,7 +38,7 @@ class FailureOutput(Enum):
     max_layer_index = 2
 
 
-class LayupProperty(Enum):
+class LayupProperty(IntEnum):
     """Enum for Layup Properties.
 
     Values correspond to labels in output container of layup provider.
@@ -120,7 +120,7 @@ class MaterialProperty(Enum):
     larc_constants_fracture_toughness_mode_2: str = "transverse_friction_coefficient_larc_constants"
 
 
-class LayerProperty(Enum):
+class LayerProperty(IntEnum):
     """Available layer properties."""
 
     thicknesses = 0
@@ -132,5 +132,5 @@ class FailureMeasure(Enum):
     """Available Failure Measures."""
 
     inverse_reserve_factor: str = "inverse_reserve_factor"
-    margin_of_safety: str = "margin_of_safety"
-    reserve_factor: str = "reserve_factor"
+    margin_of_safety: str = "safety_margin"
+    reserve_factor: str = "safety_factor"
