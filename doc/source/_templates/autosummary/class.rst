@@ -1,7 +1,5 @@
 {{ objname | escape | underline}}
 
-Import as ``{{ fullname }}``
-
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
