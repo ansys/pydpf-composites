@@ -614,8 +614,10 @@ class SamplingPoint:
         for comp in components:
             raw_values = getattr(self, comp)
             if raw_values is None:
-                raise RuntimeError(f"Component {comp} is not supported. "
-                                   f"Please refer to the help of add_results_to_plot")
+                raise RuntimeError(
+                    f"Component {comp} is not supported. "
+                    f"Please refer to the help of add_results_to_plot"
+                )
             values = [raw_values[i] for i in indices]
             axes.plot(values, offsets, label=comp)
         if title:
@@ -630,9 +632,11 @@ class SamplingPoint:
         self,
         strain_components: Sequence[str] = ("e1", "e2", "e3", "e12", "e13", "e23"),
         stress_components: Sequence[str] = ("s1", "s2", "s3", "s12", "s13", "s23"),
-        failure_components: Sequence[FailureMeasure] = (FailureMeasure.INVERSE_RESERVE_FACTOR,
-                                                        FailureMeasure.RESERVE_FACTOR,
-                                                        FailureMeasure.MARGIN_OF_SAFETY),
+        failure_components: Sequence[FailureMeasure] = (
+            FailureMeasure.INVERSE_RESERVE_FACTOR,
+            FailureMeasure.RESERVE_FACTOR,
+            FailureMeasure.MARGIN_OF_SAFETY,
+        ),
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
