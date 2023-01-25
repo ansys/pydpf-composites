@@ -15,7 +15,7 @@ __all__ = (
 )
 
 
-class MaterialProperty(Enum):
+class MaterialProperty(str, Enum):
     """Available material properties."""
 
     Engineering_Constants_E1: str = "young_modulus_x_direction"
