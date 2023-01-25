@@ -1,12 +1,14 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import Collection, Dict, List, Optional, Sequence, cast
+from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
-from numpy.typing import NDArray
+
+if TYPE_CHECKING:
+    from numpy.typing import NDArray
 
 from .data_sources import (
     CompositeDataSources,
@@ -362,7 +364,7 @@ class CompositeModel:
         layup_property: LayerProperty,
         element_id: int,
         composite_definition_label: Optional[str] = None,
-    ) -> Optional[NDArray[np.double]]:
+    ) -> Optional["NDArray[np.double]"]:
         """Get a layer property for a given element_id.
 
         Returns a numpy array with the values of the property for all the layers.
@@ -474,10 +476,10 @@ class CompositeModel:
             mesh=self.get_mesh(composite_definition_label),
         )
 
-    def get_result_times_or_frequencies(self) -> NDArray[np.double]:
+    def get_result_times_or_frequencies(self) -> "NDArray[np.double]":
         """Return the available times/frequencies in the result file."""
         return cast(
-            NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
+            "NDArray[np.double]", self._core_model.metadata.time_freq_support.time_frequencies.data
         )
 
     def add_interlaminar_normal_stresses(
