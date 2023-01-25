@@ -102,9 +102,9 @@ class SamplingPoint:
     """
 
     _FAILURE_MODES = {
-        FailureMeasure.inverse_reserve_factor: "inverse_reserve_factor",
-        FailureMeasure.reserve_factor: "reserve_factor",
-        FailureMeasure.margin_of_safety: "margin_of_safety",
+        FailureMeasure.INVERSE_RESERVE_FACTOR: "inverse_reserve_factor",
+        FailureMeasure.RESERVE_FACTOR: "reserve_factor",
+        FailureMeasure.MARGIN_OF_SAFETY: "margin_of_safety",
     }
 
     def __init__(
