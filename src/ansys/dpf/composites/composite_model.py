@@ -33,7 +33,23 @@ __all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 class CompositeScope:
     """Composite scope.
 
-    Defines which part of the model is selected.
+    Defines which part of the model and solution step are selected.
+
+    Parameters
+    ----------
+        elements:
+            list of element labels
+        plies:
+            list of plies.
+        time:
+            time step or frequency. Refer to
+            :func:`CompositeModel.get_result_times_or_frequencies` to list the solution steps.
+
+    Notes
+    -----
+       In case `elements` and `plies` are set, the final element scope is the intersection
+       of the two.
+
     """
 
     elements: Optional[Sequence[int]] = None
@@ -198,8 +214,9 @@ class CompositeModel:
         combined_criterion:
             Combined failure criterion to evaluate
         composite_scope:
-            Composite scope on which the failure criteria are evaluated. If
-            empty, the criteria is evaluated on the full model.
+            Composite scope on which the failure criteria are evaluated. If empty, the criteria
+            is evaluated on the full model. The last time/frequency in the result file is used
+            by default if time is not set.
         measure:
             Failure measure to evaluate
         write_data_for_full_element_scope:
