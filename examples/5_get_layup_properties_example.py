@@ -41,9 +41,9 @@ composite_model = CompositeModel(composite_files_on_server, server)
 #%%
 # Get layup properties for all the elements and show the first one as an example
 element_id = 1
-thicknesses = composite_model.get_property_for_all_layers(LayerProperty.thicknesses, element_id)
-angles = composite_model.get_property_for_all_layers(LayerProperty.angles, element_id)
-shear_angles = composite_model.get_property_for_all_layers(LayerProperty.shear_angles, element_id)
+thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
+angles = composite_model.get_property_for_all_layers(LayerProperty.ANGLES, element_id)
+shear_angles = composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id)
 offset = composite_model.get_element_laminate_offset(element_id)
 analysis_plies = composite_model.get_analysis_plies(element_id)
 
