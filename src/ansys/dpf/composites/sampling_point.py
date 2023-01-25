@@ -38,9 +38,9 @@ class FailureResult:
     """Components of a failure result."""
 
     mode: str
-    irf: float
-    rf: float
-    mos: float
+    inverse_reserve_factor: float
+    safety_factor: float
+    safety_margin: float
 
 
 def _check_result_definition_has_single_scope(result_definition: ResultDefinition) -> None:
@@ -739,8 +739,8 @@ class SamplingPoint:
                         for fc in failure_components:
                             failure_plot.annotate(
                                 getattr(critical_failures[index], "mode"),
-                                xy=(getattr(critical_failures[index], fc), offset),
-                                xytext=(getattr(critical_failures[index], fc), offset),
+                                xy=(getattr(critical_failures[index], fc.value), offset),
+                                xytext=(getattr(critical_failures[index], fc.value), offset),
                             )
 
                 axes_index += 1

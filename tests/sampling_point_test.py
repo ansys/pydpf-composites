@@ -86,29 +86,29 @@ def test_sampling_point(dpf_server):
     assert len(critical_failures) == sampling_point.number_of_plies
     ref = [
         FailureResult(
-            mode="e12",
-            irf=pytest.approx(2.248462289571762),
-            rf=pytest.approx(0.4447483974438629),
-            mos=pytest.approx(-0.5552516025561371),
+            "e12",
+            pytest.approx(2.248462289571762),
+            pytest.approx(0.4447483974438629),
+            pytest.approx(-0.5552516025561371),
         ),
         FailureResult(
-            mode="e1t",
-            irf=pytest.approx(1.522077660182279),
-            rf=pytest.approx(0.6569967000765541),
-            mos=pytest.approx(-0.3430032999234459),
+            "e1t",
+            pytest.approx(1.522077660182279),
+            pytest.approx(0.6569967000765541),
+            pytest.approx(-0.3430032999234459),
         ),
-        FailureResult(mode="na", irf=0.0, rf=1000.0, mos=999.0),
+        FailureResult("na", 0.0, 1000.0, 999.0),
         FailureResult(
-            mode="e12",
-            irf=pytest.approx(0.1853588231218358),
-            rf=pytest.approx(5.394941460880462),
-            mos=pytest.approx(4.394941460880462),
+            "e12",
+            pytest.approx(0.1853588231218358),
+            pytest.approx(5.394941460880462),
+            pytest.approx(4.394941460880462),
         ),
         FailureResult(
-            mode="s2c",
-            irf=pytest.approx(0.3256845400457666),
-            rf=pytest.approx(3.07045584619852),
-            mos=pytest.approx(2.07045584619852),
+            "s2c",
+            pytest.approx(0.3256845400457666),
+            pytest.approx(3.07045584619852),
+            pytest.approx(2.07045584619852),
         ),
     ]
     assert critical_failures == ref
