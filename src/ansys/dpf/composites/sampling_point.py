@@ -553,7 +553,7 @@ class SamplingPoint:
         num_spots = 2
         axes.set_ybound(offsets[0], offsets[-1])
         x_bound = axes.get_xbound()
-        width = x_bound[-1] - x_bound[0]
+        width = x_bound[1] - x_bound[0]
 
         for index, ply in enumerate(self.analysis_plies):
             angle = float(ply["angle"])
