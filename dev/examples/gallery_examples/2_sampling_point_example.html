@@ -406,12 +406,12 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="sampling-point">
 <span id="sampling-point-example"></span><span id="sphx-glr-examples-gallery-examples-2-sampling-point-example-py"></span><h1>Sampling Point<a class="headerlink" href="#sampling-point" title="Permalink to this heading">#</a></h1>
 <p>Extract ply-wise laminate properties and results.</p>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Sampling</span> <span class="pre">Point</span></code> is a feature
-to extract through-the-thickness data of laminate. For instance, ply-wise properties
+<p>The <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.html#ansys.dpf.composites.sampling_point.SamplingPoint" title="ansys.dpf.composites.sampling_point.SamplingPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sampling</span> <span class="pre">Point</span></code></a> is a feature to extract
+through-the-thickness data of laminate. For instance, ply-wise properties
 strains and stresses.
 Besides that, it implements basic visualization to plot the laminate.</p>
-<p>This example uses the <code class="xref py py-class docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Model</span></code> to
-scope a Sampling Point to a certain element and to visualize the laminate.</p>
+<p>This example uses the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Model</span></code></a> to scope a
+Sampling Point to a certain element and to visualize the laminate.</p>
 <section id="script">
 <h2>Script<a class="headerlink" href="#script" title="Permalink to this heading">#</a></h2>
 <p>Load Ansys libraries</p>
@@ -456,7 +456,7 @@ This will copy the example files into the current working directory.</p>
 </div>
 <section id="plot-results">
 <h3>Plot Results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h3>
-<p>Use pre-configured plots. See also <code class="xref py py-class docutils literal notranslate"><span class="pre">get_result_plots</span></code>.</p>
+<p>Use pre-configured plots. See also <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SamplingPoint.get_result_plots()</span></code></a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point_plot</span> <span class="o">=</span> <span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">(</span>
     <span class="n">strain_components</span><span class="o">=</span><span class="p">[],</span>  <span class="c1"># do not plot strains</span>
     <a href="https://docs.python.org/dev/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">core_scale_factor</span></a><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
@@ -530,7 +530,7 @@ Here, matplotlib is used. An alternative is plotly.</p>
 <span class="n">sampling_point_plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_2_sampling_point_example_005.png" srcset="../../_images/sphx_glr_2_sampling_point_example_005.png" alt="Stresses, Failures" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.851 seconds)</p>
+<img src="../../_images/sphx_glr_2_sampling_point_example_005.png" srcset="../../_images/sphx_glr_2_sampling_point_example_005.png" alt="Stresses, Failures" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.118 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-2-sampling-point-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/7e9cf296843a413f05366030fec0953f/2_sampling_point_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">2_sampling_point_example.py</span></code></a></p>

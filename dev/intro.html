@@ -390,15 +390,14 @@ to keep Python packages isolated from your system Python.</p>
 </ul>
 <p>In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.</p>
-<p>For larger models it can be slow to initialize a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code>, because it automatically
-creates many different providers that are not needed in all the workflows. Consider using the
+<p>For larger models it can be slow to initialize a <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>, because it automatically creates many
+different providers that are not needed in all the workflows. Consider using the
 <a class="reference internal" href="api/layup_info.html#layup-information-classes"><span class="std std-ref">Layup Information classes</span></a> directly.</p>
 <section id="start-from-a-local-ansys-workbench-project">
 <h3>Start from a local Ansys Workbench project<a class="headerlink" href="#start-from-a-local-ansys-workbench-project" title="Permalink to this heading">#</a></h3>
 <p>To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
 object in Mechanical and selecting “Open Solver Files Directory”. Then call the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">ansys.dpf.composites.get_composite_files_from_workbench_result_folder()</span></code> function with that folder.
+<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a> function with that folder.
 The following  example shows how to setup a project from workbench, create a basic failure plot and display
 detailed output for a sampling point.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>

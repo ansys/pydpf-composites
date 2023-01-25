@@ -1,0 +1,24 @@
+﻿LayerProperty
+=============
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: LayerProperty
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      LayerProperty.THICKNESSES
+      LayerProperty.ANGLES
+      LayerProperty.SHEAR_ANGLES
+   
+   
