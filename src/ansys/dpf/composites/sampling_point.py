@@ -686,7 +686,7 @@ class SamplingPoint:
         gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
         axes = gs.subplots(sharex="col", sharey="row")
 
-        def _get_subplot(axes_obj, current_index):
+        def _get_subplot(axes_obj: Any, current_index: int) -> Any:
             if issubclass(axes_obj.__class__, SubplotBase):
                 if current_index > 0:
                     raise RuntimeError("axes plot cannot be indexed.")
