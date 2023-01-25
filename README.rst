@@ -63,6 +63,7 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
 
         python -m pip install pipx
         pipx ensurepath
+        # Minimum required poetry version is 1.2.0
         pipx install poetry
         pipx install pip
         pipx install tox
@@ -91,7 +92,7 @@ Testing
 
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:latest
+        docker pull ghcr.io/pyansys/pydpf-composites:231
         pytest .
 
 #. Run tests with a local Grpc server executable:
@@ -109,16 +110,16 @@ Build documentation
 
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:latest
-        docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+        docker pull ghcr.io/pyansys/pydpf-composites:231
+        docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
         tox -e doc-windows
 
 #. Linux:
 
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:latest
-        docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+        docker pull ghcr.io/pyansys/pydpf-composites:231
+        docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
         tox -e doc-linux
 
 Run style checks
