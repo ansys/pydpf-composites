@@ -6,12 +6,12 @@ import json
 from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
-from .failure_criteria._combined_failure_criterion import CombinedFailureCriterion
+from .failure_criteria import CombinedFailureCriterion
 
 __all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
 
 
-class FailureMeasure(Enum):
+class FailureMeasure(str, Enum):
     """Available Failure Measures."""
 
     INVERSE_RESERVE_FACTOR: str = "inverse_reserve_factor"
