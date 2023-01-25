@@ -412,10 +412,12 @@ fiber reinforced thermoplastic injection molded from both sides.</p>
 </div>
 <p>Start a server and get the examples files.
 This will copy the example files into the current working directory.
-In general, the following files are needed:
-* the MAPDL <em>rst</em> file with the simulation results
-* the Engineering Data <em>MatML</em> file containing the material properties of the composite
-* the MAPDL input file <em>ds.dat</em> containing the fiber orientation tensor data</p>
+In general, the following files are needed:</p>
+<ul class="simple">
+<li><p>the MAPDL <em>rst</em> file with the simulation results</p></li>
+<li><p>the Engineering Data <em>MatML</em> file containing the material properties of the composite</p></li>
+<li><p>the MAPDL input file <em>ds.dat</em> containing the fiber orientation tensor data</p></li>
+</ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_short_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;short_fiber&quot;</span><span class="p">)</span>
 </pre></div>
@@ -474,7 +476,7 @@ Note that you can also specify optional time and mesh scoping inputs.</p>
 <span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_failure_value</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_3_short_fiber_example_003.png" srcset="../../_images/sphx_glr_3_short_fiber_example_003.png" alt="3 short fiber example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.319 seconds)</p>
+<img src="../../_images/sphx_glr_3_short_fiber_example_003.png" srcset="../../_images/sphx_glr_3_short_fiber_example_003.png" alt="3 short fiber example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.350 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-3-short-fiber-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e79424f559efb4dcca51af7a09973e19/3_short_fiber_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">3_short_fiber_example.py</span></code></a></p>

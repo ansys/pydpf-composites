@@ -57,16 +57,17 @@ Load Ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-35
+.. GENERATED FROM PYTHON SOURCE LINES 29-36
 
 Start a server and get the examples files.
 This will copy the example files into the current working directory.
 In general, the following files are needed:
+
 * the MAPDL *rst* file with the simulation results
 * the Engineering Data *MatML* file containing the material properties of the composite
 * the MAPDL input file *ds.dat* containing the fiber orientation tensor data
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-38
+.. GENERATED FROM PYTHON SOURCE LINES 36-39
 
 .. code-block:: default
 
@@ -80,11 +81,11 @@ In general, the following files are needed:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-40
+.. GENERATED FROM PYTHON SOURCE LINES 40-41
 
 Set up data sources.
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-45
+.. GENERATED FROM PYTHON SOURCE LINES 41-46
 
 .. code-block:: default
 
@@ -100,11 +101,11 @@ Set up data sources.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-47
+.. GENERATED FROM PYTHON SOURCE LINES 47-48
 
 Initialize the DPF model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-50
+.. GENERATED FROM PYTHON SOURCE LINES 48-51
 
 .. code-block:: default
 
@@ -118,12 +119,12 @@ Initialize the DPF model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-53
+.. GENERATED FROM PYTHON SOURCE LINES 52-54
 
 Plot the two largest eigenvalues a11 and a22 of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-65
+.. GENERATED FROM PYTHON SOURCE LINES 54-66
 
 .. code-block:: default
 
@@ -163,12 +164,12 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-68
+.. GENERATED FROM PYTHON SOURCE LINES 67-69
 
 Configure and evaluate the Short Fiber Failure Criterion Evaluator.
 Note that you can also specify optional time and mesh scoping inputs.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-74
+.. GENERATED FROM PYTHON SOURCE LINES 69-75
 
 .. code-block:: default
 
@@ -185,11 +186,11 @@ Note that you can also specify optional time and mesh scoping inputs.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-76
+.. GENERATED FROM PYTHON SOURCE LINES 76-77
 
 Compute and plot the max failure value per element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-87
+.. GENERATED FROM PYTHON SOURCE LINES 77-88
 
 .. code-block:: default
 
@@ -219,7 +220,7 @@ Compute and plot the max failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.319 seconds)
+   **Total running time of the script:** ( 0 minutes  3.350 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_3_short_fiber_example.py:

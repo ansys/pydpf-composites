@@ -29,6 +29,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 # Start a server and get the examples files.
 # This will copy the example files into the current working directory.
 # In general, the following files are needed:
+#
 # * the MAPDL *rst* file with the simulation results
 # * the Engineering Data *MatML* file containing the material properties of the composite
 # * the MAPDL input file *ds.dat* containing the fiber orientation tensor data
