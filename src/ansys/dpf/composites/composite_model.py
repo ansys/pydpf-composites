@@ -42,7 +42,7 @@ class CompositeScope:
         plies:
             list of plies.
         time:
-            time step or frequency. Refer to
+            time or frequency. Refer to
             :func:`CompositeModel.get_result_times_or_frequencies` to list the solution steps.
 
     Notes

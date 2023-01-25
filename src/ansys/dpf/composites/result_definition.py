@@ -180,7 +180,7 @@ class ResultDefinition:
         """Select time / solution step.
 
         Note: Function :func:`CompositeModel.get_result_times_or_frequencies` can be used
-        to list the available time steps or frequencies in the result file.
+        to list the available times or frequencies in the result file.
         """
         return self._time
 
