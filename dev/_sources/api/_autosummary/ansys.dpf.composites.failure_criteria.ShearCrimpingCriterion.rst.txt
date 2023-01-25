@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.failure\_criteria.ShearCrimpingCriterion
-=============================================================
+﻿ShearCrimpingCriterion
+======================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
 

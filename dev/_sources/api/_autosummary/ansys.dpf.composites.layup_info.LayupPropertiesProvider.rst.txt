@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.layup\_info.LayupPropertiesProvider
-========================================================
+﻿LayupPropertiesProvider
+=======================
 
 .. currentmodule:: ansys.dpf.composites.layup_info
 

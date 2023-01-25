@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.sampling\_point.FailureResult
-==================================================
+﻿FailureResult
+=============
 
 .. currentmodule:: ansys.dpf.composites.sampling_point
 

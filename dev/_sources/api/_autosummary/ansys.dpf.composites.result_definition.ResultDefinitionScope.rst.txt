@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.result\_definition.ResultDefinitionScope
-=============================================================
+﻿ResultDefinitionScope
+=====================
 
 .. currentmodule:: ansys.dpf.composites.result_definition
 

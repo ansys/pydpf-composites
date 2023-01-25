@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.composite\_model.CompositeInfo
-===================================================
+﻿CompositeInfo
+=============
 
 .. currentmodule:: ansys.dpf.composites.composite_model
 

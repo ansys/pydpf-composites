@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.constants.Spot
-===================================
+﻿Spot
+====
 
 .. currentmodule:: ansys.dpf.composites.constants
 

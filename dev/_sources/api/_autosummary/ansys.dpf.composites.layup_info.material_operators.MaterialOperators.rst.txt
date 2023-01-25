@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.layup\_info.material\_operators.MaterialOperators
-======================================================================
+﻿MaterialOperators
+=================
 
 .. currentmodule:: ansys.dpf.composites.layup_info.material_operators
 

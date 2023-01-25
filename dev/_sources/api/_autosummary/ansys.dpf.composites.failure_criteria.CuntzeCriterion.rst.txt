@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.failure\_criteria.CuntzeCriterion
-======================================================
+﻿CuntzeCriterion
+===============
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
 

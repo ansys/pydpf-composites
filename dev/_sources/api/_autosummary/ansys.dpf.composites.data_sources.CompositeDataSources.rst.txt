@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.data\_sources.CompositeDataSources
-=======================================================
+﻿CompositeDataSources
+====================
 
 .. currentmodule:: ansys.dpf.composites.data_sources
 

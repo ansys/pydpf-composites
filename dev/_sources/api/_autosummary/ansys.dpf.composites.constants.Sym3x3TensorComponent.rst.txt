@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.constants.Sym3x3TensorComponent
-====================================================
+﻿Sym3x3TensorComponent
+=====================
 
 .. currentmodule:: ansys.dpf.composites.constants
 

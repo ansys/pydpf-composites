@@ -1,5 +1,5 @@
-﻿ansys.dpf.composites.constants.FailureOutput
-============================================
+﻿FailureOutput
+=============
 
 .. currentmodule:: ansys.dpf.composites.constants
 
