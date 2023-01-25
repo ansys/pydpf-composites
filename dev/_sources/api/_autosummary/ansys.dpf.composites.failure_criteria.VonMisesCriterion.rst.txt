@@ -30,26 +30,12 @@
    .. autosummary::
       :toctree:
    
-      
       VonMisesCriterion.active
-      
-      
       VonMisesCriterion.eval_ins
-      
-      
       VonMisesCriterion.name
-      
-      
       VonMisesCriterion.vme
-      
-      
       VonMisesCriterion.vms
-      
-      
       VonMisesCriterion.wf_vme
-      
-      
       VonMisesCriterion.wf_vms
-      
    
    

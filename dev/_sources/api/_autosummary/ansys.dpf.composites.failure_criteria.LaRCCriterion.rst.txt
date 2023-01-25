@@ -30,38 +30,16 @@
    .. autosummary::
       :toctree:
    
-      
       LaRCCriterion.active
-      
-      
       LaRCCriterion.dim
-      
-      
       LaRCCriterion.lfc
-      
-      
       LaRCCriterion.lft
-      
-      
       LaRCCriterion.lmc
-      
-      
       LaRCCriterion.lmt
-      
-      
       LaRCCriterion.name
-      
-      
       LaRCCriterion.wf_lfc
-      
-      
       LaRCCriterion.wf_lft
-      
-      
       LaRCCriterion.wf_lmc
-      
-      
       LaRCCriterion.wf_lmt
-      
    
    

@@ -315,11 +315,6 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#testing-session-to-be-removed">
-   Testing session (to be removed)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#installation">
    Installation
   </a>
@@ -357,20 +352,6 @@ function checkPageExistsAndRedirect(event) {
                 
   <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
-<section id="testing-session-to-be-removed">
-<h2>Testing session (to be removed)<a class="headerlink" href="#testing-session-to-be-removed" title="Permalink to this heading">#</a></h2>
-<p>Most of the documentation below is still valid for the ansys internal testing session with following exceptions:</p>
-<p>Since the module is not yet public, please install from github:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pyansys</span><span class="o">/</span><span class="n">pydpf</span><span class="o">-</span><span class="n">composites</span><span class="o">.</span><span class="n">git</span>
-</pre></div>
-</div>
-<p>Whenever you call the function connect_to_or_start_server you have to pass the location of the 23.1 installer
-with the ansys_path argument:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connect_to_or_start_server</span><span class="p">(</span><span class="n">ansys_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AWP_ROOT231&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Otherwise, the dpf server will be started with the latest installer it finds, which probably is 23.2.</p>
-</section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
 <p>ansys-dpf-composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
@@ -426,7 +407,7 @@ detailed output for a sampling point.</p>
 <span class="n">combined_failure_criterion</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span><span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span><span class="n">MaxStressCriterion</span><span class="p">()])</span>
 <span class="n">failure_result</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span><span class="n">combined_failure_criterion</span><span class="p">)</span>
 
-<span class="n">irf_field</span> <span class="o">=</span> <span class="n">failure_result</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">failure_value</span><span class="o">.</span><span class="n">value</span><span class="p">})</span>
+<span class="n">irf_field</span> <span class="o">=</span> <span class="n">failure_result</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">FAILURE_VALUE</span><span class="p">})</span>
 <span class="n">irf_field</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
 <span class="c1"># Show sampling point for element with id/label 1</span>

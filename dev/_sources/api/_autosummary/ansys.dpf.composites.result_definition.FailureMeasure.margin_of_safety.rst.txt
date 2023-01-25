@@ -1,6 +1,0 @@
-margin\_of\_safety
-==================
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoattribute:: FailureMeasure.margin_of_safety

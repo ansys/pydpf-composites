@@ -108,7 +108,7 @@ For variable material properties, the default value is returned.
 .. code-block:: default
 
 
-    material_property = MaterialProperty.strain_limits_ext
+    material_property = MaterialProperty.Strain_Limits_eXt
     property_dict = composite_model.get_constant_property_dict([material_property])
 
 
@@ -150,7 +150,7 @@ Implement a custom failure criterion: basic max strain
     result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
     with result_field.as_local_field() as local_result_field:
-        component = Sym3x3TensorComponent.tensor11
+        component = Sym3x3TensorComponent.TENSOR11
 
         for element_id in strain_field.scoping.ids:
             strain_data = strain_field.get_entity_data_by_id(element_id)
@@ -185,7 +185,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.387 seconds)
+   **Total running time of the script:** ( 0 minutes  0.754 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_4_get_material_properties_example.py:

@@ -24,14 +24,8 @@
    .. autosummary::
       :toctree:
    
-      
       ContinuousFiberCompositesFiles.rst
-      
-      
       ContinuousFiberCompositesFiles.composite
-      
-      
       ContinuousFiberCompositesFiles.engineering_data
-      
    
    

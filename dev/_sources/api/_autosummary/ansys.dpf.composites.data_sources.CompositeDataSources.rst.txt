@@ -24,14 +24,8 @@
    .. autosummary::
       :toctree:
    
-      
       CompositeDataSources.rst
-      
-      
       CompositeDataSources.composite
-      
-      
       CompositeDataSources.engineering_data
-      
    
    

@@ -24,17 +24,9 @@
    .. autosummary::
       :toctree:
    
-      
       FailureResult.mode
-      
-      
       FailureResult.irf
-      
-      
       FailureResult.rf
-      
-      
       FailureResult.mos
-      
    
    

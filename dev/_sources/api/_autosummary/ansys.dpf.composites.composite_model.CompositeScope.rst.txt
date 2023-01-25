@@ -24,14 +24,8 @@
    .. autosummary::
       :toctree:
    
-      
       CompositeScope.elements
-      
-      
       CompositeScope.plies
-      
-      
       CompositeScope.time
-      
    
    

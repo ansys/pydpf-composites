@@ -24,32 +24,14 @@
    .. autosummary::
       :toctree:
    
-      
       ElementInfo.id
-      
-      
       ElementInfo.n_layers
-      
-      
       ElementInfo.n_corner_nodes
-      
-      
       ElementInfo.n_spots
-      
-      
       ElementInfo.is_layered
-      
-      
       ElementInfo.element_type
-      
-      
       ElementInfo.dpf_material_ids
-      
-      
       ElementInfo.is_shell
-      
-      
       ElementInfo.number_of_nodes_per_spot_plane
-      
    
    

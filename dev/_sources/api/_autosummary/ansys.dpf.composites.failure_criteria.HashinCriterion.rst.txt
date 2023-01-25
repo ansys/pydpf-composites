@@ -30,32 +30,14 @@
    .. autosummary::
       :toctree:
    
-      
       HashinCriterion.active
-      
-      
       HashinCriterion.dim
-      
-      
       HashinCriterion.hd
-      
-      
       HashinCriterion.hf
-      
-      
       HashinCriterion.hm
-      
-      
       HashinCriterion.name
-      
-      
       HashinCriterion.wf_hd
-      
-      
       HashinCriterion.wf_hf
-      
-      
       HashinCriterion.wf_hm
-      
    
    

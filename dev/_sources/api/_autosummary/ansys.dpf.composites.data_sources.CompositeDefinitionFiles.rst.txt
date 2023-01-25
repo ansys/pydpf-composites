@@ -24,11 +24,7 @@
    .. autosummary::
       :toctree:
    
-      
       CompositeDefinitionFiles.mapping
-      
-      
       CompositeDefinitionFiles.definition
-      
    
    

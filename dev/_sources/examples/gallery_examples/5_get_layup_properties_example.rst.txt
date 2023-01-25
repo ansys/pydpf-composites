@@ -103,9 +103,9 @@ Get layup properties for all the elements and show the first one as an example
 .. code-block:: default
 
     element_id = 1
-    thicknesses = composite_model.get_property_for_all_layers(LayerProperty.thicknesses, element_id)
-    angles = composite_model.get_property_for_all_layers(LayerProperty.angles, element_id)
-    shear_angles = composite_model.get_property_for_all_layers(LayerProperty.shear_angles, element_id)
+    thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
+    angles = composite_model.get_property_for_all_layers(LayerProperty.ANGLES, element_id)
+    shear_angles = composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id)
     offset = composite_model.get_element_laminate_offset(element_id)
     analysis_plies = composite_model.get_analysis_plies(element_id)
 
@@ -158,7 +158,7 @@ Plot lay-up properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.203 seconds)
+   **Total running time of the script:** ( 0 minutes  0.521 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_5_get_layup_properties_example.py:

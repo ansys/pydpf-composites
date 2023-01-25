@@ -17,188 +17,66 @@
    .. autosummary::
       :toctree:
    
-      
-      MaterialProperty.engineering_constants_e1
-      
-      
-      MaterialProperty.engineering_constants_e2
-      
-      
-      MaterialProperty.engineering_constants_e3
-      
-      
-      MaterialProperty.engineering_constants_e
-      
-      
-      MaterialProperty.engineering_constants_g12
-      
-      
-      MaterialProperty.engineering_constants_g23
-      
-      
-      MaterialProperty.engineering_constants_g13
-      
-      
-      MaterialProperty.engineering_constants_nu12
-      
-      
-      MaterialProperty.engineering_constants_nu23
-      
-      
-      MaterialProperty.engineering_constants_nu13
-      
-      
-      MaterialProperty.engineering_constants_nu
-      
-      
-      MaterialProperty.strain_limits_effective_strain
-      
-      
-      MaterialProperty.tensile_yield_strength_effective_stress
-      
-      
-      MaterialProperty.strain_limits_ext
-      
-      
-      MaterialProperty.strain_limits_eyt
-      
-      
-      MaterialProperty.strain_limits_ezt
-      
-      
-      MaterialProperty.strain_limits_exc
-      
-      
-      MaterialProperty.strain_limits_eyc
-      
-      
-      MaterialProperty.strain_limits_ezc
-      
-      
-      MaterialProperty.strain_limits_esxy
-      
-      
-      MaterialProperty.strain_limits_esyz
-      
-      
-      MaterialProperty.strain_limits_esxz
-      
-      
-      MaterialProperty.stress_limits_xt
-      
-      
-      MaterialProperty.stress_limits_yt
-      
-      
-      MaterialProperty.stress_limits_zt
-      
-      
-      MaterialProperty.stress_limits_xc
-      
-      
-      MaterialProperty.stress_limits_yc
-      
-      
-      MaterialProperty.stress_limits_zc
-      
-      
-      MaterialProperty.stress_limits_sxy
-      
-      
-      MaterialProperty.stress_limits_syz
-      
-      
-      MaterialProperty.stress_limits_sxz
-      
-      
-      MaterialProperty.thermal_conductivity_k
-      
-      
-      MaterialProperty.thermal_conductivity_k1
-      
-      
-      MaterialProperty.thermal_conductivity_k2
-      
-      
-      MaterialProperty.thermal_conductivity_k3
-      
-      
-      MaterialProperty.specific_heat_cp
-      
-      
-      MaterialProperty.thermal_expansion_coefficients_a
-      
-      
-      MaterialProperty.thermal_expansion_coefficients_ax
-      
-      
-      MaterialProperty.thermal_expansion_coefficients_ay
-      
-      
-      MaterialProperty.thermal_expansion_coefficients_az
-      
-      
-      MaterialProperty.fabric_fiber_angle_phi
-      
-      
-      MaterialProperty.hill_yield_criterion_r11
-      
-      
-      MaterialProperty.hill_yield_criterion_r22
-      
-      
-      MaterialProperty.hill_yield_criterion_r33
-      
-      
-      MaterialProperty.hill_yield_criterion_r12
-      
-      
-      MaterialProperty.hill_yield_criterion_r23
-      
-      
-      MaterialProperty.hill_yield_criterion_r13
-      
-      
-      MaterialProperty.tsai_wu_constant_xy
-      
-      
-      MaterialProperty.tsai_wu_constant_yz
-      
-      
-      MaterialProperty.tsai_wu_constant_xz
-      
-      
-      MaterialProperty.puck_constants_p_21_pos
-      
-      
-      MaterialProperty.puck_constants_p_21_neg
-      
-      
-      MaterialProperty.puck_constants_p_22_pos
-      
-      
-      MaterialProperty.puck_constants_p_22_neg
-      
-      
-      MaterialProperty.puck_constants_s
-      
-      
-      MaterialProperty.puck_constants_m
-      
-      
-      MaterialProperty.puck_constants_interface_weakening_factor
-      
-      
-      MaterialProperty.larc_constants_fracture_angle_under_compression
-      
-      
-      MaterialProperty.larc_constants_fracture_toughness_ratio
-      
-      
-      MaterialProperty.larc_constants_fracture_toughness_mode_1
-      
-      
-      MaterialProperty.larc_constants_fracture_toughness_mode_2
-      
+      MaterialProperty.Engineering_Constants_E1
+      MaterialProperty.Engineering_Constants_E2
+      MaterialProperty.Engineering_Constants_E3
+      MaterialProperty.Engineering_Constants_E
+      MaterialProperty.Engineering_Constants_G12
+      MaterialProperty.Engineering_Constants_G23
+      MaterialProperty.Engineering_Constants_G13
+      MaterialProperty.Engineering_Constants_nu12
+      MaterialProperty.Engineering_Constants_nu23
+      MaterialProperty.Engineering_Constants_nu13
+      MaterialProperty.Engineering_Constants_nu
+      MaterialProperty.Strain_Limits_effective_strain
+      MaterialProperty.Tensile_Yield_Strength_effective_stress
+      MaterialProperty.Strain_Limits_eXt
+      MaterialProperty.Strain_Limits_eYt
+      MaterialProperty.Strain_Limits_eZt
+      MaterialProperty.Strain_Limits_eXc
+      MaterialProperty.Strain_Limits_eYc
+      MaterialProperty.Strain_Limits_eZc
+      MaterialProperty.Strain_Limits_eSxy
+      MaterialProperty.Strain_Limits_eSyz
+      MaterialProperty.Strain_Limits_eSxz
+      MaterialProperty.Stress_Limits_Xt
+      MaterialProperty.Stress_Limits_Yt
+      MaterialProperty.Stress_Limits_Zt
+      MaterialProperty.Stress_Limits_Xc
+      MaterialProperty.Stress_Limits_Yc
+      MaterialProperty.Stress_Limits_Zc
+      MaterialProperty.Stress_Limits_Sxy
+      MaterialProperty.Stress_Limits_Syz
+      MaterialProperty.Stress_Limits_Sxz
+      MaterialProperty.Thermal_Conductivity_K
+      MaterialProperty.Thermal_Conductivity_K1
+      MaterialProperty.Thermal_Conductivity_K2
+      MaterialProperty.Thermal_Conductivity_K3
+      MaterialProperty.Specific_Heat_cp
+      MaterialProperty.Thermal_Expansion_Coefficients_a
+      MaterialProperty.Thermal_Expansion_Coefficients_aX
+      MaterialProperty.Thermal_Expansion_Coefficients_aY
+      MaterialProperty.Thermal_Expansion_Coefficients_aZ
+      MaterialProperty.Fabric_Fiber_Angle_phi
+      MaterialProperty.Hill_Yield_Criterion_R11
+      MaterialProperty.Hill_Yield_Criterion_R22
+      MaterialProperty.Hill_Yield_Criterion_R33
+      MaterialProperty.Hill_Yield_Criterion_R12
+      MaterialProperty.Hill_Yield_Criterion_R23
+      MaterialProperty.Hill_Yield_Criterion_R13
+      MaterialProperty.Tsai_Wu_Constant_xy
+      MaterialProperty.Tsai_Wu_Constant_yz
+      MaterialProperty.Tsai_Wu_Constant_xz
+      MaterialProperty.Puck_Constants_p_21_pos
+      MaterialProperty.Puck_Constants_p_21_neg
+      MaterialProperty.Puck_Constants_p_22_pos
+      MaterialProperty.Puck_Constants_p_22_neg
+      MaterialProperty.Puck_Constants_s
+      MaterialProperty.Puck_Constants_m
+      MaterialProperty.Puck_Constants_interface_weakening_factor
+      MaterialProperty.Larc_Constants_fracture_angle_under_compression
+      MaterialProperty.Larc_Constants_fracture_toughness_ratio
+      MaterialProperty.Larc_Constants_fracture_toughness_mode_1
+      MaterialProperty.Larc_Constants_fracture_toughness_mode_2
    
    

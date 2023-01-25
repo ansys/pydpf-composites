@@ -1,6 +1,0 @@
-thermal\_conductivity\_k3
-=========================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.thermal_conductivity_k3

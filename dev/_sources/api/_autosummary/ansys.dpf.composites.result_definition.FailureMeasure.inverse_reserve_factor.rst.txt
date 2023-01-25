@@ -1,6 +1,0 @@
-inverse\_reserve\_factor
-========================
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoattribute:: FailureMeasure.inverse_reserve_factor

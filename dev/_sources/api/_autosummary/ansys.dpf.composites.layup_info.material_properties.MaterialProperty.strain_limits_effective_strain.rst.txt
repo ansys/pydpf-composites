@@ -1,6 +1,0 @@
-strain\_limits\_effective\_strain
-=================================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.strain_limits_effective_strain

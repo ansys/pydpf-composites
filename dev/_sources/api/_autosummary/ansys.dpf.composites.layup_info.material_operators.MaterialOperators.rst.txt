@@ -24,14 +24,8 @@
    .. autosummary::
       :toctree:
    
-      
       MaterialOperators.material_provider
-      
-      
       MaterialOperators.material_support_provider
-      
-      
       MaterialOperators.result_info_provider
-      
    
    

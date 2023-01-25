@@ -30,20 +30,10 @@
    .. autosummary::
       :toctree:
    
-      
       ShearCrimpingCriterion.active
-      
-      
       ShearCrimpingCriterion.kc
-      
-      
       ShearCrimpingCriterion.kf
-      
-      
       ShearCrimpingCriterion.name
-      
-      
       ShearCrimpingCriterion.wf
-      
    
    

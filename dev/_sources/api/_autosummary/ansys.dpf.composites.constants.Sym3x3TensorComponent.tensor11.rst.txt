@@ -1,6 +1,0 @@
-tensor11
-========
-
-.. currentmodule:: ansys.dpf.composites.constants
-
-.. autoattribute:: Sym3x3TensorComponent.tensor11

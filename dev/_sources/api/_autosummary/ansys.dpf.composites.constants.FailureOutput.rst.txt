@@ -17,14 +17,8 @@
    .. autosummary::
       :toctree:
    
-      
-      FailureOutput.failure_mode
-      
-      
-      FailureOutput.failure_value
-      
-      
-      FailureOutput.max_layer_index
-      
+      FailureOutput.FAILURE_MODE
+      FailureOutput.FAILURE_VALUE
+      FailureOutput.MAX_LAYER_INDEX
    
    

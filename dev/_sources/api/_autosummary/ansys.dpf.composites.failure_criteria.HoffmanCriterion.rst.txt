@@ -30,17 +30,9 @@
    .. autosummary::
       :toctree:
    
-      
       HoffmanCriterion.active
-      
-      
       HoffmanCriterion.dim
-      
-      
       HoffmanCriterion.name
-      
-      
       HoffmanCriterion.wf
-      
    
    

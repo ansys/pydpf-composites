@@ -24,11 +24,7 @@
    .. autosummary::
       :toctree:
    
-      
       SamplingPointFigure.figure
-      
-      
       SamplingPointFigure.axes
-      
    
    

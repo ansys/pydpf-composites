@@ -36,12 +36,8 @@
    .. autosummary::
       :toctree:
    
-      
-      
+      CombinedFailureCriterion.JSON_DICT_KEY
       CombinedFailureCriterion.failure_criteria
-      
-      
       CombinedFailureCriterion.name
-      
    
    

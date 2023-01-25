@@ -17,14 +17,8 @@
    .. autosummary::
       :toctree:
    
-      
-      FailureMeasure.inverse_reserve_factor
-      
-      
-      FailureMeasure.margin_of_safety
-      
-      
-      FailureMeasure.reserve_factor
-      
+      FailureMeasure.INVERSE_RESERVE_FACTOR
+      FailureMeasure.MARGIN_OF_SAFETY
+      FailureMeasure.RESERVE_FACTOR
    
    

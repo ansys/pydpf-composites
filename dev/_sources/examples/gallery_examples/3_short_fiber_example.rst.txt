@@ -203,7 +203,7 @@ Compute and plot the max failure value per element.
     minmax_per_element.inputs.abstract_field_support(mat_support_operator)
 
     max_failure = minmax_per_element.outputs.field_max.get_data()
-    max_failure_value = max_failure.get_field({"failure_label": FailureOutput.failure_value})
+    max_failure_value = max_failure.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     mesh.plot(max_failure_value, show_edges=True)
 
 
@@ -220,7 +220,7 @@ Compute and plot the max failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.114 seconds)
+   **Total running time of the script:** ( 0 minutes  2.290 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_3_short_fiber_example.py:

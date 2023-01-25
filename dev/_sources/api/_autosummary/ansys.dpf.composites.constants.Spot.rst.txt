@@ -17,14 +17,8 @@
    .. autosummary::
       :toctree:
    
-      
-      Spot.bottom
-      
-      
-      Spot.middle
-      
-      
-      Spot.top
-      
+      Spot.BOTTOM
+      Spot.MIDDLE
+      Spot.TOP
    
    

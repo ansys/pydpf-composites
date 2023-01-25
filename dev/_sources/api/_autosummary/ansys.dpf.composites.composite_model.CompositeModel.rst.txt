@@ -60,17 +60,9 @@
    .. autosummary::
       :toctree:
    
-      
       CompositeModel.composite_definition_labels
-      
-      
       CompositeModel.core_model
-      
-      
       CompositeModel.data_sources
-      
-      
       CompositeModel.material_operators
-      
    
    

@@ -30,20 +30,10 @@
    .. autosummary::
       :toctree:
    
-      
       FaceSheetWrinklingCriterion.active
-      
-      
       FaceSheetWrinklingCriterion.homogeneous_core_coeff
-      
-      
       FaceSheetWrinklingCriterion.honeycomb_core_coeff
-      
-      
       FaceSheetWrinklingCriterion.name
-      
-      
       FaceSheetWrinklingCriterion.wf
-      
    
    

@@ -1,6 +1,0 @@
-stress\_limits\_sxz
-===================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.stress_limits_sxz

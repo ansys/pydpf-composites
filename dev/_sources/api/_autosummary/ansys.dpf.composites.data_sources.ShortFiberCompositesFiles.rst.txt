@@ -24,14 +24,8 @@
    .. autosummary::
       :toctree:
    
-      
       ShortFiberCompositesFiles.rst
-      
-      
       ShortFiberCompositesFiles.dsdat
-      
-      
       ShortFiberCompositesFiles.engineering_data
-      
    
    

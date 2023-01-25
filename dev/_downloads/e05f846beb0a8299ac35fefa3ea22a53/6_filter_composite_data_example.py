@@ -60,7 +60,7 @@ element_infos[0]
 
 # %%
 # Plot stress values in material direction for the top layer, first node and "top" spot
-component = Sym3x3TensorComponent.tensor11
+component = Sym3x3TensorComponent.TENSOR11
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with result_field.as_local_field() as local_result_field:
     element_ids = stress_field.scoping.ids
@@ -69,7 +69,7 @@ with result_field.as_local_field() as local_result_field:
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
         selected_indices = get_selected_indices(
-            element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.top]
+            element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.TOP]
         )
 
         value = stress_data[selected_indices][:, component]
@@ -85,7 +85,7 @@ all_ply_names
 # %%
 # Loop all elements that contain a given ply and plot the maximum stress value
 # in material direction in that ply
-component = Sym3x3TensorComponent.tensor11
+component = Sym3x3TensorComponent.TENSOR11
 
 analysis_ply_info_provider = AnalysisPlyInfoProvider(
     mesh=composite_model.get_mesh(), name="P1L1__ud_patch ns1"
@@ -118,7 +118,7 @@ material_map = get_dpf_material_id_by_analyis_ply_map(
     composite_model.get_mesh(), data_source_or_streams_provider=composite_model.data_sources.rst
 )
 ud_material_id = material_map["P1L1__ud_patch ns1"]
-component = Sym3x3TensorComponent.tensor11
+component = Sym3x3TensorComponent.TENSOR11
 
 material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with material_result_field.as_local_field() as local_result_field:

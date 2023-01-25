@@ -1,6 +1,0 @@
-engineering\_constants\_nu12
-============================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.engineering_constants_nu12

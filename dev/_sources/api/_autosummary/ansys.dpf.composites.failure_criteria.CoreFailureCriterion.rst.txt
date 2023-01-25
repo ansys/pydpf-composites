@@ -30,17 +30,9 @@
    .. autosummary::
       :toctree:
    
-      
       CoreFailureCriterion.active
-      
-      
       CoreFailureCriterion.include_ins
-      
-      
       CoreFailureCriterion.name
-      
-      
       CoreFailureCriterion.wf
-      
    
    

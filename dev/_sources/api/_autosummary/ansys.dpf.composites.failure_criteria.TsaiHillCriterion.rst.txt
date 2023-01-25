@@ -30,17 +30,9 @@
    .. autosummary::
       :toctree:
    
-      
       TsaiHillCriterion.active
-      
-      
       TsaiHillCriterion.dim
-      
-      
       TsaiHillCriterion.name
-      
-      
       TsaiHillCriterion.wf
-      
    
    

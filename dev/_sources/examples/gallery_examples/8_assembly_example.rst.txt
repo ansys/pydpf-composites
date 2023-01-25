@@ -120,7 +120,7 @@ Plot the max IRF per element
 .. code-block:: default
 
     output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
-    irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value})
+    irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     irf_field.plot()
 
 
@@ -163,7 +163,7 @@ This example shows how to get ElementInfo for all layered elements
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.249 seconds)
+   **Total running time of the script:** ( 0 minutes  1.985 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_8_assembly_example.py:

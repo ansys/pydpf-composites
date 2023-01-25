@@ -30,56 +30,22 @@
    .. autosummary::
       :toctree:
    
-      
       CuntzeCriterion.active
-      
-      
       CuntzeCriterion.b21
-      
-      
       CuntzeCriterion.b32
-      
-      
       CuntzeCriterion.cfc
-      
-      
       CuntzeCriterion.cft
-      
-      
       CuntzeCriterion.cma
-      
-      
       CuntzeCriterion.cmb
-      
-      
       CuntzeCriterion.cmc
-      
-      
       CuntzeCriterion.dim
-      
-      
       CuntzeCriterion.fracture_plane_angle
-      
-      
       CuntzeCriterion.mode_interaction_coeff
-      
-      
       CuntzeCriterion.name
-      
-      
       CuntzeCriterion.wf_cfc
-      
-      
       CuntzeCriterion.wf_cft
-      
-      
       CuntzeCriterion.wf_cma
-      
-      
       CuntzeCriterion.wf_cmb
-      
-      
       CuntzeCriterion.wf_cmc
-      
    
    

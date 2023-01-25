@@ -17,23 +17,11 @@
    .. autosummary::
       :toctree:
    
-      
-      Sym3x3TensorComponent.tensor11
-      
-      
-      Sym3x3TensorComponent.tensor22
-      
-      
-      Sym3x3TensorComponent.tensor33
-      
-      
-      Sym3x3TensorComponent.tensor21
-      
-      
-      Sym3x3TensorComponent.tensor31
-      
-      
-      Sym3x3TensorComponent.tensor32
-      
+      Sym3x3TensorComponent.TENSOR11
+      Sym3x3TensorComponent.TENSOR22
+      Sym3x3TensorComponent.TENSOR33
+      Sym3x3TensorComponent.TENSOR21
+      Sym3x3TensorComponent.TENSOR31
+      Sym3x3TensorComponent.TENSOR32
    
    
