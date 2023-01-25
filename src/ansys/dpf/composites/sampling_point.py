@@ -101,7 +101,7 @@ class SamplingPoint:
     filtering of the data.
     """
 
-    _FAILURE_MODES = {
+    _FAILURE_MODE_NAMES_TO_ACP = {
         FailureMeasure.INVERSE_RESERVE_FACTOR: "inverse_reserve_factor",
         FailureMeasure.RESERVE_FACTOR: "reserve_factor",
         FailureMeasure.MARGIN_OF_SAFETY: "margin_of_safety",
@@ -724,7 +724,7 @@ class SamplingPoint:
             if len(failure_components) > 0:
 
                 failure_plot = axes[axes_index]
-                internal_fc = [self._FAILURE_MODES[v] for v in failure_components]
+                internal_fc = [self._FAILURE_MODE_NAMES_TO_ACP[v] for v in failure_components]
                 self.add_results_to_plot(
                     axes[axes_index], internal_fc, spots, core_scale_factor, "Failures", "[-]"
                 )
