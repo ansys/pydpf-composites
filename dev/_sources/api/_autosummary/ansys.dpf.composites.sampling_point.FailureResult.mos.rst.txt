@@ -1,6 +1,0 @@
-mos
-===
-
-.. currentmodule:: ansys.dpf.composites.sampling_point
-
-.. autoattribute:: FailureResult.mos
