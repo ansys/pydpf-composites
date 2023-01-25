@@ -5,9 +5,67 @@ import math
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_CFC = "Activates the failure evaluation regarding compression in fiber direction."
+_DOC_CFT = "Activates the failure evaluation regarding tension in fiber direction."
+_DOC_CMA = "Activates the failure evaluation of matrix due to tension."
+_DOC_CMB = "Activates the failure evaluation of matrix due to compression."
+_DOC_CMC = "Activates the failure evaluation of matrix due to compression / shear."
+_DOC_DIM = "Whether the 2D or 3D formulation of the criterion is used."
+_DOC_WF_CFC = "Weighting factor of fiber failure due to compression (cfc)."
+_DOC_WF_CFT = "Weighting factor of fiber failure due to tension (cft)."
+_DOC_WF_CMA = "Weighting factor of matrix failure due to tension (cma)."
+_DOC_WF_CMB = "Weighting factor of matrix failure due to compression (cmb)."
+_DOC_WF_CMC = "Weighting factor of matrix failure due to compression / shear (cmc)."
+_DOC_B21 = "In-plane shear friction coefficient. Default is 0.2."
+_DOC_B32 = (
+    "Out-of-plane shear friction coefficient. Default is 1.3805. Depends on the fracture "
+    "plane angle."
+)
+_DOC_MODE_INTERACTION_COEFF = "Mode interaction coefficient. Default is 2.6."
+_DOC_FRACTURE_PLANE_ANGLE = (
+    "Fracture plane angle. Default is 53 degree."
+    " Must be > 45. Depends on the out-of-plane shear friction coefficient."
+)
+
 
 class CuntzeCriterion(FailureCriterionBase):
-    """Defines the Cuntze criterion for uni-directional orthotropic reinforced materials."""
+    """Cuntze Criterion."""
+
+    __doc__ = f"""Defines the Cuntze criterion for uni-directional orthotropic reinforced materials.
+
+    Parameters
+    ----------
+    cfc:
+        {_DOC_CFC}
+    cft:
+        {_DOC_CFT}
+    cma:
+        {_DOC_CMA}
+    cmb:
+        {_DOC_CMB}
+    cmc:
+        {_DOC_CMC}
+    dim:
+        {_DOC_DIM}
+    wf_cfc:
+        {_DOC_WF_CFC}
+    wf_cft:
+        {_DOC_WF_CFT}
+    wf_cma:
+        {_DOC_WF_CMA}
+    wf_cmb:
+        {_DOC_WF_CMB}
+    wf_cmc:
+        {_DOC_WF_CMC}
+    b21:
+        {_DOC_B21}
+    b32:
+        {_DOC_B32}
+    fracture_plane_angle:
+        {_DOC_FRACTURE_PLANE_ANGLE}
+    mode_interaction_coeff:
+        {_DOC_MODE_INTERACTION_COEFF}
+    """
 
     def __init__(
         self,
@@ -137,66 +195,28 @@ class CuntzeCriterion(FailureCriterionBase):
     def _set_mode_interaction_coeff(self, value: float) -> None:
         self._mode_interaction_coeff = value
 
-    cfc = property(
-        _get_cfc,
-        _set_cfc,
-        doc="Activates the failure evaluation regarding compression in fiber direction.",
-    )
-    cft = property(
-        _get_cft,
-        _set_cft,
-        doc="Activates the failure evaluation regarding tension in fiber direction.",
-    )
-    cma = property(
-        _get_cma, _set_cma, doc="Activates the failure evaluation of matrix due to tension."
-    )
-    cmb = property(
-        _get_cmb, _set_cmb, doc="Activates the failure evaluation of matrix due to compression."
-    )
-    cmc = property(
-        _get_cmc,
-        _set_cmc,
-        doc="Activates the failure evaluation of matrix due to compression / shear.",
-    )
-
-    dim = property(
-        _get_dim, _set_dim, doc="Whether the 2D or 3D formulation of the criterion is used."
-    )
-    wf_cfc = property(
-        _get_wf_cfc, _set_wf_cfc, doc="Weighting factor of fiber failure due to compression (cfc)."
-    )
-    wf_cft = property(
-        _get_wf_cft, _set_wf_cft, doc="Weighting factor of fiber failure due to tension (cft)."
-    )
-    wf_cma = property(
-        _get_wf_cma, _set_wf_cma, doc="Weighting factor of matrix failure due to tension (cma)."
-    )
-    wf_cmb = property(
-        _get_wf_cmb, _set_wf_cmb, doc="Weighting factor of matrix failure due to compression (cmb)."
-    )
-    wf_cmc = property(
-        _get_wf_cmc,
-        _set_wf_cmc,
-        doc="Weighting factor of matrix failure due to compression / shear (cmc).",
-    )
-
-    b21 = property(_get_b21, _set_b21, doc="In-plane shear friction coefficient. Default is 0.2.")
-    b32 = property(
-        _get_b32,
-        _set_b32,
-        doc="Out-of-plane shear friction coefficient. Default is 1.3805. Depends on the fracture "
-        "plane angle.",
-    )
+    cfc = property(_get_cfc, _set_cfc, doc=_DOC_CFC)
+    cft = property(_get_cft, _set_cft, doc=_DOC_CFT)
+    cma = property(_get_cma, _set_cma, doc=_DOC_CMA)
+    cmb = property(_get_cmb, _set_cmb, doc=_DOC_CMB)
+    cmc = property(_get_cmc, _set_cmc, doc=_DOC_CMC)
+    dim = property(_get_dim, _set_dim, doc=_DOC_DIM)
+    wf_cfc = property(_get_wf_cfc, _set_wf_cfc, doc=_DOC_WF_CFC)
+    wf_cft = property(_get_wf_cft, _set_wf_cft, doc=_DOC_WF_CFT)
+    wf_cma = property(_get_wf_cma, _set_wf_cma, doc=_DOC_WF_CMA)
+    wf_cmb = property(_get_wf_cmb, _set_wf_cmb, doc=_DOC_WF_CMB)
+    wf_cmc = property(_get_wf_cmc, _set_wf_cmc, doc=_DOC_WF_CMC)
+    b21 = property(_get_b21, _set_b21, doc=_DOC_B21)
+    b32 = property(_get_b32, _set_b32, doc=_DOC_B32)
     mode_interaction_coeff = property(
         _get_mode_interaction_coeff,
         _set_mode_interaction_coeff,
-        doc="Mode interaction coefficient. Default is 2.6.",
+        doc=_DOC_MODE_INTERACTION_COEFF,
     )
     fracture_plane_angle = property(
         _get_fracture_plane_angle,
         _set_fracture_plane_angle,
-        doc="Fracture plane angle. Default is 53 degree. Must be > 45. Depends on the out-of-plane "
-        "shear friction coefficient.",
+        doc=_DOC_FRACTURE_PLANE_ANGLE,
     )
 
 

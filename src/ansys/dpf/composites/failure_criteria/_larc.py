@@ -3,9 +3,50 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_LFC = "Activates the failure evaluation regarding compression in fiber direction."
+
+_DOC_LFT = "Activates the failure evaluation regarding tension in fiber direction."
+
+_DOC_LMC = "Activates the failure evaluation of matrix due to compression."
+
+_DOC_LMT = "Activates the failure evaluation of matrix due to tension."
+
+_DOC_DIM = (
+    "Whether the 2D or 3D formulation of the criterion is used. 2D is equivalent to "
+    "LaRC03, and 3D to LaRC04."
+)
+_DOC_WF_LFC = "Weighting factor of fiber failure due to compression (lfc)."
+_DOC_WF_LFT = "Weighting factor of fiber failure due to tension (lft)."
+_DOC_WF_LMC = "Weighting factor of matrix failure due to compression (lmc)."
+_DOC_WF_LMT = "Weighting factor of matrix failure due to tension (lmt)."
+
 
 class LaRCCriterion(FailureCriterionBase):
-    """Defines the LaRC failure criterion for UD reinforced materials."""
+    """LaRC Criterion."""
+
+    __doc__ = f"""Defines the LaRC failure criterion for UD reinforced materials.
+
+    Parameters
+    ----------
+    lft:
+        {_DOC_LFT}
+    lfc:
+        {_DOC_LFC}
+    lmt:
+        {_DOC_LMT}
+    lmc:
+        {_DOC_LMC}
+    dim:
+        {_DOC_DIM}
+    wf_lft:
+        {_DOC_WF_LFT}
+    wf_lfc:
+        {_DOC_WF_LFC}
+    wf_lmt:
+        {_DOC_WF_LMT}
+    wf_lmc:
+        {_DOC_WF_LMC}
+    """
 
     def __init__(
         self,
@@ -89,38 +130,28 @@ class LaRCCriterion(FailureCriterionBase):
     lfc = property(
         _get_lfc,
         _set_lfc,
-        doc="Activates the failure evaluation regarding compression in fiber direction.",
+        doc=_DOC_LFC,
     )
     lft = property(
         _get_lft,
         _set_lft,
-        doc="Activates the failure evaluation regarding tension in fiber direction.",
+        doc=_DOC_LFT,
     )
-    lmc = property(
-        _get_lmc, _set_lmc, doc="Activates the failure evaluation of matrix due to compression."
-    )
-    lmt = property(
-        _get_lmt, _set_lmt, doc="Activates the failure evaluation of matrix due to tension."
-    )
+    lmc = property(_get_lmc, _set_lmc, doc=_DOC_LMC)
+    lmt = property(_get_lmt, _set_lmt, doc=_DOC_LMT)
 
     dim = property(
         _get_dim,
         _set_dim,
-        doc="Whether the 2D or 3D formulation of the criterion is used. 2D is equivalent to "
-        "LaRC03, and 3D to LaRC04.",
+        doc=_DOC_DIM,
     )
-    wf_lfc = property(
-        _get_wf_lfc, _set_wf_lfc, doc="Weighting factor of fiber failure due to compression (lfc)."
-    )
-    wf_lft = property(
-        _get_wf_lft, _set_wf_lft, doc="Weighting factor of fiber failure due to tension (lft)."
-    )
-    wf_lmc = property(
-        _get_wf_lmc, _set_wf_lmc, doc="Weighting factor of matrix failure due to compression (lmc)."
-    )
-    wf_lmt = property(
-        _get_wf_lmt, _set_wf_lmt, doc="Weighting factor of matrix failure due to tension (lmt)."
-    )
+
+    wf_lfc = property(_get_wf_lfc, _set_wf_lfc, doc=_DOC_WF_LFC)
+
+    wf_lft = property(_get_wf_lft, _set_wf_lft, doc=_DOC_WF_LFT)
+
+    wf_lmc = property(_get_wf_lmc, _set_wf_lmc, doc=_DOC_WF_LMC)
+    wf_lmt = property(_get_wf_lmt, _set_wf_lmt, doc=_DOC_WF_LMT)
 
 
 ATTRS_LARC = inspect.signature(LaRCCriterion).parameters.keys()
