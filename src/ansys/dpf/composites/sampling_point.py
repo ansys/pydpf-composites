@@ -9,6 +9,7 @@ from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
+from matplotlib.axes import SubplotBase
 import numpy as np
 
 if TYPE_CHECKING:
@@ -532,7 +533,7 @@ class SamplingPoint:
         ax.legend()
         return SamplingPointFigure(fig, ax)
 
-    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float) -> None:
+    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.) -> None:
         """Add the stacking (ply + text) to an axes/plot.
 
         Parameters
@@ -546,9 +547,13 @@ class SamplingPoint:
             spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
         )
 
+        if len(offsets) == 0:
+            return
+
         num_spots = 2
+        axes.set_ybound(offsets[0], offsets[-1])
         x_bound = axes.get_xbound()
-        width = x_bound[1] - x_bound[0]
+        width = x_bound[-1] - x_bound[0]
 
         for index, ply in enumerate(self.analysis_plies):
             angle = float(ply["angle"])
@@ -681,38 +686,54 @@ class SamplingPoint:
         gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
         axes = gs.subplots(sharex="col", sharey="row")
 
+        def _get_subplot(axes_obj, current_index):
+            if issubclass(axes_obj.__class__, SubplotBase):
+                if current_index > 0:
+                    raise RuntimeError("axes plot cannot be indexed.")
+                return axes_obj
+            else:
+                if current_index < len(axes_obj):
+                    return axes_obj[current_index]
+
+            raise RuntimeError("get_subplot: index exceeds limit.")
+
         if num_active_plots > 0:
             ticks = self.get_offsets_by_spots(spots=[Spot.TOP], core_scale_factor=core_scale_factor)
 
+            axes_index = 0
+
+            first_axis = _get_subplot(axes, axes_index)
             if core_scale_factor != 1.0:
                 labels = []
-                axes[0].set_ylabel("z-Coordinates (scaled)")
+                first_axis.set_ylabel("z-Coordinates (scaled)")
             else:
                 labels = [f"{t:.3}" for t in ticks]
-                axes[0].set_ylabel("z-Coordinates [length]")
+                first_axis.set_ylabel("z-Coordinates [length]")
 
-            axes[0].set_yticks(ticks=ticks, labels=labels)
+            first_axis.set_yticks(ticks=ticks, labels=labels)
 
-            axes_index = 0
             if create_laminate_plot:
                 plt.rcParams["hatch.linewidth"] = 0.2
                 plt.rcParams["hatch.color"] = "silver"
-                self.add_ply_sequence_to_plot(axes[axes_index], core_scale_factor)
-                axes[axes_index].set_xticks([])
+                layup_axis = _get_subplot(axes, axes_index)
+                self.add_ply_sequence_to_plot(layup_axis, core_scale_factor)
+                layup_axis.set_xticks([])
                 axes_index += 1
 
                 plt.rcParams["hatch.linewidth"] = 1.0
                 plt.rcParams["hatch.color"] = "black"
 
             if len(strain_components) > 0:
+                strain_axis = _get_subplot(axes, axes_index)
                 self.add_results_to_plot(
-                    axes[axes_index], strain_components, spots, core_scale_factor, "Strains", "[-]"
+                    strain_axis, strain_components, spots, core_scale_factor, "Strains", "[-]"
                 )
                 axes_index += 1
 
             if len(stress_components) > 0:
+                stress_axis = _get_subplot(axes, axes_index)
                 self.add_results_to_plot(
-                    axes[axes_index],
+                    stress_axis,
                     stress_components,
                     spots,
                     core_scale_factor,
@@ -722,11 +743,10 @@ class SamplingPoint:
                 axes_index += 1
 
             if len(failure_components) > 0:
-
-                failure_plot = axes[axes_index]
+                failure_axis = _get_subplot(axes, axes_index)
                 internal_fc = [self._FAILURE_MODE_NAMES_TO_ACP[v] for v in failure_components]
                 self.add_results_to_plot(
-                    axes[axes_index], internal_fc, spots, core_scale_factor, "Failures", "[-]"
+                    failure_axis, internal_fc, spots, core_scale_factor, "Failures", "[-]"
                 )
 
                 if show_failure_modes:
@@ -741,7 +761,7 @@ class SamplingPoint:
 
                     for index, offset in enumerate(middle_offsets):
                         for fc in failure_components:
-                            failure_plot.annotate(
+                            failure_axis.annotate(
                                 getattr(critical_failures[index], "mode"),
                                 xy=(getattr(critical_failures[index], fc.value), offset),
                                 xytext=(getattr(critical_failures[index], fc.value), offset),

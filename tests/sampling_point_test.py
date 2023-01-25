@@ -156,6 +156,46 @@ def test_sampling_point(dpf_server):
     sampling_point.add_ply_sequence_to_plot(ax1, 0.5)
 
 
+def test_sampling_point_result_plots(dpf_server):
+    """Ensure that get_result_plots works if only one plot is selected."""
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    composite_files = ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+
+    files = upload_continuous_fiber_composite_files_to_server(
+        data_files=composite_files, server=dpf_server
+    )
+    cfc = CombinedFailureCriterion(
+        "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
+    )
+    composite_model = CompositeModel(files, server=dpf_server)
+
+    """Test axes plot with only one axis"""
+    sp = composite_model.get_sampling_point(cfc, 1)
+    plot_obj = sp.get_result_plots(create_laminate_plot=True,
+                                   strain_components=[],
+                                   stress_components=[],
+                                   failure_components=[])
+    plot_obj = sp.get_result_plots(create_laminate_plot=False,
+                                   strain_components=["e1"],
+                                   stress_components=[],
+                                   failure_components=[])
+    plot_obj = sp.get_result_plots(create_laminate_plot=False,
+                                   strain_components=[],
+                                   stress_components=["s1"],
+                                   failure_components=[])
+    plot_obj = sp.get_result_plots(create_laminate_plot=False,
+                                   strain_components=[],
+                                   stress_components=[],
+                                   failure_components=[FailureMeasure.MARGIN_OF_SAFETY])
+
+
 def test_sampling_point_with_numpy_types(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
