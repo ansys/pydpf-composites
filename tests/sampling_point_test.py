@@ -22,6 +22,8 @@ from ansys.dpf.composites.failure_criteria._max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import ResultDefinition, ResultDefinitionScope
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
 
+from src.ansys.dpf.composites.result_definition import FailureMeasure
+
 
 def test_sampling_point(dpf_server):
     """Basic test with a running server"""
@@ -119,7 +121,7 @@ def test_sampling_point(dpf_server):
     sampling_point.get_result_plots(
         strain_components=["e1", "e12"],
         stress_components=["s13", "s23"],
-        failure_components=["rf"],
+        failure_components=[FailureMeasure.reserve_factor],
         show_failure_modes=True,
         create_laminate_plot=True,
         core_scale_factor=0.5,
