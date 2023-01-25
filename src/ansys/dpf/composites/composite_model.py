@@ -202,14 +202,14 @@ class CompositeModel:
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
-        measure: FailureMeasure = FailureMeasure.inverse_reserve_factor,
+        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluted failure criteria.
 
         The container contains the maximum per element if the measure
-        is `FailureMeasure.inverse_reserve_factor` and the minimum per element
-        if the measure is `FailureMeasure.margin_of_safety` or `FailureMeasure.reserve_factor`
+        is `FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is `FailureMeasure.MARGIN_OF_SAFETY` or `FailureMeasure.RESERVE_FACTOR`
 
         Parameters
         ----------
@@ -273,7 +273,7 @@ class CompositeModel:
 
         failure_operator.inputs.result_definition(rd.to_json())
 
-        if measure == FailureMeasure.inverse_reserve_factor:
+        if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
             return failure_operator.outputs.fields_containerMax()
         else:
             return failure_operator.outputs.fields_containerMin()
@@ -388,11 +388,11 @@ class CompositeModel:
         layup_properties_provider = self._composite_infos[
             composite_definition_label
         ].layup_properties_provider
-        if layup_property == LayerProperty.angles:
+        if layup_property == LayerProperty.ANGLES:
             return layup_properties_provider.get_layer_angles(element_id)
-        if layup_property == LayerProperty.thicknesses:
+        if layup_property == LayerProperty.THICKNESSES:
             return layup_properties_provider.get_layer_thicknesses(element_id)
-        if layup_property == LayerProperty.shear_angles:
+        if layup_property == LayerProperty.SHEAR_ANGLES:
             return layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 

@@ -45,7 +45,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Currently only constant properties are supported.
 # For variable material properties, the default value is returned.
 
-material_property = MaterialProperty.strain_limits_ext
+material_property = MaterialProperty.Strain_Limits_eXt
 property_dict = composite_model.get_constant_property_dict([material_property])
 
 
@@ -61,7 +61,7 @@ strain_field = strain_operator.get_output(pin=0, output_type=dpf.types.fields_co
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
 with result_field.as_local_field() as local_result_field:
-    component = Sym3x3TensorComponent.tensor11
+    component = Sym3x3TensorComponent.TENSOR11
 
     for element_id in strain_field.scoping.ids:
         strain_data = strain_field.get_entity_data_by_id(element_id)

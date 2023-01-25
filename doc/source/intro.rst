@@ -89,7 +89,7 @@ detailed output for a sampling point.
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
-    irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value.value})
+    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     irf_field.plot()
 
     # Show sampling point for element with id/label 1

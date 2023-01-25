@@ -14,9 +14,9 @@ __all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
 class FailureMeasure(Enum):
     """Available Failure Measures."""
 
-    inverse_reserve_factor: str = "inverse_reserve_factor"
-    margin_of_safety: str = "safety_margin"
-    reserve_factor: str = "safety_factor"
+    INVERSE_RESERVE_FACTOR: str = "inverse_reserve_factor"
+    MARGIN_OF_SAFETY: str = "safety_margin"
+    RESERVE_FACTOR: str = "safety_factor"
 
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
