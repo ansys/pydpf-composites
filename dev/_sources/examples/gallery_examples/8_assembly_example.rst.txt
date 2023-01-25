@@ -163,7 +163,7 @@ This example shows how to get ElementInfo for all layered elements
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.806 seconds)
+   **Total running time of the script:** ( 0 minutes  3.249 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_8_assembly_example.py:

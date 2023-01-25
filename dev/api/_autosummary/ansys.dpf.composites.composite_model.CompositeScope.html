@@ -2675,7 +2675,20 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeScope">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompositeScope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeScope" title="Permalink to this definition">#</a></dt>
 <dd><p>Composite scope.</p>
-<p>Defines which part of the model is selected.</p>
+<p>Defines which part of the model and solution step are selected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elements</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>]</em><em>]</em>) – list of element labels</p></li>
+<li><p><strong>plies</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em><em>]</em>) – list of plies.</p></li>
+<li><p><strong>time</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – time or frequency. Refer to
+<a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies.html#ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies" title="ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies"><code class="xref py py-func docutils literal notranslate"><span class="pre">CompositeModel.get_result_times_or_frequencies()</span></code></a> to list the solution steps.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>In case <cite>elements</cite> and <cite>plies</cite> are set, the final element scope is the intersection
+of the two.</p>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
