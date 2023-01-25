@@ -76,7 +76,6 @@ class ResultDefinition:
         self._material_file = material_file
         self._rst_file = rst_file
         self._stress_strain_eval_mode = stress_strain_eval_mode
-        # todo: is 1 a good default? Shouldn't it be last?
         self._time = time
         self._max_chunk_size = max_chunk_size
 
@@ -178,7 +177,11 @@ class ResultDefinition:
 
     @property
     def time(self) -> float:
-        """Select time / solution step."""
+        """Select time / solution step.
+
+        Note: Function :func:`CompositeModel.get_result_times_or_frequencies` can be used
+        to list the available times or frequencies in the result file.
+        """
         return self._time
 
     @time.setter
