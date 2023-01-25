@@ -11,7 +11,7 @@ from .failure_criteria._combined_failure_criterion import CombinedFailureCriteri
 __all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
 
 
-class FailureMeasure(Enum):
+class FailureMeasure(str, Enum):
     """Available Failure Measures."""
 
     INVERSE_RESERVE_FACTOR: str = "inverse_reserve_factor"
@@ -20,7 +20,7 @@ class FailureMeasure(Enum):
 
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
-_SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
+_SUPPORTED_MEASURES = [v for v in FailureMeasure]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 

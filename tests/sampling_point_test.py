@@ -121,7 +121,7 @@ def test_sampling_point(dpf_server):
     sampling_point.get_result_plots(
         strain_components=["e1", "e12"],
         stress_components=["s13", "s23"],
-        failure_components=[FailureMeasure.reserve_factor],
+        failure_components=[FailureMeasure.RESERVE_FACTOR],
         show_failure_modes=True,
         create_laminate_plot=True,
         core_scale_factor=0.5,
