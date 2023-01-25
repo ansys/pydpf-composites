@@ -1,0 +1,5 @@
+@import "../ansys-sphinx-theme.css";
+
+.container-xl {
+    max-width: 1600px
+}
