@@ -9,7 +9,7 @@ Extract elemental layered properties such as thickness and material.
 This example shows how to access basic lay-up properties such as layer
 thicknesses, angles and analysis ply names. These properties can be queried
 very efficiently. To get the full lay-up information of an element including results
-consider also :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>`.
+consider also :class:`Sampling Point <.SamplingPoint>`.
 
 Element layered properties are typically used for layer-wise post-processing and
 data filtering.

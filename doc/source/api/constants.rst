@@ -1,7 +1,7 @@
 Constants
 ---------
 
-.. currentmodule:: ansys.dpf.composites.constants
+.. module:: ansys.dpf.composites.constants
 
 .. autosummary::
     :toctree: _autosummary

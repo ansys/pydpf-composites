@@ -52,8 +52,10 @@ def connect_to_or_start_server(
     ansys_path:
         Ansys root path, for example C:\\Program Files\\ANSYS Inc\\v231.
         Ignored if either port or ip are set.
+
     Returns
     -------
+    :
         dpf server
     """
     port_in_env = os.environ.get("PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT")

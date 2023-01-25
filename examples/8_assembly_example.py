@@ -7,7 +7,7 @@ Post-process an Assembly
 Post-process an assembly with multiple composite parts.
 
 This example shows how an assembly of a shell and solid composite
-model can be post-processed. The :class:`Composite Model <ansys.dpf.composites.CompositeModel>`
+model can be post-processed. The :class:`Composite Model <.CompositeModel>`
 helps to access the data of the different parts.
 
 """

@@ -1,7 +1,7 @@
 Server Helpers
 --------------
 
-.. currentmodule:: ansys.dpf.composites.server_helpers
+.. module:: ansys.dpf.composites.server_helpers
 
 .. autosummary::
     :toctree: _autosummary

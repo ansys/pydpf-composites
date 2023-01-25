@@ -1,7 +1,7 @@
 Data Sources
 ------------
 
-.. currentmodule:: ansys.dpf.composites.data_sources
+.. module:: ansys.dpf.composites.data_sources
 
 .. autosummary::
     :toctree: _autosummary
