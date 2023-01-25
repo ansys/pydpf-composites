@@ -29,6 +29,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 # Start a server and get the examples files.
 # This will copy the example files into the current working directory.
 # In general, the following files are needed:
+#
 # * the MAPDL *rst* file with the simulation results
 # * the Engineering Data *MatML* file containing the material properties of the composite
 # * the MAPDL input file *ds.dat* containing the fiber orientation tensor data
@@ -82,5 +83,5 @@ minmax_per_element.inputs.mesh(mesh)
 minmax_per_element.inputs.abstract_field_support(mat_support_operator)
 
 max_failure = minmax_per_element.outputs.field_max.get_data()
-max_failure_value = max_failure.get_field({"failure_label": FailureOutput.failure_value})
+max_failure_value = max_failure.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 mesh.plot(max_failure_value, show_edges=True)

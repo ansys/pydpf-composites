@@ -1,10 +1,21 @@
 @import "../ansys-sphinx-theme.css";
 
-.col-md-3 {
-    flex: 0 0 30%;
-    max-width: 30%;
+@media (min-width:1200px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1200px
+    }
 }
-.col-xl-7 {
-    flex: 0 0 53.33333%;
-    max-width: 53.33333%;
-  }
+
+@media (min-width:1600px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1600px
+    }
+}
