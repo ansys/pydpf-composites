@@ -613,7 +613,7 @@ class SamplingPoint:
 
         for comp in components:
             raw_values = getattr(self, comp)
-            if not raw_values:
+            if raw_values is None:
                 raise RuntimeError(f"Component {comp} is not supported. "
                                    f"Please refer to the help of add_results_to_plot")
             values = [raw_values[i] for i in indices]

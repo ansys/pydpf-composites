@@ -14,15 +14,11 @@ from ansys.dpf.composites.data_sources import (
     ContinuousFiberCompositesFiles,
 )
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
-from ansys.dpf.composites.failure_criteria._combined_failure_criterion import (
-    CombinedFailureCriterion,
-)
-from ansys.dpf.composites.failure_criteria._max_strain import MaxStrainCriterion
-from ansys.dpf.composites.failure_criteria._max_stress import MaxStressCriterion
-from ansys.dpf.composites.result_definition import ResultDefinition, ResultDefinitionScope
+from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion
+from ansys.dpf.composites.failure_criteria import MaxStrainCriterion
+from ansys.dpf.composites.failure_criteria import MaxStressCriterion
+from ansys.dpf.composites.result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
-
-from src.ansys.dpf.composites.result_definition import FailureMeasure
 
 
 def test_sampling_point(dpf_server):
