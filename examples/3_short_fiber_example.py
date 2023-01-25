@@ -82,5 +82,5 @@ minmax_per_element.inputs.mesh(mesh)
 minmax_per_element.inputs.abstract_field_support(mat_support_operator)
 
 max_failure = minmax_per_element.outputs.field_max.get_data()
-max_failure_value = max_failure.get_field({"failure_label": FailureOutput.failure_value})
+max_failure_value = max_failure.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 mesh.plot(max_failure_value, show_edges=True)
