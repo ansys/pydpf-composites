@@ -178,22 +178,27 @@ def test_sampling_point_result_plots(dpf_server):
 
     """Test axes plot with only one axis"""
     sp = composite_model.get_sampling_point(cfc, 1)
-    plot_obj = sp.get_result_plots(create_laminate_plot=True,
-                                   strain_components=[],
-                                   stress_components=[],
-                                   failure_components=[])
-    plot_obj = sp.get_result_plots(create_laminate_plot=False,
-                                   strain_components=["e1"],
-                                   stress_components=[],
-                                   failure_components=[])
-    plot_obj = sp.get_result_plots(create_laminate_plot=False,
-                                   strain_components=[],
-                                   stress_components=["s1"],
-                                   failure_components=[])
-    plot_obj = sp.get_result_plots(create_laminate_plot=False,
-                                   strain_components=[],
-                                   stress_components=[],
-                                   failure_components=[FailureMeasure.MARGIN_OF_SAFETY])
+    plot_obj = sp.get_result_plots(
+        create_laminate_plot=True, strain_components=[], stress_components=[], failure_components=[]
+    )
+    plot_obj = sp.get_result_plots(
+        create_laminate_plot=False,
+        strain_components=["e1"],
+        stress_components=[],
+        failure_components=[],
+    )
+    plot_obj = sp.get_result_plots(
+        create_laminate_plot=False,
+        strain_components=[],
+        stress_components=["s1"],
+        failure_components=[],
+    )
+    plot_obj = sp.get_result_plots(
+        create_laminate_plot=False,
+        strain_components=[],
+        stress_components=[],
+        failure_components=[FailureMeasure.MARGIN_OF_SAFETY],
+    )
 
 
 def test_sampling_point_with_numpy_types(dpf_server):

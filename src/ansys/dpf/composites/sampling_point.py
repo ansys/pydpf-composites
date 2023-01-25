@@ -7,9 +7,9 @@ from typing import TYPE_CHECKING, Any, Collection, Dict, List, Sequence, Union, 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
+from matplotlib.axes import SubplotBase
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
-from matplotlib.axes import SubplotBase
 import numpy as np
 
 if TYPE_CHECKING:
@@ -533,7 +533,7 @@ class SamplingPoint:
         ax.legend()
         return SamplingPointFigure(fig, ax)
 
-    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.) -> None:
+    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply + text) to an axes/plot.
 
         Parameters
