@@ -20,9 +20,9 @@ def add_layup_info_to_mesh(
     Parameters
     ----------
     data_sources:
-        Dpf DataSources object available from :attr:`.CompositeModel.data_sources`
+        DPF DataSources object available from :attr:`.CompositeModel.data_sources`
     mesh:
-        Dpf MeshedRegion object available from :meth:`.CompositeModel.get_mesh`
+        DPF MeshedRegion object available from :meth:`.CompositeModel.get_mesh`
     material_operators:
        MaterialOperators object available from :attr:`.CompositeModel.material_operators`
     composite_definition_label:

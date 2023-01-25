@@ -149,7 +149,7 @@ class AnalysisPlyInfoProvider:
     Parameters
     ----------
     mesh
-        Dpf MeshedRegion with layup information.
+        DPF MeshedRegion with layup information.
     name
         Analysis Ply Name
     """
@@ -185,9 +185,9 @@ def get_dpf_material_id_by_analyis_ply_map(
     Parameters
     ----------
     mesh
-        Dpf Meshed region enriched with layup information
+        DPF Meshed region enriched with layup information
     data_source_or_streams_provider:
-        Dpf data source with rst file or streams_provider. The streams provider is
+        DPF data source with rst file or streams_provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
     """
     # Note: The stream_provider_or_data_source is not strictly needed for this workflow
@@ -235,7 +235,7 @@ def get_analysis_ply_index_to_name_map(
     Parameters
     ----------
     mesh
-        Dpf Meshed region enriched with layup information
+        DPF Meshed region enriched with layup information
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
