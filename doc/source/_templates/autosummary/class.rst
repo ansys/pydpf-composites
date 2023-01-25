@@ -1,4 +1,6 @@
-{{ fullname | escape | underline}}
+{{ objname | escape | underline}}
+
+Import as ``{{ fullname }}``
 
 .. currentmodule:: {{ module }}
 
