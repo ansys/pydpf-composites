@@ -41,7 +41,6 @@ jobs:
   tests:
     name: "Tests and coverage"
     runs-on: ${{ matrix.os }}
-    needs: []
     strategy:
       matrix:
         # We can't test on windows because it is not possible to run linux
