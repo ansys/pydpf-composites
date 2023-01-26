@@ -202,7 +202,7 @@ jobs:
 
   release:
     name: "Release project"
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
     needs: [build-package]
     runs-on: ubuntu-latest
     steps:
