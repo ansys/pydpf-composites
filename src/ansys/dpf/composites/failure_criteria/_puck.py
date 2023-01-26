@@ -33,11 +33,11 @@ _DOC_FORCE_GLOBAL_CONSTANTS = (
     "Whether to use global constants instead of the material-wise properties."
 )
 _DOC_P21_NEG = (
-    "Global inclination factor at"
+    "Global inclination factor in the"
     r" :math:`\sigma_1 - \tau_{12}` plane at :math:`\sigma_2 = 0` for compression."
 )
 _DOC_P21_POS = (
-    "Global inclination factor at"
+    "Global inclination factor in the"
     r" :math:`\sigma_1 - \tau_{12}` plane at :math:`\sigma_2 = 0` for tension."
 )
 _DOC_P22_NEG = (
