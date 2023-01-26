@@ -111,7 +111,8 @@ def test_all_element_types(dpf_server):
 
     def check_output(rst_file, expected_output):
         rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
-        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+        if not dpf_server.local_server:
+            rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
 
         rst_data_source = dpf.DataSources(rst_path)
 
@@ -186,7 +187,9 @@ def test_document_error_cases_indices(dpf_server):
 
     def get_layup_info_for_rst(rst_file):
         rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
-        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+
+        if not dpf_server.local_server:
+            rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
 
         rst_data_source = dpf.DataSources(rst_path)
 

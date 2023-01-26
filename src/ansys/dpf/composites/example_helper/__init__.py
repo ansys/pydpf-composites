@@ -50,8 +50,10 @@ def upload_continuous_fiber_composite_files_to_server(
     server
     """
 
-    def upload(filename: _PATH) -> str:
-        return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
+    def upload(filename: _PATH) -> _PATH:
+        if not server.local_server:
+            return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
+        return filename
 
     all_composite_files = {}
     for key, composite_files_by_scope in data_files.composite.items():

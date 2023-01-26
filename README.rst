@@ -88,12 +88,18 @@ Use tox to create a virtual env for the development. Activate this env to run te
 
 Testing
 -------
-#. Run tests with a docker container:
+#. Run tests with a docker container. Note: the docker container is not yet publicly available.
 
     .. code:: bash
 
         docker pull ghcr.io/pyansys/pydpf-composites:231
         pytest .
+
+#. Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):
+
+    .. code:: bash
+
+        pytest . --ansys-path "C:\Program Files\Ansys Inc\v231"
 
 #. Run tests with a local Grpc server executable:
 
@@ -101,12 +107,14 @@ Testing
 
         pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
 
-This currently works only on windows and with the directory structure of dpf_composites. (The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder)
+    This currently works only on windows and with the directory structure of dpf_composites (an internal ansys package). The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder.
 
 
 Build documentation
 ===================
 #. Windows:
+
+    Note: the docker container is not yet publicly available.
 
     .. code:: bash
 
@@ -115,6 +123,8 @@ Build documentation
         tox -e doc-windows
 
 #. Linux:
+
+    Note: the docker container is not yet publicly available.
 
     .. code:: bash
 
