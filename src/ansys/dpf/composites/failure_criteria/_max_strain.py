@@ -3,9 +3,86 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_E1 = "Activates the failure evaluation regarding the strain in the material 1 direction."
+_DOC_E2 = "Activates the failure evaluation regarding the strain in the material 2 direction."
+_DOC_E3 = (
+    "Activates the failure evaluation regarding the strain in the "
+    "material 3 direction (out-of-plane)."
+)
+_DOC_E12 = "Activates the failure evaluation regarding the in-plane shear strain e12."
+_DOC_E13 = "Activates the failure evaluation regarding the interlaminar shear strain e13."
+_DOC_E23 = "Activates the failure evaluation regarding the interlaminar shear strain e23."
+_DOC_WF_E1 = "Weighting factor of the failure mode e1."
+_DOC_WF_E2 = "Weighting factor of the failure mode e2."
+_DOC_WF_E3 = "Weighting factor of the failure mode e3."
+_DOC_WF_E12 = "Weighting factor of the failure mode e12."
+_DOC_WF_E13 = "Weighting factor of the failure mode e13."
+_DOC_WF_E23 = "Weighting factor of the failure mode e23."
+_DOC_FORCE_GLOBAL_STRAIN_LIMITS = (
+    "Whether to use one set of global strain limits instead of the "
+    "strain limits of the materials."
+)
+_DOC_EXT = "Global tensile strain limit in material direction 1."
+_DOC_EXC = "Global compressive strain limit in material direction 1."
+_DOC_EYT = "Global tensile strain limit in material direction 2."
+_DOC_EYC = "Global compressive strain limit in material direction 2."
+_DOC_EZT = "Global strain limit in material direction 3."
+_DOC_EZC = "Global compressive strain limit in material direction 3."
+_DOC_ESXY = "Global strain limit in material direction 12."
+_DOC_ESXZ = "Global strain limit in material direction 13."
+_DOC_ESYZ = "Global strain limit in material direction 23."
+
 
 class MaxStrainCriterion(FailureCriterionBase):
-    """Defines the Maximum Strain failure criterion for orthotropic reinforced materials."""
+    """Max Strain Criterion."""
+
+    __doc__ = f"""Defines the Maximum Strain failure criterion for orthotropic reinforced materials.
+
+    Parameters
+    ----------
+    e1:
+        {_DOC_E1}
+    e2:
+        {_DOC_E2}
+    e3:
+        {_DOC_E3}
+    e12:
+        {_DOC_E12}
+    e13:
+        {_DOC_E13}
+    e23:
+        {_DOC_E23}
+    wf_e1:
+        {_DOC_WF_E1}
+    wf_e2:
+        {_DOC_WF_E2}
+    wf_e3:
+        {_DOC_WF_E3}
+    wf_e12:
+        {_DOC_WF_E12}
+    wf_e13:
+        {_DOC_WF_E13}
+    wf_e23:
+        {_DOC_WF_E23}
+    eXt:
+        {_DOC_EXT}
+    eXc:
+        {_DOC_EXC}
+    eYt:
+        {_DOC_EYT}
+    eYc:
+        {_DOC_EYC}
+    eZt:
+        {_DOC_EZT}
+    eZc:
+        {_DOC_EZC}
+    eSxy:
+        {_DOC_ESXY}
+    eSxz:
+        {_DOC_ESXZ}
+    eSyz:
+        {_DOC_ESYZ}
+    """
 
     def __init__(
         self,
@@ -189,65 +266,36 @@ class MaxStrainCriterion(FailureCriterionBase):
             raise ValueError("Strain limit eSyz cannot be negative.")
         self._eSyz = value
 
-    e1 = property(
-        _get_e1,
-        _set_e1,
-        doc="Activates the failure evaluation regarding the strain in the material 1 direction.",
-    )
-    e2 = property(
-        _get_e2,
-        _set_e2,
-        doc="Activates the failure evaluation regarding the strain in the material 2 direction.",
-    )
-    e3 = property(
-        _get_e3,
-        _set_e3,
-        doc="Activates the failure evaluation regarding the strain in the "
-        "material 3 direction (out-of-plane).",
-    )
-    e12 = property(
-        _get_e12,
-        _set_e12,
-        doc="Activates the failure evaluation regarding the in-plane shear strain e12.",
-    )
-    e13 = property(
-        _get_e13,
-        _set_e13,
-        doc="Activates the failure evaluation regarding the interlaminar shear strain e13.",
-    )
-    e23 = property(
-        _get_e23,
-        _set_e23,
-        doc="Activates the failure evaluation regarding the interlaminar shear strain e23.",
-    )
+    e1 = property(_get_e1, _set_e1, doc=_DOC_E1)
+    e2 = property(_get_e2, _set_e2, doc=_DOC_E2)
 
-    wf_e1 = property(_get_wf_e1, _set_wf_e1, doc="Weighting factor of the failure mode e1.")
-    wf_e2 = property(_get_wf_e2, _set_wf_e2, doc="Weighting factor of the failure mode e2.")
-    wf_e3 = property(_get_wf_e3, _set_wf_e3, doc="Weighting factor of the failure mode e3.")
-    wf_e12 = property(_get_wf_e12, _set_wf_e12, doc="Weighting factor of the failure mode e12.")
-    wf_e13 = property(_get_wf_e13, _set_wf_e13, doc="Weighting factor of the failure mode e13.")
-    wf_e23 = property(_get_wf_e23, _set_wf_e23, doc="Weighting factor of the failure mode e23.")
+    e3 = property(_get_e3, _set_e3, doc=_DOC_E3)
+    e12 = property(_get_e12, _set_e12, doc=_DOC_E12)
+    e13 = property(_get_e13, _set_e13, doc=_DOC_E13)
+    e23 = property(_get_e23, _set_e23, doc=_DOC_E23)
+
+    wf_e1 = property(_get_wf_e1, _set_wf_e1, doc=_DOC_WF_E1)
+    wf_e2 = property(_get_wf_e2, _set_wf_e2, doc=_DOC_WF_E2)
+    wf_e3 = property(_get_wf_e3, _set_wf_e3, doc=_DOC_WF_E3)
+    wf_e12 = property(_get_wf_e12, _set_wf_e12, doc=_DOC_WF_E12)
+    wf_e13 = property(_get_wf_e13, _set_wf_e13, doc=_DOC_WF_E13)
+    wf_e23 = property(_get_wf_e23, _set_wf_e23, doc=_DOC_WF_E23)
+
     force_global_strain_limits = property(
         _get_force_global_strain_limits,
         _set_force_global_strain_limits,
-        doc="Whether to use one set of global strain limits instead of the "
-        "strain limits of the materials.",
+        doc=_DOC_FORCE_GLOBAL_STRAIN_LIMITS,
     )
-    eXt = property(_get_eXt, _set_eXt, doc="Global tensile strain limit in material direction 1.")
-    eXc = property(
-        _get_eXc, _set_eXc, doc="Global compressive strain limit in material direction 1."
-    )
-    eYt = property(_get_eYt, _set_eYt, doc="Global tensile strain limit in material direction 2.")
-    eYc = property(
-        _get_eYc, _set_eYc, doc="Global compressive strain limit in material direction 2."
-    )
-    eZt = property(_get_eZt, _set_eZt, doc="Global _set_eYc strain limit in material direction 3.")
-    eZc = property(
-        _get_eZc, _set_eZc, doc="Global compressive strain limit in material direction 3."
-    )
-    eSxy = property(_get_eSxy, _set_eSxy, doc="Global strain limit in material direction 12.")
-    eSxz = property(_get_eSxz, _set_eSxz, doc="Global strain limit in material direction 13.")
-    eSyz = property(_get_eSyz, _set_eSyz, doc="Global strain limit in material direction 23.")
+    eXt = property(_get_eXt, _set_eXt, doc=_DOC_EXT)
+    eXc = property(_get_eXc, _set_eXc, doc=_DOC_EXC)
+    eYt = property(_get_eYt, _set_eYt, doc=_DOC_EYT)
+    eYc = property(_get_eYc, _set_eYc, doc=_DOC_EXC)
+    eZt = property(_get_eZt, _set_eZt, doc=_DOC_EZT)
+    eZc = property(_get_eZc, _set_eZc, doc=_DOC_EZC)
+    eSxy = property(_get_eSxy, _set_eSxy, doc=_DOC_ESXY)
+
+    eSxz = property(_get_eSxz, _set_eSxz, doc=_DOC_ESXZ)
+    eSyz = property(_get_eSyz, _set_eSyz, doc=_DOC_ESYZ)
 
 
 ATTRS_MAX_STRAIN = inspect.signature(MaxStrainCriterion).parameters.keys()

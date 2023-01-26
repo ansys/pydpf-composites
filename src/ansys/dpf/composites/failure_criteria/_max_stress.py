@@ -3,9 +3,55 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_S1 = "Activates the failure evaluation regarding the stress in the material 1 direction."
+_DOC_S2 = "Activates the failure evaluation regarding the stress in the material 2 direction."
+_DOC_S3 = (
+    "Activates the failure evaluation regarding the stress in the material "
+    "3 direction (out-of-plane)."
+)
+_DOC_S12 = "Activates the failure evaluation regarding the in-plane shear stress s12."
+_DOC_S13 = "Activates the failure evaluation regarding the interlaminar shear stress s13."
+_DOC_S23 = "Activates the failure evaluation regarding the interlaminar shear stress s23."
+_DOC_WF_S1 = "Weighting factor of the failure mode s1."
+_DOC_WF_S2 = "Weighting factor of the failure mode s2."
+_DOC_WF_S3 = "Weighting factor of the failure mode s3."
+_DOC_WF_S12 = "Weighting factor of the failure mode s12."
+_DOC_WF_S13 = "Weighting factor of the failure mode s13."
+_DOC_WF_S23 = "Weighting factor of the failure mode s23."
+
 
 class MaxStressCriterion(FailureCriterionBase):
-    """Defines the Maximum Stress failure criterion for orthotropic reinforced materials."""
+    """Max Stress Criterion."""
+
+    __doc__ = f"""Defines the Maximum Stress failure criterion for orthotropic reinforced materials.
+
+    Parameters
+    ----------
+    s1:
+        {_DOC_S1}
+    s2:
+        {_DOC_S2}
+    s3:
+        {_DOC_S3}
+    s12:
+        {_DOC_S12}
+    s13:
+        {_DOC_S13}
+    s23:
+        {_DOC_S23}
+    wf_s1:
+        {_DOC_WF_S1}
+    wf_s2:
+        {_DOC_WF_S2}
+    wf_s3:
+        {_DOC_WF_S3}
+    wf_s12:
+        {_DOC_WF_S12}
+    wf_s13:
+        {_DOC_WF_S13}
+    wf_s23:
+        {_DOC_WF_S23}
+    """
 
     def __init__(
         self,
@@ -101,44 +147,22 @@ class MaxStressCriterion(FailureCriterionBase):
     def _set_wf_s23(self, value: float) -> None:
         self._wf_s23 = value
 
-    s1 = property(
-        _get_s1,
-        _set_s1,
-        doc="Activates the failure evaluation regarding the stress in the material 1 direction.",
-    )
-    s2 = property(
-        _get_s2,
-        _set_s2,
-        doc="Activates the failure evaluation regarding the stress in the material 2 direction.",
-    )
-    s3 = property(
-        _get_s3,
-        _set_s3,
-        doc="Activates the failure evaluation regarding the stress in the material "
-        "3 direction (out-of-plane).",
-    )
-    s12 = property(
-        _get_s12,
-        _set_s12,
-        doc="Activates the failure evaluation regarding the in-plane shear stress s12.",
-    )
-    s13 = property(
-        _get_s13,
-        _set_s13,
-        doc="Activates the failure evaluation regarding the interlaminar shear stress s13.",
-    )
-    s23 = property(
-        _get_s23,
-        _set_s23,
-        doc="Activates the failure evaluation regarding the interlaminar shear stress s23.",
-    )
+    s1 = property(_get_s1, _set_s1, doc=_DOC_S1)
 
-    wf_s1 = property(_get_wf_s1, _set_wf_s1, doc="Weighting factor of the failure mode s1.")
-    wf_s2 = property(_get_wf_s2, _set_wf_s2, doc="Weighting factor of the failure mode s2.")
-    wf_s3 = property(_get_wf_s3, _set_wf_s3, doc="Weighting factor of the failure mode s3.")
-    wf_s12 = property(_get_wf_s12, _set_wf_s12, doc="Weighting factor of the failure mode s12.")
-    wf_s13 = property(_get_wf_s13, _set_wf_s13, doc="Weighting factor of the failure mode s13.")
-    wf_s23 = property(_get_wf_s23, _set_wf_s23, doc="Weighting factor of the failure mode s23.")
+    s2 = property(_get_s2, _set_s2, doc=_DOC_S2)
+
+    s3 = property(_get_s3, _set_s3, doc=_DOC_S3)
+    s12 = property(_get_s12, _set_s12, doc=_DOC_S12)
+    s13 = property(_get_s13, _set_s13, doc=_DOC_S13)
+    s23 = property(_get_s23, _set_s23, doc=_DOC_S23)
+
+    wf_s1 = property(_get_wf_s1, _set_wf_s1, doc=_DOC_WF_S1)
+    wf_s2 = property(_get_wf_s2, _set_wf_s2, doc=_DOC_WF_S2)
+    wf_s3 = property(_get_wf_s3, _set_wf_s3, doc=_DOC_WF_S3)
+    wf_s12 = property(_get_wf_s12, _set_wf_s12, doc=_DOC_WF_S12)
+
+    wf_s13 = property(_get_wf_s13, _set_wf_s13, doc=_DOC_WF_S13)
+    wf_s23 = property(_get_wf_s23, _set_wf_s23, doc=_DOC_WF_S23)
 
 
 ATTRS_MAX_STRESS = inspect.signature(MaxStressCriterion).parameters.keys()
