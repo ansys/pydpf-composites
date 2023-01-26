@@ -6,27 +6,27 @@ Testing session (to be removed)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Most of the documentation below is still valid for the ansys internal testing session with following exceptions:
 
-Since the module is not yet public, please install from github:
+Since the module is not yet public, please install from GitHub:
 
 .. code::
 
     pip install git+https://github.com/pyansys/pydpf-composites.git
 
-Whenever you call the function connect_to_or_start_server you have to pass the location of the 23.1 installer
+Whenever you call the function :func:`.connect_to_or_start_server` you have to pass the location of the 23.1 installer
 with the ansys_path argument:
 
 .. code::
 
     connect_to_or_start_server(ansys_path=os.environ["AWP_ROOT231"])
 
-Otherwise, the dpf server will be started with the latest installer it finds, which probably is 23.2.
+Otherwise, the DPF server will be started with the latest installer it finds, which probably is 23.2.
 
 
 Installation
 ^^^^^^^^^^^^
 
-ansys-dpf-composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
-Install the ansys-dpf-composites module from pip:
+PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
+Install the ``ansys-dpf-composites`` module with ``pip``:
 
 .. code::
 
@@ -56,7 +56,7 @@ Start from a local Ansys Workbench project
 """"""""""""""""""""""""""""""""""""""""""
 
 To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
-object in Mechanical and selecting "Open Solver Files Directory". Then call the
+object in Mechanical and selecting "Open Solver Files Directory." Then call the
 :func:`.get_composite_files_from_workbench_result_folder` function with that folder.
 The following  example shows how to setup a project from workbench, create a basic failure plot and display
 detailed output for a sampling point.

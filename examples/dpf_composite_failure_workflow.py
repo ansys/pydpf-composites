@@ -6,7 +6,7 @@ DPF Composite Failure Workflow
 
 Use of native DPF Python interface to configure and run composite failure evaluator.
 
-This example shows how to connect the different dpf operators that are needed to
+This example shows how to connect the different DPF operators that are needed to
 evaluate composite failure criteria. For simple use cases it is preferable
 to use the composite failure operator
 (:ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`)
@@ -96,7 +96,7 @@ result_info_provider.inputs.data_sources(rst_data_source)
 
 # %%
 # Set up material provider
-# Combines the material support the engineering data xml file and the unit_system.
+# Combines the material support the engineering data XML file and the ``unit_system``.
 # It's output can be used
 # to evaluate material properties
 material_provider = dpf.Operator("eng_data::ans_mat_material_provider")
@@ -144,7 +144,7 @@ failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
 # %%
-# Uses the output of the multiple_failure_criteria_operator
+# Uses the output of the ``multiple_failure_criteria_operator``
 # to compute the min and max failure criteria for each element
 #
 minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
