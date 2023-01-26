@@ -40,7 +40,7 @@ of the elementary data array. Please check the :ref:`sphx_glr_examples_gallery_e
 section for complete usage examples.
 
 
-.. currentmodule:: ansys.dpf.composites.select_indices
+.. module:: ansys.dpf.composites.select_indices
 
 .. autosummary::
     :toctree: _autosummary

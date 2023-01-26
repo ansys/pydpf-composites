@@ -3,9 +3,97 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_PF = "Activates the failure evaluation regarding fiber failure."
+_DOC_PMA = "Activates the failure evaluation regarding matrix failure due to tension."
+_DOC_PMB = "Activates the failure evaluation regarding matrix failure due to compression."
+_DOC_PMC = "Activates the failure evaluation regarding matrix failure due to shear failure."
+_DOC_PD = "Activates the failure evaluation regarding delamination if dim is equal to 3."
+_DOC_DIM = (
+    "Whether the 2D or 3D formulation of the criterion is used. The latter one also "
+    "supports the failure mode delamination. Use 1 for a simplified Puck criterion."
+)
+_DOC_WF_PF = "Weighting factor of the fiber failure (pf) mode."
+_DOC_WF_PMA = "Weighting factor of the matrix failure (pma) mode."
+_DOC_WF_PMB = "Weighting factor of the matrix failure (pmb) mode."
+_DOC_WF_PMC = "Weighting factor of the matrix failure (pmc) mode."
+_DOC_WF_PD = "Weighting factor of the delamination failure (pd) mode."
+_DOC_CFPS = "Whether to consider inter-fiber strength reduction due to fiber parallel stresses."
+_DOC_S = (
+    "Specifies the effect of fiber parallel stresses regarding inter-fiber failure. "
+    "s = [0, 1) and default is 0.5."
+)
+_DOC_M = (
+    "Specifies the effect of fiber parallel stresses regarding inter-fiber failure. "
+    "M = [0, 1) and default is 0.5."
+)
+_DOC_INTERFACE_WEAKENING_FACTOR = (
+    "Multiplicator for the interlaminar strength if failure mode pd is active. Default is 0.8."
+)
+_DOC_FORCE_GLOBAL_CONSTANTS = (
+    "Whether to use global constants instead of the material-wise properties."
+)
+_DOC_P21_NEG = (
+    "Global inclination factor in the"
+    r" :math:`\sigma_1 - \tau_{12}` plane at :math:`\sigma_2 = 0` for compression."
+)
+_DOC_P21_POS = (
+    "Global inclination factor in the"
+    r" :math:`\sigma_1 - \tau_{12}` plane at :math:`\sigma_2 = 0` for tension."
+)
+_DOC_P22_NEG = (
+    r"Global inclination factor of the fracture  plane :math:`\perp \perp` for compression."
+)
+_DOC_P22_POS = r"Global inclination factor of the fracture plane :math:`\perp \perp` for tension."
+
 
 class PuckCriterion(FailureCriterionBase):
-    """Defines the Puck failure criterion for UD reinforced materials."""
+    """Puck Criterion."""
+
+    __doc__ = f"""Defines the Puck failure criterion for UD reinforced materials.
+
+    Parameters
+    ----------
+    pf:
+        {_DOC_PF}
+    pma:
+        {_DOC_PMA}
+    pmb:
+        {_DOC_PMB}
+    pmc:
+        {_DOC_PMC}
+    pd:
+        {_DOC_PD}
+    dim:
+        {_DOC_DIM}
+    wf_pf:
+        {_DOC_WF_PF}
+    wf_pma:
+        {_DOC_WF_PMA}
+    wf_pmb:
+        {_DOC_WF_PMB}
+    wf_pmc:
+        {_DOC_WF_PMC}
+    wf_pd:
+        {_DOC_WF_PD}
+    cfps:
+        {_DOC_CFPS}
+    s:
+        {_DOC_S}
+    m:
+        {_DOC_M}
+    interface_weakening_factor:
+        {_DOC_INTERFACE_WEAKENING_FACTOR}
+    force_global_constants:
+        {_DOC_FORCE_GLOBAL_CONSTANTS}
+    p21_neg:
+        {_DOC_P21_NEG}
+    p21_pos:
+        {_DOC_P21_POS},
+    p22_neg:
+        {_DOC_P22_NEG}
+    p22_pos:
+        {_DOC_P22_POS}
+    """
 
     def __init__(
         self,
@@ -169,93 +257,78 @@ class PuckCriterion(FailureCriterionBase):
     def _set_p22_pos(self, value: float) -> None:
         self._p22_pos = value
 
-    pf = property(_get_pf, _set_pf, doc="Activates the failure evaluation regarding fiber failure.")
+    pf = property(_get_pf, _set_pf, doc=_DOC_PF)
     pma = property(
         _get_pma,
         _set_pma,
-        doc="Activates the failure evaluation regarding matrix failure due to tension.",
+        doc=_DOC_PMA,
     )
     pmb = property(
         _get_pmb,
         _set_pmb,
-        doc="Activates the failure evaluation regarding matrix failure due to compression.",
+        doc=_DOC_PMB,
     )
-    pmc = property(
-        _get_pmc,
-        _set_pmc,
-        doc="Activates the failure evaluation regarding matrix failure due to shear failure.",
-    )
+    pmc = property(_get_pmc, _set_pmc, doc=_DOC_PMC)
     pd = property(
         _get_pd,
         _set_pd,
-        doc="Activates the failure evaluation regarding delamination if dim is equal to 3.",
+        doc=_DOC_PD,
     )
     dim = property(
         _get_dim,
         _set_dim,
-        doc="Whether the 2D or 3D formulation of the criterion is used. The latter one also "
-        "supports the failure mode delamination. Use 1 for a simplified Puck criterion.",
+        doc=_DOC_DIM,
     )
-    wf_pf = property(_get_wf_pf, _set_wf_pf, doc="Weighting factor of the fiber failure (pf) mode.")
-    wf_pma = property(
-        _get_wf_pma, _set_wf_pma, doc="Weighting factor of the matrix failure (pma) mode."
-    )
-    wf_pmb = property(
-        _get_wf_pmb, _set_wf_pmb, doc="Weighting factor of the matrix failure (pmb) mode."
-    )
-    wf_pmc = property(
-        _get_wf_pmc, _set_wf_pmc, doc="Weighting factor of the matrix failure (pmc) mode."
-    )
-    wf_pd = property(
-        _get_wf_pd, _set_wf_pd, doc="Weighting factor of the delamination failure (pd) mode."
-    )
+
+    wf_pf = property(_get_wf_pf, _set_wf_pf, doc=_DOC_WF_PF)
+    wf_pma = property(_get_wf_pma, _set_wf_pma, doc=_DOC_WF_PMA)
+    wf_pmb = property(_get_wf_pmb, _set_wf_pmb, doc=_DOC_WF_PMB)
+    wf_pmc = property(_get_wf_pmc, _set_wf_pmc, doc=_DOC_WF_PMC)
+    wf_pd = property(_get_wf_pd, _set_wf_pd, doc=_DOC_WF_PD)
     cfps = property(
         _get_cfps,
         _set_cfps,
-        doc="Whether to consider inter-fiber strength reduction due to fiber parallel stresses.",
+        doc=_DOC_CFPS,
     )
+
     s = property(
         _get_s,
         _set_s,
-        doc="Specifies the effect of fiber parallel stresses regarding inter-fiber failure. "
-        "s = [0, 1) and default is 0.5.",
+        doc=_DOC_S,
     )
     M = property(
         _get_m,
         _set_m,
-        doc="Specifies the effect of fiber parallel stresses regarding inter-fiber failure. "
-        "M = [0, 1) and default is 0.5.",
+        doc=_DOC_M,
     )
+
     interface_weakening_factor = property(
         _get_interface_weakening_factor,
         _set_interface_weakening_factor,
-        doc="Multiplicator for the interlaminar strength if failure mode pd is active. "
-        "Default is 0.8.",
+        doc=_DOC_INTERFACE_WEAKENING_FACTOR,
     )
 
     force_global_constants = property(
         _get_force_global_constants,
         _set_force_global_constants,
-        doc="Whether to use global constants instead of the material-wise properties.",
+        doc=_DOC_FORCE_GLOBAL_CONSTANTS,
     )
 
     p21_neg = property(
         _get_p21_neg,
         _set_p21_neg,
-        doc="Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0",
+        doc=_DOC_P21_NEG,
     )
-    p21_pos = property(
-        _get_p21_pos, _set_p21_pos, doc="Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0"
-    )
+    p21_pos = property(_get_p21_pos, _set_p21_pos, doc=_DOC_P21_POS)
     p22_neg = property(
         _get_p22_neg,
         _set_p22_neg,
-        doc="Global inclination factor of the fracture plane \u27c2 \u27c2.",
+        doc=_DOC_P22_NEG,
     )
     p22_pos = property(
         _get_p22_pos,
         _set_p22_pos,
-        doc="Global inclination factor of the fracture plane \u27c2 \u27c2.",
+        doc=_DOC_P22_POS,
     )
 
 

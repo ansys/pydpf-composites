@@ -28,9 +28,8 @@ Get started with some basic :doc:`examples/index` :
 In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.
 
-For larger models it can be slow to initialize a
-:class:`CompositeModel <ansys.dpf.composites.CompositeModel>`, because it automatically
-creates many different providers that are not needed in all the workflows. Consider using the
+For larger models it can be slow to initialize a :class:`.CompositeModel`, because it automatically creates many
+different providers that are not needed in all the workflows. Consider using the
 :ref:`Layup Information classes <layup_information_classes>` directly.
 
 Start from a local Ansys Workbench project
@@ -38,7 +37,7 @@ Start from a local Ansys Workbench project
 
 To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
 object in Mechanical and selecting "Open Solver Files Directory". Then call the
-:func:`ansys.dpf.composites.get_composite_files_from_workbench_result_folder` function with that folder.
+:func:`.get_composite_files_from_workbench_result_folder` function with that folder.
 The following  example shows how to setup a project from workbench, create a basic failure plot and display
 detailed output for a sampling point.
 

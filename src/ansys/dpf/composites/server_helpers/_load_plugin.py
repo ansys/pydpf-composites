@@ -3,9 +3,10 @@ import os
 from typing import Optional
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core.server_types import BaseServer
 
 
-def load_composites_plugin(server: dpf.server, ansys_path: Optional[str] = None) -> None:
+def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None) -> None:
     r"""Load composites plugins and its dependencies.
 
     Parameters

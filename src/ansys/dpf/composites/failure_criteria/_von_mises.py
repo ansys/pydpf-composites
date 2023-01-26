@@ -3,9 +3,33 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_VME = "Activates the von Mises strain criterion."
+_DOC_VMS = "Activates the von Mises stress criterion."
+_DOC_WF_VME = "Weighting factor of strain criterion (vme)."
+_DOC_WF_VMS = "Weighting factor of the stress criterion (vms)."
+_DOC_EVAL_INS = (
+    "Whether to consider interlaminar normal stresses (s3) and compute them for layered shells."
+)
+
 
 class VonMisesCriterion(FailureCriterionBase):
-    """Defines the von Mises criterion for isotropic materials."""
+    """Von Mises Criterion."""
+
+    __doc__ = f"""Defines the von Mises criterion for isotropic materials.
+
+    Parameters
+    ----------
+    vme:
+        {_DOC_VME}
+    vms:
+        {_DOC_VMS}
+    wf_vme:
+        {_DOC_WF_VME}
+    wf_vms:
+        {_DOC_WF_VMS}
+    eval_ins:
+        {_DOC_EVAL_INS}
+    """
 
     def __init__(
         self,
@@ -16,7 +40,7 @@ class VonMisesCriterion(FailureCriterionBase):
         wf_vms: float = 1.0,
         eval_ins: bool = False,
     ):
-        """Create a von Mises criterion for isotropic materials."""
+        """Create a von Mises Criterion."""
         super().__init__(name="Von Mises", active=True)
 
         for attr in ATTRS_VON_MISES:
@@ -52,18 +76,15 @@ class VonMisesCriterion(FailureCriterionBase):
     def _set_eval_ins(self, value: bool) -> None:
         self._eval_ins = value
 
-    vme = property(_get_vme, _set_vme, doc="Activates the von Mises strain criterion.")
-    vms = property(_get_vms, _set_vms, doc="Activates the von Mises stress criterion.")
-    wf_vme = property(_get_wf_vme, _set_wf_vme, doc="Weighting factor of strain criterion (vme).")
-    wf_vms = property(
-        _get_wf_vms, _set_wf_vms, doc="Weighting factor of the stress criterion (vms)."
-    )
+    vme = property(_get_vme, _set_vme, doc=_DOC_VME)
+    vms = property(_get_vms, _set_vms, doc=_DOC_VMS)
+    wf_vme = property(_get_wf_vme, _set_wf_vme, doc=_DOC_WF_VME)
+    wf_vms = property(_get_wf_vms, _set_wf_vms, doc=_DOC_WF_VMS)
 
     eval_ins = property(
         _get_eval_ins,
         _set_eval_ins,
-        doc="Whether to consider interlaminar normal stresses (s3) and "
-        "compute them for layered shells.",
+        doc=_DOC_EVAL_INS,
     )
 
 

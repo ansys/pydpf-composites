@@ -44,7 +44,7 @@ For instance fatigue analysis. See `PyDPF Composites - Examples`_.
 Developer Setup
 ===============
 
-Installing Pydpf composites in developer mode allows
+Installing PyDPF Composites in developer mode allows
 you to modify the source and enhance it.
 
 Before contributing to the project, please refer to the `PyAnsys Developer's guide`_.

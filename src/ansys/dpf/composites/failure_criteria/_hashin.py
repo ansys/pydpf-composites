@@ -3,9 +3,41 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_HF = "Activates the failure evaluation regarding fiber failure."
+_DOC_HM = "Activates the failure evaluation regarding matrix failure."
+_DOC_HD = "Activates the failure evaluation regarding delamination if dim is equal to 3."
+_DOC_DIM = (
+    "Whether the 2D or 3D formulation of the criterion is used. The latter one also "
+    "supports the failure mode delamination."
+)
+_DOC_WF_HF = "Weighting factor of the fiber failure (hf) mode."
+_DOC_WF_HM = "Weighting factor of the matrix failure (hm) mode."
+_DOC_WF_HD = "Weighting factor of the delamination (hd) mode."
+
 
 class HashinCriterion(FailureCriterionBase):
-    """Defines the Hashin failure criterion for UD reinforced materials."""
+    """Hashin Criterion."""
+
+    __doc__ = f"""Defines the Hashin failure criterion for UD reinforced materials.
+
+    Parameters
+    ----------
+    hf:
+        {_DOC_HF}
+    hm:
+        {_DOC_HM}
+    hd:
+        {_DOC_HD}
+    dim:
+        {_DOC_DIM}
+    wf_hf:
+        {_DOC_WF_HF}
+    wf_hm:
+        {_DOC_WF_HM}
+    wf_hd:
+        {_DOC_WF_HD}
+
+    """
 
     def __init__(
         self,
@@ -74,26 +106,21 @@ class HashinCriterion(FailureCriterionBase):
     def _set_wf_hd(self, value: float) -> None:
         self._wf_hd = value
 
-    hf = property(_get_hf, _set_hf, doc="Activates the failure evaluation regarding fiber failure.")
-    hm = property(
-        _get_hm, _set_hm, doc="Activates the failure evaluation regarding matrix failure."
-    )
+    hf = property(_get_hf, _set_hf, doc=_DOC_HF)
+    hm = property(_get_hm, _set_hm, doc=_DOC_HM)
     hd = property(
         _get_hd,
         _set_hd,
-        doc="Activates the failure evaluation regarding delamination if dim is equal to 3.",
+        doc=_DOC_HD,
     )
     dim = property(
         _get_dim,
         _set_dim,
-        doc="Whether the 2D or 3D formulation of the criterion is used. The latter one also "
-        "supports the failure mode delamination.",
+        doc=_DOC_DIM,
     )
-    wf_hf = property(_get_wf_hf, _set_wf_hf, doc="Weighting factor of the fiber failure (hf) mode.")
-    wf_hm = property(
-        _get_wf_hm, _set_wf_hm, doc="Weighting factor of the matrix failure (hm) mode."
-    )
-    wf_hd = property(_get_wf_hd, _set_wf_hd, doc="Weighting factor of the delamination (hd) mode.")
+    wf_hf = property(_get_wf_hf, _set_wf_hf, doc=_DOC_HF)
+    wf_hm = property(_get_wf_hm, _set_wf_hm, doc=_DOC_HM)
+    wf_hd = property(_get_wf_hd, _set_wf_hd, doc=_DOC_HD)
 
 
 ATTRS_HASHIN = inspect.signature(HashinCriterion).parameters.keys()

@@ -15,7 +15,7 @@ __all__ = (
 )
 
 
-class MaterialProperty(Enum):
+class MaterialProperty(str, Enum):
     """Available material properties."""
 
     Engineering_Constants_E1: str = "young_modulus_x_direction"
@@ -103,8 +103,8 @@ def get_constant_property(
         material property
     dpf_material_id:
     materials_provider:
-        Dpf Materials provider operator. Available from CompositeModel:
-        :class:`CompositeModel.material_operators`
+        DPF Materials provider operator. Available from
+        :attr:`.CompositeModel.material_operators`
     data_source_or_streams_provider:
         Data source or streams provider that contains a rst file
     """
@@ -136,9 +136,9 @@ def get_all_dpf_material_ids(
     Parameters
     ----------
     mesh:
-        Dpf MeshedRegion enriched with layup information
+        DPF MeshedRegion enriched with layup information
     data_source_or_streams_provider:
-        Dpf DataSource or StreamProvider that contains a rst file
+        DPF DataSource or StreamProvider that contains a rst file
     """
     id_to_material_map = get_dpf_material_id_by_analyis_ply_map(
         mesh, data_source_or_streams_provider
@@ -167,9 +167,9 @@ def get_constant_property_dict(
         Requested material properties
     materials_provider:
     data_source_or_streams_provider:
-        Dpf DataSource or StreamProvider that contains a rst file
+        DPF DataSource or StreamProvider that contains a rst file
     mesh:
-        Dpf MeshedRegion enriched with layup information
+        DPF MeshedRegion enriched with layup information
     """
     properties: Dict[np.int64, Dict[MaterialProperty, float]] = {}
     for dpf_material_id in get_all_dpf_material_ids(
