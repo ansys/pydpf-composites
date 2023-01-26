@@ -245,7 +245,7 @@ s13 and s23
 
 Plot e12 and e2
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-128
+.. GENERATED FROM PYTHON SOURCE LINES 110-127
 
 .. code-block:: default
 
@@ -269,7 +269,6 @@ Plot e12 and e2
 
 
 
-
 .. image-sg:: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_004.png
    :alt: e12 and e2
    :srcset: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_004.png
@@ -285,14 +284,37 @@ Plot e12 and e2
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-133
+.. GENERATED FROM PYTHON SOURCE LINES 128-129
+
+Plot lay-up only
+
+.. GENERATED FROM PYTHON SOURCE LINES 129-132
+
+.. code-block:: default
+
+    fig2, layup_axes = plt.subplots()
+    sampling_point.add_ply_sequence_to_plot(layup_axes)
+
+
+
+
+.. image-sg:: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_005.png
+   :alt: 2 sampling point example
+   :srcset: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_005.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 133-137
 
 Sample another element
 """"""""""""""""""""""
 
 The element id of the sampling point can be easily changed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-142
+.. GENERATED FROM PYTHON SOURCE LINES 137-146
 
 .. code-block:: default
 
@@ -308,9 +330,9 @@ The element id of the sampling point can be easily changed.
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_005.png
+.. image-sg:: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_006.png
    :alt: Stresses, Failures
-   :srcset: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_005.png
+   :srcset: /examples/gallery_examples/images/sphx_glr_2_sampling_point_example_006.png
    :class: sphx-glr-single-img
 
 
@@ -320,7 +342,7 @@ The element id of the sampling point can be easily changed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.338 seconds)
+   **Total running time of the script:** ( 0 minutes  1.332 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_2_sampling_point_example.py:

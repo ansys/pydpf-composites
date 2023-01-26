@@ -2744,6 +2744,19 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="ansys.dpf.composites.failure_criteria.HashinCriterion">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.failure_criteria.</span></span><span class="sig-name descname"><span class="pre">HashinCriterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_hf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_hm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_hd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.HashinCriterion" title="Permalink to this definition">#</a></dt>
 <dd><p>Defines the Hashin failure criterion for UD reinforced materials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hf</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation regarding fiber failure.</p></li>
+<li><p><strong>hm</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation regarding matrix failure.</p></li>
+<li><p><strong>hd</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Activates the failure evaluation regarding delamination if dim is equal to 3.</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">2</span></code>) – Whether the 2D or 3D formulation of the criterion is used. The latter one also supports the failure mode delamination.</p></li>
+<li><p><strong>wf_hf</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of the fiber failure (hf) mode.</p></li>
+<li><p><strong>wf_hm</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of the matrix failure (hm) mode.</p></li>
+<li><p><strong>wf_hd</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of the delamination (hd) mode.</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
@@ -2787,13 +2800,13 @@ function checkPageExistsAndRedirect(event) {
 <td><p>Name of the failure criterion.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hd.html#ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hd" title="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HashinCriterion.wf_hd</span></code></a></p></td>
-<td><p>Weighting factor of the delamination (hd) mode.</p></td>
+<td><p>Activates the failure evaluation regarding delamination if dim is equal to 3.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hf.html#ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hf" title="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HashinCriterion.wf_hf</span></code></a></p></td>
-<td><p>Weighting factor of the fiber failure (hf) mode.</p></td>
+<td><p>Activates the failure evaluation regarding fiber failure.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hm.html#ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hm" title="ansys.dpf.composites.failure_criteria.HashinCriterion.wf_hm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HashinCriterion.wf_hm</span></code></a></p></td>
-<td><p>Weighting factor of the matrix failure (hm) mode.</p></td>
+<td><p>Activates the failure evaluation regarding matrix failure.</p></td>
 </tr>
 </tbody>
 </table>

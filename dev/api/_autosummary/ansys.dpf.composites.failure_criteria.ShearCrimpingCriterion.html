@@ -2744,6 +2744,15 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.failure_criteria.</span></span><span class="sig-name descname"><span class="pre">ShearCrimpingCriterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion" title="Permalink to this definition">#</a></dt>
 <dd><p>Defines the shear crimping failure criterion for sandwich structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of the core material for evaluation of the maximum allowable load. Default is 1.</p></li>
+<li><p><strong>kf</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">0.0</span></code>) – Weighting factor of the face sheets for evaluation of the maximum allowable load. Default is 0 so the face sheet do not contribute to the allowable load. Valid for thin face sheets.</p></li>
+<li><p><strong>wf</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of the failure mode (wb or wt).</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>

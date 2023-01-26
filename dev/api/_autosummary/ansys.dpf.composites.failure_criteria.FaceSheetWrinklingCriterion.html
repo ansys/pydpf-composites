@@ -2744,6 +2744,15 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.failure_criteria.</span></span><span class="sig-name descname"><span class="pre">FaceSheetWrinklingCriterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">homogeneous_core_coeff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">honeycomb_core_coeff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.FaceSheetWrinklingCriterion" title="Permalink to this definition">#</a></dt>
 <dd><p>Defines the face sheet wrinkling criterion for sandwiches (laminate with cores).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>homogeneous_core_coeff</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">0.5</span></code>) – Wrinkling coefficient (reduction factor) for homogeneous core materials. Default is 0.5</p></li>
+<li><p><strong>honeycomb_core_coeff</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">0.33</span></code>) – Wrinkling coefficient (reduction factor) for honeycombs. Default is 0.33.</p></li>
+<li><p><strong>wf</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of the failure mode (wb or wt).</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
