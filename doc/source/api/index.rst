@@ -1,4 +1,4 @@
-API Reference
+API reference
 =============
 
 This section describes the API of the public PyDPF Composites classes, functions,
