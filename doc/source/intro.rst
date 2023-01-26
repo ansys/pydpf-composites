@@ -1,5 +1,4 @@
-
-Getting Started
+Getting started
 ---------------
 
 Testing session (to be removed)

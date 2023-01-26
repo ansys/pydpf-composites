@@ -60,7 +60,7 @@ Key features
   :doc:`Example <examples/gallery_examples/4_get_material_properties_example>`.
 * Post-processing of homogeneous elements.
 
-Pre-Requisites and Compatibility
+Pre-requisites and compatibility
 ''''''''''''''''''''''''''''''''
 - Installation of `Ansys Workbench`_.
 - ACP model or short fiber composite model.
