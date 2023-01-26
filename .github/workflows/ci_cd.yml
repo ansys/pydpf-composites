@@ -12,6 +12,7 @@ on:
 env:
   MAIN_PYTHON_VERSION: '3.9'
   ANSYS_VERSION: '231'
+  PACKAGE_NAME: 'ansys-dpf-composites'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
   PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "21002"
 
@@ -21,8 +22,8 @@ concurrency:
 
 jobs:
 
-  style:
-    name: Code style
+  code-style:
+    name: "Code style"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -38,44 +39,56 @@ jobs:
       - name: Test with tox
         run: tox -e style
 
+  doc-style:
+    name: "Documentation style"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pyansys/actions/doc-style@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   tests:
-    name: Tests and coverage
+    name: "Tests and coverage"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # We can't test on windows because
-        # it is not possible to run
-        # linux docker images on the windows agents
+        # We can't test on windows because it is not possible to run linux
+        # docker images on the windows agents. See the issue
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
         python-version: ['3.7', '3.8', '3.9', '3.10']
       fail-fast: false
-
     steps:
-      - name: Login in Github Container registry
+      - name: "Login in Github Container registry"
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: pull and start dpf container
+
+      - name: "Pull and start dpf container"
         run:  |
           docker pull ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
+
+      - name: "Checkout the project"
+        uses: actions/checkout@v3
+
+      - name: "Set up Python ${{ matrix.python-version }}"
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+
+      - name: "Install Python dependencies"
         run: |
           python -m pip install --upgrade pip tox tox-gh-actions
           python -m pip install --upgrade poetry
 
-      - name: Test with tox
+      - name: "Test with tox"
         # Only the tox environment specified in the tox.ini gh-actions is run
-        run: tox
-      - name: Upload server output
+        run: |
+          tox
+
+      - name: "Upload server output"
         if: always()
         uses: actions/upload-artifact@v2
         with:
@@ -84,18 +97,17 @@ jobs:
           retention-days: 7
 
   tests_minimal_version:
-    name: test_with_minimal_required_version
-
+    name: "Test with lower-bound dependency versions"
     runs-on: ubuntu-latest
 
     steps:
-      - name: Login in Github Container registry
+      - name: "Login in Github Container registry"
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: pull and start dpf container
+      - name: "Pull and start DPF container"
         run: |
           docker pull ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
       - uses: actions/checkout@v3
@@ -111,69 +123,119 @@ jobs:
       - name: Test with tox
         run: tox -e test-minimal
 
-  docs:
-    name: Documentation
+  doc-build:
+    name: "Documentation build"
     runs-on: ubuntu-latest
     steps:
-      - name: Install OS packages
+      - name: "Install OS packages"
         run: |
           sudo apt update
           sudo apt-get install pandoc xvfb
-      - name: Login in Github Container registry
+
+      - name: "Login in Github Container registry"
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: pyansys-ci-bot
           password: ${{ secrets.PYANSYS_CI_BOT_PACKAGE_TOKEN }}
-      - name: pull and start dpf container
+
+      - name: "Pull and start dpf container"
         run: |
           docker pull ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
           docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
-      - uses: actions/checkout@v3
-      - name: Set up Python
+
+      - name: "Checkout the project"
+        uses: actions/checkout@v3
+
+      - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      - name: Install dependencies
+
+      - name: "Install Python dependencies"
         run: |
           python -m pip install --upgrade pip tox
           python -m pip install --upgrade poetry
-      - name: Generate the documentation with tox
-        run: | 
+
+      - name: "Generate the documentation with tox"
+        run: |
           tox -e doc-linux
 
-      - name: Upload HTML Documentation
+      - name: "Upload HTML Documentation"
         uses: actions/upload-artifact@v2
         with:
           name: documentation-html
           path: .tox/doc_out/
           retention-days: 7
 
-  upload_dev_docs:
-    name: "Upload dev documentation"
+  build-package:
+    name: "Build package"
+    runs-on: ubuntu-latest
+    needs: [doc-style, doc-build, code-style, tests, tests_minimal_version]
+    steps:
+      - name: "Checkout the project"
+        uses: actions/checkout@v3
+
+      - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+      - name: "Install Python dependencies"
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade poetry
+          poetry install -E build
+
+      - name: "Build library artifacts"
+        run: |
+          poetry build
+          poetry run python -m twine check dist/*
+
+  doc-deploy-dev:
+    name: "Deploy development documentation"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: [ docs ]
+    needs: [build-package]
     steps:
-      - name: Deploy the latest documentation
-        uses: pyansys/actions/doc-deploy-dev@v2
+      - uses: pyansys/actions/doc-deploy-dev@v3
         with:
           cname: ${{ env.DOCUMENTATION_CNAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  build:
-    name: Build library
+  release:
+    name: "Release project"
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
+    needs: [build-package]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+
+      - name: "Release to the private PyPI repository"
+        uses: pyansys/actions/release-pypi-private@v3
         with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      - name: Install dependencies and build the library
-        run: |
-          # Use dev version of poetry because the stable version fails to resolve all dependencies
-          python -m pip install --upgrade pip poetry
-          poetry install -E build
-          poetry build
-          poetry run python -m twine check dist/*
+          library-name: ${{ env.PACKAGE_NAME }}
+          twine-username: "__token__"
+          twine-token: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+
+      - name: "Release to the public PyPI repository"
+        uses: pyansys/actions/release-pypi-public@v3
+        with:
+          library-name: ${{ env.PACKAGE_NAME }}
+          twine-username: "__token__"
+          twine-token: ${{ secrets.PYPI_TOKEN }}
+
+      - name: "Release to GitHub"
+        uses: pyansys/actions/release-github@v3
+        with:
+          library-name: ${{ env.PACKAGE_NAME }}
+
+  doc-deploy-stable:
+    name: "Deploy stable documentation"
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
+    steps:
+      - uses: pyansys/actions/doc-deploy-stable@v3
+        with:
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}

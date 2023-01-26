@@ -1,3 +1,5 @@
+.. vale off
+
 {{ objname | escape | underline}}
 
 .. currentmodule:: {{ module }}
@@ -30,3 +32,5 @@
    {%- endfor %}
    {% endif %}
    {% endblock %}
+
+.. vale on

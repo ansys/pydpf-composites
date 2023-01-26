@@ -25,6 +25,20 @@ repos:
 
 - repo: local
   hooks:
+  - id: poetry-pyproject-consistency
+    name: "poetry: check pyproject.toml consistency"
+    entry: poetry
+    language: system
+    args: ["check"]
+    files: '^pyproject\.toml$'
+    pass_filenames: false
+  - id: poetry-lockfile-consistency
+    name: "poetry: check lockfile consistency"
+    entry: poetry
+    language: system
+    args: ["lock", "--check"]
+    files: '^(pyproject\.toml|poetry\.lock)$'
+    pass_filenames: false
   - id: pylint
     name: pylint
     entry: pylint
