@@ -11,7 +11,7 @@
 PyDPF Composites
 ----------------
 
-A Python wrapper for Ansys dpf composites. It implements classes on top of the
+A Python wrapper for Ansys DPF composites. It implements classes on top of the
 DPF Composites operators and data accessors for short fiber and layered composites
 (layered shell and solid elements). This module can be used to post-process fiber
 reinforced plastics and layered composites, and to implement custom failure
@@ -60,7 +60,7 @@ Key features
   :doc:`Example <examples/gallery_examples/4_get_material_properties_example>`.
 * Post-processing of homogeneous elements.
 
-Pre-Requisites and Compatibility
+Pre-requisites and compatibility
 ''''''''''''''''''''''''''''''''
 - Installation of `Ansys Workbench`_.
 - ACP model or short fiber composite model.

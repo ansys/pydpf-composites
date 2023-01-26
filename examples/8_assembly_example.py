@@ -50,7 +50,7 @@ irf_field.plot()
 # %%
 # In the assembly exist two composite definitions, one with the label "shell" and one
 # with the label "solid". To query the layup properties we have to query the
-# properties with the correct composite_definition_label.
+# properties with the correct ``composite_definition_label``.
 # This example shows how to get ElementInfo for all layered elements
 #
 element_infos = []
