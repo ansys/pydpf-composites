@@ -124,6 +124,10 @@ ax1.set_yticks([])
 ax1.legend()
 ax1.set_title("e12 and e2")
 
+# %%
+# Plot lay-up only
+fig2, layup_axes = plt.subplots()
+sampling_point.add_ply_sequence_to_plot(layup_axes)
 
 # %%
 # Sample another element
