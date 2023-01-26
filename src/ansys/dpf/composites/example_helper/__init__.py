@@ -42,7 +42,7 @@ def upload_short_fiber_composite_files_to_server(
 def upload_continuous_fiber_composite_files_to_server(
     data_files: ContinuousFiberCompositesFiles, server: dpf.server
 ) -> ContinuousFiberCompositesFiles:
-    """Upload short fiber composites files to server.
+    """Upload continuous fiber composites files to server.
 
     Parameters
     ----------
