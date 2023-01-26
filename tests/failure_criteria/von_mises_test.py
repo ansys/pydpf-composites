@@ -1,4 +1,4 @@
-from ansys.dpf.composites.failure_criteria.von_mises import ATTRS_VON_MISES, VonMisesCriterion
+from ansys.dpf.composites.failure_criteria._von_mises import ATTRS_VON_MISES, VonMisesCriterion
 
 defaults = dict(zip(ATTRS_VON_MISES, [True, True, 1.0, 1.0, False]))
 

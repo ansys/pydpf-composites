@@ -48,9 +48,8 @@ Get started with some basic :doc:`examples/index` :
 In the end of each example, there is a button to download the python source code of the example.
 The examples will download the example files (results, composite definition..) from an examples repository.
 
-For larger models it can be slow to initialize a
-:class:`CompositeModel <ansys.dpf.composites.CompositeModel>`, because it automatically
-creates many different providers that are not needed in all the workflows. Consider using the
+For larger models it can be slow to initialize a :class:`.CompositeModel`, because it automatically creates many
+different providers that are not needed in all the workflows. Consider using the
 :ref:`Layup Information classes <layup_information_classes>` directly.
 
 Start from a local Ansys Workbench project
@@ -58,19 +57,17 @@ Start from a local Ansys Workbench project
 
 To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
 object in Mechanical and selecting "Open Solver Files Directory". Then call the
-:func:`ansys.dpf.composites.get_composite_files_from_workbench_result_folder` function with that folder.
+:func:`.get_composite_files_from_workbench_result_folder` function with that folder.
 The following  example shows how to setup a project from workbench, create a basic failure plot and display
 detailed output for a sampling point.
 
 .. code::
 
-    from ansys.dpf.composites import (
-        CompositeModel,
-        connect_to_or_start_server,
-        get_composite_files_from_workbench_result_folder,
-    )
-    from ansys.dpf.composites.enums import FailureOutput
+    from ansys.dpf.composites.composite_model import CompositeModel
+    from ansys.dpf.composites.constants import FailureOutput
+    from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+    from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
     # Folder that opens after clicking "Open Solver Files Directory"
     result_folder = r"D:\simulations\my_simulation_files\dp0\SYS\MECH"
@@ -91,7 +88,7 @@ detailed output for a sampling point.
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
-    irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value.value})
+    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     irf_field.plot()
 
     # Show sampling point for element with id/label 1

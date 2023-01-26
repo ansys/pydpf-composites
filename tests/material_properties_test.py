@@ -2,8 +2,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import get_composites_data_sources
-from ansys.dpf.composites.enums import MaterialProperty
+from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
@@ -12,8 +11,11 @@ from ansys.dpf.composites.layup_info import (
     get_dpf_material_id_by_analyis_ply_map,
     get_element_info_provider,
 )
-from ansys.dpf.composites.material_properties import get_constant_property_dict
-from ansys.dpf.composites.material_setup import get_material_operators
+from ansys.dpf.composites.layup_info.material_operators import get_material_operators
+from ansys.dpf.composites.layup_info.material_properties import (
+    MaterialProperty,
+    get_constant_property_dict,
+)
 from ansys.dpf.composites.select_indices import get_selected_indices
 
 from .helper import get_basic_shell_files, setup_operators
@@ -62,7 +64,7 @@ def test_material_properties(dpf_server):
 
     setup_result = setup_operators(dpf_server, files)
 
-    material_property = MaterialProperty.strain_limits_ext
+    material_property = MaterialProperty.Strain_Limits_eXt
 
     property_dict = get_constant_property_dict(
         material_properties=[material_property],
@@ -116,7 +118,7 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
         rst_data_source=data_sources.rst, engineering_data_source=data_sources.rst
     )
 
-    material_property = MaterialProperty.stress_limits_xt
+    material_property = MaterialProperty.Stress_Limits_Xt
 
     with pytest.raises(RuntimeError) as exc_info:
         get_constant_property_dict(

@@ -1,10 +1,10 @@
 from typing import Any, Dict
 
-from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
+from ansys.dpf.composites.failure_criteria._combined_failure_criterion import (
     CombinedFailureCriterion,
 )
-from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
-from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
+from ansys.dpf.composites.failure_criteria._max_strain import MaxStrainCriterion
+from ansys.dpf.composites.failure_criteria._max_stress import MaxStressCriterion
 from ansys.dpf.composites.result_definition import (
     _SUPPORTED_EXPRESSIONS,
     _SUPPORTED_MEASURES,

@@ -32,11 +32,12 @@ the lay-up.
 # Load Ansys libraries
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites import CompositeModel, Spot, get_selected_indices
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.enums import Sym3x3TensorComponent
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
+from ansys.dpf.composites.select_indices import get_selected_indices
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.
@@ -80,7 +81,7 @@ stress_field = stress_operator.outputs.fields_container()[0]
 # %%
 # Plot max s3 of each element
 
-s3_component = Sym3x3TensorComponent.tensor33
+s3_component = Sym3x3TensorComponent.TENSOR33
 max_s3_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with max_s3_field.as_local_field() as local_max_s3_field:
     element_ids = stress_field.scoping.ids
@@ -115,7 +116,7 @@ with p8l1_ply_s3_field.as_local_field() as p8l1_ply_s3_field:
         # select all stresses from bottom to top of node 0
         layer_index = ply_info_provider.get_layer_index_by_element_id(element_id)
         selected_indices = get_selected_indices(
-            element_info, layers=[layer_index], nodes=[0], spots=[Spot.middle]
+            element_info, layers=[layer_index], nodes=[0], spots=[Spot.MIDDLE]
         )
 
         # order is bottom, top, mid

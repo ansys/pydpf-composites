@@ -7,19 +7,23 @@ import numpy as np
 import numpy.testing
 import pytest
 
-from ansys.dpf.composites.composite_data_sources import (
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.constants import FailureOutput, Spot
+from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
 )
-from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.enums import FailureOutput, Spot
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
-from ansys.dpf.composites.failure_criteria.combined_failure_criterion import (
+from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
+    MaxStrainCriterion,
+    MaxStressCriterion,
 )
-from ansys.dpf.composites.failure_criteria.max_strain import MaxStrainCriterion
-from ansys.dpf.composites.failure_criteria.max_stress import MaxStressCriterion
-from ansys.dpf.composites.result_definition import ResultDefinition, ResultDefinitionScope
+from ansys.dpf.composites.result_definition import (
+    FailureMeasure,
+    ResultDefinition,
+    ResultDefinitionScope,
+)
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
 
 
@@ -50,10 +54,10 @@ def test_sampling_point(dpf_server):
 
     sampling_point = SamplingPoint(name="my first SP", result_definition=rd, server=dpf_server)
 
-    indices = sampling_point.get_indices([Spot.bottom, Spot.top])
+    indices = sampling_point.get_indices([Spot.BOTTOM, Spot.TOP])
     ref_indices = [0, 2, 3, 5, 6, 8, 9, 11, 12, 14]
-    offsets = sampling_point.get_offsets_by_spots([Spot.bottom, Spot.top], 1.0)
-    scaled_offsets = sampling_point.get_offsets_by_spots([Spot.bottom, Spot.top], 0.2)
+    offsets = sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 1.0)
+    scaled_offsets = sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 0.2)
     ref_offsets = [
         -0.00295,
         -0.0027,
@@ -88,29 +92,29 @@ def test_sampling_point(dpf_server):
     assert len(critical_failures) == sampling_point.number_of_plies
     ref = [
         FailureResult(
-            mode="e12",
-            irf=pytest.approx(2.248462289571762),
-            rf=pytest.approx(0.4447483974438629),
-            mos=pytest.approx(-0.5552516025561371),
+            "e12",
+            pytest.approx(2.248462289571762),
+            pytest.approx(0.4447483974438629),
+            pytest.approx(-0.5552516025561371),
         ),
         FailureResult(
-            mode="e1t",
-            irf=pytest.approx(1.522077660182279),
-            rf=pytest.approx(0.6569967000765541),
-            mos=pytest.approx(-0.3430032999234459),
+            "e1t",
+            pytest.approx(1.522077660182279),
+            pytest.approx(0.6569967000765541),
+            pytest.approx(-0.3430032999234459),
         ),
-        FailureResult(mode="na", irf=0.0, rf=1000.0, mos=999.0),
+        FailureResult("na", 0.0, 1000.0, 999.0),
         FailureResult(
-            mode="e12",
-            irf=pytest.approx(0.1853588231218358),
-            rf=pytest.approx(5.394941460880462),
-            mos=pytest.approx(4.394941460880462),
+            "e12",
+            pytest.approx(0.1853588231218358),
+            pytest.approx(5.394941460880462),
+            pytest.approx(4.394941460880462),
         ),
         FailureResult(
-            mode="s2c",
-            irf=pytest.approx(0.3256845400457666),
-            rf=pytest.approx(3.07045584619852),
-            mos=pytest.approx(2.07045584619852),
+            "s2c",
+            pytest.approx(0.3256845400457666),
+            pytest.approx(3.07045584619852),
+            pytest.approx(2.07045584619852),
         ),
     ]
     assert critical_failures == ref
@@ -119,17 +123,17 @@ def test_sampling_point(dpf_server):
     sampling_point.get_result_plots(
         strain_components=["e1", "e12"],
         stress_components=["s13", "s23"],
-        failure_components=["rf"],
+        failure_components=[FailureMeasure.RESERVE_FACTOR],
         show_failure_modes=True,
         create_laminate_plot=True,
         core_scale_factor=0.5,
-        spots=[Spot.bottom, Spot.top],
+        spots=[Spot.BOTTOM, Spot.TOP],
     )
 
     sampling_point.get_polar_plot(["E1", "G12"])
 
     """Test manually created plots using the provided helpers"""
-    spots = [Spot.bottom, Spot.top]
+    spots = [Spot.BOTTOM, Spot.TOP]
     core_scale_factor = 1.0
     indices = sampling_point.get_indices(spots)
     offsets = sampling_point.get_offsets_by_spots(spots, core_scale_factor)
@@ -145,7 +149,7 @@ def test_sampling_point(dpf_server):
 
     fig, ax1 = plt.subplots()
     sampling_point.add_results_to_plot(
-        ax1, ["s13", "s23"], [Spot.bottom, Spot.top], 0.5, "Out-of-plane shear stresses"
+        ax1, ["s13", "s23"], [Spot.BOTTOM, Spot.TOP], 0.5, "Out-of-plane shear stresses"
     )
     ax1.legend()
     plt.rcParams["hatch.linewidth"] = 0.2
@@ -172,7 +176,7 @@ def test_sampling_point_with_numpy_types(dpf_server):
     composite_model = CompositeModel(files, server=dpf_server)
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value})
+    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
     sp = composite_model.get_sampling_point(cfc, critical_element_id)
     assert max(sp.s1) == pytest.approx(2840894080.0, 1e-8)

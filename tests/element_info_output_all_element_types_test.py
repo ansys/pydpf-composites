@@ -6,7 +6,7 @@ import ansys.dpf.core as dpf
 from ansys.dpf.core import Field, MeshedRegion, PropertyField
 import pytest
 
-from ansys.dpf.composites import Spot
+from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.layup_info import ElementInfo, get_element_info_provider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
@@ -258,5 +258,5 @@ def test_document_error_cases_indices(dpf_server):
     for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
-            get_selected_indices(element_info, layers=[1], nodes=[1], spots=[Spot.middle])
+            get_selected_indices(element_info, layers=[1], nodes=[1], spots=[Spot.MIDDLE])
         assert str(exc_info.value).startswith("spot index 2 is greater or equal number of spots")

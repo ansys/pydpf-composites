@@ -40,7 +40,7 @@ of the elementary data array. Please check the :ref:`sphx_glr_examples_gallery_e
 section for complete usage examples.
 
 
-.. currentmodule:: ansys.dpf.composites
+.. module:: ansys.dpf.composites.select_indices
 
 .. autosummary::
     :toctree: _autosummary
@@ -48,4 +48,3 @@ section for complete usage examples.
     get_selected_indices
     get_selected_indices_by_analysis_ply
     get_selected_indices_by_dpf_material_ids
-    Spot

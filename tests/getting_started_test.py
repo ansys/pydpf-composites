@@ -17,13 +17,11 @@ def test_getting_started(dpf_server: dpf.server):
     - Uncomment the irf_field.plot() line
     """
 
-    from ansys.dpf.composites import (
-        CompositeModel,
-        get_composite_files_from_workbench_result_folder,
-    )
-    from ansys.dpf.composites import connect_to_or_start_server  # noqa:  F401
-    from ansys.dpf.composites.enums import FailureOutput
+    from ansys.dpf.composites.composite_model import CompositeModel
+    from ansys.dpf.composites.constants import FailureOutput
+    from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+    from ansys.dpf.composites.server_helpers import connect_to_or_start_server  # noqa:  F401
 
     # Folder that opens after clicking "Open Solver Files Directory"
     result_folder = pathlib.Path(__file__).parent / "data" / "workflow_example" / "shell"
@@ -50,7 +48,7 @@ def test_getting_started(dpf_server: dpf.server):
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
-    irf_field = failure_result.get_field({"failure_label": FailureOutput.failure_value})
+    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     # Commented because it blocks execution. Uncomment this
     # line when you copy this code the getting started example
     # irf_field.plot()

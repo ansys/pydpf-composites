@@ -1,33 +1,57 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import Collection, Dict, List, Optional, Sequence, cast
+from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
-from numpy.typing import NDArray
 
-from .add_layup_info_to_mesh import add_layup_info_to_mesh
-from .composite_data_sources import (
+if TYPE_CHECKING:
+    from numpy.typing import NDArray
+
+from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
     get_composites_data_sources,
 )
-from .enums import FailureMeasure, LayerProperty, MaterialProperty
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayupPropertiesProvider, get_element_info_provider
-from .material_properties import get_constant_property_dict
-from .material_setup import MaterialOperators, get_material_operators
-from .result_definition import ResultDefinition, ResultDefinitionScope
+from .layup_info import (
+    ElementInfo,
+    LayerProperty,
+    LayupPropertiesProvider,
+    add_layup_info_to_mesh,
+    get_element_info_provider,
+)
+from .layup_info.material_operators import MaterialOperators, get_material_operators
+from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
+from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
+
+__all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 
 
 @dataclass(frozen=True)
 class CompositeScope:
     """Composite scope.
 
-    Defines which part of the model is selected.
+    Defines which part of the model and solution step are selected.
+
+    Parameters
+    ----------
+        elements:
+            list of element labels
+        plies:
+            list of plies.
+        time:
+            time or frequency. Refer to
+            :func:`CompositeModel.get_result_times_or_frequencies` to list the solution steps.
+
+    Notes
+    -----
+       In case `elements` and `plies` are set, the final element scope is the intersection
+       of the two.
+
     """
 
     elements: Optional[Sequence[int]] = None
@@ -93,8 +117,8 @@ class CompositeModel:
     Parameters
     ----------
     composite_files:
-        Use :func:`ansys.dpf.composites.get_composite_files_from_workbench_result_folder`
-        to obtain ContinuousFiberCompositesFiles object.
+        Use :func:`.get_composite_files_from_workbench_result_folder` to obtain
+        ContinuousFiberCompositesFiles object.
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
@@ -135,7 +159,7 @@ class CompositeModel:
         ----------
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
@@ -165,7 +189,7 @@ class CompositeModel:
         ----------
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies. See "Note on assemblies"
             in :class:`CompositeModel` docstring.
 
@@ -178,22 +202,23 @@ class CompositeModel:
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
-        measure: FailureMeasure = FailureMeasure.inverse_reserve_factor,
+        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluted failure criteria.
 
         The container contains the maximum per element if the measure
-        is `FailureMeasure.inverse_reserve_factor` and the minimum per element
-        if the measure is `FailureMeasure.margin_of_safety` or `FailureMeasure.reserve_factor`
+        is `FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is `FailureMeasure.MARGIN_OF_SAFETY` or `FailureMeasure.RESERVE_FACTOR`
 
         Parameters
         ----------
         combined_criterion:
             Combined failure criterion to evaluate
         composite_scope:
-            Composite scope on which the failure criteria are evaluated. If
-            empty, the criteria is evaluated on the full model.
+            Composite scope on which the failure criteria are evaluated. If empty, the criteria
+            is evaluated on the full model. The last time/frequency in the result file is used
+            by default if time is not set.
         measure:
             Failure measure to evaluate
         write_data_for_full_element_scope:
@@ -248,7 +273,7 @@ class CompositeModel:
 
         failure_operator.inputs.result_definition(rd.to_json())
 
-        if measure == FailureMeasure.inverse_reserve_factor:
+        if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
             return failure_operator.outputs.fields_containerMax()
         else:
             return failure_operator.outputs.fields_containerMin()
@@ -273,7 +298,7 @@ class CompositeModel:
             time/frequency in the result file is used.
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
@@ -324,7 +349,7 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
@@ -339,7 +364,7 @@ class CompositeModel:
         layup_property: LayerProperty,
         element_id: int,
         composite_definition_label: Optional[str] = None,
-    ) -> Optional[NDArray[np.double]]:
+    ) -> Optional["NDArray[np.double]"]:
         """Get a layer property for a given element_id.
 
         Returns a numpy array with the values of the property for all the layers.
@@ -354,7 +379,7 @@ class CompositeModel:
             Selected element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
@@ -363,11 +388,11 @@ class CompositeModel:
         layup_properties_provider = self._composite_infos[
             composite_definition_label
         ].layup_properties_provider
-        if layup_property == LayerProperty.angles:
+        if layup_property == LayerProperty.ANGLES:
             return layup_properties_provider.get_layer_angles(element_id)
-        if layup_property == LayerProperty.thicknesses:
+        if layup_property == LayerProperty.THICKNESSES:
             return layup_properties_provider.get_layer_thicknesses(element_id)
-        if layup_property == LayerProperty.shear_angles:
+        if layup_property == LayerProperty.SHEAR_ANGLES:
             return layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 
@@ -382,7 +407,7 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
             The dict will only contain the analysis plies in the specified composite definition.
@@ -405,7 +430,7 @@ class CompositeModel:
             Element Id/Label
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
         """
@@ -436,7 +461,7 @@ class CompositeModel:
             A list of the requested material properties
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
             The dict will only contain the materials of the analysis plies defined
@@ -451,10 +476,10 @@ class CompositeModel:
             mesh=self.get_mesh(composite_definition_label),
         )
 
-    def get_result_times_or_frequencies(self) -> NDArray[np.double]:
+    def get_result_times_or_frequencies(self) -> "NDArray[np.double]":
         """Return the available times/frequencies in the result file."""
         return cast(
-            NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
+            "NDArray[np.double]", self._core_model.metadata.time_freq_support.time_frequencies.data
         )
 
     def add_interlaminar_normal_stresses(
@@ -476,7 +501,7 @@ class CompositeModel:
         strains:
         composite_definition_label:
             Label of composite definition
-            (dictionary key in :class:`ContinuousFiberCompositesFiles.composite`).
+            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
             Only required for assemblies.
             See "Note on assemblies" in :class:`CompositeModel` docstring.
             Interlaminar normal stresses are only added to the layered elements defined

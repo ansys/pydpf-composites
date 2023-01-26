@@ -1,12 +1,23 @@
 """Object to represent the Result Definition used by Failure Operator in DPF Composites."""
 
 from dataclasses import dataclass, field
+from enum import Enum
 import json
 from typing import Any, Dict, Optional, Sequence
 
 from ._typing_helper import PATH as _PATH
-from .enums import FailureMeasure
-from .failure_criteria.combined_failure_criterion import CombinedFailureCriterion
+from .failure_criteria import CombinedFailureCriterion
+
+__all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
+
+
+class FailureMeasure(str, Enum):
+    """Available Failure Measures."""
+
+    INVERSE_RESERVE_FACTOR: str = "inverse_reserve_factor"
+    MARGIN_OF_SAFETY: str = "safety_margin"
+    RESERVE_FACTOR: str = "safety_factor"
+
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
 _SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
@@ -65,7 +76,6 @@ class ResultDefinition:
         self._material_file = material_file
         self._rst_file = rst_file
         self._stress_strain_eval_mode = stress_strain_eval_mode
-        # todo: is 1 a good default? Shouldn't it be last?
         self._time = time
         self._max_chunk_size = max_chunk_size
 
@@ -167,7 +177,11 @@ class ResultDefinition:
 
     @property
     def time(self) -> float:
-        """Select time / solution step."""
+        """Select time / solution step.
+
+        Note: Function :meth:`.CompositeModel.get_result_times_or_frequencies` can be used
+        to list the available times or frequencies in the result file.
+        """
         return self._time
 
     @time.setter

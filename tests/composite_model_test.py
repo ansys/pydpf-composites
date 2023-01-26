@@ -5,16 +5,17 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites import MaterialProperty
-from ansys.dpf.composites.composite_data_sources import (
+from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     get_composite_files_from_workbench_result_folder,
 )
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.enums import FailureMeasure, FailureOutput, LayerProperty
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-from ansys.dpf.composites.layup_info import get_analysis_ply_index_to_name_map
+from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
+from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
+from ansys.dpf.composites.result_definition import FailureMeasure
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 
@@ -94,10 +95,10 @@ def test_basic_functionality_of_composite_model(dpf_server):
         combined_criterion=combined_failure_criterion,
         composite_scope=CompositeScope(),
     )
-    irf_field = failure_output.get_field({"failure_label": FailureOutput.failure_value})
-    fm_field = failure_output.get_field({"failure_label": FailureOutput.failure_mode})
+    irf_field = failure_output.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    fm_field = failure_output.get_field({"failure_label": FailureOutput.FAILURE_MODE})
 
-    properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.stress_limits_xt])
+    properyt_dict = composite_model.get_constant_property_dict([MaterialProperty.Stress_Limits_Xt])
 
     timer.add("After get property dict")
 
@@ -110,9 +111,9 @@ def test_basic_functionality_of_composite_model(dpf_server):
     timer.add("After getting element_info")
 
     expected_values = {
-        LayerProperty.shear_angles: [0, 0, 0, 0, 0, 0],
-        LayerProperty.angles: [45, 0, 0, 0, 0, 45],
-        LayerProperty.thicknesses: [0.00025, 0.0002, 0.0002, 0.005, 0.0002, 0.00025],
+        LayerProperty.SHEAR_ANGLES: [0, 0, 0, 0, 0, 0],
+        LayerProperty.ANGLES: [45, 0, 0, 0, 0, 45],
+        LayerProperty.THICKNESSES: [0.00025, 0.0002, 0.0002, 0.005, 0.0002, 0.00025],
     }
     element_id = 1
     for layer_property, value in expected_values.items():
@@ -184,11 +185,11 @@ def test_assembly_model(dpf_server):
         assert failure_output[1].get_entity_data_by_id(element_id) == pytest.approx(expected_value)
 
     properyt_dict = composite_model.get_constant_property_dict(
-        [MaterialProperty.stress_limits_xt], composite_definition_label=solid_label
+        [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label
     )
     timer.add("After get property dict")
 
-    assert properyt_dict[2][MaterialProperty.stress_limits_xt] == pytest.approx(513000000.0)
+    assert properyt_dict[2][MaterialProperty.Stress_Limits_Xt] == pytest.approx(513000000.0)
 
     expected_element_info = {
         solid_label: {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190},
@@ -214,15 +215,15 @@ def test_assembly_model(dpf_server):
     timer.add("After getting element_info")
 
     expected_values_shell = {
-        LayerProperty.shear_angles: [0, 0, 0, 0, 0],
-        LayerProperty.angles: [45, 0, 0, 0, 45],
-        LayerProperty.thicknesses: [0.00025, 0.0002, 0.005, 0.0002, 0.00025],
+        LayerProperty.SHEAR_ANGLES: [0, 0, 0, 0, 0],
+        LayerProperty.ANGLES: [45, 0, 0, 0, 45],
+        LayerProperty.THICKNESSES: [0.00025, 0.0002, 0.005, 0.0002, 0.00025],
     }
 
     expected_values_solid = {
-        LayerProperty.shear_angles: [0, 0, 0],
-        LayerProperty.angles: [45, 0, 0],
-        LayerProperty.thicknesses: [0.00025, 0.0002, 0.0002],
+        LayerProperty.SHEAR_ANGLES: [0, 0, 0],
+        LayerProperty.ANGLES: [45, 0, 0],
+        LayerProperty.THICKNESSES: [0.00025, 0.0002, 0.0002],
     }
 
     shell_element_id = 1
@@ -320,13 +321,13 @@ def test_composite_model_element_scope(dpf_server):
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.failure_value})
+    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     min_id = irfs.scoping.ids[np.argmin(irfs.data)]
     max_id = irfs.scoping.ids[np.argmax(irfs.data)]
 
     composite_scope = CompositeScope(elements=[min_id, max_id])
     max_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
-    max_irfs = max_container.get_field({"failure_label": FailureOutput.failure_value})
+    max_irfs = max_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     assert len(max_irfs.data) == 2
     assert max_irfs.get_entity_data_by_id(min_id)[0] == pytest.approx(min(irfs.data), 1e-8)
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)

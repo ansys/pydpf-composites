@@ -21,11 +21,12 @@ Note: Only constant material properties are currently supported.
 import ansys.dpf.core as dpf
 import numpy as np
 
-from ansys.dpf.composites import MaterialProperty, get_selected_indices
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.enums import Sym3x3TensorComponent
+from ansys.dpf.composites.constants import Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
+from ansys.dpf.composites.select_indices import get_selected_indices
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.
@@ -44,7 +45,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Currently only constant properties are supported.
 # For variable material properties, the default value is returned.
 
-material_property = MaterialProperty.strain_limits_ext
+material_property = MaterialProperty.Strain_Limits_eXt
 property_dict = composite_model.get_constant_property_dict([material_property])
 
 
@@ -60,7 +61,7 @@ strain_field = strain_operator.get_output(pin=0, output_type=dpf.types.fields_co
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
 with result_field.as_local_field() as local_result_field:
-    component = Sym3x3TensorComponent.tensor11
+    component = Sym3x3TensorComponent.TENSOR11
 
     for element_id in strain_field.scoping.ids:
         strain_data = strain_field.get_entity_data_by_id(element_id)

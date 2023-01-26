@@ -1,11 +1,27 @@
 """Functions to get elementary indices based on filter input."""
-from typing import Collection, Optional
+from typing import TYPE_CHECKING, Collection, Optional
 
 import numpy as np
-from numpy.typing import NDArray
 
-from .enums import Spot, get_rst_spot_index
+if TYPE_CHECKING:
+    from numpy.typing import NDArray
+
+from .constants import Spot
 from .layup_info import AnalysisPlyInfoProvider, ElementInfo
+
+__all__ = (
+    "get_selected_indices",
+    "get_selected_indices_by_dpf_material_ids",
+    "get_selected_indices_by_analysis_ply",
+)
+
+
+def _get_rst_spot_index(spot: Spot) -> int:
+    """Return the spot in index in the rst file.
+
+    The order in the rst file is always bottom, top, (mid)
+    """
+    return [-1, 0, 2, 1][spot]
 
 
 def get_selected_indices(
@@ -14,7 +30,7 @@ def get_selected_indices(
     nodes: Optional[Collection[int]] = None,
     spots: Optional[Collection[Spot]] = None,
     disable_checks: bool = False,
-) -> NDArray[np.int64]:
+) -> "NDArray[np.int64]":
     """Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.
 
     Parameters
@@ -59,7 +75,7 @@ def get_selected_indices(
     else:
         if len(spots) == 0:
             return np.array([])
-        spot_indices = [get_rst_spot_index(spot) for spot in spots]
+        spot_indices = [_get_rst_spot_index(spot) for spot in spots]
 
     if not disable_checks:
         if not element_info.is_layered:
@@ -107,7 +123,7 @@ def get_selected_indices(
 
 def get_selected_indices_by_dpf_material_ids(
     element_info: ElementInfo, dpf_material_ids: Collection[np.int64]
-) -> NDArray[np.int64]:
+) -> "NDArray[np.int64]":
     """Get selected indices by dpf_material_ids.
 
     Selects all indices that are in a layer with one of the selected materials
@@ -134,7 +150,7 @@ def get_selected_indices_by_dpf_material_ids(
 
 def get_selected_indices_by_analysis_ply(
     analysis_ply_info_provider: AnalysisPlyInfoProvider, element_info: ElementInfo
-) -> NDArray[np.int64]:
+) -> "NDArray[np.int64]":
     """Get selected indices by analysis ply.
 
     Selects all indices that are in a layer with the given analysis ply

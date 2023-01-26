@@ -27,11 +27,11 @@ release = version = __version__
 html_logo = pyansys_logo_black
 html_favicon = ansys_favicon
 html_theme = "ansys_sphinx_theme"
-html_short_title = html_title = "pydpf-composites"
+html_short_title = html_title = "PyDPF Composites"
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-add_module_names = False
+add_module_names = True
 
 # specify the location of your github repo
 cname = os.environ.get("DOCUMENTATION_CNAME", "composites.dpf.docs.pyansys.com")
@@ -75,6 +75,14 @@ intersphinx_mapping = {
     # "pyvista": ("https://docs.pyvista.org/", None),
     # "grpc": ("https://grpc.github.io/grpc/python/", None),
 }
+nitpick_ignore = [
+    ("py:class", "NDArray"),
+    ("py:class", "int64"),
+]
+nitpick_ignore_regex = [
+    ("py:class", "numpy\..*"),
+    ("py:class", ".*FailureCriterionBase"),  # implementation detail, not documented
+]
 
 # sphinx_autodoc_typehints configuration
 typehints_defaults = "comma"
@@ -91,7 +99,11 @@ numpydoc_validate = True
 numpydoc_validation_checks = {
     "GL06",  # Found unknown section
     "GL07",  # Sections are in the wrong order.
-    "GL08",  # The object does not have a docstring
+    # The 'GL08' check produces false positives for dataclasses whose
+    # fields are documented with a docstring following their definition,
+    # because this syntax doesn't set the '__doc__' attribute; but the
+    # documentation renders correctly.
+    # "GL08",  # The object does not have a docstring
     "GL09",  # Deprecation warning should precede extended summary
     "GL10",  # reST directives {directives} must be followed by two colons
     "SS01",  # No summary found

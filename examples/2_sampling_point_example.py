@@ -6,13 +6,13 @@ Sampling Point
 
 Extract ply-wise laminate properties and results.
 
-The :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>` is a feature
-to extract through-the-thickness data of laminate. For instance, ply-wise properties
+The :class:`Sampling Point <.SamplingPoint>` is a feature to extract
+through-the-thickness data of laminate. For instance, ply-wise properties
 strains and stresses.
 Besides that, it implements basic visualization to plot the laminate.
 
-This example uses the :class:`Composite Model <ansys.dpf.composites.CompositeModel>` to
-scope a Sampling Point to a certain element and to visualize the laminate.
+This example uses the :class:`Composite Model <.CompositeModel>` to scope a
+Sampling Point to a certain element and to visualize the laminate.
 
 """
 
@@ -22,9 +22,8 @@ scope a Sampling Point to a certain element and to visualize the laminate.
 #
 # Load Ansys libraries
 
-from ansys.dpf.composites import Spot
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
+from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -33,6 +32,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
     VonMisesCriterion,
 )
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.
@@ -64,11 +64,11 @@ sampling_point = composite_model.get_sampling_point(combined_criterion=combined_
 # Plot Results
 # """"""""""""
 #
-# Use pre-configured plots. See also :class:`~ansys.dpf.composites.SamplingPoint.get_result_plots`.
+# Use pre-configured plots. See also :meth:`.SamplingPoint.get_result_plots`.
 sampling_point_plot = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=[Spot.bottom, Spot.top],
+    spots=[Spot.BOTTOM, Spot.TOP],
     show_failure_modes=True,
 )
 sampling_point_plot.figure.set_figheight(8)
@@ -95,7 +95,7 @@ core_scale_factor = 0.5
 sampling_point.add_results_to_plot(
     ax1,
     ["s13", "s23"],
-    [Spot.bottom, Spot.top],
+    [Spot.BOTTOM, Spot.TOP],
     core_scale_factor,
     "Out-of-plane shear stresses",
     "MPA",
@@ -108,7 +108,7 @@ sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
 # %%
 # Plot e12 and e2
 
-interfaces = [Spot.bottom, Spot.top]
+interfaces = [Spot.BOTTOM, Spot.TOP]
 core_scale_factor = 1.0
 indices = sampling_point.get_indices(interfaces)
 offsets = sampling_point.get_offsets_by_spots(interfaces, core_scale_factor)
@@ -134,7 +134,7 @@ sampling_point.element_id = 4
 sampling_point_plot = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
-    spots=[Spot.bottom, Spot.top],
+    spots=[Spot.BOTTOM, Spot.TOP],
     show_failure_modes=True,
 )
 sampling_point_plot.figure.set_figheight(8)

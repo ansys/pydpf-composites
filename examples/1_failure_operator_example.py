@@ -26,8 +26,7 @@ or to select a list of materials or plies.
 # files.
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.enums import FailureOutput
+from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -36,6 +35,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
     VonMisesCriterion,
 )
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.
@@ -65,7 +65,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
 )
-irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value})
+irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
 
 # %%
@@ -74,7 +74,7 @@ output_two_elements = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
     composite_scope=CompositeScope(elements=[1, 3]),
 )
-irf_field = output_two_elements.get_field({"failure_label": FailureOutput.failure_value})
+irf_field = output_two_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
 
 # %%
@@ -83,5 +83,5 @@ output_woven_plies = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
     composite_scope=CompositeScope(plies=["P1L1__ud_patch ns1"]),
 )
-irf_field = output_woven_plies.get_field({"failure_label": FailureOutput.failure_value})
+irf_field = output_woven_plies.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()

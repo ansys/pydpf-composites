@@ -7,7 +7,7 @@ Post-process an Assembly
 Post-process an assembly with multiple composite parts.
 
 This example shows how an assembly of a shell and solid composite
-model can be post-processed. The :class:`Composite Model <ansys.dpf.composites.CompositeModel>`
+model can be post-processed. The :class:`Composite Model <.CompositeModel>`
 helps to access the data of the different parts.
 
 """
@@ -18,10 +18,10 @@ helps to access the data of the different parts.
 # Load Ansys libraries
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.connect_to_or_start_server import connect_to_or_start_server
-from ansys.dpf.composites.enums import FailureOutput
+from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a server and get the examples files.
@@ -44,7 +44,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Plot the max IRF per element
 #
 output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
-irf_field = output_all_elements.get_field({"failure_label": FailureOutput.failure_value})
+irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
 
 # %%
