@@ -3,9 +3,29 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
+_DOC_HOMOGENEOUS_CORE_COEFF = (
+    "Wrinkling coefficient (reduction factor) for homogeneous core materials. Default is 0.5"
+)
+_DOC_HONEYCOMB_CORE_COEFF = (
+    "Wrinkling coefficient (reduction factor) for honeycombs. Default is 0.33."
+)
+_DOC_WF = "Weighting factor of the failure mode (wb or wt)."
+
 
 class FaceSheetWrinklingCriterion(FailureCriterionBase):
-    """Defines the face sheet wrinkling criterion for sandwiches (laminate with cores)."""
+    """Face Sheet Wrinkling Criterion."""
+
+    __doc__ = f"""Defines the face sheet wrinkling criterion for sandwiches (laminate with cores).
+
+    Parameters
+    ----------
+    homogeneous_core_coeff:
+        {_DOC_HOMOGENEOUS_CORE_COEFF}
+    honeycomb_core_coeff:
+        {_DOC_HONEYCOMB_CORE_COEFF}
+    wf:
+        {_DOC_WF}
+    """
 
     def __init__(
         self,
@@ -44,18 +64,18 @@ class FaceSheetWrinklingCriterion(FailureCriterionBase):
     def _set_wf(self, value: float) -> None:
         self._wf = value
 
-    wf = property(_get_wf, _set_wf, doc="Weighting factor of the failure mode (wb or wt).")
     homogeneous_core_coeff = property(
         _get_homogeneous_core_coeff,
         _set_homogeneous_core_coeff,
-        doc="Wrinkling coefficient (reduction factor) for homogeneous core materials. "
-        "Default is 0.5",
+        doc=_DOC_HOMOGENEOUS_CORE_COEFF,
     )
     honeycomb_core_coeff = property(
         _get_honeycomb_core_coeff,
         _set_honeycomb_core_coeff,
-        doc="Wrinkling coefficient (reduction factor) for honeycombs. Default is 0.33.",
+        doc=_DOC_HONEYCOMB_CORE_COEFF,
     )
+
+    wf = property(_get_wf, _set_wf, doc=_DOC_WF)
 
 
 ATTRS_WRINKLING = inspect.signature(FaceSheetWrinklingCriterion).parameters.keys()
