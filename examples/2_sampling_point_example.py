@@ -6,13 +6,13 @@ Sampling Point
 
 Extract ply-wise laminate properties and results.
 
-The :class:`Sampling Point <ansys.dpf.composites.SamplingPoint>` is a feature
-to extract through-the-thickness data of laminate. For instance, ply-wise properties
+The :class:`Sampling Point <.SamplingPoint>` is a feature to extract
+through-the-thickness data of laminate. For instance, ply-wise properties
 strains and stresses.
 Besides that, it implements basic visualization to plot the laminate.
 
-This example uses the :class:`Composite Model <ansys.dpf.composites.CompositeModel>` to
-scope a Sampling Point to a certain element and to visualize the laminate.
+This example uses the :class:`Composite Model <.CompositeModel>` to scope a
+Sampling Point to a certain element and to visualize the laminate.
 
 """
 
@@ -64,7 +64,7 @@ sampling_point = composite_model.get_sampling_point(combined_criterion=combined_
 # Plot Results
 # """"""""""""
 #
-# Use pre-configured plots. See also :class:`~ansys.dpf.composites.SamplingPoint.get_result_plots`.
+# Use pre-configured plots. See also :meth:`.SamplingPoint.get_result_plots`.
 sampling_point_plot = sampling_point.get_result_plots(
     strain_components=[],  # do not plot strains
     core_scale_factor=0.1,
@@ -124,6 +124,10 @@ ax1.set_yticks([])
 ax1.legend()
 ax1.set_title("e12 and e2")
 
+# %%
+# Plot lay-up only
+fig2, layup_axes = plt.subplots()
+sampling_point.add_ply_sequence_to_plot(layup_axes)
 
 # %%
 # Sample another element

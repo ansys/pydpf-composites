@@ -75,6 +75,14 @@ intersphinx_mapping = {
     # "pyvista": ("https://docs.pyvista.org/", None),
     # "grpc": ("https://grpc.github.io/grpc/python/", None),
 }
+nitpick_ignore = [
+    ("py:class", "NDArray"),
+    ("py:class", "int64"),
+]
+nitpick_ignore_regex = [
+    ("py:class", "numpy\..*"),
+    ("py:class", ".*FailureCriterionBase"),  # implementation detail, not documented
+]
 
 # sphinx_autodoc_typehints configuration
 typehints_defaults = "comma"

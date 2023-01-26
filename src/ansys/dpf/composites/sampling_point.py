@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, Collection, Dict, List, Sequence, Union, 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
+from matplotlib.axes import SubplotBase
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
     import numpy.typing as npt
 
 from .constants import Spot
-from .result_definition import ResultDefinition
+from .result_definition import FailureMeasure, ResultDefinition
 from .server_helpers._load_plugin import load_composites_plugin
 
 __all__ = (
@@ -38,9 +39,9 @@ class FailureResult:
     """Components of a failure result."""
 
     mode: str
-    irf: float
-    rf: float
-    mos: float
+    inverse_reserve_factor: float
+    safety_factor: float
+    safety_margin: float
 
 
 def _check_result_definition_has_single_scope(result_definition: ResultDefinition) -> None:
@@ -101,10 +102,10 @@ class SamplingPoint:
     filtering of the data.
     """
 
-    _FAILURE_MODES = {
-        "irf": "inverse_reserve_factor",
-        "rf": "reserve_factor",
-        "mos": "margin_of_safety",
+    _FAILURE_MODE_NAMES_TO_ACP = {
+        FailureMeasure.INVERSE_RESERVE_FACTOR: "inverse_reserve_factor",
+        FailureMeasure.RESERVE_FACTOR: "reserve_factor",
+        FailureMeasure.MARGIN_OF_SAFETY: "margin_of_safety",
     }
 
     def __init__(
@@ -288,13 +289,19 @@ class SamplingPoint:
 
     @property
     def reserve_factor(self) -> "npt.NDArray[np.float64]":
-        """Lowest reserve factor of each ply."""
+        """Lowest reserve factor of each ply.
+
+        Equivalent to Safety Factor.
+        """
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["failures"]["reserve_factor"])
 
     @property
     def margin_of_safety(self) -> "npt.NDArray[np.float64]":
-        """Lowest margin of safety of each ply."""
+        """Lowest margin of safety of each ply.
+
+        Equivalent to Safety Margin.
+        """
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["failures"]["margin_of_safety"])
 
@@ -526,7 +533,7 @@ class SamplingPoint:
         ax.legend()
         return SamplingPointFigure(fig, ax)
 
-    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float) -> None:
+    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply + text) to an axes/plot.
 
         Parameters
@@ -540,7 +547,11 @@ class SamplingPoint:
             spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
         )
 
+        if len(offsets) == 0:
+            return
+
         num_spots = 2
+        axes.set_ybound(offsets[0], offsets[-1])
         x_bound = axes.get_xbound()
         width = x_bound[1] - x_bound[0]
 
@@ -580,7 +591,10 @@ class SamplingPoint:
         axes:
             Matplotlib single axes object
         components:
-            List of result components
+            List of result components. Valid components for
+              strain are "e1", "e2", "e3", "e12", "e13" and "e23",
+              stress are "s1", "s2", "s3", "s12", "s13" and "s23",
+              failure are "inverse_reserve_factor", "reserve_factor" and "margin_of_safety".
         spots:
             List of interfaces (bottom, middle and/or top)
         core_scale_factor:
@@ -604,6 +618,11 @@ class SamplingPoint:
 
         for comp in components:
             raw_values = getattr(self, comp)
+            if raw_values is None:
+                raise RuntimeError(
+                    f"Component {comp} is not supported. "
+                    f"Please refer to the help of add_results_to_plot"
+                )
             values = [raw_values[i] for i in indices]
             axes.plot(values, offsets, label=comp)
         if title:
@@ -618,7 +637,11 @@ class SamplingPoint:
         self,
         strain_components: Sequence[str] = ("e1", "e2", "e3", "e12", "e13", "e23"),
         stress_components: Sequence[str] = ("s1", "s2", "s3", "s12", "s13", "s23"),
-        failure_components: Sequence[str] = ("irf", "rf", "mos"),
+        failure_components: Sequence[FailureMeasure] = (
+            FailureMeasure.INVERSE_RESERVE_FACTOR,
+            FailureMeasure.RESERVE_FACTOR,
+            FailureMeasure.MARGIN_OF_SAFETY,
+        ),
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
@@ -663,38 +686,54 @@ class SamplingPoint:
         gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
         axes = gs.subplots(sharex="col", sharey="row")
 
+        def _get_subplot(axes_obj: Any, current_index: int) -> Any:
+            if issubclass(axes_obj.__class__, SubplotBase):
+                if current_index > 0:
+                    raise RuntimeError("axes plot cannot be indexed.")
+                return axes_obj
+            else:
+                if current_index < len(axes_obj):
+                    return axes_obj[current_index]
+
+            raise RuntimeError("get_subplot: index exceeds limit.")
+
         if num_active_plots > 0:
             ticks = self.get_offsets_by_spots(spots=[Spot.TOP], core_scale_factor=core_scale_factor)
 
+            axes_index = 0
+
+            first_axis = _get_subplot(axes, axes_index)
             if core_scale_factor != 1.0:
                 labels = []
-                axes[0].set_ylabel("z-Coordinates (scaled)")
+                first_axis.set_ylabel("z-Coordinates (scaled)")
             else:
                 labels = [f"{t:.3}" for t in ticks]
-                axes[0].set_ylabel("z-Coordinates [length]")
+                first_axis.set_ylabel("z-Coordinates [length]")
 
-            axes[0].set_yticks(ticks=ticks, labels=labels)
+            first_axis.set_yticks(ticks=ticks, labels=labels)
 
-            axes_index = 0
             if create_laminate_plot:
                 plt.rcParams["hatch.linewidth"] = 0.2
                 plt.rcParams["hatch.color"] = "silver"
-                self.add_ply_sequence_to_plot(axes[axes_index], core_scale_factor)
-                axes[axes_index].set_xticks([])
+                layup_axis = _get_subplot(axes, axes_index)
+                self.add_ply_sequence_to_plot(layup_axis, core_scale_factor)
+                layup_axis.set_xticks([])
                 axes_index += 1
 
                 plt.rcParams["hatch.linewidth"] = 1.0
                 plt.rcParams["hatch.color"] = "black"
 
             if len(strain_components) > 0:
+                strain_axis = _get_subplot(axes, axes_index)
                 self.add_results_to_plot(
-                    axes[axes_index], strain_components, spots, core_scale_factor, "Strains", "[-]"
+                    strain_axis, strain_components, spots, core_scale_factor, "Strains", "[-]"
                 )
                 axes_index += 1
 
             if len(stress_components) > 0:
+                stress_axis = _get_subplot(axes, axes_index)
                 self.add_results_to_plot(
-                    axes[axes_index],
+                    stress_axis,
                     stress_components,
                     spots,
                     core_scale_factor,
@@ -704,11 +743,10 @@ class SamplingPoint:
                 axes_index += 1
 
             if len(failure_components) > 0:
-
-                failure_plot = axes[axes_index]
-                internal_fc = [self._FAILURE_MODES[v] for v in failure_components]
+                failure_axis = _get_subplot(axes, axes_index)
+                internal_fc = [self._FAILURE_MODE_NAMES_TO_ACP[v] for v in failure_components]
                 self.add_results_to_plot(
-                    axes[axes_index], internal_fc, spots, core_scale_factor, "Failures", "[-]"
+                    failure_axis, internal_fc, spots, core_scale_factor, "Failures", "[-]"
                 )
 
                 if show_failure_modes:
@@ -723,10 +761,10 @@ class SamplingPoint:
 
                     for index, offset in enumerate(middle_offsets):
                         for fc in failure_components:
-                            failure_plot.annotate(
+                            failure_axis.annotate(
                                 getattr(critical_failures[index], "mode"),
-                                xy=(getattr(critical_failures[index], fc), offset),
-                                xytext=(getattr(critical_failures[index], fc), offset),
+                                xy=(getattr(critical_failures[index], fc.value), offset),
+                                xytext=(getattr(critical_failures[index], fc.value), offset),
                             )
 
                 axes_index += 1

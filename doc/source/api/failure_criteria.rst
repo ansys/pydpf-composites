@@ -3,7 +3,7 @@
 Failure Criteria
 ----------------
 
-.. currentmodule:: ansys.dpf.composites.failure_criteria
+.. module:: ansys.dpf.composites.failure_criteria
 
 .. autosummary::
     :toctree: _autosummary

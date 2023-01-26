@@ -31,7 +31,7 @@ def setup_index_by_id(scoping: Scoping) -> IndexToId:
     Parameters
     ----------
     scoping:
-        Dpf scoping
+        DPF scoping
     """
     indices: "NDArray[np.int64]" = np.full(max(scoping.ids) + 1, -1, dtype=np.int64)
     indices[scoping.ids] = np.arange(len(scoping.ids))
