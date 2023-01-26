@@ -84,7 +84,7 @@ class DockerProcess:
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n\n")
 
-        return ServerContext(port=self.port, platform="linux")
+        return ServerContext(port=self.port, platform="linux", server=None)
 
     def __init__(
         self,
