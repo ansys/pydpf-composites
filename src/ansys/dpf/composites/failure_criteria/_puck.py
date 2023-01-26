@@ -32,10 +32,18 @@ _DOC_INTERFACE_WEAKENING_FACTOR = (
 _DOC_FORCE_GLOBAL_CONSTANTS = (
     "Whether to use global constants instead of the material-wise properties."
 )
-_DOC_P21_NEG = "Global inclination factor at \u03C3 2 = 0 for \u03C3 2 < 0 for s22 < 0."
-_DOC_P21_POS = "Global inclination factor at \u03C3 2 =0 for \u03C3 2 > 0 for s22 > 0"
-_DOC_P22_NEG = "Global inclination factor of the fracture plane \u27c2 \u27c2 for compression."
-_DOC_P22_POS = "Global inclination factor of the fracture plane \u27c2 \u27c2 for tension."
+_DOC_P21_NEG = (
+    "Global inclination factor at"
+    r" :math:`\sigma_1 - \tau_{12}` plane at :math:`\sigma_2 = 0` for compression."
+)
+_DOC_P21_POS = (
+    "Global inclination factor at"
+    r" :math:`\sigma_1 - \tau_{12}` plane at :math:`\sigma_2 = 0` for tension."
+)
+_DOC_P22_NEG = (
+    r"Global inclination factor of the fracture  plane :math:`\perp \perp` for compression."
+)
+_DOC_P22_POS = r"Global inclination factor of the fracture plane :math:`\perp \perp` for tension."
 
 
 class PuckCriterion(FailureCriterionBase):
