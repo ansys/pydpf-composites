@@ -285,7 +285,7 @@ def test_performance_property_dict(dpf_server):
     timer.add("After enrich mesh")
 
     property_dict = get_constant_property_dict(
-        material_properties=[MaterialProperty.strain_limits_ext],
+        material_properties=[MaterialProperty.Strain_Limits_eXt],
         materials_provider=material_operators.material_provider,
         data_source_or_streams_provider=data_sources.rst,
         mesh=mesh,

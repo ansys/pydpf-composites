@@ -101,7 +101,7 @@ class SamplingPoint:
     filtering of the data.
     """
 
-    FAILURE_MODES = {
+    _FAILURE_MODES = {
         "irf": "inverse_reserve_factor",
         "rf": "reserve_factor",
         "mos": "margin_of_safety",
@@ -378,9 +378,9 @@ class SamplingPoint:
             )
 
         if self._spots_per_ply == 3:
-            self._interface_indices = {Spot.bottom: 0, Spot.middle: 1, Spot.top: 2}
+            self._interface_indices = {Spot.BOTTOM: 0, Spot.MIDDLE: 1, Spot.TOP: 2}
         elif self._spots_per_ply == 2:
-            self._interface_indices = {Spot.bottom: 0, Spot.top: 1}
+            self._interface_indices = {Spot.BOTTOM: 0, Spot.TOP: 1}
         elif self._spots_per_ply == 1:
             raise RuntimeError(
                 "Result files which only have results at the middle of the ply are "
@@ -390,7 +390,7 @@ class SamplingPoint:
         self._isuptodate = True
 
     def get_indices(
-        self, spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top)
+        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
     ) -> Sequence[int]:
         """Access the indices of the selected interfaces for each ply.
 
@@ -425,7 +425,7 @@ class SamplingPoint:
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
+        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
         core_scale_factor: float = 1.0,
     ) -> "npt.NDArray[np.float64]":
         """Access the y coordinates of the selected interfaces for each ply.
@@ -537,7 +537,7 @@ class SamplingPoint:
             Scales the thickness of core plies
         """
         offsets = self.get_offsets_by_spots(
-            spots=[Spot.bottom, Spot.top], core_scale_factor=core_scale_factor
+            spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
         )
 
         num_spots = 2
@@ -568,7 +568,7 @@ class SamplingPoint:
         self,
         axes: Any,
         components: Sequence[str],
-        spots: Collection[Spot] = (Spot.bottom, Spot.top),
+        spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP),
         core_scale_factor: float = 1.0,
         title: str = "",
         xlabel: str = "",
@@ -622,7 +622,7 @@ class SamplingPoint:
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.bottom, Spot.middle, Spot.top),
+        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -664,7 +664,7 @@ class SamplingPoint:
         axes = gs.subplots(sharex="col", sharey="row")
 
         if num_active_plots > 0:
-            ticks = self.get_offsets_by_spots(spots=[Spot.top], core_scale_factor=core_scale_factor)
+            ticks = self.get_offsets_by_spots(spots=[Spot.TOP], core_scale_factor=core_scale_factor)
 
             if core_scale_factor != 1.0:
                 labels = []
@@ -706,7 +706,7 @@ class SamplingPoint:
             if len(failure_components) > 0:
 
                 failure_plot = axes[axes_index]
-                internal_fc = [self.FAILURE_MODES[v] for v in failure_components]
+                internal_fc = [self._FAILURE_MODES[v] for v in failure_components]
                 self.add_results_to_plot(
                     axes[axes_index], internal_fc, spots, core_scale_factor, "Failures", "[-]"
                 )
@@ -714,7 +714,7 @@ class SamplingPoint:
                 if show_failure_modes:
 
                     middle_offsets = self.get_offsets_by_spots(
-                        spots=[Spot.middle], core_scale_factor=core_scale_factor
+                        spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
                     )
                     critical_failures = self.get_ply_wise_critical_failures()
 

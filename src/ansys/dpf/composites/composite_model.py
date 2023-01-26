@@ -35,7 +35,23 @@ __all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 class CompositeScope:
     """Composite scope.
 
-    Defines which part of the model is selected.
+    Defines which part of the model and solution step are selected.
+
+    Parameters
+    ----------
+        elements:
+            list of element labels
+        plies:
+            list of plies.
+        time:
+            time or frequency. Refer to
+            :func:`CompositeModel.get_result_times_or_frequencies` to list the solution steps.
+
+    Notes
+    -----
+       In case `elements` and `plies` are set, the final element scope is the intersection
+       of the two.
+
     """
 
     elements: Optional[Sequence[int]] = None
@@ -186,22 +202,23 @@ class CompositeModel:
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
-        measure: FailureMeasure = FailureMeasure.inverse_reserve_factor,
+        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluted failure criteria.
 
         The container contains the maximum per element if the measure
-        is `FailureMeasure.inverse_reserve_factor` and the minimum per element
-        if the measure is `FailureMeasure.margin_of_safety` or `FailureMeasure.reserve_factor`
+        is `FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is `FailureMeasure.MARGIN_OF_SAFETY` or `FailureMeasure.RESERVE_FACTOR`
 
         Parameters
         ----------
         combined_criterion:
             Combined failure criterion to evaluate
         composite_scope:
-            Composite scope on which the failure criteria are evaluated. If
-            empty, the criteria is evaluated on the full model.
+            Composite scope on which the failure criteria are evaluated. If empty, the criteria
+            is evaluated on the full model. The last time/frequency in the result file is used
+            by default if time is not set.
         measure:
             Failure measure to evaluate
         write_data_for_full_element_scope:
@@ -256,7 +273,7 @@ class CompositeModel:
 
         failure_operator.inputs.result_definition(rd.to_json())
 
-        if measure == FailureMeasure.inverse_reserve_factor:
+        if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
             return failure_operator.outputs.fields_containerMax()
         else:
             return failure_operator.outputs.fields_containerMin()
@@ -371,11 +388,11 @@ class CompositeModel:
         layup_properties_provider = self._composite_infos[
             composite_definition_label
         ].layup_properties_provider
-        if layup_property == LayerProperty.angles:
+        if layup_property == LayerProperty.ANGLES:
             return layup_properties_provider.get_layer_angles(element_id)
-        if layup_property == LayerProperty.thicknesses:
+        if layup_property == LayerProperty.THICKNESSES:
             return layup_properties_provider.get_layer_thicknesses(element_id)
-        if layup_property == LayerProperty.shear_angles:
+        if layup_property == LayerProperty.SHEAR_ANGLES:
             return layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 
