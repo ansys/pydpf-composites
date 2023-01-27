@@ -1,7 +1,7 @@
 """
 .. _failure_operator_example:
 
-Composite Failure Analysis
+Composite failure analysis
 --------------------------
 
 Analyse a composite structure by a combined failure criterion.

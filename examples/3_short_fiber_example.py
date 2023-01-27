@@ -1,7 +1,7 @@
 """
 .. _short_fiber_example:
 
-Failure Analysis for Short Fiber Composites
+Failure analysis for short fiber composites
 -------------------------------------------
 
 Failure analysis of a short fiber reinforced part.

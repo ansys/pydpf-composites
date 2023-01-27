@@ -1,7 +1,7 @@
 """
 .. _assembly_example:
 
-Post-process an Assembly
+Post-process an assembly
 ------------------------
 
 Post-process an assembly with multiple composite parts.

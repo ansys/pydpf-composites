@@ -1,6 +1,6 @@
 .. _select_indices:
 
-Select Elementary Indices
+Select elementary indices
 -------------------------
 
 This module provides functions to filter elementary data.

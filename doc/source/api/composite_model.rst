@@ -1,4 +1,4 @@
-Composite Model
+Composite model
 ---------------
 
 .. module:: ansys.dpf.composites.composite_model
