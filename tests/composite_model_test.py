@@ -154,10 +154,7 @@ def test_assembly_model(dpf_server):
     solid_label = "Setup 3_solid"
     shell_label = "Setup 4_shell"
 
-    if not dpf_server.local_server:
-        files = upload_continuous_fiber_composite_files_to_server(
-            data_files=files, server=dpf_server
-        )
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
     timer.add("After Upload files")
 
     composite_model = CompositeModel(files, server=dpf_server)
@@ -300,10 +297,7 @@ def test_assembly_model(dpf_server):
 def test_failure_measures(dpf_server):
     """Verify that all failure measure names are compatible with the backend"""
     files = get_data_files()
-    if not dpf_server.local_server:
-        files = upload_continuous_fiber_composite_files_to_server(
-            data_files=files, server=dpf_server
-        )
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 
     composite_model = CompositeModel(files, server=dpf_server)
     combined_failure_criterion = CombinedFailureCriterion(
@@ -322,10 +316,7 @@ def test_composite_model_element_scope(dpf_server):
     """Ensure that the element IDs of the scope can be of any type (e.g. np.int)"""
     files = get_data_files()
 
-    if not dpf_server.local_server:
-        files = upload_continuous_fiber_composite_files_to_server(
-            data_files=files, server=dpf_server
-        )
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 
     composite_model = CompositeModel(files, server=dpf_server)
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
