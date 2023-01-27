@@ -38,8 +38,7 @@ def test_getting_started(dpf_server: dpf.server):
     # For the getting started example comment the next two lines and
     # uncomment serer = connect_to_or_start_server()
     server = dpf_server
-    if not server.local_server:
-        composite_files = upload_continuous_fiber_composite_files_to_server(composite_files, server)
+    composite_files = upload_continuous_fiber_composite_files_to_server(composite_files, server)
     # server = connect_to_or_start_server()
 
     # Create a composite model
