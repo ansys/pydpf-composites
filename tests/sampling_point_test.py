@@ -169,10 +169,7 @@ def test_sampling_point_result_plots(dpf_server):
         engineering_data=material_path,
     )
 
-    if not dpf_server.local_server:
-        files = upload_continuous_fiber_composite_files_to_server(
-            data_files=files, server=dpf_server
-        )
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
     cfc = CombinedFailureCriterion(
         "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
     )

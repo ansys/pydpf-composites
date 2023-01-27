@@ -266,10 +266,7 @@ def test_performance_property_dict(dpf_server):
 
     files = get_data_files()
 
-    if not dpf_server.local_server:
-        files = upload_continuous_fiber_composite_files_to_server(
-            data_files=files, server=dpf_server
-        )
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 
     data_sources = get_composites_data_sources(files)
     mesh_provider = dpf.Operator("MeshProvider")
