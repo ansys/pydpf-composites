@@ -44,16 +44,18 @@ def upload_continuous_fiber_composite_files_to_server(
 ) -> ContinuousFiberCompositesFiles:
     """Upload continuous fiber composites files to server.
 
+    Note: If server.local_server == True the data_files are returned unmodified.
+
     Parameters
     ----------
     data_files
     server
     """
+    if server.local_server:
+        return data_files
 
     def upload(filename: _PATH) -> _PATH:
-        if not server.local_server:
-            return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
-        return filename
+        return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
 
     all_composite_files = {}
     for key, composite_files_by_scope in data_files.composite.items():
