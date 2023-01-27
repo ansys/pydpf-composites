@@ -41,7 +41,7 @@ DPF Composites operators and data accessors for short fiber and layered composit
 and to implement custom failure criteria and computation.
 For instance fatigue analysis. See `PyDPF Composites - Examples`_.
 
-Developer Setup
+Developer setup
 ===============
 
 Installing PyDPF Composites in developer mode allows
@@ -68,26 +68,23 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         pipx install pip
         pipx install tox
 
-Build environment
-=================
+#. Create a virtual environment and install the package with development
+    dependencies.
+    PyDPF Composites uses `poetry <https://python-poetry.org>`_ to manage the
+    development environment.
 
-# Build package and install into the local env
+    .. code:: bash
 
-.. code:: bash
+        poetry install --all-extras
 
-    poetry install -E build
-    poetry build
-    python -m pip install dist\ansys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
+#. Activate the virtual environment:
 
-Use tox to create a virtual env for the development. Activate this env to run tests and scripts
-(*<root>\\.tox\\dev\\Scripts\\activate*).
+    .. code:: bash
 
-.. code:: bash
-
-    tox -e dev
+        poetry shell
 
 Testing
--------
+=======
 #. Run tests with a docker container. Note: the docker container is not yet publicly available.
 
     .. code:: bash
