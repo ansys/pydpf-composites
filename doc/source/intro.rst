@@ -29,7 +29,7 @@ The examples download their input files (results, composite definition, etc.) fr
 
 For larger models it can be slow to initialize a :class:`.CompositeModel`, because it automatically creates many
 different providers that are not needed in all the workflows. Consider using the
-:ref:`Layup Information classes <layup_information_classes>` directly.
+:ref:`Layup information classes <layup_information_classes>` directly.
 
 Start from a local Ansys Workbench project
 """"""""""""""""""""""""""""""""""""""""""
