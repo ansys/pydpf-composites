@@ -75,7 +75,7 @@ Build environment
 
 .. code:: bash
 
-    poetry install -E build
+    poetry install --all-extras
     poetry build
     python -m pip install dist\ansys_dpf_composites-0.2.dev0-py3-none-any.whl --force-reinstall
 
