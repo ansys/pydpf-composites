@@ -75,9 +75,9 @@ Build environment
 
 .. code:: bash
 
-    poetry install -E build
+    poetry install --all-extras
     poetry build
-    python -m pip install dist\ansys_dpf_composites-0.1.dev0-py3-none-any.whl --force-reinstall
+    python -m pip install dist\ansys_dpf_composites-0.2.dev0-py3-none-any.whl --force-reinstall
 
 Use tox to create a virtual env for the development. Activate this env to run tests and scripts
 (*<root>\\.tox\\dev\\Scripts\\activate*).
