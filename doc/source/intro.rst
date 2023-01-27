@@ -12,8 +12,8 @@ Install the ``ansys-dpf-composites`` module with ``pip``:
     pip install ansys-dpf-composites
 
 
-We recommend using a `virtual environment <https://docs.python.org/3/library/venv.html>`_
-to keep Python packages isolated from your system Python.
+It is recommended to use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
+which keeps Python packages isolated from your system Python.
 
 
 Examples
@@ -25,7 +25,7 @@ Get started with some basic :doc:`examples/index` :
 * :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
 
 In the end of each example, there is a button to download the python source code of the example.
-The examples will download the example files (results, composite definition..) from an examples repository.
+The examples download their input files (results, composite definition, etc.) from a git repository.
 
 For larger models it can be slow to initialize a :class:`.CompositeModel`, because it automatically creates many
 different providers that are not needed in all the workflows. Consider using the

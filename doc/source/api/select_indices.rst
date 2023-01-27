@@ -38,7 +38,7 @@ Here are some examples:
 
 The functions in this module compute an array of elementary indices for a given selection of
 layers, nodes, spots, DPF material IDs or analysis plies. These elementary indices can be used to index the first axis
-of the elementary data array. Please check the :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
+of the elementary data array. Please refer to the :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
 section for complete usage examples.
 
 
