@@ -24,6 +24,7 @@ TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
 SERVER_BIN_OPTION_KEY = "--server-bin"
 PORT_OPTION_KEY = "--port"
+ANSYS_PATH_OPTION_KEY = "--ansys-path"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -41,8 +42,15 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         "Can be used to test with a debug container. Only supported for linux containers.",
     )
 
+    parser.addoption(
+        ANSYS_PATH_OPTION_KEY,
+        action="store",
+        help="If set, the dpf server is started from an ansys location located at the given path."
+        r"Example: C:\Program Files\Ansys Inc\v231",
+    )
 
-ServerContext = namedtuple("ServerContext", ["port", "platform"])
+
+ServerContext = namedtuple("ServerContext", ["port", "platform", "server"])
 
 
 class DockerProcess:
@@ -76,7 +84,7 @@ class DockerProcess:
         self.process_stdout.write(str(out))
         self.process_stdout.write(f"\n\n")
 
-        return ServerContext(port=self.port, platform="linux")
+        return ServerContext(port=self.port, platform="linux", server=None)
 
     def __init__(
         self,
@@ -184,7 +192,7 @@ class LocalServerProcess:
             cmd, stdout=self.server_stdout, stderr=self.server_stderr, text=True, env=self.env
         )
 
-        return ServerContext(port=self.port, platform=sys.platform)
+        return ServerContext(port=self.port, platform=sys.platform, server=None)
 
     def __exit__(
         self,
@@ -207,7 +215,21 @@ class RunningServer:
         self.platform = platform
 
     def __enter__(self):
-        return ServerContext(port=self.port, platform=self.platform)
+        return ServerContext(port=self.port, platform=self.platform, server=None)
+
+    def __exit__(self, *args):
+        pass
+
+
+class InstalledServer:
+    """Context manager that wraps a dpf server started from the installer"""
+
+    def __init__(self, ansys_path: str):
+        self.ansys_path = ansys_path
+
+    def __enter__(self):
+        server = dpf.start_local_server(ansys_path=self.ansys_path)
+        return ServerContext(port=None, platform=sys.platform, server=server)
 
     def __exit__(self, *args):
         pass
@@ -241,12 +263,14 @@ def dpf_server(request: pytest.FixtureRequest):
 
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
+    installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
 
-    if server_bin and running_server_port:
-        raise Exception(
-            "Invalid inputs. Both port and server-bin option are specified. "
-            "These two options are exclusive"
-        )
+    active_options = [
+        option for option in [installer_path, server_bin, running_server_port] if option is not None
+    ]
+
+    if len(active_options) > 1:
+        raise Exception(f"Invalid inputs. Multiple options specified: {active_options}")
 
     def start_server_process():
         if running_server_port:
@@ -255,6 +279,8 @@ def dpf_server(request: pytest.FixtureRequest):
             return LocalServerProcess(
                 server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
             )
+        if installer_path:
+            return InstalledServer(installer_path)
         else:
 
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
@@ -271,11 +297,14 @@ def dpf_server(request: pytest.FixtureRequest):
         # to a server:https://github.com/pyansys/pydpf-core/issues/638
         # We just try until connect_to_server succeeds
         def start_server():
-            return dpf.server.connect_to_server(port=server_process.port)
+            if server_process.port:
+                return dpf.server.connect_to_server(port=server_process.port)
+            else:
+                return server_process.server
 
         server = _try_until_timeout(start_server, "Failed to start server.")
 
         _wait_until_server_is_up(server)
-        load_composites_plugin(server)
+        load_composites_plugin(server, ansys_path=installer_path)
 
         yield server

@@ -266,7 +266,10 @@ def test_performance_property_dict(dpf_server):
 
     files = get_data_files()
 
-    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
+    if not dpf_server.local_server:
+        files = upload_continuous_fiber_composite_files_to_server(
+            data_files=files, server=dpf_server
+        )
 
     data_sources = get_composites_data_sources(files)
     mesh_provider = dpf.Operator("MeshProvider")
@@ -411,9 +414,11 @@ def test_performance_flat(dpf_server):
     assert np.all(np.abs(all_data[:, 9]) == pytest.approx(181))
 
     # dpf_material_ids
-    assert np.all(np.abs(all_data[:n_values_per_layers, 10]) == pytest.approx(3))
+    material_ids = layup_info.get_element_info(1).dpf_material_ids
+    assert np.all(np.abs(all_data[:n_values_per_layers, 10]) == pytest.approx(material_ids[0]))
     assert np.all(
-        np.abs(all_data[n_values_per_layers : 2 * n_values_per_layers, 10]) == pytest.approx(2)
+        np.abs(all_data[n_values_per_layers : 2 * n_values_per_layers, 10])
+        == pytest.approx(material_ids[1])
     )
 
     timer.add("after local field")

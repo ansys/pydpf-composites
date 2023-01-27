@@ -14,14 +14,15 @@ def test_basic_workflow(dpf_server):
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
-    rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+    if not dpf_server.local_server:
+        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
 
-    h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
-    material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
+        h5_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
+        material_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
 
-    rst_path = rst_server_path
-    eng_data_path = material_server_path
-    composite_definitions_path = h5_server_path
+    rst_path = rst_path
+    eng_data_path = material_path
+    composite_definitions_path = h5_path
 
     rst_data_source = dpf.DataSources(rst_path)
 
