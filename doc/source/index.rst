@@ -20,25 +20,26 @@ criteria and computation.
 .. grid:: 1 1 2 2
     :gutter: 2
 
-    .. grid-item-card:: :octicon:`rocket` Getting Started
+    .. grid-item-card:: :octicon:`rocket` Getting started
         :link: intro
         :link-type: doc
 
-        Installation, load model and failure plot.
+        The getting started guide contains installation instructions, and a simple
+        example to create a failure plot from a Workbench project.
 
     .. grid-item-card:: :octicon:`play` Examples
         :link: examples/index
         :link-type: doc
 
-        Collection of examples.
+        The examples demonstrate the use of PyDPF Composites for various workflows.
 
-    .. grid-item-card:: :octicon:`file-code` API Reference
+    .. grid-item-card:: :octicon:`file-code` API reference
         :link: api/index
         :link-type: doc
 
         Reference for the public Python classes, methods and functions.
 
-    .. grid-item-card:: :octicon:`code` Developer's Guide
+    .. grid-item-card:: :octicon:`code` Developer's guide
         :link: developers_guide
         :link-type: doc
 
