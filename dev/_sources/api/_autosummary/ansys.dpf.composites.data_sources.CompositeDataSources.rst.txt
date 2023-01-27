@@ -1,4 +1,6 @@
-﻿CompositeDataSources
+﻿.. vale off
+
+CompositeDataSources
 ====================
 
 .. currentmodule:: ansys.dpf.composites.data_sources
@@ -29,3 +31,5 @@
       CompositeDataSources.engineering_data
    
    
+
+.. vale on

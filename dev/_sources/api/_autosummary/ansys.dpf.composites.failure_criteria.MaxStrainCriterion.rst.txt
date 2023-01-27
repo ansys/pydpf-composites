@@ -1,4 +1,6 @@
-﻿MaxStrainCriterion
+﻿.. vale off
+
+MaxStrainCriterion
 ==================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -56,3 +58,5 @@
       MaxStrainCriterion.wf_e3
    
    
+
+.. vale on

@@ -1,4 +1,6 @@
-﻿FaceSheetWrinklingCriterion
+﻿.. vale off
+
+FaceSheetWrinklingCriterion
 ===========================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -37,3 +39,5 @@
       FaceSheetWrinklingCriterion.wf
    
    
+
+.. vale on

@@ -1,4 +1,6 @@
-﻿AnalysisPlyInfoProvider
+﻿.. vale off
+
+AnalysisPlyInfoProvider
 =======================
 
 .. currentmodule:: ansys.dpf.composites.layup_info
@@ -26,3 +28,5 @@
    
    
    
+
+.. vale on

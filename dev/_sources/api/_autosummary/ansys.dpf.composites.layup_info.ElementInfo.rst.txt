@@ -1,4 +1,6 @@
-﻿ElementInfo
+﻿.. vale off
+
+ElementInfo
 ===========
 
 .. currentmodule:: ansys.dpf.composites.layup_info
@@ -35,3 +37,5 @@
       ElementInfo.number_of_nodes_per_spot_plane
    
    
+
+.. vale on

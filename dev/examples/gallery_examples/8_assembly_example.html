@@ -107,13 +107,13 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../intro.html">
-  Getting Started
+  Getting started
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../api/index.html">
-  API Reference
+  API reference
  </a>
 </li>
 
@@ -205,7 +205,7 @@ function checkPageExistsAndRedirect(event) {
 
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's 0.1.dev0 variable.
+            // this version, rather than using sphinx's 0.2.dev0 variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
             if (entry.version == "dev") {
@@ -432,7 +432,7 @@ This will copy the example files into the current working directory.</p>
 </div>
 <img src="../../_images/sphx_glr_8_assembly_example_001.png" srcset="../../_images/sphx_glr_8_assembly_example_001.png" alt="8 assembly example" class = "sphx-glr-single-img"/><p>In the assembly exist two composite definitions, one with the label “shell” and one
 with the label “solid”. To query the layup properties we have to query the
-properties with the correct composite_definition_label.
+properties with the correct <code class="docutils literal notranslate"><span class="pre">composite_definition_label</span></code>.
 This example shows how to get ElementInfo for all layered elements</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">composite_definition_labels</span><span class="p">:</span>
@@ -442,7 +442,7 @@ This example shows how to get ElementInfo for all layered elements</p>
         <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_label</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.071 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.145 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-8-assembly-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/834844dd5f9fb735dc47d160776f651c/8_assembly_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">8_assembly_example.py</span></code></a></p>

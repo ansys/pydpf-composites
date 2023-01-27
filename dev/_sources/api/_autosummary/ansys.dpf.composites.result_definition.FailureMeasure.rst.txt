@@ -1,4 +1,6 @@
-﻿FailureMeasure
+﻿.. vale off
+
+FailureMeasure
 ==============
 
 .. currentmodule:: ansys.dpf.composites.result_definition
@@ -22,3 +24,5 @@
       FailureMeasure.RESERVE_FACTOR
    
    
+
+.. vale on

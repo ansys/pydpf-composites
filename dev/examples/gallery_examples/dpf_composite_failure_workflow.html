@@ -107,13 +107,13 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../intro.html">
-  Getting Started
+  Getting started
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../api/index.html">
-  API Reference
+  API reference
  </a>
 </li>
 
@@ -205,7 +205,7 @@ function checkPageExistsAndRedirect(event) {
 
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's 0.1.dev0 variable.
+            // this version, rather than using sphinx's 0.2.dev0 variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
             if (entry.version == "dev") {
@@ -394,7 +394,7 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="dpf-composite-failure-workflow">
 <span id="basic-example"></span><span id="sphx-glr-examples-gallery-examples-dpf-composite-failure-workflow-py"></span><h1>DPF Composite Failure Workflow<a class="headerlink" href="#dpf-composite-failure-workflow" title="Permalink to this heading">#</a></h1>
 <p>Use of native DPF Python interface to configure and run composite failure evaluator.</p>
-<p>This example shows how to connect the different dpf operators that are needed to
+<p>This example shows how to connect the different DPF operators that are needed to
 evaluate composite failure criteria. For simple use cases it is preferable
 to use the composite failure operator
 (<a class="reference internal" href="1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite Failure Analysis</span></a>)
@@ -478,7 +478,7 @@ provides the unit system from the rst file</p>
 </pre></div>
 </div>
 <p>Set up material provider
-Combines the material support the engineering data xml file and the unit_system.
+Combines the material support the engineering data XML file and the <code class="docutils literal notranslate"><span class="pre">unit_system</span></code>.
 It’s output can be used
 to evaluate material properties</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">material_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;eng_data::ans_mat_material_provider&quot;</span><span class="p">)</span>
@@ -524,7 +524,7 @@ The output contains the maximum failure criteria for each integration point.</p>
 <span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Uses the output of the multiple_failure_criteria_operator
+<p>Uses the output of the <code class="docutils literal notranslate"><span class="pre">multiple_failure_criteria_operator</span></code>
 to compute the min and max failure criteria for each element</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minmax_per_element</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::minmax_per_element_operator&quot;</span><span class="p">)</span>
 <span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(</span><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
@@ -541,7 +541,7 @@ to compute the min and max failure criteria for each element</p>
 <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">meshed_region</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">value_index</span></a><span class="p">])</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_dpf_composite_failure_workflow_001.png" srcset="../../_images/sphx_glr_dpf_composite_failure_workflow_001.png" alt="dpf composite failure workflow" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.644 seconds)</p>
+<img src="../../_images/sphx_glr_dpf_composite_failure_workflow_001.png" srcset="../../_images/sphx_glr_dpf_composite_failure_workflow_001.png" alt="dpf composite failure workflow" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.102 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-dpf-composite-failure-workflow-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/6b26539de83fbf2e8d5b37668ecc4e76/dpf_composite_failure_workflow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">dpf_composite_failure_workflow.py</span></code></a></p>

@@ -25,7 +25,7 @@ DPF Composite Failure Workflow
 
 Use of native DPF Python interface to configure and run composite failure evaluator.
 
-This example shows how to connect the different dpf operators that are needed to
+This example shows how to connect the different DPF operators that are needed to
 evaluate composite failure criteria. For simple use cases it is preferable
 to use the composite failure operator
 (:ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`)
@@ -206,7 +206,7 @@ provides the unit system from the rst file
 .. GENERATED FROM PYTHON SOURCE LINES 98-102
 
 Set up material provider
-Combines the material support the engineering data xml file and the unit_system.
+Combines the material support the engineering data XML file and the ``unit_system``.
 It's output can be used
 to evaluate material properties
 
@@ -306,7 +306,7 @@ The output contains the maximum failure criteria for each integration point.
 
 .. GENERATED FROM PYTHON SOURCE LINES 147-150
 
-Uses the output of the multiple_failure_criteria_operator
+Uses the output of the ``multiple_failure_criteria_operator``
 to compute the min and max failure criteria for each element
 
 
@@ -356,7 +356,7 @@ Plot the max and the minimum value for each value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.644 seconds)
+   **Total running time of the script:** ( 0 minutes  1.102 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_dpf_composite_failure_workflow.py:

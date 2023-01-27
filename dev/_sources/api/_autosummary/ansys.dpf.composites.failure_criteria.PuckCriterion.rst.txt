@@ -1,4 +1,6 @@
-﻿PuckCriterion
+﻿.. vale off
+
+PuckCriterion
 =============
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -54,3 +56,5 @@
       PuckCriterion.wf_pmc
    
    
+
+.. vale on

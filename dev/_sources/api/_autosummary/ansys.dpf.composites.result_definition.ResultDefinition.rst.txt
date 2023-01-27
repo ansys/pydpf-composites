@@ -1,4 +1,6 @@
-﻿ResultDefinition
+﻿.. vale off
+
+ResultDefinition
 ================
 
 .. currentmodule:: ansys.dpf.composites.result_definition
@@ -42,3 +44,5 @@
       ResultDefinition.time
    
    
+
+.. vale on

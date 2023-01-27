@@ -139,7 +139,7 @@ Plot the max IRF per element
 
 In the assembly exist two composite definitions, one with the label "shell" and one
 with the label "solid". To query the layup properties we have to query the
-properties with the correct composite_definition_label.
+properties with the correct ``composite_definition_label``.
 This example shows how to get ElementInfo for all layered elements
 
 
@@ -163,7 +163,7 @@ This example shows how to get ElementInfo for all layered elements
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.071 seconds)
+   **Total running time of the script:** ( 0 minutes  3.145 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_8_assembly_example.py:

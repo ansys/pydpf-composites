@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Getting Started &#8212; PyDPF Composites</title>
+    <title>Getting started &#8212; PyDPF Composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -53,7 +53,7 @@
     <link rel="shortcut icon" href="_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="api/index.html" />
+    <link rel="next" title="API reference" href="api/index.html" />
     <link rel="prev" title="PyDPF Composites" href="index.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
@@ -107,13 +107,13 @@
 
 <li class="toctree-l1 current active nav-item">
  <a class="current reference internal nav-link" href="#">
-  Getting Started
+  Getting started
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="api/index.html">
-  API Reference
+  API reference
  </a>
 </li>
 
@@ -205,7 +205,7 @@ function checkPageExistsAndRedirect(event) {
 
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's 0.1.dev0 variable.
+            // this version, rather than using sphinx's 0.2.dev0 variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
             if (entry.version == "dev") {
@@ -271,7 +271,7 @@ function checkPageExistsAndRedirect(event) {
         <li class="nav-item nav-item-0"><a href="index.html">PyDPF Composites</a> » </li>
     
 
-        <li class="nav-item nav-item-this"><a href="">Getting Started</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
       </ul>
     </div>
         </div>
@@ -315,11 +315,6 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#testing-session-to-be-removed">
-   Testing session (to be removed)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#installation">
    Installation
   </a>
@@ -356,25 +351,11 @@ function checkPageExistsAndRedirect(event) {
               <article class="bd-article" role="main">
                 
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
-<section id="testing-session-to-be-removed">
-<h2>Testing session (to be removed)<a class="headerlink" href="#testing-session-to-be-removed" title="Permalink to this heading">#</a></h2>
-<p>Most of the documentation below is still valid for the ansys internal testing session with following exceptions:</p>
-<p>Since the module is not yet public, please install from github:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pyansys</span><span class="o">/</span><span class="n">pydpf</span><span class="o">-</span><span class="n">composites</span><span class="o">.</span><span class="n">git</span>
-</pre></div>
-</div>
-<p>Whenever you call the function connect_to_or_start_server you have to pass the location of the 23.1 installer
-with the ansys_path argument:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connect_to_or_start_server</span><span class="p">(</span><span class="n">ansys_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AWP_ROOT231&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Otherwise, the dpf server will be started with the latest installer it finds, which probably is 23.2.</p>
-</section>
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<p>ansys-dpf-composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
-Install the ansys-dpf-composites module from pip:</p>
+<p>PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
+Install the <code class="docutils literal notranslate"><span class="pre">ansys-dpf-composites</span></code> module with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ansys</span><span class="o">-</span><span class="n">dpf</span><span class="o">-</span><span class="n">composites</span>
 </pre></div>
 </div>
@@ -396,7 +377,7 @@ different providers that are not needed in all the workflows. Consider using the
 <section id="start-from-a-local-ansys-workbench-project">
 <h3>Start from a local Ansys Workbench project<a class="headerlink" href="#start-from-a-local-ansys-workbench-project" title="Permalink to this heading">#</a></h3>
 <p>To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
-object in Mechanical and selecting “Open Solver Files Directory”. Then call the
+object in Mechanical and selecting “Open Solver Files Directory.” Then call the
 <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a> function with that folder.
 The following  example shows how to setup a project from workbench, create a basic failure plot and display
 detailed output for a sampling point.</p>

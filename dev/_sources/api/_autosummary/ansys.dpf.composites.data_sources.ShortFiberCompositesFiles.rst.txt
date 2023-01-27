@@ -1,4 +1,6 @@
-﻿ShortFiberCompositesFiles
+﻿.. vale off
+
+ShortFiberCompositesFiles
 =========================
 
 .. currentmodule:: ansys.dpf.composites.data_sources
@@ -29,3 +31,5 @@
       ShortFiberCompositesFiles.engineering_data
    
    
+
+.. vale on

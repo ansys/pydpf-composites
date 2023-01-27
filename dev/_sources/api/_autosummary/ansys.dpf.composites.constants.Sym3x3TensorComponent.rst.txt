@@ -1,4 +1,6 @@
-﻿Sym3x3TensorComponent
+﻿.. vale off
+
+Sym3x3TensorComponent
 =====================
 
 .. currentmodule:: ansys.dpf.composites.constants
@@ -25,3 +27,5 @@
       Sym3x3TensorComponent.TENSOR32
    
    
+
+.. vale on

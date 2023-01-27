@@ -107,13 +107,13 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../intro.html">
-  Getting Started
+  Getting started
  </a>
 </li>
 
 <li class="toctree-l1 current active nav-item">
  <a class="reference internal nav-link" href="index.html">
-  API Reference
+  API reference
  </a>
 </li>
 
@@ -205,7 +205,7 @@ function checkPageExistsAndRedirect(event) {
 
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's 0.1.dev0 variable.
+            // this version, rather than using sphinx's 0.2.dev0 variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
             if (entry.version == "dev") {
@@ -271,7 +271,7 @@ function checkPageExistsAndRedirect(event) {
         <li class="nav-item nav-item-0"><a href="../index.html">PyDPF Composites</a> » </li>
     
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API Reference</a> » </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API reference</a> » </li>
         <li class="nav-item nav-item-this"><a href="">Select Elementary Indices</a></li> 
       </ul>
     </div>
@@ -2727,41 +2727,41 @@ function checkPageExistsAndRedirect(event) {
 <span id="select-indices"></span><h1>Select Elementary Indices<a class="headerlink" href="#select-elementary-indices" title="Permalink to this heading">#</a></h1>
 <p>This module provides functions to filter elementary data.
 A layered element has</p>
-<blockquote>
-<div><p>num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane</p>
-</div></blockquote>
-<p>elementary data points. number_of_spots indicates the number of through-the-thickness integration points per layer. number_of_spots is controlled
-by the keyoption 8 which indicates how much output is written (e.g. only ‘bottom’ and ‘top’ or ‘bottom’, ‘top’ and ‘mid’).
-Each elementary data point can have multiple components (e.g 1 component for scalar data or 6 components for
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_elementary_data</span> <span class="o">=</span> <span class="n">number_of_layers</span> <span class="o">*</span> <span class="n">number_of_spots</span> <span class="o">*</span> <span class="n">number_of_nodes_per_spot_plane</span>
+</pre></div>
+</div>
+<p>elementary data points. <code class="docutils literal notranslate"><span class="pre">number_of_spots</span></code> indicates the number of through-the-thickness integration points per layer. <code class="docutils literal notranslate"><span class="pre">number_of_spots</span></code> is controlled
+by the <code class="docutils literal notranslate"><span class="pre">keyoption</span> <span class="pre">8</span></code> which indicates how much output is written (for example only ‘bottom’ and ‘top’ or ‘bottom’, ‘top’ and ‘mid’).
+Each elementary data point can have multiple components (for example 1 component for scalar data or 6 components for
 symmetrical 3x3 tensors). The elementary data of an element is available as a 2D vector with shape
-(num_elementary_data, number_of_components).</p>
+<code class="docutils literal notranslate"><span class="pre">(num_elementary_data,</span> <span class="pre">number_of_components)</span></code>.</p>
 <p>Here are some examples:</p>
 <ul>
-<li><p>Stress output for a Layered Shell Element (181, four Nodes) with 5 layers and keyoption 8 = 2 (write output for ‘bot’, ‘top’ and ‘mid’)</p>
+<li><p>Stress output for a Layered Shell Element (181, four Nodes) with 5 layers and <code class="docutils literal notranslate"><span class="pre">keyoption</span> <span class="pre">8</span> <span class="pre">=</span> <span class="pre">2</span></code> (write output for ‘bot’, ‘top’ and ‘mid’)</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>number_of_layers = 5</p></li>
-<li><p>number_of_spots = 3 (‘bot’, ‘top’, ‘mid’)</p></li>
-<li><p>number_of_nodes_per_spot_plane = 4 (equal to number of nodes)</p></li>
-<li><p>number_of_components = 6</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_layers</span> <span class="pre">=</span> <span class="pre">5</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_spots</span> <span class="pre">=</span> <span class="pre">3</span></code> (‘bot’, ‘top’, ‘mid’)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_nodes_per_spot_plane</span> <span class="pre">=</span> <span class="pre">4</span></code> (equal to number of nodes)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_components</span> <span class="pre">=</span> <span class="pre">6</span></code></p></li>
 </ul>
-<p>=&gt; num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane = 60</p>
+<p>=&gt; <code class="docutils literal notranslate"><span class="pre">num_elementary_data</span> <span class="pre">=</span> <span class="pre">number_of_layers</span> <span class="pre">*</span> <span class="pre">number_of_spots</span> <span class="pre">*</span> <span class="pre">number_of_nodes_per_spot_plane</span> <span class="pre">=</span> <span class="pre">60</span></code></p>
 </div></blockquote>
 </li>
-<li><p>Stress output for a Layered Solid Element (185, 8 Nodes) with 7 layers and keyoption 8 = 1 (write output for ‘bot’, ‘top’)</p>
+<li><p>Stress output for a Layered Solid Element (185, 8 Nodes) with 7 layers and <code class="docutils literal notranslate"><span class="pre">keyoption</span> <span class="pre">8</span> <span class="pre">=</span> <span class="pre">1</span></code> (write output for ‘bot’, ‘top’)</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>number_of_layers = 7</p></li>
-<li><p>number_of_spots = 2 (‘bot’, ‘top’)</p></li>
-<li><p>number_of_nodes_per_spot_plane = 4</p></li>
-<li><p>number_of_components = 6</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_layers</span> <span class="pre">=</span> <span class="pre">7</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_spots</span> <span class="pre">=</span> <span class="pre">2</span></code> (‘bot’, ‘top’)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_nodes_per_spot_plane</span> <span class="pre">=</span> <span class="pre">4</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_components</span> <span class="pre">=</span> <span class="pre">6</span></code></p></li>
 </ul>
-<p>=&gt; num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane = 56</p>
+<p>=&gt; <code class="docutils literal notranslate"><span class="pre">num_elementary_data</span> <span class="pre">=</span> <span class="pre">number_of_layers</span> <span class="pre">*</span> <span class="pre">number_of_spots</span> <span class="pre">*</span> <span class="pre">number_of_nodes_per_spot_plane</span> <span class="pre">=</span> <span class="pre">56</span></code></p>
 </div></blockquote>
 </li>
 </ul>
 <p>The functions in this module compute an array of elementary indices for a given selection of
-layers, nodes, spots, dpf_material_ids or analysis plies. These elementary indices can be used to index the first axis
+layers, nodes, spots, DPF material IDs or analysis plies. These elementary indices can be used to index the first axis
 of the elementary data array. Please check the <a class="reference internal" href="../examples/gallery_examples/6_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"><span class="std std-ref">Filter Result Data by Different Criteria</span></a>
 section for complete usage examples.</p>
 <span class="target" id="module-ansys.dpf.composites.select_indices"></span><table class="autosummary longtable table autosummary">

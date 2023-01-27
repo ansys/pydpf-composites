@@ -1,4 +1,6 @@
-﻿ElementInfoProvider
+﻿.. vale off
+
+ElementInfoProvider
 ===================
 
 .. currentmodule:: ansys.dpf.composites.layup_info
@@ -23,3 +25,5 @@
    
    
    
+
+.. vale on

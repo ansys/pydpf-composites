@@ -1,4 +1,6 @@
-﻿MaterialOperators
+﻿.. vale off
+
+MaterialOperators
 =================
 
 .. currentmodule:: ansys.dpf.composites.layup_info.material_operators
@@ -29,3 +31,5 @@
       MaterialOperators.result_info_provider
    
    
+
+.. vale on

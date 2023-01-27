@@ -1,4 +1,6 @@
-﻿TsaiWuCriterion
+﻿.. vale off
+
+TsaiWuCriterion
 ===============
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -36,3 +38,5 @@
       TsaiWuCriterion.wf
    
    
+
+.. vale on

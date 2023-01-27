@@ -1,4 +1,6 @@
-﻿CompositeDefinitionFiles
+﻿.. vale off
+
+CompositeDefinitionFiles
 ========================
 
 .. currentmodule:: ansys.dpf.composites.data_sources
@@ -28,3 +30,5 @@
       CompositeDefinitionFiles.definition
    
    
+
+.. vale on

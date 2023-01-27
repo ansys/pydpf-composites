@@ -1,4 +1,6 @@
-﻿CompositeScope
+﻿.. vale off
+
+CompositeScope
 ==============
 
 .. currentmodule:: ansys.dpf.composites.composite_model
@@ -29,3 +31,5 @@
       CompositeScope.time
    
    
+
+.. vale on

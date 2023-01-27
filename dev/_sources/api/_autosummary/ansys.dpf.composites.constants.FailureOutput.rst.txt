@@ -1,4 +1,6 @@
-﻿FailureOutput
+﻿.. vale off
+
+FailureOutput
 =============
 
 .. currentmodule:: ansys.dpf.composites.constants
@@ -22,3 +24,5 @@
       FailureOutput.MAX_LAYER_INDEX
    
    
+
+.. vale on

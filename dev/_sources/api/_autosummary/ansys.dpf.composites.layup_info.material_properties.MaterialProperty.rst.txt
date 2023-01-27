@@ -1,4 +1,6 @@
-﻿MaterialProperty
+﻿.. vale off
+
+MaterialProperty
 ================
 
 .. currentmodule:: ansys.dpf.composites.layup_info.material_properties
@@ -80,3 +82,5 @@
       MaterialProperty.Larc_Constants_fracture_toughness_mode_2
    
    
+
+.. vale on

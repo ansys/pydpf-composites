@@ -1,4 +1,6 @@
-﻿SamplingPoint
+﻿.. vale off
+
+SamplingPoint
 =============
 
 .. currentmodule:: ansys.dpf.composites.sampling_point
@@ -76,3 +78,5 @@
       SamplingPoint.spots_per_ply
    
    
+
+.. vale on

@@ -1,4 +1,6 @@
-﻿LayupPropertiesProvider
+﻿.. vale off
+
+LayupPropertiesProvider
 =======================
 
 .. currentmodule:: ansys.dpf.composites.layup_info
@@ -35,3 +37,5 @@
    
    
    
+
+.. vale on

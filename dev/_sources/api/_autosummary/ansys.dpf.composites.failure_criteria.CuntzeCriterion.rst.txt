@@ -1,4 +1,6 @@
-﻿CuntzeCriterion
+﻿.. vale off
+
+CuntzeCriterion
 ===============
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -49,3 +51,5 @@
       CuntzeCriterion.wf_cmc
    
    
+
+.. vale on

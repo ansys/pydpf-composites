@@ -1,4 +1,6 @@
-﻿SamplingPointFigure
+﻿.. vale off
+
+SamplingPointFigure
 ===================
 
 .. currentmodule:: ansys.dpf.composites.sampling_point
@@ -28,3 +30,5 @@
       SamplingPointFigure.axes
    
    
+
+.. vale on

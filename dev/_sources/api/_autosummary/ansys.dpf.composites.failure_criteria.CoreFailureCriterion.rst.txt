@@ -1,4 +1,6 @@
-﻿CoreFailureCriterion
+﻿.. vale off
+
+CoreFailureCriterion
 ====================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -36,3 +38,5 @@
       CoreFailureCriterion.wf
    
    
+
+.. vale on

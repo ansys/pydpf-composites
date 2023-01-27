@@ -1,4 +1,6 @@
-﻿Spot
+﻿.. vale off
+
+Spot
 ====
 
 .. currentmodule:: ansys.dpf.composites.constants
@@ -22,3 +24,5 @@
       Spot.TOP
    
    
+
+.. vale on

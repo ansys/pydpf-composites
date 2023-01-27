@@ -1,4 +1,6 @@
-﻿LayupProperty
+﻿.. vale off
+
+LayupProperty
 =============
 
 .. currentmodule:: ansys.dpf.composites.layup_info
@@ -23,3 +25,5 @@
       LayupProperty.LAMINATE_OFFSET
    
    
+
+.. vale on

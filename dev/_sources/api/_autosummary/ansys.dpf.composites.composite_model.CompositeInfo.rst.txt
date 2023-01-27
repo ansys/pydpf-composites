@@ -1,4 +1,6 @@
-﻿CompositeInfo
+﻿.. vale off
+
+CompositeInfo
 =============
 
 .. currentmodule:: ansys.dpf.composites.composite_model
@@ -20,3 +22,5 @@
    
    
    
+
+.. vale on

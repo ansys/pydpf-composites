@@ -1,4 +1,6 @@
-﻿TsaiHillCriterion
+﻿.. vale off
+
+TsaiHillCriterion
 =================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -36,3 +38,5 @@
       TsaiHillCriterion.wf
    
    
+
+.. vale on

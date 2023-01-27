@@ -106,13 +106,13 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="intro.html">
-  Getting Started
+  Getting started
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="api/index.html">
-  API Reference
+  API reference
  </a>
 </li>
 
@@ -204,7 +204,7 @@ function checkPageExistsAndRedirect(event) {
 
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's 0.1.dev0 variable.
+            // this version, rather than using sphinx's 0.2.dev0 variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
             if (entry.version == "dev") {
@@ -320,20 +320,13 @@ function checkPageExistsAndRedirect(event) {
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#developer-setup">
-     Developer Setup
+     Developer setup
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#build-environment">
-     Build environment
+    <a class="reference internal nav-link" href="#testing">
+     Testing
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#testing">
-       Testing
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#build-documentation">
@@ -370,29 +363,26 @@ function checkPageExistsAndRedirect(event) {
 <h1>PyDPF Composites<a class="headerlink" href="#pydpf-composites" title="Permalink to this heading">#</a></h1>
 <section id="developer-s-guide">
 <h2>Developer’s Guide<a class="headerlink" href="#developer-s-guide" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://docs.pyansys.com/"><img alt="PyAnsys" src="https://img.shields.io/badge/Py-Ansys-ffc107.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABDklEQVQ4jWNgoDfg5mD8vE7q/3bpVyskbW0sMRUwofHD7Dh5OBkZGBgW7/3W2tZpa2tLQEOyOzeEsfumlK2tbVpaGj4N6jIs1lpsDAwMJ278sveMY2BgCA0NFRISwqkhyQ1q/Nyd3zg4OBgYGNjZ2ePi4rB5loGBhZnhxTLJ/9ulv26Q4uVk1NXV/f///////69du4Zdg78lx//t0v+3S88rFISInD59GqIH2esIJ8G9O2/XVwhjzpw5EAam1xkkBJn/bJX+v1365hxxuCAfH9+3b9/+////48cPuNehNsS7cDEzMTAwMMzb+Q2u4dOnT2vWrMHu9ZtzxP9vl/69RVpCkBlZ3N7enoDXBwEAAA+YYitOilMVAAAAAElFTkSuQmCC" /></a> <a class="reference external" href="https://pypi.org/project/pydpf-composites/"><img alt="Python" src="https://img.shields.io/badge/Python-%3E%3D3.7-blue" /></a> <a class="reference external" href="https://pypi.org/project/pydpf-composites"><img alt="PyPI" src="https://img.shields.io/pypi/v/pydpf-composites.svg?logo=python&amp;logoColor=white" /></a> <a class="reference external" href="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml"><img alt="GH-CI" src="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg" /></a> <a class="reference external" href="https://codecov.io/gh/pyansys/pydpf-composites"><img alt="Codecov" src="https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a> <a class="reference external" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat" /></a></p>
+<p><a class="reference external" href="https://docs.pyansys.com/"><img alt="PyAnsys" src="https://img.shields.io/badge/Py-Ansys-ffc107.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABDklEQVQ4jWNgoDfg5mD8vE7q/3bpVyskbW0sMRUwofHD7Dh5OBkZGBgW7/3W2tZpa2tLQEOyOzeEsfumlK2tbVpaGj4N6jIs1lpsDAwMJ278sveMY2BgCA0NFRISwqkhyQ1q/Nyd3zg4OBgYGNjZ2ePi4rB5loGBhZnhxTLJ/9ulv26Q4uVk1NXV/f///////69du4Zdg78lx//t0v+3S88rFISInD59GqIH2esIJ8G9O2/XVwhjzpw5EAam1xkkBJn/bJX+v1365hxxuCAfH9+3b9/+////48cPuNehNsS7cDEzMTAwMMzb+Q2u4dOnT2vWrMHu9ZtzxP9vl/69RVpCkBlZ3N7enoDXBwEAAA+YYitOilMVAAAAAElFTkSuQmCC" /></a> <a class="reference external" href="https://pypi.org/project/ansys-dpf-composites/"><img alt="Python" src="https://img.shields.io/badge/Python-%3E%3D3.7-blue" /></a> <a class="reference external" href="https://pypi.org/project/ansys-dpf-composites"><img alt="PyPI" src="https://img.shields.io/pypi/v/ansys-dpf-composites.svg?logo=python&amp;logoColor=white" /></a> <a class="reference external" href="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml"><img alt="GH-CI" src="https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg" /></a> <a class="reference external" href="https://codecov.io/gh/pyansys/pydpf-composites"><img alt="Codecov" src="https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a> <a class="reference external" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat" /></a></p>
 <p>A Python wrapper for Ansys DPF Composites. It implements classes on top of the
 DPF Composites operators and data accessors for short fiber and layered composites
 (layered shell and solid elements). This module can be used to post-process these structures,
 and to implement custom failure criteria and computation.
 For instance fatigue analysis. See <a class="reference external" href="https://composites.dpf.docs.pyansys.com/dev/examples/index.html">PyDPF Composites - Examples</a>.</p>
 <section id="developer-setup">
-<h3>Developer Setup<a class="headerlink" href="#developer-setup" title="Permalink to this heading">#</a></h3>
+<h3>Developer setup<a class="headerlink" href="#developer-setup" title="Permalink to this heading">#</a></h3>
 <p>Installing PyDPF Composites in developer mode allows
 you to modify the source and enhance it.</p>
 <p>Before contributing to the project, please refer to the <a class="reference external" href="https://dev.docs.pyansys.com/">PyAnsys Developer’s guide</a>.</p>
 <ol class="arabic">
 <li><p>Clone the repository:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pyansys/pydpf-composites
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pyansys/pydpf-composites
 <span class="nb">cd</span><span class="w"> </span>pydpf-composites
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p>Install dependencies:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pipx
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pipx
 pipx<span class="w"> </span>ensurepath
 <span class="c1"># Minimum required poetry version is 1.2.0</span>
 pipx<span class="w"> </span>install<span class="w"> </span>poetry
@@ -400,71 +390,74 @@ pipx<span class="w"> </span>install<span class="w"> </span>pip
 pipx<span class="w"> </span>install<span class="w"> </span>tox
 </pre></div>
 </div>
-</div></blockquote>
+</li>
+<li><p>Create a virtual environment and install the package with development
+dependencies.
+PyDPF Composites uses <a class="reference external" href="https://python-poetry.org">poetry</a> to manage the
+development environment.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install<span class="w"> </span>--all-extras
+</pre></div>
+</div>
+</li>
+<li><p>Activate the virtual environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>shell
+</pre></div>
+</div>
 </li>
 </ol>
 </section>
-<section id="build-environment">
-<h3>Build environment<a class="headerlink" href="#build-environment" title="Permalink to this heading">#</a></h3>
-<p># Build package and install into the local env</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install<span class="w"> </span>-E<span class="w"> </span>build
-poetry<span class="w"> </span>build
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>dist<span class="se">\a</span>nsys_dpf_composites-0.1.dev0-py3-none-any.whl<span class="w"> </span>--force-reinstall
-</pre></div>
-</div>
-<p>Use tox to create a virtual env for the development. Activate this env to run tests and scripts
-(<em>&lt;root&gt;\.tox\dev\Scripts\activate</em>).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>dev
-</pre></div>
-</div>
 <section id="testing">
-<h4>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">#</a></h4>
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">#</a></h3>
 <ol class="arabic">
-<li><p>Run tests with a docker container:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
+<li><p>Run tests with a docker container. Note: the docker container is not yet publicly available.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
 pytest<span class="w"> </span>.
 </pre></div>
 </div>
-</div></blockquote>
 </li>
-<li><p>Run tests with a local Grpc server executable:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--server-bin<span class="w"> </span>dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
+<li><p>Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--ansys-path<span class="w"> </span><span class="s2">&quot;C:\Program Files\Ansys Inc\v231&quot;</span>
 </pre></div>
 </div>
-</div></blockquote>
+</li>
+<li><p>Run tests with a local Grpc server executable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--server-bin<span class="w"> </span>dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
+</pre></div>
+</div>
+<p>This currently works only on windows and with the directory structure of dpf_composites (an internal ansys package). The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder.</p>
 </li>
 </ol>
-<p>This currently works only on windows and with the directory structure of dpf_composites. (The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder)</p>
-</section>
 </section>
 <section id="build-documentation">
 <h3>Build documentation<a class="headerlink" href="#build-documentation" title="Permalink to this heading">#</a></h3>
 <ol class="arabic">
 <li><p>Windows:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
+<p>Note: the docker container is not yet publicly available.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
 docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:231
 tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p>Linux:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
+<p>Note: the docker container is not yet publicly available.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
 docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:231
 tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 </ol>
 </section>
 <section id="run-style-checks">
 <h3>Run style checks<a class="headerlink" href="#run-style-checks" title="Permalink to this heading">#</a></h3>
+<p>The style checks use <a class="reference external" href="https://pre-commit.com/">pre-commit</a>, and can be run through <a class="reference external" href="https://tox.wiki/">tox</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>style
+</pre></div>
+</div>
+<p>The style checks can also be configured to run automatically before each <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code>,
+with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
 </section>

@@ -1,4 +1,6 @@
-﻿LaRCCriterion
+﻿.. vale off
+
+LaRCCriterion
 =============
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -43,3 +45,5 @@
       LaRCCriterion.wf_lmt
    
    
+
+.. vale on

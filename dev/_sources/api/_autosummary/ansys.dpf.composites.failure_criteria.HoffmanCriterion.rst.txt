@@ -1,4 +1,6 @@
-﻿HoffmanCriterion
+﻿.. vale off
+
+HoffmanCriterion
 ================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -36,3 +38,5 @@
       HoffmanCriterion.wf
    
    
+
+.. vale on

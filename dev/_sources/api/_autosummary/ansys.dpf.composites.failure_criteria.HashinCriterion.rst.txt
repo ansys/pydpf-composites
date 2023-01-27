@@ -1,4 +1,6 @@
-﻿HashinCriterion
+﻿.. vale off
+
+HashinCriterion
 ===============
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -41,3 +43,5 @@
       HashinCriterion.wf_hm
    
    
+
+.. vale on

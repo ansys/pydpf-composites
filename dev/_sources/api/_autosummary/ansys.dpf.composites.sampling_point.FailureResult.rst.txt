@@ -1,4 +1,6 @@
-﻿FailureResult
+﻿.. vale off
+
+FailureResult
 =============
 
 .. currentmodule:: ansys.dpf.composites.sampling_point
@@ -30,3 +32,5 @@
       FailureResult.safety_margin
    
    
+
+.. vale on

@@ -1,4 +1,6 @@
-﻿MaxStressCriterion
+﻿.. vale off
+
+MaxStressCriterion
 ==================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -46,3 +48,5 @@
       MaxStressCriterion.wf_s3
    
    
+
+.. vale on

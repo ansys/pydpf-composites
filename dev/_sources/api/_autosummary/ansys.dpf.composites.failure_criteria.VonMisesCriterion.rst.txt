@@ -1,4 +1,6 @@
-﻿VonMisesCriterion
+﻿.. vale off
+
+VonMisesCriterion
 =================
 
 .. currentmodule:: ansys.dpf.composites.failure_criteria
@@ -39,3 +41,5 @@
       VonMisesCriterion.wf_vms
    
    
+
+.. vale on

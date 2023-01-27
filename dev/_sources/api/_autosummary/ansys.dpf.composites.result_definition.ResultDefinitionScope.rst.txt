@@ -1,4 +1,6 @@
-﻿ResultDefinitionScope
+﻿.. vale off
+
+ResultDefinitionScope
 =====================
 
 .. currentmodule:: ansys.dpf.composites.result_definition
@@ -31,3 +33,5 @@
       ResultDefinitionScope.ply_scope
    
    
+
+.. vale on

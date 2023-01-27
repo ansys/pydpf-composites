@@ -1,4 +1,6 @@
-﻿CompositeModel
+﻿.. vale off
+
+CompositeModel
 ==============
 
 .. currentmodule:: ansys.dpf.composites.composite_model
@@ -66,3 +68,5 @@
       CompositeModel.material_operators
    
    
+
+.. vale on
