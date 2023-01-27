@@ -11,11 +11,11 @@ Developer's Guide
    :alt: PyAnsys
 
 .. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.7-blue
-   :target: https://pypi.org/project/pydpf-composites/
+   :target: https://pypi.org/project/ansys-dpf-composites/
    :alt: Python
 
-.. |pypi| image:: https://img.shields.io/pypi/v/pydpf-composites.svg?logo=python&logoColor=white
-   :target: https://pypi.org/project/pydpf-composites
+.. |pypi| image:: https://img.shields.io/pypi/v/ansys-dpf-composites.svg?logo=python&logoColor=white
+   :target: https://pypi.org/project/ansys-dpf-composites
    :alt: PyPI
 
 .. |codecov| image:: https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg
@@ -41,7 +41,7 @@ DPF Composites operators and data accessors for short fiber and layered composit
 and to implement custom failure criteria and computation.
 For instance fatigue analysis. See `PyDPF Composites - Examples`_.
 
-Developer Setup
+Developer setup
 ===============
 
 Installing PyDPF Composites in developer mode allows
@@ -49,7 +49,7 @@ you to modify the source and enhance it.
 
 Before contributing to the project, please refer to the `PyAnsys Developer's guide`_.
 
-#. Clone the repository:
+#.  Clone the repository:
 
     .. code:: bash
 
@@ -57,7 +57,7 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         cd pydpf-composites
 
 
-#. Install dependencies:
+#.  Install dependencies:
 
     .. code:: bash
 
@@ -68,40 +68,37 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         pipx install pip
         pipx install tox
 
-Build environment
-=================
+#.  Create a virtual environment and install the package with development
+    dependencies.
+    PyDPF Composites uses `poetry <https://python-poetry.org>`_ to manage the
+    development environment.
 
-# Build package and install into the local env
+    .. code:: bash
 
-.. code:: bash
+        poetry install --all-extras
 
-    poetry install --all-extras
-    poetry build
-    python -m pip install dist\ansys_dpf_composites-0.2.dev0-py3-none-any.whl --force-reinstall
+#.  Activate the virtual environment:
 
-Use tox to create a virtual env for the development. Activate this env to run tests and scripts
-(*<root>\\.tox\\dev\\Scripts\\activate*).
+    .. code:: bash
 
-.. code:: bash
-
-    tox -e dev
+        poetry shell
 
 Testing
--------
-#. Run tests with a docker container. Note: the docker container is not yet publicly available.
+=======
+#.  Run tests with a docker container. Note: the docker container is not yet publicly available.
 
     .. code:: bash
 
         docker pull ghcr.io/pyansys/pydpf-composites:231
         pytest .
 
-#. Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):
+#.  Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):
 
     .. code:: bash
 
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v231"
 
-#. Run tests with a local Grpc server executable:
+#.  Run tests with a local Grpc server executable:
 
     .. code:: bash
 
@@ -112,7 +109,7 @@ Testing
 
 Build documentation
 ===================
-#. Windows:
+#.  Windows:
 
     Note: the docker container is not yet publicly available.
 
@@ -122,7 +119,7 @@ Build documentation
         docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
         tox -e doc-windows
 
-#. Linux:
+#.  Linux:
 
     Note: the docker container is not yet publicly available.
 
@@ -135,9 +132,18 @@ Build documentation
 Run style checks
 ================
 
+The style checks use `pre-commit`_, and can be run through `tox`_:
+
 .. code:: bash
 
     tox -e style
+
+The style checks can also be configured to run automatically before each ``git commit``,
+with
+
+.. code:: bash
+
+    pre-commit install
 
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
