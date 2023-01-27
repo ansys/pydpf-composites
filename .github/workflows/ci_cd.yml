@@ -8,6 +8,8 @@ on:
       - "*"
     branches:
       - main
+  workflow_dispatch:
+    inputs:
 
 env:
   MAIN_PYTHON_VERSION: '3.9'
