@@ -49,7 +49,7 @@ you to modify the source and enhance it.
 
 Before contributing to the project, please refer to the `PyAnsys Developer's guide`_.
 
-#. Clone the repository:
+#.  Clone the repository:
 
     .. code:: bash
 
@@ -57,7 +57,7 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         cd pydpf-composites
 
 
-#. Install dependencies:
+#.  Install dependencies:
 
     .. code:: bash
 
@@ -68,7 +68,7 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         pipx install pip
         pipx install tox
 
-#. Create a virtual environment and install the package with development
+#.  Create a virtual environment and install the package with development
     dependencies.
     PyDPF Composites uses `poetry <https://python-poetry.org>`_ to manage the
     development environment.
@@ -77,7 +77,7 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
 
         poetry install --all-extras
 
-#. Activate the virtual environment:
+#.  Activate the virtual environment:
 
     .. code:: bash
 
@@ -85,20 +85,20 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
 
 Testing
 =======
-#. Run tests with a docker container. Note: the docker container is not yet publicly available.
+#.  Run tests with a docker container. Note: the docker container is not yet publicly available.
 
     .. code:: bash
 
         docker pull ghcr.io/pyansys/pydpf-composites:231
         pytest .
 
-#. Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):
+#.  Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):
 
     .. code:: bash
 
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v231"
 
-#. Run tests with a local Grpc server executable:
+#.  Run tests with a local Grpc server executable:
 
     .. code:: bash
 
@@ -109,7 +109,7 @@ Testing
 
 Build documentation
 ===================
-#. Windows:
+#.  Windows:
 
     Note: the docker container is not yet publicly available.
 
@@ -119,7 +119,7 @@ Build documentation
         docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
         tox -e doc-windows
 
-#. Linux:
+#.  Linux:
 
     Note: the docker container is not yet publicly available.
 
