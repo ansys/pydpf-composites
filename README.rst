@@ -11,11 +11,11 @@ Developer's Guide
    :alt: PyAnsys
 
 .. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.7-blue
-   :target: https://pypi.org/project/pydpf-composites/
+   :target: https://pypi.org/project/ansys-dpf-composites/
    :alt: Python
 
-.. |pypi| image:: https://img.shields.io/pypi/v/pydpf-composites.svg?logo=python&logoColor=white
-   :target: https://pypi.org/project/pydpf-composites
+.. |pypi| image:: https://img.shields.io/pypi/v/ansys-dpf-composites.svg?logo=python&logoColor=white
+   :target: https://pypi.org/project/ansys-dpf-composites
    :alt: PyPI
 
 .. |codecov| image:: https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg
