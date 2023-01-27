@@ -92,17 +92,22 @@ def test_filter_by_layer_spot_and_corner_node_index(dpf_server):
         setup_result.field.get_entity_data_by_id(1)[8:12, 0]
     )
 
+    mat_id_of_layers = element_info_provider.get_element_info(1).dpf_material_ids
+
+    layers_with_same_material = [1, 2, 4]
+    # Make sure all the layers have the same material
+    assert len({mat_id_of_layers[mat_id] for mat_id in layers_with_same_material}) == 1
     # Test filter by material
     # Material 2 is present in layer 1,2 and 4
     result_field_by_mat = get_result_field(
         element_info_provider=element_info_provider,
         input_field=setup_result.field,
-        dpf_material_id=2,
+        dpf_material_id=mat_id_of_layers[layers_with_same_material[0]],
     )
     result_field_layer = get_result_field(
         element_info_provider=element_info_provider,
         input_field=setup_result.field,
-        layers=[1, 2, 4],
+        layers=layers_with_same_material,
     )
 
     assert result_field_by_mat.get_entity_data_by_id(1) == pytest.approx(

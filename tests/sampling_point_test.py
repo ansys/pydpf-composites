@@ -34,21 +34,22 @@ def test_sampling_point(dpf_server):
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    rst_server_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
-    h5_server_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
-    material_server_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
+    if not dpf_server.local_server:
+        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+        h5_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
+        material_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
 
     cfc = CombinedFailureCriterion("max strain & max stress")
     cfc.insert(MaxStrainCriterion())
     cfc.insert(MaxStressCriterion())
 
-    scope = ResultDefinitionScope(composite_definition=h5_server_path, element_scope=[3])
+    scope = ResultDefinitionScope(composite_definition=h5_path, element_scope=[3])
 
     rd = ResultDefinition(
         name="my first result definition",
         combined_failure_criterion=cfc,
-        rst_file=rst_server_path,
-        material_file=material_server_path,
+        rst_file=rst_path,
+        material_file=material_path,
         composite_scopes=[scope],
     )
 
@@ -162,15 +163,16 @@ def test_sampling_point_result_plots(dpf_server):
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    composite_files = ContinuousFiberCompositesFiles(
+    files = ContinuousFiberCompositesFiles(
         rst=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
 
-    files = upload_continuous_fiber_composite_files_to_server(
-        data_files=composite_files, server=dpf_server
-    )
+    if not dpf_server.local_server:
+        files = upload_continuous_fiber_composite_files_to_server(
+            data_files=files, server=dpf_server
+        )
     cfc = CombinedFailureCriterion(
         "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
     )
