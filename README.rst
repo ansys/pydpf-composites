@@ -132,9 +132,18 @@ Build documentation
 Run style checks
 ================
 
+The style checks use `pre-commit`_, and can be run through `tox`_:
+
 .. code:: bash
 
     tox -e style
+
+The style checks can also be configured to run automatically before each ``git commit``,
+with
+
+.. code:: bash
+
+    pre-commit install
 
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
