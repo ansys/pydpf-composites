@@ -1,4 +1,4 @@
-Result Definition
+Result definition
 -----------------
 
 .. module:: ansys.dpf.composites.result_definition

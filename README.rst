@@ -2,7 +2,7 @@
 PyDPF Composites
 ****************
 -----------------
-Developer's Guide
+Developer's guide
 -----------------
 |pyansys| |python| |pypi| |GH-CI| |codecov| |MIT| |black|
 
