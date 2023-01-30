@@ -1,4 +1,4 @@
-Server Helpers
+Server helpers
 --------------
 
 .. module:: ansys.dpf.composites.server_helpers
