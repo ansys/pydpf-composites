@@ -16,7 +16,7 @@ __all__ = (
 
 
 class MaterialProperty(str, Enum):
-    """Available material properties."""
+    """Provides the material properties that are available."""
 
     Engineering_Constants_E1: str = "young_modulus_x_direction"
     Engineering_Constants_E2: str = "young_modulus_y_direction"
@@ -93,20 +93,20 @@ def get_constant_property(
 ) -> float:
     """Get a constant material property.
 
-    Only constant properties
-    are supported. Variable properties are evaluated at their
-    default value.
+    Only constant properties are supported. Variable properties are evaluated at their
+    default values.
 
     Parameters
     ----------
     material_property:
-        material property
+        Material property.
     dpf_material_id:
+        DPF material ID.
     materials_provider:
-        DPF Materials provider operator. Available from
-        :attr:`.CompositeModel.material_operators`
+        DPF Materials provider operator. This value is Available from the
+        :attr:`.CompositeModel.material_operators` attribute.
     data_source_or_streams_provider:
-        Data source or streams provider that contains a rst file
+        Data source or streams provider that contains the RST file.
     """
     material_property_field = Operator("eng_data::ans_mat_property_field_provider")
     material_property_field.inputs.materials_container(materials_provider)
@@ -119,9 +119,9 @@ def get_constant_property(
         result_info_provider.inputs.streams_container(data_source_or_streams_provider)
     material_property_field.inputs.unit_system_or_result_info(result_info_provider)
     properties = material_property_field.get_output(output_type=types.fields_container)
-    assert len(properties) == 1, "Properties Container has to have exactly one entry"
+    assert len(properties) == 1, "Properties container has to have exactly one entry."
     assert len(properties[0].data) == 1, (
-        "Properties Field as to have exactly one entry. "
+        "Properties field has to have exactly one entry."
         "Probably the property is not constant. "
         "Variable properties are currently not supported."
     )
@@ -131,14 +131,14 @@ def get_constant_property(
 def get_all_dpf_material_ids(
     mesh: MeshedRegion, data_source_or_streams_provider: Union[DataSources, Operator]
 ) -> Collection[np.int64]:
-    """Get all the dpf_material_ids.
+    """Get all DPF material IDs.
 
     Parameters
     ----------
     mesh:
-        DPF MeshedRegion enriched with layup information
+        DPF meshed region enriched with layup information.
     data_source_or_streams_provider:
-        DPF DataSource or StreamProvider that contains a rst file
+        DPF data source or streams provider that contains the RST file.
     """
     id_to_material_map = get_dpf_material_id_by_analyis_ply_map(
         mesh, data_source_or_streams_provider
@@ -154,22 +154,24 @@ def get_constant_property_dict(
 ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
     """Get a dictionary with constant properties.
 
-    Returns a dictionary with the dpf_material_id as key and
-    a dict with the requested properties as the value. Only constant properties
+    Returns a dictionary with the DPF material ID as a key and
+    a dictionaory with the requested properties as the value. Only constant properties
     are supported. Variable properties are evaluated at their
-    default value.
-    This function can be slow to evaluate and should not
+    default values.
+    Because this method can be slow to evaluate, it should not
     be called in a loop.
 
     Parameters
     ----------
     material_properties:
-        Requested material properties
+        Material properties to request.
     materials_provider:
+        DPF Materials provider operator. This value is Available from the
+        :attr:`.CompositeModel.material_operators` attribute.
     data_source_or_streams_provider:
-        DPF DataSource or StreamProvider that contains a rst file
+        DPF data source or streams provider that contains the RST file.
     mesh:
-        DPF MeshedRegion enriched with layup information
+        DPF meshed region enriched with layup information.
     """
     properties: Dict[np.int64, Dict[MaterialProperty, float]] = {}
     for dpf_material_id in get_all_dpf_material_ids(

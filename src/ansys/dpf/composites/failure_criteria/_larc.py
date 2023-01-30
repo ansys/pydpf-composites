@@ -1,19 +1,19 @@
-"""LaRC Failure Criterion."""
+"""LaRC failure criterion."""
 import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
-_DOC_LFC = "Activates the failure evaluation regarding compression in fiber direction."
+_DOC_LFC = "Whether to activate the failure evaluation regarding compression in fiber direction."
 
-_DOC_LFT = "Activates the failure evaluation regarding tension in fiber direction."
+_DOC_LFT = "Whether to activate the failure evaluation regarding tension in fiber direction."
 
-_DOC_LMC = "Activates the failure evaluation of matrix due to compression."
+_DOC_LMC = "Whether to activate the failure evaluation of the matrix due to compression."
 
-_DOC_LMT = "Activates the failure evaluation of matrix due to tension."
+_DOC_LMT = "Whether to activate the failure evaluation of the matrix due to tension."
 
 _DOC_DIM = (
     "Whether the 2D or 3D formulation of the criterion is used. 2D is equivalent to "
-    "LaRC03, and 3D to LaRC04."
+    "LaRC03, and 3D is equivalent to LaRC04."
 )
 _DOC_WF_LFC = "Weighting factor of fiber failure due to compression (lfc)."
 _DOC_WF_LFT = "Weighting factor of fiber failure due to tension (lft)."

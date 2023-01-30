@@ -2,9 +2,9 @@ from enum import IntEnum
 
 
 class LayupProperty(IntEnum):
-    """Enum for Layup Properties.
+    """Enum for layup properties.
 
-    Values correspond to labels in output container of layup provider.
+    Values correspond to labels in the output container of the layup provider.
     """
 
     ANGLE = 0
@@ -14,7 +14,7 @@ class LayupProperty(IntEnum):
 
 
 class LayerProperty(IntEnum):
-    """Available layer properties."""
+    """Provides the layer properties available."""
 
     THICKNESSES = 0
     ANGLES = 1

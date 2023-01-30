@@ -1,4 +1,4 @@
-"""Tsai-Wu Failure Criterion."""
+"""Tsai-Wu failure criterion."""
 
 from ._quadratic_failure_criterion import _DOC_DIM, _DOC_WF, QuadraticFailureCriterion
 

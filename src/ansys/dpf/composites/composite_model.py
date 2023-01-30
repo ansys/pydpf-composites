@@ -33,24 +33,25 @@ __all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 
 @dataclass(frozen=True)
 class CompositeScope:
-    """Composite scope.
-
-    Defines which part of the model and solution step are selected.
+    """Provides the composite scope.
+    
+    This class defines which part of the model and solution step are selected.
 
     Parameters
     ----------
         elements:
-            list of element labels
+            List of elements.
         plies:
-            list of plies.
+            List of plies.
         time:
-            time or frequency. Refer to
-            :func:`CompositeModel.get_result_times_or_frequencies` to list the solution steps.
+            Time or frequency. You can use the
+            :func:`CompositeModel.get_result_times_or_frequencies` method
+            to list the solution steps.
 
     Notes
     -----
-       In case `elements` and `plies` are set, the final element scope is the intersection
-       of the two.
+       If both the ``elements`` and ``plies`` parameters are set, the final element
+       scope is the intersection of the two.
 
     """
 
@@ -60,7 +61,7 @@ class CompositeScope:
 
 
 class CompositeInfo:
-    """Contains composite data providers for a given composite definition."""
+    """Contains composite data providers for a composite definition."""
 
     def __init__(
         self,
@@ -69,7 +70,7 @@ class CompositeInfo:
         streams_provider: dpf.Operator,
         material_operators: MaterialOperators,
     ):
-        """Initialize CompositeInfo and add enrich mesh with composite information."""
+        """Initialize the ``CompositeInfo`` class and add enriched mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
         mesh_provider.inputs.data_sources(data_sources.rst)
         self.mesh = mesh_provider.outputs.mesh()
@@ -91,38 +92,41 @@ class CompositeInfo:
 
 
 class CompositeModel:
-    """Provides access to the basic composite post-processing functionality.
+    """Provides access to the basic composite postprocessing functionality.
 
-    On initialization, the CompositeModel automatically adds the composite layup information
-    to the meshed region(s). It prepares the providers for different layup properties
-    so they can be efficiently evaluated.
+    On initialization, the ``CompositeModel`` class automatically adds composite layup
+    information to the meshed regions. It prepares the providers for different layup properties
+    so that they can be efficiently evaluated.
 
-    Note on performance: When creating a CompositeModel, several providers are created and
-    the layup information is added the dpf meshed regions. Depending on the use
-    case it can be more efficient to create the providers separately.
+    .. note::
 
-    Note on assemblies: For assemblies with multiple composite definition files, separate meshes and
-    layup operators are generated (wrapped by CompositeInfo). This is needed because the
-    layup provider can currently only add the data of a single composite definitions file
-    to a mesh. All functions which depend on composite definitions have to be called with the
-    correct composite_definition_label. The layered elements that got information from a given
-    composite_definition_label can be determined by calling
-    self.get_all_layered_element_ids_for_composite_definition_label.
-    All the elements which are not part of a composite definition are either homogeneous
-    solids or layered models defined outside of an ACP model.
-    self.composite_definition_labels returns
-    All the available composite_definition_labels.
-    See also: :ref:`sphx_glr_examples_gallery_examples_8_assembly_example.py`
+       When creating a ``CompositeModel`` instance, several providers are created and
+       layup information is added to the DPF meshed regions. Depending on the use
+       case, it can be more efficient to create the providers separately.
+       
+       For assemblies with multiple composite definition files, separate meshes and
+       layup operators are generated (wrapped by the ``CompositeInfo`` class). This
+       is needed because the layup provider can currently only add the data of a single
+       composite definitions file to a mesh. All functions that depend on composite
+       definitions mut be called with the correct ``composite_definition_label``
+       parameter. The layered elements that get information from a given
+       composite definition label can be determined by calling
+       ``self.get_all_layered_element_ids_for_composite_definition_label``.
+       All the elements that are not part of a composite definition are either homogeneous
+       solids or layered models defined outside of an ACP model. The
+       ``self.composite_definition_labels`` command returns all available composite
+       definition labels. For more information, see
+       :ref:`sphx_glr_examples_gallery_examples_8_assembly_example.py`.
 
     Parameters
     ----------
     composite_files:
-        Use :func:`.get_composite_files_from_workbench_result_folder` to obtain
-        ContinuousFiberCompositesFiles object.
+        Use the :func:`.get_composite_files_from_workbench_result_folder` method to obtain
+        the ``ContinuousFiberCompositesFiles`` object.
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
-        """Initialize data providers and add composite information to MeshedRegion."""
+        """Initialize data providers and add composite information to mesheded regions."""
         self._core_model = dpf.Model(composite_files.rst, server=server)
         self._server = server
 
@@ -144,24 +148,24 @@ class CompositeModel:
 
     @property
     def composite_definition_labels(self) -> Sequence[str]:
-        """Get all the composite_definition_labels in this model.
+        """All composite definition labels in the model.
 
-        Only relevant for assemblies.
+        This property is only relevant for assemblies.
         """
         return list(self._composite_infos.keys())
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
-        """Get the underlying dpf meshed region.
+        """Get the underlying DPF meshed region.
 
-        The meshed region also contains the layup information
+        The meshed region contains the layup information.
 
         Parameters
         ----------
-        composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
+        composite_definition_label: str, default: None
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -169,17 +173,17 @@ class CompositeModel:
 
     @property
     def data_sources(self) -> CompositeDataSources:
-        """Get the composite DataSources."""
+        """Composite data sources."""
         return self._data_sources
 
     @property
     def core_model(self) -> dpf.Model:
-        """Get the underlying dpf core Model."""
+        """Underlying DPF core model."""
         return self._core_model
 
     @property
     def material_operators(self) -> MaterialOperators:
-        """Get the Material operators."""
+        """Material operators."""
         return self._material_operators
 
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
@@ -187,11 +191,11 @@ class CompositeModel:
 
         Parameters
         ----------
-        composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies. See "Note on assemblies"
-            in :class:`CompositeModel` docstring.
+        composite_definition_label: str, default: None
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
 
         """
         if composite_definition_label is None:
@@ -207,28 +211,31 @@ class CompositeModel:
     ) -> FieldsContainer:
         """Get a fields container with the evaluted failure criteria.
 
-        The container contains the maximum per element if the measure
-        is `FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is `FailureMeasure.MARGIN_OF_SAFETY` or `FailureMeasure.RESERVE_FACTOR`
+        The fields container contains the maximum per element if the measure
+        is ``FailureMeasure.INVERSE_RESERVE_FACTOR`` and the minimum per element
+        if the measure is ``FailureMeasure.MARGIN_OF_SAFETY`` or
+        ``FailureMeasure.RESERVE_FACTOR``.
 
         Parameters
         ----------
         combined_criterion:
-            Combined failure criterion to evaluate
+            Combined failure criterion to evaluate.
         composite_scope:
-            Composite scope on which the failure criteria are evaluated. If empty, the criteria
-            is evaluated on the full model. The last time/frequency in the result file is used
-            by default if time is not set.
+            Composite scope on which to evaluate the failure criteria. If empty, the criteria
+            is evaluated on the full model. If the time is not set, the last time or
+            frequency in the result file is used.
         measure:
-            Failure measure to evaluate
+            Failure measure to evaluate.
         write_data_for_full_element_scope:
-            If True, each requested element in element scope gets a
-            (potentially zero) failure value,
-            even for elements which are not part of composite_scope.plies.
+            Whether each element in the element scope is to get a
+            (potentially zero) failure value, even elements that are not part of composite_scope.plies.
             If no element scope is specified (composite_scope.elements),
             a (potentially zero) failure value is written for all elements.
-            Note: For some special element types such as beams,
-            write_data_for_full_element_scope == True is not supported.
+            
+            .. Note::
+               For some special element types such as beams, ``write_data_for_full_element_scope=True``
+               is not supported.
+
         """
         if composite_scope is None:
             composite_scope = CompositeScope()
@@ -240,11 +247,11 @@ class CompositeModel:
             time_in = self.get_result_times_or_frequencies()[-1]
 
         if composite_scope.plies is None or len(composite_scope.plies):
-            # This is a workaround, because setting the
+            # This is a workaround because setting the
             # write_data_for_full_element_scope flag to True can lead to
-            # problems with 2023R1 if non-composite elements exists
-            # in the solution such as beams. Since the flag
-            # is irrelevant for cases without a ply scope we set it to False here
+            # problems with 2023 R1 if non-composite elements such as
+            # beams exist in the solution. Because the flag
+            # is irrelevant for cases without a ply scope, we set it to False here.
             write_data_for_full_element_scope = False
 
         scopes = []
@@ -285,22 +292,22 @@ class CompositeModel:
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
     ) -> SamplingPoint:
-        """Get a sampling point for a given element_id and failure criteria.
+        """Get a sampling point for an element ID and failure criteria.
 
         Parameters
         ----------
         combined_criterion:
-            Combined failure criterion to evaluate
+            Combined failure criterion to evaluate.
         element_id:
-            Element Id/Label of the sampling point
+            Element ID or label of the sampling point.
         time:
-            Time at which sampling point is evaluated. If None, the last
-            time/frequency in the result file is used.
+            Time or frequency at which to evaluate the sampling point. If ``None``,
+            the last time or frequency in the result file is used.
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if time is None:
             time_in = self.get_result_times_or_frequencies()[-1]
@@ -339,19 +346,19 @@ class CompositeModel:
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[ElementInfo]:
-        """Get element info for a given element id.
+        """Get element information for an element ID.
 
-        Returns None if element type is not supported.
+        This method returns ``None`` if the element type is not supported.
 
         Parameters
         ----------
         element_id:
-            Element Id/Label
+            Element ID or label.
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -365,23 +372,24 @@ class CompositeModel:
         element_id: int,
         composite_definition_label: Optional[str] = None,
     ) -> Optional["NDArray[np.double]"]:
-        """Get a layer property for a given element_id.
+        """Get a layer property for an element ID.
 
         Returns a numpy array with the values of the property for all the layers.
         Values are ordered from bottom to top.
-        Returns None if the element is not layered
+        
+        This method returns ``None`` if the element is not layered.
 
         Parameters
         ----------
         layup_property:
-            Selected layup property
+            Layup property.
         element_id:
-            Selected element Id/Label
+            Element ID or label.
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -399,18 +407,21 @@ class CompositeModel:
     def get_analysis_plies(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[Collection[str]]:
-        """Get analysis ply names. Returns None if element is not layered.
+        """Get analysis ply names.
+        
+        This method returns ``None`` if the element is not layered.
 
         Parameters
         ----------
         element_id:
-            Element Id/Label
+            Element ID or label.
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
-            The dict will only contain the analysis plies in the specified composite definition.
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
+            The dictionary only contains the analysis plies in the specified composite
+            definition.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -422,17 +433,19 @@ class CompositeModel:
     def get_element_laminate_offset(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[np.double]:
-        """Get laminate offset of element. Returns None if element is not layered.
+        """Get the laminate offset of an element.
+        
+        THis method returns ``None`` if the element is not layered.
 
         Parameters
         ----------
         element_id:
-            Element Id/Label
+            Element ID or label.
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
@@ -448,23 +461,24 @@ class CompositeModel:
     ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
-        Returns a dictionary with the dpf_material_id as key and
-        a dict with the requested properties as the value. Only constant properties
+        Returns a dictionary with ``dpf_material_id`` as the key and
+        a dictionary with the requested properties as the value. Only constant properties
         are supported. Variable properties are evaluated at their
-        default value.
-        This function can be slow to evaluate and should not
+        default values.
+        
+        This method can be slow to evaluate and should not
         be called in a loop.
 
         Parameters
         ----------
         material_properties:
-            A list of the requested material properties
+            List of the requested material properties.
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
-            The dict will only contain the materials of the analysis plies defined
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
+            The dictionary only contains the materials of the analysis plies defined
             in the specified composite definition.
         """
         if composite_definition_label is None:
@@ -477,7 +491,7 @@ class CompositeModel:
         )
 
     def get_result_times_or_frequencies(self) -> "NDArray[np.double]":
-        """Return the available times/frequencies in the result file."""
+        """Get the times or frequencies in the result file."""
         return cast(
             "NDArray[np.double]", self._core_model.metadata.time_freq_support.time_frequencies.data
         )
@@ -488,22 +502,20 @@ class CompositeModel:
         strains: FieldsContainer,
         composite_definition_label: Optional[str] = None,
     ) -> None:
-        """Add interlaminar_normal_stresses to the stresses FieldsContainer.
+        """Add interlaminar normal stresses to the stresses fields container.
 
-        See also:
-        :ref:`sphx_glr_examples_gallery_examples_7_interlaminar_normal_stress_example.py`
+        For a usage example, see :ref:`sphx_glr_examples_gallery_examples_7_interlaminar_normal_stress_example.py`.
 
         Parameters
         ----------
         stresses:
-            Stresses FieldsContainer
-            (interlaminar normal stresses are added to this container)
+            Stresses fields container to add interlaminar normal stresses to.
         strains:
         composite_definition_label:
-            Label of composite definition
-            (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-            Only required for assemblies.
-            See "Note on assemblies" in :class:`CompositeModel` docstring.
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """
@@ -529,7 +541,16 @@ class CompositeModel:
     def get_all_layered_element_ids_for_composite_definition_label(
         self, composite_definition_label: str
     ) -> Sequence[int]:
-        """Get all the layered element ids that belong to a given composite_definition_label."""
+        """Get all layered element IDs that belong to a composite definition label.
+        
+        Parameters
+        ----------
+        composite_definition_label:
+            Label of the composite definition, which is the
+            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+            attribute. This parameter is only required for assemblies.
+            See the note about assemblies in the description for the :class:`CompositeModel` class.
+        """
         return cast(
             List[int],
             self.get_mesh(composite_definition_label)
@@ -542,6 +563,6 @@ class CompositeModel:
             return self.composite_definition_labels[0]
         else:
             raise RuntimeError(
-                f"Multiple composite definition keys exists: {self.composite_definition_labels}. "
-                f"Please specify a key explicitly."
+                f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
+                f"Specify a key explicitly."
             )

@@ -1,17 +1,17 @@
 """
 .. _layup_properties_plot:
 
-Get lay-up properties
----------------------
+Layered properties
+------------------
 
 Extract elemental layered properties such as thickness and material.
 
-This example shows how to access basic lay-up properties such as layer
-thicknesses, angles and analysis ply names. These properties can be queried
-very efficiently. To get the full lay-up information of an element including results
-consider also :class:`Sampling Point <.SamplingPoint>`.
+This example shows how to access basic layer properties such as layer
+thicknesses, angles, and analysis ply names. These properties can be queried
+very efficiently. To get the full layer information of an element, including results,
+consider also the :class:`SamplingPoint <.SamplingPoint>` class.
 
-Element layered properties are typically used for layer-wise post-processing and
+Element layered properties are typically used for layer-wise postprocessing and
 data filtering.
 
 """

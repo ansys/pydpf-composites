@@ -35,19 +35,21 @@ Developer's guide
    :alt: Black
 
 
-A Python wrapper for Ansys DPF Composites. It implements classes on top of the
-DPF Composites operators and data accessors for short fiber and layered composites
-(layered shell and solid elements). This module can be used to post-process these structures,
-and to implement custom failure criteria and computation.
-For instance fatigue analysis. See `PyDPF Composites - Examples`_.
+PyDPF Composites is a Python wrapper for Ansys DPF composites. It implements
+classes on top of DPF Composites operators and data accessors for short
+fiber and layered composites (layered shell and solid elements). This module
+can be used to postprocess fiber reinforced plastics and layered composites and
+to implement custom failurecriteria and computation. For examples demonstrating
+the behavior and usage of PyDPF Composites, see `PyDPF Composites - Examples`_.
 
-Developer setup
-===============
+Install in development mode
+===========================
 
-Installing PyDPF Composites in developer mode allows
+Installing PyDPF Composites in development mode allows
 you to modify the source and enhance it.
 
-Before contributing to the project, please refer to the `PyAnsys Developer's guide`_.
+Before attempting to contribute to PyDPF Composites, ensure that you are thoroughly
+familiar with the `PyAnsys Developer's Guide`_.
 
 #.  Clone the repository:
 
@@ -68,14 +70,15 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
         pipx install pip
         pipx install tox
 
+
 #.  Create a virtual environment and install the package with development
-    dependencies.
-    PyDPF Composites uses `poetry <https://python-poetry.org>`_ to manage the
-    development environment.
+    dependencies. PyDPF Composites uses `Poetry <https://python-poetry.org>`_
+    to manage the development environment.
 
     .. code:: bash
 
         poetry install --all-extras
+
 
 #.  Activate the virtual environment:
 
@@ -83,67 +86,83 @@ Before contributing to the project, please refer to the `PyAnsys Developer's gui
 
         poetry shell
 
-Testing
-=======
-#.  Run tests with a docker container. Note: the docker container is not yet publicly available.
+
+Test
+====
+
+.. note::
+   The Docker container referenced in the first step is not yet publicly available.
+
+
+#.  Run tests with a Docker container. Note: The Docker container is not yet publicly available.
 
     .. code:: bash
 
         docker pull ghcr.io/pyansys/pydpf-composites:231
         pytest .
 
-#.  Run tests with a DPF Server started from the Ansys installer (needs at least version 2023 R1):
+
+#.  Run tests with a DPF server started from the Ansys installer. The Ansys version must
+    be 2023 R1 or later.
 
     .. code:: bash
 
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v231"
 
-#.  Run tests with a local Grpc server executable:
+
+#.  Run tests with a local gRPC server executable:
 
     .. code:: bash
 
         pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
 
-    This currently works only on windows and with the directory structure of dpf_composites (an internal ansys package). The runtime dependencies of Ans.Dpf.Grpc.exe have to be in its folder and the parent folder.
+
+    This currently works only on Windows and with the directory structure of the Ansys internal
+    ``dpf_composites`` package. The runtime dependencies of the ``Ans.Dpf.Grpc.exe`` file must be
+    in its folder and the parent folder.
 
 
 Build documentation
 ===================
-#.  Windows:
 
-    Note: the docker container is not yet publicly available.
+.. note::
+   The Docker container referenced in this section is not yet publicly available.
 
-    .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:231
-        docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
-        tox -e doc-windows
+On Windows, build docuentation with this code:
 
-#.  Linux:
+.. code:: bash
 
-    Note: the docker container is not yet publicly available.
+    docker pull ghcr.io/pyansys/pydpf-composites:231
+    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
+    tox -e doc-windows
 
-    .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:231
-        docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
-        tox -e doc-linux
+On Linux, build documentation with this code:
+
+.. code:: bash
+
+    docker pull ghcr.io/pyansys/pydpf-composites:231
+    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
+    tox -e doc-linux
+
 
 Run style checks
 ================
 
-The style checks use `pre-commit`_, and can be run through `tox`_:
+The style checks use `pre-commit`_ and can be run through `tox`_:
 
 .. code:: bash
 
     tox -e style
 
-The style checks can also be configured to run automatically before each ``git commit``,
-with
+
+The style checks can also be configured to run automatically before each ``git commit`: 
 
 .. code:: bash
 
     pre-commit install
+    
 
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
@@ -151,7 +170,7 @@ with
 .. _isort: https://github.com/PyCQA/isort
 .. _pip: https://pypi.org/project/pip/
 .. _pre-commit: https://pre-commit.com/
-.. _PyAnsys Developer's guide: https://dev.docs.pyansys.com/
+.. _PyAnsys Developer's Guide: https://dev.docs.pyansys.com/
 .. _pytest: https://docs.pytest.org/en/stable/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _tox: https://tox.wiki/

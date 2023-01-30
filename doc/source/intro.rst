@@ -4,41 +4,44 @@ Getting started
 Installation
 ^^^^^^^^^^^^
 
-PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have licensed copy of Ansys installed.
-Install the ``ansys-dpf-composites`` module with ``pip``:
+PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed.
+
+Install the ``ansys-dpf-composites`` package with ``pip``:
 
 .. code::
 
     pip install ansys-dpf-composites
 
 
-It is recommended to use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
-which keeps Python packages isolated from your system Python.
+You should use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
+because it keeps Python packages isolated from your system Python.
 
 
 Examples
 ^^^^^^^^
 
-Get started with some basic :doc:`examples/index` :
+The :doc:`examples/index` section provides these basic examples for getting started:
 
 * :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
 * :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
 
-In the end of each example, there is a button to download the python source code of the example.
-The examples download their input files (results, composite definition, etc.) from a git repository.
+At the end of each example, there is a button for downloading the example's Python source code.
+Clicking this button downloads input files, such as the results file and composite definition,
+from a Git repository.
 
-For larger models it can be slow to initialize a :class:`.CompositeModel`, because it automatically creates many
-different providers that are not needed in all the workflows. Consider using the
-:ref:`Layup information classes <layup_information_classes>` directly.
+For larger models, initializing the :class:`.CompositeModel` class can be slow because it
+automatically creates many different providers that are not needed in all workflows.
+Consider using the :ref:`Layup information <layup_information_classes>` classes directly.
 
 Start from a local Ansys Workbench project
 """"""""""""""""""""""""""""""""""""""""""
 
-To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution
-object in Mechanical and selecting "Open Solver Files Directory." Then call the
-:func:`.get_composite_files_from_workbench_result_folder` function with that folder.
-The following  example shows how to setup a project from workbench, create a basic failure plot and display
-detailed output for a sampling point.
+To get started on a local Ansys Workbench project, first determine the result folder by
+right-clicking the solution object in Ansys Mechanical and selecting **Open Solver Files Directory**.
+Then call the :func:`.get_composite_files_from_workbench_result_folder` method with this folder.
+
+This code shows how to set up a project from Workbench, create a basic failure plot, and display
+detailed output for a sampling point:
 
 .. code::
 
@@ -52,12 +55,12 @@ detailed output for a sampling point.
     result_folder = r"D:\simulations\my_simulation_files\dp0\SYS\MECH"
 
     # Create the composite files object that contains
-    # the results file, the material properties file and the
+    # the results file, the material properties file, and the
     # composite definitions
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
 
-    # Start the server. By default this will start
-    # a new local server and load the composites plugin
+    # Start the server. By default this starts
+    # a new local server and loads the composites plugin
     server = connect_to_or_start_server()
 
     # Create a composite model
@@ -85,4 +88,4 @@ detailed output for a sampling point.
 
 .. image:: _static/boat_sampling_point.png
   :width: 750
-  :alt: Sampling Point on Boat
+  :alt: Sampling point on boat

@@ -1,4 +1,4 @@
-"""Composite Data Sources."""
+"""Composite data sources."""
 from dataclasses import dataclass
 import os
 import pathlib
@@ -28,7 +28,7 @@ _MAPPING_SUFFIX = ".mapping"
 
 @dataclass
 class CompositeDefinitionFiles:
-    """Container for composite files."""
+    """Provides the container for composite definition file paths."""
 
     definition: _PATH
     mapping: Optional[_PATH] = None
@@ -36,7 +36,7 @@ class CompositeDefinitionFiles:
 
 @dataclass
 class ContinuousFiberCompositesFiles:
-    """Container for continuous fiber file paths."""
+    """Provides the container for continuous fiber composite file paths."""
 
     rst: _PATH
     composite: Dict[str, CompositeDefinitionFiles]
@@ -45,7 +45,7 @@ class ContinuousFiberCompositesFiles:
 
 @dataclass
 class ShortFiberCompositesFiles:
-    """Container for short fiber file paths."""
+    """Provides the container for short fiber composite file paths."""
 
     rst: _PATH
     dsdat: _PATH
@@ -54,7 +54,7 @@ class ShortFiberCompositesFiles:
 
 @dataclass(frozen=True)
 class CompositeDataSources:
-    """Data Sources related to the composite Layup."""
+    """Provides data sources related to the composite layup."""
 
     rst: DataSources
     composite: Dict[str, DataSources]
@@ -157,61 +157,61 @@ def _add_composite_definitons_from_setup_folder(
 def get_composite_files_from_workbench_result_folder(
     result_folder: _PATH, ensure_composite_definitions_found: bool = True
 ) -> ContinuousFiberCompositesFiles:
-    r"""Get a ContinuousFiberCompositesFiles object from a result_folder.
+    r"""Get a ``ContinuousFiberCompositesFiles`` object from a result folder.
 
-    This function assumes
-    a typical workbench folder structure for a composite simulation.
-    If this function is not able to build a ContinuousFiberCompositesFiles
-    object the following steps can
-    be followed: In main workbench window, activate the files panel by ticking
-    "Files" in the "View" menu. This shows
-    the file location of all the files used in the workbench project.
-    Determine the different attributes of ContinuousFiberCompositesFiles:
+    This method assumes a typical Workbench folder structure for a composite
+    simulation. If this method is not able to build the ``ContinuousFiberCompositesFiles``
+    object, you can follow these steps:
+    
+    In the main Workbench window, activate the files panel by selecting
+    **View > Files**. "Files" This shows the location of all files used
+    in the workbench project. You can determine the different attributes
+    of the ''ContinuousFiberCompositesFiles`` object:
 
-    -   rst: The file.rst file which belongs to the CellId of the Solution
-        you are interested to post-process. Multiple result files are not supported yet.
-        Please ensure that 'Combine Distributed Result Files' is activated if the solution
+    -   rst: The ``file.rst`` file that belongs to the cell ID of the solution
+        that you want to postprocess. Multiple result files are not supported yet.
+        Ensure that **Combine Distributed Result Files** is selected if the solution
         was solved in 'Distributed' mode.
 
-    -   engineering_data: The MatML.xml file in the same folder as the rst file.
+    -   engineering_data: The ``MatML.xml`` file in the same folder as the RST file.
 
     -   composite: There can be multiple composite definitions,
-        one definition for each ACP System if shell data is transferred
+        one definition for each ACP system if shell data is transferred
         and one definition for each solid model if solid data is transferred.
-        All the ACPCompositeDefinitions.h5 and ACPSolidModel*.h5
-        files that are used in the solution have to be added.
-        to the ContinuousFiberCompositesFiles.composite dictionary.
-        The key can be chosen freely. Next to the ACPCompositeDefinitions.h5
-        and ACPSolidModel\*.h5 files, corresponding ACPCompositeDefinitions.mapping and
-        ACPSolidModel*.mapping files can be found (optional).
-        If they exist, they have to be added as well.
+        All the ``ACPCompositeDefinitions.h5`` and ``ACPSolidModel*.h5``
+        files that are used in the solution must be added to the
+        ``ContinuousFiberCompositesFiles.composite`` dictionary.
+        The key can be chosen freely. Next to the ``ACPCompositeDefinitions.h5``
+        and ``ACPSolidModel\*.h5`` files, corresponding ``ACPCompositeDefinitions.mapping``
+        and ``ACPSolidModel*.mapping`` files can be found (optional).
+        If they exist, they must be added as well.
 
     The following example shows how a
-    ContinuousFiberCompositesFiles object can be built:
-    The project has two ACP Pre systems, one that exports
+    ``ContinuousFiberCompositesFiles object`` can be built. 
+    The project in this example has two **ACP Pre** systems, one that exports
     shell information and one that exports solid information.
 
-    The files are located in the following locations.
+    The files are located in these locations:
 
     Result file:
 
-    - project_root_folder/dp0/SYS/MECH/file.rst.
+    - ``project_root_folder/dp0/SYS/MECH/file.rst``
 
     Engineering data file:
 
-    - project_root_folder/dp0/SYS/MECH/MatML.xml
+    - ``project_root_folder/dp0/SYS/MECH/MatML.xml``
 
-    Composite definitions and mapping for solid model:
+    Composite definition and mapping files for the solid model:
 
-    - project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5
-    - project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping
+    - ``project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5``
+    - ``project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping``
 
-    Composite definitions and mapping for shell model:
+    Composite definition and mapping files for the shell model:
 
-    - project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5
-    - project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping
+    - ``project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5``
+    - ``project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping``
 
-    The corresponding ContinuousFiberCompositesFiles object would be created like this::
+    The code creates the corresponding ``ContinuousFiberCompositesFiles`` object::
 
         ContinuousFiberCompositesFiles(
             rst="project_root_folder/dp0/SYS/MECH/file.rst",
@@ -231,10 +231,10 @@ def get_composite_files_from_workbench_result_folder(
     Parameters
     ----------
     result_folder:
-       Result folder of the solution. Right-click on the "Solution" item in the Mechanical tree and
-       choose "Open Solver Files Directory" to obtain the result_folder.
+       Result folder of the solution. Right-click the **olution**item in the Ansys Mechanical tree
+       and select **Open Solver Files Directory** to obtain the result folder.
     ensure_composite_definitions_found:
-        If True, checks that at least on composite definition (shell or solid) has been found.
+        Whether to check if at leasone one composite definition (shell or solid) has been found.
     """
     result_folder_path = pathlib.Path(result_folder)
 
@@ -275,7 +275,7 @@ def get_composite_files_from_workbench_result_folder(
 def get_composites_data_sources(
     continuous_composite_files: ContinuousFiberCompositesFiles,
 ) -> CompositeDataSources:
-    """Create dpf data sources from a ContinuousFiberCompositeFiles object.
+    """Create DPF data sources from a ``ContinuousFiberCompositeFiles`` object.
 
     Parameters
     ----------
