@@ -62,7 +62,7 @@ jobs:
       fail-fast: false
     steps:
       - name: "Login in Github Container registry"
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -104,7 +104,7 @@ jobs:
 
     steps:
       - name: "Login in Github Container registry"
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -135,7 +135,7 @@ jobs:
           sudo apt-get install pandoc xvfb
 
       - name: "Login in Github Container registry"
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: pyansys-ci-bot
