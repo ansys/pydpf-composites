@@ -178,6 +178,13 @@ jobs:
         run: |
           tox -e doc-linux-pdf
 
+      - name: "Upload PDF Documentation"
+        uses: actions/upload-artifact@v2
+        with:
+          name: documentation-pdf
+          path: .tox/doc_out/latex/ansys-dpf-composites.pdf
+          retention-days: 7
+
   build-package:
     name: "Build package"
     runs-on: ubuntu-latest
