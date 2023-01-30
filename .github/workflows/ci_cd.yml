@@ -167,8 +167,16 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: documentation-html
-          path: .tox/doc_out/
+          path: .tox/doc_out/html
           retention-days: 7
+
+      - name: "Install OS packages for PDF"
+        run: |
+          sudo apt-get install latexmk texlive-latex-extra
+
+      - name: "Generate the PDF documentation with tox"
+        run: |
+          tox -e doc-linux-pdf
 
   build-package:
     name: "Build package"
