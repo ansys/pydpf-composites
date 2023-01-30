@@ -1,8 +1,8 @@
 .. _layup_information_classes:
 
-Layup Information
+Layup information
 -----------------
-General functionality to access information on the composite layup.
+General features to access information on the composite layup.
 
 .. module:: ansys.dpf.composites.layup_info
 
@@ -20,9 +20,9 @@ General functionality to access information on the composite layup.
     LayupProperty
 
 
-Material Properties
+Material properties
 '''''''''''''''''''
-A note on material ids: In the pydpf-composites module,
+A note on material ids: in the PyDPF Composites module,
 materials are reference by their ``dpf_material_id``. The ``dpf_material_id``
 is generated based on the materials present in the result file.
 The ``dpf_material_id`` can be different from the material id used in the solver.
@@ -44,7 +44,7 @@ example shows how to evaluate material properties.
     get_constant_property_dict
 
 
-Material Operators
+Material operators
 ''''''''''''''''''
 
 .. module:: ansys.dpf.composites.layup_info.material_operators

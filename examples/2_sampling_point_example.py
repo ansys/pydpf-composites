@@ -1,7 +1,7 @@
 """
 .. _sampling_point_example:
 
-Sampling Point
+Sampling point
 --------------
 
 Extract ply-wise laminate properties and results.

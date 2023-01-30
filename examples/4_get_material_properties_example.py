@@ -1,7 +1,7 @@
 """
 .. _material_properties:
 
-Material Properties and Custom Failure Criterion
+Material properties and custom failure criterion
 ------------------------------------------------
 
 Access material properties and implement a custom failure criterion.

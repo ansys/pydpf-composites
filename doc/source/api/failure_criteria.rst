@@ -1,6 +1,6 @@
 .. _failure_criteria:
 
-Failure Criteria
+Failure criteria
 ----------------
 
 .. module:: ansys.dpf.composites.failure_criteria

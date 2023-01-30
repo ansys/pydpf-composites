@@ -1,7 +1,7 @@
 """
 .. _layup_properties_plot:
 
-Get Lay-up Properties
+Get lay-up properties
 ---------------------
 
 Extract elemental layered properties such as thickness and material.

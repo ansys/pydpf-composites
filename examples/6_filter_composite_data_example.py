@@ -1,7 +1,7 @@
 """
 .. _filter_composite_data:
 
-Filter Result Data by Different Criteria
+Filter result data by different criteria
 ----------------------------------------
 
 Filter strains and stresses by material, layer or analysis ply.
