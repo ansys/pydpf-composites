@@ -1,4 +1,4 @@
-Sampling Point
+Sampling point
 --------------
 
 .. module:: ansys.dpf.composites.sampling_point

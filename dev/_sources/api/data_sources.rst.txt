@@ -1,4 +1,4 @@
-Data Sources
+Data sources
 ------------
 
 .. module:: ansys.dpf.composites.data_sources

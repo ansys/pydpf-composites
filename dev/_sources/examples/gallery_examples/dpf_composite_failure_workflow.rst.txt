@@ -20,7 +20,7 @@
 
 .. _basic_example:
 
-DPF Composite Failure Workflow
+DPF composite failure workflow
 ------------------------------
 
 Use of native DPF Python interface to configure and run composite failure evaluator.
@@ -356,7 +356,7 @@ Plot the max and the minimum value for each value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.102 seconds)
+   **Total running time of the script:** ( 0 minutes  0.513 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_dpf_composite_failure_workflow.py:

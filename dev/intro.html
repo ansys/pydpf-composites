@@ -125,7 +125,7 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="developers_guide.html">
-  Developer's Guide
+  Developer's guide
  </a>
 </li>
 
@@ -359,21 +359,21 @@ Install the <code class="docutils literal notranslate"><span class="pre">ansys-d
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ansys</span><span class="o">-</span><span class="n">dpf</span><span class="o">-</span><span class="n">composites</span>
 </pre></div>
 </div>
-<p>We recommend using a <a class="reference external" href="https://docs.python.org/3/library/venv.html">virtual environment</a>
-to keep Python packages isolated from your system Python.</p>
+<p>It is recommended to use a <a class="reference external" href="https://docs.python.org/3/library/venv.html">virtual environment</a>,
+which keeps Python packages isolated from your system Python.</p>
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
 <p>Get started with some basic <a class="reference internal" href="examples/index.html"><span class="doc">Examples</span></a> :</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="examples/gallery_examples/1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite Failure Analysis</span></a></p></li>
-<li><p><a class="reference internal" href="examples/gallery_examples/2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling Point</span></a></p></li>
+<li><p><a class="reference internal" href="examples/gallery_examples/1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a></p></li>
+<li><p><a class="reference internal" href="examples/gallery_examples/2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a></p></li>
 </ul>
 <p>In the end of each example, there is a button to download the python source code of the example.
-The examples will download the example files (results, composite definition..) from an examples repository.</p>
+The examples download their input files (results, composite definition, etc.) from a git repository.</p>
 <p>For larger models it can be slow to initialize a <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a>, because it automatically creates many
 different providers that are not needed in all the workflows. Consider using the
-<a class="reference internal" href="api/layup_info.html#layup-information-classes"><span class="std std-ref">Layup Information classes</span></a> directly.</p>
+<a class="reference internal" href="api/layup_info.html#layup-information-classes"><span class="std std-ref">Layup information classes</span></a> directly.</p>
 <section id="start-from-a-local-ansys-workbench-project">
 <h3>Start from a local Ansys Workbench project<a class="headerlink" href="#start-from-a-local-ansys-workbench-project" title="Permalink to this heading">#</a></h3>
 <p>To get started on a local Ansys Workbench project, first determine the result folder by right-clicking on the solution

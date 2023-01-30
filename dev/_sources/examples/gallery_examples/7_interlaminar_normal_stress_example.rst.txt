@@ -20,7 +20,7 @@
 
 .. _interlaminar_normal_stress_example:
 
-Interlaminar Normal Stresses
+Interlaminar normal stresses
 ----------------------------
 
 Compute interlaminar normal stresses for layered shells.
@@ -259,7 +259,7 @@ Plot s3 at the mid-plane of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.094 seconds)
+   **Total running time of the script:** ( 0 minutes  5.240 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:

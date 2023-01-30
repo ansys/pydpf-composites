@@ -1,7 +1,7 @@
 """
 .. _basic_example:
 
-DPF Composite Failure Workflow
+DPF composite failure workflow
 ------------------------------
 
 Use of native DPF Python interface to configure and run composite failure evaluator.

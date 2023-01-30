@@ -1,7 +1,7 @@
 """
 .. _interlaminar_normal_stress_example:
 
-Interlaminar Normal Stresses
+Interlaminar normal stresses
 ----------------------------
 
 Compute interlaminar normal stresses for layered shells.

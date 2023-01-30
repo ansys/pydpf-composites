@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Interlaminar Normal Stresses &#8212; PyDPF Composites</title>
+    <title>Interlaminar normal stresses &#8212; PyDPF Composites</title>
     
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
@@ -53,8 +53,8 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Post-process an Assembly" href="8_assembly_example.html" />
-    <link rel="prev" title="Filter Result Data by Different Criteria" href="6_filter_composite_data_example.html" />
+    <link rel="next" title="Post-process an assembly" href="8_assembly_example.html" />
+    <link rel="prev" title="Filter result data by different criteria" href="6_filter_composite_data_example.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -125,7 +125,7 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's Guide
+  Developer's guide
  </a>
 </li>
 
@@ -272,7 +272,7 @@ function checkPageExistsAndRedirect(event) {
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">Interlaminar Normal Stresses</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Interlaminar normal stresses</a></li> 
       </ul>
     </div>
         </div>
@@ -295,47 +295,47 @@ function checkPageExistsAndRedirect(event) {
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="1_failure_operator_example.html">
-   Composite Failure Analysis
+   Composite failure analysis
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="2_sampling_point_example.html">
-   Sampling Point
+   Sampling point
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3_short_fiber_example.html">
-   Failure Analysis for Short Fiber Composites
+   Failure analysis for short fiber composites
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="4_get_material_properties_example.html">
-   Material Properties and Custom Failure Criterion
+   Material properties and custom failure criterion
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="5_get_layup_properties_example.html">
-   Get Lay-up Properties
+   Get lay-up properties
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="6_filter_composite_data_example.html">
-   Filter Result Data by Different Criteria
+   Filter result data by different criteria
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Interlaminar Normal Stresses
+   Interlaminar normal stresses
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="8_assembly_example.html">
-   Post-process an Assembly
+   Post-process an assembly
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="dpf_composite_failure_workflow.html">
-   DPF Composite Failure Workflow
+   DPF composite failure workflow
   </a>
  </li>
 </ul>
@@ -404,18 +404,18 @@ function checkPageExistsAndRedirect(event) {
 to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="interlaminar-normal-stresses">
-<span id="interlaminar-normal-stress-example"></span><span id="sphx-glr-examples-gallery-examples-7-interlaminar-normal-stress-example-py"></span><h1>Interlaminar Normal Stresses<a class="headerlink" href="#interlaminar-normal-stresses" title="Permalink to this heading">#</a></h1>
+<span id="interlaminar-normal-stress-example"></span><span id="sphx-glr-examples-gallery-examples-7-interlaminar-normal-stress-example-py"></span><h1>Interlaminar normal stresses<a class="headerlink" href="#interlaminar-normal-stresses" title="Permalink to this heading">#</a></h1>
 <p>Compute interlaminar normal stresses for layered shells.</p>
 <p>This example shows how to enrich the stresses of layered shells by
 interlaminar normal stresses, in short INS. INS can be of importance in thick
 and curved laminates.</p>
 <p>For simple use cases it is preferable to use the composite failure operator
-(<a class="reference internal" href="1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite Failure Analysis</span></a>)
+(<a class="reference internal" href="1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a>)
 or the composite sampling point operator
-(<a class="reference internal" href="2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling Point</span></a>). Note, the INS are
+(<a class="reference internal" href="2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a>). Note, the INS are
 computed automatically in these workflows if required. For instance if a 3D failure criterion is
 activated.
-The <a class="reference internal" href="6_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"><span class="std std-ref">Filter Result Data by Different Criteria</span></a> example shows how
+The <a class="reference internal" href="6_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> example shows how
 helper functions can be used to obtain composite result data.</p>
 <p>INS are typically not available if layered shell elements are
 used. The INS operator recomputes s3 based on the laminate strains, the geometrical curvature and
@@ -515,7 +515,7 @@ in the element coordinate system (material coordinate system).</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  8.094 seconds)</p>
+<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.240 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-7-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/aacf4e81e7cf567a4fea4a631f9c6861/7_interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">7_interlaminar_normal_stress_example.py</span></code></a></p>
