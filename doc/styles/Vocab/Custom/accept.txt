@@ -1,3 +1,0 @@
-accessor
-interlaminar
-PyDPF Composites
