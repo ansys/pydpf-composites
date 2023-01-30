@@ -92,7 +92,7 @@ jobs:
 
       - name: "Upload server output"
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: server_output
           path: tests/logs/*_log_*.txt
@@ -164,7 +164,7 @@ jobs:
           tox -e doc-linux
 
       - name: "Upload HTML Documentation"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: documentation-html
           path: .tox/doc_out/html
@@ -179,7 +179,7 @@ jobs:
           tox -e doc-linux-pdf
 
       - name: "Upload PDF Documentation"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: documentation-pdf
           path: .tox/doc_out/latex/ansys-dpf-composites.pdf
