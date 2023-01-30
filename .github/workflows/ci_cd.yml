@@ -58,7 +58,7 @@ jobs:
         # docker images on the windows agents. See the issue
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
       fail-fast: false
     steps:
       - name: "Login in Github Container registry"
@@ -212,13 +212,6 @@ jobs:
     needs: [build-package]
     runs-on: ubuntu-latest
     steps:
-
-      - name: "Release to the private PyPI repository"
-        uses: pyansys/actions/release-pypi-private@v3
-        with:
-          library-name: ${{ env.PACKAGE_NAME }}
-          twine-username: "__token__"
-          twine-token: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
 
       - name: "Release to the public PyPI repository"
         uses: pyansys/actions/release-pypi-public@v3
