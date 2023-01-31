@@ -1,14 +1,13 @@
 """
 .. _assembly_example:
 
-Post-process an assembly
+Postprocess an assembly
 ------------------------
 
-Post-process an assembly with multiple composite parts.
-
-This example shows how an assembly of a shell and solid composite
-model can be post-processed. The :class:`Composite Model <.CompositeModel>`
-helps to access the data of the different parts.
+This example shows how to postprocess an assembly with multiple composite parts.
+The assembly consists of a shell and solid composite model. The
+:class:`Composite Model <.CompositeModel>` class helps to access
+the data of the different parts.
 
 """
 # %%

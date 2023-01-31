@@ -17,9 +17,9 @@ __all__ = (
 
 
 def _get_rst_spot_index(spot: Spot) -> int:
-    """Return the spot in index in the rst file.
+    """Return the spot in the index in the RST file.
 
-    The order in the rst file is always bottom, top, (mid)
+    The order in the RST file is always bottom, top, and middle.
     """
     return [-1, 0, 2, 1][spot]
 
@@ -31,26 +31,27 @@ def get_selected_indices(
     spots: Optional[Collection[Spot]] = None,
     disable_checks: bool = False,
 ) -> "NDArray[np.int64]":
-    """Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.
+    """Get the elementary indices based on selected layers, corner nodes, spots, and element information.
 
     Parameters
     ----------
     element_info
+        Layup information for the element.
     layers
         List of selected layers.
     nodes
-        List of selected nodes
+        List of selected nodes.
     spots
         List of selected spots.
     disable_checks:
-        Set to True to disable checks.
-        Results in better performance but potentially
-        cryptic error messages or invalid indices
+        Whether to disable checks. Set to ``True`` to disable checks.
+        Disabling checks results in better performance but potentially
+        cryptic error messages or invalid indices.
 
     Returns
     -------
     NDArray:
-        Array of selected indices
+        Array of selected indices.
 
 
     Notes
@@ -83,32 +84,32 @@ def get_selected_indices(
         if element_info.n_spots == 0:
             raise RuntimeError(
                 "Computation of indices is not supported for elements with no spots. This could"
-                "mean this is a output has only been written at the bottom and "
-                f"the top of the stack of layers. Element Info: {element_info}"
+                "mean this is a output that has only been written at the bottom and "
+                f"the top of the stack of layers. Element Info: {element_info}."
             )
         if max(layer_indices) >= element_info.n_layers:
             raise RuntimeError(
                 f"Layer index {max(layer_indices)} is greater or "
-                f"equal number of layers {element_info.n_layers}. Element Info: {element_info}"
+                f"equal to the number of layers: {element_info.n_layers}. Element Info: {element_info}."
             )
 
         if max(node_indices) >= element_info.number_of_nodes_per_spot_plane:
             raise RuntimeError(
-                f"corner node index {max(node_indices)} is greater or "
-                f"equal number of corner nodes {element_info.number_of_nodes_per_spot_plane}. "
-                f"Element Info: {element_info}"
+                f"Corner node index {max(node_indices)} is greater or "
+                f"equal to the number of corner nodes: {element_info.number_of_nodes_per_spot_plane}. "
+                f"Element Info: {element_info}."
             )
 
         if max(spot_indices) >= element_info.n_spots:
             raise RuntimeError(
-                f"spot index {max(spot_indices)} is greater or "
-                f"equal number of spots {element_info.n_spots}. Element Info: {element_info}"
+                f"Spot index {max(spot_indices)} is greater or "
+                f"equal to the number of spots: {element_info.n_spots}. Element Info: {element_info}."
             )
 
     all_indices = np.zeros(
         len(spot_indices) * len(node_indices) * len(layer_indices), dtype=np.int64
     )
-    # Todo: Use numpy. Probably use ravel_multi_index
+    # Todo: Use numpy. Probably use ravel_multi_index method.
     current_index = 0
     for layer_index in layer_indices:
         layer_start_index = layer_index * element_info.n_corner_nodes * element_info.n_spots
@@ -124,15 +125,16 @@ def get_selected_indices(
 def get_selected_indices_by_dpf_material_ids(
     element_info: ElementInfo, dpf_material_ids: Collection[np.int64]
 ) -> "NDArray[np.int64]":
-    """Get selected indices by dpf_material_ids.
+    """Get selected indices by DPF material IDs.
 
-    Selects all indices that are in a layer with one of the selected materials
+    This method selects all indices that are in a layer with one of the selected materials.
 
     Parameters
     ----------
     element_info: ElementInfo
+        Layup information for the element.
     dpf_material_ids
-        Collection of dpf_material_ids to select
+        Collection of DPF materials.
 
     Returns
     -------
@@ -158,13 +160,14 @@ def get_selected_indices_by_analysis_ply(
     Parameters
     ----------
     analysis_ply_info_provider: AnalysisPlyInfoProvider
-        The AnalysisPlyInfoProvider for the Analysis ply.
+        Provider for the analysis ply information.
     element_info: ElementInfo
+        Layup information for the element.
 
     Returns
     -------
     NDArray[int64]:
-        selected elementary indices
+        Selected elementary indices.
     """
     layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_info.id)
     if layer_index is None:

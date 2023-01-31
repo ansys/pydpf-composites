@@ -1,4 +1,4 @@
-"""Object to represent the Result Definition used by Failure Operator in DPF Composites."""
+"""Object to represent the result definition used by the Failure operator in DPF Composites."""
 
 from dataclasses import dataclass, field
 from enum import Enum
@@ -12,8 +12,9 @@ __all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
 
 
 class FailureMeasure(str, Enum):
-    """Available Failure Measures."""
+    """Provides available failure measures."""
 
+    # TODO: Add descriptions for each property
     INVERSE_RESERVE_FACTOR: str = "inverse_reserve_factor"
     MARGIN_OF_SAFETY: str = "safety_margin"
     RESERVE_FACTOR: str = "safety_factor"
@@ -26,29 +27,31 @@ _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 @dataclass
 class ResultDefinitionScope:
-    """Result Definition Scope."""
+    """Provides the result definition scope."""
 
     composite_definition: _PATH
     element_scope: Sequence[int] = field(default_factory=lambda: [])
     ply_scope: Sequence[str] = field(default_factory=lambda: [])
-    """Assembly files which define the mapping of the labels
-    This input is needed if multiple parts are assembled in WB / Mechanical to map the
-    local element and node labels to the global ones.
+    """Assembly files that define the mapping of the labels.
+    This attribute is needed if multiple parts are assembled in Workbench or
+     Mechanical to map the local element and node labels to the global labels.
     """
     mapping_file: Optional[_PATH] = None
-    """Write the data for all element labels in element_scope.
-    This makes sense if the user explicitly requests an element scope
-    but the actual scope where postprocessing has happened is smaller
-    (e.g. due to ply scoping).
+    """Path to the mapping file for all element labels in the element scope.
     """
+
     write_data_for_full_element_scope: bool = True
+    """Whether to write the data for all element labels in the element scope.
+    This makes sense if an element scope is explicitly requested
+    but the actual scope where postprocessing has happened is smaller,
+    perhaps due to ply scoping.
 
 
 class ResultDefinition:
     """Represents the result definition of DPF Composites.
 
-    It is used to configure the DPF operators composite::failure_evaluator
-    and composite::sampling_point_evaluator.
+    This class is used to configure the DPF operators ``composite::failure_evaluator``
+    and ``composite::sampling_point_evaluator``.
     """
 
     _VERSION = 1
@@ -81,7 +84,7 @@ class ResultDefinition:
 
     @property
     def name(self) -> str:
-        """Define a custom name."""
+        """Custom name."""
         return self._name
 
     @name.setter
@@ -90,7 +93,7 @@ class ResultDefinition:
 
     @property
     def expression(self) -> str:
-        """Define the type of the result. Supported type is "composite_failure"."""
+        """Type of the result. The supported type is "composite_failure"."""
         return self._expression
 
     @expression.setter
@@ -99,11 +102,11 @@ class ResultDefinition:
             self._expression = value
         else:
             values = ", ".join([v for v in _SUPPORTED_EXPRESSIONS])
-            raise ValueError(f"Expression {value} is not allowed. Supported are {values}")
+            raise ValueError(f"Expression {value} is not allowed. Supported expressions are {values}.")
 
     @property
     def combined_failure_criterion(self) -> CombinedFailureCriterion:
-        """Configure of the failure criteria such as Max Stress, Puck and Wrinkling."""
+        """Configuration of the failure criteria such as maximum stress, puck, and wrinkling."""
         return self._combined_failure_criterion
 
     @combined_failure_criterion.setter
@@ -112,9 +115,9 @@ class ResultDefinition:
 
     @property
     def measure(self) -> str:
-        """Define the return type of the failure values.
+        """Return type of the failure values.
 
-        Supported types are "inverse_reserve_factor", "safety_factor" and "safety_margin".
+        Supported types are ``"inverse_reserve_factor"``, ``"safety_factor"``, and ``"safety_margin"``.
         """
         return self._measure
 
@@ -122,13 +125,13 @@ class ResultDefinition:
     def measure(self, value: str) -> None:
         if value not in _SUPPORTED_MEASURES:
             values = ", ".join([v for v in _SUPPORTED_MEASURES])
-            raise ValueError(f"Measure {value} is not allowed. Supported are {values}")
+            raise ValueError(f"Measure {value} is not allowed. Supported measures are {values}.")
         else:
             self._measure = value
 
     @property
     def scopes(self) -> Sequence[ResultDefinitionScope]:
-        """Get the different scopes of the result definition."""
+        """Different scopes of the result definition."""
         return self._composite_scopes
 
     @scopes.setter
@@ -137,7 +140,7 @@ class ResultDefinition:
 
     @property
     def rst_file(self) -> _PATH:
-        """Path of the result files (.rst)."""
+        """Path of the result (RST) files."""
         return self._rst_file
 
     @rst_file.setter
@@ -146,7 +149,7 @@ class ResultDefinition:
 
     @property
     def material_file(self) -> _PATH:
-        """Path of material files which store the material properties.
+        """Path of the material files that store the material properties.
 
         Supported formats are XML and ENGD.
         """
@@ -158,10 +161,11 @@ class ResultDefinition:
 
     @property
     def stress_strain_eval_mode(self) -> str:
-        """Results are loaded from a result file by default ("rst_file").
+        """Results loaded from a result (RST) file by default.
 
-        Set to "mapdl_live" to activate on the fly strain and stress evaluation.
-        Can be used if the result file contains only the primary results (deformations).
+        You can set this property to ``"mapdl_live"`` to activate on-the-fly
+        strain and stress evaluation. This property can be used if the result
+        file contains only the primary results (deformations).
         """
         return self._stress_strain_eval_mode
 
@@ -172,14 +176,14 @@ class ResultDefinition:
         else:
             values = ", ".join([v for v in _SUPPORTED_STRESS_STRAIN_EVAL_MODES])
             raise ValueError(
-                f"Stress strain eval mode '{value} 'is not allowed. Supported are {values}"
+                f"Stress strain evaluation mode '{value} 'is not allowed. Supported values are {values}."
             )
 
     @property
     def time(self) -> float:
-        """Select time / solution step.
+        """Time or solution step.
 
-        Note: Function :meth:`.CompositeModel.get_result_times_or_frequencies` can be used
+        You can use the :meth:`.CompositeModel.get_result_times_or_frequencies` method
         to list the available times or frequencies in the result file.
         """
         return self._time
@@ -190,10 +194,10 @@ class ResultDefinition:
 
     @property
     def max_chunk_size(self) -> int:
-        """Define the chunk size (number of elements) for the result evaluation.
+        """Maximum chunk size (number of elements) for the result evaluation.
 
-        Small chunks reduces the maximum peak of memory but too many chunks causes
-        some overhead. Default is 50'000. Use -1 to disable chunking.
+        Small chunks reduce the maximum peak of memory, but too many chunks causes
+        some overhead. The default is 50,000. Use ``-1`` to disable chunking.
         """
         return self._max_chunk_size
 
@@ -202,14 +206,14 @@ class ResultDefinition:
         self._max_chunk_size = value
 
     def to_dict(self) -> Dict[str, Any]:
-        """Get the result definition in a dict representation."""
+        """Get the result definition in a dictionary representation."""
         cfc = self.combined_failure_criterion
         if not cfc:
-            raise ValueError("Combined failure criterion is not defined!")
+            raise ValueError("Combined failure criterion is not defined.")
 
         if self.measure not in _SUPPORTED_MEASURES:
             values = ", ".join([v for v in _SUPPORTED_MEASURES])
-            raise ValueError(f"Unknown measure `{self.measure}`. Supported are {values}")
+            raise ValueError(f"Measure `{self.measure}` is invalid. Supported meaures are {values}.")
 
         result_definition = {
             "version": self._VERSION,
@@ -252,7 +256,7 @@ class ResultDefinition:
         return result_definition
 
     def to_json(self) -> str:
-        """Convert the dict representation of the result definition into a JSON Dict."""
+        """Convert the dictionary representation of the result definition to a JSON dictionary."""
         return json.dumps(self.to_dict())
 
     def _get_properties(self, exclude: Sequence[str] = tuple()) -> Sequence[Any]:
