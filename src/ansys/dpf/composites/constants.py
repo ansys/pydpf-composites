@@ -27,7 +27,8 @@ class Sym3x3TensorComponent(IntEnum):
 class FailureOutput(IntEnum):
     """Provides failure output types.
 
-    The enum value corresponds to the index in the fields container."""
+    The enum value corresponds to the index in the fields container.
+    """
 
     FAILURE_MODE = 0
     FAILURE_VALUE = 1
