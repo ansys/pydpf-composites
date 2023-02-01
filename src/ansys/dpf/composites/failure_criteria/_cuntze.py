@@ -16,21 +16,21 @@ _DOC_WF_CFT = "Weighting factor of fiber failure due to tension (cft)."
 _DOC_WF_CMA = "Weighting factor of matrix failure due to tension (cma)."
 _DOC_WF_CMB = "Weighting factor of matrix failure due to compression (cmb)."
 _DOC_WF_CMC = "Weighting factor of matrix failure due to compression or shear (cmc)."
-_DOC_B21 = "In-plane shear friction coefficient. The default is 0.2."
+_DOC_B21 = "In-plane shear friction coefficient. The default is ``0.2``."
 _DOC_B32 = (
-    "Out-of-plane shear friction coefficient. The default is 1.3805. The value depends "
+    "Out-of-plane shear friction coefficient. The default is ``1.3805``. The value depends "
     "on the fracture plane angle."
 )
-_DOC_MODE_INTERACTION_COEFF = "Mode interaction coefficient. The default is 2.6."
+_DOC_MODE_INTERACTION_COEFF = "Mode interaction coefficient. The default is ``2.6``."
 _DOC_FRACTURE_PLANE_ANGLE = (
-    "Fracture plane angle. The default is 53 degrees."
-    " The value must be greater than 45. The value depends on the out-of-plane
-    " shear friction coefficient."
+    "Fracture plane angle in degrees. The default is ``53``. "
+    "The value must be greater than 45. The value depends on the out-of-plane "
+    "shear friction coefficient."
 )
 
 
 class CuntzeCriterion(FailureCriterionBase):
-    """Cuntze Criterion."""
+    """Provides the Cuntze criterion."""
 
     __doc__ = f"""Defines the Cuntze criterion for uni-directional orthotropic reinforced materials.
 
