@@ -4,23 +4,21 @@
 Layered properties
 ------------------
 
-Extract elemental layered properties such as thickness and material.
-
-This example shows how to access basic layer properties such as layer
-thicknesses, angles, and analysis ply names. These properties can be queried
-very efficiently. To get the full layer information of an element, including results,
-consider also the :class:`SamplingPoint <.SamplingPoint>` class.
-
 Element layered properties are typically used for layer-wise postprocessing and
-data filtering.
+data filtering. This example shows how to extract elemental layered properties
+such as thickness and material. It accesses basic layer properties (layer
+thicknesses, angles, and analysis ply names) and queries them efficiently.
 
+To get the full layer information of an element, including results,
+consider using the :class:`SamplingPoint <.SamplingPoint>` class.
 """
-
 #%%
-# Script
-# ~~~~~~
+# Set up analysis
+# ~~~~~~~~~~~~~~~
+# Setting up the analysis consists of importing depedencies, connecting to the
+# DPF server, and retrieving the example files.
 #
-# Import dependencies
+# Import dependencies.
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -29,17 +27,20 @@ from ansys.dpf.composites.example_helper import get_continuous_fiber_example_fil
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
-# Start a server and get the examples files.
-# This will copy the example files into the current working directory.
+# Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 #%%
-# Set up the composite model
+# Set up model
+# ~~~~~~~~~~~~
+# Set up the composite model.
 composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
-# Get layup properties for all the elements and show the first one as an example
+# Get layup properties
+# ~~~~~~~~~~~~~~~~~~~~
+# Get layup properties for all elements and show the first one as an example.
 element_id = 1
 thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
 angles = composite_model.get_property_for_all_layers(LayerProperty.ANGLES, element_id)
@@ -49,7 +50,9 @@ analysis_plies = composite_model.get_analysis_plies(element_id)
 
 
 #%%
-# Plot lay-up properties
+# Plot layup properties
+# ~~~~~~~~~~~~~~~~~~~~~
+# Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 y_coordinates = offset + np.cumsum(thicknesses)
 y_centers = y_coordinates - thicknesses / 2
 
