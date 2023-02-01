@@ -48,11 +48,11 @@ def connect_to_or_start_server(
     Parameters
     ----------
     port: 
-        Port the DPF server is listening on.
+        Port that the DPF server is listening on.
     ip:
         IP address for the DPF server.
     ansys_path:
-        Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v231.``
+        Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v231``.
         This parameter is ignored if either the port or IP address are set.
 
     Returns
@@ -77,13 +77,13 @@ def connect_to_or_start_server(
 
     server.check_version(
         "5.0",
-        f"The DPF Composites plugin requires DPF server version 5.0 (Ansys 2023 R1) or later."
+        f"The DPF Composites plugin requires DPF Server version 5.0 (Ansys 2023 R1) or later."
         f" Your version is currently {server.version}.",
     )
 
     _wait_until_server_is_up(server)
-    # Note: server.ansys_path contains the computed ansys path from
+    # Note: server.ansys_path contains the computed Ansys path from
     # dpf.server.start_local_server. It is None if
-    # we connect to an existing server.
+    # a connection is made to an existing server.
     load_composites_plugin(server, ansys_path=server.ansys_path)
     return server
