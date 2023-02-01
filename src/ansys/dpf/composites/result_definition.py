@@ -49,7 +49,7 @@ class ResultDefinitionScope:
 
 class ResultDefinition:
     """Represents the result definition of DPF Composites.
-    
+
     This class is used to configure the DPF operators ``composite::failure_evaluator``
     and ``composite::sampling_point_evaluator``.
     """
