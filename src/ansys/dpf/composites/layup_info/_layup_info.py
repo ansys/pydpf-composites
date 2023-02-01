@@ -52,7 +52,8 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
 class ElementInfo:
     """Provides layup information for an element.
 
-    Use the :class:`~ElementInfoProvider` class to obtain the :class:`~ElementInfo` class for an element.
+    Use the :class:`~ElementInfoProvider` class to obtain the
+    :class:`~ElementInfo` class for an element.
 
     Parameters
     ----------

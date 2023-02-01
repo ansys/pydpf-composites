@@ -28,9 +28,11 @@ def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int 
 
 def _wait_until_server_is_up(server: _dpf_server) -> Any:
     # Small hack to check if the server is up.
-    # The DPF server should check this in the connect_to_server method, but that's currently not the case.
+    # The DPF server should check this in the ``connect_to_server`` method, but
+    # that's currently not the case.
     # https://github.com/pyansys/pydpf-core/issues/414
-    # We use the fact that server.version throws an error if the server is not yet connected.
+    # We use the fact that server.version throws an error if the server
+    # is not yet connected.
     _try_until_timeout(
         lambda: server.version, "Failed to connect to the DPF server before timing out."
     )

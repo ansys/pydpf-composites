@@ -70,7 +70,7 @@ class CompositeInfo:
         streams_provider: dpf.Operator,
         material_operators: MaterialOperators,
     ):
-        """Initialize the ``CompositeInfo`` class and add enriched mesh with composite information."""
+        """Initialize ``CompositeInfo`` class and add enriched mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
         mesh_provider.inputs.data_sources(data_sources.rst)
         self.mesh = mesh_provider.outputs.mesh()
@@ -228,13 +228,14 @@ class CompositeModel:
             Failure measure to evaluate.
         write_data_for_full_element_scope:
             Whether each element in the element scope is to get a
-            (potentially zero) failure value, even elements that are not part of composite_scope.plies.
-            If no element scope is specified (composite_scope.elements),
-            a (potentially zero) failure value is written for all elements.
+            (potentially zero) failure value, even elements that are not
+            part of ``composite_scope.plies``. If no element scope is
+            specified (``composite_scope.elements``), a (potentially zero)
+            failure value is written for all elements.
 
             .. Note::
-               For some special element types such as beams, ``write_data_for_full_element_scope=True``
-               is not supported.
+               For some special element types such as beams,
+               ``write_data_for_full_element_scope=True`` is not supported.
 
         """
         if composite_scope is None:
@@ -504,7 +505,8 @@ class CompositeModel:
     ) -> None:
         """Add interlaminar normal stresses to the stresses fields container.
 
-        For a usage example, see :ref:`sphx_glr_examples_gallery_examples_7_interlaminar_normal_stress_example.py`.
+        For a usage example, see
+        :ref:`sphx_glr_examples_gallery_examples_7_interlaminar_normal_stress_example.py`.
 
         Parameters
         ----------

@@ -26,9 +26,10 @@ _DOC_S = (
 )
 _DOC_M = (
     "Specifies the effect of fiber parallel stresses regarding inter-fiber failure. "
-    "M = [0, 1) and the default is ``0.5``."
+    "M = [0, 1). The default is ``0.5``."
 )
-_DOC_INTERFACE_WEAKENING_FACTOR = "Multiplicator for the interlaminar strength if failure mode pd is active. The default is ``0.8``."
+_DOC_INTERFACE_WEAKENING_FACTOR = "Multiplicator for the interlaminar strength if "
+    "failure mode ``pd`` is active. The default is ``0.8``."
 _DOC_FORCE_GLOBAL_CONSTANTS = (
     "Whether to use global constants instead of the material-wise properties."
 )

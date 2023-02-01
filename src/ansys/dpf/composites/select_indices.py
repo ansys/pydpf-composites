@@ -31,7 +31,7 @@ def get_selected_indices(
     spots: Optional[Collection[Spot]] = None,
     disable_checks: bool = False,
 ) -> "NDArray[np.int64]":
-    """Get the elementary indices based on selected layers, corner nodes, spots, and element information.
+    """Get elementary indices based on element information, layers, nodes, and spots.
 
     Parameters
     ----------
@@ -40,7 +40,7 @@ def get_selected_indices(
     layers
         List of selected layers.
     nodes
-        List of selected nodes.
+        List of selected corner nodes.
     spots
         List of selected spots.
     disable_checks:
@@ -90,20 +90,23 @@ def get_selected_indices(
         if max(layer_indices) >= element_info.n_layers:
             raise RuntimeError(
                 f"Layer index {max(layer_indices)} is greater or "
-                f"equal to the number of layers: {element_info.n_layers}. Element Info: {element_info}."
+                f"equal to the number of layers: {element_info.n_layers}. "
+                f"Element Info: {element_info}."
             )
 
         if max(node_indices) >= element_info.number_of_nodes_per_spot_plane:
             raise RuntimeError(
                 f"Corner node index {max(node_indices)} is greater or "
-                f"equal to the number of corner nodes: {element_info.number_of_nodes_per_spot_plane}. "
+                f"equal to the number of corner nodes: "
+                f"{element_info.number_of_nodes_per_spot_plane}. "
                 f"Element Info: {element_info}."
             )
 
         if max(spot_indices) >= element_info.n_spots:
             raise RuntimeError(
                 f"Spot index {max(spot_indices)} is greater or "
-                f"equal to the number of spots: {element_info.n_spots}. Element Info: {element_info}."
+                f"equal to the number of spots: {element_info.n_spots}. "
+                f"Element Info: {element_info}."
             )
 
     all_indices = np.zeros(

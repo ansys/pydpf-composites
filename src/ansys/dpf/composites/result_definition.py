@@ -44,7 +44,7 @@ class ResultDefinitionScope:
     """Whether to write the data for all element labels in the element scope.
     This makes sense if an element scope is explicitly requested
     but the actual scope where postprocessing has happened is smaller,
-    perhaps due to ply scoping.
+    perhaps due to ply scoping."""
 
 
 class ResultDefinition:
@@ -101,7 +101,9 @@ class ResultDefinition:
             self._expression = value
         else:
             values = ", ".join([v for v in _SUPPORTED_EXPRESSIONS])
-            raise ValueError(f"Expression {value} is not allowed. Supported expressions are {values}.")
+            raise ValueError(
+                f"Expression {value} is not allowed. Supported expressions are {values}."
+            )
 
     @property
     def combined_failure_criterion(self) -> CombinedFailureCriterion:
@@ -116,7 +118,8 @@ class ResultDefinition:
     def measure(self) -> str:
         """Return type of the failure values.
 
-        Supported types are ``"inverse_reserve_factor"``, ``"safety_factor"``, and ``"safety_margin"``.
+        Supported types are ``"inverse_reserve_factor"``, ``"safety_factor"``,
+        and ``"safety_margin"``.
         """
         return self._measure
 
@@ -175,7 +178,8 @@ class ResultDefinition:
         else:
             values = ", ".join([v for v in _SUPPORTED_STRESS_STRAIN_EVAL_MODES])
             raise ValueError(
-                f"Stress strain evaluation mode '{value} 'is not allowed. Supported values are {values}."
+                f"Stress strain evaluation mode '{value}' is not allowed. "
+                "Supported values are {values}."
             )
 
     @property
@@ -212,7 +216,9 @@ class ResultDefinition:
 
         if self.measure not in _SUPPORTED_MEASURES:
             values = ", ".join([v for v in _SUPPORTED_MEASURES])
-            raise ValueError(f"Measure `{self.measure}` is invalid. Supported meaures are {values}.")
+            raise ValueError(
+                f"Measure `{self.measure}` is invalid. Supported meaures are {values}."
+            )
 
         result_definition = {
             "version": self._VERSION,
