@@ -10,7 +10,7 @@ A layered element has elementary data points.
 
     num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane
 
-In the above definition, ``number_of_spots`` indicates the number of through-the-thickness
+In the preceding definition, ``number_of_spots`` indicates the number of through-the-thickness
 integration points per layer. ``number_of_spots`` is controlled by ``keyoption 8``, which
 indicates how much output is written. For example, you might write output for only ``'bottom'``
 and ``'top'`` or for ``'bottom'``, ``'top'``, and ``'mid'``.
