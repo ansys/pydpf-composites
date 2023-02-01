@@ -3,8 +3,12 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
-_DOC_S1 = "Whether to activate the failure evaluation regarding the stress in the material 1 direction."
-_DOC_S2 = "Whether to activate the failure evaluation regarding the stress in the material 2 direction."
+_DOC_S1 = (
+    "Whether to activate the failure evaluation regarding the stress in the material 1 direction."
+)
+_DOC_S2 = (
+    "Whether to activate the failure evaluation regarding the stress in the material 2 direction."
+)
 _DOC_S3 = (
     "Whether to activate the failure evaluation regarding the stress in the material "
     "3 direction (out-of-plane)."

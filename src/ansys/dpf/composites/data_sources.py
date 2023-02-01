@@ -162,7 +162,7 @@ def get_composite_files_from_workbench_result_folder(
     This method assumes a typical Workbench folder structure for a composite
     simulation. If this method is not able to build the ``ContinuousFiberCompositesFiles``
     object, you can follow these steps:
-    
+
     In the main Workbench window, activate the files panel by selecting
     **View > Files**. "Files" This shows the location of all files used
     in the workbench project. You can determine the different attributes
@@ -187,7 +187,7 @@ def get_composite_files_from_workbench_result_folder(
         If they exist, they must be added as well.
 
     The following example shows how a
-    ``ContinuousFiberCompositesFiles object`` can be built. 
+    ``ContinuousFiberCompositesFiles object`` can be built.
     The project in this example has two **ACP Pre** systems, one that exports
     shell information and one that exports solid information.
 

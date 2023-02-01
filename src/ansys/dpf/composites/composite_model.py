@@ -34,7 +34,7 @@ __all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 @dataclass(frozen=True)
 class CompositeScope:
     """Provides the composite scope.
-    
+
     This class defines which part of the model and solution step are selected.
 
     Parameters
@@ -103,7 +103,7 @@ class CompositeModel:
        When creating a ``CompositeModel`` instance, several providers are created and
        layup information is added to the DPF meshed regions. Depending on the use
        case, it can be more efficient to create the providers separately.
-       
+
        For assemblies with multiple composite definition files, separate meshes and
        layup operators are generated (wrapped by the ``CompositeInfo`` class). This
        is needed because the layup provider can currently only add the data of a single
@@ -231,7 +231,7 @@ class CompositeModel:
             (potentially zero) failure value, even elements that are not part of composite_scope.plies.
             If no element scope is specified (composite_scope.elements),
             a (potentially zero) failure value is written for all elements.
-            
+
             .. Note::
                For some special element types such as beams, ``write_data_for_full_element_scope=True``
                is not supported.
@@ -376,7 +376,7 @@ class CompositeModel:
 
         Returns a numpy array with the values of the property for all the layers.
         Values are ordered from bottom to top.
-        
+
         This method returns ``None`` if the element is not layered.
 
         Parameters
@@ -408,7 +408,7 @@ class CompositeModel:
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[Collection[str]]:
         """Get analysis ply names.
-        
+
         This method returns ``None`` if the element is not layered.
 
         Parameters
@@ -434,7 +434,7 @@ class CompositeModel:
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[np.double]:
         """Get the laminate offset of an element.
-        
+
         THis method returns ``None`` if the element is not layered.
 
         Parameters
@@ -465,7 +465,7 @@ class CompositeModel:
         a dictionary with the requested properties as the value. Only constant properties
         are supported. Variable properties are evaluated at their
         default values.
-        
+
         This method can be slow to evaluate and should not
         be called in a loop.
 
@@ -542,7 +542,7 @@ class CompositeModel:
         self, composite_definition_label: str
     ) -> Sequence[int]:
         """Get all layered element IDs that belong to a composite definition label.
-        
+
         Parameters
         ----------
         composite_definition_label:

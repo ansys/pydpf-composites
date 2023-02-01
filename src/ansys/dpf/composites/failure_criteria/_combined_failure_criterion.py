@@ -52,7 +52,8 @@ class CombinedFailureCriterion:
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
     failure_criteria = property(
-        _get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit the list."
+        _get_failure_criteria,
+        doc="List of failure criteria. Use insert and remove to edit the list.",
     )
 
     def insert(self, fc: FailureCriterionBase) -> None:
@@ -103,7 +104,7 @@ class CombinedFailureCriterion:
 
         Returns
         -------
-        dict 
+        dict
             JSON dictionary that can be used for the result definition
             of the DPF Composites Failure evaluator operator.
         """

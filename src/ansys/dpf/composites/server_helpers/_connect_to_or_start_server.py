@@ -31,7 +31,9 @@ def _wait_until_server_is_up(server: _dpf_server) -> Any:
     # The DPF server should check this in the connect_to_server method, but that's currently not the case.
     # https://github.com/pyansys/pydpf-core/issues/414
     # We use the fact that server.version throws an error if the server is not yet connected.
-    _try_until_timeout(lambda: server.version, "Failed to connect to the DPF server before timing out.")
+    _try_until_timeout(
+        lambda: server.version, "Failed to connect to the DPF server before timing out."
+    )
 
 
 def connect_to_or_start_server(
@@ -47,7 +49,7 @@ def connect_to_or_start_server(
 
     Parameters
     ----------
-    port: 
+    port:
         Port that the DPF server is listening on.
     ip:
         IP address for the DPF server.

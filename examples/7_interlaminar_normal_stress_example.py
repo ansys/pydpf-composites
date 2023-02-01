@@ -65,7 +65,7 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # %%
 # Compute interlaminar normal stresses
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Compute the interlaminar normal stresses. 
+# Compute the interlaminar normal stresses.
 # The ``INS`` operator stores the stresses in the provided stress field.
 composite_model.add_interlaminar_normal_stresses(
     stresses=stress_operator.outputs.fields_container(),

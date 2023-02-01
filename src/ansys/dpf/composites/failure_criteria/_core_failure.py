@@ -4,8 +4,7 @@ import inspect
 from ._failure_criterion_base import FailureCriterionBase
 
 _DOC_INCLUDE_INS = (
-    "Whether to activate the formulation that "
-    "considers interlaminar normal stresses."
+    "Whether to activate the formulation that " "considers interlaminar normal stresses."
 )
 
 _DOC_WF = "Weighting factor of the failure mode (cs)."

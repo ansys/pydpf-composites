@@ -392,8 +392,7 @@ class SamplingPoint:
             self._interface_indices = {Spot.BOTTOM: 0, Spot.TOP: 1}
         elif self._spots_per_ply == 1:
             raise RuntimeError(
-                "Result files that only have results at the middle of the ply are "
-                "not supported."
+                "Result files that only have results at the middle of the ply are " "not supported."
             )
 
         self._isuptodate = True

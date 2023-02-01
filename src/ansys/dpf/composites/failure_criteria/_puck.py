@@ -6,7 +6,9 @@ from ._failure_criterion_base import FailureCriterionBase
 _DOC_PF = "Whether to activate the failure evaluation regarding fiber failure."
 _DOC_PMA = "Whether to activate the failure evaluation regarding matrix failure due to tension."
 _DOC_PMB = "Whether to activate the failure evaluation regarding matrix failure due to compression."
-_DOC_PMC = "Whether to activate the failure evaluation regarding matrix failure due to shear failure."
+_DOC_PMC = (
+    "Whether to activate the failure evaluation regarding matrix failure due to shear failure."
+)
 _DOC_PD = "Whether to activate the failure evaluation regarding delamination if dim is equal to 3."
 _DOC_DIM = (
     "Whether the 2D or 3D formulation of the criterion is used. The latter one also "
@@ -26,9 +28,7 @@ _DOC_M = (
     "Specifies the effect of fiber parallel stresses regarding inter-fiber failure. "
     "M = [0, 1) and the default is ``0.5``."
 )
-_DOC_INTERFACE_WEAKENING_FACTOR = (
-    "Multiplicator for the interlaminar strength if failure mode pd is active. The default is ``0.8``."
-)
+_DOC_INTERFACE_WEAKENING_FACTOR = "Multiplicator for the interlaminar strength if failure mode pd is active. The default is ``0.8``."
 _DOC_FORCE_GLOBAL_CONSTANTS = (
     "Whether to use global constants instead of the material-wise properties."
 )
