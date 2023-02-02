@@ -9,7 +9,7 @@ This example shows how to analyze a composite structure by a combined failure cr
 The failure operator of DPF Composites computes the minimum and maximum failure values
 and failure modes of a combined failure criterion. A combined failure criterion is a selection of
 failure criteria such as Puck, Tsai-Wu, or face sheet wrinkling. For a list of all
-failure criteria, see :ref:`_failure_criteria`.
+failure criteria, see :ref:`failure_criteria`.
 
 The :class:`Combined Failure Criterion
 <.failure_criteria.CombinedFailureCriterion>` class

@@ -30,7 +30,7 @@ def add_layup_info_to_mesh(
         Label of the composite definition, which is the
         dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
         attribute. This parameter is only required for assemblies.
-        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        See the note about assemblies in the description for the :class:`.CompositeModel` class.
     Returns
     -------
     :

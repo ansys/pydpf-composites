@@ -6,7 +6,7 @@
    intro
    api/index
    examples/index
-   Developer's guide <developers_guide>
+   Contribute <contribute>
 
 PyDPF Composites
 ----------------
@@ -39,8 +39,8 @@ to implement custom failure criteria and computation.
 
         Describes the public Python classes, methods, and functions.
 
-    .. grid-item-card:: :octicon:`code` Developer's guide
-        :link: developers_guide
+    .. grid-item-card:: :octicon:`code` Contribute
+        :link: contribute
         :link-type: doc
 
         Provides developer installation and usage information.
@@ -50,17 +50,15 @@ Key features
 
 Here are some key features of PyDPF Composites:
 
-* Failure criteria evaluation as shown in :doc:`Composite failure analysis </examples/gallery_examples/1_failure_operator_example>`.
-* A :doc:`SamplingPoint class <api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint>` for
-  extracting and visualizing a result over the entire thickness of a laminate as shown in
-  :doc:`Sampling point <examples/gallery_examples/2_sampling_point_example>`.
-* A :doc:`ResultDefinition <api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition>`
-  class for configuring combined failure criteria and scopes.
+* Failure criteria evaluation as shown in :ref:`Composite failure analysis <sphx_glr_examples_gallery_examples_1_failure_operator_example.py>`.
+* A :class:`.SamplingPoint` class for extracting and visualizing a result over the entire thickness of a laminate as shown in
+  :ref:`Sampling point <sphx_glr_examples_gallery_examples_2_sampling_point_example.py>`.
+* A :class:`.ResultDefinition` class for configuring combined failure criteria and scopes.
 * Accessors for getting layered properties such as plies and materials as shown in
-  :doc:`Layered properties <examples/gallery_examples/5_get_layup_properties_example>`
-  and :doc:`Material properties and custom failure criterion <examples/gallery_examples/4_get_material_properties_example>`.
+  :ref:`Layered properties <sphx_glr_examples_gallery_examples_5_get_layup_properties_example.py>`
+  and :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
 * Interface to implement custom failure criteria and analysis as shown in
-  :doc:`Material properties and custom failure criterion <examples/gallery_examples/4_get_material_properties_example>`.
+  :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
 * Postprocessing of homogeneous elements.
 
 Prerequisites
@@ -75,7 +73,7 @@ Here are some prerequisites for PyDPF Composites:
 Limitations
 '''''''''''
 - Layered elements (section data) that have not been preprocessed with ACP are not supported.
-  For information on converting legacy models, see `Import of Legacy Mechanical APDL Composite Models`_
+  For information on converting legacy models, see `Import legacy models`_
   in the DPF help.
 - Only the Mechanical APDL solver is supported.
 

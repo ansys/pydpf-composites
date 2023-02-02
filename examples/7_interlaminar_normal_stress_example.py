@@ -14,14 +14,15 @@ the ``s3`` result based on the laminate strains, the geometrical
 curvature, and the lay-up.
 
 .. note::
-   For simple use cases, using the composite failure operator or
-   composite sampling point operator is preferable. For examples,
-   see :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
-   and :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`.
-   In these workflows, interlaminar normal stresses are computed automatically
-   if required, such as if a 3D failure criterion is activated. Additionally,
-   :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
-   shows how helper functions can be used to obtain composite result data.
+
+    For simple use cases, using the composite failure operator or
+    composite sampling point operator is preferable. For examples,
+    see :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
+    and :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`.
+    In these workflows, interlaminar normal stresses are computed automatically
+    if required, such as if a 3D failure criterion is activated. Additionally,
+    :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
+    shows how helper functions can be used to obtain composite result data.
 
 """
 

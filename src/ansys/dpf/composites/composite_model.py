@@ -122,7 +122,7 @@ class CompositeModel:
     ----------
     composite_files:
         Use the :func:`.get_composite_files_from_workbench_result_folder` function to obtain
-        the :class:`ContinuousFiberCompositesFiles` object.
+        the :class:`.ContinuousFiberCompositesFiles` object.
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
@@ -212,9 +212,9 @@ class CompositeModel:
         """Get a fields container with the evaluted failure criteria.
 
         The fields container contains the maximum per element if the measure
-        is :attr:`FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is :attr:`FailureMeasure.MARGIN_OF_SAFETY` or
-        :attr:`FailureMeasure.RESERVE_FACTOR`.
+        is :attr:`.FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is :attr:`.FailureMeasure.MARGIN_OF_SAFETY` or
+        :attr:`.FailureMeasure.RESERVE_FACTOR`.
 
         Parameters
         ----------
