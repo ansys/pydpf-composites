@@ -182,7 +182,7 @@ def test_access_to_invalid_analysis_ply(dpf_server):
         analysis_ply_info_provider = AnalysisPlyInfoProvider(
             mesh=setup_result.mesh, name="notexisting"
         )
-    assert str(exc_info.value).startswith("Analysis Ply not available")
+    assert str(exc_info.value).startswith("Analysis ply not available")
 
     # try to get element that is not part of analysis ply
     analysis_ply_info_provider = AnalysisPlyInfoProvider(

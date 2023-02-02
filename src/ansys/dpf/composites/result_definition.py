@@ -180,7 +180,7 @@ class ResultDefinition:
             values = ", ".join([v for v in _SUPPORTED_STRESS_STRAIN_EVAL_MODES])
             raise ValueError(
                 f"Stress strain evaluation mode '{value}' is not allowed. "
-                "Supported values are {values}."
+                f"Supported values are {values}."
             )
 
     @property
