@@ -25,7 +25,7 @@ Here are some examples:
   ``keyoption 8 = 2``. Write the output for ``'bot'``, ``'top'``, and ``'mid'``.
 
   * ``number_of_layers`` = 5
-  * ``number_of_spots`` = 3 (bottom, top, and mid)
+  * ``number_of_spots`` = 3 (bottom, top, and middle)
   * ``number_of_nodes_per_spot_plane`` = 4 (equal to number of nodes)
   * ``number_of_components`` = 6
 
