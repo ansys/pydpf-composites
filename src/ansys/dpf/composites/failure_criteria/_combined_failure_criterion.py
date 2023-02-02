@@ -9,7 +9,8 @@ from ._failure_criterion_base import FailureCriterionBase
 class CombinedFailureCriterion:
     """Defines the combined failure criterion.
 
-    This class can be used in combination with the Failure evaluator operator in DPF Composites.
+    This class can be used in combination with the failure evaluator operator in
+    DPF Composites.
 
     Examples
     --------
