@@ -87,7 +87,7 @@ class CombinedFailureCriterion:
         Returns
         -------
         :
-            Removed failure criterion or None.
+            Removed failure criterion or ``None``.
 
         Examples
         --------

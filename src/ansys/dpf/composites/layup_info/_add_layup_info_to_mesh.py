@@ -15,7 +15,7 @@ def add_layup_info_to_mesh(
 ) -> Operator:
     """Add lay-up information to the mesh.
 
-    Creates a Lay-up Provider operator that is run and returned.
+    Creates a lay-up provider operator that is run and returned.
 
     Parameters
     ----------
