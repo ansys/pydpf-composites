@@ -5,7 +5,7 @@ Failure analysis for short fiber composites
 -------------------------------------------
 
 Ansys 2021 R2 introduced a beta feature for short fiber workflows.
-This example shows you can use this beta feature to evaluate failures
+This example shows how you can use this beta feature to evaluate failures
 of a short fiber reinforced part. It configures the DPF operator
 ``short_fiber_failure_criterion_evaluator`` to compute Tsai-Hill type
 orientation tensor-dependent failure criteria and then generates plots.

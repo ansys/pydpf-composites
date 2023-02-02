@@ -10,7 +10,7 @@ from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plu
 
 
 def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int = 10) -> Any:
-    """Try to run a method until a timeout is reached.
+    """Try to run a function until a timeout is reached.
 
     Before the timeout is reached, all exceptions are ignored and a retry happens.
     """
@@ -28,7 +28,7 @@ def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int 
 
 def _wait_until_server_is_up(server: _dpf_server) -> Any:
     # Small hack to check if the server is up.
-    # The DPF server should check this in the ``connect_to_server`` method, but
+    # The DPF server should check this in the ``connect_to_server`` function, but
     # that's currently not the case.
     # https://github.com/pyansys/pydpf-core/issues/414
     # We use the fact that server.version throws an error if the server
@@ -45,17 +45,17 @@ def connect_to_or_start_server(
 
     .. note::
 
-       If a port or IP address is set, this method tries to connect to the server specified
-       and the ``ansys_path`` parameter is ignored. If no parameters are set, a local server
-       from the latest available Ansys installation is started.
+        If a port or IP address is set, this method tries to connect to the server specified
+        and the ``ansys_path`` parameter is ignored. If no parameters are set, a local server
+        from the latest available Ansys installation is started.
 
     Parameters
     ----------
-    port:
+    port :
         Port that the DPF server is listening on.
-    ip:
+    ip :
         IP address for the DPF server.
-    ansys_path:
+    ansys_path :
         Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v231``.
         This parameter is ignored if either the port or IP address are set.
 

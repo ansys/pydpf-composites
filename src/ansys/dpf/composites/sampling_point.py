@@ -57,7 +57,7 @@ class SamplingPoint:
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
     This class provides for plotting the lay-up and results at a certain point of the
-    layerd structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
+    layered structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
     ``failure_modes``, are always from the bottom to the top of the laminate (along
     the element normal direction). Postprocessing results such as ``e1`` are returned
     as flat arrays where ``self.spots_per_ply`` can be used to compute the index for
@@ -407,7 +407,7 @@ class SamplingPoint:
 
         Parameters
         ----------
-        spots
+        spots :
             Collection of spots. Only the indices of the bottom interfaces of plies
             are returned if ``[Spot.BOTTOM]`` is set.
 
@@ -440,10 +440,10 @@ class SamplingPoint:
 
         Parameters
         ----------
-        spots:
+        spots :
             Collection of spots.
 
-        core_scale_factor:
+        core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
         offsets = self.offsets
@@ -539,9 +539,9 @@ class SamplingPoint:
 
         Parameters
         ----------
-        axes
-            Matplotlib single-axis object.
-        core_scale_factor
+        axes :
+            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+        core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
         offsets = self.get_offsets_by_spots(
@@ -585,13 +585,13 @@ class SamplingPoint:
         title: str = "",
         xlabel: str = "",
     ) -> None:
-        """Add results (strain, stress, or failure values) to a single-axis object (plot).
+        """Add results (strain, stress, or failure values) to an ``Axes`` object.
 
         Parameters
         ----------
-        axes:
-            Matplotlib single-axis object.
-        components:
+        axes :
+            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+        components :
             List of result components. Valid components for
             strain are ``"e1"``, ``"e2"``, ``"e3"``, ``"e12"``, ``"e13"``,
             and ``"e23"`` Valid components for stress are ``"s1",`` ``"s2"``,

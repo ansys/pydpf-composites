@@ -11,7 +11,7 @@ stresses can be of importance in thick and curved laminates.
 Because interlaminar normal stresses are typically not available
 for layered shell elements, the ``INS`` operator is used to recompute
 the ``s3`` result based on the laminate strains, the geometrical
-curvature, and the layup.
+curvature, and the lay-up.
 
 .. note::
    For simple use cases, using the composite failure operator or

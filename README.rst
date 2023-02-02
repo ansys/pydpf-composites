@@ -91,10 +91,12 @@ Test
 ====
 
 .. note::
-   The Docker container referenced in the first step is not yet publicly available.
+   The Docker container referenced in the first option is not yet publicly available.
 
+There are three ways to run the PyDPF Composites tests, depending on how the DPF
+server is started.
 
-#.  Run tests with a Docker container. Note: The Docker container is not yet publicly available.
+#.  Run tests with a Docker container.
 
     .. code:: bash
 
@@ -129,7 +131,7 @@ Build documentation
    The Docker container referenced in this section is not yet publicly available.
 
 
-On Windows, build docuentation with this code:
+On Windows, build documentation with this code:
 
 .. code:: bash
 
@@ -157,12 +159,12 @@ The style checks use `pre-commit`_ and can be run through `tox`_:
     tox -e style
 
 
-The style checks can also be configured to run automatically before each ``git commit`: 
+The style checks can also be configured to run automatically before each ``git commit`:
 
 .. code:: bash
 
     pre-commit install
-    
+
 
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black

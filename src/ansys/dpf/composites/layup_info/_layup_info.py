@@ -1,4 +1,4 @@
-"""Layup information provider."""
+"""Lay-up information provider."""
 
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Collection, Dict, List, Optional, Sequence, Union, cast
@@ -50,7 +50,7 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
 
 @dataclass(frozen=True)
 class ElementInfo:
-    """Provides layup information for an element.
+    """Provides lay-up information for an element.
 
     Use the :class:`~ElementInfoProvider` class to obtain the
     :class:`~ElementInfo` class for an element.
@@ -151,7 +151,7 @@ class AnalysisPlyInfoProvider:
     Parameters
     ----------
     mesh
-        DPF MeshedRegion with layup information.
+        DPF MeshedRegion with lay-up information.
     name
         Analysis Ply Name
     """
@@ -187,7 +187,7 @@ def get_dpf_material_id_by_analyis_ply_map(
     Parameters
     ----------
     mesh
-        DPF Meshed region enriched with layup information
+        DPF Meshed region enriched with lay-up information
     data_source_or_streams_provider:
         DPF data source with rst file or streams_provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
@@ -237,7 +237,7 @@ def get_analysis_ply_index_to_name_map(
     Parameters
     ----------
     mesh
-        DPF Meshed region enriched with layup information
+        DPF Meshed region enriched with lay-up information
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
@@ -430,7 +430,7 @@ def get_element_info_provider(
             message = f"Missing property field in mesh: '{property_field_name}'."
             if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
                 message += (
-                    " Maybe you have to run the layup provider operator first. "
+                    " Maybe you have to run the lay-up provider operator first. "
                     "Please call add_layup_info_to_mesh "
                 )
             raise RuntimeError(message)
@@ -448,7 +448,7 @@ def get_element_info_provider(
 
 
 class LayupPropertiesProvider:
-    """Provider for layup properties.
+    """Provider for lay-up properties.
 
     Some properties such as layered dpf_material_ids and
     information about the element type are available
@@ -457,7 +457,7 @@ class LayupPropertiesProvider:
     Parameters
     ----------
     layup_provider:
-        Use :func:`~add_layup_info_to_mesh` to obtain a layup provider.
+        Use :func:`~add_layup_info_to_mesh` to obtain a lay-up provider.
     mesh
     """
 

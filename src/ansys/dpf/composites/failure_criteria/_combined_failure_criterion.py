@@ -104,7 +104,7 @@ class CombinedFailureCriterion:
 
         Returns
         -------
-        dict
+        :
             JSON dictionary that can be used for the result definition
             of the DPF Composites Failure evaluator operator.
         """
@@ -124,7 +124,7 @@ class CombinedFailureCriterion:
 
         Returns
         -------
-        dict
+        :
            String representation (``json.dumps`` file) that can be used for the result definition
            of the DPF Composites Failure evaluator operator.
         """

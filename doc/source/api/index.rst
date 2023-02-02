@@ -3,7 +3,7 @@ API reference
 
 This section describes the public classes, methods, and attributes of the PyDPF Composites API.
 
-For in-depth documentation on the different failure criteria, refer to the DPF help.
+For in-depth documentation on the different failure criteria, refer to the ACP help.
 
 .. module:: ansys.dpf.composites
 

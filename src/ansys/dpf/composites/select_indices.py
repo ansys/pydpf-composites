@@ -36,7 +36,7 @@ def get_selected_indices(
     Parameters
     ----------
     element_info
-        Layup information for the element.
+        Lay-up information for the element.
     layers
         List of selected layers.
     nodes
@@ -135,7 +135,7 @@ def get_selected_indices_by_dpf_material_ids(
     Parameters
     ----------
     element_info: ElementInfo
-        Layup information for the element.
+        Lay-up information for the element.
     dpf_material_ids
         Collection of DPF materials.
 
@@ -165,7 +165,7 @@ def get_selected_indices_by_analysis_ply(
     analysis_ply_info_provider: AnalysisPlyInfoProvider
         Provider for the analysis ply information.
     element_info: ElementInfo
-        Layup information for the element.
+        Lay-up information for the element.
 
     Returns
     -------

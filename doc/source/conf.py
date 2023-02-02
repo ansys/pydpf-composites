@@ -88,7 +88,6 @@ nitpick_ignore_regex = [
 typehints_defaults = "comma"
 simplify_optional_unions = False
 
-
 # numpydoc configuration
 numpydoc_show_class_members = False
 numpydoc_xref_param_type = True

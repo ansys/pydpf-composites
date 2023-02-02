@@ -4,7 +4,7 @@
 Sampling point
 --------------
 
-This example extract ply-wise laminate properties and results.
+This example extracts ply-wise laminate properties and results.
 
 The :class:`Sampling Point <.SamplingPoint>` class is used to extract
 through-the-thickness data of the laminate, such as ply-wise properties
@@ -126,7 +126,7 @@ ax1.legend()
 ax1.set_title("e12 and e2")
 
 # %%
-# This code plot the layup only.
+# This code plots the lay-up only.
 fig2, layup_axes = plt.subplots()
 sampling_point.add_ply_sequence_to_plot(layup_axes)
 

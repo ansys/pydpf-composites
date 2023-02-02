@@ -136,7 +136,7 @@ def get_all_dpf_material_ids(
     Parameters
     ----------
     mesh:
-        DPF meshed region enriched with layup information.
+        DPF meshed region enriched with lay-up information.
     data_source_or_streams_provider:
         DPF data source or streams provider that contains the RST file.
     """
@@ -171,7 +171,7 @@ def get_constant_property_dict(
     data_source_or_streams_provider:
         DPF data source or streams provider that contains the RST file.
     mesh:
-        DPF meshed region enriched with layup information.
+        DPF meshed region enriched with lay-up information.
     """
     properties: Dict[np.int64, Dict[MaterialProperty, float]] = {}
     for dpf_material_id in get_all_dpf_material_ids(

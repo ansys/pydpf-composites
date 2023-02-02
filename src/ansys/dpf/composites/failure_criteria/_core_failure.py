@@ -11,7 +11,7 @@ _DOC_WF = "Weighting factor of the failure mode (cs)."
 
 
 class CoreFailureCriterion(FailureCriterionBase):
-    """Defines core failure criterion."""
+    """Defines the core failure criterion."""
 
     __doc__ = f"""Defines the core shear failure criterion for
     core materials like foam and honeycomb.

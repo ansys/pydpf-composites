@@ -54,7 +54,7 @@ class ShortFiberCompositesFiles:
 
 @dataclass(frozen=True)
 class CompositeDataSources:
-    """Provides data sources related to the composite layup."""
+    """Provides data sources related to the composite lay-up."""
 
     rst: DataSources
     composite: Dict[str, DataSources]
@@ -159,23 +159,23 @@ def get_composite_files_from_workbench_result_folder(
 ) -> ContinuousFiberCompositesFiles:
     r"""Get a ``ContinuousFiberCompositesFiles`` object from a result folder.
 
-    This method assumes a typical Workbench folder structure for a composite
+    This function assumes a typical Workbench folder structure for a composite
     simulation. If this method is not able to build the ``ContinuousFiberCompositesFiles``
     object, you can follow these steps:
 
     In the main Workbench window, activate the files panel by selecting
-    **View > Files**. "Files" This shows the location of all files used
-    in the workbench project. You can determine the different attributes
-    of the ''ContinuousFiberCompositesFiles`` object:
+    **View > Files**. This shows the location of all files used in the
+    workbench project. You can determine the different attributes of the
+    ``ContinuousFiberCompositesFiles`` object:
 
-    -   rst: The ``file.rst`` file that belongs to the cell ID of the solution
+    -   ``rst``: The ``file.rst`` file that belongs to the cell ID of the solution
         that you want to postprocess. Multiple result files are not supported yet.
         Ensure that **Combine Distributed Result Files** is selected if the solution
         was solved in 'Distributed' mode.
 
-    -   engineering_data: The ``MatML.xml`` file in the same folder as the RST file.
+    -   ``engineering_data``: The ``MatML.xml`` file in the same folder as the RST file.
 
-    -   composite: There can be multiple composite definitions,
+    -   ``composite``: There can be multiple composite definitions,
         one definition for each ACP system if shell data is transferred
         and one definition for each solid model if solid data is transferred.
         All the ``ACPCompositeDefinitions.h5`` and ``ACPSolidModel*.h5``
@@ -187,7 +187,7 @@ def get_composite_files_from_workbench_result_folder(
         If they exist, they must be added as well.
 
     The following example shows how a
-    ``ContinuousFiberCompositesFiles object`` can be built.
+    :class:`.ContinuousFiberCompositesFiles` object can be built.
     The project in this example has two **ACP Pre** systems, one that exports
     shell information and one that exports solid information.
 
@@ -230,11 +230,11 @@ def get_composite_files_from_workbench_result_folder(
 
     Parameters
     ----------
-    result_folder:
+    result_folder :
        Result folder of the solution. Right-click the **olution**item in the Ansys Mechanical tree
        and select **Open Solver Files Directory** to obtain the result folder.
-    ensure_composite_definitions_found:
-        Whether to check if at leasone one composite definition (shell or solid) has been found.
+    ensure_composite_definitions_found :
+        Whether to check if at least one composite definition (shell or solid) has been found.
     """
     result_folder_path = pathlib.Path(result_folder)
 

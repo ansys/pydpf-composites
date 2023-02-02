@@ -3,8 +3,8 @@
 Select elementary indices
 -------------------------
 
-This module provides methods to filter elementary data.
-A layered element has elementary data points.
+This module provides functions to filter elementary data.
+A layered element has the following number of elementary data points:
 
 .. code::
 
@@ -24,10 +24,10 @@ Here are some examples:
 * Get the stress output for a layered shell element (181, four nodes) with five layers and
   ``keyoption 8 = 2``. Write the output for ``'bot'``, ``'top'``, and ``'mid'``.
 
-     * ``number_of_layers`` = 5
-     * ``number_of_spots`` = 3 (bottom, top, and mid)
-     * ``number_of_nodes_per_spot_plane`` = 4 (equal to number of nodes)
-     * ``number_of_components`` = 6
+    * ``number_of_layers`` = 5
+    * ``number_of_spots`` = 3 (bottom, top, and mid)
+    * ``number_of_nodes_per_spot_plane`` = 4 (equal to number of nodes)
+    * ``number_of_components`` = 6
 
   Thus, ``num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane``
   = 60.
@@ -43,7 +43,7 @@ Here are some examples:
     Thus, ``num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane``
     = 56.
 
-The methods in this module compute an array of elementary indices for a given selection of
+The functions in this module compute an array of elementary indices for a given selection of
 layers, nodes, spots, DPF material IDs, or analysis plies. These elementary indices can be used
 to index the first axis of the elementary data array. For usage information, see
 :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`.

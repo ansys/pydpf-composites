@@ -1,4 +1,4 @@
-"""Helper functions to add layup information to a DPF meshed region."""
+"""Helper functions to add lay-up information to a DPF meshed region."""
 from typing import Optional
 
 from ansys.dpf.core import MeshedRegion, Operator
@@ -13,9 +13,9 @@ def add_layup_info_to_mesh(
     mesh: MeshedRegion,
     composite_definition_label: Optional[str] = None,
 ) -> Operator:
-    """Add layup information to the mesh.
+    """Add lay-up information to the mesh.
 
-    Creates a Layup Provider operator that is run and returned.
+    Creates a Lay-up Provider operator that is run and returned.
 
     Parameters
     ----------
@@ -34,7 +34,7 @@ def add_layup_info_to_mesh(
     Returns
     -------
     :
-        Layup provider operator.
+        Lay-up provider operator.
     """
     if composite_definition_label is None:
         composite_definition_labels = list(data_sources.composite.keys())
@@ -46,9 +46,9 @@ def add_layup_info_to_mesh(
                 f"Please specify a key explicitly."
             )
 
-    # Set up the layup provider.
+    # Set up the lay-up provider.
     # Reads the composite definition file and enriches the mesh
-    # with the composite layup information.
+    # with the composite lay-up information.
     layup_provider = Operator("composite::layup_provider_operator")
     layup_provider.inputs.mesh(mesh)
     layup_provider.inputs.data_sources(data_sources.composite[composite_definition_label])

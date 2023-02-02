@@ -8,12 +8,13 @@ and run the composite failure evaluator. It connects the different DPF
 operators that are needed to evaluate composite failure criteria.
 
 .. note::
-   For simple use cases, using the composite failure operator or
-   composite sampling point operator is preferable. For examples,
-   see :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
-   and :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`.
-   Additionally, :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
-   shows how helper functions can be used to obtain composite result data.
+
+    For simple use cases, using the composite failure operator or
+    composite sampling point operator is preferable. For examples,
+    see :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
+    and :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`.
+    Additionally, :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
+    shows how helper functions can be used to obtain composite result data.
 
 """
 
@@ -68,7 +69,7 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 # %%
 # Initialize DPF model and data sources
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Initialize the PDF model and the data sources.
+# Initialize the DPF model and the data sources.
 model = dpf.Model(composite_files_on_server.rst)
 rst_data_source = dpf.DataSources(composite_files_on_server.rst)
 
@@ -114,8 +115,8 @@ material_provider.inputs.abstract_field_support(
 )
 material_provider.inputs.Engineering_data_file(eng_data_source)
 # %%
-# Set up the layup provider, which reads the composite definition file
-# and enriches the mesh with the composite layup information.
+# Set up the lay-up provider, which reads the composite definition file
+# and enriches the mesh with the composite lay-up information.
 layup_provider = dpf.Operator("composite::layup_provider_operator")
 layup_provider.inputs.mesh(mesh_provider.outputs.mesh)
 layup_provider.inputs.data_sources(composite_definitions_source)

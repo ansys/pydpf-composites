@@ -1,11 +1,11 @@
 """
 .. _layup_properties_plot:
 
-Layered properties
-------------------
+Lay-up properties
+-----------------
 
-Element layered properties are typically used for layer-wise postprocessing and
-data filtering. This example shows how to extract elemental layered properties
+Element lay-up properties are typically used for layer-wise postprocessing and
+data filtering. This example shows how to extract elemental lay-up properties
 such as thickness and material. It accesses basic layer properties (layer
 thicknesses, angles, and analysis ply names) and queries them efficiently.
 
@@ -38,9 +38,9 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 composite_model = CompositeModel(composite_files_on_server, server)
 
 #%%
-# Get layup properties
-# ~~~~~~~~~~~~~~~~~~~~
-# Get layup properties for all elements and show the first one as an example.
+# Get lay-up properties
+# ~~~~~~~~~~~~~~~~~~~~~
+# Get lay-up properties for all elements and show the first one as an example.
 element_id = 1
 thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
 angles = composite_model.get_property_for_all_layers(LayerProperty.ANGLES, element_id)
@@ -50,8 +50,8 @@ analysis_plies = composite_model.get_analysis_plies(element_id)
 
 
 #%%
-# Plot layup properties
-# ~~~~~~~~~~~~~~~~~~~~~
+# Plot lay-up properties
+# ~~~~~~~~~~~~~~~~~~~~~~
 # Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 y_coordinates = offset + np.cumsum(thicknesses)
 y_centers = y_coordinates - thicknesses / 2

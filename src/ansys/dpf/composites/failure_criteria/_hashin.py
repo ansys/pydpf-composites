@@ -22,19 +22,19 @@ class HashinCriterion(FailureCriterionBase):
 
     Parameters
     ----------
-    hf:
+    hf :
         {_DOC_HF}
-    hm:
+    hm :
         {_DOC_HM}
-    hd:
+    hd :
         {_DOC_HD}
-    dim:
+    dim :
         {_DOC_DIM}
-    wf_hf:
+    wf_hf :
         {_DOC_WF_HF}
-    wf_hm:a dict
+    wf_hm :
         {_DOC_WF_HM}
-    wf_hd:
+    wf_hd :
         {_DOC_WF_HD}
 
     """

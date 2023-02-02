@@ -39,19 +39,19 @@ class CompositeScope:
 
     Parameters
     ----------
-        elements:
-            List of elements.
-        plies:
-            List of plies.
-        time:
-            Time or frequency. You can use the
-            :func:`CompositeModel.get_result_times_or_frequencies` method
-            to list the solution steps.
+    elements:
+        List of elements.
+    plies:
+        List of plies.
+    time:
+        Time or frequency. You can use the
+        :func:`CompositeModel.get_result_times_or_frequencies` method
+        to list the solution steps.
 
     Notes
     -----
-       If both the ``elements`` and ``plies`` parameters are set, the final element
-       scope is the intersection of the two.
+    If both the ``elements`` and ``plies`` parameters are set, the final element
+    scope is the intersection of the two.
 
     """
 
@@ -94,35 +94,35 @@ class CompositeInfo:
 class CompositeModel:
     """Provides access to the basic composite postprocessing functionality.
 
-    On initialization, the ``CompositeModel`` class automatically adds composite layup
-    information to the meshed regions. It prepares the providers for different layup properties
+    On initialization, the ``CompositeModel`` class automatically adds composite lay-up
+    information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated.
 
     .. note::
 
-       When creating a ``CompositeModel`` instance, several providers are created and
-       layup information is added to the DPF meshed regions. Depending on the use
-       case, it can be more efficient to create the providers separately.
+        When creating a ``CompositeModel`` instance, several providers are created and
+        lay-up information is added to the DPF meshed regions. Depending on the use
+        case, it can be more efficient to create the providers separately.
 
-       For assemblies with multiple composite definition files, separate meshes and
-       layup operators are generated (wrapped by the ``CompositeInfo`` class). This
-       is needed because the layup provider can currently only add the data of a single
-       composite definitions file to a mesh. All functions that depend on composite
-       definitions mut be called with the correct ``composite_definition_label``
-       parameter. The layered elements that get information from a given
-       composite definition label can be determined by calling
-       ``self.get_all_layered_element_ids_for_composite_definition_label``.
-       All the elements that are not part of a composite definition are either homogeneous
-       solids or layered models defined outside of an ACP model. The
-       ``self.composite_definition_labels`` command returns all available composite
-       definition labels. For more information, see
-       :ref:`sphx_glr_examples_gallery_examples_8_assembly_example.py`.
+        For assemblies with multiple composite definition files, separate meshes and
+        lay-up operators are generated (wrapped by the ``CompositeInfo`` class). This
+        is needed because the lay-up provider can currently only add the data of a single
+        composite definitions file to a mesh. All functions that depend on composite
+        definitions mut be called with the correct ``composite_definition_label``
+        parameter. The layered elements that get information from a given
+        composite definition label can be determined by calling
+        ``self.get_all_layered_element_ids_for_composite_definition_label``.
+        All the elements that are not part of a composite definition are either homogeneous
+        solids or layered models defined outside of an ACP model. The
+        ``self.composite_definition_labels`` command returns all available composite
+        definition labels. For more information, see
+        :ref:`sphx_glr_examples_gallery_examples_8_assembly_example.py`.
 
     Parameters
     ----------
     composite_files:
-        Use the :func:`.get_composite_files_from_workbench_result_folder` method to obtain
-        the ``ContinuousFiberCompositesFiles`` object.
+        Use the :func:`.get_composite_files_from_workbench_result_folder` function to obtain
+        the :class:`ContinuousFiberCompositesFiles` object.
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
@@ -157,11 +157,11 @@ class CompositeModel:
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
-        The meshed region contains the layup information.
+        The meshed region contains the lay-up information.
 
         Parameters
         ----------
-        composite_definition_label: str, default: None
+        composite_definition_label :
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
             attribute. This parameter is only required for assemblies.
@@ -187,11 +187,11 @@ class CompositeModel:
         return self._material_operators
 
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
-        """Get the layup operators.
+        """Get the lay-up operators.
 
         Parameters
         ----------
-        composite_definition_label: str, default: None
+        composite_definition_label :
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
             attribute. This parameter is only required for assemblies.
@@ -212,30 +212,31 @@ class CompositeModel:
         """Get a fields container with the evaluted failure criteria.
 
         The fields container contains the maximum per element if the measure
-        is ``FailureMeasure.INVERSE_RESERVE_FACTOR`` and the minimum per element
-        if the measure is ``FailureMeasure.MARGIN_OF_SAFETY`` or
-        ``FailureMeasure.RESERVE_FACTOR``.
+        is :attr:`FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is :attr:`FailureMeasure.MARGIN_OF_SAFETY` or
+        :attr:`FailureMeasure.RESERVE_FACTOR`.
 
         Parameters
         ----------
-        combined_criterion:
+        combined_criterion :
             Combined failure criterion to evaluate.
-        composite_scope:
+        composite_scope :
             Composite scope on which to evaluate the failure criteria. If empty, the criteria
             is evaluated on the full model. If the time is not set, the last time or
             frequency in the result file is used.
-        measure:
+        measure :
             Failure measure to evaluate.
-        write_data_for_full_element_scope:
+        write_data_for_full_element_scope :
             Whether each element in the element scope is to get a
             (potentially zero) failure value, even elements that are not
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
 
-            .. Note::
-               For some special element types such as beams,
-               ``write_data_for_full_element_scope=True`` is not supported.
+            .. note::
+
+                For some special element types such as beams,
+                ``write_data_for_full_element_scope=True`` is not supported.
 
         """
         if composite_scope is None:
@@ -383,7 +384,7 @@ class CompositeModel:
         Parameters
         ----------
         layup_property:
-            Layup property.
+            Lay-up property.
         element_id:
             Element ID or label.
         composite_definition_label:

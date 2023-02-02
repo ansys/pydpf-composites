@@ -26,19 +26,19 @@ The :doc:`examples/index` section provides these basic examples for getting star
 * :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
 
 At the end of each example, there is a button for downloading the example's Python source code.
-Clicking this button downloads input files, such as the results file and composite definition,
-from a Git repository.
+Input files, such as the results file and composite definition, are downloaded from a Git
+repository when running the example.
 
 For larger models, initializing the :class:`.CompositeModel` class can be slow because it
 automatically creates many different providers that are not needed in all workflows.
-Consider using the :ref:`Layup information <layup_information_classes>` classes directly.
+Consider using the :ref:`Lay-up information <layup_information_classes>` classes directly.
 
 Start from a local Ansys Workbench project
 """"""""""""""""""""""""""""""""""""""""""
 
 To get started on a local Ansys Workbench project, first determine the result folder by
 right-clicking the solution object in Ansys Mechanical and selecting **Open Solver Files Directory**.
-Then call the :func:`.get_composite_files_from_workbench_result_folder` method with this folder.
+Then call the :func:`.get_composite_files_from_workbench_result_folder` function with this folder.
 
 This code shows how to set up a project from Workbench, create a basic failure plot, and display
 detailed output for a sampling point:
