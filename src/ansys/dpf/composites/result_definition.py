@@ -33,8 +33,9 @@ class ResultDefinitionScope:
     element_scope: Sequence[int] = field(default_factory=lambda: [])
     ply_scope: Sequence[str] = field(default_factory=lambda: [])
     """Assembly files that define the mapping of the labels.
+
     This attribute is needed if multiple parts are assembled in Workbench or
-     Mechanical to map the local element and node labels to the global labels.
+    Mechanical to map the local element and node labels to the global labels.
     """
     mapping_file: Optional[_PATH] = None
     """Path to the mapping file for all element labels in the element scope.
@@ -42,9 +43,11 @@ class ResultDefinitionScope:
 
     write_data_for_full_element_scope: bool = True
     """Whether to write the data for all element labels in the element scope.
+
     This makes sense if an element scope is explicitly requested
     but the actual scope where postprocessing has happened is smaller,
-    perhaps due to ply scoping."""
+    perhaps due to ply scoping.
+    """
 
 
 class ResultDefinition:

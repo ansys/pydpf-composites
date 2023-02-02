@@ -24,24 +24,24 @@ Here are some examples:
 * Get the stress output for a layered shell element (181, four nodes) with five layers and
   ``keyoption 8 = 2``. Write the output for ``'bot'``, ``'top'``, and ``'mid'``.
 
-    * ``number_of_layers`` = 5
-    * ``number_of_spots`` = 3 (bottom, top, and mid)
-    * ``number_of_nodes_per_spot_plane`` = 4 (equal to number of nodes)
-    * ``number_of_components`` = 6
+  * ``number_of_layers`` = 5
+  * ``number_of_spots`` = 3 (bottom, top, and mid)
+  * ``number_of_nodes_per_spot_plane`` = 4 (equal to number of nodes)
+  * ``number_of_components`` = 6
 
   Thus, ``num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane``
   = 60.
 
 * Get the stress output for a layered solid element (185, eight nodes) with seven layers and
-``keyoption 8 = 1``. Write the output for ``'bot'`` and ``'top'``.
+  ``keyoption 8 = 1``. Write the output for ``'bot'`` and ``'top'``.
 
-    * ``number_of_layers`` = 7
-    * ``number_of_spots`` = 2 (bottom and top)
-    * ``number_of_nodes_per_spot_plane`` = 4
-    * ``number_of_components`` = 6
+  * ``number_of_layers`` = 7
+  * ``number_of_spots`` = 2 (bottom and top)
+  * ``number_of_nodes_per_spot_plane`` = 4
+  * ``number_of_components`` = 6
 
-    Thus, ``num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane``
-    = 56.
+  Thus, ``num_elementary_data = number_of_layers * number_of_spots * number_of_nodes_per_spot_plane``
+  = 56.
 
 The functions in this module compute an array of elementary indices for a given selection of
 layers, nodes, spots, DPF material IDs, or analysis plies. These elementary indices can be used
