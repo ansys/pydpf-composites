@@ -12,7 +12,7 @@ _DOC_PMC = (
 _DOC_PD = "Whether to activate the failure evaluation regarding delamination if dim is equal to 3."
 _DOC_DIM = (
     "Whether the 2D or 3D formulation of the criterion is used. The latter one also "
-    "supports the failure mode delamination. Use 1 for a simplified Puck criterion."
+    "supports the failure mode delamination. Use ``1`` for a simplified Puck criterion."
 )
 _DOC_WF_PF = "Weighting factor of the fiber failure (pf) mode."
 _DOC_WF_PMA = "Weighting factor of the matrix failure (pma) mode."
