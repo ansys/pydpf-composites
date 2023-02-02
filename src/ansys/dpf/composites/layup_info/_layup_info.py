@@ -42,7 +42,7 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
     if not skip_check and property_field_name not in mesh.available_property_fields:
         available_analysis_plies = get_all_analysis_ply_names(mesh)
         raise RuntimeError(
-            f"Analysis ply not available: {name}. "
+            f"Analysis ply is not available: {name}. "
             f"Available analysis plies: {available_analysis_plies}"
         )
     return mesh.property_field(property_field_name)
