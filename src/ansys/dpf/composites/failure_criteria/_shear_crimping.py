@@ -34,7 +34,7 @@ class ShearCrimpingCriterion(FailureCriterionBase):
         """Create a shear crimping failure criterion for sandwich structures.
 
         A laminate is classified as sandwich if it has at least one core material.
-        An example is a honeycomb.
+        A honeycomb is an example.
         """
         super().__init__(name="Shear Crimping", active=True)
 
