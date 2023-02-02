@@ -596,15 +596,15 @@ class SamplingPoint:
             strain are ``"e1"``, ``"e2"``, ``"e3"``, ``"e12"``, ``"e13"``,
             and ``"e23"`` Valid components for stress are ``"s1",`` ``"s2"``,
             ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. Valid components
-              for failure are ``"inverse_reserve_factor"``, ``"reserve_factor"``,
-              and ``"margin_of_safety"``.
-        spots:
+            for failure are ``"inverse_reserve_factor"``, ``"reserve_factor"``,
+            and ``"margin_of_safety"``.
+        spots :
             Collection of spots (interfaces).
-        core_scale_factor:
+        core_scale_factor :
             Factor for scaling the thickness of core plies.
-        title:
+        title :
             Title of the plot. This parameter is ignored if empty.
-        xlabel:
+        xlabel :
             Becomes the label of the x-axis. This parameter is ignored if empty.
 
         Examples
