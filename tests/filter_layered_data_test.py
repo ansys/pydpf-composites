@@ -176,7 +176,7 @@ def test_access_to_invalid_analysis_ply(dpf_server):
     element_info_provider = get_element_info_provider(
         setup_result.mesh, setup_result.streams_provider
     )
-    # try to get non existing anlysis ply
+    # try to get non existing analysis ply
     with pytest.raises(RuntimeError) as exc_info:
 
         analysis_ply_info_provider = AnalysisPlyInfoProvider(

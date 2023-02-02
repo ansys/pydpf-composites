@@ -13,7 +13,7 @@ or analysis ply ID. To learn more about how layered result data, see :ref:`selec
 # %%
 # Set up analysis
 # ~~~~~~~~~~~~~~~
-# Setting up the analysis consists of importing depedencies, connecting to the
+# Setting up the analysis consists of importing dependencies, connecting to the
 # DPF server, and retrieving the example files.
 #
 # Import dependencies.

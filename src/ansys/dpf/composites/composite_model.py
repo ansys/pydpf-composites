@@ -209,7 +209,7 @@ class CompositeModel:
         measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
-        """Get a fields container with the evaluted failure criteria.
+        """Get a fields container with the evaluated failure criteria.
 
         The fields container contains the maximum per element if the measure
         is :attr:`.FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element

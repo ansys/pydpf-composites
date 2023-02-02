@@ -83,7 +83,7 @@ sampling_point_plot.figure.set_figwidth(12)
 sampling_point_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
 # %%
-# Generate custom plots. You can customize exisitng plots or build
+# Generate custom plots. You can customize existing plots or build
 # them from scratch using a package like Matplot or Plotly. This code
 # uses Matplotlib to generate a custom plot of results ``s13`` and ``s23``.
 #

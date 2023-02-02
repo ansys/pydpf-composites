@@ -15,7 +15,7 @@ consider using the :class:`SamplingPoint <.SamplingPoint>` class.
 #%%
 # Set up analysis
 # ~~~~~~~~~~~~~~~
-# Setting up the analysis consists of importing depedencies, connecting to the
+# Setting up the analysis consists of importing dependencies, connecting to the
 # DPF server, and retrieving the example files.
 #
 # Import dependencies.

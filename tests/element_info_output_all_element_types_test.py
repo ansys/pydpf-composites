@@ -19,7 +19,7 @@ class ExpectedOutput:
     n_layers: int
     n_corner_nodes: int
     element_type: int
-    # n_spots can be 0 for homogenous solids or
+    # n_spots can be 0 for homogeneous solids or
     # if output is only requested on top/bottom of the element
     # otherwise it is 2 or 3 for top/bot or top/bot/mid output
     n_spots: int

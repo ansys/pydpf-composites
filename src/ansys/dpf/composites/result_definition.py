@@ -221,7 +221,7 @@ class ResultDefinition:
         if self.measure not in _SUPPORTED_MEASURES:
             values = ", ".join([v for v in _SUPPORTED_MEASURES])
             raise ValueError(
-                f"Measure `{self.measure}` is invalid. Supported meaures are {values}."
+                f"Measure `{self.measure}` is invalid. Supported measures are {values}."
             )
 
         result_definition = {
