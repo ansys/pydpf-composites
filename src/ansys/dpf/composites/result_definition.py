@@ -96,7 +96,7 @@ class ResultDefinition:
 
     @property
     def expression(self) -> str:
-        """Type of the result. The supported type is "composite_failure"."""
+        """Type of the result. The supported type is ``"composite_failure"``."""
         return self._expression
 
     @expression.setter
