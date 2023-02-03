@@ -9,9 +9,9 @@ _DOC_E3 = (
     "Activates the failure evaluation regarding the strain in the "
     "material 3 direction (out-of-plane)."
 )
-_DOC_E12 = "Activates the failure evaluation regarding the in-plane shear strain e12."
-_DOC_E13 = "Activates the failure evaluation regarding the interlaminar shear strain e13."
-_DOC_E23 = "Activates the failure evaluation regarding the interlaminar shear strain e23."
+_DOC_E12 = "Whether to activate the failure evaluation regarding the in-plane shear strain e12."
+_DOC_E13 = "Whether to activate the failure evaluation regarding the interlaminar shear strain e13."
+_DOC_E23 = "Whether to activate the failure evaluation regarding the interlaminar shear strain e23."
 _DOC_WF_E1 = "Weighting factor of the failure mode e1."
 _DOC_WF_E2 = "Weighting factor of the failure mode e2."
 _DOC_WF_E3 = "Weighting factor of the failure mode e3."
@@ -36,7 +36,7 @@ _DOC_ESYZ = "Global strain limit in material direction 23."
 class MaxStrainCriterion(FailureCriterionBase):
     """Max Strain Criterion."""
 
-    __doc__ = f"""Defines the Maximum Strain failure criterion for orthotropic reinforced materials.
+    __doc__ = f"""Defines the maximum strain failure criterion for orthotropic reinforced materials.
 
     Parameters
     ----------
@@ -110,7 +110,7 @@ class MaxStrainCriterion(FailureCriterionBase):
         eSxz: float = 0.0,
         eSyz: float = 0.0,
     ):
-        """Create a Maximum Strain failure criterion for orthotropic reinforced materials."""
+        """Create a maximum strain failure criterion for orthotropic reinforced materials."""
         super().__init__(name="Max Strain", active=True)
 
         for attr in ATTRS_MAX_STRAIN:

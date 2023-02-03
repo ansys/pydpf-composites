@@ -68,9 +68,9 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/dev", None),
     "ansys-dpf-core": ("https://dpf.docs.pyansys.com", None),
     "numpy": ("https://numpy.org/doc/stable", None),
+    "matplotlib": ("https://matplotlib.org/stable", None),
     # kept here as an example
     # "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
-    # "matplotlib": ("https://matplotlib.org/stable", None),
     # "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
     # "pyvista": ("https://docs.pyvista.org/", None),
     # "grpc": ("https://grpc.github.io/grpc/python/", None),
@@ -87,7 +87,6 @@ nitpick_ignore_regex = [
 # sphinx_autodoc_typehints configuration
 typehints_defaults = "comma"
 simplify_optional_unions = False
-
 
 # numpydoc configuration
 numpydoc_show_class_members = False
@@ -124,7 +123,7 @@ sphinx_gallery_conf = {
     "examples_dirs": ["../../examples"],
     # path where to save gallery generated examples
     "gallery_dirs": ["examples/gallery_examples"],
-    # Patter to search for example files
+    # Pattern to search for example files
     "filename_pattern": r"\.py",
     # Remove the "Download all examples" button from the top level gallery
     "download_all_examples": False,

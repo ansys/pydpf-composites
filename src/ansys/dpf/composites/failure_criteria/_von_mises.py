@@ -3,9 +3,9 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
-_DOC_VME = "Activates the von Mises strain criterion."
-_DOC_VMS = "Activates the von Mises stress criterion."
-_DOC_WF_VME = "Weighting factor of strain criterion (vme)."
+_DOC_VME = "Whether to activate the von Mises strain criterion."
+_DOC_VMS = "Whether to activate the von Mises stress criterion."
+_DOC_WF_VME = "Weighting factor of the strain criterion (vme)."
 _DOC_WF_VMS = "Weighting factor of the stress criterion (vms)."
 _DOC_EVAL_INS = (
     "Whether to consider interlaminar normal stresses (s3) and compute them for layered shells."
@@ -13,7 +13,7 @@ _DOC_EVAL_INS = (
 
 
 class VonMisesCriterion(FailureCriterionBase):
-    """Von Mises Criterion."""
+    """Von Mises criterion."""
 
     __doc__ = f"""Defines the von Mises criterion for isotropic materials.
 
@@ -40,7 +40,7 @@ class VonMisesCriterion(FailureCriterionBase):
         wf_vms: float = 1.0,
         eval_ins: bool = False,
     ):
-        """Create a von Mises Criterion."""
+        """Create a von Mises criterion."""
         super().__init__(name="Von Mises", active=True)
 
         for attr in ATTRS_VON_MISES:

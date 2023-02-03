@@ -1,4 +1,4 @@
-"""Helper function to get material related operators."""
+"""Helper function to get material-related operators."""
 
 from dataclasses import dataclass
 
@@ -9,22 +9,22 @@ __all__ = ("MaterialOperators", "get_material_operators")
 
 @dataclass(frozen=True)
 class MaterialOperators:
-    """Container for Material related operators.
+    """Provides the container for material-related operators.
 
     Parameters
     ----------
     material_support_provider:
-        The material support provider takes care of mapping the materials in the rst file to
+        The material support provider takes care of mapping the materials in the RST file to
         the materials in the composite definitions.
-        The material support contains all the materials from the rst file. Currently
-        the output of this operator cannot be inspected in python.
+        The material support contains all the materials from the RST file. Currently
+        the output of this operator cannot be inspected in Python.
     material_provider:
-        Outputs a material container that can be used to
-        evaluate material properties. This MaterialsContainer
-        can not be queried in python but it can be passed to other dpf operators,
-        which evaluate the properties.
+        Outputs the ``MaterialsContainer``, which can be used to
+        evaluate material properties. This container cannot be
+        queried in Python, but it can be passed to other DPF operators
+        that evaluate the properties.
     result_info_provider:
-        Provides the ResultInfo object
+        Provides the ``ResultInfo`` object.
     """
 
     material_provider: Operator
@@ -35,14 +35,14 @@ class MaterialOperators:
 def get_material_operators(
     rst_data_source: DataSources, engineering_data_source: DataSources
 ) -> MaterialOperators:
-    """Get Material Properties related operators.
+    """Get material properties related to operators.
 
     Parameters
     ----------
     rst_data_source
-        Data source that contains an rst file
+        Data source that contains a RST file.
     engineering_data_source
-        Data source that contains the EngineeringData file
+        Data source that contains the Engineering Data file.
     ----------
 
     """
@@ -50,15 +50,14 @@ def get_material_operators(
     material_support_provider.inputs.property("mat")
     material_support_provider.inputs.data_sources(rst_data_source)
 
-    # Get Result Info
+    # Get result info
     # This is needed provides the unit system from the rst file
     result_info_provider = Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)
 
     # Set up material provider
-    # Combines the material support the engineering data xml file and the unit_system.
-    # It's output can be used
-    # to evaluate material properties
+    # Combines the material support in the engineering data XML file and the unit system.
+    # Its output can be used to evaluate material properties.
     material_provider = Operator("eng_data::ans_mat_material_provider")
     material_provider.inputs.data_sources = engineering_data_source
     material_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)

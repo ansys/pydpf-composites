@@ -1,4 +1,4 @@
-"""Cuntze Failure Criterion."""
+"""Cuntze failure criterion."""
 
 import inspect
 import math
@@ -7,29 +7,30 @@ from ._failure_criterion_base import FailureCriterionBase
 
 _DOC_CFC = "Activates the failure evaluation regarding compression in fiber direction."
 _DOC_CFT = "Activates the failure evaluation regarding tension in fiber direction."
-_DOC_CMA = "Activates the failure evaluation of matrix due to tension."
-_DOC_CMB = "Activates the failure evaluation of matrix due to compression."
-_DOC_CMC = "Activates the failure evaluation of matrix due to compression / shear."
+_DOC_CMA = "Activates the failure evaluation of the matrix due to tension."
+_DOC_CMB = "Activates the failure evaluation of the matrix due to compression."
+_DOC_CMC = "Activates the failure evaluation of the matrix due to compression or shear."
 _DOC_DIM = "Whether the 2D or 3D formulation of the criterion is used."
 _DOC_WF_CFC = "Weighting factor of fiber failure due to compression (cfc)."
 _DOC_WF_CFT = "Weighting factor of fiber failure due to tension (cft)."
 _DOC_WF_CMA = "Weighting factor of matrix failure due to tension (cma)."
 _DOC_WF_CMB = "Weighting factor of matrix failure due to compression (cmb)."
-_DOC_WF_CMC = "Weighting factor of matrix failure due to compression / shear (cmc)."
-_DOC_B21 = "In-plane shear friction coefficient. Default is 0.2."
+_DOC_WF_CMC = "Weighting factor of matrix failure due to compression or shear (cmc)."
+_DOC_B21 = "In-plane shear friction coefficient. The default is ``0.2``."
 _DOC_B32 = (
-    "Out-of-plane shear friction coefficient. Default is 1.3805. Depends on the fracture "
-    "plane angle."
+    "Out-of-plane shear friction coefficient. The default is ``1.3805``. The value depends "
+    "on the fracture plane angle."
 )
-_DOC_MODE_INTERACTION_COEFF = "Mode interaction coefficient. Default is 2.6."
+_DOC_MODE_INTERACTION_COEFF = "Mode interaction coefficient. The default is ``2.6``."
 _DOC_FRACTURE_PLANE_ANGLE = (
-    "Fracture plane angle. Default is 53 degree."
-    " Must be > 45. Depends on the out-of-plane shear friction coefficient."
+    "Fracture plane angle in degrees. The default is ``53``. "
+    "The value must be greater than 45. The value depends on the out-of-plane "
+    "shear friction coefficient."
 )
 
 
 class CuntzeCriterion(FailureCriterionBase):
-    """Cuntze Criterion."""
+    """Provides the Cuntze criterion."""
 
     __doc__ = f"""Defines the Cuntze criterion for uni-directional orthotropic reinforced materials.
 
@@ -130,7 +131,7 @@ class CuntzeCriterion(FailureCriterionBase):
             self._dim = value
         else:
             raise AttributeError(
-                f"Dimension of {self.name} cannot be set to {value}. Allowed are 2 or 3."
+                f"Dimension of {self.name} cannot be set to {value}. The values allowed are 2 or 3."
             )
 
     def _get_wf_cfc(self) -> float:
@@ -177,7 +178,7 @@ class CuntzeCriterion(FailureCriterionBase):
             self._fracture_plane_angle = math.acos(1.0 / value - 1.0) / 2.0 * 180.0 / math.pi
             self._b32 = value
         else:
-            raise ValueError("Out-of-plane friction coefficient b32 must be 1 or above.")
+            raise ValueError("Out-of-plane friction coefficient b32 must be 1 or greater.")
 
     def _get_fracture_plane_angle(self) -> float:
         return self._fracture_plane_angle

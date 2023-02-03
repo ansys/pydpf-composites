@@ -1,4 +1,4 @@
-"""LayupInfo Provider."""
+"""Lay-up information provider."""
 
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Collection, Dict, List, Optional, Sequence, Union, cast
@@ -26,7 +26,7 @@ _ANALYSIS_PLY_PREFIX = "AnalysisPly:"
 
 
 def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
-    """Get all available analysis plies names."""
+    """Get names of all available analysis plies."""
     return [
         property_field_name[len(_ANALYSIS_PLY_PREFIX) :]
         for property_field_name in mesh.available_property_fields
@@ -38,11 +38,11 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
     ANALYSIS_PLY_PREFIX = "AnalysisPly:"
     property_field_name = ANALYSIS_PLY_PREFIX + name
 
-    # This tests can be slow so it can be skipped
+    # Because this test can be slow, it can be skipped
     if not skip_check and property_field_name not in mesh.available_property_fields:
         available_analysis_plies = get_all_analysis_ply_names(mesh)
         raise RuntimeError(
-            f"Analysis Ply not available: {name}. "
+            f"Analysis ply is not available: {name}. "
             f"Available analysis plies: {available_analysis_plies}"
         )
     return mesh.property_field(property_field_name)
@@ -50,30 +50,32 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
 
 @dataclass(frozen=True)
 class ElementInfo:
-    """Layup information for a given element.
+    """Provides lay-up information for an element.
 
-    Use :class:`~ElementInfoProvider` to obtain a :class:`~ElementInfo` for a given element.
+    Use the :class:`~ElementInfoProvider` class to obtain the
+    :class:`~ElementInfo` class for an element.
 
     Parameters
     ----------
     id
-        Element id / Element Label
+        Element ID or label.
     n_layers
-        number of layers. Equal to 1 for non-layered elements
+        Number of layers. For non-layered elements, the value is ``1``.
     n_corner_nodes
         Number of corner nodes (without midside nodes).
     n_spots
-        number of spots (through-the-thickness integration points) per layer
+        Number of spots (through-the-thickness integration points) per layer.
     element_type
-        Apdl element type (e.g. 181 for layered shells)
+        APDL element type. For example, ``181`` for layered shells.
     dpf_material_ids
-        List of dpf_material_ids for all layers
+        List of DPF material IDs for all layers.
     is_shell
-        True if the element is a shell element
+        Whether the element is a shell element.
     number_of_nodes_per_spot_plane
-        Number of nodes per output plane.
-        Equal to n_corner_nodes for shell elements and n_corner_nodes / 2
-        for solid elements. Equal to -1 for non-layered elements.
+        Number of nodes per output plane. The value is equal
+        to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
+        divided by two for layered solid elements. The value is equal to ``-1``
+        for non-layered elements.
     """
 
     id: int
@@ -149,7 +151,7 @@ class AnalysisPlyInfoProvider:
     Parameters
     ----------
     mesh
-        DPF MeshedRegion with layup information.
+        DPF MeshedRegion with lay-up information.
     name
         Analysis Ply Name
     """
@@ -185,7 +187,7 @@ def get_dpf_material_id_by_analyis_ply_map(
     Parameters
     ----------
     mesh
-        DPF Meshed region enriched with layup information
+        DPF Meshed region enriched with lay-up information
     data_source_or_streams_provider:
         DPF data source with rst file or streams_provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
@@ -235,7 +237,7 @@ def get_analysis_ply_index_to_name_map(
     Parameters
     ----------
     mesh
-        DPF Meshed region enriched with layup information
+        DPF Meshed region enriched with lay-up information
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
@@ -428,7 +430,7 @@ def get_element_info_provider(
             message = f"Missing property field in mesh: '{property_field_name}'."
             if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
                 message += (
-                    " Maybe you have to run the layup provider operator first. "
+                    " Maybe you have to run the lay-up provider operator first. "
                     "Please call add_layup_info_to_mesh "
                 )
             raise RuntimeError(message)
@@ -446,7 +448,7 @@ def get_element_info_provider(
 
 
 class LayupPropertiesProvider:
-    """Provider for layup properties.
+    """Provider for lay-up properties.
 
     Some properties such as layered dpf_material_ids and
     information about the element type are available
@@ -455,7 +457,7 @@ class LayupPropertiesProvider:
     Parameters
     ----------
     layup_provider:
-        Use :func:`~add_layup_info_to_mesh` to obtain a layup provider.
+        Use :func:`~add_layup_info_to_mesh` to obtain a lay-up provider.
     mesh
     """
 

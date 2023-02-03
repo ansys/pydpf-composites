@@ -1,8 +1,8 @@
 .. _layup_information_classes:
 
-Layup information
------------------
-General features to access information on the composite layup.
+Lay-up information
+------------------
+General features to access information on the composite lay-up.
 
 .. module:: ansys.dpf.composites.layup_info
 

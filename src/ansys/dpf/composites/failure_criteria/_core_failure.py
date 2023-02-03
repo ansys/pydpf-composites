@@ -1,18 +1,17 @@
-"""Core Failure Criterion."""
+"""Core failure criterion."""
 import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
 _DOC_INCLUDE_INS = (
-    "Activate this option to enable the formulation which "
-    "considers interlaminar normal stresses."
+    "Whether to activate the formulation that considers interlaminar normal stresses."
 )
 
 _DOC_WF = "Weighting factor of the failure mode (cs)."
 
 
 class CoreFailureCriterion(FailureCriterionBase):
-    """Core Failure Criterion."""
+    """Defines the core failure criterion."""
 
     __doc__ = f"""Defines the core shear failure criterion for
     core materials like foam and honeycomb.
