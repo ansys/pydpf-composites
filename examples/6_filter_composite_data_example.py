@@ -4,19 +4,20 @@
 Filter result data by different criteria
 ----------------------------------------
 
-Filter strains and stresses by material, layer or analysis ply.
-
-This example shows how to filter data by layer, spot and node as well as material
-or analysis_ply id. This is example can be of help for custom post-processing of
-layered composites. Refer to :ref:`select_indices` to learn more about how layered
-result data is organized.
+This example show how data filtering can be used for custom postprocessing of
+layered composites. You can filter strains and stresses by material, layer, or
+analysis ply. The example filters data by layer, spot, and node, as well as material
+or analysis ply ID. To learn more about how layered result data is organized,
+see :ref:`select_indices`.
 """
 
 # %%
-# Script
-# ~~~~~~
+# Set up analysis
+# ~~~~~~~~~~~~~~~
+# Setting up the analysis consists of importing dependencies, connecting to the
+# DPF server, and retrieving the example files.
 #
-# Import dependencies
+# Import dependencies.
 import ansys.dpf.core as dpf
 import numpy as np
 
@@ -36,30 +37,34 @@ from ansys.dpf.composites.select_indices import (
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
-# Start a server and get the examples files.
-# This will copy the example files into the current working directory.
+# Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
-# Set up composite model
-
+# Set up model
+# ~~~~~~~~~~~~
+# Set up the composite model.
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
-# Get stress field
+# Get result data
+# ~~~~~~~~~~~~~~~
+# Get the stress field.
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
 stress_field = stress_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
 
 # %%
-# Get element infos for all the elements and show the first one as an example
+# Get element information for all elements and show the first one as an example.
 element_ids = stress_field.scoping.ids
 element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
 element_infos[0]
 
 # %%
-# Plot stress values in material direction for the top layer, first node and "top" spot
+# Plot result data
+# ~~~~~~~~~~~~~~~~
+# For the top layer, plot stress values in the material direction for the first node and top spot.
 component = Sym3x3TensorComponent.TENSOR11
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with result_field.as_local_field() as local_result_field:
@@ -78,13 +83,17 @@ with result_field.as_local_field() as local_result_field:
 composite_model.get_mesh().plot(result_field)
 
 # %%
-# List all the available analysis plies
+# List analysis plies
+# ~~~~~~~~~~~~~~~~~~~
+# List all available analysis plies.
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 all_ply_names
 
 # %%
+# Plot results
+# ~~~~~~~~~~~~
 # Loop all elements that contain a given ply and plot the maximum stress value
-# in material direction in that ply
+# in the material direction in this ply.
 component = Sym3x3TensorComponent.TENSOR11
 
 analysis_ply_info_provider = AnalysisPlyInfoProvider(
@@ -109,11 +118,11 @@ with ply_result_field.as_local_field() as local_result_field:
 composite_model.get_mesh().plot(ply_result_field)
 
 # %%
-# Loop all elements and get maximum stress in material direction
-# for all plies that have the material with dpf_material_id.
-# Note: It is currently not possible to get a dpf_material_id for a
-# given material name. It is only possible
-# to get the dpf_material_id from an analysis ply.
+# Loop all elements and get the maximum stress in the material direction
+# for all plies that have a material with DPF material ID.
+# Note: It is not possible to get a DPF material ID for a
+# given material name. It is only possible to get a DPF material
+# ID from an analysis ply.
 material_map = get_dpf_material_id_by_analyis_ply_map(
     composite_model.get_mesh(), data_source_or_streams_provider=composite_model.data_sources.rst
 )

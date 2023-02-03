@@ -1,11 +1,11 @@
-"""Hashin Failure Criterion."""
+"""Hashin failure criterion."""
 import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
-_DOC_HF = "Activates the failure evaluation regarding fiber failure."
-_DOC_HM = "Activates the failure evaluation regarding matrix failure."
-_DOC_HD = "Activates the failure evaluation regarding delamination if dim is equal to 3."
+_DOC_HF = "Whether to activate the failure evaluation regarding fiber failure."
+_DOC_HM = "Whether to activate the failure evaluation regarding matrix failure."
+_DOC_HD = "Whether to activate the failure evaluation regarding delamination if dim is equal to 3."
 _DOC_DIM = (
     "Whether the 2D or 3D formulation of the criterion is used. The latter one also "
     "supports the failure mode delamination."
@@ -22,19 +22,19 @@ class HashinCriterion(FailureCriterionBase):
 
     Parameters
     ----------
-    hf:
+    hf :
         {_DOC_HF}
-    hm:
+    hm :
         {_DOC_HM}
-    hd:
+    hd :
         {_DOC_HD}
-    dim:
+    dim :
         {_DOC_DIM}
-    wf_hf:
+    wf_hf :
         {_DOC_WF_HF}
-    wf_hm:
+    wf_hm :
         {_DOC_WF_HM}
-    wf_hd:
+    wf_hd :
         {_DOC_WF_HD}
 
     """

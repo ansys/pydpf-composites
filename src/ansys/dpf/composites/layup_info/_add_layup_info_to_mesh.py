@@ -1,4 +1,4 @@
-"""Helper functions to add layup information to a dpf Meshed Region."""
+"""Helper functions to add lay-up information to a DPF meshed region."""
 from typing import Optional
 
 from ansys.dpf.core import MeshedRegion, Operator
@@ -13,26 +13,28 @@ def add_layup_info_to_mesh(
     mesh: MeshedRegion,
     composite_definition_label: Optional[str] = None,
 ) -> Operator:
-    """Add layup information to the mesh.
+    """Add lay-up information to the mesh.
 
-    Creates a Layup Provider Operator which is run and returned.
+    Creates a lay-up provider operator that is run and returned.
 
     Parameters
     ----------
     data_sources:
-        DPF DataSources object available from :attr:`.CompositeModel.data_sources`
+        DPF data sources available from the :attr:`.CompositeModel.data_sources` attribute.
     mesh:
-        DPF MeshedRegion object available from :meth:`.CompositeModel.get_mesh`
+        DPF meshed region available from the :meth:`.CompositeModel.get_mesh` method.
     material_operators:
-       MaterialOperators object available from :attr:`.CompositeModel.material_operators`
+       MaterialOperators object available from the :attr:`.CompositeModel.material_operators`
+       attribute.
     composite_definition_label:
-        Label of composite definition
-        (dictionary key in :attr:`.ContinuousFiberCompositesFiles.composite`).
-        Only required for assemblies. See "Note on assemblies" in :class:`.CompositeModel`.
+        Label of the composite definition, which is the
+        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+        attribute. This parameter is only required for assemblies.
+        See the note about assemblies in the description for the :class:`.CompositeModel` class.
     Returns
     -------
     :
-        Layup Provider Operator
+        Lay-up provider operator.
     """
     if composite_definition_label is None:
         composite_definition_labels = list(data_sources.composite.keys())
@@ -44,9 +46,9 @@ def add_layup_info_to_mesh(
                 f"Please specify a key explicitly."
             )
 
-    # Set up the layup provider.
+    # Set up the lay-up provider.
     # Reads the composite definition file and enriches the mesh
-    # with the composite layup information.
+    # with the composite lay-up information.
     layup_provider = Operator("composite::layup_provider_operator")
     layup_provider.inputs.mesh(mesh)
     layup_provider.inputs.data_sources(data_sources.composite[composite_definition_label])

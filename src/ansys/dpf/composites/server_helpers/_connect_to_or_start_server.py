@@ -1,4 +1,4 @@
-"""Helpers to connect to or start a dpf server with the composites plugin."""
+"""Helpers to connect to or start a DPF server with the DPF Composites plugin."""
 import os
 from typing import Any, Callable, Dict, Optional, Union
 
@@ -12,8 +12,7 @@ from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plu
 def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int = 10) -> Any:
     """Try to run a function until a timeout is reached.
 
-    Before the timeout is reached,
-    all exceptions are ignored and a retry happens.
+    Before the timeout is reached, all exceptions are ignored and a retry happens.
     """
     import time
 
@@ -28,35 +27,42 @@ def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int 
 
 
 def _wait_until_server_is_up(server: _dpf_server) -> Any:
-    # Small hack to check if the server is up
-    # The dpf server should check this in connect_to_server but that's currently not the case
+    # Small hack to check if the server is up.
+    # The DPF server should check this in the ``connect_to_server`` function, but
+    # that's currently not the case.
     # https://github.com/pyansys/pydpf-core/issues/414
-    # We use the fact that server.version throws if the server is not yet connected
-    _try_until_timeout(lambda: server.version, "Failed to connect to server before timeout.")
+    # We use the fact that server.version throws an error if the server
+    # is not yet connected.
+    _try_until_timeout(
+        lambda: server.version, "Failed to connect to the DPF server before timing out."
+    )
 
 
 def connect_to_or_start_server(
     port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None
 ) -> Any:
-    r"""Connect to or start a dpf server with the composites plugin loaded.
+    r"""Connect to or start a DPF server with the DPF Composites plugin loaded.
 
-    Note: If port or ip are set, this function will try to
-    connect to a server and the ansys_path is ignored.
-    If no arguments are passed a local server from the latest available installer
-    is started.
+    .. note::
+
+        If a port or IP address is set, this method tries to connect to the server specified
+        and the ``ansys_path`` parameter is ignored. If no parameters are set, a local server
+        from the latest available Ansys installation is started.
 
     Parameters
     ----------
-    port:
-    ip:
-    ansys_path:
-        Ansys root path, for example C:\\Program Files\\ANSYS Inc\\v231.
-        Ignored if either port or ip are set.
+    port :
+        Port that the DPF server is listening on.
+    ip :
+        IP address for the DPF server.
+    ansys_path :
+        Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v231``.
+        This parameter is ignored if either the port or IP address is set.
 
     Returns
     -------
     :
-        dpf server
+        DPF server.
     """
     port_in_env = os.environ.get("PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT")
     if port_in_env is not None:
@@ -75,13 +81,13 @@ def connect_to_or_start_server(
 
     server.check_version(
         "5.0",
-        f"The composites plugin requires at least server version 5.0 (Ansys 2023R1)"
-        f" Your version is currently {server.version}",
+        f"The DPF Composites plugin requires DPF Server version 5.0 (Ansys 2023 R1) or later."
+        f" Your version is currently {server.version}.",
     )
 
     _wait_until_server_is_up(server)
-    # Note: server.ansys_path contains the computed ansys path from
+    # Note: server.ansys_path contains the computed Ansys path from
     # dpf.server.start_local_server. It is None if
-    # we connect to an existing server.
+    # a connection is made to an existing server.
     load_composites_plugin(server, ansys_path=server.ansys_path)
     return server

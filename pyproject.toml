@@ -97,6 +97,11 @@ source = ["ansys.dpf.composites"]
 [tool.coverage.report]
 show_missing = true
 
+[tool.codespell]
+skip = '*.dat,*.out'
+ignore-words-list = 'ans,eyt'
+quiet-level = 3
+
 [tool.pylint.messages_control]
 disable = [
     "C",

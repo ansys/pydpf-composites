@@ -6,12 +6,12 @@ from ._failure_criterion_base import FailureCriterionBase
 _DOC_WF = "Weighting factor of the failure mode (wb or wt)."
 _DOC_KC = (
     "Weighting factor of the core material for evaluation of the "
-    "maximum allowable load. Default is 1."
+    "maximum allowable load. The default is ``1``."
 )
 _DOC_KF = (
     "Weighting factor of the face sheets for evaluation of the maximum allowable load. "
-    "Default is 0 so the face sheet do not contribute to the allowable load. "
-    "Valid for thin face sheets."
+    "The default is ``0`` so the face sheet does not contribute to the allowable load. "
+    "This property is valid for thin face sheets."
 )
 
 
@@ -34,7 +34,7 @@ class ShearCrimpingCriterion(FailureCriterionBase):
         """Create a shear crimping failure criterion for sandwich structures.
 
         A laminate is classified as sandwich if it has at least one core material.
-        For instance a honeycomb.
+        A honeycomb is an example.
         """
         super().__init__(name="Shear Crimping", active=True)
 
