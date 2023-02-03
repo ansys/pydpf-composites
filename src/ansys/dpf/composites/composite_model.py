@@ -126,7 +126,7 @@ class CompositeModel:
     """
 
     def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
-        """Initialize data providers and add composite information to mesheded regions."""
+        """Initialize data providers and add composite information to meshed region."""
         self._core_model = dpf.Model(composite_files.rst, server=server)
         self._server = server
 
