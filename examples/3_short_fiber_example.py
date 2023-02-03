@@ -7,14 +7,19 @@ Failure analysis for short fiber composites
 This example shows how to evaluate failures of a short fiber reinforced
 part.
 
-Ansys 2021 R2 introduced workflows for analyzing short fiber reinforced
-composites. As a beta feature to these workflows, you can evaluate
-and plot Tsai-Hill type orientation tensor-dependent failure criteria.
-This example shows how to configure the DPF operator
-``short_fiber_failure_criterion_evaluator`` to compute such failure criteria.
+As part of the short fiber workflows, you can evaluate and plot Tsai-Hill
+type orientation tensor-dependent failure criteria. This example shows
+how to configure the DPF operator ``short_fiber_failure_criterion_evaluator``
+to compute such failure criteria.
 
 The model shown in this example consists of a tensile specimen made of
 a short glass fiber reinforced thermoplastic injection molded from both sides.
+
+.. note::
+
+    The evaluation of failure criteria in short fiber workflows is a
+    beta feature, introduced in Ansys 2021 R2.
+
 """
 # %%
 # Set up analysis
