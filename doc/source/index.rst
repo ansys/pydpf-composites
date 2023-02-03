@@ -6,7 +6,7 @@
    intro
    api/index
    examples/index
-   Contribute <contribute>
+   contribute
 
 PyDPF Composites
 ----------------
