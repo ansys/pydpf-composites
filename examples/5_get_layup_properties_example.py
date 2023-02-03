@@ -4,7 +4,7 @@
 Lay-up properties
 -----------------
 
-Element lay-up properties are typically used for layer-wise postprocessing and
+Elemental lay-up properties are typically used for layer-wise postprocessing and
 data filtering. This example shows how to extract elemental lay-up properties
 such as thickness and material. It accesses basic layer properties (layer
 thicknesses, angles, and analysis ply names) and queries them efficiently.

@@ -1,4 +1,4 @@
-"""Object to represent the result definition used by the Failure operator in DPF Composites."""
+"""Object to represent the result definition used by the failure operator in DPF Composites."""
 
 from dataclasses import dataclass, field
 from enum import Enum
@@ -137,7 +137,7 @@ class ResultDefinition:
 
     @property
     def scopes(self) -> Sequence[ResultDefinitionScope]:
-        """Different scopes of the result definition."""
+        """Scopes of the result definition."""
         return self._composite_scopes
 
     @scopes.setter

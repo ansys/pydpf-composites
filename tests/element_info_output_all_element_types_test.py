@@ -47,7 +47,7 @@ def get_element_ids() -> ElementIds:
 def get_layup_property_fields():
     """
     Helper function to get lay-up information for the all_element_types*.rst
-    files without a lay-up definition file
+    files without a lay-up definition file.
     """
     # Mock the info that gets added in the lay-up provider
     # All the layered elements have a layered section with three layers (materials 1,2,1)

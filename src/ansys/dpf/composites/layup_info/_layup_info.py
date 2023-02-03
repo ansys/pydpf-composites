@@ -74,7 +74,7 @@ class ElementInfo:
     number_of_nodes_per_spot_plane
         Number of nodes per output plane. The value is equal
         to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
-        divided by two for solid elements. The value is equal to ``-1``
+        divided by two for layered solid elements. The value is equal to ``-1``
         for non-layered elements.
     """
 

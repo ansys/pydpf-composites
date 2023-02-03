@@ -231,7 +231,7 @@ def get_composite_files_from_workbench_result_folder(
     Parameters
     ----------
     result_folder :
-       Result folder of the solution. Right-click the **olution**item in the Ansys Mechanical tree
+       Result folder of the solution. Right-click the **solution** item in the Ansys Mechanical tree
        and select **Open Solver Files Directory** to obtain the result folder.
     ensure_composite_definitions_found :
         Whether to check if at least one composite definition (shell or solid) has been found.

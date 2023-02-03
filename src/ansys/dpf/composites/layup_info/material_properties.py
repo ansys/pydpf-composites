@@ -103,7 +103,7 @@ def get_constant_property(
     dpf_material_id:
         DPF material ID.
     materials_provider:
-        DPF Materials provider operator. This value is Available from the
+        DPF Materials provider operator. This value is available from the
         :attr:`.CompositeModel.material_operators` attribute.
     data_source_or_streams_provider:
         Data source or streams provider that contains the RST file.
@@ -138,7 +138,7 @@ def get_all_dpf_material_ids(
     mesh:
         DPF meshed region enriched with lay-up information.
     data_source_or_streams_provider:
-        DPF data source or streams provider that contains the RST file.
+        DPF data source or stream provider that contains the RST file.
     """
     id_to_material_map = get_dpf_material_id_by_analyis_ply_map(
         mesh, data_source_or_streams_provider
@@ -169,7 +169,7 @@ def get_constant_property_dict(
         DPF Materials provider operator. This value is Available from the
         :attr:`.CompositeModel.material_operators` attribute.
     data_source_or_streams_provider:
-        DPF data source or streams provider that contains the RST file.
+        DPF data source or stream provider that contains the RST file.
     mesh:
         DPF meshed region enriched with lay-up information.
     """

@@ -14,7 +14,7 @@ PyDPF Composites
 PyDPF Composites is a Python wrapper for Ansys DPF composites. It implements
 classes on top of DPF Composites operators and data accessors for short
 fiber and layered composites (layered shell and solid elements). This module
-can be used to postprocess fiber reinforced plastics and layered composites and
+can be used to postprocess fiber reinforced plastics and layered composites, and
 to implement custom failure criteria and computation.
 
 .. grid:: 1 1 2 2
@@ -74,7 +74,7 @@ Limitations
 '''''''''''
 - Layered elements (section data) that have not been preprocessed with ACP are not supported.
   For information on converting legacy models, see `Import legacy models`_
-  in the DPF help.
+  in the Ansys help.
 - Only the Mechanical APDL solver is supported.
 
 
