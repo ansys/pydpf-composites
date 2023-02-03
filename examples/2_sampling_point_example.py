@@ -7,7 +7,7 @@ Sampling point
 This example extracts ply-wise laminate properties and results.
 
 The :class:`Sampling Point <.SamplingPoint>` class is used to extract
-through-the-thickness data of the laminate, such as ply-wise properties, 
+through-the-thickness data of the laminate, such as ply-wise properties,
 strains and stresses. It then implements basic visualization to plot
 the laminate.
 
