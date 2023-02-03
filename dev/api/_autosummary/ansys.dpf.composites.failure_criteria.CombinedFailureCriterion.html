@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2743,8 +2743,9 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.failure_criteria.</span></span><span class="sig-name descname"><span class="pre">CombinedFailureCriterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CombinedFailureCriterion'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failure_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion" title="Permalink to this definition">#</a></dt>
-<dd><p>Define the Combined Failure Criterion.</p>
-<p>It can be used in combination with Failure Evaluator operator in DPF Composites.</p>
+<dd><p>Defines the combined failure criterion.</p>
+<p>This class can be used in combination with the failure evaluator operator in
+DPF Composites.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">combined_failure</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span><span class="s2">&quot;max_stress 3D&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">max_stress</span> <span class="o">=</span> <span class="n">MaxStressCriterion</span><span class="p">(</span><span class="n">s1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s3</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s12</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s13</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s23</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -2755,16 +2756,16 @@ function checkPageExistsAndRedirect(event) {
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert" title="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CombinedFailureCriterion.insert</span></code></a>(fc)</p></td>
-<td><p>Add a failure criterion.</p></td>
+<td><p>Add a failure criterion to a list of selected criteria.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove" title="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CombinedFailureCriterion.remove</span></code></a>(key)</p></td>
 <td><p>Remove a failure criterion.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict" title="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CombinedFailureCriterion.to_dict</span></code></a>()</p></td>
-<td><p>Return a dict representation of this object.</p></td>
+<td><p>Return the combined failure criterion as a dictionary.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_json.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_json" title="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CombinedFailureCriterion.to_json</span></code></a>()</p></td>
-<td><p>Return the object as JSON dict.</p></td>
+<td><p>Return the combined failure criterion as a JSON dictionary.</p></td>
 </tr>
 </tbody>
 </table>

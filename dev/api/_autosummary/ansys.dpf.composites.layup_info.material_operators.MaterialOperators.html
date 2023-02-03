@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -272,7 +272,7 @@ function checkPageExistsAndRedirect(event) {
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../layup_info.html" accesskey="U">Layup information</a> » </li>
+          <li class="nav-item nav-item-2"><a href="../layup_info.html" accesskey="U">Lay-up information</a> » </li>
         <li class="nav-item nav-item-this"><a href="">MaterialOperators</a></li> 
       </ul>
     </div>
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2743,19 +2743,19 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.layup_info.material_operators.MaterialOperators">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.material_operators.</span></span><span class="sig-name descname"><span class="pre">MaterialOperators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_support_provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_info_provider</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.material_operators.MaterialOperators" title="Permalink to this definition">#</a></dt>
-<dd><p>Container for Material related operators.</p>
+<dd><p>Provides the container for material-related operators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>material_support_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – The material support provider takes care of mapping the materials in the rst file to
+<li><p><strong>material_support_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – The material support provider takes care of mapping the materials in the RST file to
 the materials in the composite definitions.
-The material support contains all the materials from the rst file. Currently
-the output of this operator cannot be inspected in python.</p></li>
-<li><p><strong>material_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – Outputs a material container that can be used to
-evaluate material properties. This MaterialsContainer
-can not be queried in python but it can be passed to other dpf operators,
-which evaluate the properties.</p></li>
-<li><p><strong>result_info_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – Provides the ResultInfo object</p></li>
+The material support contains all the materials from the RST file. Currently
+the output of this operator cannot be inspected in Python.</p></li>
+<li><p><strong>material_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – Outputs the <code class="docutils literal notranslate"><span class="pre">MaterialsContainer</span></code>, which can be used to
+evaluate material properties. This container cannot be
+queried in Python, but it can be passed to other DPF operators
+that evaluate the properties.</p></li>
+<li><p><strong>result_info_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.7.1)"><em>ansys.dpf.core.dpf_operator.Operator</em></a>) – Provides the <code class="docutils literal notranslate"><span class="pre">ResultInfo</span></code> object.</p></li>
 </ul>
 </dd>
 </dl>

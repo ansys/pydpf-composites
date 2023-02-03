@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1661,7 +1661,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2744,19 +2744,18 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses">
 <span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">add_interlaminar_normal_stresses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strains</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses" title="Permalink to this definition">#</a></dt>
-<dd><p>Add interlaminar_normal_stresses to the stresses FieldsContainer.</p>
-<p>See also:
-<a class="reference internal" href="../../examples/gallery_examples/7_interlaminar_normal_stress_example.html#sphx-glr-examples-gallery-examples-7-interlaminar-normal-stress-example-py"><span class="std std-ref">Interlaminar normal stresses</span></a></p>
+<dd><p>Add interlaminar normal stresses to the stresses fields container.</p>
+<p>For a usage example, see
+<a class="reference internal" href="../../examples/gallery_examples/7_interlaminar_normal_stress_example.html#sphx-glr-examples-gallery-examples-7-interlaminar-normal-stress-example-py"><span class="std std-ref">Interlaminar normal stresses</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stresses</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldsContainer</span></code></a>) – Stresses FieldsContainer
-(interlaminar normal stresses are added to this container)</p></li>
+<li><p><strong>stresses</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldsContainer</span></code></a>) – Stresses fields container to add interlaminar normal stresses to.</p></li>
 <li><p><strong>strains</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="(in PyDPF-Core v0.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldsContainer</span></code></a>) – </p></li>
-<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of composite definition
-(dictionary key in <a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles.composite</span></code></a>).
-Only required for assemblies.
-See “Note on assemblies” in <a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a> docstring.
+<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of the composite definition, which is the
+dictionary key in the <a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles.composite</span></code></a>
+attribute. This parameter is only required for assemblies.
+See the note about assemblies in the description for the <a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a> class.
 Interlaminar normal stresses are only added to the layered elements defined
 in the specified composite definition.</p></li>
 </ul>

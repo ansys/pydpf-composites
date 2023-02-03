@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2743,56 +2743,55 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder">
 <span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">get_composite_files_from_workbench_result_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_composite_definitions_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="Permalink to this definition">#</a></dt>
-<dd><p>Get a ContinuousFiberCompositesFiles object from a result_folder.</p>
-<p>This function assumes
-a typical workbench folder structure for a composite simulation.
-If this function is not able to build a ContinuousFiberCompositesFiles
-object the following steps can
-be followed: In main workbench window, activate the files panel by ticking
-“Files” in the “View” menu. This shows
-the file location of all the files used in the workbench project.
-Determine the different attributes of ContinuousFiberCompositesFiles:</p>
+<dd><p>Get a <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object from a result folder.</p>
+<p>This function assumes a typical Workbench folder structure for a composite
+simulation. If this method is not able to build the <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code>
+object, you can follow these steps:</p>
+<p>In the main Workbench window, activate the files panel by selecting
+<strong>View &gt; Files</strong>. This shows the location of all files used in the
+workbench project. You can determine the different attributes of the
+<code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object:</p>
 <ul class="simple">
-<li><p>rst: The file.rst file which belongs to the CellId of the Solution
-you are interested to post-process. Multiple result files are not supported yet.
-Please ensure that ‘Combine Distributed Result Files’ is activated if the solution
+<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code>: The <code class="docutils literal notranslate"><span class="pre">file.rst</span></code> file that belongs to the cell ID of the solution
+that you want to postprocess. Multiple result files are not supported yet.
+Ensure that <strong>Combine Distributed Result Files</strong> is selected if the solution
 was solved in ‘Distributed’ mode.</p></li>
-<li><p>engineering_data: The MatML.xml file in the same folder as the rst file.</p></li>
-<li><p>composite: There can be multiple composite definitions,
-one definition for each ACP System if shell data is transferred
+<li><p><code class="docutils literal notranslate"><span class="pre">engineering_data</span></code>: The <code class="docutils literal notranslate"><span class="pre">MatML.xml</span></code> file in the same folder as the RST file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">composite</span></code>: There can be multiple composite definitions,
+one definition for each ACP system if shell data is transferred
 and one definition for each solid model if solid data is transferred.
-All the ACPCompositeDefinitions.h5 and ACPSolidModel*.h5
-files that are used in the solution have to be added.
-to the ContinuousFiberCompositesFiles.composite dictionary.
-The key can be chosen freely. Next to the ACPCompositeDefinitions.h5
-and ACPSolidModel*.h5 files, corresponding ACPCompositeDefinitions.mapping and
-ACPSolidModel*.mapping files can be found (optional).
-If they exist, they have to be added as well.</p></li>
+All the <code class="docutils literal notranslate"><span class="pre">ACPCompositeDefinitions.h5</span></code> and <code class="docutils literal notranslate"><span class="pre">ACPSolidModel*.h5</span></code>
+files that are used in the solution must be added to the
+<code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles.composite</span></code> dictionary.
+The key can be chosen freely. Next to the <code class="docutils literal notranslate"><span class="pre">ACPCompositeDefinitions.h5</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ACPSolidModel\*.h5</span></code> files, corresponding <code class="docutils literal notranslate"><span class="pre">ACPCompositeDefinitions.mapping</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ACPSolidModel*.mapping</span></code> files can be found (optional).
+If they exist, they must be added as well.</p></li>
 </ul>
 <p>The following example shows how a
-ContinuousFiberCompositesFiles object can be built:
-The project has two ACP Pre systems, one that exports
+<a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a> object can be built.
+The project in this example has two <strong>ACP Pre</strong> systems, one that exports
 shell information and one that exports solid information.</p>
-<p>The files are located in the following locations.</p>
+<p>The files are located in these locations:</p>
 <p>Result file:</p>
 <ul class="simple">
-<li><p>project_root_folder/dp0/SYS/MECH/file.rst.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/SYS/MECH/file.rst</span></code></p></li>
 </ul>
 <p>Engineering data file:</p>
 <ul class="simple">
-<li><p>project_root_folder/dp0/SYS/MECH/MatML.xml</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/SYS/MECH/MatML.xml</span></code></p></li>
 </ul>
-<p>Composite definitions and mapping for solid model:</p>
+<p>Composite definition and mapping files for the solid model:</p>
 <ul class="simple">
-<li><p>project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5</p></li>
-<li><p>project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping</span></code></p></li>
 </ul>
-<p>Composite definitions and mapping for shell model:</p>
+<p>Composite definition and mapping files for the shell model:</p>
 <ul class="simple">
-<li><p>project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5</p></li>
-<li><p>project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping</span></code></p></li>
 </ul>
-<p>The corresponding ContinuousFiberCompositesFiles object would be created like this:</p>
+<p>The code creates the corresponding <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ContinuousFiberCompositesFiles</span><span class="p">(</span>
     <span class="n">rst</span><span class="o">=</span><span class="s2">&quot;project_root_folder/dp0/SYS/MECH/file.rst&quot;</span><span class="p">,</span>
     <span class="n">composite</span><span class="o">=</span><span class="p">{</span>
@@ -2812,9 +2811,9 @@ shell information and one that exports solid information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>result_folder</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/os.html#os.PathLike" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code></a>]) – Result folder of the solution. Right-click on the “Solution” item in the Mechanical tree and
-choose “Open Solver Files Directory” to obtain the result_folder.</p></li>
-<li><p><strong>ensure_composite_definitions_found</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – If True, checks that at least on composite definition (shell or solid) has been found.</p></li>
+<li><p><strong>result_folder</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/os.html#os.PathLike" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code></a>]) – Result folder of the solution. Right-click the <strong>solution</strong> item in the Ansys Mechanical tree
+and select <strong>Open Solver Files Directory</strong> to obtain the result folder.</p></li>
+<li><p><strong>ensure_composite_definitions_found</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Whether to check if at least one composite definition (shell or solid) has been found.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

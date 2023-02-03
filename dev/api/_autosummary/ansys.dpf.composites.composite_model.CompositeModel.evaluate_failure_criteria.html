@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1661,7 +1661,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2744,25 +2744,30 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria">
 <span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">evaluate_failure_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_scope</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">FailureMeasure.INVERSE_RESERVE_FACTOR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_data_for_full_element_scope</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria" title="Permalink to this definition">#</a></dt>
-<dd><p>Get a fields container with the evaluted failure criteria.</p>
-<p>The container contains the maximum per element if the measure
-is <cite>FailureMeasure.INVERSE_RESERVE_FACTOR</cite> and the minimum per element
-if the measure is <cite>FailureMeasure.MARGIN_OF_SAFETY</cite> or <cite>FailureMeasure.RESERVE_FACTOR</cite></p>
+<dd><p>Get a fields container with the evaluated failure criteria.</p>
+<p>The fields container contains the maximum per element if the measure
+is <a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasure.INVERSE_RESERVE_FACTOR.html#ansys.dpf.composites.result_definition.FailureMeasure.INVERSE_RESERVE_FACTOR" title="ansys.dpf.composites.result_definition.FailureMeasure.INVERSE_RESERVE_FACTOR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FailureMeasure.INVERSE_RESERVE_FACTOR</span></code></a> and the minimum per element
+if the measure is <a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasure.MARGIN_OF_SAFETY.html#ansys.dpf.composites.result_definition.FailureMeasure.MARGIN_OF_SAFETY" title="ansys.dpf.composites.result_definition.FailureMeasure.MARGIN_OF_SAFETY"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FailureMeasure.MARGIN_OF_SAFETY</span></code></a> or
+<a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasure.RESERVE_FACTOR.html#ansys.dpf.composites.result_definition.FailureMeasure.RESERVE_FACTOR" title="ansys.dpf.composites.result_definition.FailureMeasure.RESERVE_FACTOR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FailureMeasure.RESERVE_FACTOR</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>combined_criterion</strong> (<a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion" title="ansys.dpf.composites.failure_criteria._combined_failure_criterion.CombinedFailureCriterion"><code class="xref py py-class docutils literal notranslate"><span class="pre">CombinedFailureCriterion</span></code></a>) – Combined failure criterion to evaluate</p></li>
-<li><p><strong>composite_scope</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeScope.html#ansys.dpf.composites.composite_model.CompositeScope" title="ansys.dpf.composites.composite_model.CompositeScope"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeScope</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Composite scope on which the failure criteria are evaluated. If empty, the criteria
-is evaluated on the full model. The last time/frequency in the result file is used
-by default if time is not set.</p></li>
-<li><p><strong>measure</strong> (<a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasure.html#ansys.dpf.composites.result_definition.FailureMeasure" title="ansys.dpf.composites.result_definition.FailureMeasure"><code class="xref py py-class docutils literal notranslate"><span class="pre">FailureMeasure</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">&lt;FailureMeasure.INVERSE_RESERVE_FACTOR:</span> <span class="pre">'inverse_reserve_factor'&gt;</span></code>) – Failure measure to evaluate</p></li>
-<li><p><strong>write_data_for_full_element_scope</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – If True, each requested element in element scope gets a
-(potentially zero) failure value,
-even for elements which are not part of composite_scope.plies.
-If no element scope is specified (composite_scope.elements),
-a (potentially zero) failure value is written for all elements.
-Note: For some special element types such as beams,
-write_data_for_full_element_scope == True is not supported.</p></li>
+<li><p><strong>combined_criterion</strong> (<a class="reference internal" href="ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion" title="ansys.dpf.composites.failure_criteria._combined_failure_criterion.CombinedFailureCriterion"><code class="xref py py-class docutils literal notranslate"><span class="pre">CombinedFailureCriterion</span></code></a>) – Combined failure criterion to evaluate.</p></li>
+<li><p><strong>composite_scope</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeScope.html#ansys.dpf.composites.composite_model.CompositeScope" title="ansys.dpf.composites.composite_model.CompositeScope"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeScope</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Composite scope on which to evaluate the failure criteria. If empty, the criteria
+is evaluated on the full model. If the time is not set, the last time or
+frequency in the result file is used.</p></li>
+<li><p><strong>measure</strong> (<a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasure.html#ansys.dpf.composites.result_definition.FailureMeasure" title="ansys.dpf.composites.result_definition.FailureMeasure"><code class="xref py py-class docutils literal notranslate"><span class="pre">FailureMeasure</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">&lt;FailureMeasure.INVERSE_RESERVE_FACTOR:</span> <span class="pre">'inverse_reserve_factor'&gt;</span></code>) – Failure measure to evaluate.</p></li>
+<li><p><strong>write_data_for_full_element_scope</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – <p>Whether each element in the element scope is to get a
+(potentially zero) failure value, even elements that are not
+part of <code class="docutils literal notranslate"><span class="pre">composite_scope.plies</span></code>. If no element scope is
+specified (<code class="docutils literal notranslate"><span class="pre">composite_scope.elements</span></code>), a (potentially zero)
+failure value is written for all elements.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For some special element types such as beams,
+<code class="docutils literal notranslate"><span class="pre">write_data_for_full_element_scope=True</span></code> is not supported.</p>
+</div>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

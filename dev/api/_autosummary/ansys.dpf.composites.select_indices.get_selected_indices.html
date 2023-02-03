@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2743,21 +2743,21 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.select_indices.get_selected_indices">
 <span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.select_indices.</span></span><span class="sig-name descname"><span class="pre">get_selected_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_checks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.select_indices.get_selected_indices" title="Permalink to this definition">#</a></dt>
-<dd><p>Return the elementary indices based on selected layers, corner_nodes, spots and ElementInfo.</p>
+<dd><p>Get elementary indices based on element information, layers, nodes, and spots.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>element_info</strong> (<a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info._layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>) – </p></li>
+<li><p><strong>element_info</strong> (<a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info._layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>) – Lay-up information for the element.</p></li>
 <li><p><strong>layers</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – List of selected layers.</p></li>
-<li><p><strong>nodes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – List of selected nodes</p></li>
+<li><p><strong>nodes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – List of selected corner nodes.</p></li>
 <li><p><strong>spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.constants.Spot.html#ansys.dpf.composites.constants.Spot" title="ansys.dpf.composites.constants.Spot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spot</span></code></a>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – List of selected spots.</p></li>
-<li><p><strong>disable_checks</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Set to True to disable checks.
-Results in better performance but potentially
-cryptic error messages or invalid indices</p></li>
+<li><p><strong>disable_checks</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Whether to disable checks. Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to disable checks.
+Disabling checks results in better performance but potentially
+cryptic error messages or invalid indices.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Array of selected indices</p>
+<dd class="field-even"><p>Array of selected indices.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>NDArray</p>

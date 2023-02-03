@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2749,19 +2749,19 @@ function checkPageExistsAndRedirect(event) {
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cfc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation regarding compression in fiber direction.</p></li>
 <li><p><strong>cft</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation regarding tension in fiber direction.</p></li>
-<li><p><strong>cma</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation of matrix due to tension.</p></li>
-<li><p><strong>cmb</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation of matrix due to compression.</p></li>
-<li><p><strong>cmc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation of matrix due to compression / shear.</p></li>
+<li><p><strong>cma</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation of the matrix due to tension.</p></li>
+<li><p><strong>cmb</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation of the matrix due to compression.</p></li>
+<li><p><strong>cmc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Activates the failure evaluation of the matrix due to compression or shear.</p></li>
 <li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">2</span></code>) – Whether the 2D or 3D formulation of the criterion is used.</p></li>
 <li><p><strong>wf_cfc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of fiber failure due to compression (cfc).</p></li>
 <li><p><strong>wf_cft</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of fiber failure due to tension (cft).</p></li>
 <li><p><strong>wf_cma</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of matrix failure due to tension (cma).</p></li>
 <li><p><strong>wf_cmb</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of matrix failure due to compression (cmb).</p></li>
-<li><p><strong>wf_cmc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of matrix failure due to compression / shear (cmc).</p></li>
-<li><p><strong>b21</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">0.2</span></code>) – In-plane shear friction coefficient. Default is 0.2.</p></li>
-<li><p><strong>b32</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.3805</span></code>) – Out-of-plane shear friction coefficient. Default is 1.3805. Depends on the fracture plane angle.</p></li>
-<li><p><strong>fracture_plane_angle</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">53.0</span></code>) – Fracture plane angle. Default is 53 degree. Must be &gt; 45. Depends on the out-of-plane shear friction coefficient.</p></li>
-<li><p><strong>mode_interaction_coeff</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">2.6</span></code>) – Mode interaction coefficient. Default is 2.6.</p></li>
+<li><p><strong>wf_cmc</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>) – Weighting factor of matrix failure due to compression or shear (cmc).</p></li>
+<li><p><strong>b21</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">0.2</span></code>) – In-plane shear friction coefficient. The default is <code class="docutils literal notranslate"><span class="pre">0.2</span></code>.</p></li>
+<li><p><strong>b32</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">1.3805</span></code>) – Out-of-plane shear friction coefficient. The default is <code class="docutils literal notranslate"><span class="pre">1.3805</span></code>. The value depends on the fracture plane angle.</p></li>
+<li><p><strong>fracture_plane_angle</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">53.0</span></code>) – Fracture plane angle in degrees. The default is <code class="docutils literal notranslate"><span class="pre">53</span></code>. The value must be greater than 45. The value depends on the out-of-plane shear friction coefficient.</p></li>
+<li><p><strong>mode_interaction_coeff</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">2.6</span></code>) – Mode interaction coefficient. The default is <code class="docutils literal notranslate"><span class="pre">2.6</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2805,19 +2805,19 @@ function checkPageExistsAndRedirect(event) {
 <td><p>Activates the failure evaluation regarding tension in fiber direction.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cma.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cma" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.cma</span></code></a></p></td>
-<td><p>Activates the failure evaluation of matrix due to tension.</p></td>
+<td><p>Activates the failure evaluation of the matrix due to tension.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmb.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmb" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.cmb</span></code></a></p></td>
-<td><p>Activates the failure evaluation of matrix due to compression.</p></td>
+<td><p>Activates the failure evaluation of the matrix due to compression.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmc" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.cmc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.cmc</span></code></a></p></td>
-<td><p>Activates the failure evaluation of matrix due to compression / shear.</p></td>
+<td><p>Activates the failure evaluation of the matrix due to compression or shear.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.dim.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.dim" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.dim</span></code></a></p></td>
 <td><p>Whether the 2D or 3D formulation of the criterion is used.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.fracture_plane_angle</span></code></a></p></td>
-<td><p>Fracture plane angle.</p></td>
+<td><p>Fracture plane angle in degrees.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.mode_interaction_coeff.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.mode_interaction_coeff" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.mode_interaction_coeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.mode_interaction_coeff</span></code></a></p></td>
 <td><p>Mode interaction coefficient.</p></td>
@@ -2838,7 +2838,7 @@ function checkPageExistsAndRedirect(event) {
 <td><p>Weighting factor of matrix failure due to compression (cmb).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmc" title="ansys.dpf.composites.failure_criteria.CuntzeCriterion.wf_cmc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CuntzeCriterion.wf_cmc</span></code></a></p></td>
-<td><p>Weighting factor of matrix failure due to compression / shear (cmc).</p></td>
+<td><p>Weighting factor of matrix failure due to compression or shear (cmc).</p></td>
 </tr>
 </tbody>
 </table>

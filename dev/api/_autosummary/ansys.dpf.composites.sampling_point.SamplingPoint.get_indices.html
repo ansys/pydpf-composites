@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1661,7 +1661,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2744,13 +2744,13 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices">
 <span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">get_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spots=(&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.sampling_point.SamplingPoint.get_indices" title="Permalink to this definition">#</a></dt>
-<dd><p>Access the indices of the selected interfaces for each ply.</p>
+<dd><p>Get the indices of the selected spots (interfaces) for each ply.</p>
 <p>The indices are sorted from bottom to top.
-For instance, can be used to access the stresses at the bottom of each ply.</p>
+For instance, this method can be used to access the stresses at the bottom of each ply.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.constants.Spot.html#ansys.dpf.composites.constants.Spot" title="ansys.dpf.composites.constants.Spot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spot</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">(&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;)</span></code>) – selection of the spots. Only the indices of the bottom interfaces of plies
-are returned if spots is equal to [BOTTOM]</p>
+<dd class="field-odd"><p><strong>spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.constants.Spot.html#ansys.dpf.composites.constants.Spot" title="ansys.dpf.composites.constants.Spot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spot</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">(&lt;Spot.BOTTOM:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Spot.MIDDLE:</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Spot.TOP:</span> <span class="pre">3&gt;)</span></code>) – Collection of spots. Only the indices of the bottom interfaces of plies
+are returned if <code class="docutils literal notranslate"><span class="pre">[Spot.BOTTOM]</span></code> is set.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>

@@ -53,7 +53,7 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Post-process an assembly" href="8_assembly_example.html" />
+    <link rel="next" title="Postprocess an assembly" href="8_assembly_example.html" />
     <link rel="prev" title="Filter result data by different criteria" href="6_filter_composite_data_example.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -315,7 +315,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="5_get_layup_properties_example.html">
-   Get lay-up properties
+   Lay-up properties
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,7 +330,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="8_assembly_example.html">
-   Post-process an assembly
+   Postprocess an assembly
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,22 +362,32 @@ function checkPageExistsAndRedirect(event) {
 
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#script">
-   Script
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Interlaminar normal stresses
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-analysis">
+     Set up analysis
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-model-and-prepare-inputs">
+     Set up model and prepare inputs
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#compute-interlaminar-normal-stresses">
      Compute interlaminar normal stresses
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plot-s3-stresses">
-     Plot s3 stresses
-    </a>
-   </li>
   </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-s3-stresses">
+   Plot s3 stresses
+  </a>
  </li>
 </ul>
 
@@ -405,24 +415,29 @@ to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="interlaminar-normal-stresses">
 <span id="interlaminar-normal-stress-example"></span><span id="sphx-glr-examples-gallery-examples-7-interlaminar-normal-stress-example-py"></span><h1>Interlaminar normal stresses<a class="headerlink" href="#interlaminar-normal-stresses" title="Permalink to this heading">#</a></h1>
-<p>Compute interlaminar normal stresses for layered shells.</p>
 <p>This example shows how to enrich the stresses of layered shells by
-interlaminar normal stresses, in short INS. INS can be of importance in thick
-and curved laminates.</p>
-<p>For simple use cases it is preferable to use the composite failure operator
-(<a class="reference internal" href="1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a>)
-or the composite sampling point operator
-(<a class="reference internal" href="2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a>). Note, the INS are
-computed automatically in these workflows if required. For instance if a 3D failure criterion is
-activated.
-The <a class="reference internal" href="6_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> example shows how
-helper functions can be used to obtain composite result data.</p>
-<p>INS are typically not available if layered shell elements are
-used. The INS operator recomputes s3 based on the laminate strains, the geometrical curvature and
-the lay-up.</p>
-<section id="script">
-<h2>Script<a class="headerlink" href="#script" title="Permalink to this heading">#</a></h2>
-<p>Load Ansys libraries</p>
+computing interlaminar normal stresses. Interlaminar normal
+stresses can be important in thick and curved laminates.</p>
+<p>Because interlaminar normal stresses are typically not available
+for layered shell elements, the <code class="docutils literal notranslate"><span class="pre">INS</span></code> operator is used to recompute
+the <code class="docutils literal notranslate"><span class="pre">s3</span></code> result based on the laminate strains, the geometrical
+curvature, and the lay-up.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For simple use cases, using the composite failure operator or
+composite sampling point operator is preferable. For examples,
+see <a class="reference internal" href="1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a>
+and <a class="reference internal" href="2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a>.
+In these workflows, interlaminar normal stresses are computed automatically
+if required, such as if a 3D failure criterion is activated. Additionally,
+<a class="reference internal" href="6_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a>
+shows how helper functions can be used to obtain composite result data.</p>
+</div>
+<section id="set-up-analysis">
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<p>Setting up the analysis consists of loading Ansys libraries, connecting to the
+DPF server, and retrieving the example files.</p>
+<p>Load Ansys libraries.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
@@ -433,19 +448,21 @@ the lay-up.</p>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
 </div>
-<p>Start a server and get the examples files.
-This will copy the example files into the current working directory.</p>
+<p>Start a DPF server and copy the example files into the current working directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;ins&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Configure data sources</p>
+</section>
+<section id="set-up-model-and-prepare-inputs">
+<h2>Set up model and prepare inputs<a class="headerlink" href="#set-up-model-and-prepare-inputs" title="Permalink to this heading">#</a></h2>
+<p>Set up the composite model.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Prepare inputs for the INS operator</p>
-<p>Rotate to global is False because the post-processing engine expects the results to be
-in the element coordinate system (material coordinate system).</p>
+<p>Prepare the inputs for the INS operator.
+<code class="docutils literal notranslate"><span class="pre">rotate_to_global</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code> because the postprocessing engine expects
+the results to be in the element coordinate system (material coordinate system).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">elastic_strain</span><span class="p">()</span>
 <span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
@@ -453,9 +470,11 @@ in the element coordinate system (material coordinate system).</p>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
 <section id="compute-interlaminar-normal-stresses">
-<h3>Compute interlaminar normal stresses<a class="headerlink" href="#compute-interlaminar-normal-stresses" title="Permalink to this heading">#</a></h3>
-<p>Note: the INS operator stores the stresses in the provided stressed field.</p>
+<h2>Compute interlaminar normal stresses<a class="headerlink" href="#compute-interlaminar-normal-stresses" title="Permalink to this heading">#</a></h2>
+<p>Compute the interlaminar normal stresses.
+The <code class="docutils literal notranslate"><span class="pre">INS</span></code> operator stores the stresses in the provided stress field.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span><span class="o">.</span><span class="n">add_interlaminar_normal_stresses</span><span class="p">(</span>
     <span class="n">stresses</span><span class="o">=</span><span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(),</span>
     <span class="n">strains</span><span class="o">=</span><span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(),</span>
@@ -463,13 +482,14 @@ in the element coordinate system (material coordinate system).</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="plot-s3-stresses">
-<h3>Plot s3 stresses<a class="headerlink" href="#plot-s3-stresses" title="Permalink to this heading">#</a></h3>
-<p>Get the first stress field</p>
+<h1>Plot s3 stresses<a class="headerlink" href="#plot-s3-stresses" title="Permalink to this heading">#</a></h1>
+<p>Get the first stress field.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_field</span> <span class="o">=</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Plot max s3 of each element</p>
+<p>Plot the maximum s3 of each element.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s3_component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR33</span>
 <span class="n">max_s3_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">max_s3_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_max_s3_field</span><span class="p">:</span>
@@ -489,7 +509,7 @@ in the element coordinate system (material coordinate system).</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p>Plot s3 at the mid-plane of a certain ply</p>
+<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_001.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p>Plot s3 at the mid-plane of a certain ply.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">analysis_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_ply</span></a> <span class="o">=</span> <span class="s2">&quot;P3L1__Ply.1&quot;</span>
 
@@ -515,7 +535,7 @@ in the element coordinate system (material coordinate system).</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.718 seconds)</p>
+<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  6.143 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-7-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/aacf4e81e7cf567a4fea4a631f9c6861/7_interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">7_interlaminar_normal_stress_example.py</span></code></a></p>
@@ -525,8 +545,6 @@ in the element coordinate system (material coordinate system).</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</section>
-</section>
 </section>
 
 

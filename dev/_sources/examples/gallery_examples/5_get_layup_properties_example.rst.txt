@@ -20,27 +20,26 @@
 
 .. _layup_properties_plot:
 
-Get lay-up properties
----------------------
+Lay-up properties
+-----------------
 
-Extract elemental layered properties such as thickness and material.
+This example shows how to efficiently extract elemental lay-up properties such as
+thickness, angles, and analysis ply names. These are typically used for layer-wise
+postprocessing and data filtering.
 
-This example shows how to access basic lay-up properties such as layer
-thicknesses, angles and analysis ply names. These properties can be queried
-very efficiently. To get the full lay-up information of an element including results
-consider also :class:`Sampling Point <.SamplingPoint>`.
+To get the full layer information of an element, including results,
+consider using the :class:`SamplingPoint <.SamplingPoint>` class.
 
-Element layered properties are typically used for layer-wise post-processing and
-data filtering.
+.. GENERATED FROM PYTHON SOURCE LINES 15-21
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-24
+Set up analysis
+~~~~~~~~~~~~~~~
+Setting up the analysis consists of importing dependencies, connecting to the
+DPF server, and retrieving the example files.
 
-Script
-~~~~~~
+Import dependencies.
 
-Import dependencies
-
-.. GENERATED FROM PYTHON SOURCE LINES 24-31
+.. GENERATED FROM PYTHON SOURCE LINES 21-28
 
 .. code-block:: default
 
@@ -58,12 +57,11 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-34
+.. GENERATED FROM PYTHON SOURCE LINES 29-30
 
-Start a server and get the examples files.
-This will copy the example files into the current working directory.
+Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-37
+.. GENERATED FROM PYTHON SOURCE LINES 30-33
 
 .. code-block:: default
 
@@ -77,11 +75,13 @@ This will copy the example files into the current working directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-39
+.. GENERATED FROM PYTHON SOURCE LINES 34-37
 
-Set up the composite model
+Set up model
+~~~~~~~~~~~~
+Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 37-39
 
 .. code-block:: default
 
@@ -94,9 +94,11 @@ Set up the composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-43
+.. GENERATED FROM PYTHON SOURCE LINES 40-43
 
-Get layup properties for all the elements and show the first one as an example
+Get lay-up properties
+~~~~~~~~~~~~~~~~~~~~~
+Get lay-up properties for all elements and show the first one as an example.
 
 .. GENERATED FROM PYTHON SOURCE LINES 43-51
 
@@ -117,11 +119,13 @@ Get layup properties for all the elements and show the first one as an example
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-53
+.. GENERATED FROM PYTHON SOURCE LINES 52-55
 
 Plot lay-up properties
+~~~~~~~~~~~~~~~~~~~~~~
+Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-71
+.. GENERATED FROM PYTHON SOURCE LINES 55-73
 
 .. code-block:: default
 
@@ -158,7 +162,7 @@ Plot lay-up properties
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.277 seconds)
+   **Total running time of the script:** ( 0 minutes  0.471 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_5_get_layup_properties_example.py:

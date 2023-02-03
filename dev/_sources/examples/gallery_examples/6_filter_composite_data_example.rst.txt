@@ -23,21 +23,22 @@
 Filter result data by different criteria
 ----------------------------------------
 
-Filter strains and stresses by material, layer or analysis ply.
+This example show how data filtering can be used for custom postprocessing of
+layered composites. You can filter strains and stresses by material, layer, or
+analysis ply. The example filters data by layer, spot, and node, as well as material
+or analysis ply ID. To learn more about how layered result data is organized,
+see :ref:`select_indices`.
 
-This example shows how to filter data by layer, spot and node as well as material
-or analysis_ply id. This is example can be of help for custom post-processing of
-layered composites. Refer to :ref:`select_indices` to learn more about how layered
-result data is organized.
+.. GENERATED FROM PYTHON SOURCE LINES 15-21
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-20
+Set up analysis
+~~~~~~~~~~~~~~~
+Setting up the analysis consists of importing dependencies, connecting to the
+DPF server, and retrieving the example files.
 
-Script
-~~~~~~
+Import dependencies.
 
-Import dependencies
-
-.. GENERATED FROM PYTHON SOURCE LINES 20-38
+.. GENERATED FROM PYTHON SOURCE LINES 21-39
 
 .. code-block:: default
 
@@ -66,10 +67,9 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-41
 
-Start a server and get the examples files.
-This will copy the example files into the current working directory.
+Start a DPF server and copy the example files into the current working directory.
 
 .. GENERATED FROM PYTHON SOURCE LINES 41-44
 
@@ -85,14 +85,15 @@ This will copy the example files into the current working directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-46
+.. GENERATED FROM PYTHON SOURCE LINES 45-48
 
-Set up composite model
+Set up model
+~~~~~~~~~~~~
+Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-49
+.. GENERATED FROM PYTHON SOURCE LINES 48-50
 
 .. code-block:: default
-
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -103,11 +104,13 @@ Set up composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-51
+.. GENERATED FROM PYTHON SOURCE LINES 51-54
 
-Get stress field
+Get result data
+~~~~~~~~~~~~~~~
+Get the stress field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-55
+.. GENERATED FROM PYTHON SOURCE LINES 54-58
 
 .. code-block:: default
 
@@ -122,11 +125,11 @@ Get stress field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-57
+.. GENERATED FROM PYTHON SOURCE LINES 59-60
 
-Get element infos for all the elements and show the first one as an example
+Get element information for all elements and show the first one as an example.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-61
+.. GENERATED FROM PYTHON SOURCE LINES 60-64
 
 .. code-block:: default
 
@@ -147,11 +150,13 @@ Get element infos for all the elements and show the first one as an example
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-63
+.. GENERATED FROM PYTHON SOURCE LINES 65-68
 
-Plot stress values in material direction for the top layer, first node and "top" spot
+Plot result data
+~~~~~~~~~~~~~~~~
+For the top layer, plot stress values in the material direction for the first node and top spot.
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-80
+.. GENERATED FROM PYTHON SOURCE LINES 68-85
 
 .. code-block:: default
 
@@ -184,11 +189,13 @@ Plot stress values in material direction for the top layer, first node and "top"
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-82
+.. GENERATED FROM PYTHON SOURCE LINES 86-89
 
-List all the available analysis plies
+List analysis plies
+~~~~~~~~~~~~~~~~~~~
+List all available analysis plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-85
+.. GENERATED FROM PYTHON SOURCE LINES 89-92
 
 .. code-block:: default
 
@@ -208,12 +215,14 @@ List all the available analysis plies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-88
+.. GENERATED FROM PYTHON SOURCE LINES 93-97
 
+Plot results
+~~~~~~~~~~~~
 Loop all elements that contain a given ply and plot the maximum stress value
-in material direction in that ply
+in the material direction in this ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-111
+.. GENERATED FROM PYTHON SOURCE LINES 97-120
 
 .. code-block:: default
 
@@ -252,15 +261,15 @@ in material direction in that ply
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-117
+.. GENERATED FROM PYTHON SOURCE LINES 121-126
 
-Loop all elements and get maximum stress in material direction
-for all plies that have the material with dpf_material_id.
-Note: It is currently not possible to get a dpf_material_id for a
-given material name. It is only possible
-to get the dpf_material_id from an analysis ply.
+Loop all elements and get the maximum stress in the material direction
+for all plies that have a material with DPF material ID.
+Note: It is not possible to get a DPF material ID for a
+given material name. It is only possible to get a DPF material
+ID from an analysis ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-138
+.. GENERATED FROM PYTHON SOURCE LINES 126-147
 
 .. code-block:: default
 
@@ -300,7 +309,7 @@ to get the dpf_material_id from an analysis ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.361 seconds)
+   **Total running time of the script:** ( 0 minutes  1.607 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_6_filter_composite_data_example.py:

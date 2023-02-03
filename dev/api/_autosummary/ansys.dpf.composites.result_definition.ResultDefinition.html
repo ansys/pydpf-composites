@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2744,16 +2744,16 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="ansys.dpf.composites.result_definition.ResultDefinition">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.result_definition.</span></span><span class="sig-name descname"><span class="pre">ResultDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined_failure_criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_scopes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rst_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inverse_reserve_factor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stress_strain_eval_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rst_file'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'composite_failure'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.result_definition.ResultDefinition" title="Permalink to this definition">#</a></dt>
 <dd><p>Represents the result definition of DPF Composites.</p>
-<p>It is used to configure the DPF operators composite::failure_evaluator
-and composite::sampling_point_evaluator.</p>
+<p>This class is used to configure the DPF operators <code class="docutils literal notranslate"><span class="pre">composite::failure_evaluator</span></code>
+and <code class="docutils literal notranslate"><span class="pre">composite::sampling_point_evaluator</span></code>.</p>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_dict.html#ansys.dpf.composites.result_definition.ResultDefinition.to_dict" title="ansys.dpf.composites.result_definition.ResultDefinition.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.to_dict</span></code></a>()</p></td>
-<td><p>Get the result definition in a dict representation.</p></td>
+<td><p>Get the result definition in a dictionary representation.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_json.html#ansys.dpf.composites.result_definition.ResultDefinition.to_json" title="ansys.dpf.composites.result_definition.ResultDefinition.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.to_json</span></code></a>()</p></td>
-<td><p>Convert the dict representation of the result definition into a JSON Dict.</p></td>
+<td><p>Convert the dictionary representation of the result definition to a JSON dictionary.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2761,34 +2761,34 @@ and composite::sampling_point_evaluator.</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.combined_failure_criterion.html#ansys.dpf.composites.result_definition.ResultDefinition.combined_failure_criterion" title="ansys.dpf.composites.result_definition.ResultDefinition.combined_failure_criterion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.combined_failure_criterion</span></code></a></p></td>
-<td><p>Configure of the failure criteria such as Max Stress, Puck and Wrinkling.</p></td>
+<td><p>Configuration of the failure criteria such as maximum stress, puck, and wrinkling.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.expression.html#ansys.dpf.composites.result_definition.ResultDefinition.expression" title="ansys.dpf.composites.result_definition.ResultDefinition.expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.expression</span></code></a></p></td>
-<td><p>Define the type of the result.</p></td>
+<td><p>Type of the result.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.material_file.html#ansys.dpf.composites.result_definition.ResultDefinition.material_file" title="ansys.dpf.composites.result_definition.ResultDefinition.material_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.material_file</span></code></a></p></td>
-<td><p>Path of material files which store the material properties.</p></td>
+<td><p>Path of the material files that store the material properties.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.max_chunk_size.html#ansys.dpf.composites.result_definition.ResultDefinition.max_chunk_size" title="ansys.dpf.composites.result_definition.ResultDefinition.max_chunk_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.max_chunk_size</span></code></a></p></td>
-<td><p>Define the chunk size (number of elements) for the result evaluation.</p></td>
+<td><p>Maximum chunk size (number of elements) for the result evaluation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.measure.html#ansys.dpf.composites.result_definition.ResultDefinition.measure" title="ansys.dpf.composites.result_definition.ResultDefinition.measure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.measure</span></code></a></p></td>
-<td><p>Define the return type of the failure values.</p></td>
+<td><p>Return type of the failure values.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.name.html#ansys.dpf.composites.result_definition.ResultDefinition.name" title="ansys.dpf.composites.result_definition.ResultDefinition.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.name</span></code></a></p></td>
-<td><p>Define a custom name.</p></td>
+<td><p>Custom name.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.rst_file.html#ansys.dpf.composites.result_definition.ResultDefinition.rst_file" title="ansys.dpf.composites.result_definition.ResultDefinition.rst_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.rst_file</span></code></a></p></td>
-<td><p>Path of the result files (.rst).</p></td>
+<td><p>Path of the result (RST) files.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.scopes.html#ansys.dpf.composites.result_definition.ResultDefinition.scopes" title="ansys.dpf.composites.result_definition.ResultDefinition.scopes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.scopes</span></code></a></p></td>
-<td><p>Get the different scopes of the result definition.</p></td>
+<td><p>Scopes of the result definition.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.stress_strain_eval_mode.html#ansys.dpf.composites.result_definition.ResultDefinition.stress_strain_eval_mode" title="ansys.dpf.composites.result_definition.ResultDefinition.stress_strain_eval_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.stress_strain_eval_mode</span></code></a></p></td>
-<td><p>Results are loaded from a result file by default (&quot;rst_file&quot;).</p></td>
+<td><p>Results loaded from a result (RST) file by default.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.time.html#ansys.dpf.composites.result_definition.ResultDefinition.time" title="ansys.dpf.composites.result_definition.ResultDefinition.time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.time</span></code></a></p></td>
-<td><p>Select time / solution step.</p></td>
+<td><p>Time or solution step.</p></td>
 </tr>
 </tbody>
 </table>

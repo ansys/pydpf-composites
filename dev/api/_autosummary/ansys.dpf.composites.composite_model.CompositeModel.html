@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2743,42 +2743,46 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.composite_model.</span></span><span class="sig-name descname"><span class="pre">CompositeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">composite_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel" title="Permalink to this definition">#</a></dt>
-<dd><p>Provides access to the basic composite post-processing functionality.</p>
-<p>On initialization, the CompositeModel automatically adds the composite layup information
-to the meshed region(s). It prepares the providers for different layup properties
-so they can be efficiently evaluated.</p>
-<p>Note on performance: When creating a CompositeModel, several providers are created and
-the layup information is added the dpf meshed regions. Depending on the use
-case it can be more efficient to create the providers separately.</p>
-<p>Note on assemblies: For assemblies with multiple composite definition files, separate meshes and
-layup operators are generated (wrapped by CompositeInfo). This is needed because the
-layup provider can currently only add the data of a single composite definitions file
-to a mesh. All functions which depend on composite definitions have to be called with the
-correct composite_definition_label. The layered elements that got information from a given
-composite_definition_label can be determined by calling
-self.get_all_layered_element_ids_for_composite_definition_label.
-All the elements which are not part of a composite definition are either homogeneous
-solids or layered models defined outside of an ACP model.
-self.composite_definition_labels returns
-All the available composite_definition_labels.
-See also: <a class="reference internal" href="../../examples/gallery_examples/8_assembly_example.html#sphx-glr-examples-gallery-examples-8-assembly-example-py"><span class="std std-ref">Post-process an assembly</span></a></p>
+<dd><p>Provides access to the basic composite postprocessing functionality.</p>
+<p>On initialization, the <code class="docutils literal notranslate"><span class="pre">CompositeModel</span></code> class automatically adds composite lay-up
+information to the meshed regions. It prepares the providers for different lay-up properties
+so that they can be efficiently evaluated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When creating a <code class="docutils literal notranslate"><span class="pre">CompositeModel</span></code> instance, several providers are created and
+lay-up information is added to the DPF meshed regions. Depending on the use
+case, it can be more efficient to create the providers separately.</p>
+<p>For assemblies with multiple composite definition files, separate meshes and
+lay-up operators are generated (wrapped by the <code class="docutils literal notranslate"><span class="pre">CompositeInfo</span></code> class). This
+is needed because the lay-up provider can currently only add the data of a single
+composite definitions file to a mesh. All functions that depend on composite
+definitions mut be called with the correct <code class="docutils literal notranslate"><span class="pre">composite_definition_label</span></code>
+parameter. The layered elements that get information from a given
+composite definition label can be determined by calling
+<code class="docutils literal notranslate"><span class="pre">self.get_all_layered_element_ids_for_composite_definition_label</span></code>.
+All the elements that are not part of a composite definition are either homogeneous
+solids or layered models defined outside of an ACP model. The
+<code class="docutils literal notranslate"><span class="pre">self.composite_definition_labels</span></code> command returns all available composite
+definition labels. For more information, see
+<a class="reference internal" href="../../examples/gallery_examples/8_assembly_example.html#sphx-glr-examples-gallery-examples-8-assembly-example-py"><span class="std std-ref">Postprocess an assembly</span></a>.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>composite_files</strong> (<a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>) – Use <a class="reference internal" href="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a> to obtain
-ContinuousFiberCompositesFiles object.</p>
+<dd class="field-odd"><p><strong>composite_files</strong> (<a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>) – Use the <a class="reference internal" href="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a> function to obtain
+the <a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a> object.</p>
 </dd>
 </dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses.html#ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses" title="ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.add_interlaminar_normal_stresses</span></code></a>(...)</p></td>
-<td><p>Add interlaminar_normal_stresses to the stresses FieldsContainer.</p></td>
+<td><p>Add interlaminar normal stresses to the stresses fields container.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria.html#ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria" title="ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.evaluate_failure_criteria</span></code></a>(...)</p></td>
-<td><p>Get a fields container with the evaluted failure criteria.</p></td>
+<td><p>Get a fields container with the evaluated failure criteria.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids_for_composite_definition_label.html#ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids_for_composite_definition_label" title="ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids_for_composite_definition_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_all_layered_element_ids_for_composite_definition_label</span></code></a>(...)</p></td>
-<td><p>Get all the layered element ids that belong to a given composite_definition_label.</p></td>
+<td><p>Get all layered element IDs that belong to a composite definition label.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_analysis_plies.html#ansys.dpf.composites.composite_model.CompositeModel.get_analysis_plies" title="ansys.dpf.composites.composite_model.CompositeModel.get_analysis_plies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_analysis_plies</span></code></a>(element_id)</p></td>
 <td><p>Get analysis ply names.</p></td>
@@ -2787,25 +2791,25 @@ ContinuousFiberCompositesFiles object.</p>
 <td><p>Get a dictionary with constant properties.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_info.html#ansys.dpf.composites.composite_model.CompositeModel.get_element_info" title="ansys.dpf.composites.composite_model.CompositeModel.get_element_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_element_info</span></code></a>(element_id)</p></td>
-<td><p>Get element info for a given element id.</p></td>
+<td><p>Get element information for an element ID.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_laminate_offset.html#ansys.dpf.composites.composite_model.CompositeModel.get_element_laminate_offset" title="ansys.dpf.composites.composite_model.CompositeModel.get_element_laminate_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_element_laminate_offset</span></code></a>(...)</p></td>
-<td><p>Get laminate offset of element.</p></td>
+<td><p>Get the laminate offset of an element.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_layup_operator.html#ansys.dpf.composites.composite_model.CompositeModel.get_layup_operator" title="ansys.dpf.composites.composite_model.CompositeModel.get_layup_operator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_layup_operator</span></code></a>([...])</p></td>
-<td><p>Get the layup operators.</p></td>
+<td><p>Get the lay-up operators.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_mesh.html#ansys.dpf.composites.composite_model.CompositeModel.get_mesh" title="ansys.dpf.composites.composite_model.CompositeModel.get_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_mesh</span></code></a>([...])</p></td>
-<td><p>Get the underlying dpf meshed region.</p></td>
+<td><p>Get the underlying DPF meshed region.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_property_for_all_layers.html#ansys.dpf.composites.composite_model.CompositeModel.get_property_for_all_layers" title="ansys.dpf.composites.composite_model.CompositeModel.get_property_for_all_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_property_for_all_layers</span></code></a>(...)</p></td>
-<td><p>Get a layer property for a given element_id.</p></td>
+<td><p>Get a layer property for an element ID.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies.html#ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies" title="ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_result_times_or_frequencies</span></code></a>()</p></td>
-<td><p>Return the available times/frequencies in the result file.</p></td>
+<td><p>Get the times or frequencies in the result file.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point.html#ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point" title="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.get_sampling_point</span></code></a>(...[, ...])</p></td>
-<td><p>Get a sampling point for a given element_id and failure criteria.</p></td>
+<td><p>Get a sampling point for an element ID and failure criteria.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2813,16 +2817,16 @@ ContinuousFiberCompositesFiles object.</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels.html#ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels" title="ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.composite_definition_labels</span></code></a></p></td>
-<td><p>Get all the composite_definition_labels in this model.</p></td>
+<td><p>All composite definition labels in the model.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html#ansys.dpf.composites.composite_model.CompositeModel.core_model" title="ansys.dpf.composites.composite_model.CompositeModel.core_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.core_model</span></code></a></p></td>
-<td><p>Get the underlying dpf core Model.</p></td>
+<td><p>Underlying DPF core model.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html#ansys.dpf.composites.composite_model.CompositeModel.data_sources" title="ansys.dpf.composites.composite_model.CompositeModel.data_sources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.data_sources</span></code></a></p></td>
-<td><p>Get the composite DataSources.</p></td>
+<td><p>Composite data sources.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html#ansys.dpf.composites.composite_model.CompositeModel.material_operators" title="ansys.dpf.composites.composite_model.CompositeModel.material_operators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.material_operators</span></code></a></p></td>
-<td><p>Get the Material operators.</p></td>
+<td><p>Material operators.</p></td>
 </tr>
 </tbody>
 </table>

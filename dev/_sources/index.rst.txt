@@ -6,16 +6,16 @@
    intro
    api/index
    examples/index
-   Developer's guide <developers_guide>
+   contribute
 
 PyDPF Composites
 ----------------
 
-A Python wrapper for Ansys DPF composites. It implements classes on top of the
-DPF Composites operators and data accessors for short fiber and layered composites
-(layered shell and solid elements). This module can be used to post-process fiber
-reinforced plastics and layered composites, and to implement custom failure
-criteria and computation.
+PyDPF Composites is a Python wrapper for Ansys DPF composites. It implements
+classes on top of DPF Composites operators and data accessors for short
+fiber and layered composites (layered shell and solid elements). This module
+can be used to postprocess fiber reinforced plastics and layered composites, and
+to implement custom failure criteria and computation.
 
 .. grid:: 1 1 2 2
     :gutter: 2
@@ -24,56 +24,59 @@ criteria and computation.
         :link: intro
         :link-type: doc
 
-        The getting started guide contains installation instructions, and a simple
+        Contains installation instructions and a simple
         example to create a failure plot from a Workbench project.
 
     .. grid-item-card:: :octicon:`play` Examples
         :link: examples/index
         :link-type: doc
 
-        The examples demonstrate the use of PyDPF Composites for various workflows.
+        Demonstrate the use of PyDPF Composites for various workflows.
 
     .. grid-item-card:: :octicon:`file-code` API reference
         :link: api/index
         :link-type: doc
 
-        Reference for the public Python classes, methods and functions.
+        Describes the public Python classes, methods, and functions.
 
-    .. grid-item-card:: :octicon:`code` Developer's guide
-        :link: developers_guide
+    .. grid-item-card:: :octicon:`code` Contribute
+        :link: contribute
         :link-type: doc
 
-        Contributing to PyDPF Composites.
+        Provides developer installation and usage information.
 
 Key features
 ''''''''''''
 
-* Failure criteria evaluator.
-  See this :doc:`Example </examples/gallery_examples/1_failure_operator_example>`.
-* :doc:`Sampling points <api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint>` to extract and visualize result over the
-  entire thickness of the laminate.
-  :doc:`Here <examples/gallery_examples/2_sampling_point_example>` is an example.
-* :doc:`Result definition <api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition>` to configure combined failure criteria and scopes.
-* Accessors to lay-up data such as plies and materials. Refer to the examples
-  :doc:`Lay-up properties <examples/gallery_examples/5_get_layup_properties_example>`
-  and :doc:`Material properties <examples/gallery_examples/4_get_material_properties_example>`.
-* Interface to implement custom failure criteria and analysis as shown in this
-  :doc:`Example <examples/gallery_examples/4_get_material_properties_example>`.
-* Post-processing of homogeneous elements.
+Here are some key features of PyDPF Composites:
 
-Pre-requisites and compatibility
-''''''''''''''''''''''''''''''''
-- Installation of `Ansys Workbench`_.
+* Failure criteria evaluation as shown in :ref:`Composite failure analysis <sphx_glr_examples_gallery_examples_1_failure_operator_example.py>`.
+* A :class:`.SamplingPoint` class for extracting and visualizing a result over the entire thickness of a laminate as shown in
+  :ref:`Sampling point <sphx_glr_examples_gallery_examples_2_sampling_point_example.py>`.
+* A :class:`.ResultDefinition` class for configuring combined failure criteria and scopes.
+* Accessors for getting layered properties such as plies and materials as shown in
+  :ref:`Layered properties <sphx_glr_examples_gallery_examples_5_get_layup_properties_example.py>`
+  and :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
+* Interface to implement custom failure criteria and analysis as shown in
+  :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
+* Postprocessing of homogeneous elements.
+
+Prerequisites
+'''''''''''''
+
+Here are some prerequisites for PyDPF Composites:
+
+- Installation of `Ansys Workbench`_ from Ansys 2023 R1 or later. For more information,
+  see `Compatibility`_ in the DPF help.
 - ACP model or short fiber composite model.
-- PyDPF Composites supports Ansys 2023 R1 or newer. More details can be found on
-  the DPF help about `Compatibility`_.
 
 Limitations
 '''''''''''
-- Layered elements (section data) which have not been pre-processed with ACP are not supported.
-  Refer to the Section `Import legacy models`_ on the official Ansys help
-  to learn how to convert legacy models.
-- Other solvers than MAPDL are not supported.
+- Layered elements (section data) that have not been preprocessed with ACP are not supported.
+  For information on converting legacy models, see `Import legacy models`_
+  in the Ansys help.
+- Only the Mechanical APDL solver is supported.
+
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
 .. _Import legacy models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html

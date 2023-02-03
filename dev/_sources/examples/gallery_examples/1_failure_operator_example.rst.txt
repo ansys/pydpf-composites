@@ -23,27 +23,27 @@
 Composite failure analysis
 --------------------------
 
-Analyse a composite structure by a combined failure criterion.
+This example shows how to analyze a composite structure by a combined failure criterion.
 
 The failure operator of DPF Composites computes the minimum and maximum failure values
 and failure modes of a combined failure criterion. A combined failure criterion is a selection of
-failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Refer to
-:ref:`the Failure Criteria API Reference <failure_criteria>` to get the full list of
-failure criteria.
+failure criteria such as Puck, Tsai-Wu, or face sheet wrinkling. For a list of all
+failure criteria, see :ref:`failure_criteria`.
 
 The :class:`Combined Failure Criterion
-<.failure_criteria.CombinedFailureCriterion>`
+<.failure_criteria.CombinedFailureCriterion>` class
 allows you to assess different type of materials and failure modes at once.
-The scoping enables to evaluate of the min and max failure per element,
-or to select a list of materials or plies.
+The scoping enables you to evaluate the minimum and maximum failures per element
+or select a list of materials or plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-27
+.. GENERATED FROM PYTHON SOURCE LINES 21-27
 
-Script
-~~~~~~
+Set up analysis
+~~~~~~~~~~~~~~~
+Setting up the analysis consists of loading Ansys libraries, connecting to the
+DPF server, and retrieving the example files.
 
-Load ansys libraries, connect to the DPF server, and retrieve the example
-files.
+Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 27-40
 
@@ -69,12 +69,11 @@ files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-43
+.. GENERATED FROM PYTHON SOURCE LINES 41-42
 
-Start a server and get the examples files.
-This will copy the example files into the current working directory.
+Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-46
+.. GENERATED FROM PYTHON SOURCE LINES 42-45
 
 .. code-block:: default
 
@@ -88,13 +87,16 @@ This will copy the example files into the current working directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-48
+.. GENERATED FROM PYTHON SOURCE LINES 46-49
 
-Configure the combined failure criterion
+Configure combined failure criterion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-59
+.. GENERATED FROM PYTHON SOURCE LINES 49-61
 
 .. code-block:: default
+
 
 
     combined_fc = CombinedFailureCriterion(
@@ -114,13 +116,16 @@ Configure the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-61
+.. GENERATED FROM PYTHON SOURCE LINES 62-65
 
-Set up the composite model
+Set up model and evaluate failures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-63
+.. GENERATED FROM PYTHON SOURCE LINES 65-68
 
 .. code-block:: default
+
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -131,11 +136,11 @@ Set up the composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-65
+.. GENERATED FROM PYTHON SOURCE LINES 69-70
 
-Failure evaluation for the entire model
+Evaluate failures for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-71
+.. GENERATED FROM PYTHON SOURCE LINES 70-76
 
 .. code-block:: default
 
@@ -157,11 +162,11 @@ Failure evaluation for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-73
+.. GENERATED FROM PYTHON SOURCE LINES 77-78
 
-Scope failure evaluation to a certain element scope
+Scope failure evaluation to a certain element scope.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-80
+.. GENERATED FROM PYTHON SOURCE LINES 78-85
 
 .. code-block:: default
 
@@ -184,11 +189,11 @@ Scope failure evaluation to a certain element scope
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-82
+.. GENERATED FROM PYTHON SOURCE LINES 86-87
 
-Scope by plies
+Scope failure evaluation by plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-88
+.. GENERATED FROM PYTHON SOURCE LINES 87-93
 
 .. code-block:: default
 
@@ -213,7 +218,7 @@ Scope by plies
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.034 seconds)
+   **Total running time of the script:** ( 0 minutes  5.287 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_1_failure_operator_example.py:

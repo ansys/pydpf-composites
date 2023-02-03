@@ -23,33 +23,36 @@
 Interlaminar normal stresses
 ----------------------------
 
-Compute interlaminar normal stresses for layered shells.
-
 This example shows how to enrich the stresses of layered shells by
-interlaminar normal stresses, in short INS. INS can be of importance in thick
-and curved laminates.
+computing interlaminar normal stresses. Interlaminar normal
+stresses can be important in thick and curved laminates.
 
-For simple use cases it is preferable to use the composite failure operator
-(:ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`)
-or the composite sampling point operator
-(:ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`). Note, the INS are
-computed automatically in these workflows if required. For instance if a 3D failure criterion is
-activated.
-The :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py` example shows how
-helper functions can be used to obtain composite result data.
+Because interlaminar normal stresses are typically not available
+for layered shell elements, the ``INS`` operator is used to recompute
+the ``s3`` result based on the laminate strains, the geometrical
+curvature, and the lay-up.
 
-INS are typically not available if layered shell elements are
-used. The INS operator recomputes s3 based on the laminate strains, the geometrical curvature and
-the lay-up.
+.. note::
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-33
+    For simple use cases, using the composite failure operator or
+    composite sampling point operator is preferable. For examples,
+    see :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
+    and :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`.
+    In these workflows, interlaminar normal stresses are computed automatically
+    if required, such as if a 3D failure criterion is activated. Additionally,
+    :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
+    shows how helper functions can be used to obtain composite result data.
 
-Script
-~~~~~~
+.. GENERATED FROM PYTHON SOURCE LINES 30-36
 
-Load Ansys libraries
+Set up analysis
+~~~~~~~~~~~~~~~
+Setting up the analysis consists of loading Ansys libraries, connecting to the
+DPF server, and retrieving the example files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-42
+Load Ansys libraries.
+
+.. GENERATED FROM PYTHON SOURCE LINES 36-45
 
 .. code-block:: default
 
@@ -69,12 +72,11 @@ Load Ansys libraries
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-45
+.. GENERATED FROM PYTHON SOURCE LINES 46-47
 
-Start a server and get the examples files.
-This will copy the example files into the current working directory.
+Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
+.. GENERATED FROM PYTHON SOURCE LINES 47-50
 
 .. code-block:: default
 
@@ -88,11 +90,13 @@ This will copy the example files into the current working directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
+.. GENERATED FROM PYTHON SOURCE LINES 51-54
 
-Configure data sources
+Set up model and prepare inputs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-52
+.. GENERATED FROM PYTHON SOURCE LINES 54-56
 
 .. code-block:: default
 
@@ -105,17 +109,15 @@ Configure data sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-57
+.. GENERATED FROM PYTHON SOURCE LINES 57-60
 
-Prepare inputs for the INS operator
+Prepare the inputs for the INS operator.
+``rotate_to_global`` is ``False`` because the postprocessing engine expects
+the results to be in the element coordinate system (material coordinate system).
 
-Rotate to global is False because the post-processing engine expects the results to be
-in the element coordinate system (material coordinate system).
-
-.. GENERATED FROM PYTHON SOURCE LINES 57-64
+.. GENERATED FROM PYTHON SOURCE LINES 60-66
 
 .. code-block:: default
-
 
     strain_operator = composite_model.core_model.results.elastic_strain()
     strain_operator.inputs.bool_rotate_to_global(False)
@@ -130,14 +132,14 @@ in the element coordinate system (material coordinate system).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-69
+.. GENERATED FROM PYTHON SOURCE LINES 67-71
 
 Compute interlaminar normal stresses
-""""""""""""""""""""""""""""""""""""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Compute the interlaminar normal stresses.
+The ``INS`` operator stores the stresses in the provided stress field.
 
-Note: the INS operator stores the stresses in the provided stressed field.
-
-.. GENERATED FROM PYTHON SOURCE LINES 69-74
+.. GENERATED FROM PYTHON SOURCE LINES 71-76
 
 .. code-block:: default
 
@@ -153,14 +155,13 @@ Note: the INS operator stores the stresses in the provided stressed field.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-79
+.. GENERATED FROM PYTHON SOURCE LINES 77-80
 
 Plot s3 stresses
-""""""""""""""""
+----------------
+Get the first stress field.
 
-Get the first stress field
-
-.. GENERATED FROM PYTHON SOURCE LINES 79-81
+.. GENERATED FROM PYTHON SOURCE LINES 80-82
 
 .. code-block:: default
 
@@ -173,11 +174,11 @@ Get the first stress field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-83
+.. GENERATED FROM PYTHON SOURCE LINES 83-84
 
-Plot max s3 of each element
+Plot the maximum s3 of each element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-102
+.. GENERATED FROM PYTHON SOURCE LINES 84-103
 
 .. code-block:: default
 
@@ -212,11 +213,11 @@ Plot max s3 of each element
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 103-104
+.. GENERATED FROM PYTHON SOURCE LINES 104-105
 
-Plot s3 at the mid-plane of a certain ply
+Plot s3 at the mid-plane of a certain ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-128
+.. GENERATED FROM PYTHON SOURCE LINES 105-129
 
 .. code-block:: default
 
@@ -259,7 +260,7 @@ Plot s3 at the mid-plane of a certain ply
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.718 seconds)
+   **Total running time of the script:** ( 0 minutes  6.143 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:

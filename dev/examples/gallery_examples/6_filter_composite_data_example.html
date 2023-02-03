@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Interlaminar normal stresses" href="7_interlaminar_normal_stress_example.html" />
-    <link rel="prev" title="Get lay-up properties" href="5_get_layup_properties_example.html" />
+    <link rel="prev" title="Lay-up properties" href="5_get_layup_properties_example.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -315,7 +315,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="5_get_layup_properties_example.html">
-   Get lay-up properties
+   Lay-up properties
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -330,7 +330,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="8_assembly_example.html">
-   Post-process an assembly
+   Postprocess an assembly
   </a>
  </li>
  <li class="toctree-l1">
@@ -363,8 +363,33 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#script">
-   Script
+  <a class="reference internal nav-link" href="#set-up-analysis">
+   Set up analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-model">
+   Set up model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-result-data">
+   Get result data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-result-data">
+   Plot result data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#list-analysis-plies">
+   List analysis plies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-results">
+   Plot results
   </a>
  </li>
 </ul>
@@ -393,14 +418,16 @@ to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="filter-result-data-by-different-criteria">
 <span id="filter-composite-data"></span><span id="sphx-glr-examples-gallery-examples-6-filter-composite-data-example-py"></span><h1>Filter result data by different criteria<a class="headerlink" href="#filter-result-data-by-different-criteria" title="Permalink to this heading">#</a></h1>
-<p>Filter strains and stresses by material, layer or analysis ply.</p>
-<p>This example shows how to filter data by layer, spot and node as well as material
-or analysis_ply id. This is example can be of help for custom post-processing of
-layered composites. Refer to <a class="reference internal" href="../../api/select_indices.html#select-indices"><span class="std std-ref">Select elementary indices</span></a> to learn more about how layered
-result data is organized.</p>
-<section id="script">
-<h2>Script<a class="headerlink" href="#script" title="Permalink to this heading">#</a></h2>
-<p>Import dependencies</p>
+<p>This example show how data filtering can be used for custom postprocessing of
+layered composites. You can filter strains and stresses by material, layer, or
+analysis ply. The example filters data by layer, spot, and node, as well as material
+or analysis ply ID. To learn more about how layered result data is organized,
+see <a class="reference internal" href="../../api/select_indices.html#select-indices"><span class="std std-ref">Select elementary indices</span></a>.</p>
+<section id="set-up-analysis">
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<p>Setting up the analysis consists of importing dependencies, connecting to the
+DPF server, and retrieving the example files.</p>
+<p>Import dependencies.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -420,23 +447,28 @@ result data is organized.</p>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
 </div>
-<p>Start a server and get the examples files.
-This will copy the example files into the current working directory.</p>
+<p>Start a DPF server and copy the example files into the current working directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Set up composite model</p>
+</section>
+<section id="set-up-model">
+<h2>Set up model<a class="headerlink" href="#set-up-model" title="Permalink to this heading">#</a></h2>
+<p>Set up the composite model.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Get stress field</p>
+</section>
+<section id="get-result-data">
+<h2>Get result data<a class="headerlink" href="#get-result-data" title="Permalink to this heading">#</a></h2>
+<p>Get the stress field.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">stress_field</span> <span class="o">=</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span><span class="n">pin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Get element infos for all the elements and show the first one as an example</p>
+<p>Get element information for all elements and show the first one as an example.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">stress_field</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span> <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">]</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -445,7 +477,10 @@ This will copy the example files into the current working directory.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ElementInfo(id=1, n_layers=6, n_corner_nodes=4, n_spots=3, is_layered=True, element_type=181, dpf_material_ids=array([3, 2, 2, 1, 2, 3]), is_shell=True, number_of_nodes_per_spot_plane=4)
 </pre></div>
 </div>
-<p>Plot stress values in material direction for the top layer, first node and “top” spot</p>
+</section>
+<section id="plot-result-data">
+<h2>Plot result data<a class="headerlink" href="#plot-result-data" title="Permalink to this heading">#</a></h2>
+<p>For the top layer, plot stress values in the material direction for the first node and top spot.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
 <span class="n">result_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">result_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
@@ -464,7 +499,10 @@ This will copy the example files into the current working directory.</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_6_filter_composite_data_example_001.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_001.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p>List all the available analysis plies</p>
+<img src="../../_images/sphx_glr_6_filter_composite_data_example_001.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_001.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/></section>
+<section id="list-analysis-plies">
+<h2>List analysis plies<a class="headerlink" href="#list-analysis-plies" title="Permalink to this heading">#</a></h2>
+<p>List all available analysis plies.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a>
 </pre></div>
@@ -472,8 +510,11 @@ This will copy the example files into the current working directory.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;P1L1__ud&#39;, &#39;P1L1__ud.2&#39;, &#39;P1L1__woven_45&#39;, &#39;P1L1__ud_patch ns1&#39;, &#39;P1L1__core&#39;, &#39;P1L1__woven_45.2&#39;]
 </pre></div>
 </div>
+</section>
+<section id="plot-results">
+<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h2>
 <p>Loop all elements that contain a given ply and plot the maximum stress value
-in material direction in that ply</p>
+in the material direction in this ply.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
 
 <span class="n">analysis_ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span>
@@ -498,11 +539,11 @@ in material direction in that ply</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ply_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_6_filter_composite_data_example_002.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_002.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p>Loop all elements and get maximum stress in material direction
-for all plies that have the material with dpf_material_id.
-Note: It is currently not possible to get a dpf_material_id for a
-given material name. It is only possible
-to get the dpf_material_id from an analysis ply.</p>
+<img src="../../_images/sphx_glr_6_filter_composite_data_example_002.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_002.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p>Loop all elements and get the maximum stress in the material direction
+for all plies that have a material with DPF material ID.
+Note: It is not possible to get a DPF material ID for a
+given material name. It is only possible to get a DPF material
+ID from an analysis ply.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a> <span class="o">=</span> <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">(</span>
     <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">data_source_or_streams_provider</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span>
 <span class="p">)</span>
@@ -526,7 +567,7 @@ to get the dpf_material_id from an analysis ply.</p>
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">material_result_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_6_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_003.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.361 seconds)</p>
+<img src="../../_images/sphx_glr_6_filter_composite_data_example_003.png" srcset="../../_images/sphx_glr_6_filter_composite_data_example_003.png" alt="6 filter composite data example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.607 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-6-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e05f846beb0a8299ac35fefa3ea22a53/6_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">6_filter_composite_data_example.py</span></code></a></p>

@@ -124,8 +124,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developers_guide.html">
-  Developer's guide
+ <a class="reference internal nav-link" href="../../contribute.html">
+  Contribute
  </a>
 </li>
 
@@ -272,7 +272,7 @@ function checkPageExistsAndRedirect(event) {
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../layup_info.html" accesskey="U">Layup information</a> » </li>
+          <li class="nav-item nav-item-2"><a href="../layup_info.html" accesskey="U">Lay-up information</a> » </li>
         <li class="nav-item nav-item-this"><a href="">ElementInfo</a></li> 
       </ul>
     </div>
@@ -1660,7 +1660,7 @@ function checkPageExistsAndRedirect(event) {
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../layup_info.html">
-   Layup information
+   Lay-up information
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
   <label for="toctree-checkbox-28">
@@ -2743,21 +2743,23 @@ function checkPageExistsAndRedirect(event) {
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.layup_info.ElementInfo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.</span></span><span class="sig-name descname"><span class="pre">ElementInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_corner_nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_spots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_layered</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpf_material_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_shell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_nodes_per_spot_plane</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.ElementInfo" title="Permalink to this definition">#</a></dt>
-<dd><p>Layup information for a given element.</p>
-<p>Use <a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.html#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> to obtain a <a class="reference internal" href="#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a> for a given element.</p>
+<dd><p>Provides lay-up information for an element.</p>
+<p>Use the <a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.html#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> class to obtain the
+<a class="reference internal" href="#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a> class for an element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Element id / Element Label</p></li>
-<li><p><strong>n_layers</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – number of layers. Equal to 1 for non-layered elements</p></li>
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Element ID or label.</p></li>
+<li><p><strong>n_layers</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of layers. For non-layered elements, the value is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
 <li><p><strong>n_corner_nodes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of corner nodes (without midside nodes).</p></li>
-<li><p><strong>n_spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – number of spots (through-the-thickness integration points) per layer</p></li>
-<li><p><strong>element_type</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Apdl element type (e.g. 181 for layered shells)</p></li>
-<li><p><strong>dpf_material_ids</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>numpy.ndarray</em></a><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.24)"><em>numpy.dtype</em></a><em>[</em><em>numpy.int64</em><em>]</em><em>]</em>) – List of dpf_material_ids for all layers</p></li>
-<li><p><strong>is_shell</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – True if the element is a shell element</p></li>
-<li><p><strong>number_of_nodes_per_spot_plane</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of nodes per output plane.
-Equal to n_corner_nodes for shell elements and n_corner_nodes / 2
-for solid elements. Equal to -1 for non-layered elements.</p></li>
+<li><p><strong>n_spots</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of spots (through-the-thickness integration points) per layer.</p></li>
+<li><p><strong>element_type</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – APDL element type. For example, <code class="docutils literal notranslate"><span class="pre">181</span></code> for layered shells.</p></li>
+<li><p><strong>dpf_material_ids</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>numpy.ndarray</em></a><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.24)"><em>numpy.dtype</em></a><em>[</em><em>numpy.int64</em><em>]</em><em>]</em>) – List of DPF material IDs for all layers.</p></li>
+<li><p><strong>is_shell</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the element is a shell element.</p></li>
+<li><p><strong>number_of_nodes_per_spot_plane</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of nodes per output plane. The value is equal
+to <code class="docutils literal notranslate"><span class="pre">n_corner_nodes</span></code> for shell elements and <code class="docutils literal notranslate"><span class="pre">n_corner_nodes</span></code>
+divided by two for layered solid elements. The value is equal to <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+for non-layered elements.</p></li>
 </ul>
 </dd>
 </dl>
