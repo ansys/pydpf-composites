@@ -3,15 +3,19 @@ import inspect
 
 from ._failure_criterion_base import FailureCriterionBase
 
-_DOC_S1 = "Activates the failure evaluation regarding the stress in the material 1 direction."
-_DOC_S2 = "Activates the failure evaluation regarding the stress in the material 2 direction."
+_DOC_S1 = (
+    "Whether to activate the failure evaluation regarding the stress in the material 1 direction."
+)
+_DOC_S2 = (
+    "Whether to activate the failure evaluation regarding the stress in the material 2 direction."
+)
 _DOC_S3 = (
-    "Activates the failure evaluation regarding the stress in the material "
+    "Whether to activate the failure evaluation regarding the stress in the material "
     "3 direction (out-of-plane)."
 )
-_DOC_S12 = "Activates the failure evaluation regarding the in-plane shear stress s12."
-_DOC_S13 = "Activates the failure evaluation regarding the interlaminar shear stress s13."
-_DOC_S23 = "Activates the failure evaluation regarding the interlaminar shear stress s23."
+_DOC_S12 = "Whether to activate the failure evaluation regarding the in-plane shear stress s12."
+_DOC_S13 = "Whether to activate the failure evaluation regarding the interlaminar shear stress s13."
+_DOC_S23 = "Whether to activate the failure evaluation regarding the interlaminar shear stress s23."
 _DOC_WF_S1 = "Weighting factor of the failure mode s1."
 _DOC_WF_S2 = "Weighting factor of the failure mode s2."
 _DOC_WF_S3 = "Weighting factor of the failure mode s3."
@@ -23,7 +27,7 @@ _DOC_WF_S23 = "Weighting factor of the failure mode s23."
 class MaxStressCriterion(FailureCriterionBase):
     """Max Stress Criterion."""
 
-    __doc__ = f"""Defines the Maximum Stress failure criterion for orthotropic reinforced materials.
+    __doc__ = f"""Defines the maximum stress failure criterion for orthotropic reinforced materials.
 
     Parameters
     ----------
@@ -69,7 +73,7 @@ class MaxStressCriterion(FailureCriterionBase):
         wf_s13: float = 1.0,
         wf_s23: float = 1.0,
     ):
-        """Create a Maximum Stress failure criterion for orthotropic reinforced materials."""
+        """Create a maximum stress failure criterion for orthotropic reinforced materials."""
         super().__init__(name="Max Stress", active=True)
 
         for attr in ATTRS_MAX_STRESS:

@@ -1,4 +1,4 @@
-"""Wrapper for the Sampling Point Operator."""
+"""Wrapper for the sampling point operator."""
 import dataclasses
 import hashlib
 import json
@@ -28,7 +28,7 @@ __all__ = (
 
 @dataclasses.dataclass(frozen=True)
 class SamplingPointFigure:
-    """Sampling Point Figure and Axes."""
+    """Provides the sampling point figure and axes."""
 
     figure: Any
     axes: Any
@@ -36,7 +36,7 @@ class SamplingPointFigure:
 
 @dataclasses.dataclass(frozen=True)
 class FailureResult:
-    """Components of a failure result."""
+    """Provides the components of a failure result."""
 
     mode: str
     inverse_reserve_factor: float
@@ -48,39 +48,40 @@ def _check_result_definition_has_single_scope(result_definition: ResultDefinitio
     if len(result_definition.scopes) != 1:
         raise RuntimeError(
             "Error when creating a sampling point: "
-            "Result definition needs to have exactly one"
+            "Result definition must have exactly one"
             "scope."
         )
 
 
 class SamplingPoint:
-    """Implements the Sampling Point object which wraps the DPF sampling point operator.
+    """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
-    Allows to plot the lay-up and results at a certain point of the layerd structure.
-    The results (e.g. analysis_plies, e1, s12, failure_modes ...) are always from the
-    bottom to the top of the laminate (along the element normal direction).
-    Post-processing results such as e1 are returned as flat arrays where self.spots_per_ply
-    can be used to compute the index for a certain ply.
+    This class provides for plotting the lay-up and results at a certain point of the
+    layered structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
+    ``failure_modes``, are always from the bottom to the top of the laminate (along
+    the element normal direction). Postprocessing results such as ``e1`` are returned
+    as flat arrays where ``self.spots_per_ply`` can be used to compute the index for
+    a certain ply.
 
     Parameters
     ----------
     name :
-        The name of the object.
+        Name of the object.
     result_definition :
-        Result definition object which defines all the inputs and scope.
+        Result definition object that defines all inputs and the scope.
 
     Notes
     -----
     The results of layered elements are stored per integration point. A layered shell element
     has a number of in-plane integration points (depending on the integration scheme) and
-    typically 3 integration points through-the-thickness. We call this through-the-thickness
-    integration points ``SPOTS`` and they are typically at the BOTTOM, MIDDLE and TOP of the layer.
-    This notation is used here to identify the corresponding data.
+    typically three integration points through the thickness. The through-the-thickness
+    integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
+    and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
 
-    The Sampling Point returns 3 results per layer (one for each spot) because the results of
-    the in-plane integration points are interpolated to the centroid of the element.
-    The table below shows an example of a laminate with 3 layers. So a result (e.g. s1) has
-    9 values, 3 for each ply.
+    The ``SamplingPoint`` class returns three results per layer (one for each spot) because
+    the results of the in-plane integration points are interpolated to the centroid of the element.
+    The following table shows an example of a laminate with three layers. So a result, such as
+    ``s1`` has nine values, three for each ply.
 
     +------------+------------+------------------------+
     | Layer      | Index      | Spot                   |
@@ -98,7 +99,7 @@ class SamplingPoint:
     |            | - 0        | - BOTTOM of Layer 1    |
     +------------+------------+------------------------+
 
-    The function get_indices and get_offsets_by_spots simplify the indexing and
+    The get_indices and get_offsets_by_spots methods simplify the indexing and
     filtering of the data.
     """
 
@@ -114,7 +115,7 @@ class SamplingPoint:
         result_definition: ResultDefinition,
         server: BaseServer = None,
     ):
-        """Create a SamplingPoint object."""
+        """Create a ``SamplingPoint`` object."""
         self._spots_per_ply = 0
         self._interface_indices: Dict[Spot, int] = {}
         self.name = name
@@ -134,7 +135,7 @@ class SamplingPoint:
             name="composite::composite_sampling_point_operator", server=used_server
         )
         if not self._operator:
-            raise RuntimeError("SamplingPoint: failed to initialize the operator!")
+            raise RuntimeError("SamplingPoint: failed to initialize the operator.")
 
         self._results: Any = None
         self._isuptodate = False
@@ -142,7 +143,7 @@ class SamplingPoint:
 
     @property
     def result_definition(self) -> ResultDefinition:
-        """Input for the Sampling Point operator."""
+        """Input for the sampling point operator."""
         return self._result_definition
 
     @result_definition.setter
@@ -154,13 +155,13 @@ class SamplingPoint:
 
     @property
     def element_id(self) -> Union[int, None]:
-        """Element label where to sample the laminate.
+        """Element label for sampling the laminate.
 
-        Returns -1 if the element id is not set.
+        This attribute returns ``-1`` if the element ID is not set.
         """
         element_scope = self._result_definition.scopes[0].element_scope
         if len(element_scope) > 1:
-            raise RuntimeError("The scope of a Sampling Point can only be one element.")
+            raise RuntimeError("The scope of a sampling point can only be one element.")
         if len(element_scope) == 0:
             return None
         return element_scope[0]
@@ -172,12 +173,12 @@ class SamplingPoint:
 
     @property
     def spots_per_ply(self) -> int:
-        """Access the number of through-the-thickness integration points per ply."""
+        """Number of through-the-thickness integration points per ply."""
         return self._spots_per_ply
 
     @property
     def results(self) -> Any:
-        """Access the results of the sampling point operator as JSON Dict."""
+        """Results of the sampling point operator as a JSON dictionary."""
         self._update_and_check_results()
 
         return self._results
@@ -186,13 +187,14 @@ class SamplingPoint:
     def analysis_plies(self) -> Sequence[Any]:
         """List of analysis plies from the bottom to the top.
 
-        Returns a list of ply data as dict such as angle, thickness and material name.
+        This attribute returns a list of ply data, such as angle, thickness and material name,
+        as a dictionary.
         """
         self._update_and_check_results()
 
         raw_data = cast(Sequence[Any], self._results[0]["layup"]["analysis_plies"])
         if len(raw_data) == 0:
-            raise RuntimeError("No plies are found for the selected element!")
+            raise RuntimeError("No plies are found for the selected element.")
 
         types = {
             "angle": float,
@@ -291,7 +293,7 @@ class SamplingPoint:
     def reserve_factor(self) -> "npt.NDArray[np.float64]":
         """Lowest reserve factor of each ply.
 
-        Equivalent to Safety Factor.
+        This attribute is equivalent to the safety factor.
         """
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["failures"]["reserve_factor"])
@@ -300,7 +302,7 @@ class SamplingPoint:
     def margin_of_safety(self) -> "npt.NDArray[np.float64]":
         """Lowest margin of safety of each ply.
 
-        Equivalent to Safety Margin.
+        This attribute is equivalent to the safety margin.
         """
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["failures"]["margin_of_safety"])
@@ -313,19 +315,19 @@ class SamplingPoint:
 
     @property
     def offsets(self) -> "npt.NDArray[np.float64]":
-        """Access the z-coordinates for each interface and ply."""
+        """Z coordinates for each interface and ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["offsets"])
 
     @property
     def polar_properties_E1(self) -> "npt.NDArray[np.float64]":
-        """Access the polar property E1 of the laminate."""
+        """Polar property E1 of the laminate."""
         self._update_and_check_results()
         return np.array(self._results[0]["layup"]["polar_properties"]["E1"])
 
     @property
     def polar_properties_E2(self) -> "npt.NDArray[np.float64]":
-        """Access the polar property E2 of the laminate."""
+        """Polar property E2 of the laminate."""
         if not self._isuptodate or not self._results:
             self.run()
 
@@ -336,7 +338,7 @@ class SamplingPoint:
 
     @property
     def polar_properties_G12(self) -> "npt.NDArray[np.float64]":
-        """Access the polar property G12 of the laminate."""
+        """Polar property G12 of the laminate."""
         if not self._isuptodate or not self._results:
             self.run()
 
@@ -347,11 +349,11 @@ class SamplingPoint:
 
     @property
     def number_of_plies(self) -> int:
-        """Get number of plies."""
+        """Number of plies."""
         return len(self.analysis_plies)
 
     def run(self) -> None:
-        """Run the DPF operator and caches the results."""
+        """Run the DPF operator and cache the results."""
         if self.result_definition:
             new_hash = hashlib.sha1(
                 json.dumps(self.result_definition.to_dict(), sort_keys=True).encode("utf8")
@@ -363,16 +365,16 @@ class SamplingPoint:
                 self._rd_hash = new_hash.hexdigest()
         else:
             raise RuntimeError(
-                "Cannot update Sampling Point because the Result Definition is missing."
+                "Cannot update sampling point because the result definition is missing."
             )
 
         result_as_string = self._operator.outputs.results()
         self._results = json.loads(result_as_string)
         if not self._results or len(self._results) == 0:
-            raise RuntimeError(f"Sampling Point {self.name} has no results.")
+            raise RuntimeError(f"Sampling point {self.name} has no results.")
         if self._results and len(self._results) > 1:
             raise RuntimeError(
-                f"Sampling Point {self.name} is scoped to more than one element"
+                f"Sampling point {self.name} is scoped to more than one element,"
                 f" which is not yet supported."
             )
 
@@ -390,8 +392,7 @@ class SamplingPoint:
             self._interface_indices = {Spot.BOTTOM: 0, Spot.TOP: 1}
         elif self._spots_per_ply == 1:
             raise RuntimeError(
-                "Result files which only have results at the middle of the ply are "
-                "not supported!"
+                "Result files that only have results at the middle of the ply are " "not supported."
             )
 
         self._isuptodate = True
@@ -399,16 +400,16 @@ class SamplingPoint:
     def get_indices(
         self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
     ) -> Sequence[int]:
-        """Access the indices of the selected interfaces for each ply.
+        """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.
-        For instance, can be used to access the stresses at the bottom of each ply.
+        For instance, this method can be used to access the stresses at the bottom of each ply.
 
         Parameters
         ----------
-        spots
-            selection of the spots. Only the indices of the bottom interfaces of plies
-            are returned if spots is equal to [BOTTOM]
+        spots :
+            Collection of spots. Only the indices of the bottom interfaces of plies
+            are returned if ``[Spot.BOTTOM]`` is set.
 
         Examples
         --------
@@ -435,15 +436,15 @@ class SamplingPoint:
         spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
         core_scale_factor: float = 1.0,
     ) -> "npt.NDArray[np.float64]":
-        """Access the y coordinates of the selected interfaces for each ply.
+        """Access the y coordinates of the selected spots (interfaces) for each ply.
 
         Parameters
         ----------
-        spots:
-            Select the spot(s) of interest.
+        spots :
+            Collection of spots.
 
-        core_scale_factor:
-            Scale the thickness of core plies.
+        core_scale_factor :
+            Factor for scaling the thickness of core plies.
         """
         offsets = self.offsets
         indices = self.get_indices(spots)
@@ -453,7 +454,7 @@ class SamplingPoint:
 
         thicknesses = []
         if not self.analysis_plies:
-            raise RuntimeError("No analysis plies are found in the selected element!")
+            raise RuntimeError("No analysis plies are found in the selected element.")
 
         for index, ply in enumerate(self.analysis_plies):
             is_core = ply["is_core"]
@@ -511,7 +512,7 @@ class SamplingPoint:
         Parameters
         ----------
         components :
-            Defines which stiffness quantities should be added to the plot
+            Stiffness quantities to plot.
 
         Examples
         --------
@@ -534,14 +535,14 @@ class SamplingPoint:
         return SamplingPointFigure(fig, ax)
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
-        """Add the stacking (ply + text) to an axes/plot.
+        """Add the stacking (ply and text) to an axis or plot.
 
         Parameters
         ----------
-        axes
-            Matplotlib single axes object
-        core_scale_factor
-            Scales the thickness of core plies
+        axes :
+            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+        core_scale_factor :
+            Factor for scaling the thickness of core plies.
         """
         offsets = self.get_offsets_by_spots(
             spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
@@ -584,25 +585,27 @@ class SamplingPoint:
         title: str = "",
         xlabel: str = "",
     ) -> None:
-        """Add results (strains, stresses or failure values) to single axes object (plot).
+        """Add results (strain, stress, or failure values) to an ``Axes`` object.
 
         Parameters
         ----------
-        axes:
-            Matplotlib single axes object
-        components:
+        axes :
+            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+        components :
             List of result components. Valid components for
-              strain are "e1", "e2", "e3", "e12", "e13" and "e23",
-              stress are "s1", "s2", "s3", "s12", "s13" and "s23",
-              failure are "inverse_reserve_factor", "reserve_factor" and "margin_of_safety".
-        spots:
-            List of interfaces (bottom, middle and/or top)
-        core_scale_factor:
-            Scales the thickness of core plies
-        title:
-            Becomes the title of the plot. Ignored if empty.
-        xlabel:
-            Becomes the label of the x-axis. Ignored if empty.
+            strain are ``"e1"``, ``"e2"``, ``"e3"``, ``"e12"``, ``"e13"``,
+            and ``"e23"`` Valid components for stress are ``"s1",`` ``"s2"``,
+            ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. Valid components
+            for failure are ``"inverse_reserve_factor"``, ``"reserve_factor"``,
+            and ``"margin_of_safety"``.
+        spots :
+            Collection of spots (interfaces).
+        core_scale_factor :
+            Factor for scaling the thickness of core plies.
+        title :
+            Title of the plot. This parameter is ignored if empty.
+        xlabel :
+            Becomes the label of the x-axis. This parameter is ignored if empty.
 
         Examples
         --------
@@ -621,7 +624,7 @@ class SamplingPoint:
             if raw_values is None:
                 raise RuntimeError(
                     f"Component {comp} is not supported. "
-                    f"Please refer to the help of add_results_to_plot"
+                    f"See the description for the 'add_results_to_plot' method."
                 )
             values = [raw_values[i] for i in indices]
             axes.plot(values, offsets, label=comp)
@@ -652,25 +655,25 @@ class SamplingPoint:
         Parameters
         ----------
         strain_components
-            Specify the strain entities of interest.
-            Supported are "e1", "e2", "e3", "e12", "e13", "e23".
-            Plot is skipped if the list is empty.
+            Strain entities of interest. Supported values are ``"e1"``, ``"e2"``,
+            ``"e3"``, ``"e12"``, ``"e13"``, and ``"e23"``. The plot is skipped
+            if the list is empty.
         stress_components
-            Specify the stress entities of interest.
-            Supported are "s1", "s2", "s3", "s12", "s13", "s23".
-            Plot is skipped if the list is empty.
+            Stress entities of interest. Supported values are ``"s1"``, ``"s2"``,
+            ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. The plot is skipped
+            if the list is empty.
         failure_components
-            Specify the failure values of interest. Supported are "irf", "rf", "mos".
-            Plot is skipped if the list is empty.
+            Failure values of interest. Values supported are ``"irf"``, ``"rf"``,
+            and ``"mos"``. The plot is skipped if the list is empty.
         show_failure_modes
-            Enable this flag to add the critical failure mode to the failure plot
+            WHether to add the critical failure mode to the failure plot.
         create_laminate_plot
-            Plot the stacking sequence of the laminate including text information
-            such as material, thickness and angle.
+            Whether to plot the stacking sequence of the laminate, including text information
+            such as material, thickness, and angle.
         core_scale_factor
-            Ply thickness of core materials are scaled by this factor.
+            Factor for scaling the thickness of core plies.
         spots
-            Show results at these interfaces.
+            Spots (interfaces) to show results at.
 
         Examples
         --------
@@ -689,7 +692,7 @@ class SamplingPoint:
         def _get_subplot(axes_obj: Any, current_index: int) -> Any:
             if issubclass(axes_obj.__class__, SubplotBase):
                 if current_index > 0:
-                    raise RuntimeError("axes plot cannot be indexed.")
+                    raise RuntimeError("Axes plot cannot be indexed.")
                 return axes_obj
             else:
                 if current_index < len(axes_obj):
@@ -757,7 +760,7 @@ class SamplingPoint:
                     critical_failures = self.get_ply_wise_critical_failures()
 
                     if len(critical_failures) != len(middle_offsets):
-                        raise IndexError("Sizes of failures and offsets mismatch.")
+                        raise IndexError("Sizes of failures and offsets do not match.")
 
                     for index, offset in enumerate(middle_offsets):
                         for fc in failure_components:

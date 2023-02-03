@@ -19,7 +19,7 @@ class ExpectedOutput:
     n_layers: int
     n_corner_nodes: int
     element_type: int
-    # n_spots can be 0 for homogenous solids or
+    # n_spots can be 0 for homogeneous solids or
     # if output is only requested on top/bottom of the element
     # otherwise it is 2 or 3 for top/bot or top/bot/mid output
     n_spots: int
@@ -46,10 +46,10 @@ def get_element_ids() -> ElementIds:
 
 def get_layup_property_fields():
     """
-    Helper function to get layup information for the all_element_types*.rst
-    files without a layup definition file
+    Helper function to get lay-up information for the all_element_types*.rst
+    files without a lay-up definition file.
     """
-    # Mock the info that gets added in the layup provider
+    # Mock the info that gets added in the lay-up provider
     # All the layered elements have a layered section with three layers (materials 1,2,1)
     material_property_field = PropertyField()
     layer_indices_property_field = PropertyField()
@@ -240,7 +240,7 @@ def test_document_error_cases_indices(dpf_server):
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, layers=[3])
         assert str(exc_info.value).startswith(
-            "Layer index 3 is greater or equal number of layers 3"
+            "Layer index 3 is greater or equal to the number of layers: 3"
         )
 
     for element_id in get_element_ids().layered:
@@ -248,7 +248,7 @@ def test_document_error_cases_indices(dpf_server):
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, layers=[1], nodes=[4])
         assert str(exc_info.value).startswith(
-            "corner node index 4 is greater or equal number of corner nodes"
+            "Corner node index 4 is greater or equal to the number of corner nodes"
         )
 
     # Try to get non-existing dpf_material_id
@@ -262,4 +262,6 @@ def test_document_error_cases_indices(dpf_server):
         with pytest.raises(RuntimeError) as exc_info:
             element_info: ElementInfo = layup_info.get_element_info(element_id)
             get_selected_indices(element_info, layers=[1], nodes=[1], spots=[Spot.MIDDLE])
-        assert str(exc_info.value).startswith("spot index 2 is greater or equal number of spots")
+        assert str(exc_info.value).startswith(
+            "Spot index 2 is greater or equal to the number of spots"
+        )

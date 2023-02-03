@@ -4,8 +4,6 @@
 Material properties and custom failure criterion
 ------------------------------------------------
 
-Access material properties and implement a custom failure criterion.
-
 This example shows how to access constant material properties and how to
 implement a custom failure criterion. The failure criterion is computed for
 all layers and integration points. Finally, the elemental maximum is computed and shown.

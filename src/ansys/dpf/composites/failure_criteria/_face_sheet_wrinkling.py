@@ -4,12 +4,12 @@ import inspect
 from ._failure_criterion_base import FailureCriterionBase
 
 _DOC_HOMOGENEOUS_CORE_COEFF = (
-    "Wrinkling coefficient (reduction factor) for homogeneous core materials. Default is 0.5"
+    "Wrinkling coefficient (reduction factor) for homogeneous core materials."
 )
 _DOC_HONEYCOMB_CORE_COEFF = (
-    "Wrinkling coefficient (reduction factor) for honeycombs. Default is 0.33."
+    "Wrinkling coefficient (reduction factor) for honeycombs. The default is ``0.33``."
 )
-_DOC_WF = "Weighting factor of the failure mode (wb or wt)."
+_DOC_WF = "Weighting factor of the failure mode (wb or wt). The default is ``0.5``."
 
 
 class FaceSheetWrinklingCriterion(FailureCriterionBase):

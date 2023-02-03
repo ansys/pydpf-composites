@@ -7,9 +7,10 @@ from ._failure_criterion_base import FailureCriterionBase
 
 
 class CombinedFailureCriterion:
-    """Define the Combined Failure Criterion.
+    """Defines the combined failure criterion.
 
-    It can be used in combination with Failure Evaluator operator in DPF Composites.
+    This class can be used in combination with the failure evaluator operator in
+    DPF Composites.
 
     Examples
     --------
@@ -26,14 +27,14 @@ class CombinedFailureCriterion:
         name: str = "CombinedFailureCriterion",
         failure_criteria: Sequence[FailureCriterionBase] = (),
     ):
-        """Create a new combined failure criterion.
+        """Create a combined failure criterion.
 
         Parameters
         ----------
         name:
-            user-defined name of the criterion
+            User-defined name of the criterion.
         failure_criteria:
-            list of failure criteria
+            List of failure criteria.
         """
         self._failure_criteria: Dict[str, FailureCriterionBase] = {}
         for fc in failure_criteria:
@@ -52,17 +53,18 @@ class CombinedFailureCriterion:
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
     failure_criteria = property(
-        _get_failure_criteria, doc="List of failure criteria. Use insert and remove to edit it."
+        _get_failure_criteria,
+        doc="List of failure criteria. Use insert and remove to edit the list.",
     )
 
     def insert(self, fc: FailureCriterionBase) -> None:
-        """Add a failure criterion.
+        """Add a failure criterion to a list of selected criteria.
 
         Parameters
         ----------
         fc:
-            Adds a failure criterion to list of selected criteria. Overwrites an entity if a
-            failure criterion of the same type already exists.
+            Failure criterion to add. If a failure criterion of the same type
+            already exists, it is overwritten.
 
         Examples
         --------
@@ -81,12 +83,12 @@ class CombinedFailureCriterion:
         Parameters
         ----------
         key:
-            Name of the failure criterion
+            Name of the failure criterion.
 
         Returns
         -------
         :
-            The removed failure criterion or None
+            Removed failure criterion or ``None``.
 
         Examples
         --------
@@ -94,17 +96,18 @@ class CombinedFailureCriterion:
 
         """
         if not key in self._failure_criteria.keys():
-            raise KeyError(f"{key} does not exist in the list of failure criteria!")
+            raise KeyError(f"{key} does not exist in the list of failure criteria.")
 
         return self._failure_criteria.pop(key)
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return a dict representation of this object.
+        """Return the combined failure criterion as a dictionary.
 
         Returns
         -------
-        The json_dict which can be used for the result definition
-        of the DPF Composites Failure Operator
+        :
+            JSON dictionary that can be used for the result definition
+            of the DPF Composites Failure evaluator operator.
         """
         criteria = {}
         for _, fc in self.failure_criteria.items():
@@ -118,17 +121,18 @@ class CombinedFailureCriterion:
         return criteria
 
     def to_json(self) -> str:
-        """Return the object as JSON dict.
+        """Return the combined failure criterion as a JSON dictionary.
 
         Returns
         -------
-        The string representation (json.dumps) which can be used for the result definition
-        of the DPF Composites Failure Operator
+        :
+           String representation (``json.dumps`` file) that can be used for the result definition
+           of the DPF Composites Failure evaluator operator.
         """
         return json.dumps(self.to_dict())
 
     def __repr__(self) -> str:
-        """Return a description of the object."""
+        """Return a description of the combined failure criteria."""
         s_criteria = ", ".join(
             [f"'{k}': {fc._short_descr()}" for k, fc in self.failure_criteria.items()]
         )

@@ -4,26 +4,26 @@
 Composite failure analysis
 --------------------------
 
-Analyse a composite structure by a combined failure criterion.
+This example shows how to analyze a composite structure by a combined failure criterion.
 
 The failure operator of DPF Composites computes the minimum and maximum failure values
 and failure modes of a combined failure criterion. A combined failure criterion is a selection of
-failure criteria such as Puck, Tsai-Wu or Face Sheet Wrinkling. Refer to
-:ref:`the Failure Criteria API Reference <failure_criteria>` to get the full list of
-failure criteria.
+failure criteria such as Puck, Tsai-Wu, or face sheet wrinkling. For a list of all
+failure criteria, see :ref:`failure_criteria`.
 
 The :class:`Combined Failure Criterion
-<.failure_criteria.CombinedFailureCriterion>`
+<.failure_criteria.CombinedFailureCriterion>` class
 allows you to assess different type of materials and failure modes at once.
-The scoping enables to evaluate of the min and max failure per element,
-or to select a list of materials or plies.
+The scoping enables you to evaluate the minimum and maximum failures per element
+or select a list of materials or plies.
 """
 # %%
-# Script
-# ~~~~~~
+# Set up analysis
+# ~~~~~~~~~~~~~~~
+# Setting up the analysis consists of loading Ansys libraries, connecting to the
+# DPF server, and retrieving the example files.
 #
-# Load ansys libraries, connect to the DPF server, and retrieve the example
-# files.
+# Load Ansys libraries.
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FailureOutput
@@ -38,13 +38,15 @@ from ansys.dpf.composites.failure_criteria import (
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
-# Start a server and get the examples files.
-# This will copy the example files into the current working directory.
+# Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
-# Configure the combined failure criterion
+# Configure combined failure criterion
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Configure the combined failure criterion.
+
 
 combined_fc = CombinedFailureCriterion(
     name="failure of all materials",
@@ -57,11 +59,14 @@ combined_fc = CombinedFailureCriterion(
 )
 
 # %%
-# Set up the composite model
+# Set up model and evaluate failures
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set up the composite model.
+
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
-# Failure evaluation for the entire model
+# Evaluate failures for the entire model
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
 )
@@ -69,7 +74,7 @@ irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILUR
 irf_field.plot()
 
 # %%
-# Scope failure evaluation to a certain element scope
+# Scope failure evaluation to a certain element scope.
 output_two_elements = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
     composite_scope=CompositeScope(elements=[1, 3]),
@@ -78,7 +83,7 @@ irf_field = output_two_elements.get_field({"failure_label": FailureOutput.FAILUR
 irf_field.plot()
 
 # %%
-# Scope by plies
+# Scope failure evaluation by plies.
 output_woven_plies = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
     composite_scope=CompositeScope(plies=["P1L1__ud_patch ns1"]),

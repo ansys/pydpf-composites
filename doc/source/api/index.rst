@@ -1,11 +1,9 @@
 API reference
 =============
 
-This section describes the API of the public PyDPF Composites classes, functions,
-and attributes.
+This section describes the public classes, methods, and attributes of the PyDPF Composites API.
 
-For in depth documentation on the different failure criteria, please refer to the official Ansys
-Documentation.
+For in-depth documentation on the different failure criteria, refer to the ACP help.
 
 .. module:: ansys.dpf.composites
 

@@ -1,21 +1,22 @@
 """
 .. _assembly_example:
 
-Post-process an assembly
-------------------------
+Postprocess an assembly
+-----------------------
 
-Post-process an assembly with multiple composite parts.
-
-This example shows how an assembly of a shell and solid composite
-model can be post-processed. The :class:`Composite Model <.CompositeModel>`
-helps to access the data of the different parts.
+This example shows how to postprocess an assembly with multiple composite parts.
+The assembly consists of a shell and solid composite model. The
+:class:`Composite Model <.CompositeModel>` class is used to access
+the data of the different parts.
 
 """
 # %%
-# Script
-# ~~~~~~
+# Set up analysis
+# ~~~~~~~~~~~~~~~
+# Setting up the analysis consists of loading Ansys libraries, connecting to the
+# DPF server, and retrieving the example files.
 #
-# Load Ansys libraries
+# Load Ansys libraries.
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
@@ -24,34 +25,40 @@ from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxS
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
-# Start a server and get the examples files.
-# This will copy the example files into the current working directory.
+# Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "assembly")
 
 # %%
-# Configure the combined failure criterion
+# Configure combined failure criterion
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Configure the combined failure crition.
 combined_fc = CombinedFailureCriterion(
     name="failure of all materials",
     failure_criteria=[MaxStressCriterion()],
 )
 
 # %%
-# Set up the composite model
+# Set up model
+# ~~~~~~~~~~~~
+# Set up the composite model.
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
-# Plot the max IRF per element
-#
+# Plot IRF
+# ~~~~~~~~
+# Plot the maximum IRF per element.
 output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
 irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
 
 # %%
-# In the assembly exist two composite definitions, one with the label "shell" and one
-# with the label "solid". To query the layup properties we have to query the
-# properties with the correct ``composite_definition_label``.
-# This example shows how to get ElementInfo for all layered elements
+# Get element information
+# ~~~~~~~~~~~~~~~~~~~~~~~
+# In the assembly, two composite definitions exist: one with a "shell" label
+# and one with a "solid" label. To query the lay-up properties, you must query the
+# properties with the correct composite definition label. This code
+# gets element information for all layered elements.
 #
 element_infos = []
 for composite_label in composite_model.composite_definition_labels:

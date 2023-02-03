@@ -14,7 +14,7 @@ class Spot(IntEnum):
 
 
 class Sym3x3TensorComponent(IntEnum):
-    """Tensor indices for symmetrical 3x3 tensors."""
+    """Provides tensor indices for symmetrical 3x3 tensors."""
 
     TENSOR11 = 0
     TENSOR22 = 1
@@ -25,7 +25,10 @@ class Sym3x3TensorComponent(IntEnum):
 
 
 class FailureOutput(IntEnum):
-    """Failure output type. The enum value corresponds to the index in the fields container."""
+    """Provides failure output types.
+
+    The enum value corresponds to the index in the fields container.
+    """
 
     FAILURE_MODE = 0
     FAILURE_VALUE = 1
