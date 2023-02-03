@@ -1,0 +1,6 @@
+﻿load\_composites\_plugin
+========================
+
+.. currentmodule:: ansys.dpf.composites.server_helpers
+
+.. autofunction:: load_composites_plugin

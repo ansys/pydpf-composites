@@ -1,0 +1,6 @@
+﻿get\_composite\_files\_from\_workbench\_result\_folder
+======================================================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autofunction:: get_composite_files_from_workbench_result_folder

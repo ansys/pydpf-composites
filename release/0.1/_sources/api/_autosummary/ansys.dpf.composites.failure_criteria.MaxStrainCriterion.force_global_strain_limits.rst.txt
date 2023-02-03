@@ -1,0 +1,6 @@
+force\_global\_strain\_limits
+=============================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: MaxStrainCriterion.force_global_strain_limits

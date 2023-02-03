@@ -1,0 +1,6 @@
+number\_of\_plies
+=================
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. autoproperty:: SamplingPoint.number_of_plies

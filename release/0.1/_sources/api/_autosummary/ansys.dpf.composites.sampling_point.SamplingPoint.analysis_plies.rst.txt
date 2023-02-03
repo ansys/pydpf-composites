@@ -1,0 +1,6 @@
+analysis\_plies
+===============
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. autoproperty:: SamplingPoint.analysis_plies

@@ -1,0 +1,37 @@
+﻿.. vale off
+
+ResultDefinitionScope
+=====================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoclass:: ResultDefinitionScope
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ResultDefinitionScope.mapping_file
+      ResultDefinitionScope.write_data_for_full_element_scope
+      ResultDefinitionScope.composite_definition
+      ResultDefinitionScope.element_scope
+      ResultDefinitionScope.ply_scope
+   
+   
+
+.. vale on
