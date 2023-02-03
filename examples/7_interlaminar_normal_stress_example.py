@@ -6,7 +6,7 @@ Interlaminar normal stresses
 
 This example shows how to enrich the stresses of layered shells by
 computing interlaminar normal stresses. Interlaminar normal
-stresses can be of importance in thick and curved laminates.
+stresses can be important in thick and curved laminates.
 
 Because interlaminar normal stresses are typically not available
 for layered shell elements, the ``INS`` operator is used to recompute

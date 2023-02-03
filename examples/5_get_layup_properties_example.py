@@ -4,10 +4,9 @@
 Lay-up properties
 -----------------
 
-Elemental lay-up properties are typically used for layer-wise postprocessing and
-data filtering. This example shows how to extract elemental lay-up properties
-such as thickness and material. It accesses basic layer properties (layer
-thicknesses, angles, and analysis ply names) and queries them efficiently.
+This example shows how to efficiently extract elemental lay-up properties such as
+thickness, angles, and analysis ply names. These are typically used for layer-wise
+postprocessing and data filtering.
 
 To get the full layer information of an element, including results,
 consider using the :class:`SamplingPoint <.SamplingPoint>` class.
