@@ -25,7 +25,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
-
+# The dependency on 'setuptools' is a temporary workaround: 'ansys-dpf-core'
+# version 0.7.2 uses 'setuptools', but does not declare it. This is fixed
+# upstream, but not released yet. We can remove this dependency after the
+# next (0.7.3?) release of 'ansys-dpf-core'.
+setuptools = "*"
 numpy = [
     {version = ">=1.19,<1.22", python = ">=3.7,<3.8"},
     # Needs to be smaller 1.24 because dpf-core still uses
