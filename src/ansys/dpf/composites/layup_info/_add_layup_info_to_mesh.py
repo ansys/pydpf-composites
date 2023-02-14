@@ -55,9 +55,7 @@ def add_layup_info_to_mesh(
     layup_provider.inputs.abstract_field_support(
         material_operators.material_support_provider.outputs.abstract_field_support
     )
-    layup_provider.inputs.unit_system_or_result_info(
-        material_operators.result_info_provider.outputs.result_info
-    )
+    layup_provider.inputs.unit_system(material_operators.result_info_provider.outputs.result_info)
     layup_provider.run()
 
     return layup_provider
