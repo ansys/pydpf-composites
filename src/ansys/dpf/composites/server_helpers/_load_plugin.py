@@ -62,4 +62,4 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
         else:
             library = get_lib_from_name(name)
         print(f"library: {library}, name: {name}")
-        dpf.load_library(library, name + "random", server=server)
+        dpf.load_library(library + "inexsitent", name + "random", server=server)
