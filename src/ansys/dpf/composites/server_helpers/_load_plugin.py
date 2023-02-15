@@ -28,11 +28,11 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
     # we only need to load composite_operators
     # and Ans.Dpf.EngineeringData.
     libs = [
+        "composite_operators",
+        "Ans.Dpf.EngineeringData",
         "Ans.Dpf.Native",
         "mapdlOperatorsCore",
         "Ans.Dpf.FEMutils",
-        "composite_operators",
-        "Ans.Dpf.EngineeringData",
     ]
 
     def get_lib_from_name(name: str) -> str:
