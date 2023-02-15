@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Optional, Union
 
 from ansys.dpf.core import connect_to_server
 from ansys.dpf.core import server as _dpf_server
-from ansys.dpf.core import start_local_server
+from ansys.dpf.core import server_context, start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
@@ -76,8 +76,16 @@ def connect_to_or_start_server(
 
     if len(list(connect_kwargs.keys())) > 0:
         server = connect_to_server(**connect_kwargs)
+        server.apply_context(
+            _dpf_server.server_context.ServerContext(server_context.LicensingContextType.premium)
+        )
     else:
-        server = start_local_server(ansys_path=ansys_path)
+        server = start_local_server(
+            ansys_path=ansys_path,
+            context=_dpf_server.server_context.ServerContext(
+                server_context.LicensingContextType.premium
+            ),
+        )
 
     server.check_version(
         "5.0",
