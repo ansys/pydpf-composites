@@ -7,6 +7,17 @@ import pytest
 from .utils import get_basic_combined_failure_criterion
 
 
+def test_single_operator(dpf_server):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    mesh_provider = dpf.Operator("MeshProvider")
+    rst_data_source = dpf.DataSources(rst_path)
+    mesh_provider.inputs.data_sources(rst_data_source)
+
+    mesh = mesh_provider.outputs.mesh
+
+
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
