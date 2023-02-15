@@ -61,4 +61,5 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
             library = os.path.join(absolute_installer_location, get_lib_from_name(name))
         else:
             library = get_lib_from_name(name)
-        dpf.load_library(library, name, server=server)
+        print(f"library: {library}, name: {name}")
+        dpf.load_library(library, name + "random", server=server)
