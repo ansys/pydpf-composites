@@ -15,7 +15,7 @@ def test_single_operator(dpf_server):
     rst_data_source = dpf.DataSources(rst_path)
     mesh_provider.inputs.data_sources(rst_data_source)
 
-    mesh = mesh_provider.outputs.mesh
+    mesh = mesh_provider.outputs.mesh()
 
 
 def test_basic_workflow(dpf_server):
