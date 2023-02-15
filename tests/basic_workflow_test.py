@@ -21,8 +21,8 @@ def test_single_operator(dpf_server):
         )
     rst_data_source = dpf.DataSources()
     print(f"rst path: {rst_path_server}")
-    rst_data_source.set_result_file_path(rst_path, "rst")
-    mesh_provider.inputs.data_sources(rst_path_server)
+    rst_data_source.set_result_file_path(rst_path_server, "rst")
+    mesh_provider.inputs.data_sources(rst_data_source)
 
     mesh = mesh_provider.outputs.mesh()
 
