@@ -12,6 +12,8 @@ def test_single_operator(dpf_server):
 
     rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     mesh_provider = dpf.Operator("MeshProvider")
+    if not dpf_server.local_server:
+        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
     rst_data_source = dpf.DataSources(rst_path)
     mesh_provider.inputs.data_sources(rst_data_source)
 
