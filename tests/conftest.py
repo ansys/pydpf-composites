@@ -92,7 +92,7 @@ class DockerProcess:
         server_err_file: pathlib.Path,
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
-        image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
+        image_name: str = "ghcr.io/pyansys/pydpf-composites:fix_temp",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
