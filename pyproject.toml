@@ -34,7 +34,7 @@ numpy = [
     {version = ">=1.19,<1.22", python = ">=3.7,<3.8"},
     # Needs to be smaller 1.24 because dpf-core still uses
     # numpy.float/numpy.int
-    {version = "^1.22,<1.24", python = ">=3.8,<3.11"}
+    {version = "^1.22,<1.24", python = ">=3.8"}
 ]
 importlib-metadata = {version = "^4.0", python = "<3.8"}
 build = {version = "^0.8.0", optional = true}
