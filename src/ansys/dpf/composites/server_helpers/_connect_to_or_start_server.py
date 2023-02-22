@@ -56,7 +56,7 @@ def connect_to_or_start_server(
     ip :
         IP address for the DPF server.
     ansys_path :
-        Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v231``.
+        Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v232``.
         This parameter is ignored if either the port or IP address is set.
 
     Returns
