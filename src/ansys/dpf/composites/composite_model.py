@@ -243,10 +243,7 @@ class CompositeModel:
             composite_scope = CompositeScope()
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
-        if composite_scope.time is not None:
-            time_in = composite_scope.time
-        else:
-            time_in = self.get_result_times_or_frequencies()[-1]
+        time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
             # This is a workaround because setting the
@@ -311,10 +308,7 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        if time is None:
-            time_in = self.get_result_times_or_frequencies()[-1]
-        else:
-            time_in = time
+        time_in = time
 
         if composite_definition_label is None:
             # jvonrick: Jan 2023: We could also try to determine composite_definition_label

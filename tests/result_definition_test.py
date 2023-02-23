@@ -16,7 +16,7 @@ defaults: Dict[str, Any] = {
     "expression": "composite_failure",
     "measure": "inverse_reserve_factor",
     "stress_strain_eval_mode": "rst_file",
-    "time": 1.0,
+    "time": None,
     "max_chunk_size": 50000,
 }
 
@@ -143,6 +143,11 @@ def test_result_definition():
         ],
     }
 
+    assert rd.to_dict() == ref_dict
+
+    # check result definition is time is not set (None)
+    rd.time = None
+    ref_dict.pop("time")
     assert rd.to_dict() == ref_dict
 
     # test reprs
