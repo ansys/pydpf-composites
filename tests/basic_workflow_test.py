@@ -7,26 +7,6 @@ import pytest
 from .utils import get_basic_combined_failure_criterion
 
 
-def test_single_operator(dpf_server):
-    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
-
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-    mesh_provider = dpf.Operator("MeshProvider", server=dpf_server)
-    print(f"rst path before upload: {rst_path}")
-
-    rst_path_server = "test"
-    if not dpf_server.local_server:
-        rst_path_server = dpf.upload_file(
-            rst_path, to_server_file_path="/home/container/test.rst", server=dpf_server
-        )
-    rst_data_source = dpf.DataSources()
-    print(f"rst path: {rst_path_server}")
-    rst_data_source.set_result_file_path(rst_path_server, "rst")
-    mesh_provider.inputs.data_sources(rst_data_source)
-
-    mesh = mesh_provider.outputs.mesh()
-
-
 def test_basic_workflow(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 

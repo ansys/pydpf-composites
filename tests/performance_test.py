@@ -18,6 +18,7 @@ from ansys.dpf.composites.layup_info.material_properties import (
     MaterialProperty,
     get_constant_property_dict,
 )
+from ansys.dpf.composites.unit_system import get_unit_system
 
 from .helper import ContinuousFiberCompositesFiles, Timer, setup_operators
 
@@ -276,11 +277,17 @@ def test_performance_property_dict(dpf_server):
 
     timer.add("Load data")
 
+    unit_system = get_unit_system(data_sources.rst)
     material_operators = get_material_operators(
-        rst_data_source=data_sources.rst, engineering_data_source=data_sources.engineering_data
+        rst_data_source=data_sources.rst,
+        engineering_data_source=data_sources.engineering_data,
+        unit_system=unit_system,
     )
     layup_operators = add_layup_info_to_mesh(
-        data_sources=data_sources, mesh=mesh, material_operators=material_operators
+        data_sources=data_sources,
+        mesh=mesh,
+        material_operators=material_operators,
+        unit_system=unit_system,
     )
     timer.add("After enrich mesh")
 

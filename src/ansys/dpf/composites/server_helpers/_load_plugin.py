@@ -28,11 +28,11 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
     # we only need to load composite_operators
     # and Ans.Dpf.EngineeringData.
     libs = [
-        "composite_operators",
-        "Ans.Dpf.EngineeringData",
         "Ans.Dpf.Native",
         "mapdlOperatorsCore",
         "Ans.Dpf.FEMutils",
+        "Ans.Dpf.EngineeringData",
+        "composite_operators",
     ]
 
     def get_lib_from_name(name: str) -> str:
@@ -61,5 +61,4 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
             library = os.path.join(absolute_installer_location, get_lib_from_name(name))
         else:
             library = get_lib_from_name(name)
-        print(f"library: {library}, name: {name}")
-        dpf.load_library(library, name + "random", server=server)
+        dpf.load_library(library, name, server=server)

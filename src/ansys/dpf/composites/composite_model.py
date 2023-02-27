@@ -1,11 +1,13 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, cast
+from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator
+from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, ResultInfo, UnitSystem
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
+
+from .unit_system import get_unit_system
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -69,6 +71,7 @@ class CompositeInfo:
         composite_definition_label: str,
         streams_provider: dpf.Operator,
         material_operators: MaterialOperators,
+        unit_system: Union[ResultInfo, UnitSystem],
     ):
         """Initialize ``CompositeInfo`` class and add enriched mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
@@ -79,6 +82,7 @@ class CompositeInfo:
             mesh=self.mesh,
             data_sources=data_sources,
             material_operators=material_operators,
+            unit_system=unit_system,
             composite_definition_label=composite_definition_label,
         )
 
@@ -125,15 +129,24 @@ class CompositeModel:
         the :class:`.ContinuousFiberCompositesFiles` object.
     """
 
-    def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
+    def __init__(
+        self,
+        composite_files: ContinuousFiberCompositesFiles,
+        server: BaseServer,
+        default_unit_system: Optional[UnitSystem] = None,
+    ):
         """Initialize data providers and add composite information to meshed region."""
         self._core_model = dpf.Model(composite_files.rst, server=server)
         self._server = server
 
         self._composite_files = composite_files
         self._data_sources = get_composites_data_sources(composite_files)
+
+        self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
+
         self._material_operators = get_material_operators(
             rst_data_source=self._data_sources.rst,
+            unit_system=self._unit_system,
             engineering_data_source=self._data_sources.engineering_data,
         )
 
@@ -144,6 +157,7 @@ class CompositeModel:
                 composite_definition_label,
                 self._core_model.metadata.streams_provider,
                 material_operators=self._material_operators,
+                unit_system=self._unit_system,
             )
 
     @property
