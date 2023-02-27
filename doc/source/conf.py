@@ -66,7 +66,7 @@ extensions = [
 # Intersphinx mapping
 intersphinx_mapping = {
     "python": ("https://docs.python.org/dev", None),
-    "ansys-dpf-core": ("https://dpf.docs.pyansys.com", None),
+    "ansys-dpf-core": ("https://dpf.docs.pyansys.com/release/0.7", None),
     "numpy": ("https://numpy.org/doc/stable", None),
     "matplotlib": ("https://matplotlib.org/stable", None),
     # kept here as an example
