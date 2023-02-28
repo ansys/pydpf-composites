@@ -251,7 +251,7 @@ and enriches the mesh with the composite lay-up information.
     layup_provider.inputs.abstract_field_support(
         material_support_provider.outputs.abstract_field_support
     )
-    layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
+    layup_provider.inputs.unit_system(result_info_provider.outputs.result_info)
     layup_provider.run()
 
 
@@ -367,7 +367,7 @@ Plot the maximum and minimum values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.138 seconds)
+   **Total running time of the script:** ( 0 minutes  0.616 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_dpf_composite_failure_workflow.py:

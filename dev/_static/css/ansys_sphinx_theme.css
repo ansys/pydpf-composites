@@ -607,6 +607,10 @@ Navigation column (according to side column)
 .bd-header .navbar-nav li a.nav-link {
   color: #ddd;
 }
+.bd-header .navbar-nav .dropdown button {
+  color: #ddd;
+  display: unset;
+}
 
 /*
 #################################
@@ -633,6 +637,14 @@ b, strong {
   border-bottom: 2px solid #fff;
 }
 
+.navbar-nav li a:focus, .navbar-nav li a:hover, .navbar-nav li.current>a {
+  color: white !important;
+}
+
+.navbar-nav .dropdown .dropdown-menu{
+  min-width: 250px;
+}
+
 /*
 ###########################
 Left side toc-tree hovering 
@@ -647,14 +659,15 @@ nav.bd-links .active:hover>a {
 
 nav.bd-links .active>a {
   font-weight: bold;
-  color: var(--pst-color-text-muted);
+  color: var(--pst-color-text-muted)!important;
   border-left: 2px solid var(--pst-color-text-base);
+  border-bottom: none!important;
   padding-left: 0.5rem;
 }
 
 nav.bd-links li>a:hover {
   font-weight: 900;
-  color: var(--pst-color-link);
+  color: var(--pst-color-link)!important;
 }
 
 /*

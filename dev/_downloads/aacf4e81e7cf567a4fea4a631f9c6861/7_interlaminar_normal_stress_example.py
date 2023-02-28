@@ -34,6 +34,7 @@ curvature, and the lay-up.
 #
 # Load Ansys libraries.
 import ansys.dpf.core as dpf
+from ansys.dpf.core import unit_systems
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
@@ -51,7 +52,9 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "ins")
 # Set up model and prepare inputs
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Set up the composite model.
-composite_model = CompositeModel(composite_files_on_server, server)
+composite_model = CompositeModel(
+    composite_files_on_server, server, default_unit_system=unit_systems.solver_mks
+)
 
 # %%
 # Prepare the inputs for the INS operator.

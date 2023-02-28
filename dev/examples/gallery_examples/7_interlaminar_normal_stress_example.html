@@ -475,6 +475,7 @@ shows how helper functions can be used to obtain composite result data.</p>
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.core</span> <span class="kn">import</span> <span class="n">unit_systems</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">Spot</span><span class="p">,</span> <span class="n">Sym3x3TensorComponent</span>
@@ -493,7 +494,9 @@ DPF server, and retrieving the example files.</p>
 <section id="set-up-model-and-prepare-inputs">
 <h2>Set up model and prepare inputs<a class="headerlink" href="#set-up-model-and-prepare-inputs" title="Permalink to this heading">#</a></h2>
 <p>Set up the composite model.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span>
+    <span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">default_unit_system</span><span class="o">=</span><span class="n">unit_systems</span><span class="o">.</span><span class="n">solver_mks</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p>Prepare the inputs for the INS operator.
@@ -571,7 +574,7 @@ The <code class="docutils literal notranslate"><span class="pre">INS</span></cod
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p8l1_ply_s3_field</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.750 seconds)</p>
+<img src="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" srcset="../../_images/sphx_glr_7_interlaminar_normal_stress_example_002.png" alt="7 interlaminar normal stress example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.282 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-7-interlaminar-normal-stress-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/aacf4e81e7cf567a4fea4a631f9c6861/7_interlaminar_normal_stress_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">7_interlaminar_normal_stress_example.py</span></code></a></p>

@@ -467,14 +467,14 @@ to manage the development environment.</p>
 server is started.</p>
 <ol class="arabic">
 <li><p>Run tests with a Docker container.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
 pytest<span class="w"> </span>.
 </pre></div>
 </div>
 </li>
 <li><p>Run tests with a DPF server started from the Ansys installer. The Ansys version must
-be 2023 R1 or later.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--ansys-path<span class="w"> </span><span class="s2">&quot;C:\Program Files\Ansys Inc\v231&quot;</span>
+be 2023 R2 or later.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--ansys-path<span class="w"> </span><span class="s2">&quot;C:\Program Files\Ansys Inc\v232&quot;</span>
 </pre></div>
 </div>
 </li>
@@ -495,14 +495,14 @@ in its folder and the parent folder.</p>
 <p>The Docker container referenced in this section is not yet publicly available.</p>
 </div>
 <p>On Windows, build documentation with this code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:231
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:latest
 tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
 <p>On Linux, build documentation with this code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:231
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:231
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:latest
 tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 </pre></div>
 </div>

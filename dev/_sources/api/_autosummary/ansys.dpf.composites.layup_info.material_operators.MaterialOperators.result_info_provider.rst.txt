@@ -3,4 +3,4 @@ result\_info\_provider
 
 .. currentmodule:: ansys.dpf.composites.layup_info.material_operators
 
-.. autoattribute:: MaterialOperators.result_info_provider
+.. autoproperty:: MaterialOperators.result_info_provider

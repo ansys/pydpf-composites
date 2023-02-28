@@ -124,7 +124,7 @@ layup_provider.inputs.data_sources(composite_definitions_source)
 layup_provider.inputs.abstract_field_support(
     material_support_provider.outputs.abstract_field_support
 )
-layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
+layup_provider.inputs.unit_system(result_info_provider.outputs.result_info)
 layup_provider.run()
 
 # %%

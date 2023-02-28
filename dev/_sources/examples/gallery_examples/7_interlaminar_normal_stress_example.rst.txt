@@ -52,11 +52,12 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-45
+.. GENERATED FROM PYTHON SOURCE LINES 36-46
 
 .. code-block:: default
 
     import ansys.dpf.core as dpf
+    from ansys.dpf.core import unit_systems
 
     from ansys.dpf.composites.composite_model import CompositeModel
     from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
@@ -72,11 +73,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-47
+.. GENERATED FROM PYTHON SOURCE LINES 47-48
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-50
+.. GENERATED FROM PYTHON SOURCE LINES 48-51
 
 .. code-block:: default
 
@@ -90,17 +91,19 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-54
+.. GENERATED FROM PYTHON SOURCE LINES 52-55
 
 Set up model and prepare inputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-56
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 .. code-block:: default
 
-    composite_model = CompositeModel(composite_files_on_server, server)
+    composite_model = CompositeModel(
+        composite_files_on_server, server, default_unit_system=unit_systems.solver_mks
+    )
 
 
 
@@ -109,13 +112,13 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-60
+.. GENERATED FROM PYTHON SOURCE LINES 60-63
 
 Prepare the inputs for the INS operator.
 ``rotate_to_global`` is ``False`` because the postprocessing engine expects
 the results to be in the element coordinate system (material coordinate system).
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-66
+.. GENERATED FROM PYTHON SOURCE LINES 63-69
 
 .. code-block:: default
 
@@ -132,14 +135,14 @@ the results to be in the element coordinate system (material coordinate system).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-71
+.. GENERATED FROM PYTHON SOURCE LINES 70-74
 
 Compute interlaminar normal stresses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Compute the interlaminar normal stresses.
 The ``INS`` operator stores the stresses in the provided stress field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-76
+.. GENERATED FROM PYTHON SOURCE LINES 74-79
 
 .. code-block:: default
 
@@ -155,13 +158,13 @@ The ``INS`` operator stores the stresses in the provided stress field.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-80
+.. GENERATED FROM PYTHON SOURCE LINES 80-83
 
 Plot s3 stresses
 ----------------
 Get the first stress field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-82
+.. GENERATED FROM PYTHON SOURCE LINES 83-85
 
 .. code-block:: default
 
@@ -174,11 +177,11 @@ Get the first stress field.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-84
+.. GENERATED FROM PYTHON SOURCE LINES 86-87
 
 Plot the maximum s3 of each element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-103
+.. GENERATED FROM PYTHON SOURCE LINES 87-106
 
 .. code-block:: default
 
@@ -213,11 +216,11 @@ Plot the maximum s3 of each element.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-105
+.. GENERATED FROM PYTHON SOURCE LINES 107-108
 
 Plot s3 at the mid-plane of a certain ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-129
+.. GENERATED FROM PYTHON SOURCE LINES 108-132
 
 .. code-block:: default
 
@@ -260,7 +263,7 @@ Plot s3 at the mid-plane of a certain ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.750 seconds)
+   **Total running time of the script:** ( 0 minutes  5.282 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_7_interlaminar_normal_stress_example.py:
