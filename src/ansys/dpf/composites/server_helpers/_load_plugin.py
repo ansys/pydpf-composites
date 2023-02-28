@@ -31,8 +31,8 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
         "Ans.Dpf.Native",
         "mapdlOperatorsCore",
         "Ans.Dpf.FEMutils",
-        "composite_operators",
         "Ans.Dpf.EngineeringData",
+        "composite_operators",
     ]
 
     def get_lib_from_name(name: str) -> str:

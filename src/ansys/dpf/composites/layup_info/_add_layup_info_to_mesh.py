@@ -1,9 +1,11 @@
 """Helper functions to add lay-up information to a DPF meshed region."""
 from typing import Optional
+from warnings import warn
 
 from ansys.dpf.core import MeshedRegion, Operator
 
 from ..data_sources import CompositeDataSources
+from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
 
 
@@ -11,6 +13,7 @@ def add_layup_info_to_mesh(
     data_sources: CompositeDataSources,
     material_operators: MaterialOperators,
     mesh: MeshedRegion,
+    unit_system: Optional[UnitSystemProvider] = None,
     composite_definition_label: Optional[str] = None,
 ) -> Operator:
     """Add lay-up information to the mesh.
@@ -26,6 +29,8 @@ def add_layup_info_to_mesh(
     material_operators:
        MaterialOperators object available from the :attr:`.CompositeModel.material_operators`
        attribute.
+    unit_system:
+        Unit system specification
     composite_definition_label:
         Label of the composite definition, which is the
         dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
@@ -55,9 +60,18 @@ def add_layup_info_to_mesh(
     layup_provider.inputs.abstract_field_support(
         material_operators.material_support_provider.outputs.abstract_field_support
     )
-    layup_provider.inputs.unit_system(
-        material_operators.result_info_provider.outputs.result_info
-    )
+
+    if unit_system is None:
+        warn(
+            "Calling add_layup_info_to_mesh"
+            "without a unit system is deprecated. Use get_unit_system"
+            "to obtain the unit system.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        unit_system = material_operators.result_info_provider
+
+    layup_provider.inputs.unit_system(unit_system)
     layup_provider.run()
 
     return layup_provider
