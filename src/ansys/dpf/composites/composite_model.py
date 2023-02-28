@@ -127,6 +127,12 @@ class CompositeModel:
     composite_files:
         Use the :func:`.get_composite_files_from_workbench_result_folder` function to obtain
         the :class:`.ContinuousFiberCompositesFiles` object.
+    server:
+        DPF Server on which the model is created
+    default_unit_system:
+        Unit system that is used if the result file
+        does not specify the unit system. This happens
+        for pure MAPDL projects.
     """
 
     def __init__(

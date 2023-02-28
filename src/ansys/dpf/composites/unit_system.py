@@ -24,7 +24,10 @@ def get_unit_system(
     Parameters
     ----------
     rst_data_source:
+        DPF Data Source containing a rst file.
     default_unit_system:
+        Default Unit system that is used if the rst file does not contain
+        a unit system.
     """
     result_info_provider = Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)
