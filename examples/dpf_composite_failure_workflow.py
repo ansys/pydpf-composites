@@ -162,7 +162,7 @@ failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
 minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
 minmax_per_element.inputs.mesh(mesh_provider.outputs.mesh)
-minmax_per_element.inputs.abstract_field_support(
+minmax_per_element.inputs.material_support(
     material_support_provider.outputs.abstract_field_support
 )
 
