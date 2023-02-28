@@ -1,9 +1,10 @@
 """Helper functions to add lay-up information to a DPF meshed region."""
-from typing import Optional, Union
+from typing import Optional
 
-from ansys.dpf.core import MeshedRegion, Operator, ResultInfo, UnitSystem
+from ansys.dpf.core import MeshedRegion, Operator
 
 from ..data_sources import CompositeDataSources
+from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
 
 
@@ -11,7 +12,7 @@ def add_layup_info_to_mesh(
     data_sources: CompositeDataSources,
     material_operators: MaterialOperators,
     mesh: MeshedRegion,
-    unit_system: Union[UnitSystem, ResultInfo],
+    unit_system: UnitSystemProvider,
     composite_definition_label: Optional[str] = None,
 ) -> Operator:
     """Add lay-up information to the mesh.

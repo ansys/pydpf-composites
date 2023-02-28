@@ -1,10 +1,11 @@
 """Helper function to get material-related operators."""
 from dataclasses import dataclass
-from typing import Union
 
-from ansys.dpf.core import DataSources, Operator, ResultInfo, UnitSystem
+from ansys.dpf.core import DataSources, Operator
 
 __all__ = ("MaterialOperators", "get_material_operators")
+
+from ansys.dpf.composites.unit_system import UnitSystemProvider
 
 
 @dataclass(frozen=True)
@@ -32,7 +33,7 @@ class MaterialOperators:
 def get_material_operators(
     rst_data_source: DataSources,
     engineering_data_source: DataSources,
-    unit_system: Union[UnitSystem, ResultInfo],
+    unit_system: UnitSystemProvider,
 ) -> MaterialOperators:
     """Get material properties related to operators.
 
@@ -42,6 +43,7 @@ def get_material_operators(
         Data source that contains a RST file.
     engineering_data_source
         Data source that contains the Engineering Data file.
+    unit_system:
     ----------
 
     """

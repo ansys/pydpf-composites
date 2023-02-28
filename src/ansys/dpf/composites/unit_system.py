@@ -1,14 +1,20 @@
 """Unit system helper."""
-__all__ = ("get_unit_system",)
+__all__ = ("get_unit_system", "UnitSystemProvider")
 
 from typing import Optional, Union
 
-from ansys.dpf.core import DataSources, Operator, ResultInfo, UnitSystem
+from ansys.dpf.core import DataSources, Operator, UnitSystem
+
+# Either a UnitSystem or a ResultInfoProvider operator.
+# This Union is needed because dpf currently does not support passing
+# a ResultInfo directly to operators nor is it possible to get
+# the UnitSystem from a ResultInfo.
+UnitSystemProvider = Union[UnitSystem, Operator]
 
 
 def get_unit_system(
     rst_data_source: DataSources, default_unit_system: Optional[UnitSystem] = None
-) -> Union[UnitSystem, ResultInfo]:
+) -> UnitSystemProvider:
     """Get unit_system from rst DataSources.
 
     Returns the ResultInfo from the result file or
@@ -23,10 +29,8 @@ def get_unit_system(
     result_info_provider = Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)
 
-    rst_result_info = result_info_provider.outputs.result_info()
-
     # If unit system is undefined, fall back to default_unit_system
-    if rst_result_info.unit_system == "Undefined":
+    if result_info_provider.outputs.result_info().unit_system == "Undefined":
         if default_unit_system is None:
             raise RuntimeError(
                 "The result file does not specify a unit system."
@@ -36,4 +40,4 @@ def get_unit_system(
             )
         return default_unit_system
     else:
-        return rst_result_info
+        return result_info_provider
