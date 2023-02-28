@@ -61,7 +61,7 @@ grpcio = "*"
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.9.4"
+version = "0.9.5"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 category = "main"
 optional = true
@@ -116,14 +116,14 @@ tests_no_zope = ["cloudpickle", "hypothesis", "mypy (>=0.971,<0.990)", "pympler"
 
 [[package]]
 name = "Babel"
-version = "2.11.0"
+version = "2.12.0"
 description = "Internationalization utilities"
 category = "main"
 optional = true
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
-pytz = ">=2015.7"
+pytz = {version = ">=2015.7", markers = "python_version < \"3.9\""}
 
 [[package]]
 name = "beautifulsoup4"
@@ -703,7 +703,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "more-itertools"
-version = "9.0.0"
+version = "9.1.0"
 description = "More routines for operating on iterables, beyond itertools"
 category = "main"
 optional = true
@@ -1555,7 +1555,7 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0"
-content-hash = "3acb7b28079ad33e6f1ce14d8ea5d0caf798203cca9a589824c99f5771658f8e"
+content-hash = "b7d1c319d36d1eb4de4c9f7b7d35d3212090e9f84b5e906c44adfc2f9b2522b1"
 
 [metadata.files]
 alabaster = [
@@ -1578,8 +1578,8 @@ ansys-grpc-dpf = [
     {file = "ansys_grpc_dpf-0.7.1-py3-none-any.whl", hash = "sha256:bf71388d50c05ee3c24d08f2baf1b10689fccec948276ad5740c9d80aba89c58"},
 ]
 ansys-sphinx-theme = [
-    {file = "ansys-sphinx-theme-0.9.4.tar.gz", hash = "sha256:69eb5e06b786c00b6ffbf5f96b40ff25ceae0fc3cf782d66d023d6c159022432"},
-    {file = "ansys_sphinx_theme-0.9.4-py3-none-any.whl", hash = "sha256:769336c5016266c1b3882e27abb862b47be6e08ec196e4b4c75acff20c1003e8"},
+    {file = "ansys-sphinx-theme-0.9.5.tar.gz", hash = "sha256:acdbc0f1b67951f43848e2cc9d02725c85bd85ed6ded307163f33813c8454559"},
+    {file = "ansys_sphinx_theme-0.9.5-py3-none-any.whl", hash = "sha256:2871e834d139565f140805fb42f4f2b3b9faad37ff28df20bb94801afeba5e18"},
 ]
 appdirs = [
     {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
@@ -1594,8 +1594,8 @@ attrs = [
     {file = "attrs-22.2.0.tar.gz", hash = "sha256:c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"},
 ]
 Babel = [
-    {file = "Babel-2.11.0-py3-none-any.whl", hash = "sha256:1ad3eca1c885218f6dce2ab67291178944f810a10a9b5f3cb8382a5a232b64fe"},
-    {file = "Babel-2.11.0.tar.gz", hash = "sha256:5ef4b3226b0180dedded4229651c8b0e1a3a6a2837d45a073272f313e4cf97f6"},
+    {file = "Babel-2.12.0-py3-none-any.whl", hash = "sha256:8f8b752c803e9f9e03ff219b644aceb0dbcf081c55a88ea11f86291e60a7bb68"},
+    {file = "Babel-2.12.0.tar.gz", hash = "sha256:468e6cd1e2b571a1663110fc737e3a7d9069d038e0c9c4a7f158caeeafe4089c"},
 ]
 beautifulsoup4 = [
     {file = "beautifulsoup4-4.11.2-py3-none-any.whl", hash = "sha256:0e79446b10b3ecb499c1556f7e228a53e64a2bfcebd455f370d8927cb5b59e39"},
@@ -2216,8 +2216,8 @@ mdurl = [
     {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
 ]
 more-itertools = [
-    {file = "more-itertools-9.0.0.tar.gz", hash = "sha256:5a6257e40878ef0520b1803990e3e22303a41b5714006c32a3fd8304b26ea1ab"},
-    {file = "more_itertools-9.0.0-py3-none-any.whl", hash = "sha256:250e83d7e81d0c87ca6bd942e6aeab8cc9daa6096d12c5308f3f92fa5e5c1f41"},
+    {file = "more-itertools-9.1.0.tar.gz", hash = "sha256:cabaa341ad0389ea83c17a94566a53ae4c9d07349861ecb14dc6d0345cf9ac5d"},
+    {file = "more_itertools-9.1.0-py3-none-any.whl", hash = "sha256:d2bc7f02446e86a68911e58ded76d6561eea00cddfb2a91e7019bbb586c799f3"},
 ]
 mypy = [
     {file = "mypy-0.931-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:3c5b42d0815e15518b1f0990cff7a705805961613e701db60387e6fb663fe78a"},
