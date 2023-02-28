@@ -150,8 +150,8 @@ stress_operator.inputs.bool_rotate_to_global(False)
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
 failure_evaluator.inputs.configuration(combined_fc.to_json())
 failure_evaluator.inputs.materials_container(material_provider.outputs)
-failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
-failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
+failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
+failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
 # %%
