@@ -1,13 +1,13 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, Union, cast
+from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, ResultInfo, UnitSystem
+from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 
-from .unit_system import get_unit_system
+from .unit_system import UnitSystemProvider, get_unit_system
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -71,7 +71,7 @@ class CompositeInfo:
         composite_definition_label: str,
         streams_provider: dpf.Operator,
         material_operators: MaterialOperators,
-        unit_system: Union[ResultInfo, UnitSystem],
+        unit_system: UnitSystemProvider,
     ):
         """Initialize ``CompositeInfo`` class and add enriched mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
