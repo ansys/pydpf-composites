@@ -92,7 +92,7 @@ class DockerProcess:
         server_err_file: pathlib.Path,
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
-        image_name: str = "ghcr.io/pyansys/pydpf-composites:231",
+        image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
@@ -228,7 +228,11 @@ class InstalledServer:
         self.ansys_path = ansys_path
 
     def __enter__(self):
-        server = dpf.start_local_server(ansys_path=self.ansys_path)
+        context = dpf.server.server_context.ServerContext(
+            dpf.server_context.LicensingContextType.premium
+        )
+
+        server = dpf.start_local_server(ansys_path=self.ansys_path, context=context)
         return ServerContext(port=None, platform=sys.platform, server=server)
 
     def __exit__(self, *args):
@@ -305,6 +309,9 @@ def dpf_server(request: pytest.FixtureRequest):
         server = _try_until_timeout(start_server, "Failed to start server.")
 
         _wait_until_server_is_up(server)
+        server.apply_context(
+            dpf.server.server_context.ServerContext(dpf.server_context.LicensingContextType.premium)
+        )
         load_composites_plugin(server, ansys_path=installer_path)
 
         yield server

@@ -5,6 +5,7 @@ from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import LayupPropertiesProvider, add_layup_info_to_mesh
 from ansys.dpf.composites.layup_info.material_operators import get_material_operators
+from ansys.dpf.composites.unit_system import get_unit_system
 
 from .helper import get_basic_shell_files
 
@@ -18,11 +19,15 @@ def test_layup_properties(dpf_server):
     mesh_provider.inputs.data_sources(composite_data_sources.rst)
     mesh = mesh_provider.outputs.mesh()
 
+    unit_system = get_unit_system(composite_data_sources.rst)
     material_operators = get_material_operators(
-        composite_data_sources.rst, composite_data_sources.engineering_data
+        composite_data_sources.rst, composite_data_sources.engineering_data, unit_system=unit_system
     )
     layup_provider = add_layup_info_to_mesh(
-        composite_data_sources, mesh=mesh, material_operators=material_operators
+        composite_data_sources,
+        mesh=mesh,
+        material_operators=material_operators,
+        unit_system=unit_system,
     )
 
     properties_provider = LayupPropertiesProvider(layup_provider, mesh=mesh)

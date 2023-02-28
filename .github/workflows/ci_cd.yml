@@ -13,7 +13,7 @@ on:
 
 env:
   MAIN_PYTHON_VERSION: '3.9'
-  ANSYS_VERSION: '231'
+  CONTAINER_TAG: 'latest'
   PACKAGE_NAME: 'ansys-dpf-composites'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
   PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "21002"
@@ -70,7 +70,7 @@ jobs:
 
       - name: "Pull and start dpf container"
         run:  |
-          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
+          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
@@ -111,7 +111,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Pull and start DPF container"
         run: |
-          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
+          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -143,8 +143,8 @@ jobs:
 
       - name: "Pull and start dpf container"
         run: |
-          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:${{ env.ANSYS_VERSION }}
+          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
