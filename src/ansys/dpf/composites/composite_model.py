@@ -546,11 +546,9 @@ class CompositeModel:
         ins_operator.inputs.mesh_properties_container(
             layup_provider.outputs.mesh_properties_container
         )
-        # pass inputs by pin because the input name is not set yet.
-        # Will be improved in sever version 2023 R2
-        ins_operator.connect(24, layup_provider.outputs.fields_container)
-        ins_operator.connect(0, strains)
-        ins_operator.connect(1, stresses)
+        ins_operator.inputs.section_data_container(layup_provider.outputs.section_data_container)
+        ins_operator.inputs.strains_container(strains)
+        ins_operator.inputs.stresses_container(stresses)
 
         # call run because ins operator has not output
         ins_operator.run()
