@@ -17,6 +17,7 @@ from ansys.dpf.composites.layup_info.material_properties import (
     get_constant_property_dict,
 )
 from ansys.dpf.composites.select_indices import get_selected_indices
+from ansys.dpf.composites.unit_system import get_unit_system
 
 from .helper import get_basic_shell_files, setup_operators
 
@@ -114,8 +115,12 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
     mesh_provider.inputs.streams_container(streams_provider)
     mesh = mesh_provider.outputs.mesh()
 
+    unit_system = get_unit_system(data_sources.rst)
+
     material_operators = get_material_operators(
-        rst_data_source=data_sources.rst, engineering_data_source=data_sources.rst
+        rst_data_source=data_sources.rst,
+        engineering_data_source=data_sources.rst,
+        unit_system=unit_system,
     )
 
     material_property = MaterialProperty.Stress_Limits_Xt

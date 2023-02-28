@@ -12,6 +12,7 @@ from ansys.dpf.composites.example_helper import (
 )
 from ansys.dpf.composites.layup_info import add_layup_info_to_mesh
 from ansys.dpf.composites.layup_info.material_operators import get_material_operators
+from ansys.dpf.composites.unit_system import get_unit_system
 
 
 class Timer:
@@ -82,9 +83,15 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles):
     mesh = mesh_provider.outputs.mesh()
     timer.add("mesh")
 
-    material_operators = get_material_operators(data_sources.rst, data_sources.engineering_data)
+    unit_system = get_unit_system(data_sources.rst)
+    material_operators = get_material_operators(
+        data_sources.rst, data_sources.engineering_data, unit_system=unit_system
+    )
     layup_provider = add_layup_info_to_mesh(
-        data_sources=data_sources, mesh=mesh, material_operators=material_operators
+        data_sources=data_sources,
+        mesh=mesh,
+        material_operators=material_operators,
+        unit_system=unit_system,
     )
 
     return SetupResult(
