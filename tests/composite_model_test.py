@@ -333,6 +333,7 @@ def test_composite_model_element_scope(dpf_server):
     assert max_irfs.get_entity_data_by_id(min_id)[0] == pytest.approx(min(irfs.data), 1e-8)
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
 
+
 def test_composite_model_named_selection_scope(dpf_server):
     """Ensure that the scoping by Named Selection is supported"""
     files = get_data_files()
@@ -352,5 +353,5 @@ def test_composite_model_named_selection_scope(dpf_server):
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
     irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
-    assert irfs.data[0] == pytest.approx(2., 1e-8)
-    assert irfs.data[1] == pytest.approx(3., 1e-8)
+    assert irfs.data[0] == pytest.approx(2.0, 1e-8)
+    assert irfs.data[1] == pytest.approx(3.0, 1e-8)

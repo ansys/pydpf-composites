@@ -139,7 +139,7 @@ def test_result_definition():
                 "write_data_for_full_element_scope": False,
                 "elements": [1, 2, 5],
                 "ply_ids": ["ply 1", "ply carbon UD"],
-                "named_selections": []
+                "named_selections": [],
             }
         ],
     }

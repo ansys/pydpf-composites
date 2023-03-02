@@ -267,10 +267,12 @@ class CompositeModel:
         """
         if composite_scope is None:
             composite_scope = CompositeScope()
-       
+
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
-        named_selections_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
+        named_selections_in = (
+            [] if composite_scope.named_selections is None else composite_scope.named_selections
+        )
         time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
@@ -356,7 +358,7 @@ class CompositeModel:
             mapping_file=self._composite_files.composite[composite_definition_label].mapping,
             element_scope=[element_id],
             ply_scope=[],
-            named_selection_scope=[]
+            named_selection_scope=[],
         )
         rd = ResultDefinition(
             name="combined failure criteria",
