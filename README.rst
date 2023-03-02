@@ -105,16 +105,16 @@ server is started.
 
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:231
+        docker pull ghcr.io/pyansys/pydpf-composites:latest
         pytest .
 
 
 #.  Run tests with a DPF server started from the Ansys installer. The Ansys version must
-    be 2023 R1 or later.
+    be 2023 R2 or later.
 
     .. code:: bash
 
-        pytest . --ansys-path "C:\Program Files\Ansys Inc\v231"
+        pytest . --ansys-path "C:\Program Files\Ansys Inc\v232"
 
 
 #.  Run tests with a local gRPC server executable:
@@ -141,8 +141,8 @@ On Windows, build documentation with this code:
 
 .. code:: bash
 
-    docker pull ghcr.io/pyansys/pydpf-composites:231
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
+    docker pull ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-windows
 
 
@@ -150,8 +150,8 @@ On Linux, build documentation with this code:
 
 .. code:: bash
 
-    docker pull ghcr.io/pyansys/pydpf-composites:231
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:231
+    docker pull ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-linux
 
 

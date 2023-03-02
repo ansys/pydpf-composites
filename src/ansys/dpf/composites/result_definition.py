@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 import json
-from typing import Any, Dict, Optional, Sequence
+from typing import Any, Dict, Optional, Sequence, Union
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
@@ -70,7 +70,7 @@ class ResultDefinition:
         material_file: _PATH,
         measure: str = "inverse_reserve_factor",
         stress_strain_eval_mode: str = "rst_file",
-        time: float = 1.0,
+        time: Union[float, None] = None,
         expression: str = "composite_failure",
         max_chunk_size: int = 50000,
     ):
@@ -188,8 +188,10 @@ class ResultDefinition:
             )
 
     @property
-    def time(self) -> float:
+    def time(self) -> Union[float, None]:
         """Time or solution step.
+
+        DPF Composites automatically selects the last time step if time is not set.
 
         You can use the :meth:`.CompositeModel.get_result_times_or_frequencies` method
         to list the available times or frequencies in the result file.
@@ -197,7 +199,7 @@ class ResultDefinition:
         return self._time
 
     @time.setter
-    def time(self, value: float) -> None:
+    def time(self, value: Union[float, None]) -> None:
         self._time = value
 
     @property
@@ -232,9 +234,11 @@ class ResultDefinition:
             "failure_criteria_definition": {cfc.JSON_DICT_KEY: cfc.to_dict()},
             "measures": [self.measure],
             "stress_strain_eval_mode": f"{self.stress_strain_eval_mode}",
-            "time": self.time,
             "max_chunk_size": self.max_chunk_size,
         }
+
+        if self.time:
+            result_definition["time"] = self.time
 
         def get_scope(
             result_definition_scope: ResultDefinitionScope, rst_file: _PATH, material_file: _PATH

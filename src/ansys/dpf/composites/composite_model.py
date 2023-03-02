@@ -3,9 +3,11 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator
+from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
+
+from .unit_system import UnitSystemProvider, get_unit_system
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -75,6 +77,7 @@ class CompositeInfo:
         composite_definition_label: str,
         streams_provider: dpf.Operator,
         material_operators: MaterialOperators,
+        unit_system: UnitSystemProvider,
     ):
         """Initialize ``CompositeInfo`` class and add enriched mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
@@ -85,6 +88,7 @@ class CompositeInfo:
             mesh=self.mesh,
             data_sources=data_sources,
             material_operators=material_operators,
+            unit_system=unit_system,
             composite_definition_label=composite_definition_label,
         )
 
@@ -129,17 +133,32 @@ class CompositeModel:
     composite_files:
         Use the :func:`.get_composite_files_from_workbench_result_folder` function to obtain
         the :class:`.ContinuousFiberCompositesFiles` object.
+    server:
+        DPF Server on which the model is created
+    default_unit_system:
+        Unit system that is used if the result file
+        does not specify the unit system. This happens
+        for pure MAPDL projects.
     """
 
-    def __init__(self, composite_files: ContinuousFiberCompositesFiles, server: BaseServer):
+    def __init__(
+        self,
+        composite_files: ContinuousFiberCompositesFiles,
+        server: BaseServer,
+        default_unit_system: Optional[UnitSystem] = None,
+    ):
         """Initialize data providers and add composite information to meshed region."""
         self._core_model = dpf.Model(composite_files.rst, server=server)
         self._server = server
 
         self._composite_files = composite_files
         self._data_sources = get_composites_data_sources(composite_files)
+
+        self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
+
         self._material_operators = get_material_operators(
             rst_data_source=self._data_sources.rst,
+            unit_system=self._unit_system,
             engineering_data_source=self._data_sources.engineering_data,
         )
 
@@ -150,6 +169,7 @@ class CompositeModel:
                 composite_definition_label,
                 self._core_model.metadata.streams_provider,
                 material_operators=self._material_operators,
+                unit_system=self._unit_system,
             )
 
     @property
@@ -247,13 +267,11 @@ class CompositeModel:
         """
         if composite_scope is None:
             composite_scope = CompositeScope()
+       
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
         named_selections_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
-        if composite_scope.time is not None:
-            time_in = composite_scope.time
-        else:
-            time_in = self.get_result_times_or_frequencies()[-1]
+        time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
             # This is a workaround because setting the
@@ -319,10 +337,7 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        if time is None:
-            time_in = self.get_result_times_or_frequencies()[-1]
-        else:
-            time_in = time
+        time_in = time
 
         if composite_definition_label is None:
             # jvonrick: Jan 2023: We could also try to determine composite_definition_label
@@ -541,11 +556,9 @@ class CompositeModel:
         ins_operator.inputs.mesh_properties_container(
             layup_provider.outputs.mesh_properties_container
         )
-        # pass inputs by pin because the input name is not set yet.
-        # Will be improved in sever version 2023 R2
-        ins_operator.connect(24, layup_provider.outputs.fields_container)
-        ins_operator.connect(0, strains)
-        ins_operator.connect(1, stresses)
+        ins_operator.inputs.section_data_container(layup_provider.outputs.section_data_container)
+        ins_operator.inputs.strains_container(strains)
+        ins_operator.inputs.stresses_container(stresses)
 
         # call run because ins operator has not output
         ins_operator.run()

@@ -124,7 +124,7 @@ layup_provider.inputs.data_sources(composite_definitions_source)
 layup_provider.inputs.abstract_field_support(
     material_support_provider.outputs.abstract_field_support
 )
-layup_provider.inputs.unit_system_or_result_info(result_info_provider.outputs.result_info)
+layup_provider.inputs.unit_system(result_info_provider.outputs.result_info)
 layup_provider.run()
 
 # %%
@@ -150,8 +150,8 @@ stress_operator.inputs.bool_rotate_to_global(False)
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
 failure_evaluator.inputs.configuration(combined_fc.to_json())
 failure_evaluator.inputs.materials_container(material_provider.outputs)
-failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
-failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
+failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
+failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
 # %%
@@ -162,9 +162,7 @@ failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
 minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
 minmax_per_element.inputs.mesh(mesh_provider.outputs.mesh)
-minmax_per_element.inputs.abstract_field_support(
-    material_support_provider.outputs.abstract_field_support
-)
+minmax_per_element.inputs.material_support(material_support_provider.outputs.abstract_field_support)
 
 output = minmax_per_element.outputs.field_max()
 

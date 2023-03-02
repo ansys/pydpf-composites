@@ -98,7 +98,7 @@ mat_support_operator.connect(4, data_sources)
 minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
 minmax_per_element.inputs.fields_container(sf_op)
 minmax_per_element.inputs.mesh(mesh)
-minmax_per_element.inputs.abstract_field_support(mat_support_operator)
+minmax_per_element.inputs.material_support(mat_support_operator)
 
 max_failure = minmax_per_element.outputs.field_max.get_data()
 max_failure_value = max_failure.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
