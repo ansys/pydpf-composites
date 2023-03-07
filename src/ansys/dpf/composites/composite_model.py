@@ -270,9 +270,7 @@ class CompositeModel:
 
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
-        named_selections_in = (
-            [] if composite_scope.named_selections is None else composite_scope.named_selections
-        )
+        named_selections_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
         time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
