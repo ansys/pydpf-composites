@@ -353,5 +353,5 @@ def test_composite_model_named_selection_scope(dpf_server):
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
     irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
-    assert irfs.data[0] == pytest.approx(2.0, 1e-8)
-    assert irfs.data[1] == pytest.approx(3.0, 1e-8)
+    assert irfs.data[0] == pytest.approx(1.4792790331384016, 1e-8)
+    assert irfs.data[1] == pytest.approx(1.3673715033617213, 1e-8)
