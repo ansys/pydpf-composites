@@ -65,7 +65,7 @@ class CompositeScope:
     elements: Optional[Sequence[int]] = None
     plies: Optional[Sequence[str]] = None
     time: Optional[float] = None
-    named_selections: Optional[Sequence[int]] = None
+    named_selections: Optional[Sequence[str]] = None
 
 
 class CompositeInfo:
