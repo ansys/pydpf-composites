@@ -270,7 +270,7 @@ class CompositeModel:
 
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
-        named_selections_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
+        ns_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
         time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
@@ -290,7 +290,7 @@ class CompositeModel:
                     mapping_file=composite_files.mapping,
                     element_scope=element_scope_in,
                     ply_scope=ply_scope_in,
-                    named_selection_scope=named_selections_in,
+                    named_selection_scope=ns_in,
                     write_data_for_full_element_scope=write_data_for_full_element_scope,
                 )
             )
