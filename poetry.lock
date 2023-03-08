@@ -1883,14 +1883,14 @@ testutil = ["gitpython (>3)"]
 
 [[package]]
 name = "pypandoc"
-version = "1.10"
+version = "1.11"
 description = "Thin wrapper for pandoc."
 category = "main"
 optional = true
 python-versions = ">=3.6"
 files = [
-    {file = "pypandoc-1.10-py3-none-any.whl", hash = "sha256:ff9658cda18865a822695349a7c707756ecc454b59b71f920b554579ec54aaa7"},
-    {file = "pypandoc-1.10.tar.gz", hash = "sha256:101164d154f0b9957372cdbf285396153b74144fda47f531fb556de244efc86e"},
+    {file = "pypandoc-1.11-py3-none-any.whl", hash = "sha256:b260596934e9cfc6513056110a7c8600171d414f90558bf4407e68b209be8007"},
+    {file = "pypandoc-1.11.tar.gz", hash = "sha256:7f6d68db0e57e0f6961bec2190897118c4d305fc2d31c22cd16037f22ee084a5"},
 ]
 
 [[package]]
