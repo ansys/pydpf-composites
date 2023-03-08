@@ -332,3 +332,26 @@ def test_composite_model_element_scope(dpf_server):
     assert len(max_irfs.data) == 2
     assert max_irfs.get_entity_data_by_id(min_id)[0] == pytest.approx(min(irfs.data), 1e-8)
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
+
+
+def test_composite_model_named_selection_scope(dpf_server):
+    """Ensure that the scoping by Named Selection is supported"""
+    files = get_data_files()
+
+    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
+
+    composite_model = CompositeModel(files, server=dpf_server)
+
+    ns_name = "NS_ELEM"
+    assert ns_name in composite_model.get_mesh().available_named_selections
+    ns_scope = composite_model.get_mesh().named_selection(ns_name)
+    assert list(ns_scope.ids) == [2, 3]
+
+    cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
+
+    scope = CompositeScope(named_selections=[ns_name])
+    failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
+    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    assert len(irfs.data) == 2
+    assert irfs.data[0] == pytest.approx(1.4792790331384016, 1e-8)
+    assert irfs.data[1] == pytest.approx(1.3673715033617213, 1e-8)

@@ -49,17 +49,23 @@ class CompositeScope:
         Time or frequency. You can use the
         :func:`CompositeModel.get_result_times_or_frequencies` method
         to list the solution steps.
+    named_selections:
+        List of element sets.
+        Use `composite_model.get_mesh().available_named_selections` to list
+        all named selections.
 
     Notes
     -----
-    If both the ``elements`` and ``plies`` parameters are set, the final element
-    scope is the intersection of the two.
+    If more than one scope (``elements``, ``named_selections`` and ``plies``)
+    is set, then the final element scope is the intersection
+    of the defined parameters. All elements are selected if no parameter is set.
 
     """
 
     elements: Optional[Sequence[int]] = None
     plies: Optional[Sequence[str]] = None
     time: Optional[float] = None
+    named_selections: Optional[Sequence[str]] = None
 
 
 class CompositeInfo:
@@ -261,8 +267,10 @@ class CompositeModel:
         """
         if composite_scope is None:
             composite_scope = CompositeScope()
+
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
+        ns_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
         time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
@@ -282,6 +290,7 @@ class CompositeModel:
                     mapping_file=composite_files.mapping,
                     element_scope=element_scope_in,
                     ply_scope=ply_scope_in,
+                    named_selection_scope=ns_in,
                     write_data_for_full_element_scope=write_data_for_full_element_scope,
                 )
             )
@@ -347,6 +356,7 @@ class CompositeModel:
             mapping_file=self._composite_files.composite[composite_definition_label].mapping,
             element_scope=[element_id],
             ply_scope=[],
+            named_selection_scope=[],
         )
         rd = ResultDefinition(
             name="combined failure criteria",
