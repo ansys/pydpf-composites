@@ -139,13 +139,29 @@ def test_result_definition():
                 "write_data_for_full_element_scope": False,
                 "elements": [1, 2, 5],
                 "ply_ids": ["ply 1", "ply carbon UD"],
+                "named_selections": [],
             }
         ],
     }
 
     assert rd.to_dict() == ref_dict
 
-    # check result definition is time is not set (None)
+    """
+    Define scope by named selections
+    """
+    ns_list = ["NS_1", "Body 7"]
+    rd.scopes[0].element_scope = []
+    rd.scopes[0].ply_scope = []
+    rd.scopes[0].named_selection_scope = ns_list
+    assert rd.scopes[0].named_selection_scope == ns_list
+    ref_dict["scopes"][0]["elements"] = []
+    ref_dict["scopes"][0]["ply_ids"] = []
+    ref_dict["scopes"][0]["named_selections"] = ns_list
+    assert rd.to_dict() == ref_dict
+
+    """
+    Skip the definition of the time
+    """
     rd.time = None
     ref_dict.pop("time")
     assert rd.to_dict() == ref_dict

@@ -32,6 +32,7 @@ class ResultDefinitionScope:
     composite_definition: _PATH
     element_scope: Sequence[int] = field(default_factory=lambda: [])
     ply_scope: Sequence[str] = field(default_factory=lambda: [])
+    named_selection_scope: Sequence[str] = field(default_factory=lambda: [])
     """Assembly files that define the mapping of the labels.
 
     This attribute is needed if multiple parts are assembled in Workbench or
@@ -256,6 +257,7 @@ class ResultDefinition:
                 "write_data_for_full_element_scope": write_for_full_scope,
                 "elements": [int(v) for v in result_definition_scope.element_scope],
                 "ply_ids": result_definition_scope.ply_scope,
+                "named_selections": result_definition_scope.named_selection_scope,
             }
 
         scopes = {
