@@ -14,14 +14,14 @@ files = [
 
 [[package]]
 name = "ansys-dpf-core"
-version = "0.7.3"
+version = "0.7.4"
 description = "Data Processing Framework - Python Core"
 category = "main"
 optional = false
 python-versions = ">=3.7, <4"
 files = [
-    {file = "ansys-dpf-core-0.7.3.tar.gz", hash = "sha256:99cf1f0b2f504e3b58c6746b391412ae793367f2e16fc0502ad7a7454f961731"},
-    {file = "ansys_dpf_core-0.7.3-py3-none-any.whl", hash = "sha256:f0d3591294652858ee2b0c8bcb1e04868a8fc750ed47d37c5f40df448fe92417"},
+    {file = "ansys-dpf-core-0.7.4.tar.gz", hash = "sha256:a60662c349e8d30da75f003817299c47a4982b5500cf09bae63866bf9d8a7b11"},
+    {file = "ansys_dpf_core-0.7.4-py3-none-any.whl", hash = "sha256:e36711ada85d6f936bfef15eddcc77750a5b7a7df53f63308c97e9d734e9d32f"},
 ]
 
 [package.dependencies]
