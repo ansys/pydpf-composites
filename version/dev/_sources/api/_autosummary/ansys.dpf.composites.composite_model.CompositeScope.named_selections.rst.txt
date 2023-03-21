@@ -1,0 +1,6 @@
+named\_selections
+=================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoattribute:: CompositeScope.named_selections

@@ -217,7 +217,7 @@ Compute and plot the maximum failure value per element.
     minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
     minmax_per_element.inputs.fields_container(sf_op)
     minmax_per_element.inputs.mesh(mesh)
-    minmax_per_element.inputs.abstract_field_support(mat_support_operator)
+    minmax_per_element.inputs.material_support(mat_support_operator)
 
     max_failure = minmax_per_element.outputs.field_max.get_data()
     max_failure_value = max_failure.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
@@ -237,7 +237,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.659 seconds)
+   **Total running time of the script:** ( 0 minutes  4.205 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_3_short_fiber_example.py:

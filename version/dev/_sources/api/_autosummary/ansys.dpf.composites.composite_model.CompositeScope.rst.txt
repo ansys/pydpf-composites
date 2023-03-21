@@ -27,6 +27,7 @@ CompositeScope
       :toctree:
    
       CompositeScope.elements
+      CompositeScope.named_selections
       CompositeScope.plies
       CompositeScope.time
    

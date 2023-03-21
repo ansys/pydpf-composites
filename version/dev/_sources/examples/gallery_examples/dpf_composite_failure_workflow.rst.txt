@@ -303,8 +303,8 @@ maximum failure criteria for each integration point.
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
     failure_evaluator.inputs.configuration(combined_fc.to_json())
     failure_evaluator.inputs.materials_container(material_provider.outputs)
-    failure_evaluator.inputs.strains(strain_operator.outputs.fields_container)
-    failure_evaluator.inputs.stresses(stress_operator.outputs.fields_container)
+    failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
+    failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
     failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
 
@@ -321,16 +321,14 @@ Compute and plot failure criteria
 Use the output of the multiple failure criteria operator to
 compute the minimum and maximum failure criteria for each element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-171
+.. GENERATED FROM PYTHON SOURCE LINES 162-169
 
 .. code-block:: default
 
     minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
     minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
     minmax_per_element.inputs.mesh(mesh_provider.outputs.mesh)
-    minmax_per_element.inputs.abstract_field_support(
-        material_support_provider.outputs.abstract_field_support
-    )
+    minmax_per_element.inputs.material_support(material_support_provider.outputs.abstract_field_support)
 
     output = minmax_per_element.outputs.field_max()
 
@@ -341,12 +339,12 @@ compute the minimum and maximum failure criteria for each element.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-174
+.. GENERATED FROM PYTHON SOURCE LINES 170-172
 
 Plot the maximum and minimum values.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 174-176
+.. GENERATED FROM PYTHON SOURCE LINES 172-174
 
 .. code-block:: default
 
@@ -367,7 +365,7 @@ Plot the maximum and minimum values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.191 seconds)
+   **Total running time of the script:** ( 0 minutes  0.856 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_dpf_composite_failure_workflow.py:
