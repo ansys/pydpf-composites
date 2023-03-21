@@ -1,10 +1,10 @@
 [
     {
         "version": "dev",
-        "url": "https://composites.dpf.docs.pyansys.com/dev/"
+        "url": "https://composites.dpf.docs.pyansys.com/version/dev/"
     },
     {
         "version": "0.1 (stable)",
-        "url": "https://composites.dpf.docs.pyansys.com/release/0.1/"
+        "url": "https://composites.dpf.docs.pyansys.com/version/stable/"
     }
 ]
