@@ -81,7 +81,12 @@ familiar with the `PyAnsys Developer's Guide`_.
 
     .. code:: bash
 
+        poetry config installer.modern-installation false
         poetry install --all-extras
+
+    Setting ``installer.modern-installation`` to ``false`` is a temporary workaround.
+    See `this pydata-sphinx-theme issue <https://github.com/pydata/pydata-sphinx-theme/issues/1253>`_
+    for more information.
 
 
 #.  Activate the virtual environment:
