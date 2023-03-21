@@ -1,0 +1,6 @@
+lmt
+===
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: LaRCCriterion.lmt

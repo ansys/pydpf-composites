@@ -1,0 +1,52 @@
+﻿.. vale off
+
+MaxStressCriterion
+==================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: MaxStressCriterion
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      MaxStressCriterion.to_dict
+      
+      
+      MaxStressCriterion.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      MaxStressCriterion.active
+      MaxStressCriterion.name
+      MaxStressCriterion.s1
+      MaxStressCriterion.s12
+      MaxStressCriterion.s13
+      MaxStressCriterion.s2
+      MaxStressCriterion.s23
+      MaxStressCriterion.s3
+      MaxStressCriterion.wf_s1
+      MaxStressCriterion.wf_s12
+      MaxStressCriterion.wf_s13
+      MaxStressCriterion.wf_s2
+      MaxStressCriterion.wf_s23
+      MaxStressCriterion.wf_s3
+   
+   
+
+.. vale on

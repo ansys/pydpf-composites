@@ -1,0 +1,6 @@
+eYc
+===
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: MaxStrainCriterion.eYc

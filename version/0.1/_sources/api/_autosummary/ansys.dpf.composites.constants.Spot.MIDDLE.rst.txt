@@ -1,0 +1,6 @@
+MIDDLE
+======
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: Spot.MIDDLE

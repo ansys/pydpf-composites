@@ -1,0 +1,6 @@
+get\_offsets\_by\_spots
+=======================
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. automethod:: SamplingPoint.get_offsets_by_spots

@@ -1,0 +1,6 @@
+plies
+=====
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoattribute:: CompositeScope.plies

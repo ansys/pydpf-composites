@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>SamplingPoint &#8212; PyDPF Composites</title>
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    
+        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/table.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/release/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
+        </script>
+    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="add_ply_sequence_to_plot" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_ply_sequence_to_plot.html" />
+    <link rel="prev" title="Sampling point" href="../sampling_point.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      <!-- Debugging: html_theme_options =  -->
+
+  <!-- If there is no MiliSearch enabled, use the PyData search -->
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+    
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../_static/pyansys-logo-black-cropped.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/pyansys-logo-black-cropped.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        PyDPF Composites
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../contribute.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        dev  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pyansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+    
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(text => document.getElementById("announcement_msg").innerHTML = text)
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+    
+
+    
+    <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../index.html">PyDPF Composites</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
+          <li class="nav-item nav-item-2"><a href="../sampling_point.html" accesskey="U">Sampling point</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">SamplingPoint</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        PyDPF Composites
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../contribute.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        dev  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/pyansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../composite_model.html">Composite model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constants.html">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../failure_criteria.html">Failure criteria</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layup_info.html">Lay-up information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../result_definition.html">Result definition</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../sampling_point.html">Sampling point</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">SamplingPoint</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_ply_sequence_to_plot.html">add_ply_sequence_to_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_results_to_plot.html">add_results_to_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices.html">get_indices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots.html">get_offsets_by_spots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_ply_wise_critical_failures.html">get_ply_wise_critical_failures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_polar_plot.html">get_polar_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots.html">get_result_plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.run.html">run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.analysis_plies.html">analysis_plies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e1.html">e1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e12.html">e12</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e13.html">e13</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e2.html">e2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e23.html">e23</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e3.html">e3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.element_id.html">element_id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.failure_modes.html">failure_modes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor.html">inverse_reserve_factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety.html">margin_of_safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies.html">number_of_plies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.offsets.html">offsets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E1.html">polar_properties_E1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E2.html">polar_properties_E2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_G12.html">polar_properties_G12</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor.html">reserve_factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.result_definition.html">result_definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.results.html">results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s1.html">s1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s12.html">s12</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s13.html">s13</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s2.html">s2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s23.html">s23</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s3.html">s3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply.html">spots_per_ply</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPointFigure.html">SamplingPointFigure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.sampling_point.FailureResult.html">FailureResult</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../server_helpers.html">Server helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../select_indices.html">Select elementary indices</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="samplingpoint">
+<h1>SamplingPoint<a class="headerlink" href="#samplingpoint" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys.dpf.composites.sampling_point.SamplingPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.sampling_point.</span></span><span class="sig-name descname"><span class="pre">SamplingPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_definition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.sampling_point.SamplingPoint" title="Permalink to this definition">#</a></dt>
+<dd><p>Implements the <code class="docutils literal notranslate"><span class="pre">Sampling</span> <span class="pre">Point</span></code> object that wraps the DPF sampling point operator.</p>
+<p>This class provides for plotting the lay-up and results at a certain point of the
+layered structure. The results, including <code class="docutils literal notranslate"><span class="pre">analysis_plies</span></code>, <code class="docutils literal notranslate"><span class="pre">e1</span></code>, <code class="docutils literal notranslate"><span class="pre">s12</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">failure_modes</span></code>, are always from the bottom to the top of the laminate (along
+the element normal direction). Postprocessing results such as <code class="docutils literal notranslate"><span class="pre">e1</span></code> are returned
+as flat arrays where <code class="docutils literal notranslate"><span class="pre">self.spots_per_ply</span></code> can be used to compute the index for
+a certain ply.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the object.</p></li>
+<li><p><strong>result_definition</strong> (<a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.html#ansys.dpf.composites.result_definition.ResultDefinition" title="ansys.dpf.composites.result_definition.ResultDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a>) – Result definition object that defines all inputs and the scope.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The results of layered elements are stored per integration point. A layered shell element
+has a number of in-plane integration points (depending on the integration scheme) and
+typically three integration points through the thickness. The through-the-thickness
+integration points are called <cite>spots</cite>. They are typically at the <code class="docutils literal notranslate"><span class="pre">BOTTOM</span></code>, <code class="docutils literal notranslate"><span class="pre">MIDDLE</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">TOP</span></code> of the layer. This notation is used here to identify the corresponding data.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">SamplingPoint</span></code> class returns three results per layer (one for each spot) because
+the results of the in-plane integration points are interpolated to the centroid of the element.
+The following table shows an example of a laminate with three layers. So a result, such as
+<code class="docutils literal notranslate"><span class="pre">s1</span></code> has nine values, three for each ply.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>Index</p></th>
+<th class="head"><p>Spot</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Layer 3</p></td>
+<td><ul class="simple">
+<li><p>8</p></li>
+<li><p>7</p></li>
+<li><p>6</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>TOP of Layer 3</p></li>
+<li><p>MIDDLE of Layer 3</p></li>
+<li><p>BOTTOM of Layer 3</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Layer 2</p></td>
+<td><ul class="simple">
+<li><p>5</p></li>
+<li><p>4</p></li>
+<li><p>3</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>TOP of Layer 2</p></li>
+<li><p>MIDDLE of Layer 2</p></li>
+<li><p>BOTTOM of Layer 2</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Layer 1</p></td>
+<td><ul class="simple">
+<li><p>2</p></li>
+<li><p>1</p></li>
+<li><p>0</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>TOP of Layer 1</p></li>
+<li><p>MIDDLE of Layer 1</p></li>
+<li><p>BOTTOM of Layer 1</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The get_indices and get_offsets_by_spots methods simplify the indexing and
+filtering of the data.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_ply_sequence_to_plot.html#ansys.dpf.composites.sampling_point.SamplingPoint.add_ply_sequence_to_plot" title="ansys.dpf.composites.sampling_point.SamplingPoint.add_ply_sequence_to_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.add_ply_sequence_to_plot</span></code></a>(axes)</p></td>
+<td><p>Add the stacking (ply and text) to an axis or plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_results_to_plot.html#ansys.dpf.composites.sampling_point.SamplingPoint.add_results_to_plot" title="ansys.dpf.composites.sampling_point.SamplingPoint.add_results_to_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.add_results_to_plot</span></code></a>(axes, ...)</p></td>
+<td><p>Add results (strain, stress, or failure values) to an <code class="docutils literal notranslate"><span class="pre">Axes</span></code> object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_indices" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.get_indices</span></code></a>([spots])</p></td>
+<td><p>Get the indices of the selected spots (interfaces) for each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.get_offsets_by_spots</span></code></a>([spots, ...])</p></td>
+<td><p>Access the y coordinates of the selected spots (interfaces) for each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_ply_wise_critical_failures.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_ply_wise_critical_failures" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_ply_wise_critical_failures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.get_ply_wise_critical_failures</span></code></a>()</p></td>
+<td><p>Get the critical failure value and modes per ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_polar_plot.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_polar_plot" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_polar_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.get_polar_plot</span></code></a>([components])</p></td>
+<td><p>Create a standard polar plot to visualize the polar properties of the laminate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.get_result_plots</span></code></a>([...])</p></td>
+<td><p>Generate a figure with a grid of axes (plot) for each selected result entity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.run.html#ansys.dpf.composites.sampling_point.SamplingPoint.run" title="ansys.dpf.composites.sampling_point.SamplingPoint.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.run</span></code></a>()</p></td>
+<td><p>Run the DPF operator and cache the results.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.analysis_plies.html#ansys.dpf.composites.sampling_point.SamplingPoint.analysis_plies" title="ansys.dpf.composites.sampling_point.SamplingPoint.analysis_plies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.analysis_plies</span></code></a></p></td>
+<td><p>List of analysis plies from the bottom to the top.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e1.html#ansys.dpf.composites.sampling_point.SamplingPoint.e1" title="ansys.dpf.composites.sampling_point.SamplingPoint.e1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.e1</span></code></a></p></td>
+<td><p>Strains in the material 1 direction of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e12.html#ansys.dpf.composites.sampling_point.SamplingPoint.e12" title="ansys.dpf.composites.sampling_point.SamplingPoint.e12"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.e12</span></code></a></p></td>
+<td><p>In-plane shear strains e12 of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e13.html#ansys.dpf.composites.sampling_point.SamplingPoint.e13" title="ansys.dpf.composites.sampling_point.SamplingPoint.e13"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.e13</span></code></a></p></td>
+<td><p>Out-of-plane shear strains e13 of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e2.html#ansys.dpf.composites.sampling_point.SamplingPoint.e2" title="ansys.dpf.composites.sampling_point.SamplingPoint.e2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.e2</span></code></a></p></td>
+<td><p>Strains in the material 2 direction of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e23.html#ansys.dpf.composites.sampling_point.SamplingPoint.e23" title="ansys.dpf.composites.sampling_point.SamplingPoint.e23"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.e23</span></code></a></p></td>
+<td><p>Out-of-plane shear strains e23 of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e3.html#ansys.dpf.composites.sampling_point.SamplingPoint.e3" title="ansys.dpf.composites.sampling_point.SamplingPoint.e3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.e3</span></code></a></p></td>
+<td><p>Strains in the material 3 direction of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.element_id.html#ansys.dpf.composites.sampling_point.SamplingPoint.element_id" title="ansys.dpf.composites.sampling_point.SamplingPoint.element_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.element_id</span></code></a></p></td>
+<td><p>Element label for sampling the laminate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.failure_modes.html#ansys.dpf.composites.sampling_point.SamplingPoint.failure_modes" title="ansys.dpf.composites.sampling_point.SamplingPoint.failure_modes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.failure_modes</span></code></a></p></td>
+<td><p>Critical failure mode of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor.html#ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor" title="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.inverse_reserve_factor</span></code></a></p></td>
+<td><p>Critical inverse reserve factor of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety.html#ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety" title="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.margin_of_safety</span></code></a></p></td>
+<td><p>Lowest margin of safety of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies.html#ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies" title="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.number_of_plies</span></code></a></p></td>
+<td><p>Number of plies.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.offsets.html#ansys.dpf.composites.sampling_point.SamplingPoint.offsets" title="ansys.dpf.composites.sampling_point.SamplingPoint.offsets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.offsets</span></code></a></p></td>
+<td><p>Z coordinates for each interface and ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E1.html#ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E1" title="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.polar_properties_E1</span></code></a></p></td>
+<td><p>Polar property E1 of the laminate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E2.html#ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E2" title="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.polar_properties_E2</span></code></a></p></td>
+<td><p>Polar property E2 of the laminate.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_G12.html#ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_G12" title="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_G12"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.polar_properties_G12</span></code></a></p></td>
+<td><p>Polar property G12 of the laminate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor.html#ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor" title="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.reserve_factor</span></code></a></p></td>
+<td><p>Lowest reserve factor of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.result_definition.html#ansys.dpf.composites.sampling_point.SamplingPoint.result_definition" title="ansys.dpf.composites.sampling_point.SamplingPoint.result_definition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.result_definition</span></code></a></p></td>
+<td><p>Input for the sampling point operator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.results.html#ansys.dpf.composites.sampling_point.SamplingPoint.results" title="ansys.dpf.composites.sampling_point.SamplingPoint.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.results</span></code></a></p></td>
+<td><p>Results of the sampling point operator as a JSON dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s1.html#ansys.dpf.composites.sampling_point.SamplingPoint.s1" title="ansys.dpf.composites.sampling_point.SamplingPoint.s1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s1</span></code></a></p></td>
+<td><p>Stresses in the material 1 direction of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s12.html#ansys.dpf.composites.sampling_point.SamplingPoint.s12" title="ansys.dpf.composites.sampling_point.SamplingPoint.s12"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s12</span></code></a></p></td>
+<td><p>In-plane shear stresses s12 of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s13.html#ansys.dpf.composites.sampling_point.SamplingPoint.s13" title="ansys.dpf.composites.sampling_point.SamplingPoint.s13"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s13</span></code></a></p></td>
+<td><p>Out-of-plane shear stresses s13 of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s2.html#ansys.dpf.composites.sampling_point.SamplingPoint.s2" title="ansys.dpf.composites.sampling_point.SamplingPoint.s2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s2</span></code></a></p></td>
+<td><p>Stresses in the material 2 direction of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s23.html#ansys.dpf.composites.sampling_point.SamplingPoint.s23" title="ansys.dpf.composites.sampling_point.SamplingPoint.s23"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s23</span></code></a></p></td>
+<td><p>Out-of-plane shear stresses s23 of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s3.html#ansys.dpf.composites.sampling_point.SamplingPoint.s3" title="ansys.dpf.composites.sampling_point.SamplingPoint.s3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s3</span></code></a></p></td>
+<td><p>Stresses in the material 3 direction of each ply.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply.html#ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply" title="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.spots_per_ply</span></code></a></p></td>
+<td><p>Number of through-the-thickness integration points per ply.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+
+
+            </article>
+            
+            
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ansys.dpf.composites.sampling_point.SamplingPoint">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     SamplingPoint
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright (c) 2023 ANSYS, Inc. All rights reserved.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

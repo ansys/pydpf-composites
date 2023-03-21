@@ -1,0 +1,6 @@
+to\_dict
+========
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. automethod:: VonMisesCriterion.to_dict

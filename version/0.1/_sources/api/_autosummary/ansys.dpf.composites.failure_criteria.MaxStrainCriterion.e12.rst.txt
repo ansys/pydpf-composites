@@ -1,0 +1,6 @@
+e12
+===
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: MaxStrainCriterion.e12

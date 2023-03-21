@@ -1,0 +1,35 @@
+﻿.. vale off
+
+CompositeScope
+==============
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoclass:: CompositeScope
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      CompositeScope.elements
+      CompositeScope.plies
+      CompositeScope.time
+   
+   
+
+.. vale on

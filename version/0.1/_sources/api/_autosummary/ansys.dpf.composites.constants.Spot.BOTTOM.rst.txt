@@ -1,0 +1,6 @@
+BOTTOM
+======
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: Spot.BOTTOM

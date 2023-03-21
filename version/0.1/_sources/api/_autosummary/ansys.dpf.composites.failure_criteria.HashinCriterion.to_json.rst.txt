@@ -1,0 +1,6 @@
+to\_json
+========
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. automethod:: HashinCriterion.to_json
