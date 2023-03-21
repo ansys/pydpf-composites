@@ -80,23 +80,23 @@ grpcio = "*"
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.9.5"
+version = "0.8.1"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 category = "main"
 optional = true
-python-versions = ">=3.7"
+python-versions = ">=3.5"
 files = [
-    {file = "ansys-sphinx-theme-0.9.5.tar.gz", hash = "sha256:acdbc0f1b67951f43848e2cc9d02725c85bd85ed6ded307163f33813c8454559"},
-    {file = "ansys_sphinx_theme-0.9.5-py3-none-any.whl", hash = "sha256:2871e834d139565f140805fb42f4f2b3b9faad37ff28df20bb94801afeba5e18"},
+    {file = "ansys-sphinx-theme-0.8.1.tar.gz", hash = "sha256:2a74f74d0f818ad4c1bf6a52e7e38b75df29c866f7ef1023605891308b197890"},
+    {file = "ansys_sphinx_theme-0.8.1-py3-none-any.whl", hash = "sha256:8cc4d2c15e73b26dea0a4fc1fc59f6202d261100314d5443ce904c131306653c"},
 ]
 
 [package.dependencies]
 Jinja2 = ">=3.1.2"
-pydata-sphinx-theme = "0.12.0"
-Sphinx = ">=4.2.0,<6"
+pydata-sphinx-theme = "0.9.0"
+Sphinx = ">=4.0.0"
 
 [package.extras]
-doc = ["Sphinx (==5.3.0)", "bs4 (==0.0.1)", "html5lib (==1.1)", "numpydoc (==1.5.0)", "requests (==2.28.2)", "sphinx-copybutton (==0.5.1)", "sphinx-design (==0.3.0)", "sphinx-jinja (==2.0.2)", "sphinx-notfound-page (==0.8.3)"]
+doc = ["Sphinx (==5.3.0)", "numpydoc (==1.5.0)", "sphinx-copybutton (==0.5.1)", "sphinx-notfound-page (==0.8.3)"]
 
 [[package]]
 name = "appdirs"
