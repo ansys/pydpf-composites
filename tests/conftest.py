@@ -62,12 +62,18 @@ class DockerProcess:
             cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
         if sys.platform == "linux":
             cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
+
         cmd += [
             "-p",
             f"{self.port}:50052/tcp",
             "-e",
             "HOME=/home/container",
-            "--name",
+            "-e",
+            "ANSYS_DPF_ACCEPT_LA=Y",
+            "-e",
+            "ANSYSLMD_LICENSE_FILE=1055@milflexlm1.ansys.com",
+            "-e",
+            "ANSYSCL232_DIR=/usr/ansys_inc/licensingclient" "--name",
             self.name,
             self.image_name,
         ]
