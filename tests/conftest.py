@@ -73,7 +73,8 @@ class DockerProcess:
             "-e",
             "ANSYSLMD_LICENSE_FILE=1055@milflexlm1.ansys.com",
             "-e",
-            "ANSYSCL232_DIR=/usr/ansys_inc/licensingclient" "--name",
+            "ANSYSCL232_DIR=/usr/ansys_inc/licensingclient",
+            "--name",
             self.name,
             self.image_name,
         ]
