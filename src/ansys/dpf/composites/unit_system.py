@@ -13,7 +13,8 @@ UnitSystemProvider = Union[UnitSystem, Operator]
 
 
 def get_unit_system(
-    rst_data_source: DataSources, default_unit_system: Optional[UnitSystem] = None
+    data_source_or_streams_provider: Union[DataSources, Operator],
+    default_unit_system: Optional[UnitSystem] = None,
 ) -> UnitSystemProvider:
     """Get unit_system from rst DataSources.
 
@@ -23,14 +24,17 @@ def get_unit_system(
 
     Parameters
     ----------
-    rst_data_source:
-        DPF Data Source containing a rst file.
+    data_source_or_streams_provider:
+        DPF Data Source or streams provider containing a rst file.
     default_unit_system:
         Default Unit system that is used if the rst file does not contain
         a unit system.
     """
     result_info_provider = Operator("ResultInfoProvider")
-    result_info_provider.inputs.data_sources(rst_data_source)
+    if isinstance(data_source_or_streams_provider, Operator):
+        result_info_provider.inputs.streams_container(data_source_or_streams_provider)
+    else:
+        result_info_provider.inputs.data_sources(data_source_or_streams_provider)
 
     # If unit system is undefined, fall back to default_unit_system
     if result_info_provider.outputs.result_info().unit_system == "Undefined":

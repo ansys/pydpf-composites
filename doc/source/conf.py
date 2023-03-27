@@ -44,7 +44,7 @@ html_theme_options = {
         ("PyAnsys", "https://docs.pyansys.com/"),
     ],
     "switcher": {
-        "json_url": f"https://{cname}/release/versions.json",
+        "json_url": f"https://{cname}/versions.json",
         "version_match": get_version_match(__version__),
     },
     "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
@@ -66,7 +66,7 @@ extensions = [
 # Intersphinx mapping
 intersphinx_mapping = {
     "python": ("https://docs.python.org/dev", None),
-    "ansys-dpf-core": ("https://dpf.docs.pyansys.com/release/0.7", None),
+    "ansys-dpf-core": ("https://dpf.docs.pyansys.com/version/stable", None),
     "numpy": ("https://numpy.org/doc/stable", None),
     "matplotlib": ("https://matplotlib.org/stable", None),
     # kept here as an example

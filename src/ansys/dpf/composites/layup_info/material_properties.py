@@ -1,11 +1,9 @@
 """Helpers to get material properties."""
 from enum import Enum
-from typing import Collection, Dict, Union, cast
+from typing import Collection, Dict, Set, Union, cast
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 import numpy as np
-
-from ._layup_info import get_dpf_material_id_by_analyis_ply_map
 
 __all__ = (
     "MaterialProperty",
@@ -13,6 +11,8 @@ __all__ = (
     "get_all_dpf_material_ids",
     "get_constant_property_dict",
 )
+from ..unit_system import UnitSystemProvider, get_unit_system
+from ._layup_info import get_element_info_provider
 
 
 class MaterialProperty(str, Enum):
@@ -89,7 +89,7 @@ def get_constant_property(
     material_property: MaterialProperty,
     dpf_material_id: np.int64,
     materials_provider: Operator,
-    data_source_or_streams_provider: Union[DataSources, Operator],
+    unit_system: UnitSystemProvider,
 ) -> float:
     """Get a constant material property.
 
@@ -105,19 +105,14 @@ def get_constant_property(
     materials_provider:
         DPF Materials provider operator. This value is available from the
         :attr:`.CompositeModel.material_operators` attribute.
-    data_source_or_streams_provider:
-        Data source or streams provider that contains the RST file.
+    unit_system:
     """
     material_property_field = Operator("eng_data::ans_mat_property_field_provider")
     material_property_field.inputs.materials_container(materials_provider)
     material_property_field.inputs.dpf_mat_id(int(dpf_material_id))
     material_property_field.inputs.property_name(material_property.value)
-    result_info_provider = Operator("ResultInfoProvider")
-    if isinstance(data_source_or_streams_provider, DataSources):
-        result_info_provider.inputs.data_sources(data_source_or_streams_provider)
-    else:
-        result_info_provider.inputs.streams_container(data_source_or_streams_provider)
-    material_property_field.inputs.unit_system_or_result_info(result_info_provider)
+
+    material_property_field.inputs.unit_system_or_result_info(unit_system)
     properties = material_property_field.get_output(output_type=types.fields_container)
     assert len(properties) == 1, "Properties container has to have exactly one entry."
     assert len(properties[0].data) == 1, (
@@ -140,10 +135,13 @@ def get_all_dpf_material_ids(
     data_source_or_streams_provider:
         DPF data source or stream provider that contains the RST file.
     """
-    id_to_material_map = get_dpf_material_id_by_analyis_ply_map(
-        mesh, data_source_or_streams_provider
-    )
-    return set(id_to_material_map.values())
+    element_info_provider = get_element_info_provider(mesh, data_source_or_streams_provider)
+    all_material_ids: Set["np.int64"] = set()
+    for element_id in mesh.elements.scoping.ids:
+        element_info = element_info_provider.get_element_info(element_id)
+        if element_info is not None:
+            all_material_ids.update(element_info.dpf_material_ids)
+    return all_material_ids
 
 
 def get_constant_property_dict(
@@ -155,7 +153,7 @@ def get_constant_property_dict(
     """Get a dictionary with constant properties.
 
     Returns a dictionary with the DPF material ID as a key and
-    a dictionaory with the requested properties as the value. Only constant properties
+    a dictionary with the requested properties as the value. Only constant properties
     are supported. Variable properties are evaluated at their
     default values.
     Because this method can be slow to evaluate, it should not
@@ -174,6 +172,7 @@ def get_constant_property_dict(
         DPF meshed region enriched with lay-up information.
     """
     properties: Dict[np.int64, Dict[MaterialProperty, float]] = {}
+    unit_system = get_unit_system(data_source_or_streams_provider)
     for dpf_material_id in get_all_dpf_material_ids(
         mesh=mesh, data_source_or_streams_provider=data_source_or_streams_provider
     ):
@@ -183,7 +182,7 @@ def get_constant_property_dict(
                 material_property=material_property,
                 dpf_material_id=dpf_material_id,
                 materials_provider=materials_provider,
-                data_source_or_streams_provider=data_source_or_streams_provider,
+                unit_system=unit_system,
             )
             properties[dpf_material_id][material_property] = constant_property
     return properties
