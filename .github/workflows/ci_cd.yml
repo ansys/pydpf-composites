@@ -13,7 +13,7 @@ on:
 
 env:
   MAIN_PYTHON_VERSION: '3.9'
-  CONTAINER_TAG: 'latest'
+  CONTAINER_TAG: 'with_lic_client'
   PACKAGE_NAME: 'ansys-dpf-composites'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
   PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "21002"
@@ -89,6 +89,8 @@ jobs:
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: |
           tox
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
       - name: "Upload server output"
         if: always()
