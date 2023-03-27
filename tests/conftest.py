@@ -181,10 +181,19 @@ class LocalServerProcess:
                 "Local server currently not supported on linux. Please use the docker container"
             )
         self.env = os.environ.copy()
-        # Add parent folder of deps to path which contains the composites operators
+        dpf_root = pathlib.Path(self.server_executable).parent.parent.parent.parent.parent
         self.env["PATH"] = (
-            self.env["PATH"] + ";" + str(pathlib.Path(self.server_executable).parent.parent)
+            self.env["PATH"]
+            + ";"
+            + ";".join(
+                [
+                    str(dpf_root),
+                    str(dpf_root / "deps" / "dpf" / "bin" / "winx64"),
+                    str(dpf_root / "deps" / "aisol" / "bin" / "winx64"),
+                ]
+            )
         )
+        print(self.env["PATH"])
 
     def __enter__(self):
         cmd = [self.server_executable, "--port", str(self.port), "--address", dpf.server.LOCALHOST]
@@ -254,6 +263,7 @@ def _find_free_port() -> int:
 
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
+    print(os.environ["ANSYSCL232_DIR"])
 
     # Use a unique session id so logs don't get overwritten
     # by tests that run in different sessions

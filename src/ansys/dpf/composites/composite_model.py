@@ -148,12 +148,11 @@ class CompositeModel:
         default_unit_system: Optional[UnitSystem] = None,
     ):
         """Initialize data providers and add composite information to meshed region."""
-        self._core_model = dpf.Model(composite_files.rst, server=server)
-        self._server = server
-
-        self._composite_files = composite_files
         self._data_sources = get_composites_data_sources(composite_files)
 
+        self._core_model = dpf.Model(self._data_sources.rst, server=server)
+        self._server = server
+        self._composite_files = composite_files
         self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
 
         self._material_operators = get_material_operators(
@@ -294,19 +293,21 @@ class CompositeModel:
                     write_data_for_full_element_scope=write_data_for_full_element_scope,
                 )
             )
-
+        """
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_file=self._composite_files.rst,
+            # Todo fix
+            rst_file=self._composite_files.rst[0],
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criterion,
             composite_scopes=scopes,
             time=time_in,
             measure=measure.value,
         )
+        """
         failure_operator = dpf.Operator("composite::composite_failure_operator")
 
-        failure_operator.inputs.result_definition(rd.to_json())
+        #failure_operator.inputs.result_definition(rd.to_json())
 
         if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
             return failure_operator.outputs.fields_containerMax()
@@ -319,7 +320,7 @@ class CompositeModel:
         element_id: int,
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
-    ) -> SamplingPoint:
+    ) -> None:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters
@@ -358,16 +359,18 @@ class CompositeModel:
             ply_scope=[],
             named_selection_scope=[],
         )
+        """
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_file=self._composite_files.rst,
+            rst_file=self._composite_files.rst[0],
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criterion,
             time=time_in,
             composite_scopes=[scope],
         )
-
-        return SamplingPoint("Sampling Point", rd, server=self._server)
+        """
+        # Todo return sampling point again
+        return
 
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None

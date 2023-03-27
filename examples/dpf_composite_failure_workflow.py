@@ -29,7 +29,7 @@ operators that are needed to evaluate composite failure criteria.
 # Load Ansys libraries.
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
@@ -65,14 +65,16 @@ combined_fc = CombinedFailureCriterion(
 # %%
 # Start a DPF server and prepare files
 server = connect_to_or_start_server()
-composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
+
+folder = r"D:\ANSYSDev\acp_test_model_data\model_data\class40\class40_files\dp0\SYS-4\MECH"
+composite_files_on_server = get_composite_files_from_workbench_result_folder(folder)
 
 # %%
 # Initialize DPF model and data sources
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Initialize the DPF model and the data sources.
 model = dpf.Model(composite_files_on_server.rst)
-rst_data_source = dpf.DataSources(composite_files_on_server.rst)
+
 
 eng_data_source = dpf.DataSources()
 eng_data_source.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")

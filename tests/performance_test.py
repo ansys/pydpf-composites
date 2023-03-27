@@ -6,7 +6,12 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites._indexer import FieldIndexerWithDataPointer
-from ansys.dpf.composites.data_sources import CompositeDefinitionFiles, get_composites_data_sources
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.data_sources import (
+    CompositeDefinitionFiles,
+    get_composite_files_from_workbench_result_folder,
+    get_composites_data_sources,
+)
 from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
     LayupPropertiesProvider,
@@ -61,6 +66,11 @@ def get_ger_data_files():
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
+
+
+def get_blade_files():
+    blade_path = r"D:\ANSYSDev\workbench_projects\beewind_example_files\dp0\SYS-1\MECH"
+    return get_composite_files_from_workbench_result_folder(blade_path)
 
 
 def get_test_data(dpf_server):
@@ -428,3 +438,13 @@ def test_performance_flat(dpf_server):
     timer.add("after local field")
 
     timer.summary()
+
+
+def test_distributed_load(dpf_server):
+    distributed_path = (
+        r"D:\ANSYSDev\acp_test_model_data\model_data\class40\class40_files\dp0\SYS-4\MECH"
+    )
+    composite_files = get_composite_files_from_workbench_result_folder(distributed_path)
+    composite_model = CompositeModel(composite_files, dpf_server)
+
+    composite_model.core_model.metadata.result_info

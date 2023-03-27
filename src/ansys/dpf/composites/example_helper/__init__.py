@@ -69,7 +69,7 @@ def upload_continuous_fiber_composite_files_to_server(
         all_composite_files[key] = composite_definition_files
 
     return ContinuousFiberCompositesFiles(
-        rst=upload(data_files.rst),
+        rst=[upload(rst_path) for rst_path in data_files.rst],
         engineering_data=upload(data_files.engineering_data),
         composite=all_composite_files,
     )
@@ -256,7 +256,7 @@ def get_continuous_fiber_example_files(
             all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
-            rst=get_server_path(example_files.files.rst),
+            rst=[get_server_path(rst_path) for rst_path in example_files.files.rst],
             engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
         )
