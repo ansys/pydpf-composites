@@ -150,7 +150,7 @@ On Windows, build documentation with this code:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-windows
 
 
@@ -159,7 +159,7 @@ On Linux, build documentation with this code:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-linux
 
 

@@ -5,6 +5,6 @@ the DPF Composites plugin.
 """
 
 from ._connect_to_or_start_server import connect_to_or_start_server
-from ._load_plugin import AWP_ROOT_DOCKER, load_composites_plugin
+from ._load_plugin import load_composites_plugin
 
-__all__ = ("AWP_ROOT_DOCKER", "load_composites_plugin", "connect_to_or_start_server")
+__all__ = ("load_composites_plugin", "connect_to_or_start_server")

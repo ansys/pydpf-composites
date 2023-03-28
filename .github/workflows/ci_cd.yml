@@ -149,7 +149,7 @@ jobs:
       - name: "Pull and start dpf container"
         run: |
           docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker run -d --restart always -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y -e HOME=/tmp ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
