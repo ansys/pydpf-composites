@@ -75,7 +75,7 @@ class DockerProcess:
             "-p",
             f"{self.port}:50052/tcp",
             "-e",
-            "HOME=/home/container",
+            "HOME=/home",
             "-e",
             "ANSYS_DPF_ACCEPT_LA=Y",
             "-e",
