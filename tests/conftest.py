@@ -80,7 +80,7 @@ class DockerProcess:
             "-e",
             f"ANSYSLMD_LICENSE_FILE={self.ansyslmd_license_file}",
             "-e",
-            "ANSYSCL232_DIR=/usr/ansys_inc/licensingclient",
+            "ANSYSCL232_DIR=/ansys_inc/ansys/dpf/server_2023_2_pre1/licensingclient",
             "--name",
             self.name,
             self.image_name,
