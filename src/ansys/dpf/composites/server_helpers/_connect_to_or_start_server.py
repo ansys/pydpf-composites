@@ -8,6 +8,7 @@ from ansys.dpf.core import server_context, start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
+
 def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int = 10) -> Any:
     """Try to run a function until a timeout is reached.
 

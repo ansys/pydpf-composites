@@ -291,8 +291,10 @@ def dpf_server(request: pytest.FixtureRequest):
         if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
             license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
         else:
-            raise RuntimeError("License server not set. Either run test with --license-server of "
-                               f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}.")
+            raise RuntimeError(
+                "License server not set. Either run test with --license-server of "
+                f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
+            )
 
     if license_server.find("@") < 0:
         license_server = "1055@" + license_server

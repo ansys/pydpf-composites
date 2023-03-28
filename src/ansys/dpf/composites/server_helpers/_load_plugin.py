@@ -8,6 +8,7 @@ from ansys.dpf.core.server_types import BaseServer
 
 AWP_ROOT_DOCKER = "/ansys_inc/ansys/dpf/server_2023_2_pre1"
 
+
 def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None) -> None:
     r"""Load composites plugins and its dependencies.
 
@@ -58,7 +59,9 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
     for name in libs:
         if name in location_in_installer:
             relative_installer_location = location_in_installer[name][server.os]
-            library = os.path.join(ansys_path, *relative_installer_location, get_lib_from_name(name))
+            library = os.path.join(
+                ansys_path, *relative_installer_location, get_lib_from_name(name)
+            )
             if server.os == "posix":
                 library = pathlib.Path(library).as_posix()
         else:

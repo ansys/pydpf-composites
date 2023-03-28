@@ -125,7 +125,10 @@ jobs:
           python -m pip install --upgrade poetry
 
       - name: Test with tox
-        run: tox -e test-minimal
+        run: |
+          tox -e test-minimal
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
   doc-build:
     name: "Documentation build"
