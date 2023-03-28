@@ -18,7 +18,7 @@ from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
     _try_until_timeout,
     _wait_until_server_is_up,
 )
-from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
+from ansys.dpf.composites.server_helpers._load_plugin import AWP_ROOT_DOCKER, load_composites_plugin
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
@@ -26,6 +26,7 @@ SERVER_BIN_OPTION_KEY = "--server-bin"
 PORT_OPTION_KEY = "--port"
 ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
+ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -78,9 +79,9 @@ class DockerProcess:
             "-e",
             "ANSYS_DPF_ACCEPT_LA=Y",
             "-e",
-            f"ANSYSLMD_LICENSE_FILE={self.ansyslmd_license_file}",
+            f"{ANSYSLMD_LICENSE_FILE_KEY}={self.license_server}",
             "-e",
-            "ANSYSCL232_DIR=/ansys_inc/ansys/dpf/server_2023_2_pre1/licensingclient",
+            f"{AWP_ROOT_DOCKER}/licensingclient",
             "--name",
             self.name,
             self.image_name,
@@ -106,8 +107,8 @@ class DockerProcess:
         server_err_file: pathlib.Path,
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
-        ansyslmd_license_file: str,
-        image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
+        license_server: str = "",
+        image_name: str = "ghcr.io/pyansys/pydpf-composites:customer_portal",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
@@ -119,7 +120,7 @@ class DockerProcess:
             Local directories which should be mounted to the Docker container.
             The keys contain the path in the context of the host, and the
             values are the paths as they should appear inside the container.
-        ansyslmd_license_file:
+        license_server:
             Definition of the license server. E.g. 1055@my_ansys_license_server
         server_out_file :
             Path (on the host) to which the output of ``docker run`` is redirected.
@@ -141,7 +142,7 @@ class DockerProcess:
         self.process_stderr = open(process_err_file, mode="w", encoding="utf-8")
         self.name = str(uuid.uuid4())
         self.mount_directories = mount_directories
-        self.ansyslmd_license_file = ansyslmd_license_file
+        self.license_server = license_server
         self.image_name = image_name
 
     def __exit__(
@@ -288,6 +289,13 @@ def dpf_server(request: pytest.FixtureRequest):
     installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
     license_server = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
 
+    if not license_server:
+        if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
+            license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
+
+    if license_server.find("@") < 0:
+        license_server = "1055@" + license_server
+
     active_options = [
         option for option in [installer_path, server_bin, running_server_port] if option is not None
     ]
@@ -314,7 +322,7 @@ def dpf_server(request: pytest.FixtureRequest):
                 server_err_file=server_log_stderr,
                 process_out_file=process_log_stdout,
                 process_err_file=process_log_stderr,
-                ansyslmd_license_file=license_server,
+                license_server=license_server,
             )
 
     with start_server_process() as server_process:

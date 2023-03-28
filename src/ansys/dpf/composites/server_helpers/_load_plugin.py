@@ -1,10 +1,12 @@
 """Helper to load composites plugin."""
 import os
+import pathlib
 from typing import Optional
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server_types import BaseServer
 
+AWP_ROOT_DOCKER = "/ansys_inc/ansys/dpf/server_2023_2_pre1"
 
 def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None) -> None:
     r"""Load composites plugins and its dependencies.
@@ -13,7 +15,7 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
     ----------
     server:
     ansys_path:
-        Ansys root path, for example C:\Program Files\ANSYS Inc\v231.
+        Ansys root path, for example C:\Program Files\ANSYS Inc\v232.
         If None, it is assumed that all the plugins and their dependencies
         are found in the PATH/LD_LIBRARY_PATH. If ansys_path
         is set, the composite_operators and
@@ -50,11 +52,15 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
         },
     }
 
+    if not ansys_path:
+        ansys_path = server.ansys_path if server.ansys_path else AWP_ROOT_DOCKER
 
     for name in libs:
         if name in location_in_installer:
             relative_installer_location = location_in_installer[name][server.os]
-            library = os.path.join(".", *relative_installer_location, get_lib_from_name(name))
+            library = os.path.join(ansys_path, *relative_installer_location, get_lib_from_name(name))
+            if server.os == "posix":
+                library = pathlib.Path(library).as_posix()
         else:
             library = get_lib_from_name(name)
         dpf.load_library(library, name, server=server)
