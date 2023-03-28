@@ -309,8 +309,6 @@ def dpf_server(request: pytest.FixtureRequest):
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
 
-            raise RuntimeError(f"ansyslmd_license_file: {license_server}")
-
             return DockerProcess(
                 server_out_file=server_log_stdout,
                 server_err_file=server_log_stderr,
