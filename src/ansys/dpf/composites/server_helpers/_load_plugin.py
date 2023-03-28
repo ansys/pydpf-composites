@@ -48,17 +48,18 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
             "nt": ["dpf", "plugins", "dpf_composites"],
             "posix": ["dpf", "plugins", "dpf_composites"],
         },
-        "Ans.Dpf.EngineeringData": {
-            "nt": ["dpf", "bin", "winx64"],
-            "posix": ["dpf", "bin", "linx64"],
-        },
+        #"Ans.Dpf.EngineeringData": {
+        #    "nt": ["dpf", "bin", "winx64"],
+        #    "posix": ["dpf", "bin", "linx64"],
+        #},
     }
 
+
     for name in libs:
-        if ansys_path is not None and name in location_in_installer:
+        if name in location_in_installer:
             relative_installer_location = location_in_installer[name][server.os]
-            absolute_installer_location = os.path.join(ansys_path, *relative_installer_location)
-            library = os.path.join(absolute_installer_location, get_lib_from_name(name))
+            #absolute_installer_location = os.path.join(ansys_path, *relative_installer_location)
+            library = os.path.join(*relative_installer_location, get_lib_from_name(name))
         else:
             library = get_lib_from_name(name)
         dpf.load_library(library, name, server=server)
