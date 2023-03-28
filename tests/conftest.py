@@ -75,6 +75,8 @@ class DockerProcess:
             "-p",
             f"{self.port}:50052/tcp",
             "-e",
+            "HOME=/tmp",
+            "-e",
             "ANSYS_DPF_ACCEPT_LA=Y",
             "-e",
             f"{ANSYSLMD_LICENSE_FILE_KEY}={self.license_server}",
@@ -292,8 +294,8 @@ def dpf_server(request: pytest.FixtureRequest):
             raise RuntimeError("License server not set. Either run test with --license-server of "
                                f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}.")
 
-    #if license_server.find("@") < 0:
-    #    license_server = "1055@" + license_server
+    if license_server.find("@") < 0:
+        license_server = "1055@" + license_server
 
     active_options = [
         option for option in [installer_path, server_bin, running_server_port] if option is not None
