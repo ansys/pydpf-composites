@@ -104,7 +104,7 @@ Test
    The Docker container referenced in the first option is not yet publicly available.
 
 Set the environment variable `ANSYSLMD_LICENSE_FILE` to configure the licensing or pass it
-as argument (`--license-server=1055@mylicenseserver`).
+as argument (`--license-server=1055@mylicenseserver`) to the pytest call.
 
 There are three ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.
