@@ -10,10 +10,6 @@ of fiber orientation tensor in the global coordinate system.
 For more details about the fiber orientation tensor,
 refer to the Short Fiber Composites help.
 
-TODO:
- - check euler angle format (zxy vs ZXY)
- - numpy and scipy?
-
 """
 # %%
 # Set up analysis
