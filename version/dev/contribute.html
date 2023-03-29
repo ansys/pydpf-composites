@@ -467,6 +467,8 @@ for more information.</p>
 <p class="admonition-title">Note</p>
 <p>The Docker container referenced in the first option is not yet publicly available.</p>
 </div>
+<p>Set the environment variable <cite>ANSYSLMD_LICENSE_FILE</cite> to configure the licensing or pass it
+as argument (<cite>–license-server=1055&#64;mylicenseserver</cite>) to the pytest call.</p>
 <p>There are three ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.</p>
 <ol class="arabic">
@@ -500,13 +502,13 @@ in its folder and the parent folder.</p>
 </div>
 <p>On Windows, build documentation with this code:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
 tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
 <p>On Linux, build documentation with this code:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w">  </span>ghcr.io/pyansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
 tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 </pre></div>
 </div>
