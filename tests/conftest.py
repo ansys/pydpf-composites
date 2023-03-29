@@ -297,7 +297,7 @@ def dpf_server(request: pytest.FixtureRequest):
                 f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
             )
 
-    if license_server.find("@") < 0:
+    if "@" not in license_server:
         license_server = "1055@" + license_server
 
     active_options = [
