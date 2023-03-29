@@ -103,6 +103,9 @@ Test
 
    The Docker container referenced in the first option is not yet publicly available.
 
+Set the environment variable `ANSYSLMD_LICENSE_FILE` to configure the licensing or pass it
+as argument (`--license-server=1055@mylicenseserver`) to the pytest call.
+
 There are three ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.
 
@@ -147,7 +150,7 @@ On Windows, build documentation with this code:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-windows
 
 
@@ -156,7 +159,7 @@ On Linux, build documentation with this code:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-linux
 
 

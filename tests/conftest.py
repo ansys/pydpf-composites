@@ -25,6 +25,8 @@ TEST_ROOT_DIR = pathlib.Path(__file__).parent
 SERVER_BIN_OPTION_KEY = "--server-bin"
 PORT_OPTION_KEY = "--port"
 ANSYS_PATH_OPTION_KEY = "--ansys-path"
+LICENSE_SERVER_OPTION_KEY = "--license-server"
+ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -49,6 +51,12 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         r"Example: C:\Program Files\Ansys Inc\v231",
     )
 
+    parser.addoption(
+        LICENSE_SERVER_OPTION_KEY,
+        action="store",
+        help="Value of the ANSYSLMD_LICENSE_FILE for the gRPC server.",
+    )
+
 
 ServerContext = namedtuple("ServerContext", ["port", "platform", "server"])
 
@@ -62,16 +70,22 @@ class DockerProcess:
             cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
         if sys.platform == "linux":
             cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
+
         cmd += [
             "-p",
             f"{self.port}:50052/tcp",
             "-e",
-            "HOME=/home/container",
+            "HOME=/tmp",
+            "-e",
+            "ANSYS_DPF_ACCEPT_LA=Y",
+            "-e",
+            f"{ANSYSLMD_LICENSE_FILE_KEY}={self.license_server}",
             "--name",
             self.name,
             self.image_name,
         ]
-        self.process_stdout.write(f"Starting docker container: {cmd}\n\n")
+        # ensure that the output does not contain any pipeline secrets
+        # self.process_stdout.write(f"Starting docker container: {cmd}\n\n")
         self.server_process = subprocess.Popen(
             cmd,
             stdout=self.server_stdout,
@@ -92,6 +106,7 @@ class DockerProcess:
         server_err_file: pathlib.Path,
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
+        license_server: str = "",
         image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
@@ -104,6 +119,8 @@ class DockerProcess:
             Local directories which should be mounted to the Docker container.
             The keys contain the path in the context of the host, and the
             values are the paths as they should appear inside the container.
+        license_server:
+            Definition of the license server. E.g. 1055@my_ansys_license_server
         server_out_file :
             Path (on the host) to which the output of ``docker run`` is redirected.
         server_err_file :
@@ -124,6 +141,7 @@ class DockerProcess:
         self.process_stderr = open(process_err_file, mode="w", encoding="utf-8")
         self.name = str(uuid.uuid4())
         self.mount_directories = mount_directories
+        self.license_server = license_server
         self.image_name = image_name
 
     def __exit__(
@@ -268,6 +286,19 @@ def dpf_server(request: pytest.FixtureRequest):
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
     installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
+    license_server = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
+
+    if not license_server:
+        if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
+            license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
+        else:
+            raise RuntimeError(
+                "License server not set. Either run test with --license-server of "
+                f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
+            )
+
+    if "@" not in license_server:
+        license_server = "1055@" + license_server
 
     active_options = [
         option for option in [installer_path, server_bin, running_server_port] if option is not None
@@ -289,11 +320,13 @@ def dpf_server(request: pytest.FixtureRequest):
 
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
+
             return DockerProcess(
                 server_out_file=server_log_stdout,
                 server_err_file=server_log_stderr,
                 process_out_file=process_log_stdout,
                 process_err_file=process_log_stderr,
+                license_server=license_server,
             )
 
     with start_server_process() as server_process:
