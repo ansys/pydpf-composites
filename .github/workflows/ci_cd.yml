@@ -92,13 +92,15 @@ jobs:
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
-      - name: "Upload server output"
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: server_output
-          path: tests/logs/*_log_*.txt
-          retention-days: 7
+      # enable for debugging purposes. Ensure that the output does not contain
+      # pipeline secrets.
+      # - name: "Upload server output"
+      #  if: always()
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: server_output
+      #    path: tests/logs/*_log_*.txt
+      #    retention-days: 7
 
   tests_minimal_version:
     name: "Test with lower-bound dependency versions"

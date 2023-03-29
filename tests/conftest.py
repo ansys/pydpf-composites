@@ -84,7 +84,8 @@ class DockerProcess:
             self.name,
             self.image_name,
         ]
-        self.process_stdout.write(f"Starting docker container: {cmd}\n\n")
+        # ensure that the output does not contain any pipeline secrets
+        # self.process_stdout.write(f"Starting docker container: {cmd}\n\n")
         self.server_process = subprocess.Popen(
             cmd,
             stdout=self.server_stdout,
