@@ -99,7 +99,7 @@ for eid in element_ids:
     d1 = a11.get_entity_data_by_id(eid)[0]
     d2 = a22.get_entity_data_by_id(eid)[0]
     D = np.diag([d1, d2, max(1.0 - d1 - d2, 0.0)])
-    aRot = V * D * V.transpose()
+    aRot = np.matmul(np.matmul(V, D), V.transpose())
     fiber_orientation_tensor.append(
         [aRot[0, 0], aRot[1, 1], aRot[2, 2], aRot[0, 1], aRot[1, 2], aRot[0, 2]], eid
     )
