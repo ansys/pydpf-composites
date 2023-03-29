@@ -77,7 +77,9 @@ def connect_to_or_start_server(
     if len(list(connect_kwargs.keys())) > 0:
         server = connect_to_server(
             **connect_kwargs,
-            context=_dpf_server.server_context.ServerContext(server_context.LicensingContextType.premium)
+            context=_dpf_server.server_context.ServerContext(
+                server_context.LicensingContextType.premium
+            ),
         )
     else:
         server = start_local_server(
