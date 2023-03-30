@@ -31,7 +31,6 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 # These files are needed:
 #
 # * Mechanical APDL result (RST) file containing the simulation results
-# * Engineering Data (MATML) file containing the material properties of the composite
 # * Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data
 server = connect_to_or_start_server()
 composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
@@ -48,7 +47,7 @@ data_sources.set_result_file_path(composite_files_on_server.rst)
 # Initialize DPF model
 # ~~~~~~~~~~~~~~~~~~~~
 # Initialize the DPF model.
-model = dpf.Model(composite_files_on_server.rst)
+model = dpf.Model(data_sources=data_sources)
 mesh = model.metadata.meshed_region
 
 # %%
