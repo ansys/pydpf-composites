@@ -115,4 +115,4 @@ aXZ = fiber_orientation_tensor_fc.select_component(5)[0]
 
 mesh.plot(aXX, title="Axx", text="Axx plot")
 mesh.plot(aYY, title="Ayy", text="Ayy plot")
-mesh.plot(aXZ, title="aXZ", text="Axz plot")
+mesh.plot(aXZ, title="Axz", text="Axz plot")
