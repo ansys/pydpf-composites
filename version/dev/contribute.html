@@ -480,9 +480,13 @@ pipx<span class="w"> </span>install<span class="w"> </span>tox
 <li><p>Create a virtual environment and install the package with development
 dependencies. PyDPF Composites uses <a class="reference external" href="https://python-poetry.org">Poetry</a>
 to manage the development environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install<span class="w"> </span>--all-extras
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>config<span class="w"> </span>installer.modern-installation<span class="w"> </span><span class="nb">false</span>
+poetry<span class="w"> </span>install<span class="w"> </span>--all-extras
 </pre></div>
 </div>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">installer.modern-installation</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> is a temporary workaround.
+See <a class="reference external" href="https://github.com/pydata/pydata-sphinx-theme/issues/1253">this pydata-sphinx-theme issue</a>
+for more information.</p>
 </li>
 <li><p>Activate the virtual environment:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>shell
