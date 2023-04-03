@@ -4,8 +4,8 @@
 Plot of the orientation tensor for short fiber composites
 ---------------------------------------------------------
 
-This example shows how reconstruct and plot the components
-of fiber orientation tensor in the global coordinate system.
+This example shows how to reconstruct and plot the components
+of the fiber orientation tensor in the global coordinate system.
 
 For more details about the fiber orientation tensor,
 refer to the Short Fiber Composites help.
@@ -106,7 +106,7 @@ fiber_orientation_tensor_fc = dpf.operators.utility.field_to_fc(
 # %%
 # Plot results
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-# Plot the components of fiber orientation tensor.
+# Plot some components of the fiber orientation tensor.
 
 aXX = fiber_orientation_tensor_fc.select_component(0)[0]
 aYY = fiber_orientation_tensor_fc.select_component(1)[0]
