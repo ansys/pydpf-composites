@@ -89,14 +89,18 @@ jobs:
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: |
           tox
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
-      - name: "Upload server output"
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: server_output
-          path: tests/logs/*_log_*.txt
-          retention-days: 7
+      # enable for debugging purposes. Ensure that the output does not contain
+      # pipeline secrets.
+      # - name: "Upload server output"
+      #  if: always()
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: server_output
+      #    path: tests/logs/*_log_*.txt
+      #    retention-days: 7
 
   tests_minimal_version:
     name: "Test with lower-bound dependency versions"
@@ -123,7 +127,10 @@ jobs:
           python -m pip install --upgrade poetry
 
       - name: Test with tox
-        run: tox -e test-minimal
+        run: |
+          tox -e test-minimal
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
   doc-build:
     name: "Documentation build"
@@ -144,7 +151,7 @@ jobs:
       - name: "Pull and start dpf container"
         run: |
           docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker run -d --restart always -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
@@ -155,13 +162,9 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: "Install Python dependencies"
-      # TODO: remove 'poetry config installer.modern-installation false' once we use a pydata-sphinx-theme
-      # version where https://github.com/pydata/pydata-sphinx-theme/issues/1253 is resolved.
-      # The same needs to be removed in the README.
         run: |
           python -m pip install --upgrade pip tox
           python -m pip install --upgrade poetry
-          poetry config installer.modern-installation false
 
       - name: "Generate the documentation with tox"
         run: |

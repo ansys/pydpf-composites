@@ -81,12 +81,7 @@ familiar with the `PyAnsys Developer's Guide`_.
 
     .. code:: bash
 
-        poetry config installer.modern-installation false
         poetry install --all-extras
-
-    Setting ``installer.modern-installation`` to ``false`` is a temporary workaround.
-    See `this pydata-sphinx-theme issue <https://github.com/pydata/pydata-sphinx-theme/issues/1253>`_
-    for more information.
 
 
 #.  Activate the virtual environment:
@@ -102,6 +97,9 @@ Test
 .. note::
 
    The Docker container referenced in the first option is not yet publicly available.
+
+Set the environment variable `ANSYSLMD_LICENSE_FILE` to configure the licensing or pass it
+as argument (`--license-server=1055@mylicenseserver`) to the pytest call.
 
 There are three ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.
@@ -147,7 +145,7 @@ On Windows, build documentation with this code:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-windows
 
 
@@ -156,7 +154,7 @@ On Linux, build documentation with this code:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-linux
 
 
