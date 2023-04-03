@@ -71,10 +71,11 @@ all = [
     "pylint",
     "pre-commit",
     "pypandoc",
+    "scipy",
     "sphinx-autodoc-typehints",
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
-    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design"]
+    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy"]
 test = ["pytest", "pytest-cov"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
