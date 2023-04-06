@@ -36,7 +36,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 #
 # * Mechanical APDL result (RST) file containing the simulation results
 # * Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data
-server = connect_to_or_start_server(port=21002)
+server = connect_to_or_start_server()
 composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
 
 # %%
