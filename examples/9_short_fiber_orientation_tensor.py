@@ -10,6 +10,10 @@ of the fiber orientation tensor in the global coordinate system.
 For more details about the fiber orientation tensor,
 refer to the Short Fiber Composites help.
 
+.. note::
+
+    To run this example you first need to install the SciPy package.
+
 """
 # %%
 # Set up analysis
