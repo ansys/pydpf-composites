@@ -36,7 +36,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 #
 # * Mechanical APDL result (RST) file containing the simulation results
 # * Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data
-server = connect_to_or_start_server()
+server = connect_to_or_start_server(port=21002)
 composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
 
 # %%
@@ -63,12 +63,17 @@ field_variable_provider = dpf.Operator("composite::inistate_field_variables_prov
 field_variable_provider.inputs.data_sources(data_sources)
 field_variable_provider.inputs.mesh(model.metadata.mesh_provider)
 
-field_variables = field_variable_provider.outputs.fields_container.get_data()
+field_variable_dict = {
+    fv.name: fv for fv in field_variable_provider.outputs.fields_container.get_data()
+}
 
-a11 = field_variables[0]
+A11_NAME = "Orientation Tensor A11"
+A22_NAME = "Orientation Tensor A22"
+
+a11 = field_variable_dict[A11_NAME]
 a11.plot()
 
-a22 = field_variables[1]
+a22 = field_variable_dict[A22_NAME]
 a22.plot()
 
 # %%
@@ -76,7 +81,7 @@ a22.plot()
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 # Reconstruct the fiber orientation tensor in the global coordinate system.
 
-element_ids = field_variables[0].scoping.ids
+element_ids = a11.scoping.ids
 # Alternatively, you could for instance scope to a named selection with
 # >>> element_ids = model.metadata.meshed_region.named_selection('CENTER').ids
 
