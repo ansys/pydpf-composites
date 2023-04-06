@@ -5,6 +5,9 @@ from scipy.spatial.transform import Rotation
 from ansys.dpf.composites.example_helper import get_short_fiber_example_files
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
+a11_name = "Orientation Tensor A11"
+a22_name = "Orientation Tensor A22"
+
 for name, server_kwargs in [("local", {}), ("container", {"port": 21002})]:
     server = connect_to_or_start_server(**server_kwargs)
     composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
@@ -22,8 +25,9 @@ for name, server_kwargs in [("local", {}), ("container", {"port": 21002})]:
 
     field_variables = field_variable_provider.outputs.fields_container.get_data()
 
-    a11 = field_variables[0]
-    a22 = field_variables[1]
+    field_variable_dict = {}
+    for field_variable in field_variables:
+        field_variable_dict[field_variable.name] = field_variable
 
     element_ids = field_variables[0].scoping.ids
 
@@ -40,8 +44,8 @@ for name, server_kwargs in [("local", {}), ("container", {"port": 21002})]:
         V = Rotation.from_euler(
             seq="ZXY", angles=euler_angles_field.get_entity_data_by_id(eid)[0], degrees=True
         ).as_matrix()
-        d1 = a11.get_entity_data_by_id(eid)[0]
-        d2 = a22.get_entity_data_by_id(eid)[0]
+        d1 = field_variable_dict[a11_name].get_entity_data_by_id(eid)[0]
+        d2 = field_variable_dict[a22_name].get_entity_data_by_id(eid)[0]
         D = np.diag([d1, d2, max(1.0 - d1 - d2, 0.0)])
         aRot = np.matmul(np.matmul(V, D), V.transpose())
         fiber_orientation_tensor.append(
