@@ -54,17 +54,18 @@ data_sources.set_result_file_path(composite_files_on_server.rst)
 model = dpf.Model(data_sources=data_sources)
 mesh = model.metadata.meshed_region
 
+# %%
 # Should your mesh contain both solid and shell elements, for visualization purposes
-# it can be useful to scope the mesh to the solid ones:
-#
-# >>> solid_scoping_op = dpf.operators.scoping.on_mesh_property(
-# ...   property_name='solid_elements',
-# ...   mesh=mesh,
-# ... )
-# >>> solid_mesh = dpf.operators.mesh.from_scoping(
-# ...   scoping=solid_scoping_op.outputs.mesh_scoping(),
-# ...   mesh=model.metadata.mesh_provider,
-# ... ).outputs.mesh()
+# it can be useful to scope the mesh to the solid ones.
+
+# solid_scoping_op = dpf.operators.scoping.on_mesh_property(
+#   property_name='solid_elements',
+#   mesh=mesh,
+# )
+# solid_mesh = dpf.operators.mesh.from_scoping(
+#   scoping=solid_scoping_op.outputs.mesh_scoping(),
+#   mesh=model.metadata.mesh_provider,
+# ).outputs.mesh()
 
 # %%
 # Plot input data
