@@ -54,6 +54,18 @@ data_sources.set_result_file_path(composite_files_on_server.rst)
 model = dpf.Model(data_sources=data_sources)
 mesh = model.metadata.meshed_region
 
+# Should your mesh contain both solid and shell elements, for visualization purposes
+# it can be useful to scope the mesh to the solid ones:
+#
+# >>> solid_scoping_op = dpf.operators.scoping.on_mesh_property(
+# ...   property_name='solid_elements',
+# ...   mesh=mesh,
+# ... )
+# >>> solid_mesh = dpf.operators.mesh.from_scoping(
+# ...   scoping=solid_scoping_op.outputs.mesh_scoping(),
+# ...   mesh=model.metadata.mesh_provider,
+# ... ).outputs.mesh()
+
 # %%
 # Plot input data
 # ~~~~~~~~~~~~~~~
@@ -61,7 +73,7 @@ mesh = model.metadata.meshed_region
 # Note that the plots reveal the presence of a weld line in the middle of the specimen.
 field_variable_provider = dpf.Operator("composite::inistate_field_variables_provider")
 field_variable_provider.inputs.data_sources(data_sources)
-field_variable_provider.inputs.mesh(model.metadata.mesh_provider)
+field_variable_provider.inputs.mesh(mesh)
 
 field_variable_dict = {
     fv.name: fv for fv in field_variable_provider.outputs.fields_container.get_data()
