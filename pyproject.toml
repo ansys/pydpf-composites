@@ -52,7 +52,10 @@ pre-commit = {version = "*", optional = true}
 # Upper bound because there is a problem with examples in versions > 1.20.1
 sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
 pylint = {version = "^2.13", optional = true}
-
+scipy = [
+    {version = ">=1.6", python = ">=3.7,<3.8", optional = true},
+    {version = ">=1.9.0", python = ">=3.8", optional = true}
+]
 
 [tool.poetry.extras]
 all = [
@@ -71,10 +74,11 @@ all = [
     "pylint",
     "pre-commit",
     "pypandoc",
+    "scipy",
     "sphinx-autodoc-typehints",
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
-    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design"]
+    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy"]
 test = ["pytest", "pytest-cov"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
