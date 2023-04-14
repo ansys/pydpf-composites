@@ -120,7 +120,7 @@ Initialize the DPF model.
 
 .. code-block:: default
 
-    model = dpf.Model(composite_files_on_server.rst)
+    model = dpf.Model(data_sources=data_sources)
     mesh = model.metadata.meshed_region
 
 
@@ -237,7 +237,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.422 seconds)
+   **Total running time of the script:** ( 0 minutes  5.037 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_3_short_fiber_example.py:

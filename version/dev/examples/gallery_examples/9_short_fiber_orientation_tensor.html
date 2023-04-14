@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Failure analysis for short fiber composites &#8212; PyDPF Composites</title>
+    <title>Plot of the orientation tensor for short fiber composites &#8212; PyDPF Composites</title>
     
   
   
@@ -59,7 +59,7 @@
     <script src="../../_static/js/table.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="../../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/3_short_fiber_example';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/9_short_fiber_orientation_tensor';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
@@ -67,8 +67,8 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Material properties and custom failure criterion" href="4_get_material_properties_example.html" />
-    <link rel="prev" title="Sampling point" href="2_sampling_point_example.html" />
+    <link rel="next" title="DPF composite failure workflow" href="dpf_composite_failure_workflow.html" />
+    <link rel="prev" title="Postprocess an assembly" href="8_assembly_example.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -313,7 +313,7 @@ document.write(`
     
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">Failure analysis for short fiber composites</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Plot of the orientation tensor for short fiber composites</a></li> 
       </ul>
     </div>
         </div>
@@ -438,14 +438,14 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1_failure_operator_example.html">Composite failure analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2_sampling_point_example.html">Sampling point</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Failure analysis for short fiber composites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_short_fiber_example.html">Failure analysis for short fiber composites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_get_material_properties_example.html">Material properties and custom failure criterion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_get_layup_properties_example.html">Lay-up properties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_filter_composite_data_example.html">Filter result data by different criteria</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7_interlaminar_normal_stress_example.html">Interlaminar normal stresses</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="8_assembly_example.html">Postprocess an assembly</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9_short_fiber_orientation_tensor.html">Plot of the orientation tensor for short fiber composites</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Plot of the orientation tensor for short fiber composites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dpf_composite_failure_workflow.html">DPF composite failure workflow</a></li>
 </ul>
 </div>
@@ -477,23 +477,18 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-3-short-fiber-example-py"><span class="std std-ref">here</span></a>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-9-short-fiber-orientation-tensor-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="failure-analysis-for-short-fiber-composites">
-<span id="short-fiber-example"></span><span id="sphx-glr-examples-gallery-examples-3-short-fiber-example-py"></span><h1>Failure analysis for short fiber composites<a class="headerlink" href="#failure-analysis-for-short-fiber-composites" title="Permalink to this heading">#</a></h1>
-<p>This example shows how to evaluate failures of a short fiber reinforced
-part.</p>
-<p>As part of the short fiber workflows, you can evaluate and plot Tsai-Hill
-type orientation tensor-dependent failure criteria. This example shows
-how to configure the DPF operator <code class="docutils literal notranslate"><span class="pre">short_fiber_failure_criterion_evaluator</span></code>
-to compute such failure criteria.</p>
-<p>The model shown in this example consists of a tensile specimen made of
-a short glass fiber reinforced thermoplastic injection molded from both sides.</p>
+<section class="sphx-glr-example-title" id="plot-of-the-orientation-tensor-for-short-fiber-composites">
+<span id="short-fiber-orientation-tensor"></span><span id="sphx-glr-examples-gallery-examples-9-short-fiber-orientation-tensor-py"></span><h1>Plot of the orientation tensor for short fiber composites<a class="headerlink" href="#plot-of-the-orientation-tensor-for-short-fiber-composites" title="Permalink to this heading">#</a></h1>
+<p>This example shows how to reconstruct and plot the components
+of the fiber orientation tensor in the global coordinate system.</p>
+<p>For more details about the fiber orientation tensor,
+refer to the Short Fiber Composites help.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The evaluation of failure criteria in short fiber workflows is a
-beta feature, introduced in Ansys 2021 R2.</p>
+<p>To run this example you first need to install the SciPy package.</p>
 </div>
 <section id="set-up-analysis">
 <h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
@@ -501,8 +496,9 @@ beta feature, introduced in Ansys 2021 R2.</p>
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.transform</span> <span class="kn">import</span> <span class="n">Rotation</span>
 
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_short_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
@@ -511,7 +507,6 @@ DPF server, and retrieving the example files.</p>
 These files are needed:</p>
 <ul class="simple">
 <li><p>Mechanical APDL result (RST) file containing the simulation results</p></li>
-<li><p>Engineering Data (MATML) file containing the material properties of the composite</p></li>
 <li><p>Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
@@ -523,7 +518,6 @@ These files are needed:</p>
 <h2>Set up data sources<a class="headerlink" href="#set-up-data-sources" title="Permalink to this heading">#</a></h2>
 <p>Set up the data sources.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">DataSources</span><span class="p">()</span>
-<span class="n">data_sources</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">engineering_data</span></a><span class="p">,</span> <span class="s2">&quot;EngineeringData&quot;</span><span class="p">)</span>
 <span class="n">data_sources</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">dsdat</span></a><span class="p">,</span> <span class="s2">&quot;dat&quot;</span><span class="p">)</span>
 <span class="n">data_sources</span><span class="o">.</span><span class="n">set_result_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">)</span>
 </pre></div>
@@ -536,64 +530,106 @@ These files are needed:</p>
 <span class="n">mesh</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">meshed_region</span>
 </pre></div>
 </div>
+<p>Should your mesh contain both solid and shell elements, for visualization purposes
+it can be useful to scope the mesh to the solid ones.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solid_scoping_op = dpf.operators.scoping.on_mesh_property(</span>
+<span class="c1">#   property_name=&#39;solid_elements&#39;,</span>
+<span class="c1">#   mesh=mesh,</span>
+<span class="c1"># )</span>
+<span class="c1"># solid_mesh = dpf.operators.mesh.from_scoping(</span>
+<span class="c1">#   scoping=solid_scoping_op.outputs.mesh_scoping(),</span>
+<span class="c1">#   mesh=model.metadata.mesh_provider,</span>
+<span class="c1"># ).outputs.mesh()</span>
+</pre></div>
+</div>
 </section>
-<section id="plot-results">
-<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h2>
+<section id="plot-input-data">
+<h2>Plot input data<a class="headerlink" href="#plot-input-data" title="Permalink to this heading">#</a></h2>
 <p>Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">field_variable_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::inistate_field_variables_provider&quot;</span><span class="p">)</span>
 <span class="n">field_variable_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">data_sources</span><span class="p">)</span>
-<span class="n">field_variable_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">mesh_provider</span><span class="p">)</span>
+<span class="n">field_variable_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
 
-<span class="n">field_variables</span> <span class="o">=</span> <span class="n">field_variable_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">field_variable_dict</span></a> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">fv</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">fv</span> <span class="k">for</span> <span class="n">fv</span> <span class="ow">in</span> <span class="n">field_variable_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="p">}</span>
 
-<span class="n">a11</span> <span class="o">=</span> <span class="n">field_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">A11_NAME</span></a> <span class="o">=</span> <span class="s2">&quot;Orientation Tensor A11&quot;</span>
+<a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">A22_NAME</span></a> <span class="o">=</span> <span class="s2">&quot;Orientation Tensor A22&quot;</span>
+
+<span class="n">a11</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">field_variable_dict</span></a><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">A11_NAME</span></a><span class="p">]</span>
 <span class="n">a11</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="n">a22</span> <span class="o">=</span> <span class="n">field_variables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">a22</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">field_variable_dict</span></a><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">A22_NAME</span></a><span class="p">]</span>
 <span class="n">a22</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 <ul class="sphx-glr-horizontal">
-<li><img src="../../_images/sphx_glr_3_short_fiber_example_001.png" srcset="../../_images/sphx_glr_3_short_fiber_example_001.png" alt="3 short fiber example" class = "sphx-glr-multi-img"/></li>
-<li><img src="../../_images/sphx_glr_3_short_fiber_example_002.png" srcset="../../_images/sphx_glr_3_short_fiber_example_002.png" alt="3 short fiber example" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_9_short_fiber_orientation_tensor_001.png" srcset="../../_images/sphx_glr_9_short_fiber_orientation_tensor_001.png" alt="9 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_9_short_fiber_orientation_tensor_002.png" srcset="../../_images/sphx_glr_9_short_fiber_orientation_tensor_002.png" alt="9 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
 </ul>
 </section>
-<section id="configure-and-evaluate">
-<h2>Configure and evaluate<a class="headerlink" href="#configure-and-evaluate" title="Permalink to this heading">#</a></h2>
-<p>Configure the short fiber failure criterion evaluator and evaluate.
-Note that you can specify optional time and mesh scoping inputs.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sf_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::short_fiber_failure_criterion_evaluator&quot;</span><span class="p">)</span>
-<span class="n">sf_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">streams_container</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">streams_provider</span><span class="p">)</span>
-<span class="n">sf_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">data_sources</span><span class="p">)</span>
-<span class="n">sf_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">stress_limit_type</span><span class="p">(</span><span class="s2">&quot;ultimate&quot;</span><span class="p">)</span>  <span class="c1"># &quot;yield&quot; or &quot;ultimate&quot; (default)</span>
-<span class="n">sf_op</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<section id="compute-results">
+<h2>Compute results<a class="headerlink" href="#compute-results" title="Permalink to this heading">#</a></h2>
+<p>Reconstruct the fiber orientation tensor in the global coordinate system.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">a11</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
+<span class="c1"># Alternatively, you could for instance scope to a named selection with</span>
+<span class="c1"># &gt;&gt;&gt; element_ids = model.metadata.meshed_region.named_selection(&#39;CENTER&#39;).ids</span>
+
+<span class="c1"># Define the fiber orientation tensor in the global coordinate system</span>
+<span class="c1"># as a symmetrical 3x3 tensor with components XX,YY,ZZ,XY,YZ,XZ.</span>
+<span class="n">fiber_orientation_tensor</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">fields_factory</span><span class="o">.</span><span class="n">create_tensor_field</span><span class="p">(</span>
+    <span class="n">num_entities</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">element_ids</span><span class="p">),</span> <span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a>
+<span class="p">)</span>
+
+<span class="n">ele_orientation_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">element_orientations</span><span class="p">(</span>
+    <span class="n">data_sources</span><span class="o">=</span><span class="n">data_sources</span><span class="p">,</span> <span class="n">requested_location</span><span class="o">=</span><span class="s2">&quot;Elemental&quot;</span><span class="p">,</span> <span class="n">bool_rotate_to_global</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">euler_angles_field</span> <span class="o">=</span> <span class="n">ele_orientation_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">eid</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">:</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">V</span></a> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span>
+        <span class="n">seq</span><span class="o">=</span><span class="s2">&quot;ZXY&quot;</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="n">euler_angles_field</span><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">eid</span></a><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+    <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">d1</span></a> <span class="o">=</span> <span class="n">a11</span><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">eid</span></a><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">d2</span></a> <span class="o">=</span> <span class="n">a22</span><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">eid</span></a><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">D</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.diag.html#numpy.diag" title="numpy.diag" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">diag</span></a><span class="p">([</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">d1</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">d2</span></a><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">d1</span></a> <span class="o">-</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">d2</span></a><span class="p">,</span> <span class="mf">0.0</span><span class="p">)])</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">matmul</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">matmul</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">V</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">D</span></a><span class="p">),</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">V</span></a><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+    <span class="n">fiber_orientation_tensor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aRot</span></a><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">eid</span></a>
+    <span class="p">)</span>
+
+<span class="n">fiber_orientation_tensor_fc</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">field_to_fc</span><span class="p">(</span>
+    <span class="n">field</span><span class="o">=</span><span class="n">fiber_orientation_tensor</span>
+<span class="p">)</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
-<section id="compute-and-plot-results">
-<h2>Compute and plot results<a class="headerlink" href="#compute-and-plot-results" title="Permalink to this heading">#</a></h2>
-<p>Compute and plot the maximum failure value per element.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mat_support_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;mat_support_provider&quot;</span><span class="p">)</span>
-<span class="n">mat_support_operator</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">data_sources</span><span class="p">)</span>
+<section id="plot-results">
+<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h2>
+<p>Plot some components of the fiber orientation tensor.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">aXX</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">aYY</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">aXZ</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="n">minmax_per_element</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::minmax_per_element_operator&quot;</span><span class="p">)</span>
-<span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(</span><span class="n">sf_op</span><span class="p">)</span>
-<span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
-<span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">material_support</span><span class="p">(</span><span class="n">mat_support_operator</span><span class="p">)</span>
-
-<span class="n">max_failure</span> <span class="o">=</span> <span class="n">minmax_per_element</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">max_failure_value</span> <span class="o">=</span> <span class="n">max_failure</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">FAILURE_VALUE</span><span class="p">})</span>
-<span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_failure_value</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aXX</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Axx&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Axx plot&quot;</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aYY</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ayy&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Ayy plot&quot;</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aXZ</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Axz&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Axz plot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_3_short_fiber_example_003.png" srcset="../../_images/sphx_glr_3_short_fiber_example_003.png" alt="3 short fiber example" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.037 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-3-short-fiber-example-py">
+<ul class="sphx-glr-horizontal">
+<li><img src="../../_images/sphx_glr_9_short_fiber_orientation_tensor_003.png" srcset="../../_images/sphx_glr_9_short_fiber_orientation_tensor_003.png" alt="9 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_9_short_fiber_orientation_tensor_004.png" srcset="../../_images/sphx_glr_9_short_fiber_orientation_tensor_004.png" alt="9 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_9_short_fiber_orientation_tensor_005.png" srcset="../../_images/sphx_glr_9_short_fiber_orientation_tensor_005.png" alt="9 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
+</ul>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  7.292 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-9-short-fiber-orientation-tensor-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/e79424f559efb4dcca51af7a09973e19/3_short_fiber_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">3_short_fiber_example.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/1097d9b7ae7ee45bb01480a6d29f5834/9_short_fiber_orientation_tensor.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">9_short_fiber_orientation_tensor.py</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/69acae2b746b2763a8d711f6de4d0393/3_short_fiber_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">3_short_fiber_example.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/add93dfc009ec5455cdd4b97f41622cf/9_short_fiber_orientation_tensor.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">9_short_fiber_orientation_tensor.ipynb</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -620,15 +656,15 @@ Note that you can specify optional time and mesh scoping inputs.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-analysis">Set up analysis</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-data-sources">Set up data sources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-dpf-model">Initialize DPF model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-input-data">Plot input data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-results">Compute results</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-results">Plot results</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-and-evaluate">Configure and evaluate</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-and-plot-results">Compute and plot results</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/examples/gallery_examples/3_short_fiber_example.rst.txt">
+    <a href="../../_sources/examples/gallery_examples/9_short_fiber_orientation_tensor.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
