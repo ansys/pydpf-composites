@@ -476,10 +476,11 @@ pipx<span class="w"> </span>install<span class="w"> </span>pip
 pipx<span class="w"> </span>install<span class="w"> </span>tox
 </pre></div>
 </div>
-</li>
-<li><p>Create a virtual environment and install the package with development
-dependencies. PyDPF Composites uses <a class="reference external" href="https://python-poetry.org">Poetry</a>
+<p>PyDPF Composites uses <a class="reference external" href="https://python-poetry.org">Poetry</a>
 to manage the development environment.</p>
+</li>
+<li><p>Create a virtual environment and install the package with the
+development dependencies:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install<span class="w"> </span>--all-extras
 </pre></div>
 </div>
@@ -497,12 +498,12 @@ to manage the development environment.</p>
 <p class="admonition-title">Note</p>
 <p>The Docker container referenced in the first option is not yet publicly available.</p>
 </div>
-<p>Set the environment variable <cite>ANSYSLMD_LICENSE_FILE</cite> to configure the licensing or pass it
-as argument (<cite>–license-server=1055&#64;mylicenseserver</cite>) to the pytest call.</p>
+<p>Set the environment variable <code class="docutils literal notranslate"><span class="pre">ANSYSLMD_LICENSE_FILE</span></code> to configure the licensing or pass it
+as an argument to the pytest call: <code class="docutils literal notranslate"><span class="pre">--license-server=1055&#64;mylicenseserver</span></code>.</p>
 <p>There are three ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.</p>
 <ol class="arabic">
-<li><p>Run tests with a Docker container.</p>
+<li><p>Run tests with a Docker container:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
 pytest<span class="w"> </span>.
 </pre></div>
@@ -553,6 +554,15 @@ tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
+<section id="view-documentation">
+<h3>View documentation<a class="headerlink" href="#view-documentation" title="Permalink to this heading">#</a></h3>
+<p>Documentation for the latest stable release of PyDPF Composites is hosted at
+<a class="reference external" href="https://composites.dpf.docs.pyansys.com/version/stable/">PyDPF Composites Documentation</a>.</p>
+<p>In the upper right corner of the documentation’s title bar, there is an option
+for switching from viewing the documentation for the latest stable release
+to viewing the documentation for the development version or previously
+released versions.</p>
+</section>
 </section>
 </section>
 
@@ -576,7 +586,10 @@ tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-in-development-mode">Install in development mode</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test">Test</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-documentation">Build documentation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-style-checks">Run style checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-style-checks">Run style checks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#view-documentation">View documentation</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
