@@ -80,7 +80,7 @@ nitpick_ignore = [
     ("py:class", "int64"),
 ]
 nitpick_ignore_regex = [
-    ("py:class", "numpy\..*"),
+    ("py:class", r"numpy\..*"),
     ("py:class", ".*FailureCriterionBase"),  # implementation detail, not documented
 ]
 
