@@ -218,6 +218,9 @@ def get_dpf_material_id_by_analyis_ply_map(
                 layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(
                     element_id_int
                 )
+                assert (
+                    layer_index is not None
+                ), f"No layer index found for element with id {element_id_int}."
                 analysis_ply_to_material_map[analysis_ply_name] = element_info.dpf_material_ids[
                     layer_index
                 ]
@@ -355,6 +358,8 @@ class ElementInfoProvider:
         n_spots = _get_n_spots(apdl_element_type, keyopt_8, keyopt_3)
         dpf_material_ids: Any = []
         element_type = self.dpf_element_types.by_id(element_id)
+        if element_type is None:
+            raise IndexError(f"No DPF element type for element with id {element_id}.")
 
         layer_data = self.layer_indices.by_id(element_id)
         if layer_data is not None:
