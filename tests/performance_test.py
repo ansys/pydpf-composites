@@ -332,7 +332,6 @@ def test_performance_flat(dpf_server):
     timer.add("indexer")
 
     with setup_result.mesh.elements.connectivities_field.as_local_field() as local_connectivity:
-
         timer.add("local connectivity")
 
         for element_id in scope:

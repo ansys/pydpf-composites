@@ -423,7 +423,6 @@ class SamplingPoint:
         ply_wise_indices.sort()
         indices = []
         if self.analysis_plies:
-
             for ply_index in range(0, self.number_of_plies):
                 indices.extend(
                     [ply_index * self._spots_per_ply + index for index in ply_wise_indices]
@@ -753,7 +752,6 @@ class SamplingPoint:
                 )
 
                 if show_failure_modes:
-
                     middle_offsets = self.get_offsets_by_spots(
                         spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
                     )

@@ -112,7 +112,6 @@ def _is_shell(apdl_element_type: np.int64) -> bool:
 
 
 def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.int64) -> int:
-
     if keyopt_3 == 0:
         if apdl_element_type == 185 or apdl_element_type == 186:
             return 0
@@ -244,7 +243,6 @@ def get_analysis_ply_index_to_name_map(
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
-
         for analysis_ply_name in get_all_analysis_ply_names(mesh):
             analysis_ply_property_field = _get_analysis_ply(
                 mesh, analysis_ply_name, skip_check=True

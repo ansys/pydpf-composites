@@ -23,7 +23,6 @@ class Timer:
         self.timings.append((label, time.time()))
 
     def summary(self):
-
         diffs = self._get_diffs()
         print("")
         print("Timer summary")
@@ -61,7 +60,6 @@ class SetupResult:
 
 
 def setup_operators(server, files: ContinuousFiberCompositesFiles):
-
     timer = Timer()
 
     files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=server)

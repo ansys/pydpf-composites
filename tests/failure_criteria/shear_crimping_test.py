@@ -7,7 +7,6 @@ defaults = dict(zip(ATTRS_SHEAR_CRIMPING, [1.0, 0.0, 1.0]))
 
 
 def test_shear_crimping_criterion():
-
     sc_default = ShearCrimpingCriterion()
     assert sc_default.name == "Shear Crimping"
 

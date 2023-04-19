@@ -272,7 +272,6 @@ def _find_free_port() -> int:
 
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
-
     # Use a unique session id so logs don't get overwritten
     # by tests that run in different sessions
     import uuid
@@ -317,7 +316,6 @@ def dpf_server(request: pytest.FixtureRequest):
         if installer_path:
             return InstalledServer(installer_path)
         else:
-
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
 

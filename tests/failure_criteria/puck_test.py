@@ -30,7 +30,6 @@ defaults = dict(
 
 
 def test_puck_criterion():
-
     puck_default = PuckCriterion()
     assert puck_default.name == "Puck"
 

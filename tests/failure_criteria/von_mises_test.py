@@ -4,7 +4,6 @@ defaults = dict(zip(ATTRS_VON_MISES, [True, True, 1.0, 1.0, False]))
 
 
 def test_von_mises_criterion():
-
     von_mises_default = VonMisesCriterion()
     assert von_mises_default.name == "Von Mises"
 
