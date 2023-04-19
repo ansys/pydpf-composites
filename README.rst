@@ -8,7 +8,7 @@ PyDPF Composites
    :target: https://docs.pyansys.com/
    :alt: PyAnsys
 
-.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.7-blue
+.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.8-blue
    :target: https://pypi.org/project/ansys-dpf-composites/
    :alt: Python
 
@@ -74,13 +74,13 @@ familiar with the `PyAnsys Developer's Guide`_.
         pipx install poetry
         pipx install pip
         pipx install tox
-    
-    
+
+
     PyDPF Composites uses `Poetry <https://python-poetry.org>`_
     to manage the development environment.
 
 #.  Create a virtual environment and install the package with the
-    development dependencies: 
+    development dependencies:
 
     .. code:: bash
 
