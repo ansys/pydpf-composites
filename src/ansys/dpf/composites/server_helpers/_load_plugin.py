@@ -7,7 +7,7 @@ import ansys.dpf.core as dpf
 from ansys.dpf.core.misc import get_ansys_path
 from ansys.dpf.core.server_types import BaseServer
 
-AWP_ROOT_DOCKER = "/ansys_inc/ansys/dpf/server_2023_2_pre1"
+AWP_ROOT_DOCKER = "/ansys_inc/ansys/dpf/server_2023_2_pre2"
 
 
 def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None) -> None:
