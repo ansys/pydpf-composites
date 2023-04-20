@@ -202,6 +202,22 @@ jobs:
         with:
           library-name: ${{ env.PACKAGE_NAME }}
 
+  build-wheelhouse:
+    name: "Build wheelhouse for latest Python versions"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest]
+          python-version: ['3.8', '3.9', '3.10', '3.11']
+    steps:
+      - name: "Build a wheelhouse of the Python library"
+        uses: pyansys/actions/build-wheelhouse@v4
+        with:
+          library-name: "ansys-dpf-composites"
+          library-namespace: "ansys.dpf.composites"
+          operating-system: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
+
   doc-deploy-dev:
     name: "Deploy development documentation"
     if: github.ref == 'refs/heads/main'
