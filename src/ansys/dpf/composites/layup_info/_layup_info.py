@@ -1,14 +1,12 @@
 """Lay-up information provider."""
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Collection, Dict, List, Optional, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 import numpy as np
-
-if TYPE_CHECKING:
-    from numpy.typing import NDArray
+from numpy.typing import NDArray
 
 from .._indexer import (
     FieldIndexerNoDataPointer,
@@ -84,7 +82,7 @@ class ElementInfo:
     n_spots: int
     is_layered: bool
     element_type: int
-    dpf_material_ids: "NDArray[np.int64]"
+    dpf_material_ids: NDArray[np.int64]
     is_shell: bool
     number_of_nodes_per_spot_plane: int
 
@@ -112,7 +110,6 @@ def _is_shell(apdl_element_type: np.int64) -> bool:
 
 
 def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.int64) -> int:
-
     if keyopt_3 == 0:
         if apdl_element_type == 185 or apdl_element_type == 186:
             return 0
@@ -127,12 +124,12 @@ def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.i
         ) from exc
 
 
-def _get_corner_nodes_by_element_type_array() -> "NDArray[np.int64]":
+def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     # Precompute n_corner_nodes for all element types
     # corner_nodes_by_element_type by can be indexed by element type to get the number of
     # corner nodes. If negative value is returned number of corner nodes is not available.
     all_element_types = [int(e.value) for e in dpf.element_types if e.value >= 0]
-    corner_nodes_by_element_type: "NDArray[np.int64]" = np.full(
+    corner_nodes_by_element_type: NDArray[np.int64] = np.full(
         np.amax(all_element_types) + 1, -1, dtype=np.int64
     )
 
@@ -244,7 +241,6 @@ def get_analysis_ply_index_to_name_map(
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
-
         for analysis_ply_name in get_all_analysis_ply_names(mesh):
             analysis_ply_property_field = _get_analysis_ply(
                 mesh, analysis_ply_name, skip_check=True
@@ -491,7 +487,7 @@ class LayupPropertiesProvider:
             mesh.property_field("layer_to_analysis_ply")
         )
 
-    def get_layer_angles(self, element_id: int) -> Optional["NDArray[np.double]"]:
+    def get_layer_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get angles for all layers. Returns None if element is not layered.
 
         Parameters
@@ -501,7 +497,7 @@ class LayupPropertiesProvider:
         """
         return self._angle_indexer.by_id(element_id)
 
-    def get_layer_thicknesses(self, element_id: int) -> Optional["NDArray[np.double]"]:
+    def get_layer_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get thicknesses for all layers. Returns None if element is not layered.
 
         Parameters
@@ -512,7 +508,7 @@ class LayupPropertiesProvider:
         """
         return self._thickness_indexer.by_id(element_id)
 
-    def get_layer_shear_angles(self, element_id: int) -> Optional["NDArray[np.double]"]:
+    def get_layer_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get shear angle for all layers. Returns None if element is not layered.
 
         Parameters

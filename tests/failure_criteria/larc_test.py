@@ -4,7 +4,6 @@ defaults = dict(zip(ATTRS_LARC, [True, True, True, True, 2, 1.0, 1.0, 1.0, 1.0])
 
 
 def test_larc_criterion():
-
     larc_default = LaRCCriterion()
     assert larc_default.name == "LaRC"
 

@@ -6,7 +6,6 @@ from ansys.dpf.composites.failure_criteria._max_stress import MaxStressCriterion
 
 
 def test_combined_failure_criterion():
-
     cfc = CombinedFailureCriterion("my name")
     assert cfc.name == "my name"
 

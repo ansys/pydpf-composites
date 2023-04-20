@@ -102,7 +102,6 @@ def test_material_properties(dpf_server):
 
 
 def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server):
-
     files = get_basic_shell_files()
     files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 

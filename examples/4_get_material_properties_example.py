@@ -11,7 +11,7 @@ all layers and integration points. Finally, the elemental maximum is computed an
 Note: Only constant material properties are currently supported.
 """
 
-#%%
+# %%
 # Script
 # ~~~~~~
 #
@@ -32,11 +32,11 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
-#%%
+# %%
 # Set up the composite model
 composite_model = CompositeModel(composite_files_on_server, server)
 
-#%%
+# %%
 # Get dictionary that maps dpf_material_id to properties
 # The creation of the dictionary is currently quite slow and
 # should be done before using the properties in a loop.
@@ -47,14 +47,14 @@ material_property = MaterialProperty.Strain_Limits_eXt
 property_dict = composite_model.get_constant_property_dict([material_property])
 
 
-#%%
+# %%
 # Get strain field
 strain_operator = composite_model.core_model.results.elastic_strain()
 strain_operator.inputs.bool_rotate_to_global(False)
 strain_field = strain_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
 
 
-#%%
+# %%
 # Implement a custom failure criterion: basic max strain
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
