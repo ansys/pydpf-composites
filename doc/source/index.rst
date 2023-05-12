@@ -61,14 +61,6 @@ Here are some key features of PyDPF Composites:
   :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
 * Postprocessing of homogeneous elements.
 
-Prerequisites
-'''''''''''''
-
-Here are some prerequisites for PyDPF Composites:
-
-- Installation of `Ansys Workbench`_ 2023 R1 or later. For more information,
-  see `Compatibility`_ in the DPF help.
-- ACP model or short fiber composite model.
 
 Limitations
 '''''''''''
@@ -80,4 +72,4 @@ Limitations
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
 .. _Import of Legacy Mechanical APDL Composite Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html
-.. _Compatibility: https://dpf.docs.pyansys.com/getting_started/compatibility.html
+.. _Compatibility: https://dpf.docs.pyansys.com/version/stable/getting_started/compatibility.html

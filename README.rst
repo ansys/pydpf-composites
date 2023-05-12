@@ -97,22 +97,17 @@ familiar with the `PyAnsys Developer's Guide`_.
 Test
 ====
 
-.. note::
-
-   The Docker container referenced in the first option is not yet publicly available.
-
-Set the environment variable ``ANSYSLMD_LICENSE_FILE`` to configure the licensing or pass it
-as an argument to the pytest call: ``--license-server=1055@mylicenseserver``.
-
-There are three ways to run the PyDPF Composites tests, depending on how the DPF
+There are different ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.
 
 #.  Run tests with a Docker container:
 
+    Follow the steps in `Getting The DPF Server Docker Image`_ to get
+    and run the dpf docker image. Run the tests with the following command
+
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:latest
-        pytest .
+        pytest . --port 50052
 
 
 #.  Run tests with a DPF server started from the Ansys installer. The Ansys version must
@@ -123,7 +118,8 @@ server is started.
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v232"
 
 
-#.  Run tests with a local gRPC server executable:
+
+#.  Run tests with a local gRPC server executable (Ansys Internal only):
 
     .. code:: bash
 
@@ -134,31 +130,39 @@ server is started.
     ``dpf_composites`` package. The runtime dependencies of the ``Ans.Dpf.Grpc.exe`` file must be
     in its folder and the parent folder.
 
+#.  Run tests with a Docker container from github (Ansys Internal only):
+
+    .. code:: bash
+
+        docker pull ghcr.io/pyansys/pydpf-composites:latest
+        pytest .
+
 
 Build documentation
 ===================
 
-.. note::
+Follow the description in `Getting The DPF Server Docker Image`_ image to get
+and run the dpf docker image.
 
-    The Docker container referenced in this section is not yet publicly available.
-
-
-On Windows, build documentation with this code:
+On Windows, build the documentation with:
 
 .. code:: bash
 
-    docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-windows
 
 
-On Linux, build documentation with this code:
+On Linux, build the documentation with:
+
+.. code:: bash
+
+    tox -e doc-linux
+
+Ansys internal only: Build the docs with the latest container from github:
 
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
-    tox -e doc-linux
+    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
 
 
 Run style checks
@@ -189,6 +193,7 @@ to viewing the documentation for the development version or previously
 released versions.
 
 
+
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
 .. _flake8: https://flake8.pycqa.org/en/latest/
@@ -200,3 +205,4 @@ released versions.
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _tox: https://tox.wiki/
 .. _Examples: https://composites.dpf.docs.pyansys.com/dev/examples/index.html
+.. _Getting The DPF Server Docker Image: https://composites.dpf.docs.pyansys.com/version/dev/intro.html#getting-the-dpf-server-docker-image

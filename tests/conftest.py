@@ -270,6 +270,21 @@ def _find_free_port() -> int:
         return sock.getsockname()[1]  # type: ignore
 
 
+def get_license_server_string(license_server_option: str) -> str | None:
+    if license_server_option:
+        return license_server_option
+    if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
+        license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
+        if "@" not in license_server:
+            license_server = "1055@" + license_server
+        return license_server
+
+    raise RuntimeError(
+        "License server not set. Either run test with --license-server or "
+        f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
+    )
+
+
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
     # Use a unique session id so logs don't get overwritten
@@ -285,19 +300,7 @@ def dpf_server(request: pytest.FixtureRequest):
     server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
     installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
-    license_server = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
-
-    if not license_server:
-        if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
-            license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
-        else:
-            raise RuntimeError(
-                "License server not set. Either run test with --license-server of "
-                f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
-            )
-
-    if "@" not in license_server:
-        license_server = "1055@" + license_server
+    license_server_config = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
 
     active_options = [
         option for option in [installer_path, server_bin, running_server_port] if option is not None
@@ -324,7 +327,7 @@ def dpf_server(request: pytest.FixtureRequest):
                 server_err_file=server_log_stderr,
                 process_out_file=process_log_stdout,
                 process_err_file=process_log_stderr,
-                license_server=license_server,
+                license_server=get_license_server_string(license_server_config),
             )
 
     with start_server_process() as server_process:
