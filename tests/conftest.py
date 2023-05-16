@@ -107,7 +107,7 @@ class DockerProcess:
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
         license_server: str = "",
-        image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
+        image_name: str = "ghcr.io/ansys/pydpf-composites:latest",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
@@ -329,7 +329,7 @@ def dpf_server(request: pytest.FixtureRequest):
 
     with start_server_process() as server_process:
         # Workaround for dpf bug. The timeout is not respected when connecting
-        # to a server:https://github.com/pyansys/pydpf-core/issues/638
+        # to a server:https://github.com/ansys/pydpf-core/issues/638
         # We just try until connect_to_server succeeds
         def start_server():
             if server_process.port:
