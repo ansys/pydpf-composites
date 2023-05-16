@@ -103,7 +103,7 @@ server is started.
 #.  Run tests with a Docker container:
 
     Follow the steps in `Getting The DPF Server Docker Image`_ to get
-    and run the dpf docker image. Run the tests with the following command
+    and run the DPF docker image. Run the tests with the following command
 
     .. code:: bash
 
