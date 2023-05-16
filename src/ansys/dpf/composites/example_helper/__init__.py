@@ -15,7 +15,7 @@ from ..data_sources import (
     ShortFiberCompositesFiles,
 )
 
-EXAMPLE_REPO = "https://github.com/pyansys/example-data/raw/master/pydpf-composites/"
+EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
 
 def upload_short_fiber_composite_files_to_server(
