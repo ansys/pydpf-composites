@@ -250,7 +250,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/pyansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
 </ul></div>
@@ -421,7 +421,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/pyansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
 </ul></div>
@@ -463,7 +463,7 @@ you to modify the source and enhance it.</p>
 familiar with the <a class="reference external" href="https://dev.docs.pyansys.com/">PyAnsys Developer’s Guide</a>.</p>
 <ol class="arabic">
 <li><p>Clone the repository:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pyansys/pydpf-composites
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ansys/pydpf-composites
 <span class="nb">cd</span><span class="w"> </span>pydpf-composites
 </pre></div>
 </div>
@@ -505,7 +505,7 @@ as an argument to the pytest call: <code class="docutils literal notranslate"><s
 server is started.</p>
 <ol class="arabic">
 <li><p>Run tests with a Docker container:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
 pytest<span class="w"> </span>.
 </pre></div>
 </div>
@@ -533,14 +533,14 @@ in its folder and the parent folder.</p>
 <p>The Docker container referenced in this section is not yet publicly available.</p>
 </div>
 <p>On Windows, build documentation with this code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
 tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
 <p>On Linux, build documentation with this code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/pyansys/pydpf-composites:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
 tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
 </pre></div>
 </div>
