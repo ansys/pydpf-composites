@@ -103,6 +103,7 @@ Compatibility
 """""""""""""
 
 The following table shows which ansys-dpf-composites version is compatible with which server version (Ansys version). See :ref:`Get DPF Docker image` to get the pre-releases.
+By default the DPF server is started from the latest Ansys installer. To choose a specific Ansys version or connect to an existing server, use the appropriate arguments for  :func:`.connect_to_or_start_server`
 
 .. list-table::
    :widths: 20 20

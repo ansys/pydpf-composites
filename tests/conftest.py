@@ -22,7 +22,6 @@ from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plu
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
-SERVER_BIN_OPTION_KEY = "--server-bin"
 PORT_OPTION_KEY = "--port"
 ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
@@ -31,11 +30,6 @@ ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 
 def pytest_addoption(parser: pytest.Parser) -> None:
     """Add command-line options to pytest."""
-    parser.addoption(
-        SERVER_BIN_OPTION_KEY,
-        action="store",
-        help="Path of the dpf server executable",
-    )
 
     parser.addoption(
         PORT_OPTION_KEY,
@@ -167,64 +161,6 @@ class DockerProcess:
         self.process_stderr.close()
 
 
-class LocalServerProcess:
-    """Context manager that wraps a local server executable"""
-
-    def __init__(
-        self,
-        server_executable: str,
-        server_out_file: pathlib.Path,
-        server_err_file: pathlib.Path,
-    ):
-        """Initialize the wrapper
-        Parameters
-        ----------
-        server_executable :
-            Path
-        server_out_file :
-            Path where the standard out of the server is
-            redirected.
-        server_err_file :
-            Path where the standard error of the server is
-            redirected.
-        """
-        self.port = _find_free_port()
-        self.server_stdout = open(server_out_file, mode="w", encoding="utf-8")
-        self.server_stderr = open(server_err_file, mode="w", encoding="utf-8")
-
-        self.server_executable = server_executable
-
-        if sys.platform != "win32":
-            raise Exception(
-                "Local server currently not supported on linux. Please use the docker container"
-            )
-        self.env = os.environ.copy()
-        # Add parent folder of deps to path which contains the composites operators
-        self.env["PATH"] = (
-            self.env["PATH"] + ";" + str(pathlib.Path(self.server_executable).parent.parent)
-        )
-
-    def __enter__(self):
-        cmd = [self.server_executable, "--port", str(self.port), "--address", dpf.server.LOCALHOST]
-        self.server_process = subprocess.Popen(
-            cmd, stdout=self.server_stdout, stderr=self.server_stderr, text=True, env=self.env
-        )
-
-        return ServerContext(port=self.port, platform=sys.platform, server=None)
-
-    def __exit__(
-        self,
-        type,
-        value,
-        traceback,
-    ):
-        self.server_process.kill()
-        self.server_process.communicate(timeout=5)
-
-        self.server_stdout.close()
-        self.server_stderr.close()
-
-
 class RunningServer:
     """Context manager that wraps an already running dpf server that serves at a port"""
 
@@ -297,13 +233,12 @@ def dpf_server(request: pytest.FixtureRequest):
     server_log_stdout = TEST_ROOT_DIR / "logs" / f"server_log_out-{uid}.txt"
     server_log_stderr = TEST_ROOT_DIR / "logs" / f"server_log_err-{uid}.txt"
 
-    server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
     installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
     license_server_config = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
 
     active_options = [
-        option for option in [installer_path, server_bin, running_server_port] if option is not None
+        option for option in [installer_path, running_server_port] if option is not None
     ]
 
     if len(active_options) > 1:
@@ -312,10 +247,6 @@ def dpf_server(request: pytest.FixtureRequest):
     def start_server_process():
         if running_server_port:
             return RunningServer(port=running_server_port)
-        if server_bin:
-            return LocalServerProcess(
-                server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
-            )
         if installer_path:
             return InstalledServer(installer_path)
         else:

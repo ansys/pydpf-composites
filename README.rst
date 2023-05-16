@@ -118,18 +118,6 @@ server is started.
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v232"
 
 
-
-#.  Run tests with a local gRPC server executable (Ansys Internal only):
-
-    .. code:: bash
-
-        pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
-
-
-    This currently works only on Windows and with the directory structure of the Ansys internal
-    ``dpf_composites`` package. The runtime dependencies of the ``Ans.Dpf.Grpc.exe`` file must be
-    in its folder and the parent folder.
-
 #.  Run tests with a Docker container from github (Ansys Internal only):
 
     .. code:: bash
@@ -162,7 +150,9 @@ Ansys internal only: Build the docs with the latest container from github:
 .. code:: bash
 
     docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=10555@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
+    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
+    tox -e doc-windows
+
 
 
 Run style checks
