@@ -7,7 +7,6 @@ from typing import Any, Collection, Dict, List, Sequence, Union, cast
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
-from matplotlib.axes import SubplotBase
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
 import numpy as np
@@ -687,15 +686,16 @@ class SamplingPoint:
         axes = gs.subplots(sharex="col", sharey="row")
 
         def _get_subplot(axes_obj: Any, current_index: int) -> Any:
-            if issubclass(axes_obj.__class__, SubplotBase):
+            try:
+                return axes_obj[current_index]
+            except TypeError as exc:
                 if current_index > 0:
-                    raise RuntimeError("Axes plot cannot be indexed.")
+                    raise RuntimeError(
+                        f"{type(axes_obj).__name__} plot cannot be indexed."
+                    ) from exc
                 return axes_obj
-            else:
-                if current_index < len(axes_obj):
-                    return axes_obj[current_index]
-
-            raise RuntimeError("get_subplot: index exceeds limit.")
+            except IndexError as exc:
+                raise RuntimeError("get_subplot: index exceeds limit.") from exc
 
         if num_active_plots > 0:
             ticks = self.get_offsets_by_spots(spots=[Spot.TOP], core_scale_factor=core_scale_factor)
