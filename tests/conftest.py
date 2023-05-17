@@ -206,14 +206,17 @@ def _find_free_port() -> int:
         return sock.getsockname()[1]  # type: ignore
 
 
+def prepend_port_if_needed(license_server):
+    if "@" not in license_server:
+        license_server = "1055@" + license_server
+    return license_server
+
+
 def get_license_server_string(license_server_option: str) -> str | None:
     if license_server_option:
-        return license_server_option
+        return prepend_port_if_needed(license_server_option)
     if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
-        license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
-        if "@" not in license_server:
-            license_server = "1055@" + license_server
-        return license_server
+        return prepend_port_if_needed(os.environ[ANSYSLMD_LICENSE_FILE_KEY])
 
     raise RuntimeError(
         "License server not set. Either run test with --license-server or "
