@@ -103,7 +103,7 @@ server is started.
 #.  Run tests with a Docker container:
 
     Follow the steps in `Getting The DPF Server Docker Image`_ to get
-    and run the dpf docker image. Run the tests with the following command
+    and run the DPF docker image. Run the tests with the following command
 
     .. code:: bash
 
@@ -118,11 +118,11 @@ server is started.
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v232"
 
 
-#.  Run tests with a Docker container from github (Ansys Internal only):
+#.  Run tests with a Docker container from Github (Ansys Internal only):
 
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:latest
+        docker pull ghcr.io/ansys/pydpf-composites:latest
         pytest .
 
 
@@ -145,12 +145,12 @@ On Linux, build the documentation with:
 
     tox -e doc-linux
 
-Ansys internal only: Build the docs with the latest container from github:
+Ansys internal only: Build the docs with the latest container from Github:
 
 .. code:: bash
 
-    docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/pyansys/pydpf-composites:latest
+    docker pull ghcr.io/ansys/pydpf-composites:latest
+    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:latest
     tox -e doc-windows
 
 
@@ -195,4 +195,4 @@ released versions.
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _tox: https://tox.wiki/
 .. _Examples: https://composites.dpf.docs.pyansys.com/dev/examples/index.html
-.. _Getting The DPF Server Docker Image: https://composites.dpf.docs.pyansys.com/version/dev/intro.html#getting-the-dpf-server-docker-image
+.. _Getting The DPF Server Docker Image: https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image
