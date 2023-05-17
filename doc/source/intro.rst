@@ -20,8 +20,8 @@ Specific versions can be installed by specifying the version in the pip command.
     pip install ansys-dpf-composites==0.1.0
 
 
-It is recommended to use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
-because it keeps Python packages isolated from system Python.
+You should use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
+because it keeps Python packages isolated from your system Python.
 
 
 Examples
