@@ -5,7 +5,7 @@ Installation
 ^^^^^^^^^^^^
 
 PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed. See
-:ref:`Compatibility` to understand which ansys-dpf-composites version corresponds to which Ansys version.
+:ref:`Compatibility` to understand which ``ansys-dpf-composites`` version corresponds to which Ansys version.
 
 Install the ``ansys-dpf-composites`` package with ``pip``:
 
@@ -102,7 +102,7 @@ detailed output for a sampling point:
 Compatibility
 """""""""""""
 
-The following table shows which ansys-dpf-composites version is compatible with which server version (Ansys version). See :ref:`Get DPF Docker image` to get the pre-releases.
+The following table shows which ``ansys-dpf-composites`` version is compatible with which server version (Ansys version). See :ref:`Get DPF Docker image` to get the pre-releases.
 By default the DPF server is started from the latest Ansys installer. To choose a specific Ansys version or connect to an existing server, use the appropriate arguments for  :func:`.connect_to_or_start_server`
 
 .. list-table::
@@ -126,5 +126,5 @@ By default the DPF server is started from the latest Ansys installer. To choose 
 Getting the DPF Server Docker Image
 """""""""""""""""""""""""""""""""""
 Follow the steps described in the DPF documentation in the section `Run DPF Server in A Docker Container <https://dpf.docs.pyansys.com/version/stable/user_guide/getting_started_with_dpf_server.html#run-dpf-server-in-a-docker-container>`_.
-Make sure you also download the composites plugin (e.g ansys_dpf_composites_lin_v2023.2.pre1.zip).
+Make sure you also download the composites plugin (e.g ``ansys_dpf_composites_lin_v2023.2.pre1.zip``).
 After following the steps above, you should have a running DPF docker container that listens to port 50052.
