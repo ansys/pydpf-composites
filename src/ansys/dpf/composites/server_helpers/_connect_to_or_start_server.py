@@ -30,7 +30,7 @@ def _wait_until_server_is_up(server: _dpf_server) -> Any:
     # Small hack to check if the server is up.
     # The DPF server should check this in the ``connect_to_server`` function, but
     # that's currently not the case.
-    # https://github.com/pyansys/pydpf-core/issues/414
+    # https://github.com/ansys/pydpf-core/issues/414
     # We use the fact that server.version throws an error if the server
     # is not yet connected.
     _try_until_timeout(

@@ -16,12 +16,12 @@ PyDPF Composites
    :target: https://pypi.org/project/ansys-dpf-composites
    :alt: PyPI
 
-.. |codecov| image:: https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/pyansys/pydpf-composites
+.. |codecov| image:: https://codecov.io/gh/ansys/pydpf-composites/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/ansys/pydpf-composites
    :alt: Codecov
 
-.. |GH-CI| image:: https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg
-   :target: https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml
+.. |GH-CI| image:: https://github.com/ansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg
+   :target: https://github.com/ansys/pydpf-composites/actions/workflows/ci_cd.yml
    :alt: GH-CI
 
 .. |MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
@@ -60,7 +60,7 @@ familiar with the `PyAnsys Developer's Guide`_.
 
     .. code:: bash
 
-        git clone https://github.com/pyansys/pydpf-composites
+        git clone https://github.com/ansys/pydpf-composites
         cd pydpf-composites
 
 

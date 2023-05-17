@@ -11,7 +11,7 @@ license = "MIT"
 authors = ["ANSYS, Inc. <ansys.support@ansys.com>"]
 maintainers = ["PyAnsys developers <pyansys.maintainers@ansys.com>"]
 readme = "README.rst"
-repository = "https://github.com/pyansys/pydpf-composites"
+repository = "https://github.com/ansys/pydpf-composites"
 documentation = "https://composites.dpf.docs.pyansys.com"
 classifiers = [
     "Development Status :: 4 - Beta",
