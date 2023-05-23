@@ -21,6 +21,10 @@ def upload_short_fiber_composite_files_to_server(
     data_files
     server
     """
+    # If files are not local, it means they have already been
+    # uploaded to the server
+    if server.local_server or not data_files.files_are_local:
+        return data_files
 
     def upload(filename: _PATH) -> str:
         return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
@@ -29,6 +33,7 @@ def upload_short_fiber_composite_files_to_server(
         rst=upload(data_files.engineering_data),
         dsdat=upload(data_files.dsdat),
         engineering_data=upload(data_files.engineering_data),
+        files_are_local=False,
     )
 
 
@@ -44,7 +49,9 @@ def upload_continuous_fiber_composite_files_to_server(
     data_files
     server
     """
-    if server.local_server:
+    # If files are not local, it means they have already been
+    # uploaded to the server
+    if server.local_server or not data_files.files_are_local:
         return data_files
 
     def upload(filename: _PATH) -> _PATH:
@@ -65,4 +72,5 @@ def upload_continuous_fiber_composite_files_to_server(
         rst=upload(data_files.rst),
         engineering_data=upload(data_files.engineering_data),
         composite=all_composite_files,
+        files_are_local=False,
     )

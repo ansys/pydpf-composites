@@ -162,6 +162,7 @@ def get_short_fiber_example_files(
             rst=get_server_path(example_files.files.rst),
             dsdat=get_server_path(example_files.files.dsdat),
             engineering_data=get_server_path(example_files.files.engineering_data),
+            files_are_local=False,
         )
 
 
@@ -201,4 +202,5 @@ def get_continuous_fiber_example_files(
             rst=get_server_path(example_files.files.rst),
             engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
+            files_are_local=False,
         )
