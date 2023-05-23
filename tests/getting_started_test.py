@@ -2,8 +2,6 @@ import pathlib
 
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
-
 
 def test_getting_started(dpf_server: dpf.server):
     """ "
@@ -34,11 +32,10 @@ def test_getting_started(dpf_server: dpf.server):
     # Start the server. By default this will start
     # a new local server and load the composites plugin
 
-    # In the test we use the dpf server and upload the files to the server.
-    # For the getting started example comment the next two lines and
-    # uncomment serer = connect_to_or_start_server()
+    # In the test we use the dpf server from the fixture.
+    # For the getting started example comment the next line and
+    # uncomment server = connect_to_or_start_server()
     server = dpf_server
-    composite_files = upload_continuous_fiber_composite_files_to_server(composite_files, server)
     # server = connect_to_or_start_server()
 
     # Create a composite model
