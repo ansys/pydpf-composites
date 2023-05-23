@@ -367,7 +367,7 @@ class ElementInfoProvider:
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
-            raise Exception(f"Invalid number of corner nodes for element with type {element_type}")
+            raise ValueError(f"Invalid number of corner nodes for element with type {element_type}")
         is_shell = _is_shell(apdl_element_type)
         number_of_nodes_per_spot_plane = -1
         if is_layered:
