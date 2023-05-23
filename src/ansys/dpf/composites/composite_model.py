@@ -183,10 +183,7 @@ class CompositeModel:
 
     @property
     def composite_files(self) -> ContinuousFiberCompositesFiles:
-        """All composite definition labels in the model.
-
-        This property is only relevant for assemblies.
-        """
+        """Get the composite file paths on the server."""
         return self._composite_files
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
