@@ -86,7 +86,8 @@ detailed output for a sampling point:
         combined_criterion=combined_failure_criterion, element_id=element_id
     )
 
-    sampling_point.get_result_plots()
+    plots = sampling_point.get_result_plots()
+    plots.figure.show()
 
 
 .. image:: _static/boat_irf.png
