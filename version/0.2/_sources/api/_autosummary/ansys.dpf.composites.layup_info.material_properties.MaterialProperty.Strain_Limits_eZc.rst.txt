@@ -1,0 +1,6 @@
+Strain\_Limits\_eZc
+===================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.Strain_Limits_eZc

@@ -1,0 +1,48 @@
+﻿.. vale off
+
+ResultDefinition
+================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoclass:: ResultDefinition
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      ResultDefinition.to_dict
+      
+      
+      ResultDefinition.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ResultDefinition.combined_failure_criterion
+      ResultDefinition.expression
+      ResultDefinition.material_file
+      ResultDefinition.max_chunk_size
+      ResultDefinition.measure
+      ResultDefinition.name
+      ResultDefinition.rst_file
+      ResultDefinition.scopes
+      ResultDefinition.stress_strain_eval_mode
+      ResultDefinition.time
+   
+   
+
+.. vale on

@@ -1,0 +1,6 @@
+p21\_neg
+========
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: PuckCriterion.p21_neg
