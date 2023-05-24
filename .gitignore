@@ -169,3 +169,6 @@ doc/source/api/_autosummary
 # testing server logs
 tests/logs/*_log_err*.txt
 tests/logs/*_log_out*.txt
+
+# Generated result_definitions in tests
+tests/data/*/result_definition.json

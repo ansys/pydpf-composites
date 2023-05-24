@@ -25,6 +25,7 @@ from .layup_info.material_operators import MaterialOperators, get_material_opera
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
+from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
 __all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
@@ -103,7 +104,8 @@ class CompositeModel:
 
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
-    so that they can be efficiently evaluated.
+    so that they can be efficiently evaluated. The composite_files provided are automatically
+    uploaded to the server if needed.
 
     .. note::
 
@@ -145,11 +147,13 @@ class CompositeModel:
         default_unit_system: Optional[UnitSystem] = None,
     ):
         """Initialize data providers and add composite information to meshed region."""
-        self._core_model = dpf.Model(composite_files.rst, server=server)
+        self._composite_files = upload_continuous_fiber_composite_files_to_server(
+            composite_files, server
+        )
+        self._core_model = dpf.Model(self._composite_files.rst, server=server)
         self._server = server
 
-        self._composite_files = composite_files
-        self._data_sources = get_composites_data_sources(composite_files)
+        self._data_sources = get_composites_data_sources(self._composite_files)
 
         self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
 
@@ -176,6 +180,11 @@ class CompositeModel:
         This property is only relevant for assemblies.
         """
         return list(self._composite_infos.keys())
+
+    @property
+    def composite_files(self) -> ContinuousFiberCompositesFiles:
+        """Get the composite file paths on the server."""
+        return self._composite_files
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
