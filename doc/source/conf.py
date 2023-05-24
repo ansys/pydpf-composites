@@ -37,7 +37,7 @@ add_module_names = True
 cname = os.environ.get("DOCUMENTATION_CNAME", "composites.dpf.docs.pyansys.com")
 
 html_theme_options = {
-    "github_url": "https://github.com/pyansys/pydpf-composites",
+    "github_url": "https://github.com/ansys/pydpf-composites",
     "show_prev_next": False,
     "show_breadcrumbs": True,
     "additional_breadcrumbs": [
@@ -80,7 +80,7 @@ nitpick_ignore = [
     ("py:class", "int64"),
 ]
 nitpick_ignore_regex = [
-    ("py:class", "numpy\..*"),
+    ("py:class", r"numpy\..*"),
     ("py:class", ".*FailureCriterionBase"),  # implementation detail, not documented
 ]
 

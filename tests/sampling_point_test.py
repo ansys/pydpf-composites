@@ -13,7 +13,6 @@ from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
 )
-from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     MaxStrainCriterion,
@@ -169,7 +168,6 @@ def test_sampling_point_result_plots(dpf_server):
         engineering_data=material_path,
     )
 
-    files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
     cfc = CombinedFailureCriterion(
         "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
     )
@@ -211,13 +209,10 @@ def test_sampling_point_with_numpy_types(dpf_server):
         engineering_data=material_path,
     )
 
-    files = upload_continuous_fiber_composite_files_to_server(
-        data_files=composite_files, server=dpf_server
-    )
     cfc = CombinedFailureCriterion(
         "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
     )
-    composite_model = CompositeModel(files, server=dpf_server)
+    composite_model = CompositeModel(composite_files, server=dpf_server)
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
     irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})

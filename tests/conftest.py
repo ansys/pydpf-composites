@@ -22,7 +22,6 @@ from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plu
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
-SERVER_BIN_OPTION_KEY = "--server-bin"
 PORT_OPTION_KEY = "--port"
 ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
@@ -31,11 +30,6 @@ ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 
 def pytest_addoption(parser: pytest.Parser) -> None:
     """Add command-line options to pytest."""
-    parser.addoption(
-        SERVER_BIN_OPTION_KEY,
-        action="store",
-        help="Path of the dpf server executable",
-    )
 
     parser.addoption(
         PORT_OPTION_KEY,
@@ -107,7 +101,7 @@ class DockerProcess:
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
         license_server: str = "",
-        image_name: str = "ghcr.io/pyansys/pydpf-composites:latest",
+        image_name: str = "ghcr.io/ansys/pydpf-composites:latest",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
@@ -167,64 +161,6 @@ class DockerProcess:
         self.process_stderr.close()
 
 
-class LocalServerProcess:
-    """Context manager that wraps a local server executable"""
-
-    def __init__(
-        self,
-        server_executable: str,
-        server_out_file: pathlib.Path,
-        server_err_file: pathlib.Path,
-    ):
-        """Initialize the wrapper
-        Parameters
-        ----------
-        server_executable :
-            Path
-        server_out_file :
-            Path where the standard out of the server is
-            redirected.
-        server_err_file :
-            Path where the standard error of the server is
-            redirected.
-        """
-        self.port = _find_free_port()
-        self.server_stdout = open(server_out_file, mode="w", encoding="utf-8")
-        self.server_stderr = open(server_err_file, mode="w", encoding="utf-8")
-
-        self.server_executable = server_executable
-
-        if sys.platform != "win32":
-            raise Exception(
-                "Local server currently not supported on linux. Please use the docker container"
-            )
-        self.env = os.environ.copy()
-        # Add parent folder of deps to path which contains the composites operators
-        self.env["PATH"] = (
-            self.env["PATH"] + ";" + str(pathlib.Path(self.server_executable).parent.parent)
-        )
-
-    def __enter__(self):
-        cmd = [self.server_executable, "--port", str(self.port), "--address", dpf.server.LOCALHOST]
-        self.server_process = subprocess.Popen(
-            cmd, stdout=self.server_stdout, stderr=self.server_stderr, text=True, env=self.env
-        )
-
-        return ServerContext(port=self.port, platform=sys.platform, server=None)
-
-    def __exit__(
-        self,
-        type,
-        value,
-        traceback,
-    ):
-        self.server_process.kill()
-        self.server_process.communicate(timeout=5)
-
-        self.server_stdout.close()
-        self.server_stderr.close()
-
-
 class RunningServer:
     """Context manager that wraps an already running dpf server that serves at a port"""
 
@@ -270,9 +206,26 @@ def _find_free_port() -> int:
         return sock.getsockname()[1]  # type: ignore
 
 
+def prepend_port_if_needed(license_server):
+    if "@" not in license_server:
+        license_server = "1055@" + license_server
+    return license_server
+
+
+def get_license_server_string(license_server_option: str) -> str | None:
+    if license_server_option:
+        return prepend_port_if_needed(license_server_option)
+    if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
+        return prepend_port_if_needed(os.environ[ANSYSLMD_LICENSE_FILE_KEY])
+
+    raise RuntimeError(
+        "License server not set. Either run test with --license-server or "
+        f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
+    )
+
+
 @pytest.fixture(scope="session")
 def dpf_server(request: pytest.FixtureRequest):
-
     # Use a unique session id so logs don't get overwritten
     # by tests that run in different sessions
     import uuid
@@ -283,25 +236,12 @@ def dpf_server(request: pytest.FixtureRequest):
     server_log_stdout = TEST_ROOT_DIR / "logs" / f"server_log_out-{uid}.txt"
     server_log_stderr = TEST_ROOT_DIR / "logs" / f"server_log_err-{uid}.txt"
 
-    server_bin = request.config.getoption(SERVER_BIN_OPTION_KEY)
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
     installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
-    license_server = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
-
-    if not license_server:
-        if ANSYSLMD_LICENSE_FILE_KEY in os.environ.keys():
-            license_server = os.environ[ANSYSLMD_LICENSE_FILE_KEY]
-        else:
-            raise RuntimeError(
-                "License server not set. Either run test with --license-server of "
-                f" set ENV {ANSYSLMD_LICENSE_FILE_KEY}."
-            )
-
-    if "@" not in license_server:
-        license_server = "1055@" + license_server
+    license_server_config = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
 
     active_options = [
-        option for option in [installer_path, server_bin, running_server_port] if option is not None
+        option for option in [installer_path, running_server_port] if option is not None
     ]
 
     if len(active_options) > 1:
@@ -310,14 +250,9 @@ def dpf_server(request: pytest.FixtureRequest):
     def start_server_process():
         if running_server_port:
             return RunningServer(port=running_server_port)
-        if server_bin:
-            return LocalServerProcess(
-                server_bin, server_out_file=server_log_stdout, server_err_file=server_log_stderr
-            )
         if installer_path:
             return InstalledServer(installer_path)
         else:
-
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
 
@@ -326,12 +261,12 @@ def dpf_server(request: pytest.FixtureRequest):
                 server_err_file=server_log_stderr,
                 process_out_file=process_log_stdout,
                 process_err_file=process_log_stderr,
-                license_server=license_server,
+                license_server=get_license_server_string(license_server_config),
             )
 
     with start_server_process() as server_process:
         # Workaround for dpf bug. The timeout is not respected when connecting
-        # to a server:https://github.com/pyansys/pydpf-core/issues/638
+        # to a server:https://github.com/ansys/pydpf-core/issues/638
         # We just try until connect_to_server succeeds
         def start_server():
             if server_process.port:

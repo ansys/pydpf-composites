@@ -4,7 +4,6 @@ defaults = dict(zip(ATTRS_HASHIN, [True, True, False, 2, 1.0, 1.0, 1]))
 
 
 def test_hashin_criterion():
-
     hashin_default = HashinCriterion()
     assert hashin_default.name == "Hashin"
 

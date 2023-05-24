@@ -11,7 +11,6 @@ defaults = dict(
 
 
 def test_cuntze_criterion():
-
     cuntze_default = CuntzeCriterion()
     assert cuntze_default.name == "Cuntze"
 

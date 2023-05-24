@@ -7,7 +7,6 @@ defaults = dict(zip(ATTRS_WRINKLING, [0.5, 0.33, 1.0]))
 
 
 def test_face_sheet_wrinkling_criterion():
-
     wrinkling_default = FaceSheetWrinklingCriterion()
     assert wrinkling_default.name == "Face Sheet Wrinkling"
 
