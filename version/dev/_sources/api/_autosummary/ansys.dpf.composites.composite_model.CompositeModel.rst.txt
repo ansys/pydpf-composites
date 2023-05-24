@@ -63,6 +63,7 @@ CompositeModel
       :toctree:
    
       CompositeModel.composite_definition_labels
+      CompositeModel.composite_files
       CompositeModel.core_model
       CompositeModel.data_sources
       CompositeModel.material_operators

@@ -453,6 +453,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies.html">get_result_times_or_frequencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point.html">get_sampling_point</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels.html">composite_definition_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_files.html">composite_files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html">core_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html">data_sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html">material_operators</a></li>
@@ -506,7 +507,8 @@ document.write(`
 <dd><p>Provides access to the basic composite postprocessing functionality.</p>
 <p>On initialization, the <code class="docutils literal notranslate"><span class="pre">CompositeModel</span></code> class automatically adds composite lay-up
 information to the meshed regions. It prepares the providers for different lay-up properties
-so that they can be efficiently evaluated.</p>
+so that they can be efficiently evaluated. The composite_files provided are automatically
+uploaded to the server if needed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When creating a <code class="docutils literal notranslate"><span class="pre">CompositeModel</span></code> instance, several providers are created and
@@ -532,7 +534,7 @@ definition labels. For more information, see
 <li><p><strong>composite_files</strong> (<a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>) – Use the <a class="reference internal" href="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a> function to obtain
 the <a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a> object.</p></li>
 <li><p><strong>server</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.server_types.html#ansys.dpf.core.server_types.BaseServer" title="(in PyDPF-Core v0.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseServer</span></code></a>) – DPF Server on which the model is created</p></li>
-<li><p><strong>default_unit_system</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.unit_system.html#ansys.dpf.core.unit_system.UnitSystem" title="(in PyDPF-Core v0.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitSystem</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Unit system that is used if the result file
+<li><p><strong>default_unit_system</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.unit_system.html#ansys.dpf.core.unit_system.UnitSystem" title="(in PyDPF-Core v0.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitSystem</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Unit system that is used if the result file
 does not specify the unit system. This happens
 for pure MAPDL projects.</p></li>
 </ul>
@@ -585,13 +587,16 @@ for pure MAPDL projects.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels.html#ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels" title="ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.composite_definition_labels</span></code></a></p></td>
 <td><p>All composite definition labels in the model.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html#ansys.dpf.composites.composite_model.CompositeModel.core_model" title="ansys.dpf.composites.composite_model.CompositeModel.core_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.core_model</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_files.html#ansys.dpf.composites.composite_model.CompositeModel.composite_files" title="ansys.dpf.composites.composite_model.CompositeModel.composite_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.composite_files</span></code></a></p></td>
+<td><p>Get the composite file paths on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html#ansys.dpf.composites.composite_model.CompositeModel.core_model" title="ansys.dpf.composites.composite_model.CompositeModel.core_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.core_model</span></code></a></p></td>
 <td><p>Underlying DPF core model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html#ansys.dpf.composites.composite_model.CompositeModel.data_sources" title="ansys.dpf.composites.composite_model.CompositeModel.data_sources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.data_sources</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html#ansys.dpf.composites.composite_model.CompositeModel.data_sources" title="ansys.dpf.composites.composite_model.CompositeModel.data_sources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.data_sources</span></code></a></p></td>
 <td><p>Composite data sources.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html#ansys.dpf.composites.composite_model.CompositeModel.material_operators" title="ansys.dpf.composites.composite_model.CompositeModel.material_operators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.material_operators</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html#ansys.dpf.composites.composite_model.CompositeModel.material_operators" title="ansys.dpf.composites.composite_model.CompositeModel.material_operators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeModel.material_operators</span></code></a></p></td>
 <td><p>Material operators.</p></td>
 </tr>
 </tbody>

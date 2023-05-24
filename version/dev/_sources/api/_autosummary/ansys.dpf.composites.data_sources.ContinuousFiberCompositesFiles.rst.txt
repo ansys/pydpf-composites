@@ -26,6 +26,7 @@ ContinuousFiberCompositesFiles
    .. autosummary::
       :toctree:
    
+      ContinuousFiberCompositesFiles.files_are_local
       ContinuousFiberCompositesFiles.rst
       ContinuousFiberCompositesFiles.composite
       ContinuousFiberCompositesFiles.engineering_data

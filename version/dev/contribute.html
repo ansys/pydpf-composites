@@ -495,18 +495,13 @@ development dependencies:</p>
 </section>
 <section id="test">
 <h2>Test<a class="headerlink" href="#test" title="Permalink to this heading">#</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The Docker container referenced in the first option is not yet publicly available.</p>
-</div>
-<p>Set the environment variable <code class="docutils literal notranslate"><span class="pre">ANSYSLMD_LICENSE_FILE</span></code> to configure the licensing or pass it
-as an argument to the pytest call: <code class="docutils literal notranslate"><span class="pre">--license-server=1055&#64;mylicenseserver</span></code>.</p>
-<p>There are three ways to run the PyDPF Composites tests, depending on how the DPF
+<p>There are different ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.</p>
 <ol class="arabic">
 <li><p>Run tests with a Docker container:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
-pytest<span class="w"> </span>.
+<p>Follow the steps in <a class="reference external" href="https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image">Getting The DPF Server Docker Image</a> to get
+and run the DPF docker image. Run the tests with the following command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--port<span class="w"> </span><span class="m">50052</span>
 </pre></div>
 </div>
 </li>
@@ -516,32 +511,30 @@ be 2023 R2 or later.</p>
 </pre></div>
 </div>
 </li>
-<li><p>Run tests with a local gRPC server executable:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--server-bin<span class="w"> </span>dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
+<li><p>Run tests with a Docker container from Github (Ansys Internal only):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
+pytest<span class="w"> </span>.
 </pre></div>
 </div>
-<p>This currently works only on Windows and with the directory structure of the Ansys internal
-<code class="docutils literal notranslate"><span class="pre">dpf_composites</span></code> package. The runtime dependencies of the <code class="docutils literal notranslate"><span class="pre">Ans.Dpf.Grpc.exe</span></code> file must be
-in its folder and the parent folder.</p>
 </li>
 </ol>
 </section>
 <section id="build-documentation">
 <h2>Build documentation<a class="headerlink" href="#build-documentation" title="Permalink to this heading">#</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The Docker container referenced in this section is not yet publicly available.</p>
-</div>
-<p>On Windows, build documentation with this code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
-tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
+<p>Follow the description in <a class="reference external" href="https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image">Getting The DPF Server Docker Image</a> image to get
+and run the dpf docker image.</p>
+<p>On Windows, build the documentation with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
-<p>On Linux, build documentation with this code:</p>
+<p>On Linux, build the documentation with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
+</pre></div>
+</div>
+<p>Ansys internal only: Build the docs with the latest container from Github:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">21002</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">10555</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
-tox<span class="w"> </span>-e<span class="w"> </span>doc-linux
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">50052</span>:50052<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYSLMD_LICENSE_FILE</span><span class="o">=</span><span class="m">1055</span>@mylicserver<span class="w"> </span>-e<span class="w"> </span><span class="nv">ANSYS_DPF_ACCEPT_LA</span><span class="o">=</span>Y<span class="w"> </span>ghcr.io/ansys/pydpf-composites:latest
+tox<span class="w"> </span>-e<span class="w"> </span>doc-windows
 </pre></div>
 </div>
 </section>

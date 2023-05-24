@@ -26,6 +26,7 @@ ShortFiberCompositesFiles
    .. autosummary::
       :toctree:
    
+      ShortFiberCompositesFiles.files_are_local
       ShortFiberCompositesFiles.rst
       ShortFiberCompositesFiles.dsdat
       ShortFiberCompositesFiles.engineering_data

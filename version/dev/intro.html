@@ -458,9 +458,14 @@ document.write(`
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<p>PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed.</p>
+<p>PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed. See
+<a class="reference internal" href="#compatibility"><span class="std std-ref">Compatibility</span></a> to understand which <code class="docutils literal notranslate"><span class="pre">ansys-dpf-composites</span></code> version corresponds to which Ansys version.</p>
 <p>Install the <code class="docutils literal notranslate"><span class="pre">ansys-dpf-composites</span></code> package with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ansys</span><span class="o">-</span><span class="n">dpf</span><span class="o">-</span><span class="n">composites</span>
+</pre></div>
+</div>
+<p>Specific versions can be installed by specifying the version in the pip command. For example: Ansys 2023 R1 requires ansys-dpf-composites version 0.1.0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ansys</span><span class="o">-</span><span class="n">dpf</span><span class="o">-</span><span class="n">composites</span><span class="o">==</span><span class="mf">0.1.0</span>
 </pre></div>
 </div>
 <p>You should use a <a class="reference external" href="https://docs.python.org/3/library/venv.html">virtual environment</a>,
@@ -520,11 +525,48 @@ detailed output for a sampling point:</p>
     <span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_failure_criterion</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span>
 <span class="p">)</span>
 
-<span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">()</span>
+<span class="n">plots</span> <span class="o">=</span> <span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">()</span>
+<span class="n">plots</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/boat_irf.png"><img alt="IRF plot on boat" src="_images/boat_irf.png" style="width: 750px;" /></a>
 <a class="reference internal image-reference" href="_images/boat_sampling_point.png"><img alt="Sampling point on boat" src="_images/boat_sampling_point.png" style="width: 750px;" /></a>
+</section>
+<section id="compatibility">
+<span id="id1"></span><h3>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this heading">#</a></h3>
+<p>The following table shows which <code class="docutils literal notranslate"><span class="pre">ansys-dpf-composites</span></code> version is compatible with which server version (Ansys version). See <a class="reference internal" href="#get-dpf-docker-image"><span class="std std-ref">Getting the DPF Server Docker Image</span></a> to get the pre-releases.
+By default the DPF server is started from the latest Ansys installer. To choose a specific Ansys version or connect to an existing server, use the appropriate arguments for  <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.server_helpers.connect_to_or_start_server.html#ansys.dpf.composites.server_helpers.connect_to_or_start_server" title="ansys.dpf.composites.server_helpers.connect_to_or_start_server"><code class="xref py py-func docutils literal notranslate"><span class="pre">connect_to_or_start_server()</span></code></a></p>
+<table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Server version</p></th>
+<th class="head"><p>ansys.dpf.composites Python module version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>6.2 (Ansys 2023 R2)</p></td>
+<td><p>0.2.0 and later</p></td>
+</tr>
+<tr class="row-odd"><td><p>6.1 (Ansys 2023 R2 pre1)</p></td>
+<td><p>0.2.0 and later</p></td>
+</tr>
+<tr class="row-even"><td><p>6.0 (Ansys 2023 R2 pre0)</p></td>
+<td><p>Not available. The composites plugin is not part of the Ansys 2023 R2 pre0 release.</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.0 (Ansys 2023 R1)</p></td>
+<td><p>0.1.0</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="getting-the-dpf-server-docker-image">
+<span id="get-dpf-docker-image"></span><h3>Getting the DPF Server Docker Image<a class="headerlink" href="#getting-the-dpf-server-docker-image" title="Permalink to this heading">#</a></h3>
+<p>Follow the steps described in the DPF documentation in the section <a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/user_guide/getting_started_with_dpf_server.html#run-dpf-server-in-a-docker-container">Run DPF Server in A Docker Container</a>.
+Make sure you also download the composites plugin (e.g <code class="docutils literal notranslate"><span class="pre">ansys_dpf_composites_lin_v2023.2.pre1.zip</span></code>).
+After following the steps above, you should have a running DPF docker container that listens to port 50052.</p>
 </section>
 </section>
 </section>
@@ -549,6 +591,8 @@ detailed output for a sampling point:</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#start-from-a-local-ansys-workbench-project">Start from a local Ansys Workbench project</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility">Compatibility</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-dpf-server-docker-image">Getting the DPF Server Docker Image</a></li>
 </ul>
 </li>
 </ul>
