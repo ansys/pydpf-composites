@@ -2,18 +2,15 @@
 import dataclasses
 import hashlib
 import json
-from typing import TYPE_CHECKING, Any, Collection, Dict, List, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
-from matplotlib.axes import SubplotBase
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
 import numpy as np
-
-if TYPE_CHECKING:
-    import numpy.typing as npt
+import numpy.typing as npt
 
 from .constants import Spot
 from .result_definition import FailureMeasure, ResultDefinition
@@ -212,85 +209,85 @@ class SamplingPoint:
         return plies
 
     @property
-    def s1(self) -> "npt.NDArray[np.float64]":
+    def s1(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 1 direction of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["stresses"]["s1"])
 
     @property
-    def s2(self) -> "npt.NDArray[np.float64]":
+    def s2(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 2 direction of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["stresses"]["s2"])
 
     @property
-    def s3(self) -> "npt.NDArray[np.float64]":
+    def s3(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 3 direction of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["stresses"]["s3"])
 
     @property
-    def s12(self) -> "npt.NDArray[np.float64]":
+    def s12(self) -> npt.NDArray[np.float64]:
         """In-plane shear stresses s12 of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["stresses"]["s12"])
 
     @property
-    def s13(self) -> "npt.NDArray[np.float64]":
+    def s13(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear stresses s13 of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["stresses"]["s13"])
 
     @property
-    def s23(self) -> "npt.NDArray[np.float64]":
+    def s23(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear stresses s23 of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["stresses"]["s23"])
 
     @property
-    def e1(self) -> "npt.NDArray[np.float64]":
+    def e1(self) -> npt.NDArray[np.float64]:
         """Strains in the material 1 direction of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["strains"]["e1"])
 
     @property
-    def e2(self) -> "npt.NDArray[np.float64]":
+    def e2(self) -> npt.NDArray[np.float64]:
         """Strains in the material 2 direction of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["strains"]["e2"])
 
     @property
-    def e3(self) -> "npt.NDArray[np.float64]":
+    def e3(self) -> npt.NDArray[np.float64]:
         """Strains in the material 3 direction of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["strains"]["e3"])
 
     @property
-    def e12(self) -> "npt.NDArray[np.float64]":
+    def e12(self) -> npt.NDArray[np.float64]:
         """In-plane shear strains e12 of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["strains"]["e12"])
 
     @property
-    def e13(self) -> "npt.NDArray[np.float64]":
+    def e13(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear strains e13 of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["strains"]["e13"])
 
     @property
-    def e23(self) -> "npt.NDArray[np.float64]":
+    def e23(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear strains e23 of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["strains"]["e13"])
 
     @property
-    def inverse_reserve_factor(self) -> "npt.NDArray[np.float64]":
+    def inverse_reserve_factor(self) -> npt.NDArray[np.float64]:
         """Critical inverse reserve factor of each ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["failures"]["inverse_reserve_factor"])
 
     @property
-    def reserve_factor(self) -> "npt.NDArray[np.float64]":
+    def reserve_factor(self) -> npt.NDArray[np.float64]:
         """Lowest reserve factor of each ply.
 
         This attribute is equivalent to the safety factor.
@@ -299,7 +296,7 @@ class SamplingPoint:
         return np.array(self._results[0]["results"]["failures"]["reserve_factor"])
 
     @property
-    def margin_of_safety(self) -> "npt.NDArray[np.float64]":
+    def margin_of_safety(self) -> npt.NDArray[np.float64]:
         """Lowest margin of safety of each ply.
 
         This attribute is equivalent to the safety margin.
@@ -314,19 +311,19 @@ class SamplingPoint:
         return cast(Sequence[str], self._results[0]["results"]["failures"]["failure_modes"])
 
     @property
-    def offsets(self) -> "npt.NDArray[np.float64]":
+    def offsets(self) -> npt.NDArray[np.float64]:
         """Z coordinates for each interface and ply."""
         self._update_and_check_results()
         return np.array(self._results[0]["results"]["offsets"])
 
     @property
-    def polar_properties_E1(self) -> "npt.NDArray[np.float64]":
+    def polar_properties_E1(self) -> npt.NDArray[np.float64]:
         """Polar property E1 of the laminate."""
         self._update_and_check_results()
         return np.array(self._results[0]["layup"]["polar_properties"]["E1"])
 
     @property
-    def polar_properties_E2(self) -> "npt.NDArray[np.float64]":
+    def polar_properties_E2(self) -> npt.NDArray[np.float64]:
         """Polar property E2 of the laminate."""
         if not self._isuptodate or not self._results:
             self.run()
@@ -337,7 +334,7 @@ class SamplingPoint:
         return np.array(self._results[0]["layup"]["polar_properties"]["E2"])
 
     @property
-    def polar_properties_G12(self) -> "npt.NDArray[np.float64]":
+    def polar_properties_G12(self) -> npt.NDArray[np.float64]:
         """Polar property G12 of the laminate."""
         if not self._isuptodate or not self._results:
             self.run()
@@ -392,7 +389,7 @@ class SamplingPoint:
             self._interface_indices = {Spot.BOTTOM: 0, Spot.TOP: 1}
         elif self._spots_per_ply == 1:
             raise RuntimeError(
-                "Result files that only have results at the middle of the ply are " "not supported."
+                "Result files that only have results at the middle of the ply are not supported."
             )
 
         self._isuptodate = True
@@ -423,7 +420,6 @@ class SamplingPoint:
         ply_wise_indices.sort()
         indices = []
         if self.analysis_plies:
-
             for ply_index in range(0, self.number_of_plies):
                 indices.extend(
                     [ply_index * self._spots_per_ply + index for index in ply_wise_indices]
@@ -435,7 +431,7 @@ class SamplingPoint:
         self,
         spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
         core_scale_factor: float = 1.0,
-    ) -> "npt.NDArray[np.float64]":
+    ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
 
         Parameters
@@ -450,7 +446,7 @@ class SamplingPoint:
         indices = self.get_indices(spots)
 
         if core_scale_factor == 1.0:
-            return cast("npt.NDArray[np.float64]", offsets[indices])
+            return cast(npt.NDArray[np.float64], offsets[indices])
 
         thicknesses = []
         if not self.analysis_plies:
@@ -477,7 +473,7 @@ class SamplingPoint:
             for i in range(0, self._spots_per_ply):
                 offsets[index * self._spots_per_ply + i] = top_of_previous_ply + step * i
 
-        return cast("npt.NDArray[np.float64]", offsets[indices])
+        return cast(npt.NDArray[np.float64], offsets[indices])
 
     def get_ply_wise_critical_failures(self) -> List[FailureResult]:
         """Get the critical failure value and modes per ply."""
@@ -690,15 +686,16 @@ class SamplingPoint:
         axes = gs.subplots(sharex="col", sharey="row")
 
         def _get_subplot(axes_obj: Any, current_index: int) -> Any:
-            if issubclass(axes_obj.__class__, SubplotBase):
+            try:
+                return axes_obj[current_index]
+            except TypeError as exc:
                 if current_index > 0:
-                    raise RuntimeError("Axes plot cannot be indexed.")
+                    raise RuntimeError(
+                        f"{type(axes_obj).__name__} plot cannot be indexed."
+                    ) from exc
                 return axes_obj
-            else:
-                if current_index < len(axes_obj):
-                    return axes_obj[current_index]
-
-            raise RuntimeError("get_subplot: index exceeds limit.")
+            except IndexError as exc:
+                raise RuntimeError("get_subplot: index exceeds limit.") from exc
 
         if num_active_plots > 0:
             ticks = self.get_offsets_by_spots(spots=[Spot.TOP], core_scale_factor=core_scale_factor)
@@ -753,7 +750,6 @@ class SamplingPoint:
                 )
 
                 if show_failure_modes:
-
                     middle_offsets = self.get_offsets_by_spots(
                         spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
                     )

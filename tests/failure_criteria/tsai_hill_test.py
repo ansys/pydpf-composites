@@ -5,7 +5,6 @@ ATTRS = ["wf", "dim"]
 
 
 def test_tsai_hill_criterion():
-
     th_default = TsaiHillCriterion()
     assert th_default.name == "Tsai Hill"
 

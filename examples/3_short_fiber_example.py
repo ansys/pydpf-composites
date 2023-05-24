@@ -57,7 +57,7 @@ data_sources.set_result_file_path(composite_files_on_server.rst)
 # Initialize DPF model
 # ~~~~~~~~~~~~~~~~~~~~
 # Initialize the DPF model.
-model = dpf.Model(composite_files_on_server.rst)
+model = dpf.Model(data_sources=data_sources)
 mesh = model.metadata.meshed_region
 
 # %%

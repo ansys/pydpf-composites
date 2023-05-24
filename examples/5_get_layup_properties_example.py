@@ -11,7 +11,7 @@ postprocessing and data filtering.
 To get the full layer information of an element, including results,
 consider using the :class:`SamplingPoint <.SamplingPoint>` class.
 """
-#%%
+# %%
 # Set up analysis
 # ~~~~~~~~~~~~~~~
 # Setting up the analysis consists of importing dependencies, connecting to the
@@ -30,13 +30,13 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
-#%%
+# %%
 # Set up model
 # ~~~~~~~~~~~~
 # Set up the composite model.
 composite_model = CompositeModel(composite_files_on_server, server)
 
-#%%
+# %%
 # Get lay-up properties
 # ~~~~~~~~~~~~~~~~~~~~~
 # Get lay-up properties for all elements and show the first one as an example.
@@ -48,7 +48,7 @@ offset = composite_model.get_element_laminate_offset(element_id)
 analysis_plies = composite_model.get_analysis_plies(element_id)
 
 
-#%%
+# %%
 # Plot lay-up properties
 # ~~~~~~~~~~~~~~~~~~~~~~
 # Plot basic layer properties (layer thicknesses, angles, and analysis ply names).

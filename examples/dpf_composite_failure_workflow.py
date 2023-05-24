@@ -19,7 +19,7 @@ operators that are needed to evaluate composite failure criteria.
 
 """
 
-#%%
+# %%
 # Set up analysis
 # ~~~~~~~~~~~~~~~
 # Setting up the analysis consists of loading Ansys libraries, configuring
@@ -44,7 +44,7 @@ from ansys.dpf.composites.failure_criteria import (
 )
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
-#%%
+# %%
 # Configure the combined failure criterion.
 combined_fc = CombinedFailureCriterion(
     name="My Failure Criteria",

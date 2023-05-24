@@ -5,7 +5,6 @@ ATTRS = ["wf", "dim"]
 
 
 def test_tsai_wu_criterion():
-
     tw_default = TsaiWuCriterion()
     assert tw_default.name == "Tsai Wu"
 

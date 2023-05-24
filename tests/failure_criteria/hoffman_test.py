@@ -5,7 +5,6 @@ ATTRS = ["wf", "dim"]
 
 
 def test_hoffman_criterion():
-
     hoffman_default = HoffmanCriterion()
     assert hoffman_default.name == "Hoffman"
 
