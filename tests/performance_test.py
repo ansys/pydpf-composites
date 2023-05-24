@@ -64,7 +64,8 @@ def get_ger_data_files():
 
 
 def get_blade_files():
-    blade_path = r"D:\ANSYSDev\workbench_projects\beewind_example_files\dp0\SYS-1\MECH"
+    blade_path = r""
+
     return get_composite_files_from_workbench_result_folder(blade_path)
 
 
