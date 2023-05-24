@@ -157,6 +157,9 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 
+# VSCode
+.vscode/
+
 # Generated sphinx gallery
 doc/source/examples/gallery_examples
 
@@ -166,3 +169,6 @@ doc/source/api/_autosummary
 # testing server logs
 tests/logs/*_log_err*.txt
 tests/logs/*_log_out*.txt
+
+# Generated result_definitions in tests
+tests/data/*/result_definition.json

@@ -178,7 +178,6 @@ def test_access_to_invalid_analysis_ply(dpf_server):
     )
     # try to get non existing analysis ply
     with pytest.raises(RuntimeError) as exc_info:
-
         analysis_ply_info_provider = AnalysisPlyInfoProvider(
             mesh=setup_result.mesh, name="notexisting"
         )

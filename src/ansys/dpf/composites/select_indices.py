@@ -1,10 +1,8 @@
 """Functions to get elementary indices based on filter input."""
-from typing import TYPE_CHECKING, Collection, Optional
+from typing import Collection, Optional
 
 import numpy as np
-
-if TYPE_CHECKING:
-    from numpy.typing import NDArray
+from numpy.typing import NDArray
 
 from .constants import Spot
 from .layup_info import AnalysisPlyInfoProvider, ElementInfo
@@ -30,7 +28,7 @@ def get_selected_indices(
     nodes: Optional[Collection[int]] = None,
     spots: Optional[Collection[Spot]] = None,
     disable_checks: bool = False,
-) -> "NDArray[np.int64]":
+) -> NDArray[np.int64]:
     """Get elementary indices based on element information, layers, nodes, and spots.
 
     Parameters
@@ -127,7 +125,7 @@ def get_selected_indices(
 
 def get_selected_indices_by_dpf_material_ids(
     element_info: ElementInfo, dpf_material_ids: Collection[np.int64]
-) -> "NDArray[np.int64]":
+) -> NDArray[np.int64]:
     """Get selected indices by DPF material IDs.
 
     This method selects all indices that are in a layer with one of the selected materials.
@@ -155,7 +153,7 @@ def get_selected_indices_by_dpf_material_ids(
 
 def get_selected_indices_by_analysis_ply(
     analysis_ply_info_provider: AnalysisPlyInfoProvider, element_info: ElementInfo
-) -> "NDArray[np.int64]":
+) -> NDArray[np.int64]:
     """Get selected indices by analysis ply.
 
     Selects all indices that are in a layer with the given analysis ply

@@ -42,6 +42,9 @@ class ContinuousFiberCompositesFiles:
     rst: Collection[_PATH]
     composite: Dict[str, CompositeDefinitionFiles]
     engineering_data: _PATH
+    # True if files are local and false if files
+    # have already been uploaded to the server
+    files_are_local: bool = True
 
 
 @dataclass
@@ -51,6 +54,9 @@ class ShortFiberCompositesFiles:
     rst: _PATH
     dsdat: _PATH
     engineering_data: _PATH
+    # True if files are local and false if files
+    # have already been uploaded to the server
+    files_are_local: bool = True
 
 
 @dataclass(frozen=True)

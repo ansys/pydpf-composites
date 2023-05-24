@@ -7,7 +7,6 @@ defaults = dict(zip(ATTRS_CORE_FAILURE, [False, 1.0]))
 
 
 def test_core_failure_criterion():
-
     cf_default = CoreFailureCriterion()
     assert cf_default.name == "Core Failure"
 

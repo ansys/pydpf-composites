@@ -8,7 +8,7 @@ PyDPF Composites
    :target: https://docs.pyansys.com/
    :alt: PyAnsys
 
-.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.7-blue
+.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.8-blue
    :target: https://pypi.org/project/ansys-dpf-composites/
    :alt: Python
 
@@ -16,12 +16,12 @@ PyDPF Composites
    :target: https://pypi.org/project/ansys-dpf-composites
    :alt: PyPI
 
-.. |codecov| image:: https://codecov.io/gh/pyansys/pydpf-composites/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/pyansys/pydpf-composites
+.. |codecov| image:: https://codecov.io/gh/ansys/pydpf-composites/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/ansys/pydpf-composites
    :alt: Codecov
 
-.. |GH-CI| image:: https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg
-   :target: https://github.com/pyansys/pydpf-composites/actions/workflows/ci_cd.yml
+.. |GH-CI| image:: https://github.com/ansys/pydpf-composites/actions/workflows/ci_cd.yml/badge.svg
+   :target: https://github.com/ansys/pydpf-composites/actions/workflows/ci_cd.yml
    :alt: GH-CI
 
 .. |MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
@@ -37,8 +37,9 @@ PyDPF Composites is a Python wrapper for Ansys DPF composites. It implements
 classes on top of DPF Composites operators and data accessors for short
 fiber and layered composites (layered shell and solid elements). This module
 can be used to postprocess fiber reinforced plastics and layered composites and
-to implement custom failure criteria and computation. For examples demonstrating
-the behavior and usage of PyDPF Composites, see `PyDPF Composites - Examples`_.
+to implement custom failure criteria and computation. For information demonstrating
+the behavior and usage of PyDPF Composites, see `Examples`_ in the DPF Composite
+documentation.
 
 .. START_MARKER_FOR_SPHINX_DOCS
 
@@ -59,7 +60,7 @@ familiar with the `PyAnsys Developer's Guide`_.
 
     .. code:: bash
 
-        git clone https://github.com/pyansys/pydpf-composites
+        git clone https://github.com/ansys/pydpf-composites
         cd pydpf-composites
 
 
@@ -75,18 +76,15 @@ familiar with the `PyAnsys Developer's Guide`_.
         pipx install tox
 
 
-#.  Create a virtual environment and install the package with development
-    dependencies. PyDPF Composites uses `Poetry <https://python-poetry.org>`_
+    PyDPF Composites uses `Poetry <https://python-poetry.org>`_
     to manage the development environment.
+
+#.  Create a virtual environment and install the package with the
+    development dependencies:
 
     .. code:: bash
 
-        poetry config installer.modern-installation false
         poetry install --all-extras
-
-    Setting ``installer.modern-installation`` to ``false`` is a temporary workaround.
-    See `this pydata-sphinx-theme issue <https://github.com/pydata/pydata-sphinx-theme/issues/1253>`_
-    for more information.
 
 
 #.  Activate the virtual environment:
@@ -99,19 +97,17 @@ familiar with the `PyAnsys Developer's Guide`_.
 Test
 ====
 
-.. note::
-
-   The Docker container referenced in the first option is not yet publicly available.
-
-There are three ways to run the PyDPF Composites tests, depending on how the DPF
+There are different ways to run the PyDPF Composites tests, depending on how the DPF
 server is started.
 
-#.  Run tests with a Docker container.
+#.  Run tests with a Docker container:
+
+    Follow the steps in `Getting The DPF Server Docker Image`_ to get
+    and run the DPF docker image. Run the tests with the following command
 
     .. code:: bash
 
-        docker pull ghcr.io/pyansys/pydpf-composites:latest
-        pytest .
+        pytest . --port 50052
 
 
 #.  Run tests with a DPF server started from the Ansys installer. The Ansys version must
@@ -122,42 +118,41 @@ server is started.
         pytest . --ansys-path "C:\Program Files\Ansys Inc\v232"
 
 
-#.  Run tests with a local gRPC server executable:
+#.  Run tests with a Docker container from Github (Ansys Internal only):
 
     .. code:: bash
 
-        pytest . --server-bin dpf_composites/bin/lib/deps/Ans.Dpf.Grpc.exe
-
-
-    This currently works only on Windows and with the directory structure of the Ansys internal
-    ``dpf_composites`` package. The runtime dependencies of the ``Ans.Dpf.Grpc.exe`` file must be
-    in its folder and the parent folder.
+        docker pull ghcr.io/ansys/pydpf-composites:latest
+        pytest .
 
 
 Build documentation
 ===================
 
-.. note::
+Follow the description in `Getting The DPF Server Docker Image`_ image to get
+and run the dpf docker image.
 
-    The Docker container referenced in this section is not yet publicly available.
-
-
-On Windows, build documentation with this code:
+On Windows, build the documentation with:
 
 .. code:: bash
 
-    docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-windows
 
 
-On Linux, build documentation with this code:
+On Linux, build the documentation with:
 
 .. code:: bash
 
-    docker pull ghcr.io/pyansys/pydpf-composites:latest
-    docker run -d -p 21002:50052  ghcr.io/pyansys/pydpf-composites:latest
     tox -e doc-linux
+
+Ansys internal only: Build the docs with the latest container from Github:
+
+.. code:: bash
+
+    docker pull ghcr.io/ansys/pydpf-composites:latest
+    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:latest
+    tox -e doc-windows
+
 
 
 Run style checks
@@ -177,6 +172,18 @@ The style checks can also be configured to run automatically before each ``git c
     pre-commit install
 
 
+View documentation
+-------------------
+Documentation for the latest stable release of PyDPF Composites is hosted at
+`PyDPF Composites Documentation <https://composites.dpf.docs.pyansys.com/version/stable/>`_.
+
+In the upper right corner of the documentation's title bar, there is an option
+for switching from viewing the documentation for the latest stable release
+to viewing the documentation for the development version or previously
+released versions.
+
+
+
 .. LINKS AND REFERENCES
 .. _black: https://github.com/psf/black
 .. _flake8: https://flake8.pycqa.org/en/latest/
@@ -187,4 +194,5 @@ The style checks can also be configured to run automatically before each ``git c
 .. _pytest: https://docs.pytest.org/en/stable/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _tox: https://tox.wiki/
-.. _PyDPF Composites - Examples: https://composites.dpf.docs.pyansys.com/dev/examples/index.html
+.. _Examples: https://composites.dpf.docs.pyansys.com/dev/examples/index.html
+.. _Getting The DPF Server Docker Image: https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image

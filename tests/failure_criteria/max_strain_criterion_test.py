@@ -32,7 +32,6 @@ defaults = dict(
 
 
 def test_max_strain_criterion():
-
     ms_default = MaxStrainCriterion()
     assert ms_default.name == "Max Strain"
 

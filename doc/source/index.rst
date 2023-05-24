@@ -14,7 +14,7 @@ PyDPF Composites
 PyDPF Composites is a Python wrapper for Ansys DPF composites. It implements
 classes on top of DPF Composites operators and data accessors for short
 fiber and layered composites (layered shell and solid elements). This module
-can be used to postprocess fiber reinforced plastics and layered composites, and
+can be used to postprocess fiber reinforced plastics and layered composites and
 to implement custom failure criteria and computation.
 
 .. grid:: 1 1 2 2
@@ -31,7 +31,7 @@ to implement custom failure criteria and computation.
         :link: examples/index
         :link-type: doc
 
-        Demonstrate the use of PyDPF Composites for various workflows.
+        Demonstrates the use of PyDPF Composites for various workflows.
 
     .. grid-item-card:: :octicon:`file-code` API reference
         :link: api/index
@@ -61,23 +61,15 @@ Here are some key features of PyDPF Composites:
   :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
 * Postprocessing of homogeneous elements.
 
-Prerequisites
-'''''''''''''
-
-Here are some prerequisites for PyDPF Composites:
-
-- Installation of `Ansys Workbench`_ from Ansys 2023 R1 or later. For more information,
-  see `Compatibility`_ in the DPF help.
-- ACP model or short fiber composite model.
 
 Limitations
 '''''''''''
 - Layered elements (section data) that have not been preprocessed with ACP are not supported.
-  For information on converting legacy models, see `Import legacy models`_
-  in the Ansys help.
+  For information on converting legacy models, see `Import of Legacy Mechanical APDL Composite Models`_
+  in the Ansys Help.
 - Only the Mechanical APDL solver is supported.
 
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
-.. _Import legacy models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html
-.. _Compatibility: https://dpf.docs.pyansys.com/getting_started/compatibility.html
+.. _Import of Legacy Mechanical APDL Composite Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html
+.. _Compatibility: https://dpf.docs.pyansys.com/version/stable/getting_started/compatibility.html

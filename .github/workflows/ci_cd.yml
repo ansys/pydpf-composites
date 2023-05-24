@@ -16,7 +16,7 @@ env:
   CONTAINER_TAG: 'latest'
   PACKAGE_NAME: 'ansys-dpf-composites'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
-  PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "21002"
+  PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "50052"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,7 +45,7 @@ jobs:
     name: "Documentation style"
     runs-on: ubuntu-latest
     steps:
-      - uses: pyansys/actions/doc-style@v4
+      - uses: ansys/actions/doc-style@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -58,7 +58,7 @@ jobs:
         # docker images on the windows agents. See the issue
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
       fail-fast: false
     steps:
       - name: "Login in Github Container registry"
@@ -70,7 +70,7 @@ jobs:
 
       - name: "Pull and start dpf container"
         run:  |
-          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
@@ -89,14 +89,18 @@ jobs:
         # Only the tox environment specified in the tox.ini gh-actions is run
         run: |
           tox
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
-      - name: "Upload server output"
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: server_output
-          path: tests/logs/*_log_*.txt
-          retention-days: 7
+      # enable for debugging purposes. Ensure that the output does not contain
+      # pipeline secrets.
+      # - name: "Upload server output"
+      #  if: always()
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: server_output
+      #    path: tests/logs/*_log_*.txt
+      #    retention-days: 7
 
   tests_minimal_version:
     name: "Test with lower-bound dependency versions"
@@ -111,19 +115,22 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Pull and start DPF container"
         run: |
-          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: 3.8
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox tox-gh-actions
           python -m pip install --upgrade poetry
 
       - name: Test with tox
-        run: tox -e test-minimal
+        run: |
+          tox -e test-minimal
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
 
   doc-build:
     name: "Documentation build"
@@ -143,8 +150,8 @@ jobs:
 
       - name: "Pull and start dpf container"
         run: |
-          docker pull ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-          docker run -d --restart always -p 21002:50052 ghcr.io/pyansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker run -d --restart always -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
@@ -155,13 +162,9 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: "Install Python dependencies"
-      # TODO: remove 'poetry config installer.modern-installation false' once we use a pydata-sphinx-theme
-      # version where https://github.com/pydata/pydata-sphinx-theme/issues/1253 is resolved.
-      # The same needs to be removed in the README.
         run: |
           python -m pip install --upgrade pip tox
           python -m pip install --upgrade poetry
-          poetry config installer.modern-installation false
 
       - name: "Generate the documentation with tox"
         run: |
@@ -189,23 +192,40 @@ jobs:
           path: .tox/doc_out/latex/ansys-dpf-composites.pdf
           retention-days: 7
 
-  build-package:
+  build-library:
     name: "Build package"
     runs-on: ubuntu-latest
     needs: [doc-style, doc-build, code-style, tests, tests_minimal_version]
     steps:
       - name: "Build library source and wheel artifacts"
-        uses: pyansys/actions/build-library@v4
+        uses: ansys/actions/build-library@v4
         with:
           library-name: ${{ env.PACKAGE_NAME }}
+
+  build-wheelhouse:
+    name: "Build wheelhouse for latest Python versions"
+    runs-on: ${{ matrix.os }}
+    needs: [doc-style, doc-build, code-style, tests, tests_minimal_version]
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest]
+          python-version: ['3.8', '3.9', '3.10', '3.11']
+    steps:
+      - name: "Build a wheelhouse of the Python library"
+        uses: ansys/actions/build-wheelhouse@v4
+        with:
+          library-name: "ansys-dpf-composites"
+          library-namespace: "ansys.dpf.composites"
+          operating-system: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
 
   doc-deploy-dev:
     name: "Deploy development documentation"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: [build-package]
+    needs: [build-library, build-wheelhouse]
     steps:
-      - uses: pyansys/actions/doc-deploy-dev@v4
+      - uses: ansys/actions/doc-deploy-dev@v4
         with:
           cname: ${{ env.DOCUMENTATION_CNAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -214,19 +234,19 @@ jobs:
   release:
     name: "Release project"
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
-    needs: [build-package]
+    needs: [build-library, build-wheelhouse]
     runs-on: ubuntu-latest
     steps:
 
       - name: "Release to the public PyPI repository"
-        uses: pyansys/actions/release-pypi-public@v4
+        uses: ansys/actions/release-pypi-public@v4
         with:
           library-name: ${{ env.PACKAGE_NAME }}
           twine-username: "__token__"
           twine-token: ${{ secrets.PYPI_TOKEN }}
 
       - name: "Release to GitHub"
-        uses: pyansys/actions/release-github@v4
+        uses: ansys/actions/release-github@v4
         with:
           library-name: ${{ env.PACKAGE_NAME }}
 
@@ -236,7 +256,7 @@ jobs:
     needs: [release]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
     steps:
-      - uses: pyansys/actions/doc-deploy-stable@v4
+      - uses: ansys/actions/doc-deploy-stable@v4
         with:
           cname: ${{ env.DOCUMENTATION_CNAME }}
           token: ${{ secrets.GITHUB_TOKEN }}

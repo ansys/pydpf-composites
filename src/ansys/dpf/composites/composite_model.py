@@ -1,16 +1,12 @@
 """Composite Model."""
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Collection, Dict, List, Optional, Sequence, cast
+from typing import Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
-
-from .unit_system import UnitSystemProvider, get_unit_system
-
-if TYPE_CHECKING:
-    from numpy.typing import NDArray
+from numpy.typing import NDArray
 
 from .data_sources import (
     CompositeDataSources,
@@ -29,6 +25,8 @@ from .layup_info.material_operators import MaterialOperators, get_material_opera
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
+from .server_helpers import upload_continuous_fiber_composite_files_to_server
+from .unit_system import UnitSystemProvider, get_unit_system
 
 __all__ = ("CompositeScope", "CompositeInfo", "CompositeModel")
 
@@ -106,7 +104,8 @@ class CompositeModel:
 
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
-    so that they can be efficiently evaluated.
+    so that they can be efficiently evaluated. The composite_files provided are automatically
+    uploaded to the server if needed.
 
     .. note::
 
@@ -148,11 +147,15 @@ class CompositeModel:
         default_unit_system: Optional[UnitSystem] = None,
     ):
         """Initialize data providers and add composite information to meshed region."""
-        self._data_sources = get_composites_data_sources(composite_files)
+
+        self._composite_files = upload_continuous_fiber_composite_files_to_server(
+            composite_files, server
+        )
+        self._data_sources = get_composites_data_sources(self._composite_files)
 
         self._core_model = dpf.Model(self._data_sources.rst, server=server)
         self._server = server
-        self._composite_files = composite_files
+
         self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
 
         self._material_operators = get_material_operators(
@@ -178,6 +181,11 @@ class CompositeModel:
         This property is only relevant for assemblies.
         """
         return list(self._composite_infos.keys())
+
+    @property
+    def composite_files(self) -> ContinuousFiberCompositesFiles:
+        """Get the composite file paths on the server."""
+        return self._composite_files
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
@@ -307,7 +315,7 @@ class CompositeModel:
         """
         failure_operator = dpf.Operator("composite::composite_failure_operator")
 
-        #failure_operator.inputs.result_definition(rd.to_json())
+        # failure_operator.inputs.result_definition(rd.to_json())
 
         if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
             return failure_operator.outputs.fields_containerMax()
@@ -400,7 +408,7 @@ class CompositeModel:
         layup_property: LayerProperty,
         element_id: int,
         composite_definition_label: Optional[str] = None,
-    ) -> Optional["NDArray[np.double]"]:
+    ) -> Optional[NDArray[np.double]]:
         """Get a layer property for an element ID.
 
         Returns a numpy array with the values of the property for all the layers.
@@ -519,10 +527,10 @@ class CompositeModel:
             mesh=self.get_mesh(composite_definition_label),
         )
 
-    def get_result_times_or_frequencies(self) -> "NDArray[np.double]":
+    def get_result_times_or_frequencies(self) -> NDArray[np.double]:
         """Get the times or frequencies in the result file."""
         return cast(
-            "NDArray[np.double]", self._core_model.metadata.time_freq_support.time_frequencies.data
+            NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
         )
 
     def add_interlaminar_normal_stresses(

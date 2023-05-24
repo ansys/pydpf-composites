@@ -6,13 +6,7 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites._indexer import FieldIndexerWithDataPointer
-from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.data_sources import (
-    CompositeDefinitionFiles,
-    get_composite_files_from_workbench_result_folder,
-    get_composites_data_sources,
-)
-from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
+from ansys.dpf.composites.data_sources import CompositeDefinitionFiles, get_composites_data_sources
 from ansys.dpf.composites.layup_info import (
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
@@ -23,6 +17,7 @@ from ansys.dpf.composites.layup_info.material_properties import (
     MaterialProperty,
     get_constant_property_dict,
 )
+from ansys.dpf.composites.server_helpers import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.unit_system import get_unit_system
 
 from .helper import ContinuousFiberCompositesFiles, Timer, setup_operators
@@ -342,7 +337,6 @@ def test_performance_flat(dpf_server):
     timer.add("indexer")
 
     with setup_result.mesh.elements.connectivities_field.as_local_field() as local_connectivity:
-
         timer.add("local connectivity")
 
         for element_id in scope:

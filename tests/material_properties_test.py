@@ -3,7 +3,6 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.data_sources import get_composites_data_sources
-from ansys.dpf.composites.example_helper import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
@@ -17,6 +16,7 @@ from ansys.dpf.composites.layup_info.material_properties import (
     get_constant_property_dict,
 )
 from ansys.dpf.composites.select_indices import get_selected_indices
+from ansys.dpf.composites.server_helpers import upload_continuous_fiber_composite_files_to_server
 from ansys.dpf.composites.unit_system import get_unit_system
 
 from .helper import get_basic_shell_files, setup_operators
@@ -102,7 +102,6 @@ def test_material_properties(dpf_server):
 
 
 def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server):
-
     files = get_basic_shell_files()
     files = upload_continuous_fiber_composite_files_to_server(data_files=files, server=dpf_server)
 

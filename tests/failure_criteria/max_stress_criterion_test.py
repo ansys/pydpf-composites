@@ -6,7 +6,6 @@ defaults = dict(
 
 
 def test_max_stress_criterion():
-
     ms_default = MaxStressCriterion()
     assert ms_default.name == "Max Stress"
 
