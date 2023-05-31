@@ -438,7 +438,7 @@ class CompositeModel:
 
     def get_analysis_plies(
         self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[Collection[str]]:
+    ) -> Optional[Sequence[str]]:
         """Get analysis ply names.
 
         This method returns ``None`` if the element is not layered.

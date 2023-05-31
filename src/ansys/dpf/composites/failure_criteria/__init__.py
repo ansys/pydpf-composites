@@ -4,6 +4,7 @@ from ._combined_failure_criterion import CombinedFailureCriterion
 from ._core_failure import CoreFailureCriterion
 from ._cuntze import CuntzeCriterion
 from ._face_sheet_wrinkling import FaceSheetWrinklingCriterion
+from ._failure_mode_enum import FailureModeEnum
 from ._hashin import HashinCriterion
 from ._hoffman import HoffmanCriterion
 from ._larc import LaRCCriterion
@@ -30,4 +31,5 @@ __all__ = [
     "PuckCriterion",
     "ShearCrimpingCriterion",
     "VonMisesCriterion",
+    "FailureModeEnum",
 ]
