@@ -125,7 +125,7 @@ class CompositeModel:
         solids or layered models defined outside of an ACP model. The
         ``self.composite_definition_labels`` command returns all available composite
         definition labels. For more information, see
-        :ref:`sphx_glr_examples_gallery_examples_8_assembly_example.py`.
+        :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py`.
 
     Parameters
     ----------
@@ -537,7 +537,7 @@ class CompositeModel:
         """Add interlaminar normal stresses to the stresses fields container.
 
         For a usage example, see
-        :ref:`sphx_glr_examples_gallery_examples_7_interlaminar_normal_stress_example.py`.
+        :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py`.
 
         Parameters
         ----------

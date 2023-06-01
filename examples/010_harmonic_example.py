@@ -1,8 +1,12 @@
 """
 .. _harmonic_example:
 
-Postprocessing for a harmonic analysis
+Postprocess a harmonic analysis
 --------------------------------------
+
+.. note::
+
+    This example is work in progress. Please open a github issue if something is unclear.
 
 This example shows how to evaluate failure criteria for a harmonic simulation.
 It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
@@ -35,9 +39,8 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 from ansys.dpf.composites.unit_system import get_unit_system
 
 # Todo: Discuss influence of damping factor
-# Todo: Add note that wb project needs to be copied
-# Todo: License context would speed up calculation but is not possible across
-# notebook cells
+# Todo: Currently the CompositeDefinition file from the modal analysis needs
+# to be copied to the harmonic response folder (including the Setup folder)
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
@@ -125,13 +128,13 @@ for phase in sweep_phases:
 
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
     failure_evaluator.inputs.configuration(combined_fc.to_json())
-    failure_evaluator.inputs.materials_container(material_operators.material_provider.outputs)
-    failure_evaluator.inputs.stresses_container(stress_at_phase.outputs.fields_container())
-    failure_evaluator.inputs.strains_container(strain_at_phase.outputs.fields_container())
+    failure_evaluator.inputs.materials_container(material_operators.material_provider)
+    failure_evaluator.inputs.stresses_container(stress_at_phase)
+    failure_evaluator.inputs.strains_container(strain_at_phase)
     failure_evaluator.inputs.mesh(composite_model.get_mesh())
 
     minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
-    minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
+    minmax_per_element.inputs.fields_container(failure_evaluator)
     minmax_per_element.inputs.mesh(composite_model.get_mesh())
     minmax_per_element.inputs.material_support(
         material_operators.material_support_provider.outputs.abstract_field_support
@@ -139,7 +142,8 @@ for phase in sweep_phases:
 
     max_for_all_frequencies_at_phase = minmax_per_element.outputs.field_max()
 
-    for frequency in range(1, max_for_all_frequencies_at_phase.time_freq_support.n_sets + 1):
+    n_frequencies = max_for_all_frequencies_at_phase.time_freq_support.n_sets
+    for frequency in range(1, n_frequencies + 1):
         output_label = {FREQ_LABEL: frequency, PHASE_LABEL: phase}
         all_phases_and_freqs_failure_value_fc.add_field(
             output_label,

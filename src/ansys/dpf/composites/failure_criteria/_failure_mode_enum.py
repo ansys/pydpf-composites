@@ -2,8 +2,9 @@ from enum import Enum
 
 # Use the functional API because otherwise it is impossible to use
 # python keywords as enum values (such as "as")
+# Note: This enum needs to be in sync with the corresponding enum in dpf_composites
 FailureModeEnum = Enum(
-    "FailureMode",
+    "FailureModeEnum",
     [
         # Strain failure criteria
         ("emax", 101),
