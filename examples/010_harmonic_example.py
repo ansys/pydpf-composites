@@ -2,7 +2,7 @@
 .. _harmonic_example:
 
 Postprocess a harmonic analysis
---------------------------------------
+-------------------------------
 
 .. note::
 
