@@ -22,3 +22,4 @@ Failure criteria
     TsaiHillCriterion
     TsaiWuCriterion
     VonMisesCriterion
+    FailureModeEnum

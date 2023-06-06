@@ -108,6 +108,16 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "harmonic": _ContinuousFiberExampleLocation(
+        directory="harmonic",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst="file.rst",
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
 }
 
 _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
