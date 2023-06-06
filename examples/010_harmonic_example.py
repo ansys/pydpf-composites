@@ -18,10 +18,10 @@ space and shows how to identify the critical failure mode and the critical layer
 # %%
 # Set up analysis
 # ~~~~~~~~~~~~~~~
-# Setting up the analysis consists of loading Ansys libraries, connecting to the
+# Setting up the analysis consists of loading the required modules, connecting to the
 # DPF server, and retrieving the example files.
 #
-# Load Ansys libraries.
+# Load Ansys libraries and matplotlib
 import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 
@@ -142,26 +142,25 @@ for phase in sweep_phases:
 
     max_for_all_frequencies_at_phase = minmax_per_element.outputs.field_max()
 
-    n_frequencies = max_for_all_frequencies_at_phase.time_freq_support.n_sets
-    for frequency in range(1, n_frequencies + 1):
-        output_label = {FREQ_LABEL: frequency, PHASE_LABEL: phase}
+    for frequency_id in max_for_all_frequencies_at_phase.get_time_scoping().ids:
+        output_label = {FREQ_LABEL: frequency_id, PHASE_LABEL: phase}
         all_phases_and_freqs_failure_value_fc.add_field(
             output_label,
             max_for_all_frequencies_at_phase.get_field(
-                {FAILURE_LABEL: FailureOutput.FAILURE_VALUE.value, FREQ_LABEL: frequency}
+                {FAILURE_LABEL: FailureOutput.FAILURE_VALUE.value, FREQ_LABEL: frequency_id}
             ),
         )
         all_phases_and_freqs_critical_layer_fc.add_field(
             output_label,
             max_for_all_frequencies_at_phase.get_field(
-                {FAILURE_LABEL: FailureOutput.MAX_LAYER_INDEX.value, FREQ_LABEL: frequency}
+                {FAILURE_LABEL: FailureOutput.MAX_LAYER_INDEX.value, FREQ_LABEL: frequency_id}
             ),
         )
 
         all_phases_and_freqs_failure_mode_fc.add_field(
             output_label,
             max_for_all_frequencies_at_phase.get_field(
-                {FAILURE_LABEL: FailureOutput.FAILURE_MODE.value, FREQ_LABEL: frequency}
+                {FAILURE_LABEL: FailureOutput.FAILURE_MODE.value, FREQ_LABEL: frequency_id}
             ),
         )
 

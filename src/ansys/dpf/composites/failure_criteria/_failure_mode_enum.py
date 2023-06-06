@@ -2,7 +2,7 @@ from enum import Enum
 
 # Use the functional API because otherwise it is impossible to use
 # python keywords as enum values (such as "as")
-# Note: This enum needs to be in sync with the corresponding enum in dpf_composites
+# Note: This enum should to be in sync with the corresponding enum in dpf_composites.
 FailureModeEnum = Enum(
     "FailureModeEnum",
     [
@@ -36,7 +36,7 @@ FailureModeEnum = Enum(
         ("s12", 240),
         ("s13", 250),
         ("s23", 260),
-        # Sandwich failurecriteria
+        # Sandwich failure criteria
         ("cf", 310),  # core shear
         ("w", 320),  # wrinkling
         ("wb", 321),  # wrinkling bot face sheet
