@@ -50,15 +50,15 @@ Key features
 
 Here are some key features of PyDPF Composites:
 
-* Failure criteria evaluation as shown in :ref:`Composite failure analysis <sphx_glr_examples_gallery_examples_1_failure_operator_example.py>`.
+* Failure criteria evaluation as shown in :ref:`Composite failure analysis <sphx_glr_examples_gallery_examples_001_failure_operator_example.py>`.
 * A :class:`.SamplingPoint` class for extracting and visualizing a result over the entire thickness of a laminate as shown in
-  :ref:`Sampling point <sphx_glr_examples_gallery_examples_2_sampling_point_example.py>`.
+  :ref:`Sampling point <sphx_glr_examples_gallery_examples_002_sampling_point_example.py>`.
 * A :class:`.ResultDefinition` class for configuring combined failure criteria and scopes.
 * Accessors for getting layered properties such as plies and materials as shown in
-  :ref:`Layered properties <sphx_glr_examples_gallery_examples_5_get_layup_properties_example.py>`
-  and :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
+  :ref:`Layered properties <sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py>`
+  and :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_004_get_material_properties_example.py>`.
 * Interface to implement custom failure criteria and analysis as shown in
-  :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_4_get_material_properties_example.py>`.
+  :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_004_get_material_properties_example.py>`.
 * Postprocessing of homogeneous elements.
 
 

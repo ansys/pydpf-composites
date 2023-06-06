@@ -29,8 +29,8 @@ Examples
 
 The :doc:`examples/index` section provides these basic examples for getting started:
 
-* :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
-* :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
+* :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py`
+* :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py`
 
 At the end of each example, there is a button for downloading the example's Python source code.
 Input files, such as the results file and composite definition, are downloaded from a Git
