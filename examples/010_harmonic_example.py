@@ -2,11 +2,11 @@
 .. _harmonic_example:
 
 Postprocess a harmonic analysis
---------------------------------------
+-------------------------------
 
 .. note::
 
-    This example is work in progress. Please open a github issue if something is unclear.
+    This example is work in progress. Please open a Github issue if something is unclear.
 
 This example shows how to evaluate failure criteria for a harmonic simulation.
 It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
