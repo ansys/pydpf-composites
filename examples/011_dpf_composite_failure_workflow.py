@@ -12,9 +12,9 @@ operators that are needed to evaluate composite failure criteria.
 
     For simple use cases, using the composite failure operator or
     composite sampling point operator is preferable. For examples,
-    see :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
-    and :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`.
-    Additionally, :ref:`sphx_glr_examples_gallery_examples_6_filter_composite_data_example.py`
+    see :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py`
+    and :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py`.
+    Additionally, :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`
     shows how helper functions can be used to obtain composite result data.
 
 """

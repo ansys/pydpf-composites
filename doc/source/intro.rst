@@ -4,13 +4,20 @@ Getting started
 Installation
 ^^^^^^^^^^^^
 
-PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed.
+PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed. See
+:ref:`Compatibility` to understand which ``ansys-dpf-composites`` version corresponds to which Ansys version.
 
 Install the ``ansys-dpf-composites`` package with ``pip``:
 
 .. code::
 
     pip install ansys-dpf-composites
+
+Specific versions can be installed by specifying the version in the pip command. For example: Ansys 2023 R1 requires ansys-dpf-composites version 0.1.0:
+
+.. code::
+
+    pip install ansys-dpf-composites==0.1.0
 
 
 You should use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
@@ -22,8 +29,8 @@ Examples
 
 The :doc:`examples/index` section provides these basic examples for getting started:
 
-* :ref:`sphx_glr_examples_gallery_examples_1_failure_operator_example.py`
-* :ref:`sphx_glr_examples_gallery_examples_2_sampling_point_example.py`
+* :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py`
+* :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py`
 
 At the end of each example, there is a button for downloading the example's Python source code.
 Input files, such as the results file and composite definition, are downloaded from a Git
@@ -79,7 +86,8 @@ detailed output for a sampling point:
         combined_criterion=combined_failure_criterion, element_id=element_id
     )
 
-    sampling_point.get_result_plots()
+    plots = sampling_point.get_result_plots()
+    plots.figure.show()
 
 
 .. image:: _static/boat_irf.png
@@ -89,3 +97,35 @@ detailed output for a sampling point:
 .. image:: _static/boat_sampling_point.png
   :width: 750
   :alt: Sampling point on boat
+
+.. _Compatibility:
+
+Compatibility
+"""""""""""""
+
+The following table shows which ``ansys-dpf-composites`` version is compatible with which server version (Ansys version). See :ref:`Get DPF Docker image` to get the pre-releases.
+By default the DPF server is started from the latest Ansys installer. To choose a specific Ansys version or connect to an existing server, use the appropriate arguments for  :func:`.connect_to_or_start_server`
+
+.. list-table::
+   :widths: 20 20
+   :header-rows: 1
+
+   * - Server version
+     - ansys.dpf.composites Python module version
+   * - 6.2 (Ansys 2023 R2)
+     - 0.2.0 and later
+   * - 6.1 (Ansys 2023 R2 pre1)
+     - 0.2.0 and later
+   * - 6.0 (Ansys 2023 R2 pre0)
+     - Not available. The composites plugin is not part of the Ansys 2023 R2 pre0 release.
+   * - 5.0 (Ansys 2023 R1)
+     - 0.1.0
+
+
+.. _Get DPF Docker image:
+
+Getting the DPF Server Docker Image
+"""""""""""""""""""""""""""""""""""
+Follow the steps described in the DPF documentation in the section `Run DPF Server in A Docker Container <https://dpf.docs.pyansys.com/version/stable/user_guide/getting_started_with_dpf_server.html#run-dpf-server-in-a-docker-container>`_.
+Make sure you also download the composites plugin (e.g ``ansys_dpf_composites_lin_v2023.2.pre1.zip``).
+After following the steps above, you should have a running DPF docker container that listens to port 50052.

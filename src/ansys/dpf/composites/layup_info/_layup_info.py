@@ -529,7 +529,7 @@ class LayupPropertiesProvider:
         """
         return self._offset_indexer.by_id(element_id)
 
-    def get_analysis_plies(self, element_id: int) -> Optional[Collection[str]]:
+    def get_analysis_plies(self, element_id: int) -> Optional[Sequence[str]]:
         """Get analysis ply names. Returns None if element is not layered.
 
         Parameters
