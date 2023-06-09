@@ -1,13 +1,20 @@
+import dataclasses
+from functools import partial
 import os
 import pathlib
+from typing import Collection, Optional
 
 import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
 from ansys.dpf.composites._indexer import FieldIndexerWithDataPointer
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.data_sources import CompositeDefinitionFiles, get_composites_data_sources
 from ansys.dpf.composites.layup_info import (
+    AnalysisPlyInfoProvider,
+    ElementInfoProvider,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
@@ -17,7 +24,19 @@ from ansys.dpf.composites.layup_info.material_properties import (
     MaterialProperty,
     get_constant_property_dict,
 )
+from ansys.dpf.composites.select_indices import (
+    get_selected_indices,
+    get_selected_indices_by_analysis_ply,
+)
 from ansys.dpf.composites.server_helpers import upload_continuous_fiber_composite_files_to_server
+from ansys.dpf.composites.solution_queries import (
+    LayeredDataProvider,
+    SolutionFilter,
+    StressSolution,
+    get_analysis_ply_selector,
+    get_filter_selector,
+    get_layered_data,
+)
 from ansys.dpf.composites.unit_system import get_unit_system
 
 from .helper import ContinuousFiberCompositesFiles, Timer, setup_operators
@@ -27,7 +46,7 @@ def get_data_files():
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_dummy_data_files()
+    return get_ger_data_files()
 
 
 def get_dummy_data_files():
@@ -425,5 +444,118 @@ def test_performance_flat(dpf_server):
     )
 
     timer.add("after local field")
+
+    timer.summary()
+
+
+def test_performance_solution_queries(dpf_server):
+    timer = Timer()
+
+    files = get_data_files()
+    timer.add("read data")
+
+    element_id = 1
+    time_id = 1
+    # %%
+    # Get element information for all elements and show the first one as an example.
+    composite_model = CompositeModel(files, server=dpf_server)
+
+    timer.add("after composite model")
+
+    stress_solution = StressSolution(composite_model, time_id)
+    timer.add("after stress solution")
+
+    analysis_plies = composite_model.get_analysis_plies(element_id)
+
+    # Same function should exist by material
+    stress_data = stress_solution.get_by_analysis_ply(
+        analysis_plies[0], components=[0], accumulate_fun=np.max
+    )
+
+    timer.add("after by analysis ply")
+
+    stress_data = stress_solution.get_by_material(4, components=[0], accumulate_fun=np.max)
+
+    timer.add("after by material")
+
+    composite_model.core_model.metadata.meshed_region.plot(stress_data)
+
+    # Add material id
+    timer.add("before get layered data ply")
+
+    stress_solution.get_layered_data(1).filter(SolutionFilter(layers=[1], spots=[], nodes=[]))
+    timer.add("after get layered data ply")
+
+    timer.summary()
+
+    """
+        def get_average_query(filter: Filter):
+        return get_layered_data(data_provider,
+                                filter=filter,
+                                accumlate_fun=np.average
+                                )
+
+    element_info = layup_info.get_element_info(element_id)
+
+    def get_average_selected_indices(layers=None, nodes=None, spots=None, components=None):
+        selected_indices = get_selected_indices(
+            element_info, layers=layers, nodes=nodes, spots=spots
+        )
+        stress_data = stress_operator.outputs.fields_container()[0].get_entity_data_by_id(element_id)
+
+        return np.average(stress_data[selected_indices, components])
+        assert get_average_selected_indices(layers=[1], components=[0]) \
+               == get_average_query(filter=Filter(layers=[1], spots=[], nodes=[], components=[0]))\
+                   .get_entity_data_by_id(element_id)
+
+        assert get_average_selected_indices(spots=[Spot.BOTTOM], layers=[1]) \
+               == get_average_query(filter=Filter(layers=[1], spots=[0], nodes=[], components=[]))\
+                   .get_entity_data_by_id(element_id)
+    """
+    pass
+
+
+def test_performance_query_data(dpf_server):
+    timer = Timer()
+
+    files = get_data_files()
+
+    rst_data_source = dpf.DataSources(files.rst)
+    stress_operator = dpf.operators.result.stress()
+    stress_operator.inputs.data_sources(rst_data_source)
+
+    stress_operator.inputs.bool_rotate_to_global(False)
+    stress_fields_container = stress_operator.outputs.fields_container()
+    stress_field = stress_fields_container[0]
+
+    timer.add("read data")
+
+    ref_data = []
+    with stress_field.as_local_field() as local_field:
+        timer.add("get local field")
+
+        for element_id in stress_field.scoping.ids:
+            local_field.get_entity_data_by_id(element_id)
+        #   ref_data.append(local_field.get_entity_data_by_id(element_id))
+
+    timer.add("loop with local")
+
+    for element_id in stress_field.scoping.ids:
+        stress_field.get_entity_data_by_id(element_id)
+
+    timer.add("loop without local")
+
+    test_data = []
+    indexer = FieldIndexerWithDataPointer(stress_field)
+    timer.add("prepare indexer")
+
+    for element_id in stress_field.scoping.ids:
+        indexer.by_id(element_id)
+    #  test_data.append(indexer.by_id(element_id))
+
+    timer.add("loop with indexer local")
+
+    for ref, test in zip(ref_data, test_data):
+        assert np.array_equal(ref, test)
 
     timer.summary()

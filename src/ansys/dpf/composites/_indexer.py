@@ -25,6 +25,8 @@ def setup_index_by_id(scoping: Scoping) -> IndexToId:
     scoping:
         DPF scoping
     """
+    if len(scoping.ids) == 0:
+        return IndexToId(mapping=np.array([]), max_id=0)
     indices: NDArray[np.int64] = np.full(max(scoping.ids) + 1, -1, dtype=np.int64)
     indices[scoping.ids] = np.arange(len(scoping.ids))
     return IndexToId(mapping=indices, max_id=len(indices) - 1)
