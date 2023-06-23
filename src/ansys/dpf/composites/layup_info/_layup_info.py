@@ -20,7 +20,8 @@ from .._indexer import (
 )
 from ._enums import LayupProperty
 
-_ANALYSIS_PLY_PREFIX = "AnalysisPly:"
+_SEPARATOR = "::"
+_ANALYSIS_PLY_PREFIX = "AnalysisPly" + _SEPARATOR
 
 
 def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
@@ -33,8 +34,7 @@ def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
 
 
 def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -> PropertyField:
-    ANALYSIS_PLY_PREFIX = "AnalysisPly:"
-    property_field_name = ANALYSIS_PLY_PREFIX + name
+    property_field_name = _ANALYSIS_PLY_PREFIX + name
 
     # Because this test can be slow, it can be skipped
     if not skip_check and property_field_name not in mesh.available_property_fields:
