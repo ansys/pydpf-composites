@@ -69,7 +69,7 @@ def upload_continuous_fiber_composite_files_to_server(
         all_composite_files[key] = composite_definition_files
 
     return ContinuousFiberCompositesFiles(
-        rst=upload(data_files.rst),
+        rst=[upload(filename) for filename in data_files.rst],
         engineering_data=upload(data_files.engineering_data),
         composite=all_composite_files,
         files_are_local=False,

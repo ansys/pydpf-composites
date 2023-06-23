@@ -26,5 +26,5 @@ def test_get_files_from_result_folder(dpf_server):
         == WORKFLOW_EXAMPLE_ROOT / "Setup 4" / "ACPCompositeDefinitions.mapping"
     )
 
-    assert files.rst == WORKFLOW_EXAMPLE_ROOT / "file.rst"
+    assert files.rst == [WORKFLOW_EXAMPLE_ROOT / "file.rst"]
     assert files.engineering_data == WORKFLOW_EXAMPLE_ROOT / "MatML.xml"

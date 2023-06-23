@@ -150,10 +150,10 @@ class CompositeModel:
         self._composite_files = upload_continuous_fiber_composite_files_to_server(
             composite_files, server
         )
-        self._core_model = dpf.Model(self._composite_files.rst, server=server)
-        self._server = server
-
         self._data_sources = get_composites_data_sources(self._composite_files)
+
+        self._core_model = dpf.Model(self._data_sources.rst, server=server)
+        self._server = server
 
         self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
 
@@ -303,7 +303,7 @@ class CompositeModel:
 
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_file=self._composite_files.rst,
+            rst_files=self._composite_files.rst,
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criterion,
             composite_scopes=scopes,
@@ -366,7 +366,7 @@ class CompositeModel:
         )
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_file=self._composite_files.rst,
+            rst_files=self._composite_files.rst,
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criterion,
             time=time_in,

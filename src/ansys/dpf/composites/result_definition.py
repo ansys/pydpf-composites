@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 import json
-from typing import Any, Dict, Optional, Sequence, Union
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
@@ -66,7 +66,7 @@ class ResultDefinition:
         name: str,
         combined_failure_criterion: CombinedFailureCriterion,
         composite_scopes: Sequence[ResultDefinitionScope],
-        rst_file: _PATH,
+        rst_files: Sequence[_PATH],
         material_file: _PATH,
         measure: str = "inverse_reserve_factor",
         stress_strain_eval_mode: str = "rst_file",
@@ -81,7 +81,7 @@ class ResultDefinition:
         self._measure = measure
         self._composite_scopes = composite_scopes
         self._material_file = material_file
-        self._rst_file = rst_file
+        self._rst_files = list(rst_files)
         self._stress_strain_eval_mode = stress_strain_eval_mode
         self._time = time
         self._max_chunk_size = max_chunk_size
@@ -146,13 +146,13 @@ class ResultDefinition:
         self._composite_scopes = value
 
     @property
-    def rst_file(self) -> _PATH:
+    def rst_files(self) -> List[_PATH]:
         """Path of the result (RST) files."""
-        return self._rst_file
+        return self._rst_files
 
-    @rst_file.setter
-    def rst_file(self, value: _PATH) -> None:
-        self._rst_file = value
+    @rst_files.setter
+    def rst_files(self, value: List[_PATH]) -> None:
+        self._rst_files = list(value)
 
     @property
     def material_file(self) -> _PATH:
@@ -241,7 +241,9 @@ class ResultDefinition:
             result_definition["time"] = self.time
 
         def get_scope(
-            result_definition_scope: ResultDefinitionScope, rst_file: _PATH, material_file: _PATH
+            result_definition_scope: ResultDefinitionScope,
+            rst_files: List[_PATH],
+            material_file: _PATH,
         ) -> Dict[str, Any]:
             write_for_full_scope = result_definition_scope.write_data_for_full_element_scope
             mapping_entry = []
@@ -251,7 +253,7 @@ class ResultDefinition:
                 "datasources": {
                     "composite_definition": [str(result_definition_scope.composite_definition)],
                     "assembly_mapping_file": mapping_entry,
-                    "rst_file": [str(rst_file)],
+                    "rst_file": [str(filename) for filename in rst_files],
                     "material_file": [str(material_file)],
                 },
                 "write_data_for_full_element_scope": write_for_full_scope,
@@ -262,7 +264,7 @@ class ResultDefinition:
 
         scopes = {
             "scopes": [
-                get_scope(scope, self.rst_file, self.material_file)
+                get_scope(scope, self.rst_files, self.material_file)
                 for scope in self._composite_scopes
             ]
         }

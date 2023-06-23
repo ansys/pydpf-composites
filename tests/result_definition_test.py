@@ -34,7 +34,7 @@ def test_result_definition():
         name="my first result definition",
         combined_failure_criterion=cfc,
         composite_scopes=[scope],
-        rst_file=r"\\workdir\file.rst",
+        rst_files=[r"\\workdir\file.rst"],
         material_file=r"\\workdir\engd.xml",
     )
 

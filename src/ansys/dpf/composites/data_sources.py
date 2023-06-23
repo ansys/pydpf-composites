@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, List, Optional, Sequence, Union
 
 from ansys.dpf.core import DataSources
 
@@ -22,7 +22,8 @@ _SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
 _SETUP_FOLDER_PREFIX = "Setup"
 _H5_SUFFIX = ".h5"
 _MATML_FILENAME = "MatML.xml"
-_RST_FILENAME = "file.rst"
+_RST_SUFFIX = ".rst"
+_RST_PREFIX = "file"
 _MAPPING_SUFFIX = ".mapping"
 
 
@@ -38,12 +39,42 @@ class CompositeDefinitionFiles:
 class ContinuousFiberCompositesFiles:
     """Provides the container for continuous fiber composite file paths."""
 
-    rst: _PATH
+    rst: List[_PATH]
     composite: Dict[str, CompositeDefinitionFiles]
     engineering_data: _PATH
     # True if files are local and false if files
     # have already been uploaded to the server
     files_are_local: bool = True
+
+    def __init__(
+        self,
+        rst: Union[List[_PATH], _PATH],
+        composite: Dict[str, CompositeDefinitionFiles],
+        engineering_data: _PATH,
+        files_are_local: bool = True,
+    ) -> None:
+        """Initialize the ContinuousFiberCompositesFiles container.
+
+        Parameters
+        ----------
+        rst :
+            A single path to an RST file, or a list of paths to distributed
+            RST files.
+        composite :
+            Dictionary of composite definition files. The key can be chosen
+            freely.
+        engineering_data :
+            Path to the engineering data file.
+        files_are_local :
+            True if files are on the local machine, False if they have already
+            been uploaded to the DPF server..
+        """
+        if isinstance(rst, (str, pathlib.Path)):
+            rst = [rst]
+        self.rst = rst  # type: ignore
+        self.composite = composite
+        self.engineering_data = engineering_data
+        self.files_are_local = files_are_local
 
 
 @dataclass
@@ -63,6 +94,12 @@ class CompositeDataSources:
     """Provides data sources related to the composite lay-up."""
 
     rst: DataSources
+    # NOTE: The 'material_support' is explicitly listed since it is currently not
+    # supported (by the DPF Core) to use a distributed RST file as source for the
+    # material support. Instead, we create a separate DataSources object for the
+    # material support from the first RST file. This is a workaround until the
+    # support for distributed RST is added.
+    material_support: DataSources
     composite: Dict[str, DataSources]
     engineering_data: DataSources
 
@@ -75,7 +112,7 @@ def _get_mapping_path_file_from_definitions_path_if_exists(
 
 
 def _is_rst_file(path: pathlib.Path) -> bool:
-    return path.name == _RST_FILENAME and path.is_file()
+    return path.name.startswith(_RST_PREFIX) and path.suffix == _RST_SUFFIX and path.is_file()
 
 
 def _is_matml_file(path: pathlib.Path) -> bool:
@@ -94,43 +131,57 @@ def _is_solid_model_composite_definition_file(path: pathlib.Path) -> bool:
     return is_h5 and is_file and is_def
 
 
-def _get_single_filepath_with_predicate(
+def _get_file_paths_with_predicate(
     predicate: Callable[[pathlib.Path], bool],
     folder: pathlib.Path,
-    descriptive_name: str,
-    accept_empty: bool = False,
-) -> Optional[pathlib.Path]:
+) -> Sequence[pathlib.Path]:
     files = [
         file_or_folder_path
         for file_or_folder_path in folder.iterdir()
         if predicate(file_or_folder_path)
     ]
+    return files
 
-    if len(files) == 0:
-        if accept_empty:
-            return None
+
+def _get_single_file_path_with_predicate(
+    predicate: Callable[[pathlib.Path], bool],
+    folder: pathlib.Path,
+    descriptive_name: str,
+) -> pathlib.Path:
+    files = _get_file_paths_with_predicate(predicate, folder)
+    if len(files) != 1:
         raise RuntimeError(
-            f"No {descriptive_name} file found. Available files:  {os.listdir(folder)}"
+            f"Expected exactly one {descriptive_name} file. Found {files}."
+            f" Available files in folder: {os.listdir(folder)}"
         )
 
-    if len(files) > 1:
-        raise RuntimeError(f"More than one {descriptive_name} file detected {files}")
+    return files[0]
 
+
+def _get_single_optional_file_path_with_predicate(
+    predicate: Callable[[pathlib.Path], bool],
+    folder: pathlib.Path,
+    descriptive_name: str,
+) -> Optional[pathlib.Path]:
+    files = _get_file_paths_with_predicate(predicate, folder)
+    if len(files) > 1:
+        raise RuntimeError(f"Expected no more than one {descriptive_name} file. Found {files}.")
+    if len(files) == 0:
+        return None
     return files[0]
 
 
 def _add_composite_definitons_from_setup_folder(
     setup_folder: pathlib.Path, composite_files: ContinuousFiberCompositesFiles
 ) -> None:
-    composite_definition = _get_single_filepath_with_predicate(
-        _is_composite_definition_file, setup_folder, "composites_definition", accept_empty=True
+    composite_definition = _get_single_optional_file_path_with_predicate(
+        _is_composite_definition_file,
+        setup_folder,
+        "composites_definition",
     )
 
-    solid_model_definition = _get_single_filepath_with_predicate(
-        _is_solid_model_composite_definition_file,
-        setup_folder,
-        "solid_model_definition",
-        accept_empty=True,
+    solid_model_definition = _get_single_optional_file_path_with_predicate(
+        _is_solid_model_composite_definition_file, setup_folder, "solid_model_definition"
     )
 
     def get_composite_definitions_files(
@@ -174,10 +225,9 @@ def get_composite_files_from_workbench_result_folder(
     workbench project. You can determine the different attributes of the
     ``ContinuousFiberCompositesFiles`` object:
 
-    -   ``rst``: The ``file.rst`` file that belongs to the cell ID of the solution
-        that you want to postprocess. Multiple result files are not supported yet.
-        Ensure that **Combine Distributed Result Files** is selected if the solution
-        was solved in 'Distributed' mode.
+    -   ``rst``: A list of files containing either the single ``file.rst``
+        file that belongs to the cell ID of the solution, or the distributed
+        ``file0.rst`` to ``fileN.rst`` files.
 
     -   ``engineering_data``: The ``MatML.xml`` file in the same folder as the RST file.
 
@@ -220,7 +270,7 @@ def get_composite_files_from_workbench_result_folder(
     The code creates the corresponding ``ContinuousFiberCompositesFiles`` object::
 
         ContinuousFiberCompositesFiles(
-            rst="project_root_folder/dp0/SYS/MECH/file.rst",
+            rst=["project_root_folder/dp0/SYS/MECH/file.rst"],
             composite={
                "solid": CompositeDefinitionFiles(
                     definition="project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5",
@@ -250,14 +300,28 @@ def get_composite_files_from_workbench_result_folder(
         if folder_path.is_dir() and folder_path.name.startswith(_SETUP_FOLDER_PREFIX)
     ]
 
-    rst_path = _get_single_filepath_with_predicate(_is_rst_file, result_folder_path, "rst")
-    matml_path = _get_single_filepath_with_predicate(_is_matml_file, result_folder_path, "matml")
+    rst_paths = _get_file_paths_with_predicate(
+        _is_rst_file,
+        result_folder_path,
+    )
+
+    if len(rst_paths) == 0:
+        raise RuntimeError(
+            f"Expected at least one rst file. Found {rst_paths}."
+            f" Available files in folder: {os.listdir(result_folder_path)}"
+        )
+
+    matml_path = _get_single_file_path_with_predicate(
+        _is_matml_file,
+        result_folder_path,
+        "matml",
+    )
 
     assert matml_path is not None
-    assert rst_path is not None
+    assert rst_paths is not None
 
     continuous_fiber_composite_files = ContinuousFiberCompositesFiles(
-        rst=rst_path.resolve(),
+        rst=[rst_path.resolve() for rst_path in rst_paths],
         composite={},
         engineering_data=matml_path.resolve(),
     )
@@ -287,7 +351,23 @@ def get_composites_data_sources(
     ----------
     continuous_composite_files
     """
-    rst_data_source = DataSources(continuous_composite_files.rst)
+    if not continuous_composite_files.rst:
+        raise RuntimeError("No rst files found.")
+    else:
+        # NOTE: The 'material_support' is explicitly listed since it is currently not
+        # supported (by the DPF Core) to use a distributed RST file as source for the
+        # material support. Instead, we create a separate DataSources object for the
+        # material support from the first RST file. This is a workaround until the
+        # support for distributed RST is added.
+        material_support_data_source = DataSources()
+        material_support_data_source.set_result_file_path(continuous_composite_files.rst[0])
+        if len(continuous_composite_files.rst) == 1:
+            rst_data_source = material_support_data_source
+        else:
+            rst_data_source = DataSources()
+            for idx, rst_file in enumerate(continuous_composite_files.rst):
+                rst_data_source.set_domain_result_file_path(rst_file, idx)
+
     engineering_data_source = DataSources()
     engineering_data_source.add_file_path(
         continuous_composite_files.engineering_data, "EngineeringData"
@@ -306,6 +386,7 @@ def get_composites_data_sources(
 
     return CompositeDataSources(
         rst=rst_data_source,
+        material_support=material_support_data_source,
         composite=composite_data_sources,
         engineering_data=engineering_data_source,
     )
