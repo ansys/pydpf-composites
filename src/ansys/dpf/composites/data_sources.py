@@ -58,8 +58,9 @@ class ShortFiberCompositesFiles:
     files_are_local: bool = True
 
 
-# roosre June 2023: refactor this class. Member composite should become a DataSources instead of a dict
-# since assemblies are supported in the meanwhile. We can also get rid of composite_definition_label.
+# roosre June 2023: refactor this class. Member composite should become
+# a DataSources instead of a dict since assemblies are supported in
+# the meanwhile. We can also get rid of composite_definition_label.
 # For instance used in add_layup_info_to_mesh.
 @dataclass(frozen=True)
 class CompositeDataSources:

@@ -289,8 +289,9 @@ class CompositeModel:
 
         scopes = []
 
-        # roosre June 2023: This should be simplified as part of the implementation of the new workflow where the
-        # result definition is no longer used. The backend supports multiple lay-up definitions in the meanwhile.
+        # roosre June 2023: This should be simplified as part of the implementation
+        # of the new workflow where the result definition is no longer used. The
+        # backend supports multiple lay-up definitions in the meanwhile.
         for composite_definition_label in self.composite_definition_labels:
             composite_files = self._composite_files.composite[composite_definition_label]
             scopes.append(
