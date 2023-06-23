@@ -158,7 +158,7 @@ class CompositeModel:
         self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
 
         self._material_operators = get_material_operators(
-            rst_data_source=self._data_sources.rst,
+            rst_data_source=self._data_sources.material_support,
             unit_system=self._unit_system,
             engineering_data_source=self._data_sources.engineering_data,
         )

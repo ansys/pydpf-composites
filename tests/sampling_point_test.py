@@ -26,15 +26,21 @@ from ansys.dpf.composites.result_definition import (
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
 
 
-def test_sampling_point(dpf_server):
+@pytest.mark.parametrize("distributed_rst", [False, True])
+def test_sampling_point(dpf_server, distributed_rst):
     """Basic test with a running server"""
 
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    if distributed_rst:
+        rst_paths = [
+            os.path.join(TEST_DATA_ROOT_DIR, f"distributed_shell{i}.rst") for i in range(2)
+        ]
+    else:
+        rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")]
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     if not dpf_server.local_server:
-        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+        rst_paths = [dpf.upload_file_in_tmp_folder(path, server=dpf_server) for path in rst_paths]
         h5_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
         material_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
 
@@ -47,7 +53,7 @@ def test_sampling_point(dpf_server):
     rd = ResultDefinition(
         name="my first result definition",
         combined_failure_criterion=cfc,
-        rst_file=rst_path,
+        rst_files=rst_paths,
         material_file=material_path,
         composite_scopes=[scope],
     )

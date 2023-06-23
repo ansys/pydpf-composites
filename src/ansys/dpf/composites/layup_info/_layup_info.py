@@ -412,12 +412,14 @@ def get_element_info_provider(
 
     def get_keyopt_property_field(keyopt: int) -> PropertyField:
         keyopt_provider = dpf.Operator("mesh_property_provider")
+        # keyopt_provider = dpf.Operator("property_field_provider_by_name")
         if isinstance(stream_provider_or_data_source, Operator):
             keyopt_provider.inputs.streams_container(stream_provider_or_data_source)
         else:
             keyopt_provider.inputs.data_sources(stream_provider_or_data_source)
 
         keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
+        # return keyopt_provider.outputs.property_field()
         return keyopt_provider.outputs.property_as_property_field()
 
     requested_property_fields = [
