@@ -71,6 +71,7 @@ jobs:
       - name: "Pull and start dpf container"
         run:  |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker pull ghcr.io/ansys/pydpf-composites:latest_2023r2
 
       - name: "Checkout the project"
         uses: actions/checkout@v3
