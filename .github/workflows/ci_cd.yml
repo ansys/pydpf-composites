@@ -13,7 +13,7 @@ on:
 
 env:
   MAIN_PYTHON_VERSION: '3.9'
-  CONTAINER_TAG: 'assemblies' # Revert before merging back
+  CONTAINER_TAG: 'latest'
   PACKAGE_NAME: 'ansys-dpf-composites'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
   PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT: "50052"

@@ -101,7 +101,7 @@ class DockerProcess:
         process_out_file: pathlib.Path,
         process_err_file: pathlib.Path,
         license_server: str = "",
-        image_name: str = "ghcr.io/ansys/pydpf-composites:assemblies",  # revert before merge
+        image_name: str = "ghcr.io/ansys/pydpf-composites:latest",
         mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
