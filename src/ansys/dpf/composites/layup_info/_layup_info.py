@@ -20,21 +20,33 @@ from .._indexer import (
 )
 from ._enums import LayupProperty
 
-_SEPARATOR = "::"
-_ANALYSIS_PLY_PREFIX = "AnalysisPly" + _SEPARATOR
+
+def _get_separator(server):
+    if server.version < "7.0":
+        # up to and with 2023 R2
+        return ":"
+    else:
+        return "::"
+
+
+def _get_analysis_ply_prefix(server):
+    return "AnalysisPly" + _get_separator(server)
 
 
 def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
     """Get names of all available analysis plies."""
+    prefix = _get_analysis_ply_prefix(mesh._server)  # pylint: disable=protected-access
     return [
-        property_field_name[len(_ANALYSIS_PLY_PREFIX) :]
+        property_field_name[len(prefix) :]
         for property_field_name in mesh.available_property_fields
-        if property_field_name.startswith(_ANALYSIS_PLY_PREFIX)
+        if property_field_name.startswith(prefix)
     ]
 
 
 def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -> PropertyField:
-    property_field_name = _ANALYSIS_PLY_PREFIX + name
+    property_field_name = (
+        _get_analysis_ply_prefix(mesh._server) + name
+    )  # pylint: disable=protected-access
 
     # Because this test can be slow, it can be skipped
     if not skip_check and property_field_name not in mesh.available_property_fields:
