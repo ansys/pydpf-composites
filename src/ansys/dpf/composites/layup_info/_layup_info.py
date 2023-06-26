@@ -5,6 +5,7 @@ from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
+from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
@@ -21,7 +22,7 @@ from .._indexer import (
 from ._enums import LayupProperty
 
 
-def _get_separator(server):
+def _get_separator(server: BaseServer) -> str:
     if server.version < "7.0":
         # up to and with 2023 R2
         return ":"
@@ -29,7 +30,7 @@ def _get_separator(server):
         return "::"
 
 
-def _get_analysis_ply_prefix(server):
+def _get_analysis_ply_prefix(server: BaseServer) -> str:
     return "AnalysisPly" + _get_separator(server)
 
 
