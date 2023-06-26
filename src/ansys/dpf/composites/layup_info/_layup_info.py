@@ -45,9 +45,8 @@ def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
 
 
 def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -> PropertyField:
-    property_field_name = (
-        _get_analysis_ply_prefix(mesh._server) + name
-    )  # pylint: disable=protected-access
+    prefix = _get_analysis_ply_prefix(mesh._server)  # pylint: disable=protected-access
+    property_field_name = prefix + name
 
     # Because this test can be slow, it can be skipped
     if not skip_check and property_field_name not in mesh.available_property_fields:
