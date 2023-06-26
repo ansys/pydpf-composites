@@ -89,10 +89,11 @@ def connect_to_or_start_server(
             ),
         )
 
+    required_version = "6.0"
     server.check_version(
-        "5.0",
-        f"The DPF Composites plugin requires DPF Server version 5.0 (Ansys 2023 R1) or later."
-        f" Your version is currently {server.version}.",
+        required_version,
+        f"The DPF Composites plugin requires DPF Server version {required_version} "
+        f"(Ansys 2023 R2) or later. Your version is currently {server.version}.",
     )
 
     _wait_until_server_is_up(server)
