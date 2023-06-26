@@ -68,7 +68,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Pull and start dpf container"
+      - name: "Pull pydpf container(s)"
+        # latest_2023r2 is used to test backward compatibility. Also update testenv in tox.ini
+        # if other containers must be tested.
         run:  |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
           docker pull ghcr.io/ansys/pydpf-composites:latest_2023r2
