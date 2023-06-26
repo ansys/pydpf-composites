@@ -53,10 +53,10 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     )
 
     parser.addoption(
-       DOCKER_IMAGE_TAG_KEY,
-       action="store",
-       default="latest",
-       help="Tag of pydpf-composites container to start for the tests. Default is 'latest'.",
+        DOCKER_IMAGE_TAG_KEY,
+        action="store",
+        default="latest",
+        help="Tag of pydpf-composites container to start for the tests. Default is 'latest'.",
     )
 
 
@@ -103,14 +103,14 @@ class DockerProcess:
         return ServerContext(port=self.port, platform="linux", server=None)
 
     def __init__(
-            self,
-            server_out_file: pathlib.Path,
-            server_err_file: pathlib.Path,
-            process_out_file: pathlib.Path,
-            process_err_file: pathlib.Path,
-            license_server: str = "",
-            image_name: str = "",
-            mount_directories: Mapping[str, str] = MappingProxyType({}),
+        self,
+        server_out_file: pathlib.Path,
+        server_err_file: pathlib.Path,
+        process_out_file: pathlib.Path,
+        process_err_file: pathlib.Path,
+        license_server: str = "",
+        image_name: str = "",
+        mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
         Parameters
@@ -250,7 +250,9 @@ def dpf_server(request: pytest.FixtureRequest):
     docker_image_tag = request.config.getoption(DOCKER_IMAGE_TAG_KEY)
 
     active_options = [
-        option for option in [installer_path, running_server_port, docker_image_tag] if option is not None
+        option
+        for option in [installer_path, running_server_port, docker_image_tag]
+        if option is not None
     ]
 
     if len(active_options) > 1:
@@ -273,7 +275,7 @@ def dpf_server(request: pytest.FixtureRequest):
                 process_out_file=process_log_stdout,
                 process_err_file=process_log_stderr,
                 license_server=get_license_server_string(license_server_config),
-                image_name=image_name
+                image_name=image_name,
             )
 
     with start_server_process() as server_process:
