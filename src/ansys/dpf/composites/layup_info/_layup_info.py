@@ -5,6 +5,7 @@ from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
+from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
@@ -20,21 +21,32 @@ from .._indexer import (
 )
 from ._enums import LayupProperty
 
-_ANALYSIS_PLY_PREFIX = "AnalysisPly:"
+
+def _get_separator(server: BaseServer) -> str:
+    if server.version < "7.0":
+        # up to and with 2023 R2
+        return ":"
+    else:
+        return "::"
+
+
+def _get_analysis_ply_prefix(server: BaseServer) -> str:
+    return "AnalysisPly" + _get_separator(server)
 
 
 def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
     """Get names of all available analysis plies."""
+    prefix = _get_analysis_ply_prefix(mesh._server)  # pylint: disable=protected-access
     return [
-        property_field_name[len(_ANALYSIS_PLY_PREFIX) :]
+        property_field_name[len(prefix) :]
         for property_field_name in mesh.available_property_fields
-        if property_field_name.startswith(_ANALYSIS_PLY_PREFIX)
+        if property_field_name.startswith(prefix)
     ]
 
 
 def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -> PropertyField:
-    ANALYSIS_PLY_PREFIX = "AnalysisPly:"
-    property_field_name = ANALYSIS_PLY_PREFIX + name
+    prefix = _get_analysis_ply_prefix(mesh._server)  # pylint: disable=protected-access
+    property_field_name = prefix + name
 
     # Because this test can be slow, it can be skipped
     if not skip_check and property_field_name not in mesh.available_property_fields:
