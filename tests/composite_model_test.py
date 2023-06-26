@@ -1,7 +1,7 @@
 import os
 import pathlib
+from typing import List, Union
 
-import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
@@ -19,11 +19,17 @@ from ansys.dpf.composites.result_definition import FailureMeasure
 from .helper import ContinuousFiberCompositesFiles, Timer
 
 
-def get_data_files():
+@pytest.fixture(params=[False, True])
+def distributed(request):
+    return request.param
+
+
+@pytest.fixture
+def data_files(request, distributed):
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_dummy_data_files()
+    return get_dummy_data_files(distributed=distributed)
 
 
 def get_assembly_data_files():
@@ -48,40 +54,32 @@ def get_assembly_data_files():
     )
 
 
-def get_dummy_data_files():
+def get_dummy_data_files(distributed: bool = False):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    if distributed:
+        rst_path: Union[str, List[str]] = [
+            os.path.join(TEST_DATA_ROOT_DIR, f"distributed_shell{i}.rst") for i in range(2)
+        ]
+    else:
+        rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     return ContinuousFiberCompositesFiles(
-        rst=[rst_path],
+        rst=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
 
 
-def get_test_data(dpf_server):
-    files = get_data_files()
-    rst_path = dpf.upload_file_in_tmp_folder(files.rst, server=dpf_server)
+def test_basic_functionality_of_composite_model(dpf_server, data_files, distributed):
+    if distributed:
+        # TODO: remove once backend issue #856638 is resolved
+        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 
-    rst_data_source = dpf.DataSources(rst_path)
-
-    strain_operator = dpf.operators.result.elastic_strain.elastic_strain()
-    strain_operator.inputs.data_sources(rst_data_source)
-    strain_operator.inputs.bool_rotate_to_global(False)
-
-    fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
-    field = fields_container[0]
-    return field
-
-
-def test_basic_functionality_of_composite_model(dpf_server):
     timer = Timer()
 
-    files = get_data_files()
-
-    composite_model = CompositeModel(files, server=dpf_server)
+    composite_model = CompositeModel(data_files, server=dpf_server)
     timer.add("After Setup model")
 
     combined_failure_criterion = CombinedFailureCriterion(
@@ -288,11 +286,9 @@ def test_assembly_model(dpf_server):
     timer.summary()
 
 
-def test_failure_measures(dpf_server):
+def test_failure_measures(dpf_server, data_files):
     """Verify that all failure measure names are compatible with the backend"""
-    files = get_data_files()
-
-    composite_model = CompositeModel(files, server=dpf_server)
+    composite_model = CompositeModel(data_files, server=dpf_server)
     combined_failure_criterion = CombinedFailureCriterion(
         "max stress", failure_criteria=[MaxStressCriterion()]
     )
@@ -305,11 +301,9 @@ def test_failure_measures(dpf_server):
         )
 
 
-def test_composite_model_element_scope(dpf_server):
+def test_composite_model_element_scope(dpf_server, data_files):
     """Ensure that the element IDs of the scope can be of any type (e.g. np.int)"""
-    files = get_data_files()
-
-    composite_model = CompositeModel(files, server=dpf_server)
+    composite_model = CompositeModel(data_files, server=dpf_server)
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
@@ -325,11 +319,13 @@ def test_composite_model_element_scope(dpf_server):
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
 
 
-def test_composite_model_named_selection_scope(dpf_server):
+def test_composite_model_named_selection_scope(dpf_server, data_files, distributed):
     """Ensure that the scoping by Named Selection is supported"""
-    files = get_data_files()
+    if distributed:
+        # TODO: remove once backend issue #856638 is resolved
+        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 
-    composite_model = CompositeModel(files, server=dpf_server)
+    composite_model = CompositeModel(data_files, server=dpf_server)
 
     ns_name = "NS_ELEM"
     assert ns_name in composite_model.get_mesh().available_named_selections

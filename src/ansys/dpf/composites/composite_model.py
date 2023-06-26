@@ -166,9 +166,9 @@ class CompositeModel:
         self._composite_infos: Dict[str, CompositeInfo] = {}
         for composite_definition_label in self._data_sources.composite:
             self._composite_infos[composite_definition_label] = CompositeInfo(
-                self._data_sources,
-                composite_definition_label,
-                self._core_model.metadata.streams_provider,
+                data_sources=self._data_sources,
+                composite_definition_label=composite_definition_label,
+                streams_provider=self._core_model.metadata.streams_provider,
                 material_operators=self._material_operators,
                 unit_system=self._unit_system,
             )
