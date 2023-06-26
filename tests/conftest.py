@@ -26,6 +26,7 @@ PORT_OPTION_KEY = "--port"
 ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
 ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
+DOCKER_IMAGE_TAG_KEY = "--image-tag"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -49,6 +50,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         LICENSE_SERVER_OPTION_KEY,
         action="store",
         help="Value of the ANSYSLMD_LICENSE_FILE for the gRPC server.",
+    )
+
+    parser.addoption(
+       DOCKER_IMAGE_TAG_KEY,
+       action="store",
+       default="latest",
+       help="Tag of pydpf-composites container to start for the tests. Default is 'latest'.",
     )
 
 
@@ -95,14 +103,14 @@ class DockerProcess:
         return ServerContext(port=self.port, platform="linux", server=None)
 
     def __init__(
-        self,
-        server_out_file: pathlib.Path,
-        server_err_file: pathlib.Path,
-        process_out_file: pathlib.Path,
-        process_err_file: pathlib.Path,
-        license_server: str = "",
-        image_name: str = "ghcr.io/ansys/pydpf-composites:latest",
-        mount_directories: Mapping[str, str] = MappingProxyType({}),
+            self,
+            server_out_file: pathlib.Path,
+            server_err_file: pathlib.Path,
+            process_out_file: pathlib.Path,
+            process_err_file: pathlib.Path,
+            license_server: str = "",
+            image_name: str = "",
+            mount_directories: Mapping[str, str] = MappingProxyType({}),
     ):
         """Initialize the wrapper
         Parameters
@@ -239,9 +247,10 @@ def dpf_server(request: pytest.FixtureRequest):
     running_server_port = request.config.getoption(PORT_OPTION_KEY)
     installer_path = request.config.getoption(ANSYS_PATH_OPTION_KEY)
     license_server_config = request.config.getoption(LICENSE_SERVER_OPTION_KEY)
+    docker_image_tag = request.config.getoption(DOCKER_IMAGE_TAG_KEY)
 
     active_options = [
-        option for option in [installer_path, running_server_port] if option is not None
+        option for option in [installer_path, running_server_port, docker_image_tag] if option is not None
     ]
 
     if len(active_options) > 1:
@@ -256,12 +265,15 @@ def dpf_server(request: pytest.FixtureRequest):
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
 
+            image_name = f"ghcr.io/ansys/pydpf-composites:{docker_image_tag}"
+
             return DockerProcess(
                 server_out_file=server_log_stdout,
                 server_err_file=server_log_stderr,
                 process_out_file=process_log_stdout,
                 process_err_file=process_log_stderr,
                 license_server=get_license_server_string(license_server_config),
+                image_name=image_name
             )
 
     with start_server_process() as server_process:
