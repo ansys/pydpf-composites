@@ -8,6 +8,7 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
+from packaging import version
 
 from .._indexer import (
     FieldIndexerNoDataPointer,
@@ -23,7 +24,7 @@ from ._enums import LayupProperty
 
 
 def _get_separator(server: BaseServer) -> str:
-    if server.version < "7.0":
+    if version.parse(server.version) < version.parse("7.0"):
         # up to and with 2023 R2
         return ":"
     else:
@@ -276,6 +277,10 @@ class ElementInfoProvider:
     Initialize the class before a loop and
     call :func:`~get_element_info` for each element.
 
+    Note that the :class:`~ElementInfoProvider` class is not fully supported for
+    distributed RST files. The :func:`~get_element_info` method will raise an
+    exception if the DPF server version does not support reading the required
+    information.
 
     Parameters
     ----------
@@ -357,7 +362,8 @@ class ElementInfoProvider:
         if keyopt_3 is None or keyopt_8 is None or apdl_element_type is None:
             raise RuntimeError(
                 "Could not determine element properties. Probably they were requested for an"
-                f" invalid element id. Element id: {element_id}"
+                f" invalid element id. Element id: {element_id}\n"
+                "Note that creating ElementInfo is not fully supported for distributed RST files."
             )
 
         if int(apdl_element_type) not in _supported_element_types:

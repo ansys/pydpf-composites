@@ -7,24 +7,35 @@ import pytest
 from .utils import get_basic_combined_failure_criterion
 
 
-def test_basic_workflow(dpf_server):
+def test_basic_workflow(dpf_server, distributed_rst):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    if distributed_rst:
+        rst_paths = [
+            os.path.join(TEST_DATA_ROOT_DIR, f"distributed_shell{i}.rst") for i in range(2)
+        ]
+    else:
+        rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")]
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
     if not dpf_server.local_server:
-        rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+        rst_paths = [dpf.upload_file_in_tmp_folder(path, server=dpf_server) for path in rst_paths]
 
         h5_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
         material_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
 
-    rst_path = rst_path
     eng_data_path = material_path
     composite_definitions_path = h5_path
 
-    rst_data_source = dpf.DataSources(rst_path)
+    if distributed_rst:
+        rst_data_source = dpf.DataSources()
+        for idx, path in enumerate(rst_paths):
+            rst_data_source.set_domain_result_file_path(path, idx)
+        material_support_data_source = dpf.DataSources(rst_paths[0])
+    else:
+        rst_data_source = dpf.DataSources(rst_paths[0])
+        material_support_data_source = rst_data_source
 
     mesh_provider = dpf.Operator("MeshProvider")
     mesh_provider.inputs.data_sources(rst_data_source)
@@ -37,7 +48,7 @@ def test_basic_workflow(dpf_server):
 
     material_support_provider = dpf.Operator("support_provider")
     material_support_provider.inputs.property("mat")
-    material_support_provider.inputs.data_sources(rst_data_source)
+    material_support_provider.inputs.data_sources(material_support_data_source)
 
     result_info_provider = dpf.Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)

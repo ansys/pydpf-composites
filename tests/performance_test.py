@@ -63,21 +63,6 @@ def get_ger_data_files():
     )
 
 
-def get_test_data(dpf_server):
-    files = get_data_files()
-    rst_path = dpf.upload_file_in_tmp_folder(files.rst, server=dpf_server)
-
-    rst_data_source = dpf.DataSources(rst_path)
-
-    strain_operator = dpf.operators.result.elastic_strain()
-    strain_operator.inputs.data_sources(rst_data_source)
-    strain_operator.inputs.bool_rotate_to_global(False)
-
-    fields_container = strain_operator.get_output(output_type=dpf.types.fields_container)
-    field = fields_container[0]
-    return field
-
-
 def get_generated_test_data(server, n_components=6):
     n_entities = 10000
     n_layers_times_nodes_times_integration_points = 10 * 4 * 3

@@ -72,7 +72,8 @@ def get_material_operators(
     Parameters
     ----------
     rst_data_source
-        Data source that contains a RST file.
+        Data source that contains a RST file. Note that multiple (distributed)
+        RST files are not supported.
     engineering_data_source
         Data source that contains the Engineering Data file.
     unit_system:

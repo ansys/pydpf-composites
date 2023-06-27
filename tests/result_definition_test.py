@@ -34,7 +34,7 @@ def test_result_definition():
         name="my first result definition",
         combined_failure_criterion=cfc,
         composite_scopes=[scope],
-        rst_file=r"\\workdir\file.rst",
+        rst_files=[r"\\workdir\file.rst"],
         material_file=r"\\workdir\engd.xml",
     )
 
@@ -58,7 +58,7 @@ def test_result_definition():
     rd.scopes[0].mapping_file = r"\\workdir\solid_model.mapping"
     assert rd.scopes[0].composite_definition == r"\\workdir\ACPCompositeDefinitions.h5"
     assert rd.scopes[0].mapping_file == r"\\workdir\solid_model.mapping"
-    assert rd.rst_file == r"\\workdir\file.rst"
+    assert rd.rst_files == [r"\\workdir\file.rst"]
     assert rd.material_file == r"\\workdir\engd.xml"
 
     rd.scopes[0].write_data_for_full_element_scope = False

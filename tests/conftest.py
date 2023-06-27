@@ -12,6 +12,7 @@ from typing import Mapping
 import uuid
 
 import ansys.dpf.core as dpf
+from packaging import version
 import pytest
 
 from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
@@ -256,7 +257,12 @@ def dpf_server(request: pytest.FixtureRequest):
     ]
 
     if len(active_options) > 1:
-        raise Exception(f"Invalid inputs. Multiple options specified: {active_options}")
+        if (docker_image_tag is not None) and docker_image_tag == "latest":
+            # We don't want to fail if docker_image_tag is not set explicitly
+            # because it has a default value.
+            docker_image_tag = None
+        else:
+            raise Exception(f"Invalid inputs. Multiple options specified: {active_options}")
 
     def start_server_process():
         if running_server_port:
@@ -297,3 +303,13 @@ def dpf_server(request: pytest.FixtureRequest):
         load_composites_plugin(server, ansys_path=installer_path)
 
         yield server
+
+
+@pytest.fixture(params=[False, True])
+def distributed_rst(request, dpf_server):
+    """Fixture that parametrizes tests to run with a distributed RST or not."""
+    res = request.param
+    supports_distributed_rst = version.parse(dpf_server.version) >= version.parse("7.0")
+    if res and not supports_distributed_rst:
+        pytest.skip(f"Distributed RST not supported for server version {dpf_server.version}.")
+    return res

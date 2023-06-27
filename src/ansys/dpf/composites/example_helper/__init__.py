@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 import os
 import tempfile
-from typing import Dict, Optional, cast
+from typing import Dict, List, Optional, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -25,7 +25,7 @@ class _ContinuousFiberCompositeFiles:
 
 @dataclass
 class _ContinuousFiberCompositesExampleFilenames:
-    rst: str
+    rst: List[str]
     composite: Dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
 
@@ -73,7 +73,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     "shell": _ContinuousFiberExampleLocation(
         directory="shell",
         files=_ContinuousFiberCompositesExampleFilenames(
-            rst="shell.rst",
+            rst=["shell.rst"],
             engineering_data="material.engd",
             composite={
                 "shell": _ContinuousFiberCompositeFiles(
@@ -85,7 +85,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     "ins": _ContinuousFiberExampleLocation(
         directory="ins",
         files=_ContinuousFiberCompositesExampleFilenames(
-            rst="beam_181_analysis_model.rst",
+            rst=["beam_181_analysis_model.rst"],
             engineering_data="materials.xml",
             composite={
                 "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5")
@@ -95,7 +95,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     "assembly": _ContinuousFiberExampleLocation(
         directory="assembly",
         files=_ContinuousFiberCompositesExampleFilenames(
-            rst="file.rst",
+            rst=["file.rst"],
             engineering_data="material.engd",
             composite={
                 "solid": _ContinuousFiberCompositeFiles(
@@ -111,7 +111,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     "harmonic": _ContinuousFiberExampleLocation(
         directory="harmonic",
         files=_ContinuousFiberCompositesExampleFilenames(
-            rst="file.rst",
+            rst=["file.rst"],
             engineering_data="MatML.xml",
             composite={
                 "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
@@ -209,7 +209,7 @@ def get_continuous_fiber_example_files(
             all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
-            rst=get_server_path(example_files.files.rst),
+            rst=[get_server_path(rst_path) for rst_path in example_files.files.rst],
             engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
             files_are_local=False,
