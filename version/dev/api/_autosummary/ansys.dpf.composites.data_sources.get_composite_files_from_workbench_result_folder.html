@@ -497,10 +497,9 @@ object, you can follow these steps:</p>
 workbench project. You can determine the different attributes of the
 <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code>: The <code class="docutils literal notranslate"><span class="pre">file.rst</span></code> file that belongs to the cell ID of the solution
-that you want to postprocess. Multiple result files are not supported yet.
-Ensure that <strong>Combine Distributed Result Files</strong> is selected if the solution
-was solved in ‘Distributed’ mode.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code>: A list of files containing either the single <code class="docutils literal notranslate"><span class="pre">file.rst</span></code>
+file that belongs to the cell ID of the solution, or the distributed
+<code class="docutils literal notranslate"><span class="pre">file0.rst</span></code> to <code class="docutils literal notranslate"><span class="pre">fileN.rst</span></code> files.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">engineering_data</span></code>: The <code class="docutils literal notranslate"><span class="pre">MatML.xml</span></code> file in the same folder as the RST file.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">composite</span></code>: There can be multiple composite definitions,
 one definition for each ACP system if shell data is transferred
@@ -538,7 +537,7 @@ shell information and one that exports solid information.</p>
 </ul>
 <p>The code creates the corresponding <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ContinuousFiberCompositesFiles</span><span class="p">(</span>
-    <span class="n">rst</span><span class="o">=</span><span class="s2">&quot;project_root_folder/dp0/SYS/MECH/file.rst&quot;</span><span class="p">,</span>
+    <span class="n">rst</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;project_root_folder/dp0/SYS/MECH/file.rst&quot;</span><span class="p">],</span>
     <span class="n">composite</span><span class="o">=</span><span class="p">{</span>
        <span class="s2">&quot;solid&quot;</span><span class="p">:</span> <span class="n">CompositeDefinitionFiles</span><span class="p">(</span>
             <span class="n">definition</span><span class="o">=</span><span class="s2">&quot;project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5&quot;</span><span class="p">,</span>

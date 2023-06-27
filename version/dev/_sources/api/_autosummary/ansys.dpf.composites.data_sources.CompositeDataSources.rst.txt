@@ -27,6 +27,7 @@ CompositeDataSources
       :toctree:
    
       CompositeDataSources.rst
+      CompositeDataSources.material_support
       CompositeDataSources.composite
       CompositeDataSources.engineering_data
    

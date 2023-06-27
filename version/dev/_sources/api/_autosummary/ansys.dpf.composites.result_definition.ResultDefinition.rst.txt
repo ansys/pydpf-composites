@@ -38,7 +38,7 @@ ResultDefinition
       ResultDefinition.max_chunk_size
       ResultDefinition.measure
       ResultDefinition.name
-      ResultDefinition.rst_file
+      ResultDefinition.rst_files
       ResultDefinition.scopes
       ResultDefinition.stress_strain_eval_mode
       ResultDefinition.time

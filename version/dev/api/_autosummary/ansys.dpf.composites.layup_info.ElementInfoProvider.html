@@ -505,6 +505,10 @@ document.write(`
 objects.</p>
 <p>Initialize the class before a loop and
 call <a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.get_element_info.html#ansys.dpf.composites.layup_info.ElementInfoProvider.get_element_info" title="ansys.dpf.composites.layup_info.ElementInfoProvider.get_element_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_element_info()</span></code></a> for each element.</p>
+<p>Note that the <a class="reference internal" href="#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> class is not fully supported for
+distributed RST files. The <a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.get_element_info.html#ansys.dpf.composites.layup_info.ElementInfoProvider.get_element_info" title="ansys.dpf.composites.layup_info.ElementInfoProvider.get_element_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_element_info()</span></code></a> method will raise an
+exception if the DPF server version does not support reading the required
+information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

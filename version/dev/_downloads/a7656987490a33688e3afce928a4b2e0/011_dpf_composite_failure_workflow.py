@@ -29,6 +29,7 @@ operators that are needed to evaluate composite failure criteria.
 # Load Ansys libraries.
 import ansys.dpf.core as dpf
 
+from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -67,20 +68,18 @@ combined_fc = CombinedFailureCriterion(
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
+composite_data_sources = get_composites_data_sources(composite_files_on_server)
+
 # %%
 # Initialize DPF model and data sources
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Initialize the DPF model and the data sources.
-model = dpf.Model(composite_files_on_server.rst)
-rst_data_source = dpf.DataSources(composite_files_on_server.rst)
+rst_data_source = composite_data_sources.rst
+material_support_data_source = composite_data_sources.material_support
+eng_data_source = composite_data_sources.engineering_data
+composite_definitions_source = composite_data_sources.composite["shell"]
 
-eng_data_source = dpf.DataSources()
-eng_data_source.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
-
-composite_definitions_source = dpf.DataSources()
-composite_definitions_source.add_file_path(
-    composite_files_on_server.composite["shell"].definition, "CompositeDefinitions"
-)
+model = dpf.Model(rst_data_source)
 
 # %%
 # Set up providers
@@ -95,7 +94,8 @@ mesh_provider = model.metadata.mesh_provider
 # The material support contains all materials from the RST file.
 material_support_provider = dpf.Operator("support_provider")
 material_support_provider.inputs.property("mat")
-material_support_provider.inputs.data_sources(rst_data_source)
+material_support_provider.inputs.data_sources(material_support_data_source)
+material_support_provider.run()
 
 # %%
 # Set up the result information provider, which gets

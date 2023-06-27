@@ -46,12 +46,13 @@ preparing files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-47
+.. GENERATED FROM PYTHON SOURCE LINES 30-48
 
 .. code-block:: default
 
     import ansys.dpf.core as dpf
 
+    from ansys.dpf.composites.data_sources import get_composites_data_sources
     from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.failure_criteria import (
         CombinedFailureCriterion,
@@ -74,11 +75,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-49
+.. GENERATED FROM PYTHON SOURCE LINES 49-50
 
 Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-65
+.. GENERATED FROM PYTHON SOURCE LINES 50-66
 
 .. code-block:: default
 
@@ -105,17 +106,18 @@ Configure the combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-67
+.. GENERATED FROM PYTHON SOURCE LINES 67-68
 
 Start a DPF server and prepare files
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-70
+.. GENERATED FROM PYTHON SOURCE LINES 68-73
 
 .. code-block:: default
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
+    composite_data_sources = get_composites_data_sources(composite_files_on_server)
 
 
 
@@ -123,26 +125,23 @@ Start a DPF server and prepare files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-74
+
+.. GENERATED FROM PYTHON SOURCE LINES 74-77
 
 Initialize DPF model and data sources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Initialize the DPF model and the data sources.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-85
+.. GENERATED FROM PYTHON SOURCE LINES 77-84
 
 .. code-block:: default
 
-    model = dpf.Model(composite_files_on_server.rst)
-    rst_data_source = dpf.DataSources(composite_files_on_server.rst)
+    rst_data_source = composite_data_sources.rst
+    material_support_data_source = composite_data_sources.material_support
+    eng_data_source = composite_data_sources.engineering_data
+    composite_definitions_source = composite_data_sources.composite["shell"]
 
-    eng_data_source = dpf.DataSources()
-    eng_data_source.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
-
-    composite_definitions_source = dpf.DataSources()
-    composite_definitions_source.add_file_path(
-        composite_files_on_server.composite["shell"].definition, "CompositeDefinitions"
-    )
+    model = dpf.Model(rst_data_source)
 
 
 
@@ -151,13 +150,13 @@ Initialize the DPF model and the data sources.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-89
+.. GENERATED FROM PYTHON SOURCE LINES 85-88
 
 Set up providers
 ~~~~~~~~~~~~~~~~
 Set up the mesh provider.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-91
+.. GENERATED FROM PYTHON SOURCE LINES 88-90
 
 .. code-block:: default
 
@@ -170,20 +169,21 @@ Set up the mesh provider.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-96
+.. GENERATED FROM PYTHON SOURCE LINES 91-95
 
 Set up the material support provider.
 The material support provider takes care of mapping the materials in the RST file to
 the materials in the composite definitions.
 The material support contains all materials from the RST file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-100
+.. GENERATED FROM PYTHON SOURCE LINES 95-100
 
 .. code-block:: default
 
     material_support_provider = dpf.Operator("support_provider")
     material_support_provider.inputs.property("mat")
-    material_support_provider.inputs.data_sources(rst_data_source)
+    material_support_provider.inputs.data_sources(material_support_data_source)
+    material_support_provider.run()
 
 
 
@@ -365,7 +365,7 @@ Plot the maximum and minimum values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.456 seconds)
+   **Total running time of the script:** ( 0 minutes  9.215 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_dpf_composite_failure_workflow.py:
