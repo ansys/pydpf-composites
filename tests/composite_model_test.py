@@ -19,17 +19,12 @@ from ansys.dpf.composites.result_definition import FailureMeasure
 from .helper import ContinuousFiberCompositesFiles, Timer
 
 
-@pytest.fixture(params=[False, True])
-def distributed(request):
-    return request.param
-
-
 @pytest.fixture
-def data_files(request, distributed):
+def data_files(distributed_rst):
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
     # for actual performance tests
     # return get_ger_data_files()
-    return get_dummy_data_files(distributed=distributed)
+    return get_dummy_data_files(distributed=distributed_rst)
 
 
 def get_assembly_data_files():
@@ -72,8 +67,8 @@ def get_dummy_data_files(distributed: bool = False):
     )
 
 
-def test_basic_functionality_of_composite_model(dpf_server, data_files, distributed):
-    if distributed:
+def test_basic_functionality_of_composite_model(dpf_server, data_files, distributed_rst):
+    if distributed_rst:
         # TODO: remove once backend issue #856638 is resolved
         pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 
@@ -319,9 +314,9 @@ def test_composite_model_element_scope(dpf_server, data_files):
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
 
 
-def test_composite_model_named_selection_scope(dpf_server, data_files, distributed):
+def test_composite_model_named_selection_scope(dpf_server, data_files, distributed_rst):
     """Ensure that the scoping by Named Selection is supported"""
-    if distributed:
+    if distributed_rst:
         # TODO: remove once backend issue #856638 is resolved
         pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 

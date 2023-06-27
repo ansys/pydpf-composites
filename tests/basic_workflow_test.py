@@ -7,7 +7,6 @@ import pytest
 from .utils import get_basic_combined_failure_criterion
 
 
-@pytest.mark.parametrize("distributed_rst", [False, True])
 def test_basic_workflow(dpf_server, distributed_rst):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 

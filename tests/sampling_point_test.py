@@ -26,7 +26,6 @@ from ansys.dpf.composites.result_definition import (
 from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
 
 
-@pytest.mark.parametrize("distributed_rst", [False, True])
 def test_sampling_point(dpf_server, distributed_rst):
     """Basic test with a running server"""
 
