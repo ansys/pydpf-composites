@@ -1,5 +1,5 @@
 """Composite Model."""
-from typing import Collection, Dict, List, Optional, Sequence, cast
+from typing import Collection, Dict, Optional, Sequence
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
@@ -34,19 +34,8 @@ class CompositeModel:
         lay-up information is added to the DPF meshed regions. Depending on the use
         case, it can be more efficient to create the providers separately.
 
-        For assemblies with multiple composite definition files, separate meshes and
-        lay-up operators are generated (wrapped by the ``CompositeInfo`` class). This
-        is needed because the lay-up provider can currently only add the data of a single
-        composite definitions file to a mesh. All functions that depend on composite
-        definitions mut be called with the correct ``composite_definition_label``
-        parameter. The layered elements that get information from a given
-        composite definition label can be determined by calling
-        ``self.get_all_layered_element_ids_for_composite_definition_label``.
-        All the elements that are not part of a composite definition are either homogeneous
-        solids or layered models defined outside of an ACP model. The
-        ``self.composite_definition_labels`` command returns all available composite
-        definition labels. For more information, see
-        :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py`.
+        Assemblies are supported depending on the version of the DPF server.
+        Please use version 7.0 (2024 R1) or later to process assemblies.
 
     Parameters
     ----------
@@ -67,6 +56,7 @@ class CompositeModel:
         server: BaseServer,
         default_unit_system: Optional[UnitSystem] = None,
     ):
+        """Initialize the composite model interface."""
         self._interface = _composite_model_interface_factory(server)(
             composite_files, server, default_unit_system
         )

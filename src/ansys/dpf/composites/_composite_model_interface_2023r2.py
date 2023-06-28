@@ -1,5 +1,4 @@
 """Composite Model Interface 2023R2."""
-from dataclasses import dataclass
 from typing import Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf

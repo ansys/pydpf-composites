@@ -1,6 +1,5 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
-from dataclasses import dataclass
 from typing import Collection, Dict, List, Optional, Sequence, cast
 
 import ansys.dpf.core as dpf
@@ -28,7 +27,7 @@ from .layup_info.material_properties import MaterialProperty, get_constant_prope
 from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
-from .unit_system import UnitSystemProvider, get_unit_system
+from .unit_system import get_unit_system
 
 __all__ = "CompositeModelInterface"
 
@@ -349,7 +348,6 @@ class CompositeModelInterface:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-
         time_in = time
 
         if composite_definition_label is None:
@@ -538,7 +536,6 @@ class CompositeModelInterface:
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """
-
         ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
         ins_operator.inputs.materials_container(self._material_operators.material_provider)
         ins_operator.inputs.mesh(self.get_mesh())

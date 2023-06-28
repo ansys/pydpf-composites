@@ -416,7 +416,7 @@ def _data_sources_result_key(data_sources: DataSources, index: int):
 
 def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSources) -> DataSources:
     """
-    Helper function to convert DataSources of composite.
+    Prepare DataSources of composite for the DPF server.
 
     Ensure that DataSources object is compatible with the version of the layup provider.
     """
