@@ -407,14 +407,22 @@ def get_composites_data_sources(
 
 
 def _data_sources_num_result_keys(data_sources: DataSources) -> int:
+    # pylint: disable=protected-access
     return cast(
-        int, data_sources._api.data_sources_get_num_result_keys(data_sources)  # pylint: disable=protected-access
+        int,
+        data_sources._api.data_sources_get_num_result_keys(
+            data_sources
+        ),
     )
 
 
 def _data_sources_result_key(data_sources: DataSources, index: int) -> str:
+    # pylint: disable=protected-access
     return cast(
-        str, data_sources._api.data_sources_get_result_key_by_index(data_sources, index)  # pylint: disable=protected-access
+        str,
+        data_sources._api.data_sources_get_result_key_by_index(
+            data_sources, index
+        ),
     )
 
 
@@ -424,6 +432,7 @@ def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSourc
 
     Ensure that DataSources object is compatible with the version of the layup provider.
     """
+    # pylint: disable=protected-access
     if version.parse(data_sources.composite._server.version) < version.parse("7.0"):
         # Python API of DataSources does not allow to get the path by key and resultKey
         if _data_sources_num_result_keys(data_sources.composite) > 1:
