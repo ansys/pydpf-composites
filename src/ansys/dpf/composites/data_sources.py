@@ -1,5 +1,6 @@
 """Composite data sources."""
 from dataclasses import dataclass
+from packaging import version
 import os
 import pathlib
 from typing import Callable, Dict, List, Optional, Sequence, Union
@@ -15,6 +16,7 @@ __all__ = (
     "CompositeDataSources",
     "get_composite_files_from_workbench_result_folder",
     "get_composites_data_sources",
+    "get_composite_datasource_for_layup_provider"
 )
 
 _SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
@@ -25,6 +27,9 @@ _MATML_FILENAME = "MatML.xml"
 _RST_SUFFIX = ".rst"
 _RST_PREFIX = "file"
 _MAPPING_SUFFIX = ".mapping"
+
+_LAYUPFILE_INDEX_KEY = "CompositeDefinitions"
+_MAPPINGFILE_INDEX_KEY = "MappingCompositeDefinitions"
 
 
 @dataclass
@@ -89,10 +94,7 @@ class ShortFiberCompositesFiles:
     files_are_local: bool = True
 
 
-# roosre June 2023: refactor this class. Member composite should become
-# a DataSources instead of a dict since assemblies are supported in
-# the meanwhile. We can also get rid of composite_definition_label.
-# For instance used in add_layup_info_to_mesh.
+# roosre June 2023: todo add deprecation warning where composite definition label is used
 @dataclass(frozen=True)
 class CompositeDataSources:
     """Provides data sources related to the composite lay-up."""
@@ -104,7 +106,7 @@ class CompositeDataSources:
     # material support from the first RST file. This is a workaround until the
     # support for distributed RST is added.
     material_support: DataSources
-    composite: Dict[str, DataSources]
+    composite: DataSources
     engineering_data: DataSources
 
 
@@ -376,21 +378,75 @@ def get_composites_data_sources(
     engineering_data_source.add_file_path(
         continuous_composite_files.engineering_data, "EngineeringData"
     )
-    composite_data_sources = {}
+    
+    composite_data_source = DataSources()
+    set_part_key = len(continuous_composite_files.composite) > 1
+
     for key, composite_files in continuous_composite_files.composite.items():
-        composite_data_source = DataSources()
-        composite_data_source.add_file_path(composite_files.definition, "CompositeDefinitions")
+        if set_part_key:
+            composite_data_source.add_file_path_for_specified_result(
+                composite_files.definition,
+                _LAYUPFILE_INDEX_KEY,
+                key
+            )
+        else:
+            composite_data_source.add_file_path(composite_files.definition, _LAYUPFILE_INDEX_KEY)
 
         if composite_files.mapping is not None:
-            composite_data_source.add_file_path(
-                composite_files.mapping, "MappingCompositeDefinitions"
-            )
-
-        composite_data_sources[key] = composite_data_source
+            if set_part_key:
+                composite_data_source.add_file_path_for_specified_result(
+                    composite_files.mapping,
+                    _MAPPINGFILE_INDEX_KEY,
+                    key
+                )
+            else:
+                composite_data_source.add_file_path(
+                    composite_files.mapping, _MAPPINGFILE_INDEX_KEY
+                )
 
     return CompositeDataSources(
         rst=rst_data_source,
         material_support=material_support_data_source,
-        composite=composite_data_sources,
+        composite=composite_data_source,
         engineering_data=engineering_data_source,
     )
+
+
+def _data_sources_num_result_keys(data_sources: DataSources) -> int:
+    return data_sources._api.data_sources_get_num_result_keys(data_sources)
+
+def _data_sources_result_key(data_sources: DataSources, index: int):
+    return data_sources._api.data_sources_get_result_key_by_index(data_sources, index)
+def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSources) -> DataSources:
+    """
+    Helper function to convert DataSources of composite.
+
+    Ensure that DataSources object is compatible with the version of the layup provider.
+    """
+    if version.parse(data_sources.composite._server.version) < version.parse("7.0"):
+        # Python API of DataSources does not allow to get the path by key and resultKey
+        if _data_sources_num_result_keys(data_sources.composite) > 1:
+            raise RuntimeError("Assemblies are no longer supported with DPF Server 6.1 (2023R2) or earlier."
+                               " Please use DPF Sever 7.0 (2024 R1) or later.")
+
+        if _data_sources_result_key(data_sources.composite, 0):
+            # Datasources has one result key -> create new datasource without key
+            composite_definition_file_path = data_sources.composite._api.data_sources_get_path(
+                data_sources.composite,
+                _LAYUPFILE_INDEX_KEY,
+                0
+            )
+            mapping_file_path = data_sources.composite._api.data_sources_get_path(
+                data_sources.composite,
+                _MAPPINGFILE_INDEX_KEY,
+                0
+            )
+            composite_data_source = DataSources
+            composite_data_source.add_file_path(composite_definition_file_path, _LAYUPFILE_INDEX_KEY)
+            composite_data_source.add_file_path(mapping_file_path, _MAPPINGFILE_INDEX_KEY)
+            return composite_data_source
+        else:
+            # result key is not set. Datasource can be used directly
+            return data_sources.composite
+
+    return data_sources.composite

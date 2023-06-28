@@ -1,13 +1,14 @@
 """Helper functions to add lay-up information to a DPF meshed region."""
-from typing import Optional
+from typing import Optional, Sequence
 from warnings import warn
+from packaging import version
 
-from ansys.dpf.core import MeshedRegion, Operator
+from ansys.dpf.core import DataSources, MeshedRegion, Operator
+from ansys.dpf.gate import integral_types
 
-from ..data_sources import CompositeDataSources
+from ..data_sources import CompositeDataSources, get_composite_datasource_for_layup_provider
 from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
-
 
 def add_layup_info_to_mesh(
     data_sources: CompositeDataSources,
@@ -41,22 +42,23 @@ def add_layup_info_to_mesh(
     :
         Lay-up provider operator.
     """
-    if composite_definition_label is None:
-        composite_definition_labels = list(data_sources.composite.keys())
-        if len(composite_definition_labels) == 1:
-            composite_definition_label = composite_definition_labels[0]
-        else:
-            raise RuntimeError(
-                f"Multiple composite definition keys exists: {composite_definition_labels}. "
-                f"Please specify a key explicitly."
-            )
+
+    composite_data_sources = get_composite_datasource_for_layup_provider(data_sources)
+    if composite_definition_label:
+        warn(
+            "Calling add_layup_info_to_mesh with"
+            "composite_definition_label is deprecated. Assemblies are fully"
+            "supported with DPF Server 7.0 (2024 R1) or later.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
     # Set up the lay-up provider.
     # Reads the composite definition file and enriches the mesh
     # with the composite lay-up information.
     layup_provider = Operator("composite::layup_provider_operator")
     layup_provider.inputs.mesh(mesh)
-    layup_provider.inputs.data_sources(data_sources.composite[composite_definition_label])
+    layup_provider.inputs.data_sources(composite_data_sources)
     layup_provider.inputs.abstract_field_support(
         material_operators.material_support_provider.outputs.abstract_field_support
     )

@@ -1,4 +1,5 @@
-"""Composite Model Interface 2023R2."""
+"""Composite Model Interface."""
+# New interface after 2023 R2
 from dataclasses import dataclass
 from typing import Collection, Dict, List, Optional, Sequence, cast
 
@@ -29,45 +30,12 @@ from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
-__all__ = ("CompositeModelInterface_2023R2")
+__all__ = ("CompositeModelInterface")
 
-class CompositeInfo:
-    """Contains composite data providers for a composite definition."""
-
-    def __init__(
-        self,
-        data_sources: CompositeDataSources,
-        composite_definition_label: str,
-        streams_provider: dpf.Operator,
-        material_operators: MaterialOperators,
-        unit_system: UnitSystemProvider,
-    ):
-        """Initialize ``CompositeInfo`` class and add enriched mesh with composite information."""
-        mesh_provider = dpf.Operator("MeshProvider")
-        mesh_provider.inputs.data_sources(data_sources.rst)
-        self.mesh = mesh_provider.outputs.mesh()
-
-        self.layup_provider = add_layup_info_to_mesh(
-            mesh=self.mesh,
-            data_sources=data_sources,
-            material_operators=material_operators,
-            unit_system=unit_system,
-            composite_definition_label=composite_definition_label,
-        )
-
-        self.element_info_provider = get_element_info_provider(
-            mesh=self.mesh,
-            stream_provider_or_data_source=streams_provider,
-        )
-        self.layup_properties_provider = LayupPropertiesProvider(
-            layup_provider=self.layup_provider, mesh=self.mesh
-        )
-
-
-class CompositeModelInterface2023R2:
+class CompositeModelInterface:
     """Provides access to the basic composite postprocessing functionality.
 
-    This interface supports DPF server version up to and till 2023R2 (6.1).
+    This interface supports DPF server version 7.0 and later.
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated. The composite_files provided are automatically
@@ -79,19 +47,8 @@ class CompositeModelInterface2023R2:
         lay-up information is added to the DPF meshed regions. Depending on the use
         case, it can be more efficient to create the providers separately.
 
-        For assemblies with multiple composite definition files, separate meshes and
-        lay-up operators are generated (wrapped by the ``CompositeInfo`` class). This
-        is needed because the lay-up provider can currently only add the data of a single
-        composite definitions file to a mesh. All functions that depend on composite
-        definitions mut be called with the correct ``composite_definition_label``
-        parameter. The layered elements that get information from a given
-        composite definition label can be determined by calling
-        ``self.get_all_layered_element_ids_for_composite_definition_label``.
-        All the elements that are not part of a composite definition are either homogeneous
-        solids or layered models defined outside of an ACP model. The
-        ``self.composite_definition_labels`` command returns all available composite
-        definition labels. For more information, see
-        :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py`.
+        Assemblies are now fully supported and so the handling is much easier if
+        compared with previous versions of the backend.
 
     Parameters
     ----------
@@ -129,26 +86,20 @@ class CompositeModelInterface2023R2:
             engineering_data_source=self._data_sources.engineering_data,
         )
 
-        if len(composite_files.composite) > 1:
-            raise RuntimeError("Assemblies are no longer supported with DPF Server 6.1 (2023R2) or earlier."
-                               " Please use DPF Sever 7.0 (2024 R1) or later.")
-
-        label = list(composite_files.composite.keys())[0]
-        self._composite_infos: Dict[str, CompositeInfo] = {label: CompositeInfo(
-            data_sources=self._data_sources,
-            composite_definition_label=label,
-            streams_provider=self._core_model.metadata.streams_provider,
-            material_operators=self._material_operators,
+        self._layup_provider = add_layup_info_to_mesh(
+            mesh=self.get_mesh(),
+            data_sources=self.data_sources,
+            material_operators=self.material_operators,
             unit_system=self._unit_system,
-        )}
-        #for composite_definition_label in self._data_sources.composite:
-        #    self._composite_infos[composite_definition_label] = CompositeInfo(
-        #        data_sources=self._data_sources,
-        #        composite_definition_label=composite_definition_label,
-        #        streams_provider=self._core_model.metadata.streams_provider,
-        #        material_operators=self._material_operators,
-        #        unit_system=self._unit_system,
-        #    )
+        )
+
+        self.element_info_provider = get_element_info_provider(
+            mesh=self.get_mesh(),
+            stream_provider_or_data_source=self._stream_provider(),
+        )
+        self.layup_properties_provider = LayupPropertiesProvider(
+            layup_provider=self.layup_provider, mesh=self.get_mesh()
+        )
 
     @property
     def composite_definition_labels(self) -> Sequence[str]:
@@ -162,23 +113,6 @@ class CompositeModelInterface2023R2:
     def composite_files(self) -> ContinuousFiberCompositesFiles:
         """Get the composite file paths on the server."""
         return self._composite_files
-
-    def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
-        """Get the underlying DPF meshed region.
-
-        The meshed region contains the lay-up information.
-
-        Parameters
-        ----------
-        composite_definition_label :
-            Label of the composite definition, which is the
-            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
-            attribute. This parameter is only required for assemblies.
-            See the note about assemblies in the description for the :class:`CompositeModel` class.
-        """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-        return self._composite_infos[composite_definition_label].mesh
 
     @property
     def data_sources(self) -> CompositeDataSources:
@@ -195,6 +129,13 @@ class CompositeModelInterface2023R2:
         """Material operators."""
         return self._material_operators
 
+    def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
+        """Get the underlying DPF meshed region.
+
+        The meshed region contains the lay-up information.
+        """
+        return self._core_model.metadata.meshed_region
+
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operators.
 
@@ -207,9 +148,7 @@ class CompositeModelInterface2023R2:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
 
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-        return self._composite_infos[composite_definition_label].layup_provider
+        return self._layup_provider
 
     def evaluate_failure_criteria(
         self,
@@ -251,6 +190,7 @@ class CompositeModelInterface2023R2:
         if composite_scope is None:
             composite_scope = CompositeScope()
 
+        # todo: how to pass the time ids and ply_scope
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
         ns_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
@@ -264,41 +204,119 @@ class CompositeModelInterface2023R2:
             # is irrelevant for cases without a ply scope, we set it to False here.
             write_data_for_full_element_scope = False
 
-        scopes = []
+        has_layup_provider = len(self._composite_files.composite) > 0
 
-        # roosre June 2023: This should be simplified as part of the implementation
-        # of the new workflow where the result definition is no longer used. The
-        # backend supports multiple lay-up definitions in the meanwhile.
-        for composite_definition_label in self.composite_definition_labels:
-            composite_files = self._composite_files.composite[composite_definition_label]
-            scopes.append(
-                ResultDefinitionScope(
-                    composite_definition=composite_files.definition,
-                    mapping_file=composite_files.mapping,
-                    element_scope=element_scope_in,
-                    ply_scope=ply_scope_in,
-                    named_selection_scope=ns_in,
-                    write_data_for_full_element_scope=write_data_for_full_element_scope,
-                )
+        scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
+        scope_config_reader_op.inputs.write_data_for_full_element_scope(write_data_for_full_element_scope)
+
+        chunking_config = {"max_chunk_size": 50000}
+        if ns_in:
+            chunking_config["named_selections"] = ns_in
+
+        chunking_data_tree = dpf.DataTree(chunking_config)
+        chunking_generator = dpf.Operator("composite::scope_generator")
+        chunking_generator.inputs.stream_provider(self._stream_provider())
+        chunking_generator.inputs.data_tree(chunking_data_tree)
+        chunking_generator.inputs.data_sources(self.data_sources.composite)
+        if element_scope_in:
+            element_scoping = dpf.Scoping()
+            element_scoping.ids = element_scope_in
+            chunking_generator.inputs.element_scoping(element_scoping)
+
+        min_merger = dpf.Operator("merge::fields_container")
+        max_merger = dpf.Operator("merge::fields_container")
+
+        merge_index = 0
+
+        while True:
+            chunking_generator.inputs.generator_counter(merge_index)
+            finished = chunking_generator.outputs.is_finished()
+            if finished:
+                break
+
+            evaluate_failure_criterion_per_scope_op = dpf.Operator(
+                "composite::evaluate_failure_criterion_per_scope"
             )
 
-        rd = ResultDefinition(
-            name="combined failure criteria",
-            rst_files=self._composite_files.rst,
-            material_file=self._composite_files.engineering_data,
-            combined_failure_criterion=combined_criterion,
-            composite_scopes=scopes,
-            time=time_in,
-            measure=measure.value,
-        )
-        failure_operator = dpf.Operator("composite::composite_failure_operator")
+            # Todo: live evaluation flag missing
+            evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
+                combined_criterion.to_json())
 
-        failure_operator.inputs.result_definition(rd.to_json())
+            evaluate_failure_criterion_per_scope_op.inputs.scope_configuration(
+                scope_config_reader_op.outputs
+            )
+
+            evaluate_failure_criterion_per_scope_op.inputs.element_scoping(
+                chunking_generator.outputs
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.materials_container(
+                self.material_operators.material_provider.outputs
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
+                self._stream_provider().outputs
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.mesh(
+                self.get_mesh()
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
+                has_layup_provider
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
+                self._layup_provider.outputs.section_data_container
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.material_fields(
+                self._layup_provider.outputs.material_fields
+            )
+            evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
+                self._layup_provider.outputs.mesh_properties_container)
+            #always set to true to ensure that solid stacks are grouped
+            evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
+
+            minmax_el_op = dpf.Operator("composite::minmax_per_element_operator")
+            minmax_el_op.inputs.fields_container(
+                evaluate_failure_criterion_per_scope_op.outputs.failure_container
+            )
+            # check if that is correct
+            minmax_el_op.inputs.mesh(self.get_mesh())
+            minmax_el_op.inputs.material_support(self.material_operators.material_support_provider.outputs)
+
+            if has_layup_provider:
+                add_default_data_op = dpf.Operator("composite::add_default_data")
+                add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
+                add_default_data_op.inputs.time_id(evaluate_failure_criterion_per_scope_op.outputs.time_id)
+                # check if that is correct
+                add_default_data_op.inputs.mesh(self.get_mesh())
+
+                add_default_data_op.inputs.fields_container(minmax_el_op.outputs.field_min)
+                add_default_data_op.run()
+
+                add_default_data_op.inputs.fields_container(minmax_el_op.outputs.field_max)
+                add_default_data_op.run()
+
+            # It is important to evaluate the field here, otherwise the merge operator detects
+            # the workflow as changed if upstream operator inputs change
+            min_container = minmax_el_op.outputs.field_min()
+            max_container = minmax_el_op.outputs.field_max()
+
+            converter_op = dpf.Operator("composite::failure_measure_converter")
+            converter_op.inputs.fields_container(min_container)
+            converter_op.inputs.measure_type(measure)
+            converter_op.run()
+
+            converter_op.inputs.fields_container(max_container)
+            converter_op.run()
+
+            min_merger.connect(merge_index, min_container)
+            max_merger.connect(merge_index, max_container)
+            merge_index = merge_index + 1
+
+        if merge_index == 0:
+            raise RuntimeError("No output is generated! Please check the scope (element and ply ids).")
 
         if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
-            return failure_operator.outputs.fields_containerMax()
+            return max_merger.outputs.merged_fields_container()
         else:
-            return failure_operator.outputs.fields_containerMin()
+            return min_merger.outputs.merged_fields_container()
 
     def get_sampling_point(
         self,
@@ -324,6 +342,7 @@ class CompositeModelInterface2023R2:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
+
         time_in = time
 
         if composite_definition_label is None:
@@ -373,11 +392,7 @@ class CompositeModelInterface2023R2:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-        return self._composite_infos[
-            composite_definition_label
-        ].element_info_provider.get_element_info(element_id)
+        return self._element_info_provider.get_element_info(element_id)
 
     def get_property_for_all_layers(
         self,
@@ -404,17 +419,12 @@ class CompositeModelInterface2023R2:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-        layup_properties_provider = self._composite_infos[
-            composite_definition_label
-        ].layup_properties_provider
         if layup_property == LayerProperty.ANGLES:
-            return layup_properties_provider.get_layer_angles(element_id)
+            return self._layup_properties_provider.get_layer_angles(element_id)
         if layup_property == LayerProperty.THICKNESSES:
-            return layup_properties_provider.get_layer_thicknesses(element_id)
+            return self._layup_properties_provider.get_layer_thicknesses(element_id)
         if layup_property == LayerProperty.SHEAR_ANGLES:
-            return layup_properties_provider.get_layer_shear_angles(element_id)
+            return self._layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 
     def get_analysis_plies(
@@ -436,12 +446,7 @@ class CompositeModelInterface2023R2:
             The dictionary only contains the analysis plies in the specified composite
             definition.
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-        layup_properties_provider = self._composite_infos[
-            composite_definition_label
-        ].layup_properties_provider
-        return layup_properties_provider.get_analysis_plies(element_id)
+        return self._layup_properties_provider.get_analysis_plies(element_id)
 
     def get_element_laminate_offset(
         self, element_id: int, composite_definition_label: Optional[str] = None
@@ -460,12 +465,7 @@ class CompositeModelInterface2023R2:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-        layup_properties_provider = self._composite_infos[
-            composite_definition_label
-        ].layup_properties_provider
-        return layup_properties_provider.get_element_laminate_offset(element_id)
+        return self._layup_properties_provider.get_element_laminate_offset(element_id)
 
     def get_constant_property_dict(
         self,
@@ -494,13 +494,11 @@ class CompositeModelInterface2023R2:
             The dictionary only contains the materials of the analysis plies defined
             in the specified composite definition.
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
         return get_constant_property_dict(
             material_properties=material_properties,
             materials_provider=self.material_operators.material_provider,
-            data_source_or_streams_provider=self.core_model.metadata.streams_provider,
-            mesh=self.get_mesh(composite_definition_label),
+            data_source_or_streams_provider=self._streams_provider(),
+            mesh=self.get_mesh(),
         )
 
     def get_result_times_or_frequencies(self) -> NDArray[np.double]:
@@ -533,17 +531,14 @@ class CompositeModelInterface2023R2:
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """
-        if composite_definition_label is None:
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
 
-        layup_provider = self._composite_infos[composite_definition_label].layup_provider
         ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
         ins_operator.inputs.materials_container(self._material_operators.material_provider)
-        ins_operator.inputs.mesh(self.get_mesh(composite_definition_label))
+        ins_operator.inputs.mesh(self.get_mesh())
         ins_operator.inputs.mesh_properties_container(
-            layup_provider.outputs.mesh_properties_container
+            self._layup_provider.outputs.mesh_properties_container
         )
-        ins_operator.inputs.section_data_container(layup_provider.outputs.section_data_container)
+        ins_operator.inputs.section_data_container(self._layup_provider.outputs.section_data_container)
         ins_operator.inputs.strains_container(strains)
         ins_operator.inputs.stresses_container(stresses)
 
@@ -565,16 +560,10 @@ class CompositeModelInterface2023R2:
         """
         return cast(
             List[int],
-            self.get_mesh(composite_definition_label)
+            self.get_mesh()
             .property_field("element_layer_indices")
             .scoping.ids,
         )
 
-    def _first_composite_definition_label_if_only_one(self) -> str:
-        if len(self.composite_definition_labels) == 1:
-            return self.composite_definition_labels[0]
-        else:
-            raise RuntimeError(
-                f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
-                f"Specify a key explicitly."
-            )
+    def _stream_provider(self) -> Operator:
+        return self._core_model.metadata.streams_provider
