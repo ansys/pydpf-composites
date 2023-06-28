@@ -210,7 +210,7 @@ class CompositeModelInterface:
             write_data_for_full_element_scope
         )
 
-        chunking_config: Dict[str, Union[int, Sequence[int]]] = {"max_chunk_size": 50000}
+        chunking_config: Dict[str, Union[int, Sequence[str]]] = {"max_chunk_size": 50000}
         if ns_in:
             chunking_config["named_selections"] = ns_in
 
