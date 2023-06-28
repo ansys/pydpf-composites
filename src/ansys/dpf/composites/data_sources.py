@@ -407,11 +407,15 @@ def get_composites_data_sources(
 
 
 def _data_sources_num_result_keys(data_sources: DataSources) -> int:
-    return cast(int, data_sources._api.data_sources_get_num_result_keys(data_sources)) # pylint: disable=protected-access
+    return cast(
+        int, data_sources._api.data_sources_get_num_result_keys(data_sources)  # pylint: disable=protected-access
+    )
 
 
 def _data_sources_result_key(data_sources: DataSources, index: int) -> str:
-    return cast(str, data_sources._api.data_sources_get_result_key_by_index(data_sources, index))  # pylint: disable=protected-access
+    return cast(
+        str, data_sources._api.data_sources_get_result_key_by_index(data_sources, index)  # pylint: disable=protected-access
+    )
 
 
 def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSources) -> DataSources:
@@ -430,12 +434,14 @@ def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSourc
 
         if _data_sources_result_key(data_sources.composite, 0):
             # Datasources has one result key -> create new datasource without key
+            # pylint: disable=protected-access
             composite_definition_file_path = data_sources.composite._api.data_sources_get_path(
                 data_sources.composite, _LAYUPFILE_INDEX_KEY, 0
-            ) # pylint: disable=protected-access
+            )
+            # pylint: disable=protected-access
             mapping_file_path = data_sources.composite._api.data_sources_get_path(
                 data_sources.composite, _MAPPINGFILE_INDEX_KEY, 0
-            ) # pylint: disable=protected-access
+            )
             composite_data_source = DataSources
             composite_data_source.add_file_path(
                 composite_definition_file_path, _LAYUPFILE_INDEX_KEY
