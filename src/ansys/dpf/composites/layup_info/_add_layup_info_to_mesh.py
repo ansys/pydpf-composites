@@ -1,14 +1,15 @@
 """Helper functions to add lay-up information to a DPF meshed region."""
 from typing import Optional, Sequence
 from warnings import warn
-from packaging import version
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator
 from ansys.dpf.gate import integral_types
+from packaging import version
 
 from ..data_sources import CompositeDataSources, get_composite_datasource_for_layup_provider
 from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
+
 
 def add_layup_info_to_mesh(
     data_sources: CompositeDataSources,

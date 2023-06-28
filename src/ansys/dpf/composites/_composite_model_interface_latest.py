@@ -30,7 +30,8 @@ from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
-__all__ = ("CompositeModelInterface")
+__all__ = "CompositeModelInterface"
+
 
 class CompositeModelInterface:
     """Provides access to the basic composite postprocessing functionality.
@@ -207,7 +208,9 @@ class CompositeModelInterface:
         has_layup_provider = len(self._composite_files.composite) > 0
 
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config_reader_op.inputs.write_data_for_full_element_scope(write_data_for_full_element_scope)
+        scope_config_reader_op.inputs.write_data_for_full_element_scope(
+            write_data_for_full_element_scope
+        )
 
         chunking_config = {"max_chunk_size": 50000}
         if ns_in:
@@ -240,7 +243,8 @@ class CompositeModelInterface:
 
             # Todo: live evaluation flag missing
             evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
-                combined_criterion.to_json())
+                combined_criterion.to_json()
+            )
 
             evaluate_failure_criterion_per_scope_op.inputs.scope_configuration(
                 scope_config_reader_op.outputs
@@ -255,12 +259,8 @@ class CompositeModelInterface:
             evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
                 self._stream_provider().outputs
             )
-            evaluate_failure_criterion_per_scope_op.inputs.mesh(
-                self.get_mesh()
-            )
-            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
-                has_layup_provider
-            )
+            evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
+            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
             evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
                 self._layup_provider.outputs.section_data_container
             )
@@ -268,8 +268,9 @@ class CompositeModelInterface:
                 self._layup_provider.outputs.material_fields
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
-                self._layup_provider.outputs.mesh_properties_container)
-            #always set to true to ensure that solid stacks are grouped
+                self._layup_provider.outputs.mesh_properties_container
+            )
+            # always set to true to ensure that solid stacks are grouped
             evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
 
             minmax_el_op = dpf.Operator("composite::minmax_per_element_operator")
@@ -278,12 +279,16 @@ class CompositeModelInterface:
             )
             # check if that is correct
             minmax_el_op.inputs.mesh(self.get_mesh())
-            minmax_el_op.inputs.material_support(self.material_operators.material_support_provider.outputs)
+            minmax_el_op.inputs.material_support(
+                self.material_operators.material_support_provider.outputs
+            )
 
             if has_layup_provider:
                 add_default_data_op = dpf.Operator("composite::add_default_data")
                 add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
-                add_default_data_op.inputs.time_id(evaluate_failure_criterion_per_scope_op.outputs.time_id)
+                add_default_data_op.inputs.time_id(
+                    evaluate_failure_criterion_per_scope_op.outputs.time_id
+                )
                 # check if that is correct
                 add_default_data_op.inputs.mesh(self.get_mesh())
 
@@ -311,7 +316,9 @@ class CompositeModelInterface:
             merge_index = merge_index + 1
 
         if merge_index == 0:
-            raise RuntimeError("No output is generated! Please check the scope (element and ply ids).")
+            raise RuntimeError(
+                "No output is generated! Please check the scope (element and ply ids)."
+            )
 
         if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
             return max_merger.outputs.merged_fields_container()
@@ -538,7 +545,9 @@ class CompositeModelInterface:
         ins_operator.inputs.mesh_properties_container(
             self._layup_provider.outputs.mesh_properties_container
         )
-        ins_operator.inputs.section_data_container(self._layup_provider.outputs.section_data_container)
+        ins_operator.inputs.section_data_container(
+            self._layup_provider.outputs.section_data_container
+        )
         ins_operator.inputs.strains_container(strains)
         ins_operator.inputs.stresses_container(stresses)
 
@@ -560,9 +569,7 @@ class CompositeModelInterface:
         """
         return cast(
             List[int],
-            self.get_mesh()
-            .property_field("element_layer_indices")
-            .scoping.ids,
+            self.get_mesh().property_field("element_layer_indices").scoping.ids,
         )
 
     def _stream_provider(self) -> Operator:

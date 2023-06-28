@@ -29,7 +29,8 @@ from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
-__all__ = ("CompositeModelInterface_2023R2")
+__all__ = "CompositeModelInterface_2023R2"
+
 
 class CompositeInfo:
     """Contains composite data providers for a composite definition."""
@@ -130,18 +131,22 @@ class CompositeModelInterface2023R2:
         )
 
         if len(composite_files.composite) > 1:
-            raise RuntimeError("Assemblies are no longer supported with DPF Server 6.1 (2023R2) or earlier."
-                               " Please use DPF Sever 7.0 (2024 R1) or later.")
+            raise RuntimeError(
+                "Assemblies are no longer supported with DPF Server 6.1 (2023R2) or earlier."
+                " Please use DPF Sever 7.0 (2024 R1) or later."
+            )
 
         label = list(composite_files.composite.keys())[0]
-        self._composite_infos: Dict[str, CompositeInfo] = {label: CompositeInfo(
-            data_sources=self._data_sources,
-            composite_definition_label=label,
-            streams_provider=self._core_model.metadata.streams_provider,
-            material_operators=self._material_operators,
-            unit_system=self._unit_system,
-        )}
-        #for composite_definition_label in self._data_sources.composite:
+        self._composite_infos: Dict[str, CompositeInfo] = {
+            label: CompositeInfo(
+                data_sources=self._data_sources,
+                composite_definition_label=label,
+                streams_provider=self._core_model.metadata.streams_provider,
+                material_operators=self._material_operators,
+                unit_system=self._unit_system,
+            )
+        }
+        # for composite_definition_label in self._data_sources.composite:
         #    self._composite_infos[composite_definition_label] = CompositeInfo(
         #        data_sources=self._data_sources,
         #        composite_definition_label=composite_definition_label,

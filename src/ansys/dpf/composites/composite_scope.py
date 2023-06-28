@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from typing import Optional, Sequence
 
-__all__ = ("CompositeScope")
+__all__ = "CompositeScope"
 
 
 @dataclass(frozen=True)

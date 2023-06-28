@@ -7,23 +7,17 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .composite_scope import CompositeScope
 from ._composite_model_interface_factory import _composite_model_interface_factory
-from .data_sources import (
-    CompositeDataSources,
-    ContinuousFiberCompositesFiles,
-)
+from .composite_scope import CompositeScope
+from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import (
-    ElementInfo,
-    LayerProperty
-)
+from .layup_info import ElementInfo, LayerProperty
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasure
 from .sampling_point import SamplingPoint
 
-__all__ = ("CompositeModel")
+__all__ = "CompositeModel"
 
 
 class CompositeModel:
@@ -68,12 +62,14 @@ class CompositeModel:
     """
 
     def __init__(
-            self,
-            composite_files: ContinuousFiberCompositesFiles,
-            server: BaseServer,
-            default_unit_system: Optional[UnitSystem] = None,
+        self,
+        composite_files: ContinuousFiberCompositesFiles,
+        server: BaseServer,
+        default_unit_system: Optional[UnitSystem] = None,
     ):
-        self._interface = _composite_model_interface_factory(server)(composite_files, server, default_unit_system)
+        self._interface = _composite_model_interface_factory(server)(
+            composite_files, server, default_unit_system
+        )
 
     @property
     def composite_definition_labels(self) -> Sequence[str]:
@@ -87,7 +83,6 @@ class CompositeModel:
     def composite_files(self) -> ContinuousFiberCompositesFiles:
         """Get the composite file paths on the server."""
         return self._interface.composite_files
-
 
     @property
     def data_sources(self) -> CompositeDataSources:
@@ -134,11 +129,11 @@ class CompositeModel:
         return self._interface.get_layup_operator(composite_definition_label)
 
     def evaluate_failure_criteria(
-            self,
-            combined_criterion: CombinedFailureCriterion,
-            composite_scope: Optional[CompositeScope] = None,
-            measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
-            write_data_for_full_element_scope: bool = True,
+        self,
+        combined_criterion: CombinedFailureCriterion,
+        composite_scope: Optional[CompositeScope] = None,
+        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
+        write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -175,11 +170,11 @@ class CompositeModel:
         )
 
     def get_sampling_point(
-            self,
-            combined_criterion: CombinedFailureCriterion,
-            element_id: int,
-            time: Optional[float] = None,
-            composite_definition_label: Optional[str] = None,
+        self,
+        combined_criterion: CombinedFailureCriterion,
+        element_id: int,
+        time: Optional[float] = None,
+        composite_definition_label: Optional[str] = None,
     ) -> SamplingPoint:
         """Get a sampling point for an element ID and failure criteria.
 
@@ -198,13 +193,12 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_sampling_point(combined_criterion,
-                                                  element_id,
-                                                  time,
-                                                  composite_definition_label)
+        return self._interface.get_sampling_point(
+            combined_criterion, element_id, time, composite_definition_label
+        )
 
     def get_element_info(
-            self, element_id: int, composite_definition_label: Optional[str] = None
+        self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[ElementInfo]:
         """Get element information for an element ID.
 
@@ -223,10 +217,10 @@ class CompositeModel:
         return self._interface.get_element_info(element_id, composite_definition_label)
 
     def get_property_for_all_layers(
-            self,
-            layup_property: LayerProperty,
-            element_id: int,
-            composite_definition_label: Optional[str] = None,
+        self,
+        layup_property: LayerProperty,
+        element_id: int,
+        composite_definition_label: Optional[str] = None,
     ) -> Optional[NDArray[np.double]]:
         """Get a layer property for an element ID.
 
@@ -252,7 +246,7 @@ class CompositeModel:
         )
 
     def get_analysis_plies(
-            self, element_id: int, composite_definition_label: Optional[str] = None
+        self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[Sequence[str]]:
         """Get analysis ply names.
 
@@ -273,7 +267,7 @@ class CompositeModel:
         return self._interface.get_analysis_plies(element_id, composite_definition_label)
 
     def get_element_laminate_offset(
-            self, element_id: int, composite_definition_label: Optional[str] = None
+        self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[np.double]:
         """Get the laminate offset of an element.
 
@@ -292,9 +286,9 @@ class CompositeModel:
         return self._interface.get_element_laminate_offset(element_id, composite_definition_label)
 
     def get_constant_property_dict(
-            self,
-            material_properties: Collection[MaterialProperty],
-            composite_definition_label: Optional[str] = None,
+        self,
+        material_properties: Collection[MaterialProperty],
+        composite_definition_label: Optional[str] = None,
     ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
@@ -319,8 +313,7 @@ class CompositeModel:
             in the specified composite definition.
         """
         return self._interface.get_constant_property_dict(
-            material_properties,
-            composite_definition_label
+            material_properties, composite_definition_label
         )
 
     def get_result_times_or_frequencies(self) -> NDArray[np.double]:
@@ -328,10 +321,10 @@ class CompositeModel:
         return self._interface.get_result_times_or_frequencies()
 
     def add_interlaminar_normal_stresses(
-            self,
-            stresses: FieldsContainer,
-            strains: FieldsContainer,
-            composite_definition_label: Optional[str] = None,
+        self,
+        stresses: FieldsContainer,
+        strains: FieldsContainer,
+        composite_definition_label: Optional[str] = None,
     ) -> None:
         """Add interlaminar normal stresses to the stresses fields container.
 
@@ -356,7 +349,7 @@ class CompositeModel:
         )
 
     def get_all_layered_element_ids_for_composite_definition_label(
-            self, composite_definition_label: str
+        self, composite_definition_label: str
     ) -> Sequence[int]:
         """Get all layered element IDs that belong to a composite definition label.
 
