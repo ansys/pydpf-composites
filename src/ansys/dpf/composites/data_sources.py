@@ -410,9 +410,7 @@ def _data_sources_num_result_keys(data_sources: DataSources) -> int:
     # pylint: disable=protected-access
     return cast(
         int,
-        data_sources._api.data_sources_get_num_result_keys(
-            data_sources
-        ),
+        data_sources._api.data_sources_get_num_result_keys(data_sources),
     )
 
 
@@ -420,9 +418,7 @@ def _data_sources_result_key(data_sources: DataSources, index: int) -> str:
     # pylint: disable=protected-access
     return cast(
         str,
-        data_sources._api.data_sources_get_result_key_by_index(
-            data_sources, index
-        ),
+        data_sources._api.data_sources_get_result_key_by_index(data_sources, index),
     )
 
 

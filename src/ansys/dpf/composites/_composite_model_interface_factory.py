@@ -1,13 +1,19 @@
 """Composite Model Interface Factory."""
-from typing import Union
-
-from ansys.dpf.core.server_types import BaseServer
 from packaging import version
+from typing import Callable, Optional, Union
 
+from ansys.dpf.core import UnitSystem
+from ansys.dpf.core.server_types import BaseServer
+
+from .data_sources import ContinuousFiberCompositesFiles
 from ._composite_model_interface_2023r2 import CompositeModelInterface2023R2
 
 
-def _composite_model_interface_factory(server: BaseServer) -> Union[CompositeModelInterface2023R2]:
+CompositeModelInterfaceT = Callable[[ContinuousFiberCompositesFiles, BaseServer, Optional[UnitSystem]],
+                                    Union[CompositeModelInterface2023R2]]
+
+
+def _composite_model_interface_factory(server: BaseServer) -> CompositeModelInterfaceT:
     dpf_server_version = version.parse(server.version)
     if dpf_server_version < version.parse("7.0"):
         return CompositeModelInterface2023R2

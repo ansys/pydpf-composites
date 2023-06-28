@@ -1,6 +1,6 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
-from typing import Collection, Dict, List, Optional, Sequence, cast
+from typing import Collection, Dict, List, Optional, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
@@ -210,7 +210,7 @@ class CompositeModelInterface:
             write_data_for_full_element_scope
         )
 
-        chunking_config = {"max_chunk_size": 50000}
+        chunking_config: Dict[str, Union[int, Sequence[int]]] = {"max_chunk_size": 50000}
         if ns_in:
             chunking_config["named_selections"] = ns_in
 
