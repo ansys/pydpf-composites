@@ -29,8 +29,6 @@ from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
 
-__all__ = "CompositeModelInterface"
-
 
 class CompositeModelInterface:
     """Provides access to the basic composite postprocessing functionality.
@@ -93,21 +91,22 @@ class CompositeModelInterface:
             unit_system=self._unit_system,
         )
 
-        self.element_info_provider = get_element_info_provider(
+        self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self._stream_provider(),
         )
-        self.layup_properties_provider = LayupPropertiesProvider(
-            layup_provider=self.layup_provider, mesh=self.get_mesh()
+        self._layup_properties_provider = LayupPropertiesProvider(
+            layup_provider=self._layup_provider, mesh=self.get_mesh()
         )
 
     @property
     def composite_definition_labels(self) -> Sequence[str]:
         """All composite definition labels in the model.
 
-        This property is only relevant for assemblies.
+        This property is only relevant for assemblies to access
+        plies by ID.
         """
-        return list(self._composite_infos.keys())
+        return list(self.composite_files.composite.keys())
 
     @property
     def composite_files(self) -> ContinuousFiberCompositesFiles:
@@ -192,9 +191,9 @@ class CompositeModelInterface:
 
         # todo: how to pass the time ids and ply_scope
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
-        ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
+        # ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
         ns_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
-        time_in = composite_scope.time
+        # time_in = composite_scope.time
 
         if composite_scope.plies is None or len(composite_scope.plies):
             # This is a workaround because setting the
@@ -502,7 +501,7 @@ class CompositeModelInterface:
         return get_constant_property_dict(
             material_properties=material_properties,
             materials_provider=self.material_operators.material_provider,
-            data_source_or_streams_provider=self._streams_provider(),
+            data_source_or_streams_provider=self._stream_provider(),
             mesh=self.get_mesh(),
         )
 
@@ -571,3 +570,12 @@ class CompositeModelInterface:
 
     def _stream_provider(self) -> Operator:
         return self._core_model.metadata.streams_provider
+
+    def _first_composite_definition_label_if_only_one(self) -> str:
+        if len(self.composite_definition_labels) == 1:
+            return self.composite_definition_labels[0]
+        else:
+            raise RuntimeError(
+                f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
+                f"Specify a key explicitly."
+            )

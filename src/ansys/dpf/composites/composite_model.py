@@ -17,8 +17,6 @@ from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasure
 from .sampling_point import SamplingPoint
 
-__all__ = "CompositeModel"
-
 
 class CompositeModel:
     """Provides access to the basic composite postprocessing functionality.

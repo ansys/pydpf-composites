@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Callable, Dict, List, Optional, Sequence, Union
+from typing import Callable, Dict, List, Optional, Sequence, Union, cast
 
 from ansys.dpf.core import DataSources
 from packaging import version
@@ -406,15 +406,21 @@ def get_composites_data_sources(
     )
 
 
-def _data_sources_num_result_keys(data_sources: DataSources) -> int:
-    return data_sources._api.data_sources_get_num_result_keys(data_sources)
+def _data_sources_num_result_keys(
+    data_sources: DataSources,
+) -> int:  # pylint: disable=protected-access
+    return cast(int, data_sources._api.data_sources_get_num_result_keys(data_sources))
 
 
-def _data_sources_result_key(data_sources: DataSources, index: int):
-    return data_sources._api.data_sources_get_result_key_by_index(data_sources, index)
+def _data_sources_result_key(
+    data_sources: DataSources, index: int
+):  # pylint: disable=protected-access
+    return cast(int, data_sources._api.data_sources_get_result_key_by_index(data_sources, index))
 
 
-def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSources) -> DataSources:
+def get_composite_datasource_for_layup_provider(
+    data_sources: CompositeDataSources,
+) -> DataSources:  # pylint: disable=protected-access
     """
     Prepare DataSources of composite for the DPF server.
 

@@ -28,8 +28,6 @@ from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
-__all__ = "CompositeModelInterface_2023R2"
-
 
 class CompositeInfo:
     """Contains composite data providers for a composite definition."""
