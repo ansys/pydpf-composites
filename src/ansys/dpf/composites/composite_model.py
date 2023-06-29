@@ -8,6 +8,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ._composite_model_interface_factory import _composite_model_interface_factory
+from ._sampling_point_base import SamplingPointBase
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
@@ -15,7 +16,6 @@ from .layup_info import ElementInfo, LayerProperty
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasure
-from .sampling_point import SamplingPointBase
 
 
 class CompositeModel:

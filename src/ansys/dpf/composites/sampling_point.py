@@ -343,7 +343,7 @@ class SamplingPoint(SamplingPointBase):
             >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
         """
         self._update_and_check_results()
-        super().get_polar_plot(components)
+        return super().get_polar_plot(components)
 
     def _update_and_check_results(self) -> None:
         if not self._isuptodate or not self._results:
