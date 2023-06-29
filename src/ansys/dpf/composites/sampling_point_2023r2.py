@@ -374,7 +374,9 @@ class SamplingPoint2023R2(SamplingPointProtocol):
             >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
 
         """
-        return get_indices_from_sp(self._interface_indices, self.number_of_plies, self.spots_per_ply, spots)
+        return get_indices_from_sp(
+            self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
+        )
 
     def get_offsets_by_spots(
         self,
