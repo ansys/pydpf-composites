@@ -18,7 +18,6 @@ from .result_definition import FailureMeasureEnum
 from .sampling_point_types import SamplingPointProtocol
 
 # todo
-# - rename _composite_model_interface to _composite_model_impl
 # - add tests for time scoping and ply-wise scoping
 # - add tests for sampling point (check values)
 

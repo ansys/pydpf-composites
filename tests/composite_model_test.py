@@ -155,10 +155,15 @@ def test_assembly_model(dpf_server):
         "max strain & max stress", failure_criteria=[MaxStressCriterion()]
     )
 
-    failure_output = composite_model.evaluate_failure_criteria(
-        combined_criterion=combined_failure_criterion,
-        composite_scope=CompositeScope(),
+    # failure_output = composite_model.evaluate_failure_criteria(
+    #    combined_criterion=combined_failure_criterion,
+    #    composite_scope=CompositeScope(),
+    # )
+
+    sampling_point = composite_model.get_sampling_point(
+        combined_criterion=combined_failure_criterion, element_id=1
     )
+    sampling_point.run()
 
     timer.add("After get failure output")
 

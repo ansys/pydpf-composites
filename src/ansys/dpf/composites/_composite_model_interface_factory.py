@@ -4,19 +4,19 @@ from typing import Callable, Optional, Union
 from ansys.dpf.core import UnitSystem
 from ansys.dpf.core.server_types import BaseServer
 
-from ._composite_model_interface_2023r2 import CompositeModelInterface2023R2
-from ._composite_model_interface_latest import CompositeModelInterface
+from ._composite_model_impl import CompositeModelImpl
+from ._composite_model_impl_2023r2 import CompositeModelImpl2023R2
 from .data_sources import ContinuousFiberCompositesFiles
 from .server_helpers import version_older_than
 
-CompositeModelInterfaceT = Callable[
+CompositeModelImplT = Callable[
     [ContinuousFiberCompositesFiles, BaseServer, Optional[UnitSystem]],
-    Union[CompositeModelInterface2023R2, CompositeModelInterface],
+    Union[CompositeModelImpl2023R2, CompositeModelImpl],
 ]
 
 
-def _composite_model_interface_factory(server: BaseServer) -> CompositeModelInterfaceT:
+def _composite_model_interface_factory(server: BaseServer) -> CompositeModelImplT:
     if version_older_than(server, "7.0"):
-        return CompositeModelInterface2023R2
+        return CompositeModelImpl2023R2
 
-    return CompositeModelInterface
+    return CompositeModelImpl
