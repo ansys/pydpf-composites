@@ -20,12 +20,12 @@ from .._indexer import (
     PropertyFieldIndexerWithDataPointer,
     PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
+from ..server_helpers import version_older_than
 from ._enums import LayupProperty
 
 
 def _get_separator(server: BaseServer) -> str:
-    if version.parse(server.version) < version.parse("7.0"):
-        # up to and with 2023 R2
+    if version_older_than(server, "7.0"):
         return ":"
     else:
         return "::"

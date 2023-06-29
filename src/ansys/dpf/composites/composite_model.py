@@ -15,7 +15,7 @@ from .layup_info import ElementInfo, LayerProperty
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasure
-from .sampling_point import SamplingPoint
+from .sampling_point import SamplingPointBase
 
 
 class CompositeModel:
@@ -163,7 +163,7 @@ class CompositeModel:
         element_id: int,
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
-    ) -> SamplingPoint:
+    ) -> SamplingPointBase:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters

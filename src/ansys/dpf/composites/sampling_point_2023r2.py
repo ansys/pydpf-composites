@@ -13,7 +13,7 @@ from .constants import Spot
 from .result_definition import FailureMeasure, ResultDefinition
 
 
-class SamplingPoint(SamplingPointBase):
+class SamplingPoint2023R2(SamplingPointBase):
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
     This class provides for plotting the lay-up and results at a certain point of the

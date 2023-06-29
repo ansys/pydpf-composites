@@ -288,6 +288,10 @@ class ResultDefinition:
 
         return properties
 
+    def check_has_single_scope(self, msg: str) -> None:
+        if len(self.scopes) != 1:
+            raise RuntimeError(f"Result definition has multiple scopes. {msg}")
+
     def _short_descr(self) -> str:
         """:return: short description of the object."""
         return f"{self.__class__.__name__}(name='{self.name}')"
