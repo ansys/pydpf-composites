@@ -129,8 +129,8 @@ class SamplingPoint(SamplingPointProtocol):
         """Element label for sampling the laminate."""
         return self._combined_criterion
 
-    @element_id.setter
-    def element_id(self, value: CombinedFailureCriterion) -> None:
+    @combined_criterion.setter
+    def combined_criterion(self, value: CombinedFailureCriterion) -> None:
         self._combined_criterion = value
         self._is_uptodate = False
 
@@ -293,10 +293,7 @@ class SamplingPoint(SamplingPointProtocol):
         return self._is_uptodate
 
     def run(self) -> None:
-        """Run the DPF operator and cache the results."""
-        # todo: implement operator network
-        result_as_string = ""
-
+        """Build and run the DPF operator network and cache the results."""
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
         scope_config_reader_op.inputs.write_data_for_full_element_scope(True)
 
@@ -320,7 +317,7 @@ class SamplingPoint(SamplingPointProtocol):
             self._material_operators.material_provider.outputs
         )
         evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
-            self._stream_provider.outputs
+            self._rst_stream_provider.outputs
         )
         evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
         has_layup_provider = True
