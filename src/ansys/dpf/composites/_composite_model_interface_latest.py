@@ -350,35 +350,7 @@ class CompositeModelInterface:
         """
         time_in = time
 
-        if composite_definition_label is None:
-            # jvonrick: Jan 2023: We could also try to determine composite_definition_label
-            # based on the element_id and
-            # self.get_all_layered_element_ids_for_composite_definition_label.
-            # But the element_id of the sampling point can be changed later
-            # In this case it is complicated switch to the correct composite definition, so
-            # it is probably better to make it explicit that the sampling point is tied to
-            # a composite definition
-            composite_definition_label = self._first_composite_definition_label_if_only_one()
-
-        scope = ResultDefinitionScope(
-            composite_definition=self._composite_files.composite[
-                composite_definition_label
-            ].definition,
-            mapping_file=self._composite_files.composite[composite_definition_label].mapping,
-            element_scope=[element_id],
-            ply_scope=[],
-            named_selection_scope=[],
-        )
-        rd = ResultDefinition(
-            name="combined failure criteria",
-            rst_files=self._composite_files.rst,
-            material_file=self._composite_files.engineering_data,
-            combined_failure_criterion=combined_criterion,
-            time=time_in,
-            composite_scopes=[scope],
-        )
-
-        return SamplingPoint("Sampling Point", rd, server=self._server)
+        return SamplingPoint("Sampling Point", element_id, time_id, combined_criterion)
 
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None

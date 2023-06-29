@@ -12,6 +12,7 @@ __all__ = (
     "SamplingPointFigure",
     "FailureResult",
     "SamplingPointProtocol",
+    "FAILURE_MODE_NAMES_TO_ACP",
 )
 
 
@@ -31,6 +32,13 @@ class FailureResult:
     inverse_reserve_factor: float
     safety_factor: float
     safety_margin: float
+
+
+FAILURE_MODE_NAMES_TO_ACP = {
+    FailureMeasureEnum.INVERSE_RESERVE_FACTOR: "inverse_reserve_factor",
+    FailureMeasureEnum.RESERVE_FACTOR: "reserve_factor",
+    FailureMeasureEnum.MARGIN_OF_SAFETY: "margin_of_safety",
+}
 
 
 class SamplingPointProtocol(Protocol):
@@ -148,6 +156,10 @@ class SamplingPointProtocol(Protocol):
     @property
     def number_of_plies(self) -> int:
         """Number of plies."""
+
+    @property
+    def is_uptodate(self) -> bool:
+        """True if the Sampling Point is up-to-date"""
 
     def get_indices(
         self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
