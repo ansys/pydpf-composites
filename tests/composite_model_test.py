@@ -14,7 +14,7 @@ from ansys.dpf.composites.data_sources import (
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
-from ansys.dpf.composites.result_definition import FailureMeasure
+from ansys.dpf.composites.result_definition import FailureMeasureEnum
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 
@@ -288,7 +288,7 @@ def test_failure_measures(dpf_server, data_files):
         "max stress", failure_criteria=[MaxStressCriterion()]
     )
 
-    for v in FailureMeasure:
+    for v in FailureMeasureEnum:
         failure_output = composite_model.evaluate_failure_criteria(
             combined_criterion=combined_failure_criterion,
             composite_scope=CompositeScope(),

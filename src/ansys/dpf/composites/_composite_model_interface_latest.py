@@ -350,16 +350,17 @@ class CompositeModelInterface:
         """
         time_in = time
 
-        return SamplingPoint("Sampling Point",
-                             element_id,
-                             combined_criterion,
-                             self._material_operators,
-                             self.get_mesh(),
-                             self._layup_provider,
-                             self._stream_provider,
-                             self._data_sources.rst,
-                             time_in,
-                             )
+        return SamplingPoint(
+            "Sampling Point",
+            element_id,
+            combined_criterion,
+            self._material_operators,
+            self.get_mesh(),
+            self._layup_provider,
+            self._stream_provider,
+            self._data_sources.rst,
+            time_in,
+        )
 
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None

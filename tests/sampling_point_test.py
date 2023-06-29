@@ -17,7 +17,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStrainCriterion,
     MaxStressCriterion,
 )
-from ansys.dpf.composites.result_definition import FailureMeasure
+from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.sampling_point_base import FailureResult
 
 
@@ -117,7 +117,7 @@ def test_sampling_point(dpf_server, distributed_rst):
     sampling_point.get_result_plots(
         strain_components=["e1", "e12"],
         stress_components=["s13", "s23"],
-        failure_components=[FailureMeasure.RESERVE_FACTOR],
+        failure_components=[FailureMeasureEnum.RESERVE_FACTOR],
         show_failure_modes=True,
         create_laminate_plot=True,
         core_scale_factor=0.5,

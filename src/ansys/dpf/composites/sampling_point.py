@@ -135,6 +135,11 @@ class SamplingPoint(SamplingPointProtocol):
         self._is_uptodate = False
 
     @property
+    def spots_per_ply(self) -> int:
+        """Number of through-the-thickness integration points per ply."""
+        return self._spots_per_ply
+
+    @property
     def results(self) -> Any:
         """Results of the sampling point operator as a JSON dictionary."""
         self._update_and_check_results()
