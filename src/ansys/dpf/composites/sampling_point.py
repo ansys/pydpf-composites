@@ -96,7 +96,7 @@ class SamplingPoint(SamplingPointBase):
     @result_definition.setter
     def result_definition(self, value: ResultDefinition) -> None:
         value.check_has_single_scope(
-            f"Result definition of Sampling point {name}" " cannot be set."
+            f"Result definition of Sampling point {self.name}" " cannot be set."
         )
         self._isuptodate = False
         self._result_definition = value

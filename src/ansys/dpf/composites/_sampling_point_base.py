@@ -16,7 +16,7 @@ from .server_helpers._load_plugin import load_composites_plugin
 __all__ = (
     "SamplingPointFigure",
     "FailureResult",
-    "SamplingPoint",
+    "SamplingPointBase",
 )
 
 

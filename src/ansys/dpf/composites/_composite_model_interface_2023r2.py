@@ -24,7 +24,7 @@ from .layup_info import (
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
-from .sampling_point import SamplingPoint2023R2
+from .sampling_point_2023r2 import SamplingPoint2023R2
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
