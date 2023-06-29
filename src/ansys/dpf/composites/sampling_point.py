@@ -321,7 +321,7 @@ class SamplingPoint(SamplingPointProtocol):
 
         """
         self._update_and_check_results()
-        return get_indices_from_sp(self._interface_indices, self.number_of_plies)
+        return get_indices_from_sp(self._interface_indices, self.number_of_plies, self.spots_per_ply, spots)
 
     def get_offsets_by_spots(
         self,

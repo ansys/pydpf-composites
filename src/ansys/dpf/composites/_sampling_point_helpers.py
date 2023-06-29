@@ -45,7 +45,7 @@ def get_analysis_plies_from_sp(results: Any) -> Sequence[Any]:
     return plies
 
 
-def get_data_from_sp_results(*args: Tuple[str, ...], results: Any) -> npt.NDArray[np.float64]:
+def get_data_from_sp_results(*args: Any, results: Any) -> npt.NDArray[np.float64]:
     """Extract data from the result dict."""
 
     def _next(outer_data: Any, comp: str) -> Any:
@@ -154,7 +154,9 @@ def get_polar_plot_from_sp(
         raise RuntimeError(f"Sampling point {sampling_point.name} is out-of-date.")
 
     theta = (
-        get_data_from_sp_results("layup", "polar_properties", "angles", results=sampling_point.results)
+        get_data_from_sp_results(
+            "layup", "polar_properties", "angles", results=sampling_point.results
+        )
         / 180.0
         * np.pi
     )
