@@ -18,11 +18,11 @@ from ._sampling_point_helpers import (
     get_polar_plot_from_sp,
     get_result_plots_from_sp,
 )
-from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
+from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 
 
 class SamplingPoint(SamplingPointProtocol):
@@ -321,9 +321,7 @@ class SamplingPoint(SamplingPointProtocol):
         evaluate_failure_criterion_per_scope_op.inputs.materials_container(
             self._material_operators.material_provider.outputs
         )
-        evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
-            self._rst_streams_provider
-        )
+        evaluate_failure_criterion_per_scope_op.inputs.stream_provider(self._rst_streams_provider)
         evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
         has_layup_provider = True
         evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)

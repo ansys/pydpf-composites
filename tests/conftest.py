@@ -18,8 +18,8 @@ from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
     _try_until_timeout,
     _wait_until_server_is_up,
 )
-from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
+from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 

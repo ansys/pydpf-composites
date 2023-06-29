@@ -20,6 +20,7 @@ from .helper import ContinuousFiberCompositesFiles, Timer
 
 SEPARATOR = "::"
 
+
 @pytest.fixture
 def data_files(distributed_rst):
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
@@ -188,7 +189,9 @@ def test_assembly_model(dpf_server):
     all_layered_elements = (
         composite_model.get_all_layered_element_ids_for_composite_definition_label()
     )
-    assert set(all_layered_elements) == set(expected_shells["element_ids"] + expected_solids["element_ids"])
+    assert set(all_layered_elements) == set(
+        expected_shells["element_ids"] + expected_solids["element_ids"]
+    )
 
     for expected_elements in [expected_shells, expected_solids]:
         for element_id in expected_elements["element_ids"]:
@@ -214,55 +217,44 @@ def test_assembly_model(dpf_server):
     shell_element_id = 1
     for layer_property, value in expected_values_shell.items():
         assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(
-                layer_property, shell_element_id
-            )
+            composite_model.get_property_for_all_layers(layer_property, shell_element_id)
         )
 
     solid_element_id = 5
     for layer_property, value in expected_values_solid.items():
         assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(
-                layer_property, solid_element_id
-            )
+            composite_model.get_property_for_all_layers(layer_property, solid_element_id)
         )
 
     assert composite_model.get_element_laminate_offset(shell_element_id) == -0.00295
     analysis_ply_ids_shell = [
-        f'{shell_label}{SEPARATOR}P1L1__woven_45',
-        f'{shell_label}{SEPARATOR}P1L1__ud',
-        f'{shell_label}{SEPARATOR}P1L1__core',
-        f'{shell_label}{SEPARATOR}P1L1__ud.2',
-        f'{shell_label}{SEPARATOR}P1L1__woven_45.2'
+        f"{shell_label}{SEPARATOR}P1L1__woven_45",
+        f"{shell_label}{SEPARATOR}P1L1__ud",
+        f"{shell_label}{SEPARATOR}P1L1__core",
+        f"{shell_label}{SEPARATOR}P1L1__ud.2",
+        f"{shell_label}{SEPARATOR}P1L1__woven_45.2",
     ]
 
-    assert (
-        composite_model.get_analysis_plies(shell_element_id) == analysis_ply_ids_shell
-    )
+    assert composite_model.get_analysis_plies(shell_element_id) == analysis_ply_ids_shell
 
     assert composite_model.core_model is not None
     assert composite_model.get_mesh() is not None
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
-        combined_criterion=combined_failure_criterion,
-        element_id=1
+        combined_criterion=combined_failure_criterion, element_id=1
     )
 
     sampling_point.run()
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids_shell
 
-    assert composite_model.get_element_laminate_offset(
-        solid_element_id
-    ) == pytest.approx(0.0)
+    assert composite_model.get_element_laminate_offset(solid_element_id) == pytest.approx(0.0)
     analysis_ply_ids_solid = [
         f"{solid_label}{SEPARATOR}P1L1__woven_45",
         f"{solid_label}{SEPARATOR}P1L1__ud_patch ns1",
         f"{solid_label}{SEPARATOR}P1L1__ud",
     ]
 
-    assert (
-        composite_model.get_analysis_plies(solid_element_id) == analysis_ply_ids_solid
-    )
+    assert composite_model.get_analysis_plies(solid_element_id) == analysis_ply_ids_solid
 
     timer.add("After getting properties")
     timer.summary()

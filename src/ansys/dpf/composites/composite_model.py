@@ -8,7 +8,6 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ._composite_model_interface_factory import _composite_model_interface_factory
-from .sampling_point_types import SamplingPointProtocol
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
@@ -16,11 +15,13 @@ from .layup_info import ElementInfo, LayerProperty
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasureEnum
+from .sampling_point_types import SamplingPointProtocol
 
 # todo
 # - rename _composite_model_interface to _composite_model_impl
 # - add tests for time scoping and ply-wise scoping
 # - add tests for sampling point (check values)
+
 
 class CompositeModel:
     """Provides access to the basic composite postprocessing functionality.

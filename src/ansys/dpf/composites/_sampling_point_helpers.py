@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 
+from .constants import Spot
+from .result_definition import FailureMeasureEnum
 from .sampling_point_types import (
     FAILURE_MODE_NAMES_TO_ACP,
     FailureResult,
     SamplingPointFigure,
     SamplingPointProtocol,
 )
-from .constants import Spot
-from .result_definition import FailureMeasureEnum
 
 
 def get_analysis_plies_from_sp(results: Any) -> Sequence[Any]:

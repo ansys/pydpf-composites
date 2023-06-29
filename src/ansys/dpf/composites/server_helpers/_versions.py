@@ -4,6 +4,7 @@ from typing import Dict
 from ansys.dpf.core.server_types import BaseServer
 from packaging import version
 
+
 @dataclasses.dataclass(frozen=True)
 class _DpfVersionInfo:
     server_version: str

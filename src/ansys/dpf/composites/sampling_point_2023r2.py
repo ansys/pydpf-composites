@@ -20,9 +20,9 @@ from ._sampling_point_helpers import (
     get_polar_plot_from_sp,
     get_result_plots_from_sp,
 )
-from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 from .constants import Spot
 from .result_definition import FailureMeasureEnum, ResultDefinition
+from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 from .server_helpers._load_plugin import load_composites_plugin
 
 

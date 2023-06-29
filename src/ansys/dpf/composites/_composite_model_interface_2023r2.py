@@ -7,7 +7,6 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .sampling_point_types import SamplingPointProtocol
 from .composite_scope import CompositeScope
 from .data_sources import (
     CompositeDataSources,
@@ -26,6 +25,7 @@ from .layup_info.material_operators import MaterialOperators, get_material_opera
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasureEnum, ResultDefinition, ResultDefinitionScope
 from .sampling_point_2023r2 import SamplingPoint2023R2
+from .sampling_point_types import SamplingPointProtocol
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
@@ -554,7 +554,7 @@ class CompositeModelInterface2023R2:
         ins_operator.run()
 
     def get_all_layered_element_ids_for_composite_definition_label(
-        self, composite_definition_label: str
+        self, composite_definition_label: Optional[str]
     ) -> Sequence[int]:
         """Get all layered element IDs that belong to a composite definition label.
 
@@ -567,8 +567,10 @@ class CompositeModelInterface2023R2:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if not composite_definition_label:
-            raise RuntimeError(f"The composite_definition_label must be set for this version of DPF server."
-                               " Or update the the latest version.")
+            raise RuntimeError(
+                "The composite_definition_label must be set for this version of DPF server."
+                " Or update the the latest version."
+            )
         return cast(
             List[int],
             self.get_mesh(composite_definition_label)
