@@ -350,7 +350,7 @@ class CompositeModelInterface:
         """
         time_in = time
 
-        return SamplingPoint("Sampling Point", element_id, time_in, combined_criterion)
+        return SamplingPoint("Sampling Point", element_id, combined_criterion, time_in)
 
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None

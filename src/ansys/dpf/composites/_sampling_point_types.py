@@ -50,7 +50,7 @@ class SamplingPointProtocol(Protocol):
 
     @name.setter
     def name(self, value: str) -> None:
-        """Setter of name"""
+        """Setter of name."""
 
     @property
     def element_id(self) -> Union[int, None]:

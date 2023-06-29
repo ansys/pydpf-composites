@@ -97,7 +97,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
             load_composites_plugin(used_server)
 
         self._results: Any = None
-        self._isuptodate = False
+        self._is_uptodate = False
         self._rd_hash = ""
 
         # initialize the sampling point operator. Do it just once
@@ -125,7 +125,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
     @result_definition.setter
     def result_definition(self, value: ResultDefinition) -> None:
         value.check_has_single_scope(f"Cannot set the result definition of {self.name}")
-        self._isuptodate = False
+        self._is_uptodate = False
         self._result_definition = value
 
     @property
@@ -144,7 +144,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
     @element_id.setter
     def element_id(self, value: int) -> None:
         self._result_definition.scopes[0].element_scope = [value]
-        self._isuptodate = False
+        self._is_uptodate = False
 
     @property
     def spots_per_ply(self) -> int:
@@ -274,9 +274,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
     def failure_modes(self) -> Sequence[str]:
         """Critical failure mode of each ply."""
         self._update_and_check_results()
-        return get_data_from_sp_results(
-            "results", "failures", "failure_modes", results=self.results
-        )
+        return list(self.results[0]["results"]["failures"]["failure_modes"])
 
     @property
     def offsets(self) -> npt.NDArray[np.float64]:
@@ -310,7 +308,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
     @property
     def is_uptodate(self) -> bool:
         """True if the results are up-to-date."""
-        return self._isuptodate
+        return self._is_uptodate
 
     def run(self) -> None:
         """Run the DPF operator and cache the results."""
@@ -321,7 +319,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
             if new_hash.hexdigest() != self._rd_hash:
                 # only set input if the result definition changed
                 self._operator.inputs.result_definition(self.result_definition.to_json())
-                self._isuptodate = False
+                self._is_uptodate = False
                 self._rd_hash = new_hash.hexdigest()
         else:
             raise RuntimeError(
@@ -355,7 +353,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
                 "Result files that only have results at the middle of the ply are not supported."
             )
 
-        self._isuptodate = True
+        self._is_uptodate = True
 
     def get_indices(
         self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
@@ -525,7 +523,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
         )
 
     def _update_and_check_results(self) -> None:
-        if not self._isuptodate or not self._results:
+        if not self._is_uptodate or not self._results:
             self.run()
 
         if not self._results:

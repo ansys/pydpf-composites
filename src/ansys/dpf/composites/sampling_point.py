@@ -1,10 +1,12 @@
 """Wrapper for the sampling point operator."""
 import json
-from typing import Any, Collection, Dict, List, Sequence, Union
+from typing import Any, Collection, Dict, List, Optional, Sequence, Union
 
 import numpy as np
 import numpy.typing as npt
 
+from ansys.dpf import core as dpf
+from .layup_info.material_operators import MaterialOperators
 from ._sampling_point_helpers import (
     add_ply_sequence_to_plot_to_sp,
     add_results_to_plot_to_sp,
@@ -74,28 +76,32 @@ class SamplingPoint(SamplingPointProtocol):
         self,
         name: str,
         element_id: int,
-        time_id: int,
-        combined_criterion: CombinedFailureCriterion
-        # rst_stream_provider: dpf.Operator,
-        # material_provider: dpf.Operator,
-        # material_support_provider: dpf.Operator,
-        # result_info_provider: dpf.Operator,
-        # layup_provider: dpf.Operator
+        combined_criterion: CombinedFailureCriterion,
+        material_operators: MaterialOperators,
+        meshed_region: dpf.MeshedRegion,
+        layup_provider: dpf.Operator,
+        rst_stream_provider: dpf.Operator,
+        rst_data_source: dpf.DataSources,
+        time_id: Optional[float] = None
     ):
         """Create a ``SamplingPoint`` object."""
         self._name = name
         self._element_id = element_id
         self._time_id = time_id
-        self._rst_stream_provider = rst_stream_provider
-        self._material_provider = material_provider
-        self._material_support_provider = material_support_provider
-        # todo: check if that is used
-        self._result_info_provider = result_info_provider
+        self._combined_criterion = combined_criterion
+
+        self._material_operators = material_operators
+        self._meshed_region = meshed_region
         self._layup_provider = layup_provider
+        self._rst_stream_provider = rst_stream_provider
+        # todo: is it possible to get rst file path from rst_stream_provider as it is done in C++
+        # Refer to get_result_file_paths_from_stream
+        self._rst_data_source = rst_data_source
 
         self._spots_per_ply = 0
         self._interface_indices: Dict[Spot, int] = {}
         self._results: Any = None
+        self._is_uptodate = False
 
     @property
     def name(self) -> str:
@@ -115,7 +121,17 @@ class SamplingPoint(SamplingPointProtocol):
     @element_id.setter
     def element_id(self, value: int) -> None:
         self._element_id = value
-        self._isuptodate = False
+        self._is_uptodate = False
+
+    @property
+    def combined_criterion(self) -> CombinedFailureCriterion:
+        """Element label for sampling the laminate."""
+        return self._combined_criterion
+
+    @element_id.setter
+    def element_id(self, value: CombinedFailureCriterion) -> None:
+        self._combined_criterion = value
+        self._is_uptodate = False
 
     @property
     def results(self) -> Any:
@@ -273,15 +289,90 @@ class SamplingPoint(SamplingPointProtocol):
     @property
     def is_uptodate(self) -> bool:
         """True if the results are up-to-date."""
-        return self._isuptodate
+        return self._is_uptodate
 
     def run(self) -> None:
         """Run the DPF operator and cache the results."""
         # todo: implement operator network
         result_as_string = ""
 
+
+        scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
+        scope_config_reader_op.inputs.write_data_for_full_element_scope(True)
+
+        evaluate_failure_criterion_per_scope_op = dpf.Operator(
+            "composite::evaluate_failure_criterion_per_scope"
+        )
+
+        # Todo: live evaluation flag missing
+        evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
+            self.combined_criterion.to_json())
+
+        evaluate_failure_criterion_per_scope_op.inputs.scope_configuration(
+            scope_config_reader_op.outputs
+        )
+
+        scope = dpf.Scoping()
+        scope.ids = [self.element_id]
+        evaluate_failure_criterion_per_scope_op.inputs.element_scoping(
+            scope
+        )
+        evaluate_failure_criterion_per_scope_op.inputs.materials_container(
+            self._material_operators.material_provider.outputs
+        )
+        evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
+            self._stream_provider.outputs
+        )
+        evaluate_failure_criterion_per_scope_op.inputs.mesh(
+            self._meshed_region
+        )
+        has_layup_provider = True
+        evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
+            has_layup_provider
+        )
+        evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
+            self._layup_provider.outputs.section_data_container
+        )
+
+        evaluate_failure_criterion_per_scope_op.inputs.material_fields(
+            self._layup_provider.outputs.material_fields
+        )
+        evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
+            self._layup_provider.outputs.mesh_properties_container)
+        evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
+
+        sampling_point_evaluator = dpf.Operator("composite::evaluate_sampling_point")
+
+        sampling_point_evaluator.inputs.materials_container(self._material_operators.material_provider.outputs)
+        sampling_point_evaluator.inputs.material_support(self._material_operators.material_support_provider.outputs)
+        sampling_point_evaluator.inputs.mesh(self._meshed_region)
+        sampling_point_evaluator.inputs.stresses_container(
+            evaluate_failure_criterion_per_scope_op.outputs.stresses_container
+        )
+        sampling_point_evaluator.inputs.strains_container(
+            evaluate_failure_criterion_per_scope_op.outputs.strains_container
+        )
+        sampling_point_evaluator.inputs.element_scoping(scope)
+        sampling_point_evaluator.inputs.section_data_container(
+            self._layup_provider.outputs.section_data_container
+        )
+
+        result_info_provider = dpf.Operator("ResultInfoProvider")
+        result_info_provider.inputs.data_sources(self._rst_data_source)
+
+        sampling_point_evaluator.inputs.time_id(evaluate_failure_criterion_per_scope_op.outputs.time_id)
+        sampling_point_evaluator.inputs.unit_system(result_info_provider.outputs)
+        sampling_point_evaluator.inputs.failure_container(
+            evaluate_failure_criterion_per_scope_op.outputs.failure_container)
+        sampling_point_evaluator.inputs.extract_max_failure_per_layer(False)
+        sampling_point_evaluator.inputs.check_mechanical_unit_system(False)
+        sampling_point_evaluator.run()
+
+        sampling_point_to_json_converter = dpf.Operator("composite::convert_sampling_point_to_json")
+        sampling_point_to_json_converter.connect(0, sampling_point_evaluator, 0)
+
         # update internal members
-        self._results = json.loads(result_as_string)
+        self._results = json.loads(sampling_point_to_json_converter.get_output(pin=0, output_type=dpf.types.string))
         if not self._results or len(self._results) == 0:
             raise RuntimeError(f"Sampling point {self.name} has no results.")
         if self._results and len(self._results) > 1:
@@ -307,7 +398,7 @@ class SamplingPoint(SamplingPointProtocol):
                 "Result files that only have results at the middle of the ply are not supported."
             )
 
-        self._isuptodate = True
+        self._is_uptodate = True
 
     def get_indices(
         self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
@@ -481,7 +572,7 @@ class SamplingPoint(SamplingPointProtocol):
         )
 
     def _update_and_check_results(self) -> None:
-        if not self._isuptodate or not self._results:
+        if not self._is_uptodate or not self._results:
             self.run()
 
         if not self._results:
