@@ -83,7 +83,7 @@ class SamplingPoint(SamplingPointProtocol):
         # layup_provider: dpf.Operator
     ):
         """Create a ``SamplingPoint`` object."""
-        self.name = name
+        self._name = name
         self._element_id = element_id
         self._time_id = time_id
         self._rst_stream_provider = rst_stream_provider
@@ -96,6 +96,16 @@ class SamplingPoint(SamplingPointProtocol):
         self._spots_per_ply = 0
         self._interface_indices: Dict[Spot, int] = {}
         self._results: Any = None
+
+    @property
+    def name(self) -> str:
+        """Name of the object."""
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        """Set object name."""
+        self._name = value
 
     @property
     def element_id(self) -> Union[int, None]:
@@ -229,9 +239,7 @@ class SamplingPoint(SamplingPointProtocol):
     def failure_modes(self) -> Sequence[str]:
         """Critical failure mode of each ply."""
         self._update_and_check_results()
-        return get_data_from_sp_results(
-            "results", "failures", "failure_modes", results=self.results
-        )
+        return list(self.results[0]["results"]["failures"]["failure_modes"])
 
     @property
     def offsets(self) -> npt.NDArray[np.float64]:
@@ -321,7 +329,9 @@ class SamplingPoint(SamplingPointProtocol):
 
         """
         self._update_and_check_results()
-        return get_indices_from_sp(self._interface_indices, self.number_of_plies, self.spots_per_ply, spots)
+        return get_indices_from_sp(
+            self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
+        )
 
     def get_offsets_by_spots(
         self,

@@ -88,7 +88,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
 
         self._spots_per_ply = 0
         self._interface_indices: Dict[Spot, int] = {}
-        self.name = name
+        self._name = name
         used_server = get_or_create_server(server)
         if not used_server:
             raise RuntimeError("SamplingPoint: cannot connect to DPF server or launch it.")
@@ -106,6 +106,16 @@ class SamplingPoint2023R2(SamplingPointProtocol):
         )
         if not self._operator:
             raise RuntimeError("SamplingPoint: failed to initialize the operator.")
+
+    @property
+    def name(self) -> str:
+        """Name of the object."""
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        """Set object name."""
+        self._name = value
 
     @property
     def result_definition(self) -> ResultDefinition:

@@ -1,5 +1,5 @@
 """Wrapper for the sampling point operator."""
-from typing import Any, Collection, Dict, List, Sequence, Tuple, cast
+from typing import Any, Collection, Dict, List, Sequence, cast
 
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt

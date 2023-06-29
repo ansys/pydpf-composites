@@ -48,6 +48,10 @@ class SamplingPointProtocol(Protocol):
     def name(self) -> str:
         """Name of the object."""
 
+    @name.setter
+    def name(self, value: str) -> None:
+        """Setter of name"""
+
     @property
     def element_id(self) -> Union[int, None]:
         """Element label for sampling the laminate.
