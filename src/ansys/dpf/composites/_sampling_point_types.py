@@ -45,6 +45,10 @@ class SamplingPointProtocol(Protocol):
     """Specification of the Sampling Point interface."""
 
     @property
+    def name(self) -> str:
+        """Name of the object."""
+
+    @property
     def element_id(self) -> Union[int, None]:
         """Element label for sampling the laminate.
 
@@ -159,7 +163,7 @@ class SamplingPointProtocol(Protocol):
 
     @property
     def is_uptodate(self) -> bool:
-        """True if the Sampling Point is up-to-date"""
+        """True if the Sampling Point is up-to-date."""
 
     def get_indices(
         self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)

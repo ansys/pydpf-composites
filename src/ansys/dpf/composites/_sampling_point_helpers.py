@@ -1,5 +1,5 @@
 """Wrapper for the sampling point operator."""
-from typing import Any, Collection, Dict, List, Sequence, cast
+from typing import Any, Collection, Dict, List, Sequence, Tuple, cast
 
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
@@ -45,8 +45,10 @@ def get_analysis_plies_from_sp(results: Any) -> Sequence[Any]:
     return plies
 
 
-def get_data_from_sp_results(*args, results: Any) -> npt.NDArray[np.float64]:
-    def _next(outer_data: Any, comp: str):
+def get_data_from_sp_results(*args: Tuple[str, ...], results: Any) -> npt.NDArray[np.float64]:
+    """Extract data from the result dict."""
+
+    def _next(outer_data: Any, comp: str) -> Any:
         if comp in outer_data.keys():
             return outer_data[comp]
 
@@ -152,7 +154,7 @@ def get_polar_plot_from_sp(
         raise RuntimeError(f"Sampling point {sampling_point.name} is out-of-date.")
 
     theta = (
-        get_data_from_sp_results(sampling_point.results, "layup", "polar_properties", "angles")
+        get_data_from_sp_results("layup", "polar_properties", "angles", results=sampling_point.results)
         / 180.0
         * np.pi
     )

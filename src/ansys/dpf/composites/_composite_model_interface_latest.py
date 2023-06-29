@@ -24,7 +24,7 @@ from .layup_info import (
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
-from .result_definition import FailureMeasureEnum, ResultDefinition, ResultDefinitionScope
+from .result_definition import FailureMeasureEnum
 from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
@@ -350,7 +350,7 @@ class CompositeModelInterface:
         """
         time_in = time
 
-        return SamplingPoint("Sampling Point", element_id, time_id, combined_criterion)
+        return SamplingPoint("Sampling Point", element_id, time_in, combined_criterion)
 
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None

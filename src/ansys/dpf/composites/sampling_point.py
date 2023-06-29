@@ -1,6 +1,6 @@
 """Wrapper for the sampling point operator."""
 import json
-from typing import Any, Collection, Dict, Sequence, Union
+from typing import Any, Collection, Dict, List, Sequence, Union
 
 import numpy as np
 import numpy.typing as npt
@@ -269,7 +269,6 @@ class SamplingPoint(SamplingPointProtocol):
 
     def run(self) -> None:
         """Run the DPF operator and cache the results."""
-
         # todo: implement operator network
         result_as_string = ""
 

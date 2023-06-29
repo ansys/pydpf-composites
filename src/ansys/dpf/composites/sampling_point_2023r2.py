@@ -1,7 +1,7 @@
 """Wrapper for the sampling point operator."""
 import hashlib
 import json
-from typing import Any, Collection, Dict, List, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Sequence, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
