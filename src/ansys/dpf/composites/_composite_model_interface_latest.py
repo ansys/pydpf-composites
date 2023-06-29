@@ -93,7 +93,7 @@ class CompositeModelInterface:
 
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
-            stream_provider_or_data_source=self._stream_provider(),
+            stream_provider_or_data_source=self._get_rst_streams_provider(),
         )
         self._layup_properties_provider = LayupPropertiesProvider(
             layup_provider=self._layup_provider, mesh=self.get_mesh()
@@ -217,7 +217,7 @@ class CompositeModelInterface:
 
         chunking_data_tree = dpf.DataTree(chunking_config)
         chunking_generator = dpf.Operator("composite::scope_generator")
-        chunking_generator.inputs.stream_provider(self._stream_provider())
+        chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
         chunking_generator.inputs.data_sources(self.data_sources.composite)
         if element_scope_in:
@@ -256,7 +256,7 @@ class CompositeModelInterface:
                 self.material_operators.material_provider.outputs
             )
             evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
-                self._stream_provider().outputs
+                self._get_rst_streams_provider()
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
             evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
@@ -304,7 +304,7 @@ class CompositeModelInterface:
 
             converter_op = dpf.Operator("composite::failure_measure_converter")
             converter_op.inputs.fields_container(min_container)
-            converter_op.inputs.measure_type(measure)
+            converter_op.inputs.measure_type(measure.value)
             converter_op.run()
 
             converter_op.inputs.fields_container(max_container)
@@ -357,7 +357,7 @@ class CompositeModelInterface:
             self._material_operators,
             self.get_mesh(),
             self._layup_provider,
-            self._stream_provider,
+            self._get_rst_streams_provider(),
             self._data_sources.rst,
             time_in,
         )
@@ -484,7 +484,7 @@ class CompositeModelInterface:
         return get_constant_property_dict(
             material_properties=material_properties,
             materials_provider=self.material_operators.material_provider,
-            data_source_or_streams_provider=self._stream_provider(),
+            data_source_or_streams_provider=self._get_rst_streams_provider(),
             mesh=self.get_mesh(),
         )
 
@@ -534,24 +534,21 @@ class CompositeModelInterface:
         ins_operator.run()
 
     def get_all_layered_element_ids_for_composite_definition_label(
-        self, composite_definition_label: str
+        self, composite_definition_label: Optional[str] = None
     ) -> Sequence[int]:
         """Get all layered element IDs that belong to a composite definition label.
 
         Parameters
         ----------
         composite_definition_label:
-            Label of the composite definition, which is the
-            dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
-            attribute. This parameter is only required for assemblies.
-            See the note about assemblies in the description for the :class:`CompositeModel` class.
+            Deprecated. It's no longer needed
         """
         return cast(
             List[int],
             self.get_mesh().property_field("element_layer_indices").scoping.ids,
         )
 
-    def _stream_provider(self) -> Operator:
+    def _get_rst_streams_provider(self) -> Operator:
         return self._core_model.metadata.streams_provider
 
     def _first_composite_definition_label_if_only_one(self) -> str:

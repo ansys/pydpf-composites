@@ -45,8 +45,8 @@ def add_layup_info_to_mesh(
     if composite_definition_label:
         warn(
             "Calling add_layup_info_to_mesh with"
-            "composite_definition_label is deprecated. Assemblies are fully"
-            "supported with DPF Server 7.0 (2024 R1) or later.",
+            " composite_definition_label is deprecated. Assemblies are fully"
+            " supported with DPF Server 7.0 (2024 R1) or later.",
             DeprecationWarning,
             stacklevel=2,
         )

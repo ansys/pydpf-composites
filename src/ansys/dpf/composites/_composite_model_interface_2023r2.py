@@ -7,7 +7,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from ._sampling_point_types import SamplingPointProtocol
+from .sampling_point_types import SamplingPointProtocol
 from .composite_scope import CompositeScope
 from .data_sources import (
     CompositeDataSources,
@@ -224,9 +224,9 @@ class CompositeModelInterface2023R2:
         """Get a fields container with the evaluated failure criteria.
 
         The fields container contains the maximum per element if the measure
-        is :attr:`.FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is :attr:`.FailureMeasure.MARGIN_OF_SAFETY` or
-        :attr:`.FailureMeasure.RESERVE_FACTOR`.
+        is :attr:`.FailureMeasureEnum.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
+        :attr:`.FailureMeasureEnum.RESERVE_FACTOR`.
 
         Parameters
         ----------
@@ -566,6 +566,9 @@ class CompositeModelInterface2023R2:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
+        if not composite_definition_label:
+            raise RuntimeError(f"The composite_definition_label must be set for this version of DPF server."
+                               " Or update the the latest version.")
         return cast(
             List[int],
             self.get_mesh(composite_definition_label)

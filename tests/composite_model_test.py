@@ -18,6 +18,7 @@ from ansys.dpf.composites.result_definition import FailureMeasureEnum
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 
+SEPARATOR = "::"
 
 @pytest.fixture
 def data_files(distributed_rst):
@@ -147,6 +148,8 @@ def test_assembly_model(dpf_server):
     composite_model = CompositeModel(files, server=dpf_server)
     timer.add("After Setup model")
 
+    assert composite_model.composite_definition_labels == [solid_label, shell_label]
+
     combined_failure_criterion = CombinedFailureCriterion(
         "max strain & max stress", failure_criteria=[MaxStressCriterion()]
     )
@@ -155,6 +158,7 @@ def test_assembly_model(dpf_server):
         combined_criterion=combined_failure_criterion,
         composite_scope=CompositeScope(),
     )
+
     timer.add("After get failure output")
 
     expected_output = {
@@ -178,27 +182,21 @@ def test_assembly_model(dpf_server):
 
     assert properyt_dict[2][MaterialProperty.Stress_Limits_Xt] == pytest.approx(513000000.0)
 
-    expected_element_info = {
-        solid_label: {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190},
-        shell_label: {"element_ids": [1, 2], "element_type": 181},
-    }
+    expected_solids = {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190}
+    expected_shells = {"element_ids": [1, 2], "element_type": 181}
 
-    for composite_label in composite_model.composite_definition_labels:
-        expected = expected_element_info[composite_label]
-        all_layered_elements = (
-            composite_model.get_all_layered_element_ids_for_composite_definition_label(
-                composite_label
-            )
-        )
-        assert set(all_layered_elements) == set(expected["element_ids"])
-        for element_id in all_layered_elements:
-            element_info = composite_model.get_element_info(element_id, composite_label)
+    all_layered_elements = (
+        composite_model.get_all_layered_element_ids_for_composite_definition_label()
+    )
+    assert set(all_layered_elements) == set(expected_shells["element_ids"] + expected_solids["element_ids"])
+
+    for expected_elements in [expected_shells, expected_solids]:
+        for element_id in expected_elements["element_ids"]:
+            element_info = composite_model.get_element_info(element_id)
             assert element_info.is_layered
-            assert element_info.element_type == expected["element_type"]
+            assert element_info.element_type == expected_elements["element_type"]
 
-    assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh(shell_label))) == 5
-    assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh(solid_label))) == 6
-
+    assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh())) == 11
     timer.add("After getting element_info")
 
     expected_values_shell = {
@@ -217,7 +215,7 @@ def test_assembly_model(dpf_server):
     for layer_property, value in expected_values_shell.items():
         assert value == pytest.approx(
             composite_model.get_property_for_all_layers(
-                layer_property, shell_element_id, shell_label
+                layer_property, shell_element_id
             )
         )
 
@@ -225,59 +223,48 @@ def test_assembly_model(dpf_server):
     for layer_property, value in expected_values_solid.items():
         assert value == pytest.approx(
             composite_model.get_property_for_all_layers(
-                layer_property, solid_element_id, solid_label
+                layer_property, solid_element_id
             )
         )
 
-    assert composite_model.get_element_laminate_offset(shell_element_id, shell_label) == -0.00295
+    assert composite_model.get_element_laminate_offset(shell_element_id) == -0.00295
     analysis_ply_ids_shell = [
-        "P1L1__woven_45",
-        "P1L1__ud",
-        "P1L1__core",
-        "P1L1__ud.2",
-        "P1L1__woven_45.2",
+        f'{shell_label}{SEPARATOR}P1L1__woven_45',
+        f'{shell_label}{SEPARATOR}P1L1__ud',
+        f'{shell_label}{SEPARATOR}P1L1__core',
+        f'{shell_label}{SEPARATOR}P1L1__ud.2',
+        f'{shell_label}{SEPARATOR}P1L1__woven_45.2'
     ]
 
     assert (
-        composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
+        composite_model.get_analysis_plies(shell_element_id) == analysis_ply_ids_shell
     )
 
     assert composite_model.core_model is not None
-    assert composite_model.get_mesh(shell_label) is not None
-    assert composite_model.get_mesh(solid_label) is not None
+    assert composite_model.get_mesh() is not None
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
         combined_criterion=combined_failure_criterion,
-        element_id=shell_element_id,
-        composite_definition_label=shell_label,
+        element_id=1
     )
 
-    # ensure that the rd is complete
-    rd = sampling_point.result_definition.to_dict()
-    assert len(rd["scopes"]) == 1
-    composite_files = rd["scopes"][0]["datasources"]
-    assert len(composite_files["assembly_mapping_file"]) == 1
-    assert len(composite_files["composite_definition"]) == 1
-    assert len(composite_files["material_file"]) == 1
-    assert len(composite_files["rst_file"]) == 1
-
+    sampling_point.run()
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids_shell
 
     assert composite_model.get_element_laminate_offset(
-        solid_element_id, solid_label
+        solid_element_id
     ) == pytest.approx(0.0)
     analysis_ply_ids_solid = [
-        "P1L1__woven_45",
-        "P1L1__ud_patch ns1",
-        "P1L1__ud",
+        f"{solid_label}{SEPARATOR}P1L1__woven_45",
+        f"{solid_label}{SEPARATOR}P1L1__ud_patch ns1",
+        f"{solid_label}{SEPARATOR}P1L1__ud",
     ]
 
     assert (
-        composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
+        composite_model.get_analysis_plies(solid_element_id) == analysis_ply_ids_solid
     )
 
     timer.add("After getting properties")
-
     timer.summary()
 
 

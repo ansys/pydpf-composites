@@ -20,7 +20,7 @@ from ._sampling_point_helpers import (
     get_polar_plot_from_sp,
     get_result_plots_from_sp,
 )
-from ._sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
+from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 from .constants import Spot
 from .result_definition import FailureMeasureEnum, ResultDefinition
 from .server_helpers._load_plugin import load_composites_plugin
@@ -374,6 +374,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
             >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
 
         """
+        self._update_and_check_results()
         return get_indices_from_sp(
             self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
         )
@@ -393,10 +394,12 @@ class SamplingPoint2023R2(SamplingPointProtocol):
         core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
+        self._update_and_check_results()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
     def get_ply_wise_critical_failures(self) -> List[FailureResult]:
         """Get the critical failure value and modes per ply."""
+        self._update_and_check_results()
         return get_ply_wise_critical_failures_from_sp(self)
 
     def get_polar_plot(
@@ -413,6 +416,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
         --------
             >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
         """
+        self._update_and_check_results()
         return get_polar_plot_from_sp(self, components)
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
@@ -425,6 +429,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
         core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
+        self._update_and_check_results()
         add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
 
     def add_results_to_plot(
@@ -513,6 +518,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
             >>> figure, axes = sampling_point.get_result_plots()
 
         """
+        self._update_and_check_results()
         return get_result_plots_from_sp(
             self,
             strain_components,

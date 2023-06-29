@@ -18,7 +18,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
 )
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
-from ansys.dpf.composites.sampling_point_base import FailureResult
+from ansys.dpf.composites.sampling_point_types import FailureResult
 
 
 def test_sampling_point(dpf_server, distributed_rst):
@@ -188,7 +188,7 @@ def test_sampling_point_result_plots(dpf_server):
         create_laminate_plot=False,
         strain_components=[],
         stress_components=[],
-        failure_components=[FailureMeasure.MARGIN_OF_SAFETY],
+        failure_components=[FailureMeasureEnum.MARGIN_OF_SAFETY],
     )
 
 

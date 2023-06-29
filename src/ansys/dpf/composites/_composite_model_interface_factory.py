@@ -19,4 +19,4 @@ def _composite_model_interface_factory(server: BaseServer) -> CompositeModelInte
     if version_older_than(server, "7.0"):
         return CompositeModelInterface2023R2
 
-    return CompositeModelInterface2023R2  # CompositeModelInterface
+    return CompositeModelInterface

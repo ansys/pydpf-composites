@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 
-from ._sampling_point_types import (
+from .sampling_point_types import (
     FAILURE_MODE_NAMES_TO_ACP,
     FailureResult,
     SamplingPointFigure,
@@ -54,7 +54,7 @@ def get_data_from_sp_results(*args: Any, results: Any) -> npt.NDArray[np.float64
 
         raise RuntimeError(f"Cannot extract result {comp} from Sampling Point results.")
 
-    if len(results) == 0:
+    if not results or len(results) == 0:
         raise RuntimeError(f"Cannot extract result {args} from Sampling Point result.")
 
     data = results[0]

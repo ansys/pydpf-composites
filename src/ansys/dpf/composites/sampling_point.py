@@ -18,7 +18,7 @@ from ._sampling_point_helpers import (
     get_polar_plot_from_sp,
     get_result_plots_from_sp,
 )
-from ._sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
+from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info.material_operators import MaterialOperators
@@ -81,7 +81,7 @@ class SamplingPoint(SamplingPointProtocol):
         material_operators: MaterialOperators,
         meshed_region: dpf.MeshedRegion,
         layup_provider: dpf.Operator,
-        rst_stream_provider: dpf.Operator,
+        rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
         time_id: Optional[float] = None,
     ):
@@ -94,7 +94,7 @@ class SamplingPoint(SamplingPointProtocol):
         self._material_operators = material_operators
         self._meshed_region = meshed_region
         self._layup_provider = layup_provider
-        self._rst_stream_provider = rst_stream_provider
+        self._rst_streams_provider = rst_streams_provider
         # todo: is it possible to get rst file path from rst_stream_provider as it is done in C++
         # Refer to get_result_file_paths_from_stream
         self._rst_data_source = rst_data_source
@@ -143,7 +143,7 @@ class SamplingPoint(SamplingPointProtocol):
     def results(self) -> Any:
         """Results of the sampling point operator as a JSON dictionary."""
         self._update_and_check_results()
-        return super().results
+        return self._results
 
     @property
     def analysis_plies(self) -> Sequence[Any]:
@@ -322,7 +322,7 @@ class SamplingPoint(SamplingPointProtocol):
             self._material_operators.material_provider.outputs
         )
         evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
-            self._rst_stream_provider.outputs
+            self._rst_streams_provider
         )
         evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
         has_layup_provider = True
@@ -446,10 +446,12 @@ class SamplingPoint(SamplingPointProtocol):
         core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
+        self._update_and_check_results()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
     def get_ply_wise_critical_failures(self) -> List[FailureResult]:
         """Get the critical failure value and modes per ply."""
+        self._update_and_check_results()
         return get_ply_wise_critical_failures_from_sp(self)
 
     def add_results_to_plot(
@@ -492,6 +494,7 @@ class SamplingPoint(SamplingPointProtocol):
                                                   [Spot.BOTTOM, Spot.TOP],
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
+        self._update_and_check_results()
         add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
@@ -504,6 +507,7 @@ class SamplingPoint(SamplingPointProtocol):
         core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
+        self._update_and_check_results()
         add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
 
     def get_polar_plot(
@@ -567,6 +571,7 @@ class SamplingPoint(SamplingPointProtocol):
             >>> figure, axes = sampling_point.get_result_plots()
 
         """
+        self._update_and_check_results()
         return get_result_plots_from_sp(
             self,
             strain_components,

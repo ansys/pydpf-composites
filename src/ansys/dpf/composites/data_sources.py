@@ -7,7 +7,6 @@ from typing import Callable, Dict, List, Optional, Sequence, Union, cast
 from ansys.dpf.core import DataSources
 
 from ._typing_helper import PATH as _PATH
-from .server_helpers import version_older_than
 
 __all__ = (
     "CompositeDefinitionFiles",
@@ -428,6 +427,9 @@ def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSourc
 
     Ensure that DataSources object is compatible with the version of the layup provider.
     """
+    # import is here because of circular includes
+    from .server_helpers import version_older_than
+
     # pylint: disable=protected-access
     if version_older_than(data_sources.composite._server, "7.0"):
         # Python API of DataSources does not allow to get the path by key and resultKey
