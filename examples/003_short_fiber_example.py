@@ -31,6 +31,7 @@ a short glass fiber reinforced thermoplastic injection molded from both sides.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.data_sources import get_short_fiber_composites_data_sources
 from ansys.dpf.composites.example_helper import get_short_fiber_example_files
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
@@ -48,10 +49,7 @@ composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
 # Set up data sources
 # ~~~~~~~~~~~~~~~~~~~
 # Set up the data sources.
-data_sources = dpf.DataSources()
-data_sources.add_file_path(composite_files_on_server.engineering_data, "EngineeringData")
-data_sources.add_file_path(composite_files_on_server.dsdat, "dat")
-data_sources.set_result_file_path(composite_files_on_server.rst)
+data_sources = get_short_fiber_composites_data_sources(composite_files_on_server)
 
 # %%
 # Initialize DPF model
