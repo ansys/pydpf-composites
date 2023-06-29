@@ -15,7 +15,7 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import ElementInfo, LayerProperty
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
-from .result_definition import FailureMeasure
+from .result_definition import FailureMeasureEnum
 
 
 class CompositeModel:
@@ -120,15 +120,15 @@ class CompositeModel:
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
-        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
+        measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
         The fields container contains the maximum per element if the measure
-        is :attr:`.FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is :attr:`.FailureMeasure.MARGIN_OF_SAFETY` or
-        :attr:`.FailureMeasure.RESERVE_FACTOR`.
+        is :attr:`.FailureMeasureEnum.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
+        :attr:`.FailureMeasureEnum.RESERVE_FACTOR`.
 
         Parameters
         ----------

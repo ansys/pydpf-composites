@@ -1,11 +1,13 @@
 """Wrapper for the sampling point operator."""
 import hashlib
 import json
-from typing import Any, Collection, Dict, Sequence, Union, cast
+from typing import Any, Collection, Dict, List, Sequence, Union, cast
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
+from matplotlib.patches import Rectangle
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 
@@ -88,7 +90,7 @@ class SamplingPoint2023R2(SamplingPointProtocol):
         if not used_server:
             raise RuntimeError("SamplingPoint: cannot connect to DPF server or launch it.")
 
-        if self._server != server:
+        if used_server != server:
             load_composites_plugin(used_server)
 
         self._results: Any = None

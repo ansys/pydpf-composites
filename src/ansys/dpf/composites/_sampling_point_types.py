@@ -34,7 +34,8 @@ class FailureResult:
 
 
 class SamplingPointProtocol(Protocol):
-    """Specificiation of the Sampling Point interface."""
+    """Specification of the Sampling Point interface."""
+
     @property
     def element_id(self) -> Union[int, None]:
         """Element label for sampling the laminate.
