@@ -3,7 +3,6 @@ from typing import Callable, Optional, Union
 
 from ansys.dpf.core import UnitSystem
 from ansys.dpf.core.server_types import BaseServer
-from packaging import version
 
 from ._composite_model_interface_2023r2 import CompositeModelInterface2023R2
 from ._composite_model_interface_latest import CompositeModelInterface

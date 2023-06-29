@@ -10,7 +10,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .constants import Spot
-from .result_definition import FailureMeasure, ResultDefinition
+from .result_definition import FailureMeasure
 from .server_helpers._load_plugin import load_composites_plugin
 
 __all__ = (

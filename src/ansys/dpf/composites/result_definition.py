@@ -289,6 +289,7 @@ class ResultDefinition:
         return properties
 
     def check_has_single_scope(self, msg: str) -> None:
+        """Check that the result definition has one scope."""
         if len(self.scopes) != 1:
             raise RuntimeError(f"Result definition has multiple scopes. {msg}")
 

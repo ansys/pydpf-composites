@@ -8,7 +8,6 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
-from packaging import version
 
 from .._indexer import (
     FieldIndexerNoDataPointer,

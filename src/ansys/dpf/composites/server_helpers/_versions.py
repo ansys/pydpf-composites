@@ -25,12 +25,14 @@ def _check_key(ver: str) -> None:
 
 
 def version_older_than(server: BaseServer, ver: str) -> bool:
+    """Evaluate if the dpf server is older than the given version."""
     _check_key(ver)
     version_info = _DPF_VERSIONS[ver]
     return version.parse(server.version) < version.parse(version_info.server_version)
 
 
 def version_equal_or_later(server: BaseServer, ver: str) -> bool:
+    """Evaluate if the dpf server is equal or newer than the given version."""
     _check_key(ver)
     version_info = _DPF_VERSIONS[ver]
     return version.parse(server.version) >= version.parse(version_info.server_version)

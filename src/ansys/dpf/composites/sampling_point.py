@@ -76,7 +76,6 @@ class SamplingPoint(SamplingPointBase):
         server: BaseServer = None,
     ):
         """Create a ``SamplingPoint`` object."""
-
         result_definition.check_has_single_scope(f"Sampling point {name} cannot be created.")
 
         super().__init__(name, server)
