@@ -14,7 +14,7 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
-from ansys.dpf.composites.server_helpers import equal_or_later
+from ansys.dpf.composites.server_helpers import version_equal_or_later
 from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
     _try_until_timeout,
     _wait_until_server_is_up,
@@ -309,6 +309,6 @@ def dpf_server(request: pytest.FixtureRequest):
 def distributed_rst(request, dpf_server):
     """Fixture that parametrizes tests to run with a distributed RST or not."""
     res = request.param
-    if res and not equal_or_later(dpf_server, "7.0"):
+    if res and not version_equal_or_later(dpf_server, "7.0"):
         pytest.skip(f"Distributed RST not supported for server version {dpf_server.version}.")
     return res

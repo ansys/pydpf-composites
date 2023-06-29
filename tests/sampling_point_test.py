@@ -1,7 +1,6 @@
 import os
 import pathlib
 
-import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.testing
@@ -18,11 +17,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStrainCriterion,
     MaxStressCriterion,
 )
-from ansys.dpf.composites.result_definition import (
-    FailureMeasure,
-    ResultDefinition,
-    ResultDefinitionScope,
-)
+from ansys.dpf.composites.result_definition import FailureMeasure
 from ansys.dpf.composites.sampling_point_base import FailureResult
 
 

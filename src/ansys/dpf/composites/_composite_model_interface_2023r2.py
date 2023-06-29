@@ -7,6 +7,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
+from ._sampling_point_types import SamplingPointProtocol
 from .composite_scope import CompositeScope
 from .data_sources import (
     CompositeDataSources,
@@ -23,7 +24,7 @@ from .layup_info import (
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
-from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
+from .result_definition import FailureMeasureEnum, ResultDefinition, ResultDefinitionScope
 from .sampling_point_2023r2 import SamplingPoint2023R2
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
@@ -217,7 +218,7 @@ class CompositeModelInterface2023R2:
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
-        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
+        measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
@@ -308,7 +309,7 @@ class CompositeModelInterface2023R2:
         element_id: int,
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
-    ) -> SamplingPoint2023R2:
+    ) -> SamplingPointProtocol:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters

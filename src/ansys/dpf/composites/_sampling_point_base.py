@@ -13,30 +13,6 @@ from .constants import Spot
 from .result_definition import FailureMeasure
 from .server_helpers._load_plugin import load_composites_plugin
 
-__all__ = (
-    "SamplingPointFigure",
-    "FailureResult",
-    "SamplingPointBase",
-)
-
-
-@dataclasses.dataclass(frozen=True)
-class SamplingPointFigure:
-    """Provides the sampling point figure and axes."""
-
-    figure: Any
-    axes: Any
-
-
-@dataclasses.dataclass(frozen=True)
-class FailureResult:
-    """Provides the components of a failure result."""
-
-    mode: str
-    inverse_reserve_factor: float
-    safety_factor: float
-    safety_margin: float
-
 
 class SamplingPointBase:
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.

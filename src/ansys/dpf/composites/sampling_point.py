@@ -8,12 +8,12 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 import numpy.typing as npt
 
-from ._sampling_point_base import SamplingPointBase, SamplingPointFigure
+from ._sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
 from .constants import Spot
 from .result_definition import FailureMeasure, ResultDefinition
 
 
-class SamplingPoint(SamplingPointBase):
+class SamplingPoint(SamplingPointProtocol):
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
     This class provides for plotting the lay-up and results at a certain point of the

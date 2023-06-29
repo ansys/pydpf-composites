@@ -128,6 +128,7 @@ class CompositeModelInterface:
         """Material operators."""
         return self._material_operators
 
+    # todo: check if the composite_definition_label parameter can be removed. Is this a new function?
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
@@ -209,6 +210,7 @@ class CompositeModelInterface:
         scope_config_reader_op.inputs.write_data_for_full_element_scope(
             write_data_for_full_element_scope
         )
+        # todo: set time ids and ply ids via DataTree
 
         chunking_config: Dict[str, Union[int, Sequence[str]]] = {"max_chunk_size": 50000}
         if ns_in:

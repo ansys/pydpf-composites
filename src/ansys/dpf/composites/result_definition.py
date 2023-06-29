@@ -8,10 +8,10 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
 
-__all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
+__all__ = ("FailureMeasureEnum", "ResultDefinitionScope", "ResultDefinition")
 
 
-class FailureMeasure(str, Enum):
+class FailureMeasureEnum(str, Enum):
     """Provides available failure measures."""
 
     # TODO: Add descriptions for each property
