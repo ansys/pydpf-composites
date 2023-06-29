@@ -24,7 +24,7 @@ from .layup_info import (
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
-from .result_definition import FailureMeasure, ResultDefinition, ResultDefinitionScope
+from .result_definition import FailureMeasureEnum, ResultDefinition, ResultDefinitionScope
 from .sampling_point import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
@@ -128,7 +128,6 @@ class CompositeModelInterface:
         """Material operators."""
         return self._material_operators
 
-    # todo: check if the composite_definition_label parameter can be removed. Is this a new function?
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
@@ -154,15 +153,15 @@ class CompositeModelInterface:
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
-        measure: FailureMeasure = FailureMeasure.INVERSE_RESERVE_FACTOR,
+        measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
         The fields container contains the maximum per element if the measure
-        is :attr:`.FailureMeasure.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is :attr:`.FailureMeasure.MARGIN_OF_SAFETY` or
-        :attr:`.FailureMeasure.RESERVE_FACTOR`.
+        is :attr:`.FailureMeasureEnum.INVERSE_RESERVE_FACTOR` and the minimum per element
+        if the measure is :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
+        :attr:`.FailureMeasureEnum.RESERVE_FACTOR`.
 
         Parameters
         ----------
@@ -320,7 +319,7 @@ class CompositeModelInterface:
                 "No output is generated! Please check the scope (element and ply ids)."
             )
 
-        if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
+        if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
             return max_merger.outputs.merged_fields_container()
         else:
             return min_merger.outputs.merged_fields_container()

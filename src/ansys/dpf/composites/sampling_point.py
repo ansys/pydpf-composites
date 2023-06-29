@@ -8,9 +8,9 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 import numpy.typing as npt
 
-from ._sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
+from ._sampling_point_types import SamplingPointFigure, SamplingPointProtocol
 from .constants import Spot
-from .result_definition import FailureMeasure, ResultDefinition
+from .result_definition import FailureMeasureEnum, ResultDefinition
 
 
 class SamplingPoint(SamplingPointProtocol):
@@ -64,9 +64,9 @@ class SamplingPoint(SamplingPointProtocol):
     """
 
     _FAILURE_MODE_NAMES_TO_ACP = {
-        FailureMeasure.INVERSE_RESERVE_FACTOR: "inverse_reserve_factor",
-        FailureMeasure.RESERVE_FACTOR: "reserve_factor",
-        FailureMeasure.MARGIN_OF_SAFETY: "margin_of_safety",
+        FailureMeasureEnum.INVERSE_RESERVE_FACTOR: "inverse_reserve_factor",
+        FailureMeasureEnum.RESERVE_FACTOR: "reserve_factor",
+        FailureMeasureEnum.MARGIN_OF_SAFETY: "margin_of_safety",
     }
 
     def __init__(

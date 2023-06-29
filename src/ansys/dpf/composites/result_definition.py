@@ -21,7 +21,7 @@ class FailureMeasureEnum(str, Enum):
 
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
-_SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
+_SUPPORTED_MEASURES = [v.value for v in FailureMeasureEnum]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 

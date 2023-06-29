@@ -34,18 +34,17 @@ class FailureResult:
 
 
 class SamplingPointProtocol(Protocol):
+    """Specificiation of the Sampling Point interface."""
     @property
     def element_id(self) -> Union[int, None]:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.
         """
-        pass
 
     @property
     def spots_per_ply(self) -> int:
         """Number of through-the-thickness integration points per ply."""
-        pass
 
     @property
     def results(self) -> Any:
@@ -62,67 +61,54 @@ class SamplingPointProtocol(Protocol):
     @property
     def s1(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 1 direction of each ply."""
-        pass
 
     @property
     def s2(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 2 direction of each ply."""
-        pass
 
     @property
     def s3(self) -> npt.NDArray[np.float64]:
         """Stresses in the material 3 direction of each ply."""
-        pass
 
     @property
     def s12(self) -> npt.NDArray[np.float64]:
         """In-plane shear stresses s12 of each ply."""
-        pass
 
     @property
     def s13(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear stresses s13 of each ply."""
-        pass
 
     @property
     def s23(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear stresses s23 of each ply."""
-        pass
 
     @property
     def e1(self) -> npt.NDArray[np.float64]:
         """Strains in the material 1 direction of each ply."""
-        pass
 
     @property
     def e2(self) -> npt.NDArray[np.float64]:
         """Strains in the material 2 direction of each ply."""
-        pass
 
     @property
     def e3(self) -> npt.NDArray[np.float64]:
         """Strains in the material 3 direction of each ply."""
-        pass
 
     @property
     def e12(self) -> npt.NDArray[np.float64]:
         """In-plane shear strains e12 of each ply."""
-        pass
 
     @property
     def e13(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear strains e13 of each ply."""
-        pass
 
     @property
     def e23(self) -> npt.NDArray[np.float64]:
         """Out-of-plane shear strains e23 of each ply."""
-        pass
 
     @property
     def inverse_reserve_factor(self) -> npt.NDArray[np.float64]:
         """Critical inverse reserve factor of each ply."""
-        pass
 
     @property
     def reserve_factor(self) -> npt.NDArray[np.float64]:
@@ -130,7 +116,6 @@ class SamplingPointProtocol(Protocol):
 
         This attribute is equivalent to the safety factor.
         """
-        pass
 
     @property
     def margin_of_safety(self) -> npt.NDArray[np.float64]:
@@ -138,37 +123,30 @@ class SamplingPointProtocol(Protocol):
 
         This attribute is equivalent to the safety margin.
         """
-        pass
 
     @property
     def failure_modes(self) -> Sequence[str]:
         """Critical failure mode of each ply."""
-        pass
 
     @property
     def offsets(self) -> npt.NDArray[np.float64]:
         """Z coordinates for each interface and ply."""
-        pass
 
     @property
     def polar_properties_E1(self) -> npt.NDArray[np.float64]:
         """Polar property E1 of the laminate."""
-        pass
 
     @property
     def polar_properties_E2(self) -> npt.NDArray[np.float64]:
         """Polar property E2 of the laminate."""
-        pass
 
     @property
     def polar_properties_G12(self) -> npt.NDArray[np.float64]:
         """Polar property G12 of the laminate."""
-        pass
 
     @property
     def number_of_plies(self) -> int:
         """Number of plies."""
-        pass
 
     def get_indices(
         self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)

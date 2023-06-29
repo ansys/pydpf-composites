@@ -298,7 +298,7 @@ class CompositeModelInterface2023R2:
 
         failure_operator.inputs.result_definition(rd.to_json())
 
-        if measure == FailureMeasure.INVERSE_RESERVE_FACTOR:
+        if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
             return failure_operator.outputs.fields_containerMax()
         else:
             return failure_operator.outputs.fields_containerMin()
