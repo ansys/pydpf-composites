@@ -32,7 +32,7 @@ class _ContinuousFiberCompositesExampleFilenames:
 
 @dataclass
 class _ShortFiberCompositesExampleFilenames:
-    rst: str
+    rst: List[str]
     dsdat: str
     engineering_data: str
 
@@ -124,7 +124,7 @@ _short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
     "short_fiber": _ShortFiberExampleLocation(
         directory="short_fiber",
         files=_ShortFiberCompositesExampleFilenames(
-            rst="file.rst", engineering_data="MatML.xml", dsdat="ds.dat"
+            rst=["file.rst"], engineering_data="MatML.xml", dsdat="ds.dat"
         ),
     )
 }
@@ -169,7 +169,7 @@ def get_short_fiber_example_files(
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         return ShortFiberCompositesFiles(
-            rst=get_server_path(example_files.files.rst),
+            rst=[get_server_path(filename) for filename in example_files.files.rst],
             dsdat=get_server_path(example_files.files.dsdat),
             engineering_data=get_server_path(example_files.files.engineering_data),
             files_are_local=False,

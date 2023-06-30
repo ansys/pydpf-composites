@@ -30,7 +30,7 @@ def upload_short_fiber_composite_files_to_server(
         return cast(str, dpf.upload_file_in_tmp_folder(filename, server=server))
 
     return ShortFiberCompositesFiles(
-        rst=upload(data_files.engineering_data),
+        rst=[upload(filename) for filename in data_files.rst],
         dsdat=upload(data_files.dsdat),
         engineering_data=upload(data_files.engineering_data),
         files_are_local=False,
