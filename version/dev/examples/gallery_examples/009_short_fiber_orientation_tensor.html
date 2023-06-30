@@ -501,6 +501,7 @@ DPF server, and retrieving the example files.</p>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.spatial.transform</span> <span class="kn">import</span> <span class="n">Rotation</span>
 
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.data_sources</span> <span class="kn">import</span> <span class="n">get_short_fiber_composites_data_sources</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_short_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
@@ -519,9 +520,7 @@ These files are needed:</p>
 <section id="set-up-data-sources">
 <h2>Set up data sources<a class="headerlink" href="#set-up-data-sources" title="Permalink to this heading">#</a></h2>
 <p>Set up the data sources.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">DataSources</span><span class="p">()</span>
-<span class="n">data_sources</span><span class="o">.</span><span class="n">add_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">dsdat</span></a><span class="p">,</span> <span class="s2">&quot;dat&quot;</span><span class="p">)</span>
-<span class="n">data_sources</span><span class="o">.</span><span class="n">set_result_file_path</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_files_on_server</span><span class="o">.</span><span class="n">rst</span></a><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">get_short_fiber_composites_data_sources</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -625,7 +624,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 <li><img src="../../_images/sphx_glr_009_short_fiber_orientation_tensor_004.png" srcset="../../_images/sphx_glr_009_short_fiber_orientation_tensor_004.png" alt="009 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
 <li><img src="../../_images/sphx_glr_009_short_fiber_orientation_tensor_005.png" srcset="../../_images/sphx_glr_009_short_fiber_orientation_tensor_005.png" alt="009 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.291 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.219 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-009-short-fiber-orientation-tensor-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f7afa37a2e0689eada6f12b28988b27f/009_short_fiber_orientation_tensor.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">009_short_fiber_orientation_tensor.py</span></code></a></p>

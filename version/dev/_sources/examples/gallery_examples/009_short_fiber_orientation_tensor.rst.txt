@@ -42,7 +42,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-33
+.. GENERATED FROM PYTHON SOURCE LINES 25-34
 
 .. code-block:: default
 
@@ -51,6 +51,7 @@ Load Ansys libraries.
     import numpy as np
     from scipy.spatial.transform import Rotation
 
+    from ansys.dpf.composites.data_sources import get_short_fiber_composites_data_sources
     from ansys.dpf.composites.example_helper import get_short_fiber_example_files
     from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
@@ -61,7 +62,7 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-39
+.. GENERATED FROM PYTHON SOURCE LINES 35-40
 
 Start a DPF server and copy the example files into the current working directory.
 These files are needed:
@@ -69,7 +70,7 @@ These files are needed:
 * Mechanical APDL result (RST) file containing the simulation results
 * Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-42
+.. GENERATED FROM PYTHON SOURCE LINES 40-43
 
 .. code-block:: default
 
@@ -83,19 +84,17 @@ These files are needed:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-46
+.. GENERATED FROM PYTHON SOURCE LINES 44-47
 
 Set up data sources
 ~~~~~~~~~~~~~~~~~~~
 Set up the data sources.
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-50
+.. GENERATED FROM PYTHON SOURCE LINES 47-49
 
 .. code-block:: default
 
-    data_sources = dpf.DataSources()
-    data_sources.add_file_path(composite_files_on_server.dsdat, "dat")
-    data_sources.set_result_file_path(composite_files_on_server.rst)
+    data_sources = get_short_fiber_composites_data_sources(composite_files_on_server)
 
 
 
@@ -104,13 +103,13 @@ Set up the data sources.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-54
+.. GENERATED FROM PYTHON SOURCE LINES 50-53
 
 Initialize DPF model
 ~~~~~~~~~~~~~~~~~~~~
 Initialize the DPF model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-57
+.. GENERATED FROM PYTHON SOURCE LINES 53-56
 
 .. code-block:: default
 
@@ -124,12 +123,12 @@ Initialize the DPF model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-60
+.. GENERATED FROM PYTHON SOURCE LINES 57-59
 
 Should your mesh contain both solid and shell elements, for visualization purposes
 it can be useful to scope the mesh to the solid ones.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-70
+.. GENERATED FROM PYTHON SOURCE LINES 59-69
 
 .. code-block:: default
 
@@ -150,14 +149,14 @@ it can be useful to scope the mesh to the solid ones.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-75
+.. GENERATED FROM PYTHON SOURCE LINES 70-74
 
 Plot input data
 ~~~~~~~~~~~~~~~
 Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-92
+.. GENERATED FROM PYTHON SOURCE LINES 74-91
 
 .. code-block:: default
 
@@ -202,13 +201,13 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-96
+.. GENERATED FROM PYTHON SOURCE LINES 92-95
 
 Compute results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Reconstruct the fiber orientation tensor in the global coordinate system.
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-128
+.. GENERATED FROM PYTHON SOURCE LINES 95-127
 
 .. code-block:: default
 
@@ -251,13 +250,13 @@ Reconstruct the fiber orientation tensor in the global coordinate system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-132
+.. GENERATED FROM PYTHON SOURCE LINES 128-131
 
 Plot results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Plot some components of the fiber orientation tensor.
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-140
+.. GENERATED FROM PYTHON SOURCE LINES 131-139
 
 .. code-block:: default
 
@@ -303,7 +302,7 @@ Plot some components of the fiber orientation tensor.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.291 seconds)
+   **Total running time of the script:** ( 0 minutes  4.219 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:
