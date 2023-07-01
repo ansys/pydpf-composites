@@ -8,7 +8,6 @@ from ansys.dpf.core import DataSources
 
 from ._typing_helper import PATH as _PATH
 
-
 __all__ = (
     "CompositeDefinitionFiles",
     "ContinuousFiberCompositesFiles",
@@ -119,7 +118,6 @@ def get_composite_data_sources_for_layup_provider(
 
     Ensure that DataSources object is compatible with the version of the layup provider.
     """
-
     # import is here because of circular dependencies
     from .server_helpers import version_older_than
 

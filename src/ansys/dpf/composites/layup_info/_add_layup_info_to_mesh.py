@@ -8,6 +8,7 @@ from ..data_sources import CompositeDataSources, get_composite_data_sources_for_
 from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
 
+
 def add_layup_info_to_mesh(
     data_sources: CompositeDataSources,
     material_operators: MaterialOperators,

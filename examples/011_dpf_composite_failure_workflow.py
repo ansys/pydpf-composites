@@ -29,7 +29,10 @@ operators that are needed to evaluate composite failure criteria.
 # Load Ansys libraries.
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.data_sources import get_composites_data_sources
+from ansys.dpf.composites.data_sources import (
+    get_composite_data_sources_for_layup_provider,
+    get_composites_data_sources,
+)
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -43,7 +46,6 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.data_sources import get_composite_data_sources_for_layup_provider
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
