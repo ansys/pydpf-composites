@@ -342,7 +342,7 @@ class CompositeModel:
             stresses, strains, composite_definition_label
         )
 
-    def get_all_layered_element_ids(self):
+    def get_all_layered_element_ids(self) -> Sequence[int]:
         """Get all layered element IDs."""
         return self._interface.get_all_layered_element_ids()
 

@@ -1,6 +1,6 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
-from typing import Callable, Collection, Dict, List, Optional, Sequence, Union, cast
+from typing import Any, Callable, Collection, Dict, List, Optional, Sequence, Union, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -31,10 +31,12 @@ from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
 
 
-def _deprecated_composite_definition_label(func) -> Callable:
-    """Can be used to mark composite_definition_label as deprecated.
+def _deprecated_composite_definition_label(func) -> Callable[..., Any]:
+    """
+    Can be used to mark composite_definition_label as deprecated.
 
-    It will result in a warning being emitted when the function is used."""
+    It will result in a warning being emitted when the function is used.
+    """
     function_arg = "composite_definition_label"
 
     def inner(*args, **kwargs) -> Callable:
@@ -564,8 +566,8 @@ class CompositeModelImpl:
         # call run because ins operator has not output
         ins_operator.run()
 
-    def get_all_layered_element_ids(self):
-        """Get all layered element IDs"""
+    def get_all_layered_element_ids(self) -> Sequence[int]:
+        """Get all layered element IDs."""
         return cast(
             List[int],
             self.get_mesh().property_field("element_layer_indices").scoping.ids,
@@ -582,7 +584,7 @@ class CompositeModelImpl:
             Deprecated. It's no longer needed
         """
         warn(
-            f"Call to deprecated function"
+            "Call to deprecated function"
             " get_all_layered_element_ids_for_composite_definition_label."
             " Please use get_all_layered_element_ids instead.",
             category=DeprecationWarning,

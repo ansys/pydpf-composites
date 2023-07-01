@@ -10,7 +10,7 @@ from .material_operators import MaterialOperators
 
 
 def _get_composite_datasource_for_layup_provider(
-    data_sources: CompositeDataSources, composite_definition_label: str
+    data_sources: CompositeDataSources, composite_definition_label: Optional[str] = None
 ) -> DataSources:
     """
     Prepare DataSources of composite for the DPF server.
@@ -25,6 +25,10 @@ def _get_composite_datasource_for_layup_provider(
         if len(data_sources.old_composite_sources) == 1:
             return data_sources.composite
         else:
+            if not composite_definition_label:
+                raise RuntimeError("Calling _get_composite_datasource_for_layup_provider"
+                                   " without composite_definition_label is not allowed.")
+
             if composite_definition_label in data_sources.old_composite_sources.keys():
                 return data_sources.old_composite_sources[composite_definition_label]
             else:

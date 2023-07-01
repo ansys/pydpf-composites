@@ -545,7 +545,7 @@ class CompositeModelImpl2023R2:
         # call run because ins operator has not output
         ins_operator.run()
 
-    def get_all_layered_element_ids(self):
+    def get_all_layered_element_ids(self) -> Sequence[int]:
         """Get all layered element IDs."""
         raise NotImplementedError(
             "get_all_layered_element_ids is not implemented"
