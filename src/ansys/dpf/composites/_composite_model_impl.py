@@ -239,7 +239,7 @@ class CompositeModelImpl:
             scope_config = dpf.DataTree({"requested_times": time_in})
         scope_config_reader_op.inputs.scope_configuration(scope_config)
 
-        chunking_config: Dict[str, Union[int, Sequence[str]]] = {"max_chunk_size": 50000}
+        chunking_config: Dict[str, Union[int, Sequence[str], Sequence[float]]] = {"max_chunk_size": 50000}
         if ns_in:
             chunking_config["named_selections"] = ns_in
         if element_scope_in:
