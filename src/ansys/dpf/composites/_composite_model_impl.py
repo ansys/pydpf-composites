@@ -1,6 +1,6 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
-from typing import Collection, Dict, List, Optional, Sequence, Union, cast
+from typing import Callable, Collection, Dict, List, Optional, Sequence, Union, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -38,7 +38,7 @@ def deprecated_composite_definition_label(func):
 
     function_arg = "composite_definition_label"
 
-    def inner(*args, **kwargs):
+    def inner(*args, **kwargs) -> Callable:
         if function_arg in kwargs.keys():
             if kwargs[function_arg]:
                 warn(
