@@ -15,7 +15,7 @@ from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxS
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
-from ansys.dpf.composites.server_helpers import version_older_than, version_equal_or_later
+from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 
@@ -139,8 +139,10 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
 def test_assembly_model_2023r2(dpf_server):
     if version_equal_or_later(dpf_server, "7.0"):
-        pytest.skip(f"test_assembly_model_2023r2 verifies the composite model feature"
-                    " in combination with dpf server older than 7.0.")
+        pytest.skip(
+            f"test_assembly_model_2023r2 verifies the composite model feature"
+            " in combination with dpf server older than 7.0."
+        )
     timer = Timer()
 
     files = get_composite_files_from_workbench_result_folder(
@@ -288,8 +290,10 @@ def test_assembly_model_2023r2(dpf_server):
 
 def test_assembly_model(dpf_server):
     if version_older_than(dpf_server, "7.0"):
-        pytest.skip(f"test_assembly_model verifies the composite model feature"
-                    " in combination with dpf server 7.0 or later.")
+        pytest.skip(
+            f"test_assembly_model verifies the composite model feature"
+            " in combination with dpf server 7.0 or later."
+        )
 
     timer = Timer()
 
@@ -310,8 +314,8 @@ def test_assembly_model(dpf_server):
     )
 
     failure_output = composite_model.evaluate_failure_criteria(
-       combined_criterion=combined_failure_criterion,
-       composite_scope=CompositeScope(),
+        combined_criterion=combined_failure_criterion,
+        composite_scope=CompositeScope(),
     )
 
     timer.add("After get failure output")
@@ -398,7 +402,9 @@ def test_assembly_model(dpf_server):
     )
 
     sampling_point.run()
-    assert [ply["id"] for ply in sampling_point.analysis_plies] == [ply_id.replace(f"{shell_label}{SEPARATOR}", "") for ply_id in analysis_ply_ids_shell]
+    assert [ply["id"] for ply in sampling_point.analysis_plies] == [
+        ply_id.replace(f"{shell_label}{SEPARATOR}", "") for ply_id in analysis_ply_ids_shell
+    ]
 
     assert composite_model.get_element_laminate_offset(solid_element_id) == pytest.approx(0.0)
     analysis_ply_ids_solid = [

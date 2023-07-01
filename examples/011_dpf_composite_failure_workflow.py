@@ -78,7 +78,9 @@ composite_data_sources = get_composites_data_sources(composite_files_on_server)
 rst_data_source = composite_data_sources.rst
 material_support_data_source = composite_data_sources.material_support
 eng_data_source = composite_data_sources.engineering_data
-composite_definitions_source = get_composite_datasource_for_layup_provider(composite_data_sources, "shell")
+composite_definitions_source = get_composite_datasource_for_layup_provider(
+    composite_data_sources, "shell"
+)
 model = dpf.Model(rst_data_source)
 
 # %%
