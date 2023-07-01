@@ -17,12 +17,6 @@ from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import SamplingPointProtocol
 
-# todo
-# - add tests for time scoping and ply-wise scoping
-# - add tests for sampling point (check values)
-# - add deprecation warnings where the composite_definition_label is used
-# - support assemblies with
-
 
 class CompositeModel:
     """Provides access to the basic composite postprocessing functionality.
