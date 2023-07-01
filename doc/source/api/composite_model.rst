@@ -7,5 +7,3 @@ Composite model
     :toctree: _autosummary
 
     CompositeModel
-    CompositeScope
-    CompositeInfo

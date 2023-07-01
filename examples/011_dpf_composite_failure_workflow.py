@@ -43,7 +43,7 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.layup_info import get_composite_datasource_for_layup_provider
+from ansys.dpf.composites.data_sources import get_composite_data_sources_for_layup_provider
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
@@ -78,7 +78,7 @@ composite_data_sources = get_composites_data_sources(composite_files_on_server)
 rst_data_source = composite_data_sources.rst
 material_support_data_source = composite_data_sources.material_support
 eng_data_source = composite_data_sources.engineering_data
-composite_definitions_source = get_composite_datasource_for_layup_provider(
+composite_definitions_source = get_composite_data_sources_for_layup_provider(
     composite_data_sources, "shell"
 )
 model = dpf.Model(rst_data_source)

@@ -8,6 +8,7 @@ from ansys.dpf.core import DataSources
 
 from ._typing_helper import PATH as _PATH
 
+
 __all__ = (
     "CompositeDefinitionFiles",
     "ContinuousFiberCompositesFiles",
@@ -15,6 +16,7 @@ __all__ = (
     "CompositeDataSources",
     "get_composite_files_from_workbench_result_folder",
     "get_composites_data_sources",
+    "get_composite_data_sources_for_layup_provider",
 )
 
 _SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
@@ -107,6 +109,42 @@ class CompositeDataSources:
     composite: DataSources
     engineering_data: DataSources
     old_composite_sources: Dict[str, DataSources]
+
+
+def get_composite_data_sources_for_layup_provider(
+    data_sources: CompositeDataSources, composite_definition_label: Optional[str] = None
+) -> DataSources:
+    """
+    Prepare DataSources of composite for the DPF server.
+
+    Ensure that DataSources object is compatible with the version of the layup provider.
+    """
+
+    # import is here because of circular dependencies
+    from .server_helpers import version_older_than
+
+    # pylint: disable=protected-access
+    if version_older_than(data_sources.composite._server, "7.0"):
+        if len(data_sources.old_composite_sources) == 1:
+            return data_sources.composite
+        else:
+            if not composite_definition_label:
+                raise RuntimeError(
+                    "Calling get_composite_data_sources_for_layup_provider"
+                    " without composite_definition_label is not allowed."
+                )
+
+            if composite_definition_label in data_sources.old_composite_sources.keys():
+                return data_sources.old_composite_sources[composite_definition_label]
+            else:
+                key_strs = ", ".join(data_sources.old_composite_sources.keys())
+                raise RuntimeError(
+                    f"Invalid key {composite_definition_label}."
+                    " Available keys in composite data sources are"
+                    f" {key_strs}."
+                )
+
+    return data_sources.composite
 
 
 def _get_mapping_path_file_from_definitions_path_if_exists(

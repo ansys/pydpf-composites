@@ -32,8 +32,9 @@ class CompositeModel:
         lay-up information is added to the DPF meshed regions. Depending on the use
         case, it can be more efficient to create the providers separately.
 
-        Assemblies are supported depending on the version of the DPF server.
-        Please use version 7.0 (2024 R1) or later to process assemblies.
+        The handling of models with multiple composite definition files (assemblies)
+        differ depending on the version of the DPF server. The handling is simplified
+        with DPF Server 7.0 (2024 R1) or later.
 
     Parameters
     ----------
@@ -337,7 +338,7 @@ class CompositeModel:
         )
 
     def get_all_layered_element_ids(self) -> Sequence[int]:
-        """Get all layered element IDs."""
+        """Get all element IDs with lay-up data."""
         return self._interface.get_all_layered_element_ids()
 
     def get_all_layered_element_ids_for_composite_definition_label(
