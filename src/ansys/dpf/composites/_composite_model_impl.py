@@ -31,7 +31,7 @@ from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
 
 
-def _deprecated_composite_definition_label(func) -> Callable[..., Any]:
+def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
     """
     Can be used to mark composite_definition_label as deprecated.
 
@@ -39,7 +39,7 @@ def _deprecated_composite_definition_label(func) -> Callable[..., Any]:
     """
     function_arg = "composite_definition_label"
 
-    def inner(*args, **kwargs) -> Callable:
+    def inner(*args: Sequence[Any], **kwargs: Sequence[Any]) -> Any:
         if function_arg in kwargs.keys():
             if kwargs[function_arg]:
                 warn(

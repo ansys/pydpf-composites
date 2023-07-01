@@ -26,8 +26,10 @@ def _get_composite_datasource_for_layup_provider(
             return data_sources.composite
         else:
             if not composite_definition_label:
-                raise RuntimeError("Calling _get_composite_datasource_for_layup_provider"
-                                   " without composite_definition_label is not allowed.")
+                raise RuntimeError(
+                    "Calling _get_composite_datasource_for_layup_provider"
+                    " without composite_definition_label is not allowed."
+                )
 
             if composite_definition_label in data_sources.old_composite_sources.keys():
                 return data_sources.old_composite_sources[composite_definition_label]
