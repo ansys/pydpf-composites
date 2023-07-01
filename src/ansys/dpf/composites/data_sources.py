@@ -399,9 +399,12 @@ def get_composites_data_sources(
             else:
                 composite_data_source.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
 
+        ##### This block is needed to suport DPF Server older than 7.0 (2023 R2 or before)
         old_datasource = DataSources()
         old_datasource.add_file_path(composite_files.definition, _LAYUPFILE_INDEX_KEY)
-        old_datasource.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
+        if composite_files.mapping is not None:
+            old_datasource.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
+        ##### End of block
 
         old_composite_data_sources[key] = old_datasource
 

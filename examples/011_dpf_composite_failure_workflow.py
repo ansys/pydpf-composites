@@ -43,6 +43,7 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
+from ansys.dpf.composites.layup_info import get_composite_datasource_for_layup_provider
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
@@ -77,8 +78,7 @@ composite_data_sources = get_composites_data_sources(composite_files_on_server)
 rst_data_source = composite_data_sources.rst
 material_support_data_source = composite_data_sources.material_support
 eng_data_source = composite_data_sources.engineering_data
-composite_definitions_source = composite_data_sources.composite["shell"]
-
+composite_definitions_source = get_composite_datasource_for_layup_provider(composite_data_sources, "shell")
 model = dpf.Model(rst_data_source)
 
 # %%
@@ -94,6 +94,7 @@ mesh_provider = model.metadata.mesh_provider
 # The material support contains all materials from the RST file.
 material_support_provider = dpf.Operator("support_provider")
 material_support_provider.inputs.property("mat")
+
 material_support_provider.inputs.data_sources(material_support_data_source)
 material_support_provider.run()
 

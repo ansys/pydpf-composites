@@ -83,12 +83,12 @@ class SamplingPoint(SamplingPointProtocol):
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
-        time_id: Optional[float] = None,
+        time: Optional[float] = None,
     ):
         """Create a ``SamplingPoint`` object."""
         self._name = name
         self._element_id = element_id
-        self._time_id = time_id
+        self._time = time
         self._combined_criterion = combined_criterion
 
         self._material_operators = material_operators
@@ -300,7 +300,10 @@ class SamplingPoint(SamplingPointProtocol):
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config_reader_op.inputs.write_data_for_full_element_scope(True)
+        scope_config = dpf.DataTree({"write_data_for_full_element_scope": True})
+        if self._time:
+            scope_config = dpf.DataTree({"requested_times": [self._time]})
+        scope_config_reader_op.inputs.scope_configuration(scope_config)
 
         evaluate_failure_criterion_per_scope_op = dpf.Operator(
             "composite::evaluate_failure_criterion_per_scope"

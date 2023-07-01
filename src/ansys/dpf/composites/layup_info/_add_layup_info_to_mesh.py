@@ -9,7 +9,7 @@ from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
 
 
-def _get_composite_datasource_for_layup_provider(
+def get_composite_datasource_for_layup_provider(
     data_sources: CompositeDataSources, composite_definition_label: Optional[str] = None
 ) -> DataSources:
     """
@@ -76,7 +76,7 @@ def add_layup_info_to_mesh(
     :
         Lay-up provider operator.
     """
-    composite_data_sources = _get_composite_datasource_for_layup_provider(
+    composite_data_sources = get_composite_datasource_for_layup_provider(
         data_sources, composite_definition_label
     )
 

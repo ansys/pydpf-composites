@@ -130,7 +130,7 @@ class CompositeModelImpl2023R2:
         )
 
         self._composite_infos: Dict[str, CompositeInfo] = {}
-        for composite_definition_label in self._data_sources.composite:
+        for composite_definition_label in self._data_sources.old_composite_sources:
             self._composite_infos[composite_definition_label] = CompositeInfo(
                 data_sources=self._data_sources,
                 composite_definition_label=composite_definition_label,
