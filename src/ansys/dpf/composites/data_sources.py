@@ -15,7 +15,6 @@ __all__ = (
     "CompositeDataSources",
     "get_composite_files_from_workbench_result_folder",
     "get_composites_data_sources",
-    "get_composite_datasource_for_layup_provider",
 )
 
 _SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
@@ -107,6 +106,7 @@ class CompositeDataSources:
     material_support: DataSources
     composite: DataSources
     engineering_data: DataSources
+    old_composite_sources: Dict[str, DataSources]
 
 
 def _get_mapping_path_file_from_definitions_path_if_exists(
@@ -380,8 +380,10 @@ def get_composites_data_sources(
 
     composite_data_source = DataSources()
     set_part_key = len(continuous_composite_files.composite) > 1
+    old_composite_data_sources = {}
 
     for key, composite_files in continuous_composite_files.composite.items():
+        old_datasource = DataSources()
         if set_part_key:
             composite_data_source.add_file_path_for_specified_result(
                 composite_files.definition, _LAYUPFILE_INDEX_KEY, key
@@ -397,11 +399,18 @@ def get_composites_data_sources(
             else:
                 composite_data_source.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
 
+        old_datasource = DataSources()
+        old_datasource.add_file_path(composite_files.definition, _LAYUPFILE_INDEX_KEY)
+        old_datasource.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
+
+        old_composite_data_sources[key] = old_datasource
+
     return CompositeDataSources(
         rst=rst_data_source,
         material_support=material_support_data_source,
         composite=composite_data_source,
         engineering_data=engineering_data_source,
+        old_composite_sources=old_composite_data_sources,
     )
 
 
@@ -419,44 +428,3 @@ def _data_sources_result_key(data_sources: DataSources, index: int) -> str:
         str,
         data_sources._api.data_sources_get_result_key_by_index(data_sources, index),
     )
-
-
-def get_composite_datasource_for_layup_provider(data_sources: CompositeDataSources) -> DataSources:
-    """
-    Prepare DataSources of composite for the DPF server.
-
-    Ensure that DataSources object is compatible with the version of the layup provider.
-    """
-    # import is here because of circular includes
-    from .server_helpers import version_older_than
-
-    # pylint: disable=protected-access
-    if version_older_than(data_sources.composite._server, "7.0"):
-        # Python API of DataSources does not allow to get the path by key and resultKey
-        if _data_sources_num_result_keys(data_sources.composite) > 1:
-            raise RuntimeError(
-                "Assemblies are no longer supported with DPF Server 6.1 (2023R2) or earlier."
-                " Please use DPF Sever 7.0 (2024 R1) or later."
-            )
-
-        if _data_sources_result_key(data_sources.composite, 0):
-            # Datasources has one result key -> create new datasource without key
-            # pylint: disable=protected-access
-            composite_definition_file_path = data_sources.composite._api.data_sources_get_path(
-                data_sources.composite, _LAYUPFILE_INDEX_KEY, 0
-            )
-            # pylint: disable=protected-access
-            mapping_file_path = data_sources.composite._api.data_sources_get_path(
-                data_sources.composite, _MAPPINGFILE_INDEX_KEY, 0
-            )
-            composite_data_source = DataSources
-            composite_data_source.add_file_path(
-                composite_definition_file_path, _LAYUPFILE_INDEX_KEY
-            )
-            composite_data_source.add_file_path(mapping_file_path, _MAPPINGFILE_INDEX_KEY)
-            return composite_data_source
-        else:
-            # result key is not set. Datasource can be used directly
-            return data_sources.composite
-
-    return data_sources.composite

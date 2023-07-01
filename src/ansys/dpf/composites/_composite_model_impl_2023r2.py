@@ -1,5 +1,6 @@
 """Composite Model Interface 2023R2."""
 from typing import Collection, Dict, List, Optional, Sequence, cast
+from warnings import warn
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
@@ -128,30 +129,24 @@ class CompositeModelImpl2023R2:
             engineering_data_source=self._data_sources.engineering_data,
         )
 
-        if len(composite_files.composite) > 1:
-            raise RuntimeError(
-                "Assemblies are no longer supported with DPF Server 6.1 (2023R2) or earlier."
-                " Please use DPF Sever 7.0 (2024 R1) or later."
-            )
-
-        label = list(composite_files.composite.keys())[0]
-        self._composite_infos: Dict[str, CompositeInfo] = {
-            label: CompositeInfo(
+        self._composite_infos: Dict[str, CompositeInfo] = {}
+        for composite_definition_label in self._data_sources.composite:
+            self._composite_infos[composite_definition_label] = CompositeInfo(
                 data_sources=self._data_sources,
-                composite_definition_label=label,
+                composite_definition_label=composite_definition_label,
                 streams_provider=self._core_model.metadata.streams_provider,
                 material_operators=self._material_operators,
                 unit_system=self._unit_system,
             )
-        }
-        # for composite_definition_label in self._data_sources.composite:
-        #    self._composite_infos[composite_definition_label] = CompositeInfo(
-        #        data_sources=self._data_sources,
-        #        composite_definition_label=composite_definition_label,
-        #        streams_provider=self._core_model.metadata.streams_provider,
-        #        material_operators=self._material_operators,
-        #        unit_system=self._unit_system,
-        #    )
+
+        if len(self._composite_infos) > 1:
+            warn(
+                "The post-processing of composite models with multiple lay-up"
+                " definitions (assemblies) is deprecated with DPF servers older than 7.0"
+                " (2024 R1). Please use DPF server 7.0 or later.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
     @property
     def composite_definition_labels(self) -> Sequence[str]:
@@ -269,9 +264,6 @@ class CompositeModelImpl2023R2:
 
         scopes = []
 
-        # roosre June 2023: This should be simplified as part of the implementation
-        # of the new workflow where the result definition is no longer used. The
-        # backend supports multiple lay-up definitions in the meanwhile.
         for composite_definition_label in self.composite_definition_labels:
             composite_files = self._composite_files.composite[composite_definition_label]
             scopes.append(
@@ -552,6 +544,14 @@ class CompositeModelImpl2023R2:
 
         # call run because ins operator has not output
         ins_operator.run()
+
+    def get_all_layered_element_ids(self):
+        raise NotImplementedError(
+            "get_all_layered_element_ids is not implemented"
+            " for this version of DPF. Please upgrade to 7.0 (2024 R1)"
+            " or later. Use get_all_layered_element_ids_for_composite_definition_label"
+            " instead."
+        )
 
     def get_all_layered_element_ids_for_composite_definition_label(
         self, composite_definition_label: Optional[str]

@@ -1,6 +1,7 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
 from typing import Collection, Dict, List, Optional, Sequence, Union, cast
+from warnings import warn
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
@@ -30,10 +31,31 @@ from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
 
 
+def deprecated_composite_definition_label(func):
+    """This is a decorator which can be used to mark
+    composite_definition_label as deprecated. It will result "
+    "in a warning being emitted when the function is used."""
+
+    function_arg = "composite_definition_label"
+
+    def inner(*args, **kwargs):
+        if function_arg in kwargs.keys():
+            if kwargs[function_arg]:
+                warn(
+                    f"Use of {function_arg} is deprecated. Function {func.__name__}."
+                    " can be called without this argument.",
+                    category=DeprecationWarning,
+                    stacklevel=2,
+                )
+        return func(*args, **kwargs)
+
+    return inner
+
+
 class CompositeModelImpl:
     """Provides access to the basic composite postprocessing functionality.
 
-    This interface supports DPF server version 7.0 and later.
+    This interface supports DPF server version 7.0 (2024 R1) and later.
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated. The composite_files provided are automatically
@@ -128,6 +150,7 @@ class CompositeModelImpl:
         """Material operators."""
         return self._material_operators
 
+    @deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
@@ -135,6 +158,7 @@ class CompositeModelImpl:
         """
         return self._core_model.metadata.meshed_region
 
+    @deprecated_composite_definition_label
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operators.
 
@@ -149,6 +173,7 @@ class CompositeModelImpl:
         """
         return self._layup_provider
 
+    @deprecated_composite_definition_label
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
@@ -324,6 +349,7 @@ class CompositeModelImpl:
         else:
             return min_merger.outputs.merged_fields_container()
 
+    @deprecated_composite_definition_label
     def get_sampling_point(
         self,
         combined_criterion: CombinedFailureCriterion,
@@ -362,6 +388,7 @@ class CompositeModelImpl:
             time_in,
         )
 
+    @deprecated_composite_definition_label
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[ElementInfo]:
@@ -381,6 +408,7 @@ class CompositeModelImpl:
         """
         return self._element_info_provider.get_element_info(element_id)
 
+    @deprecated_composite_definition_label
     def get_property_for_all_layers(
         self,
         layup_property: LayerProperty,
@@ -414,6 +442,7 @@ class CompositeModelImpl:
             return self._layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 
+    @deprecated_composite_definition_label
     def get_analysis_plies(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[Sequence[str]]:
@@ -435,6 +464,7 @@ class CompositeModelImpl:
         """
         return self._layup_properties_provider.get_analysis_plies(element_id)
 
+    @deprecated_composite_definition_label
     def get_element_laminate_offset(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[np.double]:
@@ -454,6 +484,7 @@ class CompositeModelImpl:
         """
         return self._layup_properties_provider.get_element_laminate_offset(element_id)
 
+    @deprecated_composite_definition_label
     def get_constant_property_dict(
         self,
         material_properties: Collection[MaterialProperty],
@@ -494,6 +525,7 @@ class CompositeModelImpl:
             NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
         )
 
+    @deprecated_composite_definition_label
     def add_interlaminar_normal_stresses(
         self,
         stresses: FieldsContainer,
@@ -533,6 +565,13 @@ class CompositeModelImpl:
         # call run because ins operator has not output
         ins_operator.run()
 
+    def get_all_layered_element_ids(self):
+        """Get all layered element IDs"""
+        return cast(
+            List[int],
+            self.get_mesh().property_field("element_layer_indices").scoping.ids,
+        )
+
     def get_all_layered_element_ids_for_composite_definition_label(
         self, composite_definition_label: Optional[str] = None
     ) -> Sequence[int]:
@@ -543,10 +582,13 @@ class CompositeModelImpl:
         composite_definition_label:
             Deprecated. It's no longer needed
         """
-        return cast(
-            List[int],
-            self.get_mesh().property_field("element_layer_indices").scoping.ids,
+        warn(
+            f"Call to deprecated function get_all_layered_element_ids_for_composite_definition_label."
+            " Please use get_all_layered_element_ids instead.",
+            category=DeprecationWarning,
+            stacklevel=2,
         )
+        return self.get_all_layered_element_ids()
 
     def _get_rst_streams_provider(self) -> Operator:
         return self._core_model.metadata.streams_provider

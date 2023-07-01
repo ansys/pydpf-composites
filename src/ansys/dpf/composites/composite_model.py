@@ -20,6 +20,8 @@ from .sampling_point_types import SamplingPointProtocol
 # todo
 # - add tests for time scoping and ply-wise scoping
 # - add tests for sampling point (check values)
+# - add deprecation warnings where the composite_definition_label is used
+# - support assemblies with
 
 
 class CompositeModel:
@@ -339,6 +341,10 @@ class CompositeModel:
         self._interface.add_interlaminar_normal_stresses(
             stresses, strains, composite_definition_label
         )
+
+    def get_all_layered_element_ids(self):
+        """Get all layered element IDs"""
+        return self._interface.get_all_layered_element_ids()
 
     def get_all_layered_element_ids_for_composite_definition_label(
         self, composite_definition_label: Optional[str] = None

@@ -2,11 +2,39 @@
 from typing import Optional
 from warnings import warn
 
-from ansys.dpf.core import MeshedRegion, Operator
+from ansys.dpf.core import DataSources, MeshedRegion, Operator
 
-from ..data_sources import CompositeDataSources, get_composite_datasource_for_layup_provider
+from ..data_sources import CompositeDataSources
 from ..unit_system import UnitSystemProvider
 from .material_operators import MaterialOperators
+
+
+def _get_composite_datasource_for_layup_provider(
+    data_sources: CompositeDataSources, composite_definition_label: str
+) -> DataSources:
+    """
+    Prepare DataSources of composite for the DPF server.
+
+    Ensure that DataSources object is compatible with the version of the layup provider.
+    """
+    # import is here because of circular includes
+    from ..server_helpers import version_older_than
+
+    # pylint: disable=protected-access
+    if version_older_than(data_sources.composite._server, "7.0"):
+        if len(data_sources.old_composite_sources) == 1:
+            return data_sources.composite
+        else:
+            if composite_definition_label in data_sources.old_composite_sources.keys():
+                return data_sources.old_composite_sources[composite_definition_label]
+            else:
+                key_strs = ", ".join(data_sources.old_composite_sources.keys())
+                raise RuntimeError(
+                    f"Invalid key {composite_definition_label}. Available keys in composite data sources are"
+                    f" {key_strs}."
+                )
+
+    return data_sources.composite
 
 
 def add_layup_info_to_mesh(
@@ -41,15 +69,9 @@ def add_layup_info_to_mesh(
     :
         Lay-up provider operator.
     """
-    composite_data_sources = get_composite_datasource_for_layup_provider(data_sources)
-    if composite_definition_label:
-        warn(
-            "Calling add_layup_info_to_mesh with"
-            " composite_definition_label is deprecated. Assemblies are fully"
-            " supported with DPF Server 7.0 (2024 R1) or later.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
+    composite_data_sources = _get_composite_datasource_for_layup_provider(
+        data_sources, composite_definition_label
+    )
 
     # Set up the lay-up provider.
     # Reads the composite definition file and enriches the mesh
