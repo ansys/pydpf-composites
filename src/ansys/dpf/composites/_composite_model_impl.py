@@ -31,11 +31,10 @@ from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
 
 
-def deprecated_composite_definition_label(func):
+def _deprecated_composite_definition_label(func):
     """This is a decorator which can be used to mark
     composite_definition_label as deprecated. It will result "
     "in a warning being emitted when the function is used."""
-
     function_arg = "composite_definition_label"
 
     def inner(*args, **kwargs) -> Callable:
@@ -150,7 +149,7 @@ class CompositeModelImpl:
         """Material operators."""
         return self._material_operators
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
@@ -158,7 +157,7 @@ class CompositeModelImpl:
         """
         return self._core_model.metadata.meshed_region
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operators.
 
@@ -173,7 +172,7 @@ class CompositeModelImpl:
         """
         return self._layup_provider
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
@@ -349,7 +348,7 @@ class CompositeModelImpl:
         else:
             return min_merger.outputs.merged_fields_container()
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_sampling_point(
         self,
         combined_criterion: CombinedFailureCriterion,
@@ -388,7 +387,7 @@ class CompositeModelImpl:
             time_in,
         )
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[ElementInfo]:
@@ -408,7 +407,7 @@ class CompositeModelImpl:
         """
         return self._element_info_provider.get_element_info(element_id)
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_property_for_all_layers(
         self,
         layup_property: LayerProperty,
@@ -442,7 +441,7 @@ class CompositeModelImpl:
             return self._layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_analysis_plies(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[Sequence[str]]:
@@ -464,7 +463,7 @@ class CompositeModelImpl:
         """
         return self._layup_properties_provider.get_analysis_plies(element_id)
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_element_laminate_offset(
         self, element_id: int, composite_definition_label: Optional[str] = None
     ) -> Optional[np.double]:
@@ -484,7 +483,7 @@ class CompositeModelImpl:
         """
         return self._layup_properties_provider.get_element_laminate_offset(element_id)
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def get_constant_property_dict(
         self,
         material_properties: Collection[MaterialProperty],
@@ -525,7 +524,7 @@ class CompositeModelImpl:
             NDArray[np.double], self._core_model.metadata.time_freq_support.time_frequencies.data
         )
 
-    @deprecated_composite_definition_label
+    @_deprecated_composite_definition_label
     def add_interlaminar_normal_stresses(
         self,
         stresses: FieldsContainer,
@@ -583,7 +582,8 @@ class CompositeModelImpl:
             Deprecated. It's no longer needed
         """
         warn(
-            f"Call to deprecated function get_all_layered_element_ids_for_composite_definition_label."
+            f"Call to deprecated function"
+            " get_all_layered_element_ids_for_composite_definition_label."
             " Please use get_all_layered_element_ids instead.",
             category=DeprecationWarning,
             stacklevel=2,

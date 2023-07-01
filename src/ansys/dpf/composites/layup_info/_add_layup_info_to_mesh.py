@@ -30,7 +30,8 @@ def _get_composite_datasource_for_layup_provider(
             else:
                 key_strs = ", ".join(data_sources.old_composite_sources.keys())
                 raise RuntimeError(
-                    f"Invalid key {composite_definition_label}. Available keys in composite data sources are"
+                    f"Invalid key {composite_definition_label}."
+                    " Available keys in composite data sources are"
                     f" {key_strs}."
                 )
 

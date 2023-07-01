@@ -343,7 +343,7 @@ class CompositeModel:
         )
 
     def get_all_layered_element_ids(self):
-        """Get all layered element IDs"""
+        """Get all layered element IDs."""
         return self._interface.get_all_layered_element_ids()
 
     def get_all_layered_element_ids_for_composite_definition_label(

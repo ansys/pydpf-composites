@@ -546,6 +546,7 @@ class CompositeModelImpl2023R2:
         ins_operator.run()
 
     def get_all_layered_element_ids(self):
+        """Get all layered element IDs."""
         raise NotImplementedError(
             "get_all_layered_element_ids is not implemented"
             " for this version of DPF. Please upgrade to 7.0 (2024 R1)"
