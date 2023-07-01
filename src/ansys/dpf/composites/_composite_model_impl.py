@@ -31,10 +31,10 @@ from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import get_unit_system
 
 
-def _deprecated_composite_definition_label(func):
-    """This is a decorator which can be used to mark
-    composite_definition_label as deprecated. It will result "
-    "in a warning being emitted when the function is used."""
+def _deprecated_composite_definition_label(func) -> Callable:
+    """Can be used to mark composite_definition_label as deprecated.
+
+    It will result in a warning being emitted when the function is used."""
     function_arg = "composite_definition_label"
 
     def inner(*args, **kwargs) -> Callable:
