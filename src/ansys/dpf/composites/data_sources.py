@@ -107,6 +107,10 @@ class CompositeDataSources:
     material_support: DataSources
     composite: DataSources
     engineering_data: DataSources
+
+    # This member is used to support assemblies in combination with the old
+    # DPF server (<7.0). It should be removed once the support of this
+    # server version is dropped.
     old_composite_sources: Dict[str, DataSources]
 
 

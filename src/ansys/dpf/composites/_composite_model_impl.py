@@ -215,7 +215,6 @@ class CompositeModelImpl:
         if composite_scope is None:
             composite_scope = CompositeScope()
 
-        # todo: how to pass the time ids and ply_scope
         element_scope_in = [] if composite_scope.elements is None else composite_scope.elements
         ply_scope_in = [] if composite_scope.plies is None else composite_scope.plies
         ns_in = [] if composite_scope.named_selections is None else composite_scope.named_selections
@@ -231,27 +230,33 @@ class CompositeModelImpl:
 
         has_layup_provider = len(self._composite_files.composite) > 0
 
+        # configure primary scoping
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config = dpf.DataTree({"write_data_for_full_element_scope": True})
+        scope_config = dpf.DataTree(
+            {"write_data_for_full_element_scope": write_data_for_full_element_scope}
+        )
         if ply_scope_in:
             scope_config = dpf.DataTree({"ply_ids": ply_scope_in})
         if time_in:
             scope_config = dpf.DataTree({"requested_times": time_in})
         scope_config_reader_op.inputs.scope_configuration(scope_config)
 
+        # configure operator to chunk the scope
         chunking_config: Dict[str, Union[int, Sequence[str], Sequence[float]]] = {
             "max_chunk_size": 50000
         }
         if ns_in:
             chunking_config["named_selections"] = ns_in
-        if element_scope_in:
-            chunking_config["element_scoping"] = [float(v) for v in element_scope_in]
         chunking_data_tree = dpf.DataTree(chunking_config)
 
         chunking_generator = dpf.Operator("composite::scope_generator")
         chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
         chunking_generator.inputs.data_sources(self.data_sources.composite)
+        if element_scope_in:
+            element_scope = dpf.Scoping(location="elemental")
+            element_scope.ids = element_scope_in
+            chunking_generator.inputs.element_scoping(element_scope)
 
         min_merger = dpf.Operator("merge::fields_container")
         max_merger = dpf.Operator("merge::fields_container")

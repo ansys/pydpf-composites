@@ -439,7 +439,8 @@ def test_composite_model_element_scope(dpf_server, data_files):
     composite_model = CompositeModel(data_files, server=dpf_server)
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
-    failure_container = composite_model.evaluate_failure_criteria(cfc)
+    composite_scope = CompositeScope(elements=[1, 3])
+    failure_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
     irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     min_id = irfs.scoping.ids[np.argmin(irfs.data)]
     max_id = irfs.scoping.ids[np.argmax(irfs.data)]
