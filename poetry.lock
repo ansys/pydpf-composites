@@ -1912,13 +1912,13 @@ files = [
 
 [[package]]
 name = "pyvista"
-version = "0.39.1"
+version = "0.40.0"
 description = "Easier Pythonic interface to VTK"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyvista-0.39.1-py3-none-any.whl", hash = "sha256:d4c9c314d0a1151a950a7dba67505e3148385ae0f7974f614252700f48cc01f4"},
-    {file = "pyvista-0.39.1.tar.gz", hash = "sha256:0023b7f6dc8a2ca4f79ec5c20a025b44910c1d1fbae9e00e13af73f3fda5d2d6"},
+    {file = "pyvista-0.40.0-py3-none-any.whl", hash = "sha256:b91eea090954cf1980aab170ce93f92d4673c1217556ddb813eafc91f6663bec"},
+    {file = "pyvista-0.40.0.tar.gz", hash = "sha256:6cff95d13edd68d7f787e87a47e9cb5ad7edfc1de4bbd7c9798ce1dce909e70c"},
 ]
 
 [package.dependencies]
@@ -1930,11 +1930,11 @@ scooby = ">=0.5.1"
 vtk = "*"
 
 [package.extras]
-all = ["cmocean", "colorcet", "imageio", "ipyvtklink", "ipywidgets", "jupyter-server-proxy", "meshio (>=5.2)", "nest-asyncio", "panel", "pythreejs", "trame (>=2.2.6)", "trame-client (>=2.4.2)", "trame-server (>=2.8.0)", "trame-vtk (>=2.4.0)"]
+all = ["pyvista[colormaps,io,jupyter,trame]"]
 colormaps = ["cmocean", "colorcet"]
 io = ["imageio", "meshio (>=5.2)"]
-jupyter = ["ipyvtklink", "ipywidgets", "jupyter-server-proxy", "nest-asyncio", "panel", "pythreejs", "trame (>=2.2.6)", "trame-client (>=2.4.2)", "trame-server (>=2.8.0)", "trame-vtk (>=2.4.0)"]
-trame = ["trame (>=2.2.6)", "trame-client (>=2.4.2)", "trame-server (>=2.8.0)", "trame-vtk (>=2.4.0)"]
+jupyter = ["ipyvtklink", "ipywidgets", "jupyter-server-proxy", "nest-asyncio", "panel", "pythreejs", "trame (>=2.5.0)", "trame-client (>=2.9.4)", "trame-server (>=2.11.4)", "trame-vtk (>=2.5.3)"]
+trame = ["trame (>=2.5.0)", "trame-client (>=2.9.4)", "trame-server (>=2.11.4)", "trame-vtk (>=2.5.3)"]
 
 [[package]]
 name = "pywin32-ctypes"
