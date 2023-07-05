@@ -735,13 +735,13 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.90.0"
+version = "2.91.0"
 description = "Google API Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-api-python-client-2.90.0.tar.gz", hash = "sha256:cbcb3ba8be37c6806676a49df16ac412077e5e5dc7fa967941eff977b31fba03"},
-    {file = "google_api_python_client-2.90.0-py2.py3-none-any.whl", hash = "sha256:4a41ffb7797d4f28e44635fb1e7076240b741c6493e7c3233c0e4421cec7c913"},
+    {file = "google-api-python-client-2.91.0.tar.gz", hash = "sha256:d9385ad6e7f95eecd40f7c81e3abfe4b6ad3a84f2c16bcdb66fb7b8dd814ed56"},
+    {file = "google_api_python_client-2.91.0-py2.py3-none-any.whl", hash = "sha256:6959d21d4b20c0f65c69662ca7b6a8a02fc08f3e7f72d70b28ae3e6e3a5f9ab2"},
 ]
 
 [package.dependencies]
@@ -1886,6 +1886,21 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
 
 [[package]]
+name = "pytest-rerunfailures"
+version = "11.1.2"
+description = "pytest plugin to re-run tests to eliminate flaky failures"
+optional = true
+python-versions = ">=3.7"
+files = [
+    {file = "pytest-rerunfailures-11.1.2.tar.gz", hash = "sha256:55611661e873f1cafa384c82f08d07883954f4b76435f4b8a5b470c1954573de"},
+    {file = "pytest_rerunfailures-11.1.2-py3-none-any.whl", hash = "sha256:d21fe2e46d9774f8ad95f1aa799544ae95cac3a223477af94aa985adfae92b7e"},
+]
+
+[package.dependencies]
+packaging = ">=17.1"
+pytest = ">=5.3"
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -2477,13 +2492,13 @@ urllib3 = ">=1.26.0"
 
 [[package]]
 name = "typing-extensions"
-version = "4.6.3"
+version = "4.7.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 optional = true
 python-versions = ">=3.7"
 files = [
-    {file = "typing_extensions-4.6.3-py3-none-any.whl", hash = "sha256:88a4153d8505aabbb4e13aacb7c486c2b4a33ca3b3f807914a9b4c844c471c26"},
-    {file = "typing_extensions-4.6.3.tar.gz", hash = "sha256:d91d5919357fe7f681a9f2b5b4cb2a5f1ef0a1e9f59c4d8ff0d3491e05c0ffd5"},
+    {file = "typing_extensions-4.7.0-py3-none-any.whl", hash = "sha256:5d8c9dac95c27d20df12fb1d97b9793ab8b2af8a3a525e68c80e21060c161771"},
+    {file = "typing_extensions-4.7.0.tar.gz", hash = "sha256:935ccf31549830cda708b42289d44b6f74084d616a00be651601a4f968e77c82"},
 ]
 
 [[package]]
@@ -2682,13 +2697,13 @@ docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker
 testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)"]
 
 [extras]
-all = ["Sphinx", "ansys-sphinx-theme", "build", "mypy", "mypy-extensions", "numpydoc", "pre-commit", "pylint", "pypandoc", "pytest", "pytest-cov", "scipy", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-design", "sphinx_gallery", "twine"]
+all = ["Sphinx", "ansys-sphinx-theme", "build", "mypy", "mypy-extensions", "numpydoc", "pre-commit", "pylint", "pypandoc", "pytest", "pytest-cov", "pytest-rerunfailures", "scipy", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-design", "sphinx_gallery", "twine"]
 build = ["build", "twine"]
 docs = ["Sphinx", "ansys-sphinx-theme", "numpydoc", "pypandoc", "scipy", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-design", "sphinx_gallery"]
 pre-commit = ["mypy", "mypy-extensions", "pre-commit", "pylint"]
-test = ["pytest", "pytest-cov"]
+test = ["pytest", "pytest-cov", "pytest-rerunfailures"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "ebe9c06dd173295c411e010c9c9fb5eb6be5d381b75fab39494007465b9f6b39"
+content-hash = "68a6422596e307bd67b96bd54c0ef6c9260f13627622a272bec42930466a29cc"

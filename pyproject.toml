@@ -50,6 +50,7 @@ pre-commit = {version = "*", optional = true}
 sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
 pylint = {version = "^2.13", optional = true}
 scipy = {version = ">=1.9.0", optional = true}
+pytest-rerunfailures = {version = "^11.1.2", optional = true}
 
 [tool.poetry.extras]
 all = [
@@ -61,6 +62,7 @@ all = [
     "numpydoc",
     "pytest",
     "pytest-cov",
+    "pytest-rerunfailures",
     "twine",
     "build",
     "mypy",
@@ -73,7 +75,7 @@ all = [
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
     "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy"]
-test = ["pytest", "pytest-cov"]
+test = ["pytest", "pytest-cov", "pytest-rerunfailures"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
 
