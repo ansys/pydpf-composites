@@ -65,6 +65,7 @@ class LayeredData:
         self.layer_indices = layer_indices
         self.spot_indices = spot_indices
         self.node_indices = node_indices
+        # Todo return also material indices
         self.data = data
 
     def filter(self, layer_filter: SolutionFilter):
@@ -144,6 +145,93 @@ def get_material_selector(dpf_material_ids: Collection[np.int64]):
 
 
 class StressSolution:
+    def __init__(
+            self,
+            composite_model: CompositeModel,
+            time_id: int
+    ):
+
+        self._time_id = time_id
+        self._composite_model = composite_model
+        self._mesh = composite_model.get_mesh()
+        self._element_info_provider = get_element_info_provider(
+            self._mesh,
+            stream_provider_or_data_source=composite_model.core_model.metadata.streams_provider,
+            no_bounds_checks=False,
+        )
+
+
+
+    def get_layered_data(self, element_id):
+        stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
+        stress_op.inputs.bool_rotate_to_global(False)
+        stress_op.inputs.time_scoping(self._time_id)
+        stress_op.inputs.mesh_scoping(dpf.Scoping(ids=[element_id]))
+
+        stress_field = stress_op.outputs.fields_container()[0]
+        layered_data_provider = LayeredDataProvider(stress_field, self._element_info_provider)
+        return layered_data_provider.get_layered_data(element_id)
+
+    def get_by_analysis_ply(self, analysis_ply_name: str, components=None, accumulate_fun=None):
+        analysis_ply_provider = AnalysisPlyInfoProvider(self._mesh, analysis_ply_name)
+        selector = get_analysis_ply_selector(analysis_ply_provider)
+        element_ids = analysis_ply_provider.ply_element_ids()
+        mesh_scoping = dpf.Scoping(ids=element_ids)
+
+        stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
+        stress_op.inputs.bool_rotate_to_global(False)
+        stress_op.inputs.time_scoping(self._time_id)
+        stress_op.inputs.mesh_scoping(mesh_scoping)
+
+        if components is None:
+            components = [0, 1, 2, 3, 4, 5]
+
+        component_selector = dpf.operators.logic.component_selector()
+        component_selector.inputs.field.connect(stress_op)
+        component_selector.inputs.component_number(components)
+        stress_field = component_selector.outputs.field()
+
+
+        return get_layered_data(
+            LayeredDataProvider(stress_field, self._element_info_provider),
+            selector,
+            accumlate_fun=accumulate_fun,
+        )
+
+    def get_by_material(self, dpf_material_id: int, components=None, accumulate_fun=None):
+        """
+        Filter the element ids first. Could be worth the effort for materials
+        that only exists in part of the the model
+        Maybe we could also precompute all the element_infos
+        element_ids = [element_id for element_id in self._mesh.elements.scoping.ids
+        if self._element_info_provider.get_element_info(element_id)
+        and dpf_material_id in self._element_info_provider.get_element_info(element_id).dpf_material_ids
+        ]
+        """
+
+        selector = get_material_selector(dpf_material_ids=[dpf_material_id])
+        mesh_scoping = dpf.Scoping(ids=self._mesh.elements.scoping.ids)
+
+        stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
+        stress_op.inputs.bool_rotate_to_global(False)
+        stress_op.inputs.time_scoping(self._time_id)
+        stress_op.inputs.mesh_scoping(mesh_scoping)
+        if components is None:
+            components = [0, 1, 2, 3, 4, 5]
+
+        component_selector = dpf.operators.logic.component_selector()
+        component_selector.inputs.field.connect(stress_op)
+        component_selector.inputs.component_number(components)
+        stress_field = component_selector.outputs.field()
+
+        return get_layered_data(
+            LayeredDataProvider(stress_field, self._element_info_provider),
+            selector,
+            accumlate_fun=accumulate_fun,
+        )
+
+
+class FailureSolution:
     def __init__(
             self,
             composite_model: CompositeModel,
