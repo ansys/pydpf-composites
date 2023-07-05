@@ -300,16 +300,15 @@ class SamplingPoint(SamplingPointProtocol):
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config = dpf.DataTree({"write_data_for_full_element_scope": True})
+        scope_config = dpf.DataTree()
         if self._time:
-            scope_config = dpf.DataTree({"requested_times": [self._time]})
+            scope_config.add("requested_times", [self._time])
         scope_config_reader_op.inputs.scope_configuration(scope_config)
 
         evaluate_failure_criterion_per_scope_op = dpf.Operator(
             "composite::evaluate_failure_criterion_per_scope"
         )
 
-        # Todo: live evaluation flag missing
         evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
             self.combined_criterion.to_json()
         )

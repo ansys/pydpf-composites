@@ -181,6 +181,7 @@ class CompositeModelImpl:
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -205,6 +206,9 @@ class CompositeModelImpl:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            Maximum chunk size. If number of elements is bigger than this number,
+            the failure criteria are evaluated in chunks of the specified size.
 
             .. note::
 
@@ -232,18 +236,21 @@ class CompositeModelImpl:
 
         # configure primary scoping
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config = dpf.DataTree(
-            {"write_data_for_full_element_scope": write_data_for_full_element_scope}
-        )
         if ply_scope_in:
-            scope_config = dpf.DataTree({"ply_ids": ply_scope_in})
+            ply_ids_container_op = dpf.Operator("composite::string_container")
+            for pin_idx, ply_id in enumerate(ply_scope_in):
+                ply_ids_container_op.connect(pin_idx, ply_id)
+            scope_config_reader_op.inputs.ply_ids(ply_ids_container_op.outputs.strings)
+
+        scope_config = dpf.DataTree()
         if time_in:
-            scope_config = dpf.DataTree({"requested_times": time_in})
+            scope_config.add("requested_times", time_in)
+
         scope_config_reader_op.inputs.scope_configuration(scope_config)
 
         # configure operator to chunk the scope
         chunking_config: Dict[str, Union[int, Sequence[str], Sequence[float]]] = {
-            "max_chunk_size": 50000
+            "max_chunk_size": max_chunk_size
         }
         if ns_in:
             chunking_config["named_selections"] = ns_in
@@ -273,7 +280,6 @@ class CompositeModelImpl:
                 "composite::evaluate_failure_criterion_per_scope"
             )
 
-            # Todo: live evaluation flag missing
             evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
                 combined_criterion.to_json()
             )
@@ -315,7 +321,7 @@ class CompositeModelImpl:
                 self.material_operators.material_support_provider.outputs
             )
 
-            if has_layup_provider:
+            if has_layup_provider and write_data_for_full_element_scope:
                 add_default_data_op = dpf.Operator("composite::add_default_data")
                 add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
                 add_default_data_op.inputs.time_id(
