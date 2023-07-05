@@ -1,18 +1,24 @@
 import dataclasses
 from functools import partial
-from typing import Optional, Collection
+from typing import Collection, Optional
 
-import numpy as np
 import ansys.dpf.core as dpf
 from ansys.dpf.core import MeshedRegion
+import numpy as np
 
 from ansys.dpf.composites._indexer import FieldIndexerWithDataPointer
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Spot
-from ansys.dpf.composites.layup_info import ElementInfoProvider, get_element_info_provider, \
-    AnalysisPlyInfoProvider
-from ansys.dpf.composites.select_indices import get_selected_indices, \
-    get_selected_indices_by_analysis_ply, get_selected_indices_by_dpf_material_ids
+from ansys.dpf.composites.layup_info import (
+    AnalysisPlyInfoProvider,
+    ElementInfoProvider,
+    get_element_info_provider,
+)
+from ansys.dpf.composites.select_indices import (
+    get_selected_indices,
+    get_selected_indices_by_analysis_ply,
+    get_selected_indices_by_dpf_material_ids,
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -34,9 +40,9 @@ class LayeredDataProvider:
         flat_indices = np.arange(
             0,
             (
-                    element_info.n_spots
-                    * element_info.number_of_nodes_per_spot_plane
-                    * element_info.n_layers
+                element_info.n_spots
+                * element_info.number_of_nodes_per_spot_plane
+                * element_info.n_layers
             ),
         )
         unraveled_indices = np.unravel_index(
@@ -56,7 +62,7 @@ class LayeredDataProvider:
             data=data,
             layer_indices=layer_indices,
             spot_indices=spot_indices,
-            node_indices=node_indices
+            node_indices=node_indices,
         )
 
 
@@ -65,6 +71,7 @@ class LayeredData:
         self.layer_indices = layer_indices
         self.spot_indices = spot_indices
         self.node_indices = node_indices
+        # Todo return also material indices
         self.data = data
 
     def filter(self, layer_filter: SolutionFilter):
@@ -84,7 +91,7 @@ class LayeredData:
             data=self.data[filter],
             layer_indices=self.layer_indices[filter],
             node_indices=self.node_indices[filter],
-            spot_indices=self.spot_indices[filter]
+            spot_indices=self.spot_indices[filter],
         )
 
 
@@ -116,22 +123,23 @@ def get_layered_data(data_provider: LayeredDataProvider, selector, accumlate_fun
 
 
 def get_filter_selector(solution_filter: SolutionFilter):
-    return partial(get_selected_indices,
-                layers=solution_filter.layers,
-                nodes=solution_filter.nodes,
-                spots=solution_filter.spots
-            )
+    return partial(
+        get_selected_indices,
+        layers=solution_filter.layers,
+        nodes=solution_filter.nodes,
+        spots=solution_filter.spots,
+    )
 
 
 def get_analysis_ply_selector(analysis_ply_info_provider: AnalysisPlyInfoProvider):
     def inner(element_info):
         try:
             return get_selected_indices_by_analysis_ply(
-                analysis_ply_info_provider=analysis_ply_info_provider,
-                element_info=element_info
+                analysis_ply_info_provider=analysis_ply_info_provider, element_info=element_info
             )
         except Exception as e:
             return []
+
     return inner
 
 
@@ -142,14 +150,8 @@ def get_material_selector(dpf_material_ids: Collection[np.int64]):
     )
 
 
-
 class StressSolution:
-    def __init__(
-            self,
-            composite_model: CompositeModel,
-            time_id: int
-    ):
-
+    def __init__(self, composite_model: CompositeModel, time_id: int):
         self._time_id = time_id
         self._composite_model = composite_model
         self._mesh = composite_model.get_mesh()
@@ -158,8 +160,6 @@ class StressSolution:
             stream_provider_or_data_source=composite_model.core_model.metadata.streams_provider,
             no_bounds_checks=False,
         )
-
-
 
     def get_layered_data(self, element_id):
         stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
@@ -189,7 +189,6 @@ class StressSolution:
         component_selector.inputs.field.connect(stress_op)
         component_selector.inputs.component_number(components)
         stress_field = component_selector.outputs.field()
-
 
         return get_layered_data(
             LayeredDataProvider(stress_field, self._element_info_provider),
@@ -229,3 +228,81 @@ class StressSolution:
             accumlate_fun=accumulate_fun,
         )
 
+
+class FailureSolution:
+    def __init__(self, composite_model: CompositeModel, time_id: int):
+        self._time_id = time_id
+        self._composite_model = composite_model
+        self._mesh = composite_model.get_mesh()
+        self._element_info_provider = get_element_info_provider(
+            self._mesh,
+            stream_provider_or_data_source=composite_model.core_model.metadata.streams_provider,
+            no_bounds_checks=False,
+        )
+
+    def get_layered_data(self, element_id):
+        stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
+        stress_op.inputs.bool_rotate_to_global(False)
+        stress_op.inputs.time_scoping(self._time_id)
+        stress_op.inputs.mesh_scoping(dpf.Scoping(ids=[element_id]))
+
+        stress_field = stress_op.outputs.fields_container()[0]
+        layered_data_provider = LayeredDataProvider(stress_field, self._element_info_provider)
+        return layered_data_provider.get_layered_data(element_id)
+
+    def get_by_analysis_ply(self, analysis_ply_name: str, components=None, accumulate_fun=None):
+        analysis_ply_provider = AnalysisPlyInfoProvider(self._mesh, analysis_ply_name)
+        selector = get_analysis_ply_selector(analysis_ply_provider)
+        element_ids = analysis_ply_provider.ply_element_ids()
+        mesh_scoping = dpf.Scoping(ids=element_ids)
+
+        stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
+        stress_op.inputs.bool_rotate_to_global(False)
+        stress_op.inputs.time_scoping(self._time_id)
+        stress_op.inputs.mesh_scoping(mesh_scoping)
+
+        if components is None:
+            components = [0, 1, 2, 3, 4, 5]
+
+        component_selector = dpf.operators.logic.component_selector()
+        component_selector.inputs.field.connect(stress_op)
+        component_selector.inputs.component_number(components)
+        stress_field = component_selector.outputs.field()
+
+        return get_layered_data(
+            LayeredDataProvider(stress_field, self._element_info_provider),
+            selector,
+            accumlate_fun=accumulate_fun,
+        )
+
+    def get_by_material(self, dpf_material_id: int, components=None, accumulate_fun=None):
+        """
+        Filter the element ids first. Could be worth the effort for materials
+        that only exists in part of the the model
+        Maybe we could also precompute all the element_infos
+        element_ids = [element_id for element_id in self._mesh.elements.scoping.ids
+        if self._element_info_provider.get_element_info(element_id)
+        and dpf_material_id in self._element_info_provider.get_element_info(element_id).dpf_material_ids
+        ]
+        """
+
+        selector = get_material_selector(dpf_material_ids=[dpf_material_id])
+        mesh_scoping = dpf.Scoping(ids=self._mesh.elements.scoping.ids)
+
+        stress_op = self._composite_model.core_model.results.stress.on_all_time_freqs()
+        stress_op.inputs.bool_rotate_to_global(False)
+        stress_op.inputs.time_scoping(self._time_id)
+        stress_op.inputs.mesh_scoping(mesh_scoping)
+        if components is None:
+            components = [0, 1, 2, 3, 4, 5]
+
+        component_selector = dpf.operators.logic.component_selector()
+        component_selector.inputs.field.connect(stress_op)
+        component_selector.inputs.component_number(components)
+        stress_field = component_selector.outputs.field()
+
+        return get_layered_data(
+            LayeredDataProvider(stress_field, self._element_info_provider),
+            selector,
+            accumlate_fun=accumulate_fun,
+        )
