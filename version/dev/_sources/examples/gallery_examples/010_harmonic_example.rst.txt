@@ -413,7 +413,7 @@ at each frequency, because we look only at the element that has the highest IRF 
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7f51c79e95b0>]
+    [<matplotlib.lines.Line2D object at 0x7fdf0f8bed60>]
 
 
 
@@ -488,7 +488,7 @@ Compute critical layer and critical failure mode.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  17.116 seconds)
+   **Total running time of the script:** ( 0 minutes  16.270 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_010_harmonic_example.py:
