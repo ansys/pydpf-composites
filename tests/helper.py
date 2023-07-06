@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import os
 import pathlib
 import time
+from typing import Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
