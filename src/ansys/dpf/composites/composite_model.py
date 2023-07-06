@@ -15,7 +15,7 @@ from .layup_info import ElementInfo, LayerProperty
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasureEnum
-from .sampling_point_types import SamplingPointProtocol
+from .sampling_point_types import SamplingPoint
 
 
 class CompositeModel:
@@ -34,7 +34,25 @@ class CompositeModel:
 
         The handling of models with multiple composite definition files (assemblies)
         differ depending on the version of the DPF server. The handling is simplified
-        with DPF Server 7.0 (2024 R1) or later.
+        with DPF Server 7.0 (2024 R1) or later and the full assembly can be post-processed
+        in the same way as a model with a single ACP model.
+
+        Before DPF Server 7.0 (2024 R1):
+
+        For assemblies with multiple composite definition files, separate meshes and
+        lay-up operators are generated (wrapped by the ``CompositeInfo`` class). This
+        is needed because the lay-up provider can only add the data of a single
+        composite definitions file to a mesh. All functions that depend on composite
+        definitions mut be called with the correct ``composite_definition_label``
+        parameter. The layered elements that get information from a given
+        composite definition label can be determined by calling
+        :meth:`.CompositeModel.get_all_layered_element_ids_for_composite_definition_label`.
+        All the elements that are not part of a composite definition are either homogeneous
+        solids or layered models defined outside of an ACP model. The
+        :meth:`.CompositeModel.composite_definition_labels` command returns all available composite
+        definition labels. For more information, see
+        :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py`.
+
 
     Parameters
     ----------
@@ -164,7 +182,7 @@ class CompositeModel:
         element_id: int,
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
-    ) -> SamplingPointProtocol:
+    ) -> SamplingPoint:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters

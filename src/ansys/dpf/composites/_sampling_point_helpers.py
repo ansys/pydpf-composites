@@ -11,8 +11,8 @@ from .result_definition import FailureMeasureEnum
 from .sampling_point_types import (
     FAILURE_MODE_NAMES_TO_ACP,
     FailureResult,
+    SamplingPoint,
     SamplingPointFigure,
-    SamplingPointProtocol,
 )
 
 
@@ -80,7 +80,7 @@ def get_indices_from_sp(
 
 
 def get_offsets_by_spots_from_sp(
-    sampling_point: SamplingPointProtocol,
+    sampling_point: SamplingPoint,
     spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
     core_scale_factor: float = 1.0,
 ) -> npt.NDArray[np.float64]:
@@ -117,7 +117,7 @@ def get_offsets_by_spots_from_sp(
 
 
 def get_ply_wise_critical_failures_from_sp(
-    sampling_point: SamplingPointProtocol,
+    sampling_point: SamplingPoint,
 ) -> List[FailureResult]:
     """Get the critical failure value and modes per ply."""
     num_plies = sampling_point.number_of_plies
@@ -147,7 +147,7 @@ def get_ply_wise_critical_failures_from_sp(
 
 
 def get_polar_plot_from_sp(
-    sampling_point: SamplingPointProtocol, components: Sequence[str] = ("E1", "E2", "G12")
+    sampling_point: SamplingPoint, components: Sequence[str] = ("E1", "E2", "G12")
 ) -> SamplingPointFigure:
     """Create a standard polar plot to visualize the polar properties of the laminate."""
     if not sampling_point.is_uptodate or not sampling_point.results:
@@ -171,7 +171,7 @@ def get_polar_plot_from_sp(
 
 
 def add_ply_sequence_to_plot_to_sp(
-    sampling_point: SamplingPointProtocol, axes: Any, core_scale_factor: float = 1.0
+    sampling_point: SamplingPoint, axes: Any, core_scale_factor: float = 1.0
 ) -> None:
     """Add the stacking (ply and text) to an axis or plot."""
     offsets = sampling_point.get_offsets_by_spots(
@@ -206,7 +206,7 @@ def add_ply_sequence_to_plot_to_sp(
 
 
 def add_results_to_plot_to_sp(
-    sampling_point: SamplingPointProtocol,
+    sampling_point: SamplingPoint,
     axes: Any,
     components: Sequence[str],
     spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP),
@@ -237,7 +237,7 @@ def add_results_to_plot_to_sp(
 
 
 def get_result_plots_from_sp(
-    sampling_point: SamplingPointProtocol,
+    sampling_point: SamplingPoint,
     strain_components: Sequence[str] = ("e1", "e2", "e3", "e12", "e13", "e23"),
     stress_components: Sequence[str] = ("s1", "s2", "s3", "s12", "s13", "s23"),
     failure_components: Sequence[FailureMeasureEnum] = (

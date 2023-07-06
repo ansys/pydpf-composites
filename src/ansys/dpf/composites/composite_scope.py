@@ -17,7 +17,7 @@ class CompositeScope:
         List of plies.
     time:
         Time or frequency. You can use the
-        :func:`CompositeModel.get_result_times_or_frequencies` method
+        :meth:`.CompositeModel.get_result_times_or_frequencies` method
         to list the solution steps.
     named_selections:
         List of element sets.

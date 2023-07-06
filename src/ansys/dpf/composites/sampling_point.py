@@ -22,10 +22,10 @@ from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
-from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
+from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 
 
-class SamplingPoint(SamplingPointProtocol):
+class SamplingPointNew(SamplingPoint):
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
     This class provides for plotting the lay-up and results at a certain point of the

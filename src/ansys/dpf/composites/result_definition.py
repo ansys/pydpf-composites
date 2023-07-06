@@ -56,6 +56,7 @@ class ResultDefinition:
 
     This class is used to configure the DPF operators ``composite::failure_evaluator``
     and ``composite::sampling_point_evaluator``.
+
     """
 
     _VERSION = 1

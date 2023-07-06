@@ -22,11 +22,11 @@ from ._sampling_point_helpers import (
 )
 from .constants import Spot
 from .result_definition import FailureMeasureEnum, ResultDefinition
-from .sampling_point_types import FailureResult, SamplingPointFigure, SamplingPointProtocol
+from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 from .server_helpers._load_plugin import load_composites_plugin
 
 
-class SamplingPoint2023R2(SamplingPointProtocol):
+class SamplingPoint2023R2(SamplingPoint):
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
     This class provides for plotting the lay-up and results at a certain point of the

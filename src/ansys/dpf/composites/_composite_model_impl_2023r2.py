@@ -26,7 +26,7 @@ from .layup_info.material_operators import MaterialOperators, get_material_opera
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasureEnum, ResultDefinition, ResultDefinitionScope
 from .sampling_point_2023r2 import SamplingPoint2023R2
-from .sampling_point_types import SamplingPointProtocol
+from .sampling_point_types import SamplingPoint
 from .server_helpers import upload_continuous_fiber_composite_files_to_server
 from .unit_system import UnitSystemProvider, get_unit_system
 
@@ -301,7 +301,7 @@ class CompositeModelImpl2023R2:
         element_id: int,
         time: Optional[float] = None,
         composite_definition_label: Optional[str] = None,
-    ) -> SamplingPointProtocol:
+    ) -> SamplingPoint:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters

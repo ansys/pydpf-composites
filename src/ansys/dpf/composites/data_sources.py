@@ -95,21 +95,32 @@ class ShortFiberCompositesFiles:
 # roosre June 2023: todo add deprecation warning where composite definition label is used
 @dataclass(frozen=True)
 class CompositeDataSources:
-    """Provides data sources related to the composite lay-up."""
+    """Provides data sources related to the composite lay-up.
+
+    Parameters
+    ----------
+    rst:
+
+    material_support:
+        NOTE: The 'material_support' is explicitly listed since it is currently not
+        supported (by the DPF Core) to use a distributed RST file as source for the
+        material support. Instead, we create a separate DataSources object for the
+        material support from the first RST file. This is a workaround until the
+        support for distributed RST is added.
+    engineering_data:
+
+    old_composite_sources:
+        This member is used to support assemblies in combination with the old
+        DPF server (<7.0). It should be removed once the support of this
+        server version is dropped.
+
+    """
 
     rst: DataSources
-    # NOTE: The 'material_support' is explicitly listed since it is currently not
-    # supported (by the DPF Core) to use a distributed RST file as source for the
-    # material support. Instead, we create a separate DataSources object for the
-    # material support from the first RST file. This is a workaround until the
-    # support for distributed RST is added.
     material_support: DataSources
     composite: DataSources
     engineering_data: DataSources
 
-    # This member is used to support assemblies in combination with the old
-    # DPF server (<7.0). It should be removed once the support of this
-    # server version is dropped.
     old_composite_sources: Dict[str, DataSources]
 
 

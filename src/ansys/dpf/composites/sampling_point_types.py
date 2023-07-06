@@ -11,7 +11,7 @@ from .result_definition import FailureMeasureEnum
 __all__ = (
     "SamplingPointFigure",
     "FailureResult",
-    "SamplingPointProtocol",
+    "SamplingPoint",
     "FAILURE_MODE_NAMES_TO_ACP",
 )
 
@@ -41,8 +41,49 @@ FAILURE_MODE_NAMES_TO_ACP = {
 }
 
 
-class SamplingPointProtocol(Protocol):
-    """Specification of the Sampling Point interface."""
+class SamplingPoint(Protocol):
+    """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
+
+    Use :meth:`.CompositeModel.get_sampling_point` to get a sampling point object.
+    This class provides for plotting the lay-up and results at a certain point of the
+    layered structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
+    ``failure_modes``, are always from the bottom to the top of the laminate (along
+    the element normal direction). Postprocessing results such as ``e1`` are returned
+    as flat arrays where ``self.spots_per_ply`` can be used to compute the index for
+    a certain ply.
+
+    Notes
+    -----
+    The results of layered elements are stored per integration point. A layered shell element
+    has a number of in-plane integration points (depending on the integration scheme) and
+    typically three integration points through the thickness. The through-the-thickness
+    integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
+    and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
+
+    The ``SamplingPoint`` class returns three results per layer (one for each spot) because
+    the results of the in-plane integration points are interpolated to the centroid of the element.
+    The following table shows an example of a laminate with three layers. So a result, such as
+    ``s1`` has nine values, three for each ply.
+
+    +------------+------------+------------------------+
+    | Layer      | Index      | Spot                   |
+    +============+============+========================+
+    |            | - 8        | - TOP of Layer 3       |
+    | Layer 3    | - 7        | - MIDDLE of Layer 3    |
+    |            | - 6        | - BOTTOM of Layer 3    |
+    +------------+------------+------------------------+
+    |            | - 5        | - TOP of Layer 2       |
+    | Layer 2    | - 4        | - MIDDLE of Layer 2    |
+    |            | - 3        | - BOTTOM of Layer 2    |
+    +------------+------------+------------------------+
+    |            | - 2        | - TOP of Layer 1       |
+    | Layer 1    | - 1        | - MIDDLE of Layer 1    |
+    |            | - 0        | - BOTTOM of Layer 1    |
+    +------------+------------+------------------------+
+
+    The get_indices and get_offsets_by_spots methods simplify the indexing and
+    filtering of the data.
+    """
 
     @property
     def name(self) -> str:
