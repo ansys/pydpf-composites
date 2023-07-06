@@ -1,50 +1,19 @@
-import os
 import pathlib
-from typing import List, Union
 
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FailureOutput
-from ansys.dpf.composites.data_sources import (
-    CompositeDefinitionFiles,
-    get_composite_files_from_workbench_result_folder,
-)
+from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.server_helpers import version_older_than
 
-from .helper import ContinuousFiberCompositesFiles, Timer
+from .helper import Timer
 
 SEPARATOR = "::"
-
-
-@pytest.fixture
-def data_files(distributed_rst):
-    # Using lightweight data for unit tests. Replace by get_ger_data_data_files
-    # for actual performance tests
-    # return get_ger_data_files()
-    return get_dummy_data_files(distributed=distributed_rst)
-
-
-def get_dummy_data_files(distributed: bool = False):
-    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
-
-    if distributed:
-        rst_path: Union[str, List[str]] = [
-            os.path.join(TEST_DATA_ROOT_DIR, f"distributed_shell{i}.rst") for i in range(2)
-        ]
-    else:
-        rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    return ContinuousFiberCompositesFiles(
-        rst=rst_path,
-        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
-        engineering_data=material_path,
-    )
 
 
 def test_basic_functionality_of_composite_model(dpf_server, data_files, distributed_rst):

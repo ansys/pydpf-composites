@@ -46,7 +46,13 @@ def get_analysis_plies_from_sp(results: Any) -> Sequence[Any]:
 
 
 def get_data_from_sp_results(*args: Any, results: Any) -> npt.NDArray[np.float64]:
-    """Extract data from the result dict."""
+    """Extract data from the result dict.
+
+    The result object of the sampling point is a (nested) JSON dict. The args are the keys
+    to dive into the results and extract the according data.
+    For example: get_data_from_sp_results("results", "stresses", "s1", results=sp.results)
+    returns the stresses in the material direction.
+    """
 
     def _next(outer_data: Any, comp: str) -> Any:
         if comp in outer_data.keys():

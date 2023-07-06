@@ -7,7 +7,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from ._composite_model_interface_factory import _composite_model_interface_factory
+from ._composite_model_factory import _composite_model_factory
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
@@ -74,7 +74,7 @@ class CompositeModel:
         default_unit_system: Optional[UnitSystem] = None,
     ):
         """Initialize the composite model class."""
-        self._implementation = _composite_model_interface_factory(server)(
+        self._implementation = _composite_model_factory(server)(
             composite_files, server, default_unit_system
         )
 

@@ -1,10 +1,13 @@
 from dataclasses import dataclass
+import os
 import pathlib
 import time
+from typing import List, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
 
+from ansys.dpf.composites._typing_helper import PATH as _PATH
 from ansys.dpf.composites.data_sources import CompositeDefinitionFiles, get_composites_data_sources
 from ansys.dpf.composites.example_helper import ContinuousFiberCompositesFiles
 from ansys.dpf.composites.layup_info import add_layup_info_to_mesh
@@ -111,6 +114,24 @@ def get_basic_shell_files(two_load_steps: bool = False):
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
         rst=[rst_path],
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+
+
+def get_dummy_data_files(distributed: bool = False):
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
+
+    if distributed:
+        rst_path: Union[_PATH, List[_PATH]] = [
+            os.path.join(TEST_DATA_ROOT_DIR, f"distributed_shell{i}.rst") for i in range(2)
+        ]
+    else:
+        rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    return ContinuousFiberCompositesFiles(
+        rst=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
