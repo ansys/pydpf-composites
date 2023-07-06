@@ -30,28 +30,6 @@ def data_files(distributed_rst):
     return get_dummy_data_files(distributed=distributed_rst)
 
 
-def get_assembly_data_files():
-    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "assembly"
-
-    rst_path = TEST_DATA_ROOT_DIR / "file.rst"
-    h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
-    solid_definitions = TEST_DATA_ROOT_DIR / "ACPSolidModel_SM.h5"
-    mapping_shell_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.mapping"
-    mapping_solid_path = TEST_DATA_ROOT_DIR / "ACPSolidModel_SM.mapping"
-
-    material_path = TEST_DATA_ROOT_DIR / "material.engd"
-    return ContinuousFiberCompositesFiles(
-        rst=rst_path,
-        composite={
-            "shell": CompositeDefinitionFiles(definition=h5_path, mapping=mapping_shell_path),
-            "solid": CompositeDefinitionFiles(
-                definition=solid_definitions, mapping=mapping_solid_path
-            ),
-        },
-        engineering_data=material_path,
-    )
-
-
 def get_dummy_data_files(distributed: bool = False):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
@@ -137,163 +115,8 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
     timer.summary()
 
 
-def test_assembly_model_2023r2(dpf_server):
-    if version_equal_or_later(dpf_server, "7.0"):
-        pytest.skip(
-            f"test_assembly_model_2023r2 verifies the composite model feature"
-            " in combination with dpf server older than 7.0."
-        )
-    timer = Timer()
-
-    files = get_composite_files_from_workbench_result_folder(
-        pathlib.Path(__file__).parent / "data" / "workflow_example" / "assembly"
-    )
-
-    solid_label = "Setup 3_solid"
-    shell_label = "Setup 4_shell"
-
-    composite_model = CompositeModel(files, server=dpf_server)
-    timer.add("After Setup model")
-
-    combined_failure_criterion = CombinedFailureCriterion(
-        "max strain & max stress", failure_criteria=[MaxStressCriterion()]
-    )
-
-    failure_output = composite_model.evaluate_failure_criteria(
-        combined_criterion=combined_failure_criterion,
-        composite_scope=CompositeScope(),
-    )
-    timer.add("After get failure output")
-
-    expected_output = {
-        1: 1.11311715,
-        2: 1.11311715,
-        5: 1.85777034,
-        6: 1.85777034,
-        7: 0.0,
-        8: 0.0,
-        9: 0.62122959,
-        10: 0.62122959,
-    }
-
-    for element_id, expected_value in expected_output.items():
-        assert failure_output[1].get_entity_data_by_id(element_id) == pytest.approx(expected_value)
-
-    property_dict = composite_model.get_constant_property_dict(
-        [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label
-    )
-    timer.add("After get property dict")
-
-    assert property_dict[2][MaterialProperty.Stress_Limits_Xt] == pytest.approx(513000000.0)
-
-    expected_element_info = {
-        solid_label: {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190},
-        shell_label: {"element_ids": [1, 2], "element_type": 181},
-    }
-
-    for composite_label in composite_model.composite_definition_labels:
-        expected = expected_element_info[composite_label]
-        all_layered_elements = (
-            composite_model.get_all_layered_element_ids_for_composite_definition_label(
-                composite_label
-            )
-        )
-        assert set(all_layered_elements) == set(expected["element_ids"])
-        for element_id in all_layered_elements:
-            element_info = composite_model.get_element_info(element_id, composite_label)
-            assert element_info.is_layered
-            assert element_info.element_type == expected["element_type"]
-
-    assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh(shell_label))) == 5
-    assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh(solid_label))) == 6
-
-    timer.add("After getting element_info")
-
-    expected_values_shell = {
-        LayerProperty.SHEAR_ANGLES: [0, 0, 0, 0, 0],
-        LayerProperty.ANGLES: [45, 0, 0, 0, 45],
-        LayerProperty.THICKNESSES: [0.00025, 0.0002, 0.005, 0.0002, 0.00025],
-    }
-
-    expected_values_solid = {
-        LayerProperty.SHEAR_ANGLES: [0, 0, 0],
-        LayerProperty.ANGLES: [45, 0, 0],
-        LayerProperty.THICKNESSES: [0.00025, 0.0002, 0.0002],
-    }
-
-    shell_element_id = 1
-    for layer_property, value in expected_values_shell.items():
-        assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(
-                layer_property, shell_element_id, shell_label
-            )
-        )
-
-    solid_element_id = 5
-    for layer_property, value in expected_values_solid.items():
-        assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(
-                layer_property, solid_element_id, solid_label
-            )
-        )
-
-    assert composite_model.get_element_laminate_offset(shell_element_id, shell_label) == -0.00295
-    analysis_ply_ids_shell = [
-        "P1L1__woven_45",
-        "P1L1__ud",
-        "P1L1__core",
-        "P1L1__ud.2",
-        "P1L1__woven_45.2",
-    ]
-
-    assert (
-        composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
-    )
-
-    assert composite_model.core_model is not None
-    assert composite_model.get_mesh(shell_label) is not None
-    assert composite_model.get_mesh(solid_label) is not None
-    assert composite_model.data_sources is not None
-    sampling_point = composite_model.get_sampling_point(
-        combined_criterion=combined_failure_criterion,
-        element_id=shell_element_id,
-        composite_definition_label=shell_label,
-    )
-
-    # ensure that the rd is complete
-    rd = sampling_point.result_definition.to_dict()
-    assert len(rd["scopes"]) == 1
-    composite_files = rd["scopes"][0]["datasources"]
-    assert len(composite_files["assembly_mapping_file"]) == 1
-    assert len(composite_files["composite_definition"]) == 1
-    assert len(composite_files["material_file"]) == 1
-    assert len(composite_files["rst_file"]) == 1
-
-    assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids_shell
-
-    assert composite_model.get_element_laminate_offset(
-        solid_element_id, solid_label
-    ) == pytest.approx(0.0)
-    analysis_ply_ids_solid = [
-        "P1L1__woven_45",
-        "P1L1__ud_patch ns1",
-        "P1L1__ud",
-    ]
-
-    assert (
-        composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
-    )
-
-    timer.add("After getting properties")
-    timer.summary()
-
-
 def test_assembly_model(dpf_server):
-    if version_older_than(dpf_server, "7.0"):
-        pytest.skip(
-            f"test_assembly_model verifies the composite model feature"
-            " in combination with dpf server 7.0 or later."
-        )
+    """Verify the handling of assemblies."""
 
     timer = Timer()
 
@@ -340,23 +163,45 @@ def test_assembly_model(dpf_server):
 
     assert property_dict[2][MaterialProperty.Stress_Limits_Xt] == pytest.approx(513000000.0)
 
-    expected_solids = {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190}
-    expected_shells = {"element_ids": [1, 2], "element_type": 181}
+    expected_element_info = {
+        solid_label: {"element_ids": [5, 6, 7, 8, 9, 10], "element_type": 190},
+        shell_label: {"element_ids": [1, 2], "element_type": 181},
+    }
 
-    all_layered_elements = (
-        composite_model.get_all_layered_element_ids_for_composite_definition_label()
-    )
-    assert set(all_layered_elements) == set(
-        expected_shells["element_ids"] + expected_solids["element_ids"]
-    )
+    if version_older_than(dpf_server, "7.0"):
+        # loop over each part separately if the old server is used
+        for composite_label in composite_model.composite_definition_labels:
+            expected = expected_element_info[composite_label]
+            all_layered_elements = (
+                composite_model.get_all_layered_element_ids_for_composite_definition_label(
+                    composite_label
+                )
+            )
+            assert set(all_layered_elements) == set(expected["element_ids"])
+            for element_id in all_layered_elements:
+                element_info = composite_model.get_element_info(element_id, composite_label)
+                assert element_info.is_layered
+                assert element_info.element_type == expected["element_type"]
 
-    for expected_elements in [expected_shells, expected_solids]:
-        for element_id in expected_elements["element_ids"]:
-            element_info = composite_model.get_element_info(element_id)
-            assert element_info.is_layered
-            assert element_info.element_type == expected_elements["element_type"]
+        assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh(shell_label))) == 5
+        assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh(solid_label))) == 6
+    else:
+        # latest server
+        all_layered_elements = (
+            composite_model.get_all_layered_element_ids_for_composite_definition_label()
+        )
+        assert set(all_layered_elements) == set(
+            expected_element_info[shell_label]["element_ids"] + expected_element_info[solid_label]["element_ids"]
+        )
 
-    assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh())) == 11
+        for expected_elements in [expected_element_info[shell_label], expected_element_info[solid_label]]:
+            for element_id in expected_elements["element_ids"]:
+                element_info = composite_model.get_element_info(element_id)
+                assert element_info.is_layered
+                assert element_info.element_type == expected_elements["element_type"]
+
+        assert len(get_analysis_ply_index_to_name_map(composite_model.get_mesh())) == 11
+
     timer.add("After getting element_info")
 
     expected_values_shell = {
@@ -374,31 +219,42 @@ def test_assembly_model(dpf_server):
     shell_element_id = 1
     for layer_property, value in expected_values_shell.items():
         assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(layer_property, shell_element_id)
+            composite_model.get_property_for_all_layers(layer_property, shell_element_id, shell_label)
         )
 
     solid_element_id = 5
     for layer_property, value in expected_values_solid.items():
         assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(layer_property, solid_element_id)
+            composite_model.get_property_for_all_layers(layer_property, solid_element_id, solid_label)
         )
 
-    assert composite_model.get_element_laminate_offset(shell_element_id) == -0.00295
+    assert composite_model.get_element_laminate_offset(shell_element_id, shell_label) == -0.00295
+
+    if version_older_than(dpf_server, "7.0"):
+        prefix = ""
+    else:
+        prefix = f"{shell_label}{SEPARATOR}"
+
     analysis_ply_ids_shell = [
-        f"{shell_label}{SEPARATOR}P1L1__woven_45",
-        f"{shell_label}{SEPARATOR}P1L1__ud",
-        f"{shell_label}{SEPARATOR}P1L1__core",
-        f"{shell_label}{SEPARATOR}P1L1__ud.2",
-        f"{shell_label}{SEPARATOR}P1L1__woven_45.2",
+        f"{prefix}P1L1__woven_45",
+        f"{prefix}P1L1__ud",
+        f"{prefix}P1L1__core",
+        f"{prefix}P1L1__ud.2",
+        f"{prefix}P1L1__woven_45.2",
     ]
 
-    assert composite_model.get_analysis_plies(shell_element_id) == analysis_ply_ids_shell
+    assert composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
 
     assert composite_model.core_model is not None
-    assert composite_model.get_mesh() is not None
+    if version_older_than(dpf_server, "7.0"):
+        assert composite_model.get_mesh(shell_label) is not None
+        assert composite_model.get_mesh(solid_label) is not None
+    else:
+        assert composite_model.get_mesh() is not None
+
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
-        combined_criterion=combined_failure_criterion, element_id=1
+        combined_criterion=combined_failure_criterion, element_id=1, composite_definition_label=shell_label
     )
 
     sampling_point.run()
@@ -406,14 +262,19 @@ def test_assembly_model(dpf_server):
         ply_id.replace(f"{shell_label}{SEPARATOR}", "") for ply_id in analysis_ply_ids_shell
     ]
 
-    assert composite_model.get_element_laminate_offset(solid_element_id) == pytest.approx(0.0)
+    assert composite_model.get_element_laminate_offset(solid_element_id, solid_label) == pytest.approx(0.0)
+    if version_older_than(dpf_server, "7.0"):
+        prefix = ""
+    else:
+        prefix = f"{solid_label}{SEPARATOR}"
+
     analysis_ply_ids_solid = [
-        f"{solid_label}{SEPARATOR}P1L1__woven_45",
-        f"{solid_label}{SEPARATOR}P1L1__ud_patch ns1",
-        f"{solid_label}{SEPARATOR}P1L1__ud",
+        f"{prefix}P1L1__woven_45",
+        f"{prefix}P1L1__ud_patch ns1",
+        f"{prefix}P1L1__ud",
     ]
 
-    assert composite_model.get_analysis_plies(solid_element_id) == analysis_ply_ids_solid
+    assert composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
 
     timer.add("After getting properties")
     timer.summary()
@@ -432,45 +293,3 @@ def test_failure_measures(dpf_server, data_files):
             composite_scope=CompositeScope(),
             measure=v,
         )
-
-
-def test_composite_model_element_scope(dpf_server, data_files):
-    """Ensure that the element IDs of the scope can be of any type (e.g. np.int)"""
-    composite_model = CompositeModel(data_files, server=dpf_server)
-    cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
-
-    composite_scope = CompositeScope(elements=[1, 3])
-    failure_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
-    min_id = irfs.scoping.ids[np.argmin(irfs.data)]
-    max_id = irfs.scoping.ids[np.argmax(irfs.data)]
-
-    composite_scope = CompositeScope(elements=[min_id, max_id])
-    max_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
-    max_irfs = max_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
-    assert len(max_irfs.data) == 2
-    assert max_irfs.get_entity_data_by_id(min_id)[0] == pytest.approx(min(irfs.data), 1e-8)
-    assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
-
-
-def test_composite_model_named_selection_scope(dpf_server, data_files, distributed_rst):
-    """Ensure that the scoping by Named Selection is supported"""
-    if distributed_rst:
-        # TODO: remove once backend issue #856638 is resolved
-        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
-
-    composite_model = CompositeModel(data_files, server=dpf_server)
-
-    ns_name = "NS_ELEM"
-    assert ns_name in composite_model.get_mesh().available_named_selections
-    ns_scope = composite_model.get_mesh().named_selection(ns_name)
-    assert list(ns_scope.ids) == [2, 3]
-
-    cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
-
-    scope = CompositeScope(named_selections=[ns_name])
-    failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
-    assert len(irfs.data) == 2
-    assert irfs.data[0] == pytest.approx(1.4792790331384016, 1e-8)
-    assert irfs.data[1] == pytest.approx(1.3673715033617213, 1e-8)

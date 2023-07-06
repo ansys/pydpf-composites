@@ -48,7 +48,7 @@ def test_getting_started(dpf_server: dpf.server):
     irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     # Commented because it blocks execution. Uncomment this
     # line when you copy this code to the getting started example
-    irf_field.plot()
+    # irf_field.plot()
 
     # Show sampling point for element with id/label 1
     element_id = 1

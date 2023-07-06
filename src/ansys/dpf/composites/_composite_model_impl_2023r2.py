@@ -67,7 +67,7 @@ class CompositeInfo:
 class CompositeModelImpl2023R2:
     """Provides access to the basic composite postprocessing functionality.
 
-    This interface supports DPF server version up to and till 2023R2 (6.1).
+    This class supports DPF server version up to and till 2023R2 (6.1).
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated. The composite_files provided are automatically
@@ -194,7 +194,7 @@ class CompositeModelImpl2023R2:
         return self._material_operators
 
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
-        """Get the lay-up operators.
+        """Get the lay-up operator.
 
         Parameters
         ----------

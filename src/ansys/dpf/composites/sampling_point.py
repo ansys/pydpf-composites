@@ -302,14 +302,14 @@ class SamplingPoint(SamplingPointProtocol):
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
         scope_config = dpf.DataTree({"write_data_for_full_element_scope": True})
         if self._time:
-            scope_config = dpf.DataTree({"requested_times": [self._time]})
+            scope_config.add({"requested_times": [self._time]})
         scope_config_reader_op.inputs.scope_configuration(scope_config)
 
         evaluate_failure_criterion_per_scope_op = dpf.Operator(
             "composite::evaluate_failure_criterion_per_scope"
         )
 
-        # Todo: live evaluation flag missing
+        # Live evaluation is not yet supported
         evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
             self.combined_criterion.to_json()
         )
@@ -372,7 +372,6 @@ class SamplingPoint(SamplingPointProtocol):
         )
         sampling_point_evaluator.inputs.extract_max_failure_per_layer(False)
         sampling_point_evaluator.inputs.check_mechanical_unit_system(False)
-        sampling_point_evaluator.run()
 
         sampling_point_to_json_converter = dpf.Operator("composite::convert_sampling_point_to_json")
         sampling_point_to_json_converter.connect(0, sampling_point_evaluator, 0)

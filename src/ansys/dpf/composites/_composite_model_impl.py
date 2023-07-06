@@ -56,7 +56,7 @@ def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
 class CompositeModelImpl:
     """Provides access to the basic composite postprocessing functionality.
 
-    This interface supports DPF server version 7.0 (2024 R1) and later.
+    This class supports DPF server version 7.0 (2024 R1) and later.
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated. The composite_files provided are automatically
@@ -161,7 +161,7 @@ class CompositeModelImpl:
 
     @_deprecated_composite_definition_label
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
-        """Get the lay-up operators.
+        """Get the lay-up operator.
 
         Parameters
         ----------
@@ -231,23 +231,22 @@ class CompositeModelImpl:
         has_layup_provider = len(self._composite_files.composite) > 0
 
         # configure primary scoping
-        scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config = dpf.DataTree(
-            {"write_data_for_full_element_scope": write_data_for_full_element_scope}
-        )
-        if ply_scope_in:
-            scope_config = dpf.DataTree({"ply_ids": ply_scope_in})
+        scope_config = dpf.DataTree()
         if time_in:
-            scope_config = dpf.DataTree({"requested_times": time_in})
+            scope_config.add({"requested_times": time_in})
+        scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
         scope_config_reader_op.inputs.scope_configuration(scope_config)
 
+        if ply_scope_in:
+            selected_plies_op = dpf.Operator("composite::string_container")
+            for value in enumerate(ply_scope_in):
+                selected_plies_op.connect(value[0], value[1])
+            scope_config_reader_op.inputs.ply_ids(selected_plies_op.outputs.strings)
+
         # configure operator to chunk the scope
-        chunking_config: Dict[str, Union[int, Sequence[str], Sequence[float]]] = {
-            "max_chunk_size": 50000
-        }
+        chunking_data_tree = dpf.DataTree({"max_chunk_size": 50000})
         if ns_in:
-            chunking_config["named_selections"] = ns_in
-        chunking_data_tree = dpf.DataTree(chunking_config)
+            chunking_data_tree.add({"named_selections": ns_in})
 
         chunking_generator = dpf.Operator("composite::scope_generator")
         chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
@@ -273,7 +272,8 @@ class CompositeModelImpl:
                 "composite::evaluate_failure_criterion_per_scope"
             )
 
-            # Todo: live evaluation flag missing
+            # Live evaluation is currently not supported by the Python module
+            # because the docker container does not support it.
             evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
                 combined_criterion.to_json()
             )
@@ -302,26 +302,26 @@ class CompositeModelImpl:
             evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
                 self._layup_provider.outputs.mesh_properties_container
             )
-            # always set to true to ensure that solid stacks are grouped
+            # Ensure that sandwich criteria are evaluated
             evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
 
             minmax_el_op = dpf.Operator("composite::minmax_per_element_operator")
             minmax_el_op.inputs.fields_container(
                 evaluate_failure_criterion_per_scope_op.outputs.failure_container
             )
-            # check if that is correct
+
             minmax_el_op.inputs.mesh(self.get_mesh())
             minmax_el_op.inputs.material_support(
                 self.material_operators.material_support_provider.outputs
             )
 
-            if has_layup_provider:
+            if has_layup_provider and write_data_for_full_element_scope:
                 add_default_data_op = dpf.Operator("composite::add_default_data")
                 add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
                 add_default_data_op.inputs.time_id(
                     evaluate_failure_criterion_per_scope_op.outputs.time_id
                 )
-                # check if that is correct
+
                 add_default_data_op.inputs.mesh(self.get_mesh())
 
                 add_default_data_op.inputs.fields_container(minmax_el_op.outputs.field_min)

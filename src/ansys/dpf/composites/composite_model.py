@@ -55,8 +55,8 @@ class CompositeModel:
         server: BaseServer,
         default_unit_system: Optional[UnitSystem] = None,
     ):
-        """Initialize the composite model interface."""
-        self._interface = _composite_model_interface_factory(server)(
+        """Initialize the composite model class."""
+        self._implementation = _composite_model_interface_factory(server)(
             composite_files, server, default_unit_system
         )
 
@@ -66,27 +66,27 @@ class CompositeModel:
 
         This property is only relevant for assemblies.
         """
-        return self._interface.composite_definition_labels
+        return self._implementation.composite_definition_labels
 
     @property
     def composite_files(self) -> ContinuousFiberCompositesFiles:
         """Get the composite file paths on the server."""
-        return self._interface.composite_files
+        return self._implementation.composite_files
 
     @property
     def data_sources(self) -> CompositeDataSources:
         """Composite data sources."""
-        return self._interface.data_sources
+        return self._implementation.data_sources
 
     @property
     def core_model(self) -> dpf.Model:
         """Underlying DPF core model."""
-        return self._interface.core_model
+        return self._implementation.core_model
 
     @property
     def material_operators(self) -> MaterialOperators:
         """Material operators."""
-        return self._interface.material_operators
+        return self._implementation.material_operators
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
@@ -101,10 +101,10 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_mesh(composite_definition_label)
+        return self._implementation.get_mesh(composite_definition_label)
 
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
-        """Get the lay-up operators.
+        """Get the lay-up operator.
 
         Parameters
         ----------
@@ -115,7 +115,7 @@ class CompositeModel:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
 
         """
-        return self._interface.get_layup_operator(composite_definition_label)
+        return self._implementation.get_layup_operator(composite_definition_label)
 
     def evaluate_failure_criteria(
         self,
@@ -154,7 +154,7 @@ class CompositeModel:
                 ``write_data_for_full_element_scope=True`` is not supported.
 
         """
-        return self._interface.evaluate_failure_criteria(
+        return self._implementation.evaluate_failure_criteria(
             combined_criterion, composite_scope, measure, write_data_for_full_element_scope
         )
 
@@ -182,7 +182,7 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_sampling_point(
+        return self._implementation.get_sampling_point(
             combined_criterion, element_id, time, composite_definition_label
         )
 
@@ -203,7 +203,7 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_element_info(element_id, composite_definition_label)
+        return self._implementation.get_element_info(element_id, composite_definition_label)
 
     def get_property_for_all_layers(
         self,
@@ -230,7 +230,7 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_property_for_all_layers(
+        return self._implementation.get_property_for_all_layers(
             layup_property, element_id, composite_definition_label
         )
 
@@ -253,7 +253,7 @@ class CompositeModel:
             The dictionary only contains the analysis plies in the specified composite
             definition.
         """
-        return self._interface.get_analysis_plies(element_id, composite_definition_label)
+        return self._implementation.get_analysis_plies(element_id, composite_definition_label)
 
     def get_element_laminate_offset(
         self, element_id: int, composite_definition_label: Optional[str] = None
@@ -272,7 +272,7 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_element_laminate_offset(element_id, composite_definition_label)
+        return self._implementation.get_element_laminate_offset(element_id, composite_definition_label)
 
     def get_constant_property_dict(
         self,
@@ -301,13 +301,13 @@ class CompositeModel:
             The dictionary only contains the materials of the analysis plies defined
             in the specified composite definition.
         """
-        return self._interface.get_constant_property_dict(
+        return self._implementation.get_constant_property_dict(
             material_properties, composite_definition_label
         )
 
     def get_result_times_or_frequencies(self) -> NDArray[np.double]:
         """Get the times or frequencies in the result file."""
-        return self._interface.get_result_times_or_frequencies()
+        return self._implementation.get_result_times_or_frequencies()
 
     def add_interlaminar_normal_stresses(
         self,
@@ -333,13 +333,13 @@ class CompositeModel:
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """
-        self._interface.add_interlaminar_normal_stresses(
+        self._implementation.add_interlaminar_normal_stresses(
             stresses, strains, composite_definition_label
         )
 
     def get_all_layered_element_ids(self) -> Sequence[int]:
         """Get all element IDs with lay-up data."""
-        return self._interface.get_all_layered_element_ids()
+        return self._implementation.get_all_layered_element_ids()
 
     def get_all_layered_element_ids_for_composite_definition_label(
         self, composite_definition_label: Optional[str] = None
@@ -354,6 +354,6 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._interface.get_all_layered_element_ids_for_composite_definition_label(
+        return self._implementation.get_all_layered_element_ids_for_composite_definition_label(
             composite_definition_label
         )

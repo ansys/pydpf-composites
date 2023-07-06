@@ -100,10 +100,13 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles):
     )
 
 
-def get_basic_shell_files():
+def get_basic_shell_files(two_load_steps: bool = False):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
-    rst_path = TEST_DATA_ROOT_DIR / "shell.rst"
+    if two_load_steps:
+        rst_path = TEST_DATA_ROOT_DIR / "shell_2load_steps.rst"
+    else:
+        rst_path = TEST_DATA_ROOT_DIR / "shell.rst"
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(

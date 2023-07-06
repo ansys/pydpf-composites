@@ -8,6 +8,7 @@ This example shows how to use the native DPF Python interface to configure
 and run the composite failure evaluator. It connects the different DPF
 operators that are needed to evaluate composite failure criteria.
 
+
 .. note::
 
     For simple use cases, using the composite failure operator or
@@ -29,10 +30,7 @@ operators that are needed to evaluate composite failure criteria.
 # Load Ansys libraries.
 import ansys.dpf.core as dpf
 
-from ansys.dpf.composites.data_sources import (
-    get_composite_data_sources_for_layup_provider,
-    get_composites_data_sources,
-)
+from ansys.dpf.composites.data_sources import get_composites_data_sources
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -46,7 +44,7 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_older_than
 
 # %%
 # Configure the combined failure criterion.
@@ -80,9 +78,14 @@ composite_data_sources = get_composites_data_sources(composite_files_on_server)
 rst_data_source = composite_data_sources.rst
 material_support_data_source = composite_data_sources.material_support
 eng_data_source = composite_data_sources.engineering_data
-composite_definitions_source = get_composite_data_sources_for_layup_provider(
-    composite_data_sources, "shell"
-)
+
+if version_older_than(server, "7.0"):
+    # Get datasources of composite definition files for the backend 2023 R2 or before
+    composite_definitions_source = composite_data_sources.old_composite_sources["shell"]
+else:
+    # Get datasources of composite definition files for the backend 2024 R1 or later
+    composite_definitions_source = composite_data_sources.composite
+
 model = dpf.Model(rst_data_source)
 
 # %%
