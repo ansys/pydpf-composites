@@ -67,7 +67,7 @@ class CompositeInfo:
 class CompositeModelImpl2023R2:
     """Provides access to the basic composite postprocessing functionality.
 
-    This interface supports DPF server version up to and till 2023R2 (6.1).
+    This interface supports DPF Server version up to and including 2023 R2 (6.1).
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated. The composite_files provided are automatically
