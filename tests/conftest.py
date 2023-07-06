@@ -21,6 +21,8 @@ from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
 
+from .helper import get_dummy_data_files
+
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
 PORT_OPTION_KEY = "--port"
@@ -312,3 +314,10 @@ def distributed_rst(request, dpf_server):
     if res and not version_equal_or_later(dpf_server, "7.0"):
         pytest.skip(f"Distributed RST not supported for server version {dpf_server.version}.")
     return res
+
+@pytest.fixture
+def data_files(distributed_rst):
+    # Using lightweight data for unit tests. Replace by get_ger_data_data_files
+    # for actual performance tests
+    # return get_ger_data_files()
+    return get_dummy_data_files(distributed=distributed_rst)
