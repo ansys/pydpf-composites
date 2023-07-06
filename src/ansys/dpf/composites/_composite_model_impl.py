@@ -68,9 +68,6 @@ class CompositeModelImpl:
         lay-up information is added to the DPF meshed regions. Depending on the use
         case, it can be more efficient to create the providers separately.
 
-        Assemblies are now fully supported and so the handling is much easier if
-        compared with previous versions of the backend.
-
     Parameters
     ----------
     composite_files:
