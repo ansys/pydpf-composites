@@ -1,4 +1,5 @@
 import pathlib
+
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
