@@ -2,7 +2,6 @@ import os
 import pathlib
 from typing import List, Union
 
-import numpy as np
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
@@ -15,7 +14,7 @@ from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxS
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
-from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
+from ansys.dpf.composites.server_helpers import version_older_than
 
 from .helper import ContinuousFiberCompositesFiles, Timer
 

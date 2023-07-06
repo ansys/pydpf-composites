@@ -15,7 +15,6 @@ from ansys.dpf.composites.failure_criteria import (
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.server_helpers._versions import version_older_than
 
-from .composite_model_test import data_files
 from .helper import get_basic_shell_files
 
 SEPARATOR = "::"
