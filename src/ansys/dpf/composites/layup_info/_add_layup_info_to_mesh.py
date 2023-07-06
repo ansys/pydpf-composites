@@ -18,7 +18,7 @@ def _get_composite_data_sources_for_layup_provider(
     Ensure that DataSources object is compatible with the version of the layup provider.
     """
     # import is here because of circular dependencies
-    from .server_helpers import version_older_than
+    from ..server_helpers import version_older_than
 
     # pylint: disable=protected-access
     if version_older_than(data_sources.composite._server, "7.0"):
