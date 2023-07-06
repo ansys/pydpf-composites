@@ -65,7 +65,7 @@ class SamplingPointProtocol(Protocol):
 
     @property
     def results(self) -> Any:
-        """Results of the sampling point operator as a JSON dictionary."""
+        """Results of the sampling point results as a JSON dictionary."""
 
     @property
     def analysis_plies(self) -> Sequence[Any]:

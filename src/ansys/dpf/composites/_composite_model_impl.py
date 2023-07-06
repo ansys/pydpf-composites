@@ -181,6 +181,7 @@ class CompositeModelImpl:
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -205,6 +206,9 @@ class CompositeModelImpl:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            Maximum chunk size. If number of elements is larger than this number,
+            the failure criteria are evaluated in chunks of the specified size.
 
             .. note::
 
