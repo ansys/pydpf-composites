@@ -38,7 +38,7 @@ def get_all_analysis_ply_names(mesh: MeshedRegion) -> Collection[str]:
     """Get names of all available analysis plies."""
     prefix = _get_analysis_ply_prefix(mesh._server)  # pylint: disable=protected-access
     return [
-        property_field_name[len(prefix):]
+        property_field_name[len(prefix) :]
         for property_field_name in mesh.available_property_fields
         if property_field_name.startswith(prefix)
     ]

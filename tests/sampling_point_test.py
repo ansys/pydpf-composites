@@ -206,12 +206,19 @@ def test_sampling_point_and_time_scoping(dpf_server):
     files = get_basic_shell_files(two_load_steps=True)
 
     composite_model = CompositeModel(files, server=dpf_server)
-    cfc = CombinedFailureCriterion("combined", failure_criteria=[
-        MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)]
+    cfc = CombinedFailureCriterion(
+        "combined",
+        failure_criteria=[
+            MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+        ],
     )
     # expect max IRF at element 1 over all plies
-    time_id_and_expected_max_irf = {1.: 1.4792790998492324, 1.5: 0.75120980930142467, 2.: 0.09834992555064767}
+    time_id_and_expected_max_irf = {
+        1.0: 1.4792790998492324,
+        1.5: 0.75120980930142467,
+        2.0: 0.09834992555064767,
+    }
 
     for time, expected_max_irf in time_id_and_expected_max_irf.items():
         sp = composite_model.get_sampling_point(combined_criterion=cfc, element_id=1, time=time)
-        assert max(sp.inverse_reserve_factor) == pytest.approx(expected_max_irf, abs=1E-6)
+        assert max(sp.inverse_reserve_factor) == pytest.approx(expected_max_irf, abs=1e-6)

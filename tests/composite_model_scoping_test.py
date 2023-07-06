@@ -5,14 +5,12 @@ import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FailureOutput
-from ansys.dpf.composites.data_sources import (
-    get_composite_files_from_workbench_result_folder,
-)
+from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
-    MaxStressCriterion,
     CoreFailureCriterion,
     HashinCriterion,
+    MaxStressCriterion,
 )
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.server_helpers._versions import version_older_than
@@ -84,11 +82,7 @@ def test_composite_model_ply_scope(dpf_server):
     if version_older_than(dpf_server, "7.0"):
         analysis_plies = []
         for label in [solid_label, shell_label]:
-            analysis_plies.extend(
-                get_all_analysis_ply_names(
-                    composite_model.get_mesh(label)
-                )
-            )
+            analysis_plies.extend(get_all_analysis_ply_names(composite_model.get_mesh(label)))
         ply_ids = ["P1L1__core", f"P1L1__woven_45.2"]
     else:
         analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
@@ -97,7 +91,9 @@ def test_composite_model_ply_scope(dpf_server):
     for ply in ply_ids:
         assert ply in analysis_plies
 
-    cfc = CombinedFailureCriterion("combined", failure_criteria=[MaxStressCriterion(), CoreFailureCriterion()])
+    cfc = CombinedFailureCriterion(
+        "combined", failure_criteria=[MaxStressCriterion(), CoreFailureCriterion()]
+    )
 
     scope = CompositeScope(plies=ply_ids)
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
@@ -108,12 +104,19 @@ def test_composite_model_ply_scope(dpf_server):
         # the old implementation did not allow to distinguish between plies of the different parts.
         # So both plies select the shell and solid elements.
         assert len(irfs.data) == 6
-        assert irfs.data == pytest.approx(np.array([0.66603946, 0.66603946, 3.24925826, 0.52981576, 3.24925826, 0.52981576]), abs=1E-3)
-        assert modes.data == pytest.approx(np.array([310., 310., 310., 222., 310., 212.]), abs=0.1)
+        assert irfs.data == pytest.approx(
+            np.array([0.66603946, 0.66603946, 3.24925826, 0.52981576, 3.24925826, 0.52981576]),
+            abs=1e-3,
+        )
+        assert modes.data == pytest.approx(
+            np.array([310.0, 310.0, 310.0, 222.0, 310.0, 212.0]), abs=0.1
+        )
     else:
         # ply scoping is now part specific thanks to the labels
         assert len(irfs.data) == 4
-        assert irfs.data == pytest.approx(np.array([0.14762838, 0.14762838, 3.24925826, 3.24925826]), abs=1E-3)
+        assert irfs.data == pytest.approx(
+            np.array([0.14762838, 0.14762838, 3.24925826, 3.24925826]), abs=1e-3
+        )
         assert modes.data == pytest.approx(np.array([222, 212, 310, 310]), abs=0.1)
 
 
@@ -130,12 +133,14 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
     ns_scope = composite_model.get_mesh().named_selection(ns_name)
     assert list(ns_scope.ids) == [2, 3]
 
-    ply_ids = ['P1L1__woven_45.2', 'P1L1__ud.2']
+    ply_ids = ["P1L1__woven_45.2", "P1L1__ud.2"]
     analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
     for ply in ply_ids:
         assert ply in analysis_plies
 
-    cfc = CombinedFailureCriterion("combined", failure_criteria=[HashinCriterion(), MaxStressCriterion()])
+    cfc = CombinedFailureCriterion(
+        "combined", failure_criteria=[HashinCriterion(), MaxStressCriterion()]
+    )
 
     scope = CompositeScope(named_selections=[ns_name], plies=ply_ids)
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
@@ -143,18 +148,27 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
     modes = failure_container.get_field({"failure_label": FailureOutput.FAILURE_MODE})
     assert len(irfs.data) == 2
     assert len(modes.data) == 2
-    assert irfs.data == pytest.approx(np.array([0.49282684, 0.32568454]), abs=1E-3)
-    assert modes.data == pytest.approx(np.array([222., 222.]), abs=1E-1)
+    assert irfs.data == pytest.approx(np.array([0.49282684, 0.32568454]), abs=1e-3)
+    assert modes.data == pytest.approx(np.array([222.0, 222.0]), abs=1e-1)
 
 
 def test_composite_model_time_scope(dpf_server):
     """Verify time scoping."""
     files = get_basic_shell_files(two_load_steps=True)
     composite_model = CompositeModel(files, server=dpf_server)
-    cfc = CombinedFailureCriterion("combined", failure_criteria=[MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)])
+    cfc = CombinedFailureCriterion(
+        "combined",
+        failure_criteria=[
+            MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+        ],
+    )
     # Note: the expected irf at time 1.5 is not the average of the other twos because the
     # load cases are different with respected to the force components.
-    time_id_and_expected_max_irf = {1.: 1.4792790998492324, 1.5: 0.75120980930142467, 2.: 0.09834992555064767}
+    time_id_and_expected_max_irf = {
+        1.0: 1.4792790998492324,
+        1.5: 0.75120980930142467,
+        2.0: 0.09834992555064767,
+    }
 
     for time, expected_max_irf in time_id_and_expected_max_irf.items():
         scope = CompositeScope(time=time)
@@ -162,4 +176,4 @@ def test_composite_model_time_scope(dpf_server):
         irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
         modes = failure_container.get_field({"failure_label": FailureOutput.FAILURE_MODE})
         assert len(irfs.data) == 4
-        assert max(irfs.data) == pytest.approx(expected_max_irf, abs=1E-6)
+        assert max(irfs.data) == pytest.approx(expected_max_irf, abs=1e-6)

@@ -191,10 +191,14 @@ def test_assembly_model(dpf_server):
             composite_model.get_all_layered_element_ids_for_composite_definition_label()
         )
         assert set(all_layered_elements) == set(
-            expected_element_info[shell_label]["element_ids"] + expected_element_info[solid_label]["element_ids"]
+            expected_element_info[shell_label]["element_ids"]
+            + expected_element_info[solid_label]["element_ids"]
         )
 
-        for expected_elements in [expected_element_info[shell_label], expected_element_info[solid_label]]:
+        for expected_elements in [
+            expected_element_info[shell_label],
+            expected_element_info[solid_label],
+        ]:
             for element_id in expected_elements["element_ids"]:
                 element_info = composite_model.get_element_info(element_id)
                 assert element_info.is_layered
@@ -219,13 +223,17 @@ def test_assembly_model(dpf_server):
     shell_element_id = 1
     for layer_property, value in expected_values_shell.items():
         assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(layer_property, shell_element_id, shell_label)
+            composite_model.get_property_for_all_layers(
+                layer_property, shell_element_id, shell_label
+            )
         )
 
     solid_element_id = 5
     for layer_property, value in expected_values_solid.items():
         assert value == pytest.approx(
-            composite_model.get_property_for_all_layers(layer_property, solid_element_id, solid_label)
+            composite_model.get_property_for_all_layers(
+                layer_property, solid_element_id, solid_label
+            )
         )
 
     assert composite_model.get_element_laminate_offset(shell_element_id, shell_label) == -0.00295
@@ -243,7 +251,9 @@ def test_assembly_model(dpf_server):
         f"{prefix}P1L1__woven_45.2",
     ]
 
-    assert composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
+    assert (
+        composite_model.get_analysis_plies(shell_element_id, shell_label) == analysis_ply_ids_shell
+    )
 
     assert composite_model.core_model is not None
     if version_older_than(dpf_server, "7.0"):
@@ -254,7 +264,9 @@ def test_assembly_model(dpf_server):
 
     assert composite_model.data_sources is not None
     sampling_point = composite_model.get_sampling_point(
-        combined_criterion=combined_failure_criterion, element_id=1, composite_definition_label=shell_label
+        combined_criterion=combined_failure_criterion,
+        element_id=1,
+        composite_definition_label=shell_label,
     )
 
     sampling_point.run()
@@ -262,7 +274,9 @@ def test_assembly_model(dpf_server):
         ply_id.replace(f"{shell_label}{SEPARATOR}", "") for ply_id in analysis_ply_ids_shell
     ]
 
-    assert composite_model.get_element_laminate_offset(solid_element_id, solid_label) == pytest.approx(0.0)
+    assert composite_model.get_element_laminate_offset(
+        solid_element_id, solid_label
+    ) == pytest.approx(0.0)
     if version_older_than(dpf_server, "7.0"):
         prefix = ""
     else:
@@ -274,7 +288,9 @@ def test_assembly_model(dpf_server):
         f"{prefix}P1L1__ud",
     ]
 
-    assert composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
+    assert (
+        composite_model.get_analysis_plies(solid_element_id, solid_label) == analysis_ply_ids_solid
+    )
 
     timer.add("After getting properties")
     timer.summary()

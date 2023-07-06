@@ -272,7 +272,9 @@ class CompositeModel:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self._implementation.get_element_laminate_offset(element_id, composite_definition_label)
+        return self._implementation.get_element_laminate_offset(
+            element_id, composite_definition_label
+        )
 
     def get_constant_property_dict(
         self,
