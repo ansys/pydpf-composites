@@ -207,7 +207,7 @@ class CompositeModelImpl:
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
         max_chunk_size:
-            Maximum chunk size. If number of elements is bigger than this number,
+            Maximum chunk size. If number of elements is larger than this number,
             the failure criteria are evaluated in chunks of the specified size.
 
             .. note::
