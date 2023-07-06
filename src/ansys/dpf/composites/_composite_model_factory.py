@@ -15,7 +15,7 @@ CompositeModelImplT = Callable[
 ]
 
 
-def _composite_model_interface_factory(server: BaseServer) -> CompositeModelImplT:
+def _composite_model_factory(server: BaseServer) -> CompositeModelImplT:
     if version_older_than(server, "7.0"):
         return CompositeModelImpl2023R2
 

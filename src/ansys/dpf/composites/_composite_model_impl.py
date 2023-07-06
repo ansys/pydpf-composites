@@ -56,7 +56,7 @@ def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
 class CompositeModelImpl:
     """Provides access to the basic composite postprocessing functionality.
 
-    This class supports DPF server version 7.0 (2024 R1) and later.
+    This class supports DPF Server version 7.0 (2024 R1) and later.
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
     so that they can be efficiently evaluated. The composite_files provided are automatically

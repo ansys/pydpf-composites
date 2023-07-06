@@ -95,8 +95,6 @@ class SamplingPoint(SamplingPointProtocol):
         self._meshed_region = meshed_region
         self._layup_provider = layup_provider
         self._rst_streams_provider = rst_streams_provider
-        # todo: is it possible to get rst file path from rst_stream_provider as it is done in C++
-        # Refer to get_result_file_paths_from_stream
         self._rst_data_source = rst_data_source
 
         self._spots_per_ply = 0
