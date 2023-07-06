@@ -315,6 +315,7 @@ def distributed_rst(request, dpf_server):
         pytest.skip(f"Distributed RST not supported for server version {dpf_server.version}.")
     return res
 
+
 @pytest.fixture
 def data_files(distributed_rst):
     # Using lightweight data for unit tests. Replace by get_ger_data_data_files
