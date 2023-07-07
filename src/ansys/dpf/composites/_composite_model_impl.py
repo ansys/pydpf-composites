@@ -184,8 +184,8 @@ class CompositeModelImpl:
 
         The fields container contains the maximum per element if the measure
         is :attr:`.FailureMeasureEnum.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
-        :attr:`.FailureMeasureEnum.RESERVE_FACTOR`.
+        if the measure is the :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
+        :attr:`.FailureMeasureEnum.RESERVE_FACTOR` attribute.
 
         Parameters
         ----------
