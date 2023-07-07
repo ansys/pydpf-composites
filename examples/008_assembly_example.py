@@ -59,7 +59,7 @@ irf_field.plot()
 # and one with a "solid" label. For dpf versions older than version 7.0,
 # the layup properties must be queried with the correct composite definition label. The code
 # following gets element information for all layered elements.
-# For newer server versions, the element_info can be retrieved directly.
+# For DPF Server versions 7.0 and later, element information can be retrieved directly.
 
 if version_older_than(server, "7.0"):
     element_infos = []
