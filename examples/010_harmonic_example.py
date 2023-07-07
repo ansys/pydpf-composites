@@ -6,7 +6,7 @@ Postprocess a harmonic analysis
 
 .. note::
 
-    When using a workbench project, use :func:`composite_files_from_workbench_harmonic_analysis`
+    When using a workbench project, use :func:`.composite_files_from_workbench_harmonic_analysis`
     to obtain the input files.
 
 This example shows how to evaluate failure criteria for a harmonic simulation.
