@@ -9,6 +9,7 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
 from . import (
     composite_model,
+    composite_scope,
     constants,
     data_sources,
     failure_criteria,
@@ -21,6 +22,7 @@ from . import (
 
 __all__ = (
     "composite_model",
+    "composite_scope",
     "constants",
     "data_sources",
     "failure_criteria",
