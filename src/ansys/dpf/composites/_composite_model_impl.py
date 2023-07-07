@@ -426,7 +426,7 @@ class CompositeModelImpl:
     ) -> Optional[NDArray[np.double]]:
         """Get a layer property for an element ID.
 
-        Returns a numpy array with the values of the property for all the layers.
+        This method returns a numpy array with the values of the property for all the layers.
         Values are ordered from bottom to top.
 
         This method returns ``None`` if the element is not layered.
