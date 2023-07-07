@@ -32,10 +32,7 @@ from .unit_system import get_unit_system
 
 
 def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
-    """
-    Emit a warning when the deprecated ``composite_definition_label`` is used.
-
-    """
+    """Emit a warning when the deprecated ``composite_definition_label`` is used."""
     function_arg = "composite_definition_label"
 
     def inner(*args: Sequence[Any], **kwargs: Sequence[Any]) -> Any:
