@@ -518,7 +518,7 @@ preparing files.</p>
     <span class="n">TsaiWuCriterion</span><span class="p">,</span>
     <span class="n">VonMisesCriterion</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span><span class="p">,</span> <span class="n">version_older_than</span>
 </pre></div>
 </div>
 <p>Configure the combined failure criterion.</p>
@@ -552,7 +552,13 @@ preparing files.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rst_data_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">rst</span>
 <span class="n">material_support_data_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">material_support</span>
 <span class="n">eng_data_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">engineering_data</span>
-<span class="n">composite_definitions_source</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_data_sources</span><span class="o">.</span><span class="n">composite</span></a><span class="p">[</span><span class="s2">&quot;shell&quot;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">version_older_than</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;7.0&quot;</span><span class="p">):</span>
+    <span class="c1"># Get datasources of composite definition files for the backend 2023 R2 or before</span>
+    <span class="n">composite_definitions_source</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_data_sources</span><span class="o">.</span><span class="n">old_composite_sources</span></a><span class="p">[</span><span class="s2">&quot;shell&quot;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Get datasources of composite definition files for the backend 2024 R1 or later</span>
+    <span class="n">composite_definitions_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">composite</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
 </pre></div>
@@ -570,6 +576,7 @@ the materials in the composite definitions.
 The material support contains all materials from the RST file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">material_support_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;support_provider&quot;</span><span class="p">)</span>
 <span class="n">material_support_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s2">&quot;mat&quot;</span><span class="p">)</span>
+
 <span class="n">material_support_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">material_support_data_source</span><span class="p">)</span>
 <span class="n">material_support_provider</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
@@ -652,7 +659,7 @@ compute the minimum and maximum failure criteria for each element.</p>
 <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">meshed_region</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">value_index</span></a><span class="p">])</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_011_dpf_composite_failure_workflow_001.png" srcset="../../_images/sphx_glr_011_dpf_composite_failure_workflow_001.png" alt="011 dpf composite failure workflow" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  11.569 seconds)</p>
+<img src="../../_images/sphx_glr_011_dpf_composite_failure_workflow_001.png" srcset="../../_images/sphx_glr_011_dpf_composite_failure_workflow_001.png" alt="011 dpf composite failure workflow" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  11.197 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-dpf-composite-failure-workflow-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a7656987490a33688e3afce928a4b2e0/011_dpf_composite_failure_workflow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">011_dpf_composite_failure_workflow.py</span></code></a></p>

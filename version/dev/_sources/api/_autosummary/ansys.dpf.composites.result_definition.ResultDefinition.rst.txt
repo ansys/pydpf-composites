@@ -17,6 +17,9 @@ ResultDefinition
    
       
       
+      ResultDefinition.check_has_single_scope
+      
+      
       ResultDefinition.to_dict
       
       

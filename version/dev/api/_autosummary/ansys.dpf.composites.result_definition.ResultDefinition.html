@@ -67,7 +67,7 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="to_dict" href="ansys.dpf.composites.result_definition.ResultDefinition.to_dict.html" />
+    <link rel="next" title="check_has_single_scope" href="ansys.dpf.composites.result_definition.ResultDefinition.check_has_single_scope.html" />
     <link rel="prev" title="Result definition" href="../result_definition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -439,12 +439,14 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../composite_model.html">Composite model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../composite_scope.html">Composite scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constants.html">Constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_sources.html">Data sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../failure_criteria.html">Failure criteria</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layup_info.html">Lay-up information</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../result_definition.html">Result definition</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">ResultDefinition</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.check_has_single_scope.html">check_has_single_scope</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_dict.html">to_dict</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_json.html">to_json</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.combined_failure_criterion.html">combined_failure_criterion</a></li>
@@ -460,7 +462,7 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinitionScope.html">ResultDefinitionScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasure.html">FailureMeasure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.result_definition.FailureMeasureEnum.html">FailureMeasureEnum</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../sampling_point.html">Sampling point</a></li>
@@ -505,10 +507,13 @@ and <code class="docutils literal notranslate"><span class="pre">composite::samp
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_dict.html#ansys.dpf.composites.result_definition.ResultDefinition.to_dict" title="ansys.dpf.composites.result_definition.ResultDefinition.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.to_dict</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.check_has_single_scope.html#ansys.dpf.composites.result_definition.ResultDefinition.check_has_single_scope" title="ansys.dpf.composites.result_definition.ResultDefinition.check_has_single_scope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.check_has_single_scope</span></code></a>(msg)</p></td>
+<td><p>Check that the result definition has one scope.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_dict.html#ansys.dpf.composites.result_definition.ResultDefinition.to_dict" title="ansys.dpf.composites.result_definition.ResultDefinition.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.to_dict</span></code></a>()</p></td>
 <td><p>Get the result definition in a dictionary representation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_json.html#ansys.dpf.composites.result_definition.ResultDefinition.to_json" title="ansys.dpf.composites.result_definition.ResultDefinition.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.to_json</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.to_json.html#ansys.dpf.composites.result_definition.ResultDefinition.to_json" title="ansys.dpf.composites.result_definition.ResultDefinition.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultDefinition.to_json</span></code></a>()</p></td>
 <td><p>Convert the dictionary representation of the result definition to a JSON dictionary.</p></td>
 </tr>
 </tbody>

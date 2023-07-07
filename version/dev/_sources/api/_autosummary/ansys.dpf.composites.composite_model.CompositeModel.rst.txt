@@ -23,6 +23,9 @@ CompositeModel
       CompositeModel.evaluate_failure_criteria
       
       
+      CompositeModel.get_all_layered_element_ids
+      
+      
       CompositeModel.get_all_layered_element_ids_for_composite_definition_label
       
       

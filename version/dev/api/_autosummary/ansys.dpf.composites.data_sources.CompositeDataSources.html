@@ -439,6 +439,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../composite_model.html">Composite model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../composite_scope.html">Composite scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constants.html">Constants</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../data_sources.html">Data sources</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.html">CompositeDefinitionFiles</a></li>
@@ -449,6 +450,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.material_support.html">material_support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.composite.html">composite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data.html">engineering_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources.html">old_composite_sources</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html">get_composite_files_from_workbench_result_folder</a></li>
@@ -493,8 +495,24 @@ document.write(`
 <h1>CompositeDataSources<a class="headerlink" href="#compositedatasources" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.data_sources.CompositeDataSources">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">CompositeDataSources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_support</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engineering_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.CompositeDataSources" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">CompositeDataSources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_support</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engineering_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_composite_sources</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.CompositeDataSources" title="Permalink to this definition">#</a></dt>
 <dd><p>Provides data sources related to the composite lay-up.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rst</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.data_sources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.8.1)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – </p></li>
+<li><p><strong>material_support</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.data_sources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.8.1)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – NOTE: The ‘material_support’ is explicitly listed since it is currently not
+supported (by the DPF Core) to use a distributed RST file as source for the
+material support. Instead, we create a separate DataSources object for the
+material support from the first RST file. This is a workaround until the
+support for distributed RST is added.</p></li>
+<li><p><strong>engineering_data</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.data_sources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.8.1)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – </p></li>
+<li><p><strong>old_composite_sources</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.data_sources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.8.1)"><em>ansys.dpf.core.data_sources.DataSources</em></a><em>]</em>) – This member is used to support assemblies in combination with the old
+DPF server (&lt;7.0). It should be removed once the support of this
+server version is dropped.</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
@@ -513,6 +531,9 @@ document.write(`
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data.html#ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data" title="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.engineering_data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources.html#ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources" title="ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.old_composite_sources</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>

@@ -439,6 +439,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../composite_model.html">Composite model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../composite_scope.html">Composite scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constants.html">Constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_sources.html">Data sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../failure_criteria.html">Failure criteria</a></li>
@@ -453,7 +454,6 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_ply_wise_critical_failures.html">get_ply_wise_critical_failures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_polar_plot.html">get_polar_plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots.html">get_result_plots</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.run.html">run</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.analysis_plies.html">analysis_plies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e1.html">e1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e12.html">e12</a></li>
@@ -464,14 +464,15 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.element_id.html">element_id</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.failure_modes.html">failure_modes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor.html">inverse_reserve_factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate.html">is_uptodate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety.html">margin_of_safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.name.html">name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies.html">number_of_plies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.offsets.html">offsets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E1.html">polar_properties_E1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E2.html">polar_properties_E2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_G12.html">polar_properties_G12</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor.html">reserve_factor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.result_definition.html">result_definition</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.results.html">results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s1.html">s1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s12.html">s12</a></li>
@@ -520,22 +521,15 @@ document.write(`
 <h1>SamplingPoint<a class="headerlink" href="#samplingpoint" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.sampling_point.SamplingPoint">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.sampling_point.</span></span><span class="sig-name descname"><span class="pre">SamplingPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_definition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.sampling_point.SamplingPoint" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.sampling_point.</span></span><span class="sig-name descname"><span class="pre">SamplingPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.sampling_point.SamplingPoint" title="Permalink to this definition">#</a></dt>
 <dd><p>Implements the <code class="docutils literal notranslate"><span class="pre">Sampling</span> <span class="pre">Point</span></code> object that wraps the DPF sampling point operator.</p>
-<p>This class provides for plotting the lay-up and results at a certain point of the
+<p>Use <a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point.html#ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point" title="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CompositeModel.get_sampling_point()</span></code></a> to get a sampling point object.
+This class provides for plotting the lay-up and results at a certain point of the
 layered structure. The results, including <code class="docutils literal notranslate"><span class="pre">analysis_plies</span></code>, <code class="docutils literal notranslate"><span class="pre">e1</span></code>, <code class="docutils literal notranslate"><span class="pre">s12</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">failure_modes</span></code>, are always from the bottom to the top of the laminate (along
 the element normal direction). Postprocessing results such as <code class="docutils literal notranslate"><span class="pre">e1</span></code> are returned
 as flat arrays where <code class="docutils literal notranslate"><span class="pre">self.spots_per_ply</span></code> can be used to compute the index for
 a certain ply.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the object.</p></li>
-<li><p><strong>result_definition</strong> (<a class="reference internal" href="ansys.dpf.composites.result_definition.ResultDefinition.html#ansys.dpf.composites.result_definition.ResultDefinition" title="ansys.dpf.composites.result_definition.ResultDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a>) – Result definition object that defines all inputs and the scope.</p></li>
-</ul>
-</dd>
-</dl>
 <p class="rubric">Notes</p>
 <p>The results of layered elements are stored per integration point. A layered shell element
 has a number of in-plane integration points (depending on the integration scheme) and
@@ -624,9 +618,6 @@ filtering of the data.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.get_result_plots</span></code></a>([...])</p></td>
 <td><p>Generate a figure with a grid of axes (plot) for each selected result entity.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.run.html#ansys.dpf.composites.sampling_point.SamplingPoint.run" title="ansys.dpf.composites.sampling_point.SamplingPoint.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.run</span></code></a>()</p></td>
-<td><p>Run the DPF operator and cache the results.</p></td>
-</tr>
 </tbody>
 </table>
 <p class="rubric">Attributes</p>
@@ -662,8 +653,14 @@ filtering of the data.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor.html#ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor" title="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.inverse_reserve_factor</span></code></a></p></td>
 <td><p>Critical inverse reserve factor of each ply.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety.html#ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety" title="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.margin_of_safety</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate.html#ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate" title="ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.is_uptodate</span></code></a></p></td>
+<td><p>True if the Sampling Point is up-to-date.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety.html#ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety" title="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.margin_of_safety</span></code></a></p></td>
 <td><p>Lowest margin of safety of each ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.name.html#ansys.dpf.composites.sampling_point.SamplingPoint.name" title="ansys.dpf.composites.sampling_point.SamplingPoint.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.name</span></code></a></p></td>
+<td><p>Name of the object.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies.html#ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies" title="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.number_of_plies</span></code></a></p></td>
 <td><p>Number of plies.</p></td>
@@ -683,31 +680,28 @@ filtering of the data.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor.html#ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor" title="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.reserve_factor</span></code></a></p></td>
 <td><p>Lowest reserve factor of each ply.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.result_definition.html#ansys.dpf.composites.sampling_point.SamplingPoint.result_definition" title="ansys.dpf.composites.sampling_point.SamplingPoint.result_definition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.result_definition</span></code></a></p></td>
-<td><p>Input for the sampling point operator.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.results.html#ansys.dpf.composites.sampling_point.SamplingPoint.results" title="ansys.dpf.composites.sampling_point.SamplingPoint.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.results</span></code></a></p></td>
+<td><p>Results of the sampling point results as a JSON dictionary.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.results.html#ansys.dpf.composites.sampling_point.SamplingPoint.results" title="ansys.dpf.composites.sampling_point.SamplingPoint.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.results</span></code></a></p></td>
-<td><p>Results of the sampling point operator as a JSON dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s1.html#ansys.dpf.composites.sampling_point.SamplingPoint.s1" title="ansys.dpf.composites.sampling_point.SamplingPoint.s1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s1</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s1.html#ansys.dpf.composites.sampling_point.SamplingPoint.s1" title="ansys.dpf.composites.sampling_point.SamplingPoint.s1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s1</span></code></a></p></td>
 <td><p>Stresses in the material 1 direction of each ply.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s12.html#ansys.dpf.composites.sampling_point.SamplingPoint.s12" title="ansys.dpf.composites.sampling_point.SamplingPoint.s12"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s12</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s12.html#ansys.dpf.composites.sampling_point.SamplingPoint.s12" title="ansys.dpf.composites.sampling_point.SamplingPoint.s12"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s12</span></code></a></p></td>
 <td><p>In-plane shear stresses s12 of each ply.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s13.html#ansys.dpf.composites.sampling_point.SamplingPoint.s13" title="ansys.dpf.composites.sampling_point.SamplingPoint.s13"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s13</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s13.html#ansys.dpf.composites.sampling_point.SamplingPoint.s13" title="ansys.dpf.composites.sampling_point.SamplingPoint.s13"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s13</span></code></a></p></td>
 <td><p>Out-of-plane shear stresses s13 of each ply.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s2.html#ansys.dpf.composites.sampling_point.SamplingPoint.s2" title="ansys.dpf.composites.sampling_point.SamplingPoint.s2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s2</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s2.html#ansys.dpf.composites.sampling_point.SamplingPoint.s2" title="ansys.dpf.composites.sampling_point.SamplingPoint.s2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s2</span></code></a></p></td>
 <td><p>Stresses in the material 2 direction of each ply.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s23.html#ansys.dpf.composites.sampling_point.SamplingPoint.s23" title="ansys.dpf.composites.sampling_point.SamplingPoint.s23"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s23</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s23.html#ansys.dpf.composites.sampling_point.SamplingPoint.s23" title="ansys.dpf.composites.sampling_point.SamplingPoint.s23"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s23</span></code></a></p></td>
 <td><p>Out-of-plane shear stresses s23 of each ply.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s3.html#ansys.dpf.composites.sampling_point.SamplingPoint.s3" title="ansys.dpf.composites.sampling_point.SamplingPoint.s3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s3</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s3.html#ansys.dpf.composites.sampling_point.SamplingPoint.s3" title="ansys.dpf.composites.sampling_point.SamplingPoint.s3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.s3</span></code></a></p></td>
 <td><p>Stresses in the material 3 direction of each ply.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply.html#ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply" title="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.spots_per_ply</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply.html#ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply" title="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingPoint.spots_per_ply</span></code></a></p></td>
 <td><p>Number of through-the-thickness integration points per ply.</p></td>
 </tr>
 </tbody>
