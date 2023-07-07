@@ -68,7 +68,7 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
     ----------
     server:
     ansys_path:
-        Ansys root path, for example C:\Program Files\ANSYS Inc\v232.
+        Ansys root path, for example C:\\Program Files\\ANSYS Inc\\v232.
         If None, it is assumed that all the plugins and their dependencies
         are found in the PATH/LD_LIBRARY_PATH. If ansys_path
         is set, the composite_operators and

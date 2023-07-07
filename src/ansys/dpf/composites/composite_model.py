@@ -337,6 +337,12 @@ class CompositeModel:
     ) -> None:
         """Add interlaminar normal stresses to the stresses fields container.
 
+        Interlaminar normal stresses (s3) are not available for layered shells.
+        This function performs a post-processing step which computes s3 and adds
+        it to the stress field. s3 is automatically computed if a formulation
+        of a failure criterion depends on this stress component, for instance
+        :class:`Puck 3D <.failure_criteria.PuckCriterion>` .
+
         For a usage example, see
         :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py`.
 

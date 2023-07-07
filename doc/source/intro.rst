@@ -17,7 +17,7 @@ Specific versions can be installed by specifying the version in the pip command.
 
 .. code::
 
-    pip install ansys-dpf-composites==0.1.0
+    pip install ansys-dpf-composites==0.3.0
 
 
 You should use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
@@ -129,5 +129,5 @@ By default the DPF server is started from the latest Ansys installer. To choose 
 Getting the DPF Server Docker Image
 """""""""""""""""""""""""""""""""""
 Follow the steps described in the DPF documentation in the section `Run DPF Server in A Docker Container <https://dpf.docs.pyansys.com/version/stable/user_guide/getting_started_with_dpf_server.html#run-dpf-server-in-a-docker-container>`_.
-Make sure you also download the composites plugin (e.g ``ansys_dpf_composites_lin_v2023.2.pre1.zip``).
+Make sure you also download the composites plugin (e.g ``ansys_dpf_composites_lin_v2024.1.pre0.zip``).
 After following the steps above, you should have a running DPF docker container that listens to port 50052.
