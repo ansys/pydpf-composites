@@ -42,14 +42,14 @@ mypy = {version = "^1.2.0", optional = true}
 mypy-extensions = {version = "^1.0.0", optional = true}
 # If this version changes also the link in doc/src/conf.py intersphinx-mapping has to change
 ansys-dpf-core = ">=0.8,<1"
-vtk = {version = "*"}
 matplotlib = {version = "^3.5.0"}
-pyvista = {version = ">=0.36.1,<1"}
+pyvista = {version = ">=0.36.1,<1", extras=["jupyter"], optional=true}
 pre-commit = {version = "*", optional = true}
 # Upper bound because there is a problem with examples in versions > 1.20.1
 sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
 pylint = {version = "^2.13", optional = true}
 scipy = {version = ">=1.9.0", optional = true}
+pytest-rerunfailures = {version = "^11.1.2", optional = true}
 
 [tool.poetry.extras]
 all = [
@@ -59,8 +59,10 @@ all = [
     "sphinx_gallery",
     "sphinx-design",
     "numpydoc",
+    "pyvista",
     "pytest",
     "pytest-cov",
+    "pytest-rerunfailures",
     "twine",
     "build",
     "mypy",
@@ -72,8 +74,8 @@ all = [
     "sphinx-autodoc-typehints",
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
-    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy"]
-test = ["pytest", "pytest-cov"]
+    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy", "pyvista"]
+test = ["pytest", "pytest-cov", "pytest-rerunfailures"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
 
