@@ -589,7 +589,7 @@ class CompositeModelImpl:
         Parameters
         ----------
         composite_definition_label:
-            Deprecated. It's no longer needed
+            Deprecated. This parameter is no longer needed.
         """
         warn(
             "Call to deprecated function"
