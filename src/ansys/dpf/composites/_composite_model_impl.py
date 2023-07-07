@@ -33,7 +33,7 @@ from .unit_system import get_unit_system
 
 def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
     """
-    Can be used to mark composite_definition_label as deprecated.
+    Emit a warning when the deprecated ``composite_definition_label`` is used.
 
     It will result in a warning being emitted when the function is used.
     """
