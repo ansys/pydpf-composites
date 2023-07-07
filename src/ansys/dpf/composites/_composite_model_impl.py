@@ -59,7 +59,7 @@ class CompositeModelImpl:
     This class supports DPF Server version 7.0 (2024 R1) and later.
     On initialization, the ``CompositeModel`` class automatically adds composite lay-up
     information to the meshed regions. It prepares the providers for different lay-up properties
-    so that they can be efficiently evaluated. The composite_files provided are automatically
+    so that they can be efficiently evaluated. The composite files provided are automatically
     uploaded to the server if needed.
 
     .. note::
