@@ -6,7 +6,8 @@ Postprocess a harmonic analysis
 
 .. note::
 
-    This example is work in progress. Please open a Github issue if something is unclear.
+    When using a workbench project, use :func:`composite_files_from_workbench_harmonic_analysis`
+    to obtain the input files.
 
 This example shows how to evaluate failure criteria for a harmonic simulation.
 It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
@@ -38,13 +39,9 @@ from ansys.dpf.composites.layup_info.material_operators import get_material_oper
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 from ansys.dpf.composites.unit_system import get_unit_system
 
-# Todo: Discuss influence of damping factor
-# Todo: Currently the CompositeDefinition file from the modal analysis needs
-# to be copied to the harmonic response folder (including the Setup folder)
-
 # %%
 # Start a DPF server and copy the example files into the current working directory.
-server = connect_to_or_start_server(port=50052)
+server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "harmonic")
 
 # %%

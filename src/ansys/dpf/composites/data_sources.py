@@ -14,6 +14,7 @@ __all__ = (
     "ShortFiberCompositesFiles",
     "CompositeDataSources",
     "get_composite_files_from_workbench_result_folder",
+    "composite_files_from_workbench_harmonic_analysis",
     "get_composites_data_sources",
     "get_short_fiber_composites_data_sources",
 )
@@ -245,6 +246,65 @@ def _add_composite_definitons_from_setup_folder(
         composite_files.composite[key] = definition_files
 
 
+def composite_files_from_workbench_harmonic_analysis(
+    result_folder_modal: _PATH, result_folder_harmonic: _PATH
+) -> ContinuousFiberCompositesFiles:
+    """Get a ``ContinuousFiberCompositesFiles`` object for a harmonic analysis.
+
+    Parameters
+    ----------
+    result_folder_modal :
+       Result folder of the modal solution.
+       In the Modal System, Right-click the **solution** item in the Ansys Mechanical tree
+       and select **Open Solver Files Directory** to obtain the result folder.
+    result_folder_harmonic :
+       Result folder of the Harmonic Response solution.
+       In the Harmonic Response System,
+       Right-click the **solution** item in the Ansys Mechanical tree
+       and select **Open Solver Files Directory** to obtain the result folder.
+
+    """
+    result_folder_path_harmonic = pathlib.Path(result_folder_harmonic)
+    result_folder_path_modal = pathlib.Path(result_folder_modal)
+
+    setup_folders_modal = [
+        folder_path
+        for folder_path in result_folder_path_modal.iterdir()
+        if folder_path.is_dir() and folder_path.name.startswith(_SETUP_FOLDER_PREFIX)
+    ]
+
+    rst_paths = _get_file_paths_with_predicate(
+        _is_rst_file,
+        result_folder_path_harmonic,
+    )
+
+    if len(rst_paths) == 0:
+        raise RuntimeError(
+            f"Expected at least one rst file. Found {rst_paths}."
+            f" Available files in folder: {os.listdir(result_folder_path_harmonic)}"
+        )
+
+    matml_path = _get_single_file_path_with_predicate(
+        _is_matml_file,
+        result_folder_path_harmonic,
+        "matml",
+    )
+
+    assert matml_path is not None
+    assert rst_paths is not None
+
+    continuous_fiber_composite_files = ContinuousFiberCompositesFiles(
+        rst=[rst_path.resolve() for rst_path in rst_paths],
+        composite={},
+        engineering_data=matml_path.resolve(),
+    )
+
+    for setup_folder in setup_folders_modal:
+        _add_composite_definitons_from_setup_folder(setup_folder, continuous_fiber_composite_files)
+
+    return continuous_fiber_composite_files
+
+
 def get_composite_files_from_workbench_result_folder(
     result_folder: _PATH, ensure_composite_definitions_found: bool = True
 ) -> ContinuousFiberCompositesFiles:
@@ -370,7 +430,8 @@ def get_composite_files_from_workbench_result_folder(
         raise RuntimeError(
             "No composite definitions found. Set "
             "ensure_composite_definitions_found argument"
-            " to False to skip this check."
+            " to False to skip this check. Note: Use the function"
+            " composite_files_from_workbench_harmonic_analysis if this is a harmonic analysis."
         )
 
     return continuous_fiber_composite_files

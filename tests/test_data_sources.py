@@ -1,6 +1,9 @@
 import pathlib
 
-from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
+from ansys.dpf.composites.data_sources import (
+    composite_files_from_workbench_harmonic_analysis,
+    get_composite_files_from_workbench_result_folder,
+)
 
 
 def test_get_files_from_result_folder(dpf_server):
@@ -28,3 +31,29 @@ def test_get_files_from_result_folder(dpf_server):
 
     assert files.rst == [WORKFLOW_EXAMPLE_ROOT / "file.rst"]
     assert files.engineering_data == WORKFLOW_EXAMPLE_ROOT / "MatML.xml"
+
+
+def test_get_files_from_result_folder_harmonic(dpf_server):
+    WORKFLOW_EXAMPLE_ROOT_HARMONIC = (
+        pathlib.Path(__file__).parent
+        / "data"
+        / "workflow_example"
+        / "harmonic"
+        / "harmonic_analysis"
+    )
+    WORKFLOW_EXAMPLE_ROOT_MODAL = (
+        pathlib.Path(__file__).parent / "data" / "workflow_example" / "harmonic" / "modal_analysis"
+    )
+
+    files = composite_files_from_workbench_harmonic_analysis(
+        result_folder_modal=WORKFLOW_EXAMPLE_ROOT_MODAL,
+        result_folder_harmonic=WORKFLOW_EXAMPLE_ROOT_HARMONIC,
+    )
+
+    assert (
+        files.composite["Setup_shell"].definition
+        == WORKFLOW_EXAMPLE_ROOT_MODAL / "Setup" / "ACPCompositeDefinitions.h5"
+    )
+
+    assert files.rst == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
+    assert files.engineering_data == WORKFLOW_EXAMPLE_ROOT_HARMONIC / "MatML.xml"
