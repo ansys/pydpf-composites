@@ -551,6 +551,9 @@ class CompositeModelImpl:
         stresses:
             Stresses fields container to add interlaminar normal stresses to.
         strains:
+            Strains fields container from which the interlaminar normal stresses
+            are computed.
+
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
@@ -592,9 +595,8 @@ class CompositeModelImpl:
             Deprecated. It's no longer needed
         """
         warn(
-            "Call to deprecated function"
-            " get_all_layered_element_ids_for_composite_definition_label."
-            " Please use get_all_layered_element_ids instead.",
+            "The get_all_layered_element_ids_for_composite_definition_label method is deprecated. "
+            "Use the get_all_layered_element_ids method instead.",
             category=DeprecationWarning,
             stacklevel=2,
         )
