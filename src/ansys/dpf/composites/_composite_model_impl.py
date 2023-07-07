@@ -479,7 +479,7 @@ class CompositeModelImpl:
     ) -> Optional[np.double]:
         """Get the laminate offset of an element.
 
-        THis method returns ``None`` if the element is not layered.
+        This method returns ``None`` if the element is not layered.
 
         Parameters
         ----------
