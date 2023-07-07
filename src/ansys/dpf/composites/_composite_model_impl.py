@@ -501,7 +501,7 @@ class CompositeModelImpl:
     ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
-        Returns a dictionary with ``dpf_material_id`` as the key and
+        This method returns a dictionary with ``dpf_material_id`` as the key and
         a dictionary with the requested properties as the value. Only constant properties
         are supported. Variable properties are evaluated at their
         default values.
