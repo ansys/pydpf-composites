@@ -35,7 +35,6 @@ def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
     """
     Emit a warning when the deprecated ``composite_definition_label`` is used.
 
-    It will result in a warning being emitted when the function is used.
     """
     function_arg = "composite_definition_label"
 
