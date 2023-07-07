@@ -130,7 +130,7 @@ class CompositeModelImpl:
 
     @property
     def composite_files(self) -> ContinuousFiberCompositesFiles:
-        """Get the composite file paths on the server."""
+        """Composite file paths on the server."""
         return self._composite_files
 
     @property
