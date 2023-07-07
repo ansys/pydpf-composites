@@ -74,7 +74,7 @@ class CompositeModelImpl:
         Use the :func:`.get_composite_files_from_workbench_result_folder` function to obtain
         the :class:`.ContinuousFiberCompositesFiles` object.
     server:
-        DPF Server on which the model is created
+        DPF Server to create the model on.
     default_unit_system:
         Unit system that is used if the result file
         does not specify the unit system. This happens
@@ -130,7 +130,7 @@ class CompositeModelImpl:
 
     @property
     def composite_files(self) -> ContinuousFiberCompositesFiles:
-        """Get the composite file paths on the server."""
+        """Composite file paths on the server."""
         return self._composite_files
 
     @property
@@ -184,8 +184,8 @@ class CompositeModelImpl:
 
         The fields container contains the maximum per element if the measure
         is :attr:`.FailureMeasureEnum.INVERSE_RESERVE_FACTOR` and the minimum per element
-        if the measure is :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
-        :attr:`.FailureMeasureEnum.RESERVE_FACTOR`.
+        if the measure is the :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
+        :attr:`.FailureMeasureEnum.RESERVE_FACTOR` attribute.
 
         Parameters
         ----------
@@ -375,8 +375,9 @@ class CompositeModelImpl:
         element_id:
             Element ID or label of the sampling point.
         time:
-            Time or frequency at which to evaluate the sampling point. If ``None``,
-            the last time or frequency in the result file is used.
+            Time or frequency to evaluate the sampling point at. The default
+            is ``None``, in which case the last time or frequency in the result
+            file is used.
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
@@ -426,7 +427,7 @@ class CompositeModelImpl:
     ) -> Optional[NDArray[np.double]]:
         """Get a layer property for an element ID.
 
-        Returns a numpy array with the values of the property for all the layers.
+        This method returns a numpy array with the values of the property for all the layers.
         Values are ordered from bottom to top.
 
         This method returns ``None`` if the element is not layered.
@@ -479,7 +480,7 @@ class CompositeModelImpl:
     ) -> Optional[np.double]:
         """Get the laminate offset of an element.
 
-        THis method returns ``None`` if the element is not layered.
+        This method returns ``None`` if the element is not layered.
 
         Parameters
         ----------
@@ -501,7 +502,7 @@ class CompositeModelImpl:
     ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
-        Returns a dictionary with ``dpf_material_id`` as the key and
+        This method returns a dictionary with ``dpf_material_id`` as the key and
         a dictionary with the requested properties as the value. Only constant properties
         are supported. Variable properties are evaluated at their
         default values.
@@ -592,7 +593,7 @@ class CompositeModelImpl:
         Parameters
         ----------
         composite_definition_label:
-            Deprecated. It's no longer needed
+            Deprecated. This parameter is no longer needed.
         """
         warn(
             "The get_all_layered_element_ids_for_composite_definition_label method is deprecated. "

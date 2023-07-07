@@ -15,6 +15,7 @@ __all__ = (
     "CompositeDataSources",
     "get_composite_files_from_workbench_result_folder",
     "get_composites_data_sources",
+    "get_short_fiber_composites_data_sources",
 )
 
 _SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
@@ -84,12 +85,41 @@ class ContinuousFiberCompositesFiles:
 class ShortFiberCompositesFiles:
     """Provides the container for short fiber composite file paths."""
 
-    rst: _PATH
+    rst: List[_PATH]
     dsdat: _PATH
     engineering_data: _PATH
     # True if files are local and false if files
     # have already been uploaded to the server
     files_are_local: bool = True
+
+    def __init__(
+        self,
+        rst: Union[List[_PATH], _PATH],
+        dsdat: _PATH,
+        engineering_data: _PATH,
+        files_are_local: bool = True,
+    ) -> None:
+        """Initialize the ShortFiberCompositesFiles container.
+
+        Parameters
+        ----------
+        rst :
+            A single path to an RST file, or a list of paths to distributed
+            RST files.
+        dsdat :
+            Path to the solver input file (``ds.dat``).
+        engineering_data :
+            Path to the engineering data file.
+        files_are_local :
+            True if files are on the local machine, False if they have already
+            been uploaded to the DPF server..
+        """
+        if isinstance(rst, (str, pathlib.Path)):
+            rst = [rst]
+        self.rst = rst  # type: ignore
+        self.dsdat = dsdat
+        self.engineering_data = engineering_data
+        self.files_are_local = files_are_local
 
 
 # roosre June 2023: todo add deprecation warning where composite definition label is used
@@ -362,6 +392,23 @@ def get_composite_files_from_workbench_result_folder(
     return continuous_fiber_composite_files
 
 
+def _get_data_sources_from_rst_files(
+    rst_files: List[_PATH],
+) -> DataSources:
+    """Get a DPF data sources object from a list of RST files.
+
+    If a single RST file is provided, it is added via 'set_result_file_path'.
+    Otherwise, the RST files are added via 'set_domain_result_file_path'.
+    """
+    data_sources = DataSources()
+    if len(rst_files) == 1:
+        data_sources.set_result_file_path(rst_files[0])
+    else:
+        for idx, rst_file in enumerate(rst_files):
+            data_sources.set_domain_result_file_path(rst_file, idx)
+    return data_sources
+
+
 def get_composites_data_sources(
     continuous_composite_files: ContinuousFiberCompositesFiles,
 ) -> CompositeDataSources:
@@ -374,19 +421,19 @@ def get_composites_data_sources(
     if not continuous_composite_files.rst:
         raise RuntimeError("No rst files found.")
     else:
+        rst_data_source = _get_data_sources_from_rst_files(continuous_composite_files.rst)
+
         # NOTE: The 'material_support' is explicitly listed since it is currently not
         # supported (by the DPF Core) to use a distributed RST file as source for the
         # material support. Instead, we create a separate DataSources object for the
         # material support from the first RST file. This is a workaround until the
         # support for distributed RST is added.
-        material_support_data_source = DataSources()
-        material_support_data_source.set_result_file_path(continuous_composite_files.rst[0])
         if len(continuous_composite_files.rst) == 1:
-            rst_data_source = material_support_data_source
+            material_support_data_source = rst_data_source
         else:
-            rst_data_source = DataSources()
-            for idx, rst_file in enumerate(continuous_composite_files.rst):
-                rst_data_source.set_domain_result_file_path(rst_file, idx)
+            material_support_data_source = _get_data_sources_from_rst_files(
+                [continuous_composite_files.rst[0]]
+            )
 
     engineering_data_source = DataSources()
     engineering_data_source.add_file_path(
@@ -446,3 +493,20 @@ def _data_sources_result_key(data_sources: DataSources, index: int) -> str:
         str,
         data_sources._api.data_sources_get_result_key_by_index(data_sources, index),
     )
+
+
+def get_short_fiber_composites_data_sources(
+    short_fiber_composites_files: ShortFiberCompositesFiles,
+) -> DataSources:
+    """
+    Create DPF data sources from a ``ShortFiberCompositeFiles`` object.
+
+    Parameters
+    ----------
+    short_fiber_composite_files :
+        Container for short fiber composite file paths.
+    """
+    data_sources = _get_data_sources_from_rst_files(short_fiber_composites_files.rst)
+    data_sources.add_file_path(short_fiber_composites_files.dsdat, "dat")
+    data_sources.add_file_path(short_fiber_composites_files.engineering_data, "EngineeringData")
+    return data_sources

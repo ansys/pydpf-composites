@@ -56,10 +56,10 @@ irf_field.plot()
 # Get element information
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # In the assembly, two composite definitions exist: one with a "shell" label
-# and one with a "solid" label. For dpf versions older than version 7.0,
+# and one with a "solid" label. For DPF Server versions earlier than 7.0,
 # the layup properties must be queried with the correct composite definition label. The code
-# below gets element information for all layered elements.
-# For newer server versions, the element_info can be retrieved directly.
+# following gets element information for all layered elements.
+# For DPF Server versions 7.0 and later, element information can be retrieved directly.
 
 if version_older_than(server, "7.0"):
     element_infos = []
