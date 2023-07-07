@@ -375,8 +375,9 @@ class CompositeModelImpl:
         element_id:
             Element ID or label of the sampling point.
         time:
-            Time or frequency at which to evaluate the sampling point. If ``None``,
-            the last time or frequency in the result file is used.
+            Time or frequency to evaluate the sampling point at. The default
+            is ``None``, in which case the last time or frequency in the result
+            file is used.
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
