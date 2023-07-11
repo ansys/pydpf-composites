@@ -89,7 +89,6 @@ def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None)
         possible_awp_roots = [
             "/ansys_inc/ansys/dpf/server_2023_2_pre1",
             "/ansys_inc/ansys/dpf/server_2023_2_pre2",
-            "/ansys_inc/ansys/dpf/server_2024_1_pre0",
         ]
 
         while True:
