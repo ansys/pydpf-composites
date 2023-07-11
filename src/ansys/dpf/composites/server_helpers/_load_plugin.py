@@ -10,6 +10,8 @@ from ansys.dpf.gate.errors import DPFServerException
 
 from ._versions import version_older_than
 
+# The automatic load of the plug-in can be disabled by the user and so
+# all plugins which are required for dpf composites are loaded
 _PLUGINS = (
     "Ans.Dpf.Native",
     "mapdlOperatorsCore",
@@ -24,8 +26,6 @@ def _load_plugins(
     awp_root_docker: str,
     ansys_path: Optional[str] = None,
 ) -> None:
-    # The automatic load of the plug-in can be disabled by the user and so
-    # all plugins which are required for dpf composites are loaded
     def get_lib_from_name(name: str) -> str:
         if server.os == "posix":
             return f"lib{name}.so"
