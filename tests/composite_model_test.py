@@ -1,5 +1,6 @@
 import pathlib
 
+from ansys.dpf.core import unit_systems
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
@@ -289,7 +290,7 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
     is not part of the rst (because the project was created from mapdl)
     """
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mapdl"
-    rst_path = TEST_DATA_ROOT_DIR / "linear_shell_3_layer_analysis_model.rst"
+    rst_path = TEST_DATA_ROOT_DIR / "linear_shell_analysis_model.rst"
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     files = ContinuousFiberCompositesFiles(
@@ -297,7 +298,9 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
-    composite_model = CompositeModel(files, server=dpf_server)
+    composite_model = CompositeModel(
+        files, server=dpf_server, default_unit_system=unit_systems.solver_mks
+    )
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
