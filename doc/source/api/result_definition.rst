@@ -8,4 +8,4 @@ Result definition
 
     ResultDefinition
     ResultDefinitionScope
-    FailureMeasure
+    FailureMeasureEnum

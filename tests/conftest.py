@@ -12,7 +12,6 @@ from typing import Mapping
 import uuid
 
 import ansys.dpf.core as dpf
-from packaging import version
 import pytest
 
 from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
@@ -20,6 +19,9 @@ from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
     _wait_until_server_is_up,
 )
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
+from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
+
+from .helper import get_dummy_data_files
 
 TEST_ROOT_DIR = pathlib.Path(__file__).parent
 
@@ -43,8 +45,8 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         ANSYS_PATH_OPTION_KEY,
         action="store",
-        help="If set, the dpf server is started from an ansys location located at the given path."
-        r"Example: C:\Program Files\Ansys Inc\v231",
+        help="If set, the dpf server is started from an Ansys location located at the given path."
+        r"Example: C:\\Program Files\\Ansys Inc\\v231",
     )
 
     parser.addoption(
@@ -309,7 +311,14 @@ def dpf_server(request: pytest.FixtureRequest):
 def distributed_rst(request, dpf_server):
     """Fixture that parametrizes tests to run with a distributed RST or not."""
     res = request.param
-    supports_distributed_rst = version.parse(dpf_server.version) >= version.parse("7.0")
-    if res and not supports_distributed_rst:
+    if res and not version_equal_or_later(dpf_server, "7.0"):
         pytest.skip(f"Distributed RST not supported for server version {dpf_server.version}.")
     return res
+
+
+@pytest.fixture
+def data_files(distributed_rst):
+    # Using lightweight data for unit tests. Replace by get_ger_data_data_files
+    # for actual performance tests
+    # return get_ger_data_files()
+    return get_dummy_data_files(distributed=distributed_rst)

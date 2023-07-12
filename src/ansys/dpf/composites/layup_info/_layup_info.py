@@ -8,7 +8,6 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
-from packaging import version
 
 from .._indexer import (
     FieldIndexerNoDataPointer,
@@ -20,12 +19,12 @@ from .._indexer import (
     PropertyFieldIndexerWithDataPointer,
     PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
+from ..server_helpers import version_older_than
 from ._enums import LayupProperty
 
 
 def _get_separator(server: BaseServer) -> str:
-    if version.parse(server.version) < version.parse("7.0"):
-        # up to and with 2023 R2
+    if version_older_than(server, "7.0"):
         return ":"
     else:
         return "::"

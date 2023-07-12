@@ -1,11 +1,13 @@
 """Wrapper for the sampling point operator."""
+import hashlib
 import json
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union
+from typing import Any, Collection, Dict, List, Sequence, Union
 
+import ansys.dpf.core as dpf
+from ansys.dpf.core.server import get_or_create_server
+from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 import numpy.typing as npt
-
-from ansys.dpf import core as dpf
 
 from ._sampling_point_helpers import (
     add_ply_sequence_to_plot_to_sp,
@@ -19,13 +21,12 @@ from ._sampling_point_helpers import (
     get_result_plots_from_sp,
 )
 from .constants import Spot
-from .failure_criteria import CombinedFailureCriterion
-from .layup_info.material_operators import MaterialOperators
-from .result_definition import FailureMeasureEnum
+from .result_definition import FailureMeasureEnum, ResultDefinition
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
+from .server_helpers._load_plugin import load_composites_plugin
 
 
-class SamplingPointNew(SamplingPoint):
+class SamplingPoint2023R2(SamplingPoint):
     """Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
 
     This class provides for plotting the lay-up and results at a certain point of the
@@ -39,6 +40,8 @@ class SamplingPointNew(SamplingPoint):
     ----------
     name :
         Name of the object.
+    result_definition :
+        Result definition object that defines all inputs and the scope.
 
     Notes
     -----
@@ -76,31 +79,33 @@ class SamplingPointNew(SamplingPoint):
     def __init__(
         self,
         name: str,
-        element_id: int,
-        combined_criterion: CombinedFailureCriterion,
-        material_operators: MaterialOperators,
-        meshed_region: dpf.MeshedRegion,
-        layup_provider: dpf.Operator,
-        rst_streams_provider: dpf.Operator,
-        rst_data_source: dpf.DataSources,
-        time: Optional[float] = None,
+        result_definition: ResultDefinition,
+        server: BaseServer = None,
     ):
         """Create a ``SamplingPoint`` object."""
-        self._name = name
-        self._element_id = element_id
-        self._time = time
-        self._combined_criterion = combined_criterion
-
-        self._material_operators = material_operators
-        self._meshed_region = meshed_region
-        self._layup_provider = layup_provider
-        self._rst_streams_provider = rst_streams_provider
-        self._rst_data_source = rst_data_source
+        result_definition.check_has_single_scope(f"Sampling point {name} cannot be created.")
+        self._result_definition = result_definition
 
         self._spots_per_ply = 0
         self._interface_indices: Dict[Spot, int] = {}
+        self._name = name
+        used_server = get_or_create_server(server)
+        if not used_server:
+            raise RuntimeError("SamplingPoint: cannot connect to DPF server or launch it.")
+
+        if used_server != server:
+            load_composites_plugin(used_server)
+
         self._results: Any = None
         self._is_uptodate = False
+        self._rd_hash = ""
+
+        # initialize the sampling point operator. Do it just once
+        self._operator = dpf.Operator(
+            name="composite::composite_sampling_point_operator", server=used_server
+        )
+        if not self._operator:
+            raise RuntimeError("SamplingPoint: failed to initialize the operator.")
 
     @property
     def name(self) -> str:
@@ -113,23 +118,32 @@ class SamplingPointNew(SamplingPoint):
         self._name = value
 
     @property
+    def result_definition(self) -> ResultDefinition:
+        """Input for the sampling point operator."""
+        return self._result_definition
+
+    @result_definition.setter
+    def result_definition(self, value: ResultDefinition) -> None:
+        value.check_has_single_scope(f"Cannot set the result definition of {self.name}")
+        self._is_uptodate = False
+        self._result_definition = value
+
+    @property
     def element_id(self) -> Union[int, None]:
-        """Element label for sampling the laminate."""
-        return self._element_id
+        """Element label for sampling the laminate.
+
+        This attribute returns ``-1`` if the element ID is not set.
+        """
+        element_scope = self._result_definition.scopes[0].element_scope
+        if len(element_scope) > 1:
+            raise RuntimeError("The scope of a sampling point can only be one element.")
+        if len(element_scope) == 0:
+            return None
+        return element_scope[0]
 
     @element_id.setter
     def element_id(self, value: int) -> None:
-        self._element_id = value
-        self._is_uptodate = False
-
-    @property
-    def combined_criterion(self) -> CombinedFailureCriterion:
-        """Element label for sampling the laminate."""
-        return self._combined_criterion
-
-    @combined_criterion.setter
-    def combined_criterion(self, value: CombinedFailureCriterion) -> None:
-        self._combined_criterion = value
+        self._result_definition.scopes[0].element_scope = [value]
         self._is_uptodate = False
 
     @property
@@ -141,6 +155,7 @@ class SamplingPointNew(SamplingPoint):
     def results(self) -> Any:
         """Results of the sampling point operator as a JSON dictionary."""
         self._update_and_check_results()
+
         return self._results
 
     @property
@@ -296,88 +311,23 @@ class SamplingPointNew(SamplingPoint):
         return self._is_uptodate
 
     def run(self) -> None:
-        """Build and run the DPF operator network and cache the results."""
-        scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config = dpf.DataTree()
-        if self._time:
-            scope_config.add({"requested_times": [self._time]})
-        scope_config_reader_op.inputs.scope_configuration(scope_config)
+        """Run the DPF operator and cache the results."""
+        if self.result_definition:
+            new_hash = hashlib.sha1(
+                json.dumps(self.result_definition.to_dict(), sort_keys=True).encode("utf8")
+            )
+            if new_hash.hexdigest() != self._rd_hash:
+                # only set input if the result definition changed
+                self._operator.inputs.result_definition(self.result_definition.to_json())
+                self._is_uptodate = False
+                self._rd_hash = new_hash.hexdigest()
+        else:
+            raise RuntimeError(
+                "Cannot update sampling point because the result definition is missing."
+            )
 
-        evaluate_failure_criterion_per_scope_op = dpf.Operator(
-            "composite::evaluate_failure_criterion_per_scope"
-        )
-
-        # Live evaluation is not yet supported
-        evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
-            self.combined_criterion.to_json()
-        )
-
-        evaluate_failure_criterion_per_scope_op.inputs.scope_configuration(
-            scope_config_reader_op.outputs
-        )
-
-        scope = dpf.Scoping()
-        scope.ids = [self.element_id]
-        evaluate_failure_criterion_per_scope_op.inputs.element_scoping(scope)
-        evaluate_failure_criterion_per_scope_op.inputs.materials_container(
-            self._material_operators.material_provider.outputs
-        )
-        evaluate_failure_criterion_per_scope_op.inputs.stream_provider(self._rst_streams_provider)
-        evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
-        has_layup_provider = True
-        evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
-        evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
-            self._layup_provider.outputs.section_data_container
-        )
-
-        evaluate_failure_criterion_per_scope_op.inputs.material_fields(
-            self._layup_provider.outputs.material_fields
-        )
-        evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
-            self._layup_provider.outputs.mesh_properties_container
-        )
-        evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
-
-        sampling_point_evaluator = dpf.Operator("composite::evaluate_sampling_point")
-
-        sampling_point_evaluator.inputs.materials_container(
-            self._material_operators.material_provider.outputs
-        )
-        sampling_point_evaluator.inputs.material_support(
-            self._material_operators.material_support_provider.outputs
-        )
-        sampling_point_evaluator.inputs.mesh(self._meshed_region)
-        sampling_point_evaluator.inputs.stresses_container(
-            evaluate_failure_criterion_per_scope_op.outputs.stresses_container
-        )
-        sampling_point_evaluator.inputs.strains_container(
-            evaluate_failure_criterion_per_scope_op.outputs.strains_container
-        )
-        sampling_point_evaluator.inputs.element_scoping(scope)
-        sampling_point_evaluator.inputs.section_data_container(
-            self._layup_provider.outputs.section_data_container
-        )
-
-        result_info_provider = dpf.Operator("ResultInfoProvider")
-        result_info_provider.inputs.data_sources(self._rst_data_source)
-
-        sampling_point_evaluator.inputs.time_id(
-            evaluate_failure_criterion_per_scope_op.outputs.time_id
-        )
-        sampling_point_evaluator.inputs.unit_system(result_info_provider.outputs)
-        sampling_point_evaluator.inputs.failure_container(
-            evaluate_failure_criterion_per_scope_op.outputs.failure_container
-        )
-        sampling_point_evaluator.inputs.extract_max_failure_per_layer(False)
-        sampling_point_evaluator.inputs.check_mechanical_unit_system(False)
-
-        sampling_point_to_json_converter = dpf.Operator("composite::convert_sampling_point_to_json")
-        sampling_point_to_json_converter.connect(0, sampling_point_evaluator, 0)
-
-        # update internal members
-        self._results = json.loads(
-            sampling_point_to_json_converter.get_output(pin=0, output_type=dpf.types.string)
-        )
+        result_as_string = self._operator.outputs.results()
+        self._results = json.loads(result_as_string)
         if not self._results or len(self._results) == 0:
             raise RuntimeError(f"Sampling point {self.name} has no results.")
         if self._results and len(self._results) > 1:
@@ -452,6 +402,36 @@ class SamplingPointNew(SamplingPoint):
         self._update_and_check_results()
         return get_ply_wise_critical_failures_from_sp(self)
 
+    def get_polar_plot(
+        self, components: Sequence[str] = ("E1", "E2", "G12")
+    ) -> SamplingPointFigure:
+        """Create a standard polar plot to visualize the polar properties of the laminate.
+
+        Parameters
+        ----------
+        components :
+            Stiffness quantities to plot.
+
+        Examples
+        --------
+            >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
+        """
+        self._update_and_check_results()
+        return get_polar_plot_from_sp(self, components)
+
+    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
+        """Add the stacking (ply and text) to an axis or plot.
+
+        Parameters
+        ----------
+        axes :
+            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+        core_scale_factor :
+            Factor for scaling the thickness of core plies.
+        """
+        self._update_and_check_results()
+        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
+
     def add_results_to_plot(
         self,
         axes: Any,
@@ -492,38 +472,7 @@ class SamplingPointNew(SamplingPoint):
                                                   [Spot.BOTTOM, Spot.TOP],
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
-        self._update_and_check_results()
         add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
-
-    def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
-        """Add the stacking (ply and text) to an axis or plot.
-
-        Parameters
-        ----------
-        axes :
-            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
-        core_scale_factor :
-            Factor for scaling the thickness of core plies.
-        """
-        self._update_and_check_results()
-        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
-
-    def get_polar_plot(
-        self, components: Sequence[str] = ("E1", "E2", "G12")
-    ) -> SamplingPointFigure:
-        """Create a standard polar plot to visualize the polar properties of the laminate.
-
-        Parameters
-        ----------
-        components :
-            Stiffness quantities to plot.
-
-        Examples
-        --------
-            >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
-        """
-        self._update_and_check_results()
-        return get_polar_plot_from_sp(self, components)
 
     def get_result_plots(
         self,
