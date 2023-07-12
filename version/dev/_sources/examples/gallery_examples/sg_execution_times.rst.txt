@@ -5,28 +5,28 @@
 
 Computation times
 =================
-**02:11.560** total execution time for **examples_gallery_examples** files:
+**01:42.529** total execution time for **examples_gallery_examples** files:
 
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py` (``001_failure_operator_example.py``)                     | 00:28.892 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py` (``001_failure_operator_example.py``)                     | 00:21.683 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_010_harmonic_example.py` (``010_harmonic_example.py``)                                     | 00:26.443 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_010_harmonic_example.py` (``010_harmonic_example.py``)                                     | 00:18.881 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py` (``002_sampling_point_example.py``)                         | 00:15.212 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py` (``002_sampling_point_example.py``)                         | 00:11.838 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_011_dpf_composite_failure_workflow.py` (``011_dpf_composite_failure_workflow.py``)         | 00:14.312 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``007_interlaminar_normal_stress_example.py``) | 00:11.481 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``007_interlaminar_normal_stress_example.py``) | 00:13.057 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_011_dpf_composite_failure_workflow.py` (``011_dpf_composite_failure_workflow.py``)         | 00:10.323 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py` (``004_get_material_properties_example.py``)       | 00:08.377 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``009_short_fiber_orientation_tensor.py``)         | 00:06.764 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``008_assembly_example.py``)                                     | 00:08.112 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``008_assembly_example.py``)                                     | 00:06.558 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``009_short_fiber_orientation_tensor.py``)         | 00:07.211 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py` (``004_get_material_properties_example.py``)       | 00:05.750 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_003_short_fiber_example.py` (``003_short_fiber_example.py``)                               | 00:04.785 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_003_short_fiber_example.py` (``003_short_fiber_example.py``)                               | 00:04.301 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``006_filter_composite_data_example.py``)           | 00:03.588 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``006_filter_composite_data_example.py``)           | 00:02.635 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py` (``005_get_layup_properties_example.py``)             | 00:01.571 | 0.0 MB |
+| :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py` (``005_get_layup_properties_example.py``)             | 00:02.316 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
