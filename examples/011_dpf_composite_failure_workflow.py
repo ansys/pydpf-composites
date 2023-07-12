@@ -8,6 +8,7 @@ This example shows how to use the native DPF Python interface to configure
 and run the composite failure evaluator. It connects the different DPF
 operators that are needed to evaluate composite failure criteria.
 
+
 .. note::
 
     For simple use cases, using the composite failure operator or
@@ -43,7 +44,7 @@ from ansys.dpf.composites.failure_criteria import (
     TsaiWuCriterion,
     VonMisesCriterion,
 )
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_older_than
 
 # %%
 # Configure the combined failure criterion.
@@ -77,7 +78,13 @@ composite_data_sources = get_composites_data_sources(composite_files_on_server)
 rst_data_source = composite_data_sources.rst
 material_support_data_source = composite_data_sources.material_support
 eng_data_source = composite_data_sources.engineering_data
-composite_definitions_source = composite_data_sources.composite["shell"]
+
+if version_older_than(server, "7.0"):
+    # Get datasources of composite definition files for the backend 2023 R2 or before
+    composite_definitions_source = composite_data_sources.old_composite_sources["shell"]
+else:
+    # Get datasources of composite definition files for the backend 2024 R1 or later
+    composite_definitions_source = composite_data_sources.composite
 
 model = dpf.Model(rst_data_source)
 
@@ -94,6 +101,7 @@ mesh_provider = model.metadata.mesh_provider
 # The material support contains all materials from the RST file.
 material_support_provider = dpf.Operator("support_provider")
 material_support_provider.inputs.property("mat")
+
 material_support_provider.inputs.data_sources(material_support_data_source)
 material_support_provider.run()
 

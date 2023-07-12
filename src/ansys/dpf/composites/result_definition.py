@@ -8,10 +8,10 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
 
-__all__ = ("FailureMeasure", "ResultDefinitionScope", "ResultDefinition")
+__all__ = ("FailureMeasureEnum", "ResultDefinitionScope", "ResultDefinition")
 
 
-class FailureMeasure(str, Enum):
+class FailureMeasureEnum(str, Enum):
     """Provides available failure measures."""
 
     # TODO: Add descriptions for each property
@@ -21,7 +21,7 @@ class FailureMeasure(str, Enum):
 
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
-_SUPPORTED_MEASURES = [v.value for v in FailureMeasure]
+_SUPPORTED_MEASURES = [v.value for v in FailureMeasureEnum]
 _SUPPORTED_STRESS_STRAIN_EVAL_MODES = ["rst_file", "mapdl_live"]
 
 
@@ -56,6 +56,7 @@ class ResultDefinition:
 
     This class is used to configure the DPF operators ``composite::failure_evaluator``
     and ``composite::sampling_point_evaluator``.
+
     """
 
     _VERSION = 1
@@ -287,6 +288,11 @@ class ResultDefinition:
         ]
 
         return properties
+
+    def check_has_single_scope(self, msg: str) -> None:
+        """Check that the result definition has one scope."""
+        if len(self.scopes) != 1:
+            raise RuntimeError(f"Result definition has multiple scopes. {msg}")
 
     def _short_descr(self) -> str:
         """:return: short description of the object."""

@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Callable, Dict, List, Optional, Sequence, Union
+from typing import Callable, Dict, List, Optional, Sequence, Union, cast
 
 from ansys.dpf.core import DataSources
 
@@ -26,6 +26,9 @@ _MATML_FILENAME = "MatML.xml"
 _RST_SUFFIX = ".rst"
 _RST_PREFIX = "file"
 _MAPPING_SUFFIX = ".mapping"
+
+_LAYUPFILE_INDEX_KEY = "CompositeDefinitions"
+_MAPPINGFILE_INDEX_KEY = "MappingCompositeDefinitions"
 
 
 @dataclass
@@ -119,23 +122,36 @@ class ShortFiberCompositesFiles:
         self.files_are_local = files_are_local
 
 
-# roosre June 2023: refactor this class. Member composite should become
-# a DataSources instead of a dict since assemblies are supported in
-# the meanwhile. We can also get rid of composite_definition_label.
-# For instance used in add_layup_info_to_mesh.
+# roosre June 2023: todo add deprecation warning where composite definition label is used
 @dataclass(frozen=True)
 class CompositeDataSources:
-    """Provides data sources related to the composite lay-up."""
+    """Provides data sources related to the composite lay-up.
+
+    Parameters
+    ----------
+    rst:
+
+    material_support:
+        NOTE: The 'material_support' is explicitly listed since it is currently not
+        supported (by the DPF Core) to use a distributed RST file as source for the
+        material support. Instead, we create a separate DataSources object for the
+        material support from the first RST file. This is a workaround until the
+        support for distributed RST is added.
+    engineering_data:
+
+    old_composite_sources:
+        This member is used to support assemblies in combination with the old
+        DPF server (<7.0). It should be removed once the support of this
+        server version is dropped.
+
+    """
 
     rst: DataSources
-    # NOTE: The 'material_support' is explicitly listed since it is currently not
-    # supported (by the DPF Core) to use a distributed RST file as source for the
-    # material support. Instead, we create a separate DataSources object for the
-    # material support from the first RST file. This is a workaround until the
-    # support for distributed RST is added.
     material_support: DataSources
-    composite: Dict[str, DataSources]
+    composite: DataSources
     engineering_data: DataSources
+
+    old_composite_sources: Dict[str, DataSources]
 
 
 def _get_mapping_path_file_from_definitions_path_if_exists(
@@ -423,23 +439,59 @@ def get_composites_data_sources(
     engineering_data_source.add_file_path(
         continuous_composite_files.engineering_data, "EngineeringData"
     )
-    composite_data_sources = {}
+
+    composite_data_source = DataSources()
+    set_part_key = len(continuous_composite_files.composite) > 1
+    old_composite_data_sources = {}
+
     for key, composite_files in continuous_composite_files.composite.items():
-        composite_data_source = DataSources()
-        composite_data_source.add_file_path(composite_files.definition, "CompositeDefinitions")
+        old_datasource = DataSources()
+        if set_part_key:
+            composite_data_source.add_file_path_for_specified_result(
+                composite_files.definition, _LAYUPFILE_INDEX_KEY, key
+            )
+        else:
+            composite_data_source.add_file_path(composite_files.definition, _LAYUPFILE_INDEX_KEY)
 
         if composite_files.mapping is not None:
-            composite_data_source.add_file_path(
-                composite_files.mapping, "MappingCompositeDefinitions"
-            )
+            if set_part_key:
+                composite_data_source.add_file_path_for_specified_result(
+                    composite_files.mapping, _MAPPINGFILE_INDEX_KEY, key
+                )
+            else:
+                composite_data_source.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
 
-        composite_data_sources[key] = composite_data_source
+        ##### This block is needed to support DPF Server older than 7.0 (2023 R2 or before)
+        old_datasource = DataSources()
+        old_datasource.add_file_path(composite_files.definition, _LAYUPFILE_INDEX_KEY)
+        if composite_files.mapping is not None:
+            old_datasource.add_file_path(composite_files.mapping, _MAPPINGFILE_INDEX_KEY)
+        ##### End of block
+
+        old_composite_data_sources[key] = old_datasource
 
     return CompositeDataSources(
         rst=rst_data_source,
         material_support=material_support_data_source,
-        composite=composite_data_sources,
+        composite=composite_data_source,
         engineering_data=engineering_data_source,
+        old_composite_sources=old_composite_data_sources,
+    )
+
+
+def _data_sources_num_result_keys(data_sources: DataSources) -> int:
+    # pylint: disable=protected-access
+    return cast(
+        int,
+        data_sources._api.data_sources_get_num_result_keys(data_sources),
+    )
+
+
+def _data_sources_result_key(data_sources: DataSources, index: int) -> str:
+    # pylint: disable=protected-access
+    return cast(
+        str,
+        data_sources._api.data_sources_get_result_key_by_index(data_sources, index),
     )
 
 
