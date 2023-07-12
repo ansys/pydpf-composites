@@ -314,6 +314,26 @@ def test_composite_model_element_scope(dpf_server, data_files):
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
 
 
+def test_failure_criteria_evaluation_default_unit_system(dpf_server):
+    """
+    Test if failure criteria can be evaluated if the unit system
+    is not part of the rst (because the project was created from mapdl)
+    """
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mapdl"
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "linear_shell_3_layer_analysis_model.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    files = ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+    composite_model = CompositeModel(files, server=dpf_server)
+    cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
+
+    failure_container = composite_model.evaluate_failure_criteria(cfc)
+
+
 def test_composite_model_named_selection_scope(dpf_server, data_files, distributed_rst):
     """Ensure that the scoping by Named Selection is supported"""
     if distributed_rst:

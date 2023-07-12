@@ -224,3 +224,29 @@ def test_sampling_point_with_numpy_types(dpf_server):
     critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
     sp = composite_model.get_sampling_point(cfc, critical_element_id)
     assert max(sp.s1) == pytest.approx(2840894080.0, 1e-8)
+
+
+def test_sampling_point_with_default_unit_system(dpf_server):
+    """
+    Test if a sampling point can be evaluated if the unit system
+    is not part of the rst (because the project was created from mapdl)
+    """
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mapdl"
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "linear_shell_3_layer_analysis_model.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    composite_files = ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+
+    cfc = CombinedFailureCriterion(
+        "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
+    )
+    composite_model = CompositeModel(composite_files, server=dpf_server)
+
+    failure_container = composite_model.evaluate_failure_criteria(cfc)
+    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
+    sp = composite_model.get_sampling_point(cfc, critical_element_id)
