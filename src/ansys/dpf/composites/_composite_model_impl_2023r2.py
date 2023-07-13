@@ -287,6 +287,7 @@ class CompositeModelImpl2023R2:
             measure=measure.value,
         )
         failure_operator = dpf.Operator("composite::composite_failure_operator")
+        failure_operator.inputs.unit_system(self._unit_system)
 
         failure_operator.inputs.result_definition(rd.to_json())
 
@@ -349,7 +350,7 @@ class CompositeModelImpl2023R2:
             composite_scopes=[scope],
         )
 
-        return SamplingPoint2023R2("Sampling Point", rd, server=self._server)
+        return SamplingPoint2023R2("Sampling Point", rd, self._unit_system, server=self._server)
 
     def get_element_info(
         self, element_id: int, composite_definition_label: Optional[str] = None

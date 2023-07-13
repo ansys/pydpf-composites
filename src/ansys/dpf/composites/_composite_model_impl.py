@@ -391,6 +391,7 @@ class CompositeModelImpl:
             self._layup_provider,
             self._get_rst_streams_provider(),
             self._data_sources.rst,
+            self._unit_system,
             time_in,
         )
 
