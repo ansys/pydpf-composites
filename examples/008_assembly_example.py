@@ -22,7 +22,7 @@ from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_older_than
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
@@ -56,13 +56,22 @@ irf_field.plot()
 # Get element information
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # In the assembly, two composite definitions exist: one with a "shell" label
-# and one with a "solid" label. To query the lay-up properties, you must query the
-# properties with the correct composite definition label. This code
-# gets element information for all layered elements.
-#
-element_infos = []
-for composite_label in composite_model.composite_definition_labels:
-    for element_id in composite_model.get_all_layered_element_ids_for_composite_definition_label(
-        composite_label
-    ):
-        element_infos.append(composite_model.get_element_info(element_id, composite_label))
+# and one with a "solid" label. For DPF Server versions earlier than 7.0,
+# the layup properties must be queried with the correct composite definition label. The code
+# following gets element information for all layered elements.
+# For DPF Server versions 7.0 and later, element information can be retrieved directly.
+
+if version_older_than(server, "7.0"):
+    element_infos = []
+    for composite_label in composite_model.composite_definition_labels:
+        for (
+            element_id
+        ) in composite_model.get_all_layered_element_ids_for_composite_definition_label(
+            composite_label
+        ):
+            element_infos.append(composite_model.get_element_info(element_id, composite_label))
+
+else:
+    element_infos = []
+    for element_id in composite_model.get_all_layered_element_ids():
+        element_infos.append(composite_model.get_element_info(element_id))

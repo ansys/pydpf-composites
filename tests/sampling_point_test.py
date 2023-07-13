@@ -1,7 +1,6 @@
 import os
 import pathlib
 
-import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.testing
@@ -18,12 +17,10 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStrainCriterion,
     MaxStressCriterion,
 )
-from ansys.dpf.composites.result_definition import (
-    FailureMeasure,
-    ResultDefinition,
-    ResultDefinitionScope,
-)
-from ansys.dpf.composites.sampling_point import FailureResult, SamplingPoint
+from ansys.dpf.composites.result_definition import FailureMeasureEnum
+from ansys.dpf.composites.sampling_point_types import FailureResult
+
+from .helper import get_basic_shell_files
 
 
 def test_sampling_point(dpf_server, distributed_rst):
@@ -38,26 +35,20 @@ def test_sampling_point(dpf_server, distributed_rst):
         rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")]
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    if not dpf_server.local_server:
-        rst_paths = [dpf.upload_file_in_tmp_folder(path, server=dpf_server) for path in rst_paths]
-        h5_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
-        material_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
+
+    files = ContinuousFiberCompositesFiles(
+        rst=rst_paths,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+
+    composite_model = CompositeModel(files, server=dpf_server)
 
     cfc = CombinedFailureCriterion("max strain & max stress")
     cfc.insert(MaxStrainCriterion())
     cfc.insert(MaxStressCriterion())
 
-    scope = ResultDefinitionScope(composite_definition=h5_path, element_scope=[3])
-
-    rd = ResultDefinition(
-        name="my first result definition",
-        combined_failure_criterion=cfc,
-        rst_files=rst_paths,
-        material_file=material_path,
-        composite_scopes=[scope],
-    )
-
-    sampling_point = SamplingPoint(name="my first SP", result_definition=rd, server=dpf_server)
+    sampling_point = composite_model.get_sampling_point(cfc, 3)
 
     indices = sampling_point.get_indices([Spot.BOTTOM, Spot.TOP])
     ref_indices = [0, 2, 3, 5, 6, 8, 9, 11, 12, 14]
@@ -128,7 +119,7 @@ def test_sampling_point(dpf_server, distributed_rst):
     sampling_point.get_result_plots(
         strain_components=["e1", "e12"],
         stress_components=["s13", "s23"],
-        failure_components=[FailureMeasure.RESERVE_FACTOR],
+        failure_components=[FailureMeasureEnum.RESERVE_FACTOR],
         show_failure_modes=True,
         create_laminate_plot=True,
         core_scale_factor=0.5,
@@ -163,15 +154,7 @@ def test_sampling_point(dpf_server, distributed_rst):
 
 def test_sampling_point_result_plots(dpf_server):
     """Ensure that get_result_plots works if only one plot is selected."""
-    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    files = ContinuousFiberCompositesFiles(
-        rst=rst_path,
-        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
-        engineering_data=material_path,
-    )
+    files = get_basic_shell_files()
 
     cfc = CombinedFailureCriterion(
         "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
@@ -199,20 +182,12 @@ def test_sampling_point_result_plots(dpf_server):
         create_laminate_plot=False,
         strain_components=[],
         stress_components=[],
-        failure_components=[FailureMeasure.MARGIN_OF_SAFETY],
+        failure_components=[FailureMeasureEnum.MARGIN_OF_SAFETY],
     )
 
 
 def test_sampling_point_with_numpy_types(dpf_server):
-    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
-    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "shell.rst")
-    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
-    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
-    composite_files = ContinuousFiberCompositesFiles(
-        rst=rst_path,
-        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
-        engineering_data=material_path,
-    )
+    composite_files = files = get_basic_shell_files()
 
     cfc = CombinedFailureCriterion(
         "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
@@ -224,3 +199,26 @@ def test_sampling_point_with_numpy_types(dpf_server):
     critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
     sp = composite_model.get_sampling_point(cfc, critical_element_id)
     assert max(sp.s1) == pytest.approx(2840894080.0, 1e-8)
+
+
+def test_sampling_point_and_time_scoping(dpf_server):
+    """Ensure that time scoping is handled correctly."""
+    files = get_basic_shell_files(two_load_steps=True)
+
+    composite_model = CompositeModel(files, server=dpf_server)
+    cfc = CombinedFailureCriterion(
+        "combined",
+        failure_criteria=[
+            MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+        ],
+    )
+    # expect max IRF at element 1 over all plies
+    time_id_and_expected_max_irf = {
+        1.0: 1.4792790998492324,
+        1.5: 0.75120980930142467,
+        2.0: 0.09834992555064767,
+    }
+
+    for time, expected_max_irf in time_id_and_expected_max_irf.items():
+        sp = composite_model.get_sampling_point(combined_criterion=cfc, element_id=1, time=time)
+        assert max(sp.inverse_reserve_factor) == pytest.approx(expected_max_irf, abs=1e-6)
