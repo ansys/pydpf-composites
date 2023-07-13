@@ -172,6 +172,10 @@ def _is_matml_file(path: pathlib.Path) -> bool:
 
 
 def _has_1_ext_suffix(path: pathlib.Path) -> bool:
+    """Check if the path has exactly 2 suffixes and the first one is equal to 1_ext.
+
+    Example: CompositeDefinitions.1_ext.h5
+    """
     if len(path.suffixes) == 2:
         return path.suffixes[0] == _1_EXT_SUFFIX
     return False
