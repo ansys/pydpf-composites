@@ -1,9 +1,10 @@
 """Wrapper for the sampling point operator."""
 import hashlib
 import json
-from typing import Any, Collection, Dict, List, Sequence, Union
+from typing import Any, Collection, Dict, List, Optional, Sequence, Union
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core import UnitSystem
 from ansys.dpf.core.server import get_or_create_server
 from ansys.dpf.core.server_types import BaseServer
 import numpy as np
@@ -80,6 +81,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self,
         name: str,
         result_definition: ResultDefinition,
+        default_unit_system: Optional[UnitSystem] = None,
         server: BaseServer = None,
     ):
         """Create a ``SamplingPoint`` object."""
@@ -106,6 +108,7 @@ class SamplingPoint2023R2(SamplingPoint):
         )
         if not self._operator:
             raise RuntimeError("SamplingPoint: failed to initialize the operator.")
+        self._operator.inputs.unit_system(default_unit_system)
 
     @property
     def name(self) -> str:

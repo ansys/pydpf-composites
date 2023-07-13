@@ -1,6 +1,7 @@
 import os
 import pathlib
 
+from ansys.dpf.core import unit_systems
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.testing
@@ -222,3 +223,32 @@ def test_sampling_point_and_time_scoping(dpf_server):
     for time, expected_max_irf in time_id_and_expected_max_irf.items():
         sp = composite_model.get_sampling_point(combined_criterion=cfc, element_id=1, time=time)
         assert max(sp.inverse_reserve_factor) == pytest.approx(expected_max_irf, abs=1e-6)
+
+
+def test_sampling_point_with_default_unit_system(dpf_server):
+    """
+    Test if a sampling point can be evaluated if the unit system
+    is not part of the rst (because the project was created from mapdl)
+    """
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mapdl"
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "linear_shell_analysis_model.rst")
+    h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
+    material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
+    composite_files = ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+
+    cfc = CombinedFailureCriterion(
+        "max strain & max stress", [MaxStrainCriterion(), MaxStressCriterion()]
+    )
+    composite_model = CompositeModel(
+        composite_files, server=dpf_server, default_unit_system=unit_systems.solver_mks
+    )
+
+    failure_container = composite_model.evaluate_failure_criteria(cfc)
+    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    critical_element_id = irfs.scoping.ids[np.argmax(irfs.data)]
+    sp = composite_model.get_sampling_point(cfc, critical_element_id)
+    sp.get_polar_plot()

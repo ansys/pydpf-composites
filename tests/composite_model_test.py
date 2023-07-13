@@ -1,10 +1,15 @@
 import pathlib
 
+from ansys.dpf.core import unit_systems
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FailureOutput
-from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
+from ansys.dpf.composites.data_sources import (
+    CompositeDefinitionFiles,
+    ContinuousFiberCompositesFiles,
+    get_composite_files_from_workbench_result_folder,
+)
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
@@ -277,3 +282,25 @@ def test_failure_measures(dpf_server, data_files):
             composite_scope=CompositeScope(),
             measure=v,
         )
+
+
+def test_failure_criteria_evaluation_default_unit_system(dpf_server):
+    """
+    Test if failure criteria can be evaluated if the unit system
+    is not part of the rst (because the project was created from mapdl)
+    """
+    TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mapdl"
+    rst_path = TEST_DATA_ROOT_DIR / "linear_shell_analysis_model.rst"
+    h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
+    material_path = TEST_DATA_ROOT_DIR / "material.engd"
+    files = ContinuousFiberCompositesFiles(
+        rst=rst_path,
+        composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
+        engineering_data=material_path,
+    )
+    composite_model = CompositeModel(
+        files, server=dpf_server, default_unit_system=unit_systems.solver_mks
+    )
+    cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
+
+    failure_container = composite_model.evaluate_failure_criteria(cfc)

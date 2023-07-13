@@ -2,6 +2,7 @@
 import json
 from typing import Any, Collection, Dict, List, Optional, Sequence, Union
 
+from ansys.dpf.core import UnitSystem
 import numpy as np
 import numpy.typing as npt
 
@@ -23,6 +24,7 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
+from .unit_system import get_unit_system
 
 
 class SamplingPointNew(SamplingPoint):
@@ -83,6 +85,7 @@ class SamplingPointNew(SamplingPoint):
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
+        default_unit_system: Optional[UnitSystem] = None,
         time: Optional[float] = None,
     ):
         """Create a ``SamplingPoint`` object."""
@@ -101,6 +104,7 @@ class SamplingPointNew(SamplingPoint):
         self._interface_indices: Dict[Spot, int] = {}
         self._results: Any = None
         self._is_uptodate = False
+        self._unit_system = get_unit_system(self._rst_data_source, default_unit_system)
 
     @property
     def name(self) -> str:
@@ -358,13 +362,10 @@ class SamplingPointNew(SamplingPoint):
             self._layup_provider.outputs.section_data_container
         )
 
-        result_info_provider = dpf.Operator("ResultInfoProvider")
-        result_info_provider.inputs.data_sources(self._rst_data_source)
-
         sampling_point_evaluator.inputs.time_id(
             evaluate_failure_criterion_per_scope_op.outputs.time_id
         )
-        sampling_point_evaluator.inputs.unit_system(result_info_provider.outputs)
+        sampling_point_evaluator.inputs.unit_system(self._unit_system)
         sampling_point_evaluator.inputs.failure_container(
             evaluate_failure_criterion_per_scope_op.outputs.failure_container
         )
