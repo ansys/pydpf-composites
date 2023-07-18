@@ -23,7 +23,7 @@ _SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
 _SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
 _SETUP_FOLDER_PREFIX = "Setup"
 _H5_SUFFIX = ".h5"
-_1_EXT_SUFFIX = ".1_ext"
+_EXT_SUFFIX = "_ext"
 _MATML_FILENAME = "MatML.xml"
 _RST_SUFFIX = ".rst"
 _RST_PREFIX = "file"
@@ -171,28 +171,26 @@ def _is_matml_file(path: pathlib.Path) -> bool:
     return path.name == _MATML_FILENAME and path.is_file()
 
 
-def _has_1_ext_suffix(path: pathlib.Path) -> bool:
-    """Check if the path has exactly 2 suffixes and the first one is equal to 1_ext.
+def _has_ext_suffix(path: pathlib.Path) -> bool:
+    """Check if them stem (filename without extension) ends with _ext.
 
     Example: CompositeDefinitions.1_ext.h5
     """
-    if len(path.suffixes) == 2:
-        return path.suffixes[0] == _1_EXT_SUFFIX
-    return False
+    return path.stem.endswith("_ext")
 
 
 def _is_composite_definition_file(path: pathlib.Path) -> bool:
     is_composite_def = path.name.startswith(_SHELL_COMPOSITE_DEFINITIONS_PREFIX)
-    no_ext_suffix = not _has_1_ext_suffix(path)
+    no_ext_suffix = not _has_ext_suffix(path)
     return path.suffix == _H5_SUFFIX and path.is_file() and is_composite_def and no_ext_suffix
 
 
 def _is_solid_model_composite_definition_file(path: pathlib.Path) -> bool:
     is_h5 = path.suffix == _H5_SUFFIX
-    has_1_ext_suffix = _has_1_ext_suffix(path)
+    has_ext_suffix = _has_ext_suffix(path)
     is_file = path.is_file()
     is_def = path.name.startswith(_SOLID_COMPOSITE_DEFINITIONS_PREFIX)
-    return is_h5 and is_file and is_def and not has_1_ext_suffix
+    return is_h5 and is_file and is_def and not has_ext_suffix
 
 
 def _get_file_paths_with_predicate(
