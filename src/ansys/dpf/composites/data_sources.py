@@ -172,7 +172,7 @@ def _is_matml_file(path: pathlib.Path) -> bool:
 
 
 def _has_ext_suffix(path: pathlib.Path) -> bool:
-    """Check if them stem (filename without extension) ends with _ext.
+    """Check if the stem (filename without extension) ends with ``_ext``.
 
     Example: CompositeDefinitions.1_ext.h5
     """
