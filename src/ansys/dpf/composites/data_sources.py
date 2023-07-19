@@ -280,14 +280,14 @@ def composite_files_from_workbench_harmonic_analysis(
 
     Parameters
     ----------
-    result_folder_modal :
-       Result folder of the modal solution.
-       In the Modal System, Right-click the **solution** item in the Ansys Mechanical tree
+    result_folder_modal : str
+       Result folder of the Modal solution.
+       In the Modal system, right-click the **solution** item in the Ansys Mechanical tree
        and select **Open Solver Files Directory** to obtain the result folder.
-    result_folder_harmonic :
+    result_folder_harmonic : str
        Result folder of the Harmonic Response solution.
-       In the Harmonic Response System,
-       Right-click the **solution** item in the Ansys Mechanical tree
+       In the Harmonic Response system,
+       right-click the **solution** item in the Ansys Mechanical tree
        and select **Open Solver Files Directory** to obtain the result folder.
 
     """
