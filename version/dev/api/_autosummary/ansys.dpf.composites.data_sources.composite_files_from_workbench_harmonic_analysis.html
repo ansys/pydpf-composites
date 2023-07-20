@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>CompositeDefinitionFiles &#8212; PyDPF Composites</title>
+    <title>composite_files_from_workbench_harmonic_analysis &#8212; PyDPF Composites</title>
     
   
   
@@ -59,7 +59,7 @@
     <script src="../../_static/js/table.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="../../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.data_sources.CompositeDefinitionFiles';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
@@ -67,8 +67,8 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="mapping" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.mapping.html" />
-    <link rel="prev" title="Data sources" href="../data_sources.html" />
+    <link rel="next" title="get_composites_data_sources" href="ansys.dpf.composites.data_sources.get_composites_data_sources.html" />
+    <link rel="prev" title="get_composite_files_from_workbench_result_folder" href="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -315,7 +315,7 @@ document.write(`
 
           <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
           <li class="nav-item nav-item-2"><a href="../data_sources.html" accesskey="U">Data sources</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">CompositeDefinitionFiles</a></li> 
+        <li class="nav-item nav-item-this"><a href="">composite_files_from_workbench_harmonic_analysis</a></li> 
       </ul>
     </div>
         </div>
@@ -442,16 +442,12 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="../composite_scope.html">Composite scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constants.html">Constants</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../data_sources.html">Data sources</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">CompositeDefinitionFiles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.mapping.html">mapping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.definition.html">definition</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.html">CompositeDefinitionFiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html">ContinuousFiberCompositesFiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.ShortFiberCompositesFiles.html">ShortFiberCompositesFiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.html">CompositeDataSources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html">get_composite_files_from_workbench_result_folder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis.html">composite_files_from_workbench_harmonic_analysis</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">composite_files_from_workbench_harmonic_analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.get_composites_data_sources.html">get_composites_data_sources</a></li>
 </ul>
 </li>
@@ -489,28 +485,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="compositedefinitionfiles">
-<h1>CompositeDefinitionFiles<a class="headerlink" href="#compositedefinitionfiles" title="Permalink to this heading">#</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="ansys.dpf.composites.data_sources.CompositeDefinitionFiles">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">CompositeDefinitionFiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">definition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.CompositeDefinitionFiles" title="Permalink to this definition">#</a></dt>
-<dd><p>Provides the container for composite definition file paths.</p>
-<p class="rubric">Methods</p>
-<table class="autosummary longtable table autosummary">
-<tbody>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.mapping.html#ansys.dpf.composites.data_sources.CompositeDefinitionFiles.mapping" title="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.mapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDefinitionFiles.mapping</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.definition.html#ansys.dpf.composites.data_sources.CompositeDefinitionFiles.definition" title="ansys.dpf.composites.data_sources.CompositeDefinitionFiles.definition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDefinitionFiles.definition</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
+  <section id="composite-files-from-workbench-harmonic-analysis">
+<h1>composite_files_from_workbench_harmonic_analysis<a class="headerlink" href="#composite-files-from-workbench-harmonic-analysis" title="Permalink to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis">
+<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">composite_files_from_workbench_harmonic_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_folder_modal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_folder_harmonic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object for a harmonic analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result_folder_modal</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Result folder of the Modal solution.
+In the Modal system, right-click the <strong>solution</strong> item in the Ansys Mechanical tree
+and select <strong>Open Solver Files Directory</strong> to obtain the result folder.</p></li>
+<li><p><strong>result_folder_harmonic</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Result folder of the Harmonic Response solution.
+In the Harmonic Response system,
+right-click the <strong>solution</strong> item in the Ansys Mechanical tree
+and select <strong>Open Solver Files Directory</strong> to obtain the result folder.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -532,13 +528,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.dpf.composites.data_sources.CompositeDefinitionFiles"><code class="docutils literal notranslate"><span class="pre">CompositeDefinitionFiles</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis"><code class="docutils literal notranslate"><span class="pre">composite_files_from_workbench_harmonic_analysis()</span></code></a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.data_sources.CompositeDefinitionFiles.rst.txt">
+    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

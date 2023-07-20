@@ -486,7 +486,9 @@ to download the full example code</p>
 <span id="harmonic-example"></span><span id="sphx-glr-examples-gallery-examples-010-harmonic-example-py"></span><h1>Postprocess a harmonic analysis<a class="headerlink" href="#postprocess-a-harmonic-analysis" title="Permalink to this heading">#</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This example is work in progress. Please open a Github issue if something is unclear.</p>
+<p>When using a Workbench project,
+use the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis.html#ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis" title="ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite_files_from_workbench_harmonic_analysis()</span></code></a>
+method to obtain the input files.</p>
 </div>
 <p>This example shows how to evaluate failure criteria for a harmonic simulation.
 It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
@@ -511,14 +513,10 @@ DPF server, and retrieving the example files.</p>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info.material_operators</span> <span class="kn">import</span> <span class="n">get_material_operators</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.unit_system</span> <span class="kn">import</span> <span class="n">get_unit_system</span>
-
-<span class="c1"># Todo: Discuss influence of damping factor</span>
-<span class="c1"># Todo: Currently the CompositeDefinition file from the modal analysis needs</span>
-<span class="c1"># to be copied to the harmonic response folder (including the Setup folder)</span>
 </pre></div>
 </div>
 <p>Start a DPF server and copy the example files into the current working directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">50052</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;harmonic&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -677,7 +675,7 @@ at each frequency, because we look only at the element that has the highest IRF 
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">axs</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">max_value_for_each_freq_crit_element</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_010_harmonic_example_002.png" srcset="../../_images/sphx_glr_010_harmonic_example_002.png" alt="010 harmonic example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7f49680174c0&gt;]
+<img src="../../_images/sphx_glr_010_harmonic_example_002.png" srcset="../../_images/sphx_glr_010_harmonic_example_002.png" alt="010 harmonic example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7f9279e4f700&gt;]
 </pre></div>
 </div>
 <p>Compute the critical phase</p>
@@ -714,7 +712,7 @@ The maximum IRF is 0.17852210868866686.
 The critical failure mode is s1c.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  16.467 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  17.156 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-010-harmonic-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/670b11ce26b761ff64735af981a9c12a/010_harmonic_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">010_harmonic_example.py</span></code></a></p>

@@ -25,13 +25,15 @@ Postprocess a harmonic analysis
 
 .. note::
 
-    This example is work in progress. Please open a Github issue if something is unclear.
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
 
 This example shows how to evaluate failure criteria for a harmonic simulation.
 It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
 space and shows how to identify the critical failure mode and the critical layer.
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-25
+.. GENERATED FROM PYTHON SOURCE LINES 21-27
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -40,7 +42,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries and matplotlib
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-45
+.. GENERATED FROM PYTHON SOURCE LINES 27-43
 
 .. code-block:: default
 
@@ -60,9 +62,6 @@ Load Ansys libraries and matplotlib
     from ansys.dpf.composites.server_helpers import connect_to_or_start_server
     from ansys.dpf.composites.unit_system import get_unit_system
 
-    # Todo: Discuss influence of damping factor
-    # Todo: Currently the CompositeDefinition file from the modal analysis needs
-    # to be copied to the harmonic response folder (including the Setup folder)
 
 
 
@@ -70,16 +69,15 @@ Load Ansys libraries and matplotlib
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 46-47
+.. GENERATED FROM PYTHON SOURCE LINES 44-45
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-50
+.. GENERATED FROM PYTHON SOURCE LINES 45-48
 
 .. code-block:: default
 
-    server = connect_to_or_start_server(port=50052)
+    server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "harmonic")
 
 
@@ -89,11 +87,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-52
+.. GENERATED FROM PYTHON SOURCE LINES 49-50
 
 Create a composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-55
+.. GENERATED FROM PYTHON SOURCE LINES 50-53
 
 .. code-block:: default
 
@@ -107,11 +105,11 @@ Create a composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-57
+.. GENERATED FROM PYTHON SOURCE LINES 54-55
 
 Define a failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-65
+.. GENERATED FROM PYTHON SOURCE LINES 55-63
 
 .. code-block:: default
 
@@ -130,14 +128,14 @@ Define a failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-70
+.. GENERATED FROM PYTHON SOURCE LINES 64-68
 
 Obtain stresses and strains and compute max IRF over all phases and frequencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Get complex stresses and strains at all frequencies
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-76
+.. GENERATED FROM PYTHON SOURCE LINES 68-74
 
 .. code-block:: default
 
@@ -154,12 +152,12 @@ Get complex stresses and strains at all frequencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-79
+.. GENERATED FROM PYTHON SOURCE LINES 75-77
 
 Get operators that provide material data
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-85
+.. GENERATED FROM PYTHON SOURCE LINES 77-83
 
 .. code-block:: default
 
@@ -176,13 +174,13 @@ Get operators that provide material data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-89
+.. GENERATED FROM PYTHON SOURCE LINES 84-87
 
 Define the frequency sweep. This is relatively coarse so the example does not take
 too much time.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-94
+.. GENERATED FROM PYTHON SOURCE LINES 87-92
 
 .. code-block:: default
 
@@ -198,13 +196,13 @@ too much time.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-98
+.. GENERATED FROM PYTHON SOURCE LINES 93-96
 
 Initialize result containers. We create a result container for the failure value,
 the failure mode and the layer index in which the failure occurs.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-113
+.. GENERATED FROM PYTHON SOURCE LINES 96-111
 
 .. code-block:: default
 
@@ -230,7 +228,7 @@ the failure mode and the layer index in which the failure occurs.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-119
+.. GENERATED FROM PYTHON SOURCE LINES 112-117
 
 Loop over all the phases and evaluate the failure criterion.
 The result is added to the field containers declared in the previous cell.
@@ -238,7 +236,7 @@ In the end each container contains a field for each combination of frequency
 and phase
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-167
+.. GENERATED FROM PYTHON SOURCE LINES 117-165
 
 .. code-block:: default
 
@@ -297,13 +295,13 @@ and phase
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 168-171
+.. GENERATED FROM PYTHON SOURCE LINES 166-169
 
 Compute maximum over all the phases and frequencies for each element and plot the resulting
 IRF values
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-177
+.. GENERATED FROM PYTHON SOURCE LINES 169-175
 
 .. code-block:: default
 
@@ -325,14 +323,14 @@ IRF values
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-182
+.. GENERATED FROM PYTHON SOURCE LINES 176-180
 
 Detailed analysis of the critical element
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Identify the element with the maximum IRF
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-186
+.. GENERATED FROM PYTHON SOURCE LINES 180-184
 
 .. code-block:: default
 
@@ -353,13 +351,13 @@ Identify the element with the maximum IRF
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-190
+.. GENERATED FROM PYTHON SOURCE LINES 185-188
 
 Scope container with all frequencies and phases to critical element so we can plot
 the critical IRF over all the frequencies
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-195
+.. GENERATED FROM PYTHON SOURCE LINES 188-193
 
 .. code-block:: default
 
@@ -375,14 +373,14 @@ the critical IRF over all the frequencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 196-200
+.. GENERATED FROM PYTHON SOURCE LINES 194-198
 
 Compute the maximum IRF over all the phases for each frequency and plot the result for
 the critical element. Note: this can be different from maximum overall IRF
 at each frequency, because we look only at the element that has the highest IRF overall.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 200-213
+.. GENERATED FROM PYTHON SOURCE LINES 198-211
 
 .. code-block:: default
 
@@ -413,16 +411,16 @@ at each frequency, because we look only at the element that has the highest IRF 
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7f49680174c0>]
+    [<matplotlib.lines.Line2D object at 0x7f9279e4f700>]
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-216
+.. GENERATED FROM PYTHON SOURCE LINES 212-214
 
 Compute the critical phase
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 216-223
+.. GENERATED FROM PYTHON SOURCE LINES 214-221
 
 .. code-block:: default
 
@@ -446,12 +444,12 @@ Compute the critical phase
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 224-226
+.. GENERATED FROM PYTHON SOURCE LINES 222-224
 
 Compute critical layer and critical failure mode.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 226-241
+.. GENERATED FROM PYTHON SOURCE LINES 224-239
 
 .. code-block:: default
 
@@ -488,7 +486,7 @@ Compute critical layer and critical failure mode.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  16.467 seconds)
+   **Total running time of the script:** ( 0 minutes  17.156 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_010_harmonic_example.py:
