@@ -14,6 +14,7 @@ __all__ = (
     "ShortFiberCompositesFiles",
     "CompositeDataSources",
     "get_composite_files_from_workbench_result_folder",
+    "composite_files_from_workbench_harmonic_analysis",
     "get_composites_data_sources",
     "get_short_fiber_composites_data_sources",
 )
@@ -22,6 +23,7 @@ _SOLID_COMPOSITE_DEFINITIONS_PREFIX = "ACPSolidModel"
 _SHELL_COMPOSITE_DEFINITIONS_PREFIX = "ACPCompositeDefinitions"
 _SETUP_FOLDER_PREFIX = "Setup"
 _H5_SUFFIX = ".h5"
+_EXT_SUFFIX = "_ext"
 _MATML_FILENAME = "MatML.xml"
 _RST_SUFFIX = ".rst"
 _RST_PREFIX = "file"
@@ -169,16 +171,26 @@ def _is_matml_file(path: pathlib.Path) -> bool:
     return path.name == _MATML_FILENAME and path.is_file()
 
 
+def _has_ext_suffix(path: pathlib.Path) -> bool:
+    """Check if the stem (filename without extension) ends with ``_ext``.
+
+    Example: CompositeDefinitions.1_ext.h5
+    """
+    return path.stem.endswith("_ext")
+
+
 def _is_composite_definition_file(path: pathlib.Path) -> bool:
     is_composite_def = path.name.startswith(_SHELL_COMPOSITE_DEFINITIONS_PREFIX)
-    return path.suffix == _H5_SUFFIX and path.is_file() and is_composite_def
+    no_ext_suffix = not _has_ext_suffix(path)
+    return path.suffix == _H5_SUFFIX and path.is_file() and is_composite_def and no_ext_suffix
 
 
 def _is_solid_model_composite_definition_file(path: pathlib.Path) -> bool:
     is_h5 = path.suffix == _H5_SUFFIX
+    has_ext_suffix = _has_ext_suffix(path)
     is_file = path.is_file()
     is_def = path.name.startswith(_SOLID_COMPOSITE_DEFINITIONS_PREFIX)
-    return is_h5 and is_file and is_def
+    return is_h5 and is_file and is_def and not has_ext_suffix
 
 
 def _get_file_paths_with_predicate(
@@ -259,6 +271,65 @@ def _add_composite_definitons_from_setup_folder(
         if key in composite_files.composite:
             raise RuntimeError(f"Definition with key already exists {key}")
         composite_files.composite[key] = definition_files
+
+
+def composite_files_from_workbench_harmonic_analysis(
+    result_folder_modal: _PATH, result_folder_harmonic: _PATH
+) -> ContinuousFiberCompositesFiles:
+    """Get a ``ContinuousFiberCompositesFiles`` object for a harmonic analysis.
+
+    Parameters
+    ----------
+    result_folder_modal : str
+       Result folder of the Modal solution.
+       In the Modal system, right-click the **solution** item in the Ansys Mechanical tree
+       and select **Open Solver Files Directory** to obtain the result folder.
+    result_folder_harmonic : str
+       Result folder of the Harmonic Response solution.
+       In the Harmonic Response system,
+       right-click the **solution** item in the Ansys Mechanical tree
+       and select **Open Solver Files Directory** to obtain the result folder.
+
+    """
+    result_folder_path_harmonic = pathlib.Path(result_folder_harmonic)
+    result_folder_path_modal = pathlib.Path(result_folder_modal)
+
+    setup_folders_modal = [
+        folder_path
+        for folder_path in result_folder_path_modal.iterdir()
+        if folder_path.is_dir() and folder_path.name.startswith(_SETUP_FOLDER_PREFIX)
+    ]
+
+    rst_paths = _get_file_paths_with_predicate(
+        _is_rst_file,
+        result_folder_path_harmonic,
+    )
+
+    if len(rst_paths) == 0:
+        raise RuntimeError(
+            f"Expected at least one rst file. Found {rst_paths}."
+            f" Available files in folder: {os.listdir(result_folder_path_harmonic)}"
+        )
+
+    matml_path = _get_single_file_path_with_predicate(
+        _is_matml_file,
+        result_folder_path_harmonic,
+        "matml",
+    )
+
+    assert matml_path is not None
+    assert rst_paths is not None
+
+    continuous_fiber_composite_files = ContinuousFiberCompositesFiles(
+        rst=[rst_path.resolve() for rst_path in rst_paths],
+        composite={},
+        engineering_data=matml_path.resolve(),
+    )
+
+    for setup_folder in setup_folders_modal:
+        _add_composite_definitons_from_setup_folder(setup_folder, continuous_fiber_composite_files)
+
+    return continuous_fiber_composite_files
 
 
 def get_composite_files_from_workbench_result_folder(
@@ -386,7 +457,8 @@ def get_composite_files_from_workbench_result_folder(
         raise RuntimeError(
             "No composite definitions found. Set "
             "ensure_composite_definitions_found argument"
-            " to False to skip this check."
+            " to False to skip this check. Note: Use the function"
+            " composite_files_from_workbench_harmonic_analysis if this is a harmonic analysis."
         )
 
     return continuous_fiber_composite_files
