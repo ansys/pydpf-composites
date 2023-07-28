@@ -40,7 +40,6 @@ pytest = {version = "^7.1.2", optional = true}
 pytest-cov = {version = "^3.0.0", optional = true}
 mypy = {version = "^1.2.0", optional = true}
 mypy-extensions = {version = "^1.0.0", optional = true}
-# If this version changes also the link in doc/src/conf.py intersphinx-mapping has to change
 ansys-dpf-core = ">=0.8,<1"
 matplotlib = {version = "^3.5.0"}
 pyvista = {version = ">=0.36.1,<1", extras=["jupyter"], optional=true}
