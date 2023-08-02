@@ -3478,13 +3478,13 @@ files = [
 
 [[package]]
 name = "pyvista"
-version = "0.40.1"
+version = "0.41.1"
 description = "Easier Pythonic interface to VTK"
 optional = true
 python-versions = ">=3.8"
 files = [
-    {file = "pyvista-0.40.1-py3-none-any.whl", hash = "sha256:f5ffd25d26f48201b81073eb07cbc4f8ce8b441ccd765fb8686244ea5466a59b"},
-    {file = "pyvista-0.40.1.tar.gz", hash = "sha256:96950ff298705df230f9fe2169f1bd276ef346a319085c9af7d02079d11e8327"},
+    {file = "pyvista-0.41.1-py3-none-any.whl", hash = "sha256:320785b45432089a37d3a09828853af1edf629eca8ded0fe0002c2a661e26c77"},
+    {file = "pyvista-0.41.1.tar.gz", hash = "sha256:a4d03e00d3cfb7df6c68d0be9a915435651375f6278c1d787c0903fe10701683"},
 ]
 
 [package.dependencies]
@@ -3499,18 +3499,17 @@ pillow = "*"
 pooch = "*"
 pythreejs = {version = "*", optional = true, markers = "extra == \"jupyter\""}
 scooby = ">=0.5.1"
-trame = {version = ">=2.5.0", optional = true, markers = "extra == \"jupyter\""}
-trame-client = {version = ">=2.9.4", optional = true, markers = "extra == \"jupyter\""}
-trame-server = {version = ">=2.11.4", optional = true, markers = "extra == \"jupyter\""}
-trame-vtk = {version = ">=2.5.3", optional = true, markers = "extra == \"jupyter\""}
+trame = {version = ">=2.5.2", optional = true, markers = "extra == \"jupyter\""}
+trame-vtk = {version = ">=2.5.8", optional = true, markers = "extra == \"jupyter\""}
+trame-vuetify = {version = ">=2.3.1", optional = true, markers = "extra == \"jupyter\""}
 vtk = "*"
 
 [package.extras]
 all = ["pyvista[colormaps,io,jupyter,trame]"]
 colormaps = ["cmocean", "colorcet"]
 io = ["imageio", "meshio (>=5.2)"]
-jupyter = ["ipyvtklink", "ipywidgets", "jupyter-server-proxy", "nest-asyncio", "panel", "pythreejs", "trame (>=2.5.0)", "trame-client (>=2.9.4)", "trame-server (>=2.11.4)", "trame-vtk (>=2.5.3)"]
-trame = ["trame (>=2.5.0)", "trame-client (>=2.9.4)", "trame-server (>=2.11.4)", "trame-vtk (>=2.5.3)"]
+jupyter = ["ipyvtklink", "ipywidgets", "jupyter-server-proxy", "nest-asyncio", "panel", "pythreejs", "trame (>=2.5.2)", "trame-vtk (>=2.5.8)", "trame-vuetify (>=2.3.1)"]
+trame = ["trame (>=2.5.2)", "trame-vtk (>=2.5.8)", "trame-vuetify (>=2.3.1)"]
 
 [[package]]
 name = "pyviz-comms"
@@ -4352,13 +4351,13 @@ test = ["numpy", "pandas", "pytest", "xarray"]
 
 [[package]]
 name = "trame"
-version = "2.5.0"
+version = "2.5.2"
 description = "Trame, a framework to build applications in plain Python"
 optional = true
 python-versions = "*"
 files = [
-    {file = "trame-2.5.0-py3-none-any.whl", hash = "sha256:15dad2872b4bb6eeef6eb8ad681f6314357c99ed95c2c8461453f60c2440f02d"},
-    {file = "trame-2.5.0.tar.gz", hash = "sha256:3ac22be1961945e7240f396ad415c73446c45f5a4af1cb4afb80ffa1a7d6a24e"},
+    {file = "trame-2.5.2-py3-none-any.whl", hash = "sha256:2948be7691cbcbbfa64144581acc825a669bb47a2d76b78d728db21be008daa5"},
+    {file = "trame-2.5.2.tar.gz", hash = "sha256:875320353517c133312e46dc87c66050f721f045fd8817cd394fe06363e84ce2"},
 ]
 
 [package.dependencies]
@@ -4370,7 +4369,7 @@ trame-matplotlib = "<3.0.0"
 trame-plotly = "<3.0.0"
 trame-rca = "<3.0.0"
 trame-router = "<3.0.0"
-trame-server = ">=2.11.0"
+trame-server = ">=2.11.7"
 trame-simput = "<3.0.0"
 trame-vega = "<3.0.0"
 trame-vtk = "<3.0.0"
@@ -4491,13 +4490,13 @@ trame-client = "*"
 
 [[package]]
 name = "trame-server"
-version = "2.11.4"
+version = "2.11.7"
 description = "Internal server side implementation of trame"
 optional = true
 python-versions = "*"
 files = [
-    {file = "trame-server-2.11.4.tar.gz", hash = "sha256:99178d6fe2919f9e592df671acce14c0048cb9835f2d582388a849f0b2984002"},
-    {file = "trame_server-2.11.4-py3-none-any.whl", hash = "sha256:513cc0253c897bd032fd136c67e6def30718fb42a5ca5be3d1a546abed44459e"},
+    {file = "trame-server-2.11.7.tar.gz", hash = "sha256:6cca8f1f786bc7b121925524be85ce1ee9440a9911eaa16564e9af764dca6cd3"},
+    {file = "trame_server-2.11.7-py3-none-any.whl", hash = "sha256:450e5b2ba450ebace4ed1cc37bda5d5a5a233963c7ea3f0965a6f6ea0319f26f"},
 ]
 
 [package.dependencies]
@@ -4534,13 +4533,13 @@ trame-client = "*"
 
 [[package]]
 name = "trame-vtk"
-version = "2.5.4"
+version = "2.5.8"
 description = "VTK widgets for trame"
 optional = true
 python-versions = "*"
 files = [
-    {file = "trame-vtk-2.5.4.tar.gz", hash = "sha256:71eb9c28982b3bd3dc735ef5daabf1e8a1f2b83c6f64d9632abdba0115dd1fff"},
-    {file = "trame_vtk-2.5.4-py3-none-any.whl", hash = "sha256:fdb8dd82530a02a6f69be8da98d4a922da7d98d813533a818f0e0bf374b2a50a"},
+    {file = "trame-vtk-2.5.8.tar.gz", hash = "sha256:341cf7b45c539ca683332ffc179d6c7874c7f626a12b78dc7e588953d425d05c"},
+    {file = "trame_vtk-2.5.8-py3-none-any.whl", hash = "sha256:1462f8230efb56a65781baf4163439562a62f1a29b669f852cdc9f7c15496694"},
 ]
 
 [package.dependencies]
@@ -4548,13 +4547,13 @@ trame-client = "*"
 
 [[package]]
 name = "trame-vuetify"
-version = "2.2.4"
+version = "2.3.1"
 description = "Vuetify widgets for trame"
 optional = true
 python-versions = "*"
 files = [
-    {file = "trame-vuetify-2.2.4.tar.gz", hash = "sha256:41316c16cf6af2446e980a0bbc32a549209bb27cc5fd4d18b87945e607ccc69a"},
-    {file = "trame_vuetify-2.2.4-py3-none-any.whl", hash = "sha256:fede3b08db60f50e0f6ab36594c662c6cee010b7514376bfdfbece8a5c2ba9ee"},
+    {file = "trame-vuetify-2.3.1.tar.gz", hash = "sha256:9775c4833ec87ba400c8cdb4eef1dce24396fd841968369563bb34bb0b60ee4a"},
+    {file = "trame_vuetify-2.3.1-py3-none-any.whl", hash = "sha256:455b179143f44e71719f9b8feeb36ec9aabf1d25e79c637a425c8cb153405335"},
 ]
 
 [package.dependencies]
