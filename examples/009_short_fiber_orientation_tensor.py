@@ -85,6 +85,8 @@ A22_NAME = "Orientation Tensor A22"
 a11 = field_variable_dict[A11_NAME]
 a11.plot()
 
+# %%
+
 a22 = field_variable_dict[A22_NAME]
 a22.plot()
 
@@ -134,5 +136,9 @@ aYY = fiber_orientation_tensor_fc.select_component(1)[0]
 aXZ = fiber_orientation_tensor_fc.select_component(5)[0]
 
 mesh.plot(aXX, title="Axx", text="Axx plot")
+
+# %%
 mesh.plot(aYY, title="Ayy", text="Ayy plot")
+
+# %%
 mesh.plot(aXZ, title="Axz", text="Axz plot")
