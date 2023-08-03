@@ -361,10 +361,8 @@ Plot the maximum and minimum values.
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_011_dpf_composite_failure_workflow_001.png
-   :alt: 011 dpf composite failure workflow
-   :srcset: /examples/gallery_examples/images/sphx_glr_011_dpf_composite_failure_workflow_001.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_011_dpf_composite_failure_workflow_001.vtksz
+
 
 
 
@@ -373,7 +371,7 @@ Plot the maximum and minimum values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  9.905 seconds)
+   **Total running time of the script:** ( 0 minutes  13.718 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_dpf_composite_failure_workflow.py:

@@ -131,10 +131,8 @@ Plot the maximum IRF per element.
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_008_assembly_example_001.png
-   :alt: 008 assembly example
-   :srcset: /examples/gallery_examples/images/sphx_glr_008_assembly_example_001.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_008_assembly_example_001.vtksz
+
 
 
 
@@ -179,7 +177,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.922 seconds)
+   **Total running time of the script:** ( 0 minutes  7.257 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:

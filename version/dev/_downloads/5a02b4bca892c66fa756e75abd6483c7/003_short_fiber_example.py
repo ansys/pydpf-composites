@@ -72,6 +72,8 @@ field_variables = field_variable_provider.outputs.fields_container.get_data()
 a11 = field_variables[0]
 a11.plot()
 
+# %%
+
 a22 = field_variables[1]
 a22.plot()
 

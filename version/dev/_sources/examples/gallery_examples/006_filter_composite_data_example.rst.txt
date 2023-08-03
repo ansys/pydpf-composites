@@ -180,10 +180,8 @@ For the top layer, plot stress values in the material direction for the first no
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_001.png
-   :alt: 006 filter composite data example
-   :srcset: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_001.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_001.vtksz
+
 
 
 
@@ -252,10 +250,8 @@ in the material direction in this ply.
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_002.png
-   :alt: 006 filter composite data example
-   :srcset: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_002.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_002.vtksz
+
 
 
 
@@ -297,10 +293,8 @@ ID from an analysis ply.
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_003.png
-   :alt: 006 filter composite data example
-   :srcset: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_003.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_003.vtksz
+
 
 
 
@@ -309,7 +303,7 @@ ID from an analysis ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.154 seconds)
+   **Total running time of the script:** ( 0 minutes  3.464 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:

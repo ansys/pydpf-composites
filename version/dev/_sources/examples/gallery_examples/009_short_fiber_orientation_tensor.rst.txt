@@ -156,7 +156,7 @@ Plot input data
 Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-91
+.. GENERATED FROM PYTHON SOURCE LINES 74-88
 
 .. code-block:: default
 
@@ -174,40 +174,41 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
     a11 = field_variable_dict[A11_NAME]
     a11.plot()
 
+
+
+
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.vtksz
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
+
+.. code-block:: default
+
+
     a22 = field_variable_dict[A22_NAME]
     a22.plot()
 
 
 
 
-.. rst-class:: sphx-glr-horizontal
-
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.png
-          :alt: 009 short fiber orientation tensor
-          :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.png
-          :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.png
-          :alt: 009 short fiber orientation tensor
-          :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.png
-          :class: sphx-glr-multi-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.vtksz
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-95
+
+.. GENERATED FROM PYTHON SOURCE LINES 94-97
 
 Compute results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Reconstruct the fiber orientation tensor in the global coordinate system.
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-127
+.. GENERATED FROM PYTHON SOURCE LINES 97-129
 
 .. code-block:: default
 
@@ -250,13 +251,13 @@ Reconstruct the fiber orientation tensor in the global coordinate system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-131
+.. GENERATED FROM PYTHON SOURCE LINES 130-133
 
 Plot results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Plot some components of the fiber orientation tensor.
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-139
+.. GENERATED FROM PYTHON SOURCE LINES 133-140
 
 .. code-block:: default
 
@@ -266,34 +267,43 @@ Plot some components of the fiber orientation tensor.
     aXZ = fiber_orientation_tensor_fc.select_component(5)[0]
 
     mesh.plot(aXX, title="Axx", text="Axx plot")
+
+
+
+
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.vtksz
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 141-143
+
+.. code-block:: default
+
     mesh.plot(aYY, title="Ayy", text="Ayy plot")
+
+
+
+
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.vtksz
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 144-145
+
+.. code-block:: default
+
     mesh.plot(aXZ, title="Axz", text="Axz plot")
 
 
 
-.. rst-class:: sphx-glr-horizontal
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.vtksz
 
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.png
-          :alt: 009 short fiber orientation tensor
-          :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.png
-          :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.png
-          :alt: 009 short fiber orientation tensor
-          :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.png
-          :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.png
-          :alt: 009 short fiber orientation tensor
-          :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.png
-          :class: sphx-glr-multi-img
 
 
 
@@ -302,7 +312,7 @@ Plot some components of the fiber orientation tensor.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.362 seconds)
+   **Total running time of the script:** ( 0 minutes  5.768 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:

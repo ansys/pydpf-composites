@@ -171,10 +171,8 @@ Implement a custom failure criterion: basic max strain
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.png
-   :alt: 004 get material properties example
-   :srcset: /examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.vtksz
+
 
 
 
@@ -183,7 +181,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.579 seconds)
+   **Total running time of the script:** ( 0 minutes  6.940 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:

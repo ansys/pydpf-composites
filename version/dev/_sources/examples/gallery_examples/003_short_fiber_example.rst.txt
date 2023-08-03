@@ -135,7 +135,7 @@ Plot results
 Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-78
+.. GENERATED FROM PYTHON SOURCE LINES 66-75
 
 .. code-block:: default
 
@@ -148,41 +148,42 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
     a11 = field_variables[0]
     a11.plot()
 
+
+
+
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.vtksz
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 76-80
+
+.. code-block:: default
+
+
     a22 = field_variables[1]
     a22.plot()
 
 
 
 
-.. rst-class:: sphx-glr-horizontal
-
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.png
-          :alt: 003 short fiber example
-          :srcset: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.png
-          :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.png
-          :alt: 003 short fiber example
-          :srcset: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.png
-          :class: sphx-glr-multi-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.vtksz
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-83
+
+.. GENERATED FROM PYTHON SOURCE LINES 81-85
 
 Configure and evaluate
 ~~~~~~~~~~~~~~~~~~~~~~
 Configure the short fiber failure criterion evaluator and evaluate.
 Note that you can specify optional time and mesh scoping inputs.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-89
+.. GENERATED FROM PYTHON SOURCE LINES 85-91
 
 .. code-block:: default
 
@@ -199,13 +200,13 @@ Note that you can specify optional time and mesh scoping inputs.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-93
+.. GENERATED FROM PYTHON SOURCE LINES 92-95
 
 Compute and plot results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Compute and plot the maximum failure value per element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-104
+.. GENERATED FROM PYTHON SOURCE LINES 95-106
 
 .. code-block:: default
 
@@ -223,10 +224,8 @@ Compute and plot the maximum failure value per element.
 
 
 
-.. image-sg:: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.png
-   :alt: 003 short fiber example
-   :srcset: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.png
-   :class: sphx-glr-single-img
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.vtksz
+
 
 
 
@@ -235,7 +234,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.668 seconds)
+   **Total running time of the script:** ( 0 minutes  5.397 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:
