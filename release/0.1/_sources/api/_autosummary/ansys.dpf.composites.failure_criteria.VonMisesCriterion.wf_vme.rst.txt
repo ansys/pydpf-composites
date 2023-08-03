@@ -1,6 +1,0 @@
-wf\_vme
-=======
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: VonMisesCriterion.wf_vme

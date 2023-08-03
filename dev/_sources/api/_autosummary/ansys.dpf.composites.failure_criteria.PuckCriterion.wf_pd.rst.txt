@@ -1,6 +1,0 @@
-wf\_pd
-======
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: PuckCriterion.wf_pd

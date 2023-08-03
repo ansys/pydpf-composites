@@ -1,6 +1,0 @@
-p22\_pos
-========
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: PuckCriterion.p22_pos

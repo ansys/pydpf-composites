@@ -1,6 +1,0 @@
-﻿add\_layup\_info\_to\_mesh
-==========================
-
-.. currentmodule:: ansys.dpf.composites.layup_info
-
-.. autofunction:: add_layup_info_to_mesh

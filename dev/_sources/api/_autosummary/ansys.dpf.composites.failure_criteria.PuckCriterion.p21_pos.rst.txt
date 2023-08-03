@@ -1,6 +1,0 @@
-p21\_pos
-========
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: PuckCriterion.p21_pos

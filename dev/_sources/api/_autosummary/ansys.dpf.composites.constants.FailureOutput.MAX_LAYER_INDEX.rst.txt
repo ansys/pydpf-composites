@@ -1,6 +1,0 @@
-MAX\_LAYER\_INDEX
-=================
-
-.. currentmodule:: ansys.dpf.composites.constants
-
-.. autoattribute:: FailureOutput.MAX_LAYER_INDEX

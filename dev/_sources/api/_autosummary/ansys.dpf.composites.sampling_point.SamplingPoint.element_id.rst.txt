@@ -1,6 +1,0 @@
-element\_id
-===========
-
-.. currentmodule:: ansys.dpf.composites.sampling_point
-
-.. autoproperty:: SamplingPoint.element_id

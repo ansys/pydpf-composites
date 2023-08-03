@@ -1,6 +1,0 @@
-wf\_hd
-======
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: HashinCriterion.wf_hd

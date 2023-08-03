@@ -1,6 +1,0 @@
-figure
-======
-
-.. currentmodule:: ansys.dpf.composites.sampling_point
-
-.. autoattribute:: SamplingPointFigure.figure

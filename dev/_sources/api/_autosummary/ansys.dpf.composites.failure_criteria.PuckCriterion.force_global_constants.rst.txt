@@ -1,6 +1,0 @@
-force\_global\_constants
-========================
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: PuckCriterion.force_global_constants

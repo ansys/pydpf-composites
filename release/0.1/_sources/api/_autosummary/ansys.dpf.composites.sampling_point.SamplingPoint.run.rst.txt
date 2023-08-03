@@ -1,6 +1,0 @@
-run
-===
-
-.. currentmodule:: ansys.dpf.composites.sampling_point
-
-.. automethod:: SamplingPoint.run

@@ -1,6 +1,0 @@
-s23
-===
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: MaxStressCriterion.s23

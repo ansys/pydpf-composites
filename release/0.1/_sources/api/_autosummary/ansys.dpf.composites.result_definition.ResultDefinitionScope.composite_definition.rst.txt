@@ -1,6 +1,0 @@
-composite\_definition
-=====================
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoattribute:: ResultDefinitionScope.composite_definition

@@ -1,6 +1,0 @@
-material\_provider
-==================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_operators
-
-.. autoproperty:: MaterialOperators.material_provider

@@ -1,6 +1,0 @@
-engineering\_data
-=================
-
-.. currentmodule:: ansys.dpf.composites.data_sources
-
-.. autoattribute:: ShortFiberCompositesFiles.engineering_data

@@ -1,6 +1,0 @@
-lfc
-===
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: LaRCCriterion.lfc

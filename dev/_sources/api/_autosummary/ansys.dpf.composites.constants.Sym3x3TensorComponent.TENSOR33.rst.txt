@@ -1,6 +1,0 @@
-TENSOR33
-========
-
-.. currentmodule:: ansys.dpf.composites.constants
-
-.. autoattribute:: Sym3x3TensorComponent.TENSOR33

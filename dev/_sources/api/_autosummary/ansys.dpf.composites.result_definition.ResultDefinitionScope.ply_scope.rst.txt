@@ -1,6 +1,0 @@
-ply\_scope
-==========
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoattribute:: ResultDefinitionScope.ply_scope

@@ -1,6 +1,0 @@
-kf
-==
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: ShearCrimpingCriterion.kf

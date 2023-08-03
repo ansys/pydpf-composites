@@ -1,6 +1,0 @@
-pmc
-===
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: PuckCriterion.pmc

@@ -1,6 +1,0 @@
-Hill\_Yield\_Criterion\_R11
-===========================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.Hill_Yield_Criterion_R11

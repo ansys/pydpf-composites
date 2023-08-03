@@ -1,6 +1,0 @@
-Puck\_Constants\_interface\_weakening\_factor
-=============================================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.Puck_Constants_interface_weakening_factor

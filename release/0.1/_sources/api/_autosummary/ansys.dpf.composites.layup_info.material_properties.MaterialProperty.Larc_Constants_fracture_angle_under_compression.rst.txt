@@ -1,6 +1,0 @@
-Larc\_Constants\_fracture\_angle\_under\_compression
-====================================================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autoattribute:: MaterialProperty.Larc_Constants_fracture_angle_under_compression

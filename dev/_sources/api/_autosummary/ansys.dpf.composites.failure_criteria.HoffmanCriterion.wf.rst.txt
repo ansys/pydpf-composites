@@ -1,6 +1,0 @@
-wf
-==
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: HoffmanCriterion.wf

@@ -1,6 +1,0 @@
-expression
-==========
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoproperty:: ResultDefinition.expression

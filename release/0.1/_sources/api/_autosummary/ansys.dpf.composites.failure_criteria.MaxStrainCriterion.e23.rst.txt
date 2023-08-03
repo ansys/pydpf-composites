@@ -1,6 +1,0 @@
-e23
-===
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: MaxStrainCriterion.e23

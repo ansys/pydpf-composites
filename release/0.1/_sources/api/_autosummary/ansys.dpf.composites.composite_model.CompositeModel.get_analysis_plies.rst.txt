@@ -1,6 +1,0 @@
-get\_analysis\_plies
-====================
-
-.. currentmodule:: ansys.dpf.composites.composite_model
-
-.. automethod:: CompositeModel.get_analysis_plies

@@ -1,6 +1,0 @@
-element\_scope
-==============
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoattribute:: ResultDefinitionScope.element_scope

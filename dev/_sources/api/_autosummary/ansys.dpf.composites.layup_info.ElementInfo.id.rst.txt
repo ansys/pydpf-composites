@@ -1,6 +1,0 @@
-id
-==
-
-.. currentmodule:: ansys.dpf.composites.layup_info
-
-.. autoattribute:: ElementInfo.id

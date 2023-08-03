@@ -1,6 +1,0 @@
-mode\_interaction\_coeff
-========================
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: CuntzeCriterion.mode_interaction_coeff

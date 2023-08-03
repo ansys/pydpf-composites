@@ -1,6 +1,0 @@
-get\_analysis\_plies
-====================
-
-.. currentmodule:: ansys.dpf.composites.layup_info
-
-.. automethod:: LayupPropertiesProvider.get_analysis_plies

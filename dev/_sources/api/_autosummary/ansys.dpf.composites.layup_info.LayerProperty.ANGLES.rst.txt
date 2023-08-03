@@ -1,6 +1,0 @@
-ANGLES
-======
-
-.. currentmodule:: ansys.dpf.composites.layup_info
-
-.. autoattribute:: LayerProperty.ANGLES

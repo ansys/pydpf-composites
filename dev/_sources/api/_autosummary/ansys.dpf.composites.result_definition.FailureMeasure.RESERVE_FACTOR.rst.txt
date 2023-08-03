@@ -1,6 +1,0 @@
-RESERVE\_FACTOR
-===============
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoattribute:: FailureMeasure.RESERVE_FACTOR

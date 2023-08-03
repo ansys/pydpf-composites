@@ -1,6 +1,0 @@
-﻿get\_constant\_property
-=======================
-
-.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
-
-.. autofunction:: get_constant_property

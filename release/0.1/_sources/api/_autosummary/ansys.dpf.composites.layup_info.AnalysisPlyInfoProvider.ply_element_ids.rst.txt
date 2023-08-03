@@ -1,6 +1,0 @@
-ply\_element\_ids
-=================
-
-.. currentmodule:: ansys.dpf.composites.layup_info
-
-.. automethod:: AnalysisPlyInfoProvider.ply_element_ids

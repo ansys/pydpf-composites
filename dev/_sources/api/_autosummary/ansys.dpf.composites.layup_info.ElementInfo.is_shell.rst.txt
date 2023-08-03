@@ -1,6 +1,0 @@
-is\_shell
-=========
-
-.. currentmodule:: ansys.dpf.composites.layup_info
-
-.. autoattribute:: ElementInfo.is_shell

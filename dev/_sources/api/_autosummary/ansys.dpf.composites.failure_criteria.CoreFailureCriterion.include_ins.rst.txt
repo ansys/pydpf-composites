@@ -1,6 +1,0 @@
-include\_ins
-============
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: CoreFailureCriterion.include_ins

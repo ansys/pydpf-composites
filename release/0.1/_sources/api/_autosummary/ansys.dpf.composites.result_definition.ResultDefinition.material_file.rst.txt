@@ -1,6 +1,0 @@
-material\_file
-==============
-
-.. currentmodule:: ansys.dpf.composites.result_definition
-
-.. autoproperty:: ResultDefinition.material_file

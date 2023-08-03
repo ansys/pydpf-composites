@@ -1,6 +1,0 @@
-material\_operators
-===================
-
-.. currentmodule:: ansys.dpf.composites.composite_model
-
-.. autoproperty:: CompositeModel.material_operators

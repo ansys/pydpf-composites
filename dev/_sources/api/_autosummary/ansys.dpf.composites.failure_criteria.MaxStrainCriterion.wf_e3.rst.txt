@@ -1,6 +1,0 @@
-wf\_e3
-======
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. autoproperty:: MaxStrainCriterion.wf_e3

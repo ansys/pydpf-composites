@@ -1,6 +1,0 @@
-get\_constant\_property\_dict
-=============================
-
-.. currentmodule:: ansys.dpf.composites.composite_model
-
-.. automethod:: CompositeModel.get_constant_property_dict

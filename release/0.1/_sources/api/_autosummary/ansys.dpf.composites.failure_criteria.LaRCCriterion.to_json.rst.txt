@@ -1,6 +1,0 @@
-to\_json
-========
-
-.. currentmodule:: ansys.dpf.composites.failure_criteria
-
-.. automethod:: LaRCCriterion.to_json
