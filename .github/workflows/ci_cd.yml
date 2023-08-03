@@ -224,7 +224,6 @@ jobs:
         uses: ansys/actions/build-wheelhouse@v4
         with:
           library-name: "ansys-dpf-composites"
-          library-namespace: "ansys.dpf.composites"
           operating-system: ${{ matrix.os }}
           python-version: ${{ matrix.python-version }}
 
