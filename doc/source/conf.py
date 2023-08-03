@@ -3,7 +3,9 @@ from datetime import datetime
 import os
 
 from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
+import numpy as np
 import pyvista
+from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
 from sphinx_gallery.sorting import FileNameSortKey
 
 from ansys.dpf.composites import __version__
@@ -16,6 +18,8 @@ pyvista.OFF_SCREEN = True
 
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
+
+pyvista.global_theme.window_size = np.array([1024, 768]) * 2
 
 # Project information
 project = "ansys-dpf-composites"
@@ -61,6 +65,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_gallery.gen_gallery",
     "sphinx_design",
+    "pyvista.ext.viewer_directive",
 ]
 
 # Intersphinx mapping
@@ -133,7 +138,7 @@ sphinx_gallery_conf = {
     "backreferences_dir": None,
     # Modules for which function level galleries are created.  In
     "doc_module": "ansys-pydpf-composites",
-    "image_scrapers": ("pyvista", "matplotlib"),
+    "image_scrapers": (DynamicScraper(), "matplotlib"),
     "ignore_pattern": r"__init__\.py",
     "thumbnail_size": (350, 350),
 }
