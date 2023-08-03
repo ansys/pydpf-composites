@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Computation times &#8212; PyDPF Composites</title>
-    
+
   
   
   
@@ -44,10 +44,9 @@
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+ 
+<link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    
-        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
-    
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -94,7 +93,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container"><!-- Debugging: html_theme_options =  -->
 
-  <!-- If there is no MiliSearch enabled, use the PyData search -->
+<!-- If there is no MiliSearch enabled, use the PyData search -->
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -110,11 +109,9 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-</div>
+</form></div>
   </div>
-  
-    
+   
     <nav class="bd-header navbar navbar-expand-lg bd-navbar">
 <div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
@@ -278,9 +275,6 @@ document.write(`
 </div>
 
     </nav>
-  
-
-    
     <div id="announcement_msg"></div>
 <script>
   fetch("announcement.html")
@@ -290,35 +284,31 @@ document.write(`
       }
       return response.text();
     })
-    .then(text => document.getElementById("announcement_msg").innerHTML = text)
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
     .catch((error) => console.error(`Fetch problem: ${error.message}`));
-</script>
-    
-
-    
-    <div class="container-xl">
-    <div class="row">
-        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
-        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
-          
+</script>   <div class="container-xl">
+  <div class="row">
+    <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+    <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
-      <ul>
-    
-        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
-    
-    
-        <li class="nav-item nav-item-0"><a href="../../index.html">PyDPF Composites</a> » </li>
-    
-
+      <ul> 
+<li class="nav-item nav-item-additional-breadcrumb">
+  <a href="https://docs.pyansys.com/">PyAnsys</a> » 
+</li>
+ 
+<li class="nav-item nav-item-0">
+  <a href="../../index.html">PyDPF Composites</a> » 
+</li>
+ 
         <li class="nav-item nav-item-this"><a href="">Computation times</a></li> 
       </ul>
-    </div>
-        </div>
+    </div></div>
   </div>
 </div>
-    
-
+ 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
@@ -454,51 +444,51 @@ document.write(`
                   
   <section id="computation-times">
 <span id="sphx-glr-examples-gallery-examples-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Permalink to this heading">#</a></h1>
-<p><strong>02:10.469</strong> total execution time for <strong>examples_gallery_examples</strong> files:</p>
+<p><strong>01:34.476</strong> total execution time for <strong>examples_gallery_examples</strong> files:</p>
 <table class="table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="001_failure_operator_example.html#sphx-glr-examples-gallery-examples-001-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">001_failure_operator_example.py</span></code>)</p></td>
-<td><p>00:26.598</p></td>
+<td><p>00:21.231</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="010_harmonic_example.html#sphx-glr-examples-gallery-examples-010-harmonic-example-py"><span class="std std-ref">Postprocess a harmonic analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">010_harmonic_example.py</span></code>)</p></td>
-<td><p>00:26.003</p></td>
-<td><p>0.0 MB</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="002_sampling_point_example.html#sphx-glr-examples-gallery-examples-002-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a> (<code class="docutils literal notranslate"><span class="pre">002_sampling_point_example.py</span></code>)</p></td>
-<td><p>00:16.691</p></td>
-<td><p>0.0 MB</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="011_dpf_composite_failure_workflow.html#sphx-glr-examples-gallery-examples-011-dpf-composite-failure-workflow-py"><span class="std std-ref">DPF composite failure workflow</span></a> (<code class="docutils literal notranslate"><span class="pre">011_dpf_composite_failure_workflow.py</span></code>)</p></td>
-<td><p>00:13.770</p></td>
+<td><p>00:16.987</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="007_interlaminar_normal_stress_example.html#sphx-glr-examples-gallery-examples-007-interlaminar-normal-stress-example-py"><span class="std std-ref">Interlaminar normal stresses</span></a> (<code class="docutils literal notranslate"><span class="pre">007_interlaminar_normal_stress_example.py</span></code>)</p></td>
-<td><p>00:13.417</p></td>
+<td><p>00:10.619</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a> (<code class="docutils literal notranslate"><span class="pre">004_get_material_properties_example.py</span></code>)</p></td>
-<td><p>00:08.196</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="002_sampling_point_example.html#sphx-glr-examples-gallery-examples-002-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a> (<code class="docutils literal notranslate"><span class="pre">002_sampling_point_example.py</span></code>)</p></td>
+<td><p>00:10.528</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="008_assembly_example.html#sphx-glr-examples-gallery-examples-008-assembly-example-py"><span class="std std-ref">Postprocess an assembly</span></a> (<code class="docutils literal notranslate"><span class="pre">008_assembly_example.py</span></code>)</p></td>
-<td><p>00:07.759</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="011_dpf_composite_failure_workflow.html#sphx-glr-examples-gallery-examples-011-dpf-composite-failure-workflow-py"><span class="std std-ref">DPF composite failure workflow</span></a> (<code class="docutils literal notranslate"><span class="pre">011_dpf_composite_failure_workflow.py</span></code>)</p></td>
+<td><p>00:09.905</p></td>
+<td><p>0.0 MB</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="008_assembly_example.html#sphx-glr-examples-gallery-examples-008-assembly-example-py"><span class="std std-ref">Postprocess an assembly</span></a> (<code class="docutils literal notranslate"><span class="pre">008_assembly_example.py</span></code>)</p></td>
+<td><p>00:05.922</p></td>
+<td><p>0.0 MB</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a> (<code class="docutils literal notranslate"><span class="pre">004_get_material_properties_example.py</span></code>)</p></td>
+<td><p>00:05.579</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="009_short_fiber_orientation_tensor.html#sphx-glr-examples-gallery-examples-009-short-fiber-orientation-tensor-py"><span class="std std-ref">Plot of the orientation tensor for short fiber composites</span></a> (<code class="docutils literal notranslate"><span class="pre">009_short_fiber_orientation_tensor.py</span></code>)</p></td>
-<td><p>00:07.535</p></td>
+<td><p>00:05.362</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="003_short_fiber_example.html#sphx-glr-examples-gallery-examples-003-short-fiber-example-py"><span class="std std-ref">Failure analysis for short fiber composites</span></a> (<code class="docutils literal notranslate"><span class="pre">003_short_fiber_example.py</span></code>)</p></td>
-<td><p>00:05.051</p></td>
+<td><p>00:04.668</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="006_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> (<code class="docutils literal notranslate"><span class="pre">006_filter_composite_data_example.py</span></code>)</p></td>
-<td><p>00:03.853</p></td>
+<td><p>00:02.154</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="005_get_layup_properties_example.html#sphx-glr-examples-gallery-examples-005-get-layup-properties-example-py"><span class="std std-ref">Lay-up properties</span></a> (<code class="docutils literal notranslate"><span class="pre">005_get_layup_properties_example.py</span></code>)</p></td>
-<td><p>00:01.597</p></td>
+<td><p>00:01.520</p></td>
 <td><p>0.0 MB</p></td>
 </tr>
 </tbody>
@@ -567,13 +557,17 @@ document.write(`
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-    Built with the <a href="https://sphinxdocs.ansys.com/version/stable/index.html">Ansys Sphinx Theme</a> 0.9.9.
-    <br>Last updated on <span id="date"></span></br>
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  0.10.0. <br />Last updated on
+  <span id="date"></span>
 </p>
 <script>
-  var options = { day: 'numeric', month: 'long', year: 'numeric' };
+  var options = { day: "numeric", month: "long", year: "numeric" };
   var lastModifiedDate = new Date(document.lastModified);
-  var date = lastModifiedDate.toLocaleDateString('en-US', options);
+  var date = lastModifiedDate.toLocaleDateString("en-US", options);
   document.getElementById("date").innerHTML = date;
 </script></div>
       

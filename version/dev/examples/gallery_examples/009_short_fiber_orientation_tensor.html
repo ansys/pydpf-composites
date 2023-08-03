@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Plot of the orientation tensor for short fiber composites &#8212; PyDPF Composites</title>
-    
+
   
   
   
@@ -44,10 +44,9 @@
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+ 
+<link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    
-        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
-    
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -96,7 +95,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container"><!-- Debugging: html_theme_options =  -->
 
-  <!-- If there is no MiliSearch enabled, use the PyData search -->
+<!-- If there is no MiliSearch enabled, use the PyData search -->
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -112,11 +111,9 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-</div>
+</form></div>
   </div>
-  
-    
+   
     <nav class="bd-header navbar navbar-expand-lg bd-navbar">
 <div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
@@ -280,9 +277,6 @@ document.write(`
 </div>
 
     </nav>
-  
-
-    
     <div id="announcement_msg"></div>
 <script>
   fetch("announcement.html")
@@ -292,36 +286,32 @@ document.write(`
       }
       return response.text();
     })
-    .then(text => document.getElementById("announcement_msg").innerHTML = text)
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
     .catch((error) => console.error(`Fetch problem: ${error.message}`));
-</script>
-    
-
-    
-    <div class="container-xl">
-    <div class="row">
-        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
-        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
-          
+</script>   <div class="container-xl">
+  <div class="row">
+    <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+    <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
-      <ul>
-    
-        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
-    
-    
-        <li class="nav-item nav-item-0"><a href="../../index.html">PyDPF Composites</a> » </li>
-    
-
+      <ul> 
+<li class="nav-item nav-item-additional-breadcrumb">
+  <a href="https://docs.pyansys.com/">PyAnsys</a> » 
+</li>
+ 
+<li class="nav-item nav-item-0">
+  <a href="../../index.html">PyDPF Composites</a> » 
+</li>
+ 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
         <li class="nav-item nav-item-this"><a href="">Plot of the orientation tensor for short fiber composites</a></li> 
       </ul>
-    </div>
-        </div>
+    </div></div>
   </div>
 </div>
-    
-
+ 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
@@ -624,7 +614,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 <li><img src="../../_images/sphx_glr_009_short_fiber_orientation_tensor_004.png" srcset="../../_images/sphx_glr_009_short_fiber_orientation_tensor_004.png" alt="009 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
 <li><img src="../../_images/sphx_glr_009_short_fiber_orientation_tensor_005.png" srcset="../../_images/sphx_glr_009_short_fiber_orientation_tensor_005.png" alt="009 short fiber orientation tensor" class = "sphx-glr-multi-img"/></li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  7.535 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.362 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-009-short-fiber-orientation-tensor-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f7afa37a2e0689eada6f12b28988b27f/009_short_fiber_orientation_tensor.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">009_short_fiber_orientation_tensor.py</span></code></a></p>
@@ -714,13 +704,17 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-    Built with the <a href="https://sphinxdocs.ansys.com/version/stable/index.html">Ansys Sphinx Theme</a> 0.9.9.
-    <br>Last updated on <span id="date"></span></br>
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  0.10.0. <br />Last updated on
+  <span id="date"></span>
 </p>
 <script>
-  var options = { day: 'numeric', month: 'long', year: 'numeric' };
+  var options = { day: "numeric", month: "long", year: "numeric" };
   var lastModifiedDate = new Date(document.lastModified);
-  var date = lastModifiedDate.toLocaleDateString('en-US', options);
+  var date = lastModifiedDate.toLocaleDateString("en-US", options);
   document.getElementById("date").innerHTML = date;
 </script></div>
       

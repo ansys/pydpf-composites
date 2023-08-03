@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Sampling point &#8212; PyDPF Composites</title>
-    
+
   
   
   
@@ -44,10 +44,9 @@
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+ 
+<link href="../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    
-        <link href="../_static/css/breadcrumbs.css" rel="stylesheet">
-    
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -96,7 +95,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container"><!-- Debugging: html_theme_options =  -->
 
-  <!-- If there is no MiliSearch enabled, use the PyData search -->
+<!-- If there is no MiliSearch enabled, use the PyData search -->
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -112,11 +111,9 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-</div>
+</form></div>
   </div>
-  
-    
+   
     <nav class="bd-header navbar navbar-expand-lg bd-navbar">
 <div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
@@ -280,9 +277,6 @@ document.write(`
 </div>
 
     </nav>
-  
-
-    
     <div id="announcement_msg"></div>
 <script>
   fetch("announcement.html")
@@ -292,36 +286,32 @@ document.write(`
       }
       return response.text();
     })
-    .then(text => document.getElementById("announcement_msg").innerHTML = text)
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
     .catch((error) => console.error(`Fetch problem: ${error.message}`));
-</script>
-    
-
-    
-    <div class="container-xl">
-    <div class="row">
-        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
-        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
-          
+</script>   <div class="container-xl">
+  <div class="row">
+    <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+    <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
-      <ul>
-    
-        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
-    
-    
-        <li class="nav-item nav-item-0"><a href="../index.html">PyDPF Composites</a> » </li>
-    
-
+      <ul> 
+<li class="nav-item nav-item-additional-breadcrumb">
+  <a href="https://docs.pyansys.com/">PyAnsys</a> » 
+</li>
+ 
+<li class="nav-item nav-item-0">
+  <a href="../index.html">PyDPF Composites</a> » 
+</li>
+ 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API reference</a> » </li>
         <li class="nav-item nav-item-this"><a href="">Sampling point</a></li> 
       </ul>
-    </div>
-        </div>
+    </div></div>
   </div>
 </div>
-    
-
+ 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
@@ -559,13 +549,17 @@ document.write(`
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-    Built with the <a href="https://sphinxdocs.ansys.com/version/stable/index.html">Ansys Sphinx Theme</a> 0.9.9.
-    <br>Last updated on <span id="date"></span></br>
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  0.10.0. <br />Last updated on
+  <span id="date"></span>
 </p>
 <script>
-  var options = { day: 'numeric', month: 'long', year: 'numeric' };
+  var options = { day: "numeric", month: "long", year: "numeric" };
   var lastModifiedDate = new Date(document.lastModified);
-  var date = lastModifiedDate.toLocaleDateString('en-US', options);
+  var date = lastModifiedDate.toLocaleDateString("en-US", options);
   document.getElementById("date").innerHTML = date;
 </script></div>
       
