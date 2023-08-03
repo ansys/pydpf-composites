@@ -1,0 +1,28 @@
+﻿.. vale off
+
+FailureMeasureEnum
+==================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoclass:: FailureMeasureEnum
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      FailureMeasureEnum.INVERSE_RESERVE_FACTOR
+      FailureMeasureEnum.MARGIN_OF_SAFETY
+      FailureMeasureEnum.RESERVE_FACTOR
+   
+   
+
+.. vale on

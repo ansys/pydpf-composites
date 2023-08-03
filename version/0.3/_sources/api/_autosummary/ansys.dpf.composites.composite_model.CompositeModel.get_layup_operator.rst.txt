@@ -1,0 +1,6 @@
+get\_layup\_operator
+====================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. automethod:: CompositeModel.get_layup_operator

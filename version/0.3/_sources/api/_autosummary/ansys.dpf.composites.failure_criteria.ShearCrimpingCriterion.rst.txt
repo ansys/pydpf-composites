@@ -1,0 +1,43 @@
+﻿.. vale off
+
+ShearCrimpingCriterion
+======================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: ShearCrimpingCriterion
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      ShearCrimpingCriterion.to_dict
+      
+      
+      ShearCrimpingCriterion.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ShearCrimpingCriterion.active
+      ShearCrimpingCriterion.kc
+      ShearCrimpingCriterion.kf
+      ShearCrimpingCriterion.name
+      ShearCrimpingCriterion.wf
+   
+   
+
+.. vale on

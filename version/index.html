@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>PyDPF Composites &#8212; PyDPF Composites</title>
-    
+
   
   
   
@@ -44,10 +44,9 @@
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="stable/_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="stable/_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+ 
+<link href="stable/_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    
-        <link href="stable/_static/css/breadcrumbs.css" rel="stylesheet">
-    
     <script data-url_root="./" id="documentation_options" src="stable/_static/documentation_options.js"></script>
     <script src="stable/_static/jquery.js"></script>
     <script src="stable/_static/underscore.js"></script>
@@ -62,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3';
         </script>
     <link rel="shortcut icon" href="stable/_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -95,7 +94,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container"><!-- Debugging: html_theme_options =  -->
 
-  <!-- If there is no MiliSearch enabled, use the PyData search -->
+<!-- If there is no MiliSearch enabled, use the PyData search -->
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -111,11 +110,9 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-</div>
+</form></div>
   </div>
-  
-    
+   
     <nav class="bd-header navbar navbar-expand-lg bd-navbar">
 <div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
@@ -218,7 +215,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.2  <!-- this text may get changed later by javascript -->
+      0.3  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -279,9 +276,6 @@ document.write(`
 </div>
 
     </nav>
-  
-
-    
     <div id="announcement_msg"></div>
 <script>
   fetch("announcement.html")
@@ -291,33 +285,27 @@ document.write(`
       }
       return response.text();
     })
-    .then(text => document.getElementById("announcement_msg").innerHTML = text)
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
     .catch((error) => console.error(`Fetch problem: ${error.message}`));
-</script>
-    
-
-    
-    <div class="container-xl">
-    <div class="row">
-        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
-        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
-          
+</script>   <div class="container-xl">
+  <div class="row">
+    <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+    <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
-      <ul>
-    
-        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
-    
-    
-
+      <ul> 
+<li class="nav-item nav-item-additional-breadcrumb">
+  <a href="https://docs.pyansys.com/">PyAnsys</a> » 
+</li>
+  
         <li class="nav-item nav-item-this"><a href="">PyDPF Composites</a></li> 
       </ul>
-    </div>
-        </div>
+    </div></div>
   </div>
 </div>
-    
-
+ 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
@@ -387,7 +375,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.2  <!-- this text may get changed later by javascript -->
+      0.3  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -505,15 +493,15 @@ example to create a failure plot from a Workbench project.</p>
 <h2>Key features<a class="headerlink" href="#key-features" title="Permalink to this heading">#</a></h2>
 <p>Here are some key features of PyDPF Composites:</p>
 <ul class="simple">
-<li><p>Failure criteria evaluation as shown in <a class="reference internal" href="examples/gallery_examples/1_failure_operator_example.html#sphx-glr-examples-gallery-examples-1-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a>.</p></li>
+<li><p>Failure criteria evaluation as shown in <a class="reference internal" href="examples/gallery_examples/001_failure_operator_example.html#sphx-glr-examples-gallery-examples-001-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a>.</p></li>
 <li><p>A <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.html#ansys.dpf.composites.sampling_point.SamplingPoint" title="ansys.dpf.composites.sampling_point.SamplingPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingPoint</span></code></a> class for extracting and visualizing a result over the entire thickness of a laminate as shown in
-<a class="reference internal" href="examples/gallery_examples/2_sampling_point_example.html#sphx-glr-examples-gallery-examples-2-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a>.</p></li>
+<a class="reference internal" href="examples/gallery_examples/002_sampling_point_example.html#sphx-glr-examples-gallery-examples-002-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a>.</p></li>
 <li><p>A <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.html#ansys.dpf.composites.result_definition.ResultDefinition" title="ansys.dpf.composites.result_definition.ResultDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResultDefinition</span></code></a> class for configuring combined failure criteria and scopes.</p></li>
 <li><p>Accessors for getting layered properties such as plies and materials as shown in
-<a class="reference internal" href="examples/gallery_examples/5_get_layup_properties_example.html#sphx-glr-examples-gallery-examples-5-get-layup-properties-example-py"><span class="std std-ref">Layered properties</span></a>
-and <a class="reference internal" href="examples/gallery_examples/4_get_material_properties_example.html#sphx-glr-examples-gallery-examples-4-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a>.</p></li>
+<a class="reference internal" href="examples/gallery_examples/005_get_layup_properties_example.html#sphx-glr-examples-gallery-examples-005-get-layup-properties-example-py"><span class="std std-ref">Layered properties</span></a>
+and <a class="reference internal" href="examples/gallery_examples/004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a>.</p></li>
 <li><p>Interface to implement custom failure criteria and analysis as shown in
-<a class="reference internal" href="examples/gallery_examples/4_get_material_properties_example.html#sphx-glr-examples-gallery-examples-4-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a>.</p></li>
+<a class="reference internal" href="examples/gallery_examples/004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a>.</p></li>
 <li><p>Postprocessing of homogeneous elements.</p></li>
 </ul>
 </section>
@@ -565,7 +553,7 @@ in the Ansys Help.</p></li>
           <footer class="bd-footer-content">
             
           </footer>
-<script>const element = document.getElementById("main-content"); element.innerHTML = "<h1>Versions</h1><p>This table lists all versions released for the project:</p><table class='table'><thead><tr><th>Version</th><th>URL</th></tr></thead><tbody><tr><td>stable</td><td><a href='https://composites.dpf.docs.pyansys.com/version/stable'>https://composites.dpf.docs.pyansys.com/version/stable</a></td></tr><tr><td>dev</td><td><a href='https://composites.dpf.docs.pyansys.com/version/dev'>https://composites.dpf.docs.pyansys.com/version/dev</a></td></tr><tr><td>0.2</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.2'>https://composites.dpf.docs.pyansys.com/version/0.2</a></td></tr><tr><td>0.1</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.1'>https://composites.dpf.docs.pyansys.com/version/0.1</a></td></tr></tbody></table>"; </script>
+<script>const element = document.getElementById("main-content"); element.innerHTML = "<h1>Versions</h1><p>This table lists all versions released for the project:</p><table class='table'><thead><tr><th>Version</th><th>URL</th></tr></thead><tbody><tr><td>stable</td><td><a href='https://composites.dpf.docs.pyansys.com/version/stable'>https://composites.dpf.docs.pyansys.com/version/stable</a></td></tr><tr><td>dev</td><td><a href='https://composites.dpf.docs.pyansys.com/version/dev'>https://composites.dpf.docs.pyansys.com/version/dev</a></td></tr><tr><td>0.3</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.3'>https://composites.dpf.docs.pyansys.com/version/0.3</a></td></tr><tr><td>0.2</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.2'>https://composites.dpf.docs.pyansys.com/version/0.2</a></td></tr><tr><td>0.1</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.1'>https://composites.dpf.docs.pyansys.com/version/0.1</a></td></tr></tbody></table>"; </script>
         
       </main>
     </div>
@@ -602,13 +590,17 @@ in the Ansys Help.</p></li>
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-    Built with the <a href="https://sphinxdocs.ansys.com/version/stable/index.html">Ansys Sphinx Theme</a> 0.9.9.
-    <br>Last updated on <span id="date"></span></br>
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  0.10.0. <br />Last updated on
+  <span id="date"></span>
 </p>
 <script>
-  var options = { day: 'numeric', month: 'long', year: 'numeric' };
+  var options = { day: "numeric", month: "long", year: "numeric" };
   var lastModifiedDate = new Date(document.lastModified);
-  var date = lastModifiedDate.toLocaleDateString('en-US', options);
+  var date = lastModifiedDate.toLocaleDateString("en-US", options);
   document.getElementById("date").innerHTML = date;
 </script></div>
       
@@ -617,6 +609,6 @@ in the Ansys Help.</p></li>
 </div>
 
   </footer>
-<script>const element = document.getElementById("main-content"); element.innerHTML = "<h1>Versions</h1><p>This table lists all versions released for the project:</p><table class='table'><thead><tr><th>Version</th><th>URL</th></tr></thead><tbody><tr><td>stable</td><td><a href='https://composites.dpf.docs.pyansys.com/version/stable'>https://composites.dpf.docs.pyansys.com/version/stable</a></td></tr><tr><td>dev</td><td><a href='https://composites.dpf.docs.pyansys.com/version/dev'>https://composites.dpf.docs.pyansys.com/version/dev</a></td></tr><tr><td>0.2</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.2'>https://composites.dpf.docs.pyansys.com/version/0.2</a></td></tr><tr><td>0.1</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.1'>https://composites.dpf.docs.pyansys.com/version/0.1</a></td></tr></tbody></table>"; </script>
+<script>const element = document.getElementById("main-content"); element.innerHTML = "<h1>Versions</h1><p>This table lists all versions released for the project:</p><table class='table'><thead><tr><th>Version</th><th>URL</th></tr></thead><tbody><tr><td>stable</td><td><a href='https://composites.dpf.docs.pyansys.com/version/stable'>https://composites.dpf.docs.pyansys.com/version/stable</a></td></tr><tr><td>dev</td><td><a href='https://composites.dpf.docs.pyansys.com/version/dev'>https://composites.dpf.docs.pyansys.com/version/dev</a></td></tr><tr><td>0.3</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.3'>https://composites.dpf.docs.pyansys.com/version/0.3</a></td></tr><tr><td>0.2</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.2'>https://composites.dpf.docs.pyansys.com/version/0.2</a></td></tr><tr><td>0.1</td><td><a href='https://composites.dpf.docs.pyansys.com/version/0.1'>https://composites.dpf.docs.pyansys.com/version/0.1</a></td></tr></tbody></table>"; </script>
   </body>
 </html>

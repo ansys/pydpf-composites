@@ -1,0 +1,91 @@
+﻿.. vale off
+
+FailureModeEnum
+===============
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: FailureModeEnum
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      FailureModeEnum.emax
+      FailureModeEnum.evm
+      FailureModeEnum.e1
+      FailureModeEnum.e1t
+      FailureModeEnum.e1c
+      FailureModeEnum.e2
+      FailureModeEnum.e2t
+      FailureModeEnum.e2c
+      FailureModeEnum.e3
+      FailureModeEnum.e3t
+      FailureModeEnum.e3c
+      FailureModeEnum.e12
+      FailureModeEnum.e13
+      FailureModeEnum.e23
+      FailureModeEnum.smax
+      FailureModeEnum.svm
+      FailureModeEnum.s1
+      FailureModeEnum.s1t
+      FailureModeEnum.s1c
+      FailureModeEnum.s2
+      FailureModeEnum.s2t
+      FailureModeEnum.s2c
+      FailureModeEnum.s3
+      FailureModeEnum.s3t
+      FailureModeEnum.s3c
+      FailureModeEnum.s12
+      FailureModeEnum.s13
+      FailureModeEnum.s23
+      FailureModeEnum.cf
+      FailureModeEnum.w
+      FailureModeEnum.wb
+      FailureModeEnum.wt
+      FailureModeEnum.sc
+      FailureModeEnum.tw
+      FailureModeEnum.th
+      FailureModeEnum.h
+      FailureModeEnum.hf
+      FailureModeEnum.hm
+      FailureModeEnum.hd
+      FailureModeEnum.ho
+      FailureModeEnum.p
+      FailureModeEnum.pf
+      FailureModeEnum.pmA
+      FailureModeEnum.pmB
+      FailureModeEnum.pmC
+      FailureModeEnum.pd
+      FailureModeEnum.l
+      FailureModeEnum.lft3
+      FailureModeEnum.lfc4
+      FailureModeEnum.lfc6
+      FailureModeEnum.lmt1
+      FailureModeEnum.lmc2
+      FailureModeEnum.lmc5
+      FailureModeEnum.c
+      FailureModeEnum.cft
+      FailureModeEnum.cfc
+      FailureModeEnum.cmA
+      FailureModeEnum.cmB
+      FailureModeEnum.cmC
+      FailureModeEnum.vMe
+      FailureModeEnum.vMs
+      FailureModeEnum.as
+      FailureModeEnum.ap
+      FailureModeEnum.af
+      FailureModeEnum.ns
+      FailureModeEnum.na
+   
+   
+
+.. vale on

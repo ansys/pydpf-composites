@@ -1,0 +1,6 @@
+﻿composite\_files\_from\_workbench\_harmonic\_analysis
+=====================================================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autofunction:: composite_files_from_workbench_harmonic_analysis

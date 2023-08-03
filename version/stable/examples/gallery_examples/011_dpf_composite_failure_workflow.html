@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>DPF composite failure workflow &#8212; PyDPF Composites</title>
+
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+ 
+<link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/table.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/011_dpf_composite_failure_workflow';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3';
+        </script>
+    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Contribute" href="../../contribute.html" />
+    <link rel="prev" title="Postprocess a harmonic analysis" href="010_harmonic_example.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container"><!-- Debugging: html_theme_options =  -->
+
+<!-- If there is no MiliSearch enabled, use the PyData search -->
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+   
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pyansys-logo-black-cropped.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/pyansys-logo-black-cropped.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        PyDPF Composites
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../contribute.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.3  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>   <div class="container-xl">
+  <div class="row">
+    <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+    <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul> 
+<li class="nav-item nav-item-additional-breadcrumb">
+  <a href="https://docs.pyansys.com/">PyAnsys</a> » 
+</li>
+ 
+<li class="nav-item nav-item-0">
+  <a href="../../index.html">PyDPF Composites</a> » 
+</li>
+ 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">DPF composite failure workflow</a></li> 
+      </ul>
+    </div></div>
+  </div>
+</div>
+ 
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        PyDPF Composites
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../contribute.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.3  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="001_failure_operator_example.html">Composite failure analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="002_sampling_point_example.html">Sampling point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="003_short_fiber_example.html">Failure analysis for short fiber composites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="004_get_material_properties_example.html">Material properties and custom failure criterion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="005_get_layup_properties_example.html">Lay-up properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="006_filter_composite_data_example.html">Filter result data by different criteria</a></li>
+<li class="toctree-l1"><a class="reference internal" href="007_interlaminar_normal_stress_example.html">Interlaminar normal stresses</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="008_assembly_example.html">Postprocess an assembly</a></li>
+<li class="toctree-l1"><a class="reference internal" href="009_short_fiber_orientation_tensor.html">Plot of the orientation tensor for short fiber composites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_harmonic_example.html">Postprocess a harmonic analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DPF composite failure workflow</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-011-dpf-composite-failure-workflow-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="dpf-composite-failure-workflow">
+<span id="basic-example"></span><span id="sphx-glr-examples-gallery-examples-011-dpf-composite-failure-workflow-py"></span><h1>DPF composite failure workflow<a class="headerlink" href="#dpf-composite-failure-workflow" title="Permalink to this heading">#</a></h1>
+<p>This example shows how to use the native DPF Python interface to configure
+and run the composite failure evaluator. It connects the different DPF
+operators that are needed to evaluate composite failure criteria.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For simple use cases, using the composite failure operator or
+composite sampling point operator is preferable. For examples,
+see <a class="reference internal" href="001_failure_operator_example.html#sphx-glr-examples-gallery-examples-001-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a>
+and <a class="reference internal" href="002_sampling_point_example.html#sphx-glr-examples-gallery-examples-002-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a>.
+Additionally, <a class="reference internal" href="006_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a>
+shows how helper functions can be used to obtain composite result data.</p>
+</div>
+<section id="set-up-analysis">
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<p>Setting up the analysis consists of loading Ansys libraries, configuring
+the combined failure criterion, connecting to the DPF server, and
+preparing files.</p>
+<p>Load Ansys libraries.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.data_sources</span> <span class="kn">import</span> <span class="n">get_composites_data_sources</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CombinedFailureCriterion</span><span class="p">,</span>
+    <span class="n">CoreFailureCriterion</span><span class="p">,</span>
+    <span class="n">CuntzeCriterion</span><span class="p">,</span>
+    <span class="n">HashinCriterion</span><span class="p">,</span>
+    <span class="n">HoffmanCriterion</span><span class="p">,</span>
+    <span class="n">MaxStrainCriterion</span><span class="p">,</span>
+    <span class="n">MaxStressCriterion</span><span class="p">,</span>
+    <span class="n">TsaiHillCriterion</span><span class="p">,</span>
+    <span class="n">TsaiWuCriterion</span><span class="p">,</span>
+    <span class="n">VonMisesCriterion</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span><span class="p">,</span> <span class="n">version_older_than</span>
+</pre></div>
+</div>
+<p>Configure the combined failure criterion.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">combined_fc</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;My Failure Criteria&quot;</span><span class="p">,</span>
+    <span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">MaxStrainCriterion</span><span class="p">(),</span>
+        <span class="n">MaxStressCriterion</span><span class="p">(),</span>
+        <span class="n">TsaiHillCriterion</span><span class="p">(),</span>
+        <span class="n">TsaiWuCriterion</span><span class="p">(),</span>
+        <span class="n">HoffmanCriterion</span><span class="p">(),</span>
+        <span class="n">HashinCriterion</span><span class="p">(),</span>
+        <span class="n">CuntzeCriterion</span><span class="p">(),</span>
+        <span class="n">CoreFailureCriterion</span><span class="p">(),</span>
+        <span class="n">VonMisesCriterion</span><span class="p">(</span><span class="n">vme</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vms</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Start a DPF server and prepare files</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
+
+<span class="n">composite_data_sources</span> <span class="o">=</span> <span class="n">get_composites_data_sources</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="initialize-dpf-model-and-data-sources">
+<h2>Initialize DPF model and data sources<a class="headerlink" href="#initialize-dpf-model-and-data-sources" title="Permalink to this heading">#</a></h2>
+<p>Initialize the DPF model and the data sources.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rst_data_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">rst</span>
+<span class="n">material_support_data_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">material_support</span>
+<span class="n">eng_data_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">engineering_data</span>
+
+<span class="k">if</span> <span class="n">version_older_than</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;7.0&quot;</span><span class="p">):</span>
+    <span class="c1"># Get datasources of composite definition files for the backend 2023 R2 or before</span>
+    <span class="n">composite_definitions_source</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">composite_data_sources</span><span class="o">.</span><span class="n">old_composite_sources</span></a><span class="p">[</span><span class="s2">&quot;shell&quot;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Get datasources of composite definition files for the backend 2024 R1 or later</span>
+    <span class="n">composite_definitions_source</span> <span class="o">=</span> <span class="n">composite_data_sources</span><span class="o">.</span><span class="n">composite</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-providers">
+<h2>Set up providers<a class="headerlink" href="#set-up-providers" title="Permalink to this heading">#</a></h2>
+<p>Set up the mesh provider.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_provider</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">mesh_provider</span>
+</pre></div>
+</div>
+<p>Set up the material support provider.
+The material support provider takes care of mapping the materials in the RST file to
+the materials in the composite definitions.
+The material support contains all materials from the RST file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">material_support_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;support_provider&quot;</span><span class="p">)</span>
+<span class="n">material_support_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s2">&quot;mat&quot;</span><span class="p">)</span>
+
+<span class="n">material_support_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">material_support_data_source</span><span class="p">)</span>
+<span class="n">material_support_provider</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Set up the result information provider, which gets
+the unit system from the RST file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_info_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;ResultInfoProvider&quot;</span><span class="p">)</span>
+<span class="n">result_info_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set up the material provider
+The material provider combines the material support in the engineering data
+XML file and the unit system. Its output can be used to evaluate material
+properties.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">material_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;eng_data::ans_mat_material_provider&quot;</span><span class="p">)</span>
+<span class="n">material_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">eng_data_source</span>
+<span class="n">material_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">unit_system_or_result_info</span><span class="p">(</span><span class="n">result_info_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">result_info</span><span class="p">)</span>
+<span class="n">material_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">abstract_field_support</span><span class="p">(</span>
+    <span class="n">material_support_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">abstract_field_support</span>
+<span class="p">)</span>
+<span class="n">material_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Engineering_data_file</span><span class="p">(</span><span class="n">eng_data_source</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set up the lay-up provider, which reads the composite definition file
+and enriches the mesh with the composite lay-up information.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">layup_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::layup_provider_operator&quot;</span><span class="p">)</span>
+<span class="n">layup_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
+<span class="n">layup_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_definitions_source</span><span class="p">)</span>
+<span class="n">layup_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">abstract_field_support</span><span class="p">(</span>
+    <span class="n">material_support_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">abstract_field_support</span>
+<span class="p">)</span>
+<span class="n">layup_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">unit_system</span><span class="p">(</span><span class="n">result_info_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">result_info</span><span class="p">)</span>
+<span class="n">layup_provider</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-result-operators">
+<h2>Set up result operators<a class="headerlink" href="#set-up-result-operators" title="Permalink to this heading">#</a></h2>
+<p>Set up result operators for strains and stresses.
+<code class="docutils literal notranslate"><span class="pre">rotate_to_global</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code> because the postprocessing engine expects the
+results to be in the element coordinate system (material coordinate system).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strain_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">elastic_strain</span><span class="p">()</span>
+<span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+<span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">stress_operator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
+<span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">rst_data_source</span><span class="p">)</span>
+<span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-failure-evaluator">
+<h2>Set up failure evaluator<a class="headerlink" href="#set-up-failure-evaluator" title="Permalink to this heading">#</a></h2>
+<p>Set up the failure evaluator, which combines the results and
+evaluates all failure criteria. The output contains the
+maximum failure criteria for each integration point.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">failure_evaluator</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::multiple_failure_criteria_operator&quot;</span><span class="p">)</span>
+<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">combined_fc</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
+<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">materials_container</span><span class="p">(</span><span class="n">material_provider</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">strains_container</span><span class="p">(</span><span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
+<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">stresses_container</span><span class="p">(</span><span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
+<span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="compute-and-plot-failure-criteria">
+<h2>Compute and plot failure criteria<a class="headerlink" href="#compute-and-plot-failure-criteria" title="Permalink to this heading">#</a></h2>
+<p>Use the output of the multiple failure criteria operator to
+compute the minimum and maximum failure criteria for each element.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minmax_per_element</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::minmax_per_element_operator&quot;</span><span class="p">)</span>
+<span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(</span><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">)</span>
+<span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
+<span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">material_support</span><span class="p">(</span><span class="n">material_support_provider</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">abstract_field_support</span><span class="p">)</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">minmax_per_element</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Plot the maximum and minimum values.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">value_index</span></a> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">meshed_region</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">value_index</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_011_dpf_composite_failure_workflow_001.png" srcset="../../_images/sphx_glr_011_dpf_composite_failure_workflow_001.png" alt="011 dpf composite failure workflow" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.886 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-dpf-composite-failure-workflow-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/a7656987490a33688e3afce928a4b2e0/011_dpf_composite_failure_workflow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">011_dpf_composite_failure_workflow.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/ead038a40bb172783f3436bae6b784e4/011_dpf_composite_failure_workflow.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">011_dpf_composite_failure_workflow.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-analysis">Set up analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-dpf-model-and-data-sources">Initialize DPF model and data sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-providers">Set up providers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-result-operators">Set up result operators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-failure-evaluator">Set up failure evaluator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-and-plot-failure-criteria">Compute and plot failure criteria</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/examples/gallery_examples/011_dpf_composite_failure_workflow.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright (c) 2023 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  0.10.0. <br />Last updated on
+  <span id="date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var lastModifiedDate = new Date(document.lastModified);
+  var date = lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("date").innerHTML = date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

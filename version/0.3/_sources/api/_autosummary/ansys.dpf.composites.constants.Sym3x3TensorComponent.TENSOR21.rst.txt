@@ -1,0 +1,6 @@
+TENSOR21
+========
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: Sym3x3TensorComponent.TENSOR21

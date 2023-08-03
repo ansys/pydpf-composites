@@ -1,0 +1,6 @@
+wf\_vms
+=======
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: VonMisesCriterion.wf_vms

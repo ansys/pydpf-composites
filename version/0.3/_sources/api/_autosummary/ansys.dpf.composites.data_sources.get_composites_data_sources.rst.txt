@@ -1,0 +1,6 @@
+﻿get\_composites\_data\_sources
+==============================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autofunction:: get_composites_data_sources
