@@ -214,13 +214,13 @@ grpcio = "*"
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.10.5"
+version = "0.10.6"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 optional = true
 python-versions = ">=3.8,<4"
 files = [
-    {file = "ansys_sphinx_theme-0.10.5-py3-none-any.whl", hash = "sha256:1adc41f3b5a7a302e3c116bd25dd1b797fd786a395805390651b460b234e17d0"},
-    {file = "ansys_sphinx_theme-0.10.5.tar.gz", hash = "sha256:bf3265df50e8fc6e28e18066409dacaeaccf8bdcd3d61fe0147032e63916f33a"},
+    {file = "ansys_sphinx_theme-0.10.6-py3-none-any.whl", hash = "sha256:0ff077a35d0d950aa2d8ebe95ec5f2e8ed217c9721bea5380623c2781ffcc2ac"},
+    {file = "ansys_sphinx_theme-0.10.6.tar.gz", hash = "sha256:b66082557fbab9fe192cc1b4be495e0a64c86ba107929775cd8866ff97d3fadc"},
 ]
 
 [package.dependencies]
