@@ -92,7 +92,7 @@ class ContinuousFiberCompositesFiles:
     def _get_rst_list(value: Union[List[_PATH], _PATH]) -> List[_PATH]:
         if isinstance(value, (str, pathlib.Path)):
             value = [value]
-        return value
+        return value  # type: ignore
 
 
 @dataclass
@@ -145,7 +145,7 @@ class ShortFiberCompositesFiles:
     def _get_rst_list(value: Union[List[_PATH], _PATH]) -> List[_PATH]:
         if isinstance(value, (str, pathlib.Path)):
             value = [value]
-        return value
+        return value  # type: ignore
 
 
 # roosre June 2023: todo add deprecation warning where composite definition label is used
