@@ -75,7 +75,7 @@ class ContinuousFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
         """
-        self.rst = rst
+        self.rst = rst  # type: ignore
         self.composite = composite
         self.engineering_data = engineering_data
         self.files_are_local = files_are_local
@@ -128,7 +128,7 @@ class ShortFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
         """
-        self.rst = rst
+        self.rst = rst  # type: ignore
         self.dsdat = dsdat
         self.engineering_data = engineering_data
         self.files_are_local = files_are_local
