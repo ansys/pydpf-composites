@@ -82,7 +82,8 @@ class ContinuousFiberCompositesFiles:
 
     # The constructor pretends that rst can also be just a path
     # but the property rst must be a list
-    def __setattr__(self, prop, val):
+    def __setattr__(self, prop, val):  # type: ignore
+        """Convert values if needed."""
         if prop == "rst":
             val = self._get_rst_list(val)
         super().__setattr__(prop, val)
@@ -134,7 +135,8 @@ class ShortFiberCompositesFiles:
 
     # The constructor pretends that rst can also be just a path
     # but the property rst must be a list
-    def __setattr__(self, prop, val):
+    def __setattr__(self, prop, val):  # type: ignore
+        """Convert values if needed."""
         if prop == "rst":
             val = self._get_rst_list(val)
         super().__setattr__(prop, val)
