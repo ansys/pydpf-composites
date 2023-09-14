@@ -57,3 +57,7 @@ def test_get_files_from_result_folder_harmonic(dpf_server):
 
     assert files.rst == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
     assert files.engineering_data == WORKFLOW_EXAMPLE_ROOT_HARMONIC / "MatML.xml"
+
+    # ensure that the setter of RST converts the input into a list
+    files.rst = WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"
+    assert files.rst == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
