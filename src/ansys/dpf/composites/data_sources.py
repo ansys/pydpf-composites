@@ -134,7 +134,7 @@ class ShortFiberCompositesFiles:
         self.files_are_local = files_are_local
 
     # The constructor pretends that rst can also be just a path
-    # but the property rst must be a list
+    # but the property rst must be a list.
     def __setattr__(self, prop, val):  # type: ignore
         """Convert values if needed."""
         if prop == "rst":
