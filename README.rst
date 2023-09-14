@@ -34,13 +34,13 @@ PyDPF Composites
 
 
 PyDPF Composites enables the post-processing of composite structures based on
-`Ansys DPF`_ and the DPF Composites plugin. It implements classes on top of
-DPF Composites operators and data accessors for short fiber and layered
-composites (layered shell and solid elements). This module can be used to
-postprocess fiber reinforced plastics and layered composites, and to implement
-custom failure criteria and computation. For information demonstrating
-the behavior and usage of PyDPF Composites, see `Examples`_ in the DPF Composite
-documentation.
+`Ansys DPF`_ and the DPF Composites plugin. So it is a Python wrapper which
+implements classes on top of DPF Composites operators and data accessors for
+short fiber and layered composites (layered shell and solid elements). This
+module can be used to postprocess fiber reinforced plastics and layered
+composites, and to implement custom failure criteria and computation. For
+information demonstrating the behavior and usage of PyDPF Composites,
+see `Examples`_ in the DPF Composite documentation.
 
 .. START_MARKER_FOR_SPHINX_DOCS
 
@@ -195,6 +195,6 @@ released versions.
 .. _pytest: https://docs.pytest.org/en/stable/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _tox: https://tox.wiki/
-.. _Examples: https://composites.dpf.docs.pyansys.com/dev/examples/index.html
+.. _Examples: https://composites.dpf.docs.pyansys.com/version/stable/examples/index.html
 .. _Getting The DPF Server Docker Image: https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image
 .. _Ansys DPF: https://dpf.docs.pyansys.com/version/stable/
