@@ -75,12 +75,23 @@ class ContinuousFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
         """
-        if isinstance(rst, (str, pathlib.Path)):
-            rst = [rst]
-        self.rst = rst  # type: ignore
+        self.rst = self._get_rst_list(rst)
         self.composite = composite
         self.engineering_data = engineering_data
         self.files_are_local = files_are_local
+
+    # The constructor pretends that rst can also be just a path
+    # but the property rst must be a list
+    def __setattr__(self, prop, val):
+        if prop == "rst":
+            val = self._get_rst_list(val)
+        super().__setattr__(prop, val)
+
+    @staticmethod
+    def _get_rst_list(value: Union[List[_PATH], _PATH]) -> List[_PATH]:
+        if isinstance(value, (str, pathlib.Path)):
+            value = [value]
+        return value
 
 
 @dataclass
@@ -116,12 +127,23 @@ class ShortFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
         """
-        if isinstance(rst, (str, pathlib.Path)):
-            rst = [rst]
-        self.rst = rst  # type: ignore
+        self.rst = self._get_rst_list(rst)
         self.dsdat = dsdat
         self.engineering_data = engineering_data
         self.files_are_local = files_are_local
+
+    # The constructor pretends that rst can also be just a path
+    # but the property rst must be a list
+    def __setattr__(self, prop, val):
+        if prop == "rst":
+            val = self._get_rst_list(val)
+        super().__setattr__(prop, val)
+
+    @staticmethod
+    def _get_rst_list(value: Union[List[_PATH], _PATH]) -> List[_PATH]:
+        if isinstance(value, (str, pathlib.Path)):
+            value = [value]
+        return value
 
 
 # roosre June 2023: todo add deprecation warning where composite definition label is used
