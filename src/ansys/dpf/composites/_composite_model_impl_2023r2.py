@@ -193,6 +193,15 @@ class CompositeModelImpl2023R2:
         """Material operators."""
         return self._material_operators
 
+    @property
+    def material_names(self) -> Dict[str, int]:
+        """Material ID to name map"""
+        raise NotImplementedError(
+            "material_names is not implemented"
+            " for this version of DPF. Please upgrade to 7.0 (2024 R1)"
+            " or later."
+        )
+
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
 

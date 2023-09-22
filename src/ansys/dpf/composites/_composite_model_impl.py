@@ -144,6 +144,25 @@ class CompositeModelImpl:
         """Material operators."""
         return self._material_operators
 
+    @property
+    def material_names(self) -> Dict[str, int]:
+        """
+        Material name to DPF material ID map.
+
+        Can be used to filter analysis plies or element layers.
+        """
+        helper_op = dpf.Operator("composite::materials_container_helper")
+        helper_op.inputs.materials_container(self._material_operators.material_provider.outputs)
+        string_field = helper_op.outputs.material_names()
+        material_ids = string_field.scoping.ids
+
+        names = {}
+        for mat_id in material_ids:
+            names[string_field.data[string_field.scoping.index(mat_id)]] = mat_id
+
+        return names
+
+
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.

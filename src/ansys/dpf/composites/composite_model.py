@@ -106,6 +106,11 @@ class CompositeModel:
         """Material operators."""
         return self._implementation.material_operators
 
+    @property
+    def material_names(self) -> Dict[str, int]:
+        """Material ID to name map"""
+        return self._implementation.material_names
+
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
