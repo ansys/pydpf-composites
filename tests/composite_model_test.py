@@ -83,6 +83,17 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids
 
+    ref_material_names = {
+       'Epoxy Carbon UD (230 GPa) Prepreg': 3,
+       'Epoxy Carbon Woven (230 GPa) Wet': 2,
+       'Honeycomb': 4,
+       'Structural Steel': 1
+    }
+    mat_names = composite_model.material_names
+    assert len(mat_names) == len(ref_material_names)
+    for mat_name, dpf_mat_id in ref_material_names.items():
+        assert mat_names[mat_name] == dpf_mat_id
+
     timer.add("After getting properties")
 
     timer.summary()
