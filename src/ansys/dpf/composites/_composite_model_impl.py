@@ -155,8 +155,9 @@ class CompositeModelImpl:
             helper_op = dpf.Operator("composite::materials_container_helper")
         except:
             raise RuntimeError(
-                "Operator composite::materials_container_helper does not exist in the registry "
-                " of 2024 R1-pre0. Please use the latest preview or the unified installer."
+                "Operator composite::materials_container_helper doesn't exist. "
+                "This could be because the server version is 2024 R1-pre0. "
+                "Please use the latest preview or the unified installer."
             )
 
         helper_op.inputs.materials_container(self._material_operators.material_provider.outputs)
