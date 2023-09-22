@@ -151,7 +151,14 @@ class CompositeModelImpl:
 
         Can be used to filter analysis plies or element layers.
         """
-        helper_op = dpf.Operator("composite::materials_container_helper")
+        try:
+            helper_op = dpf.Operator("composite::materials_container_helper")
+        except:
+            raise RuntimeError(
+                "Operator composite::materials_container_helper does not exist in the registry "
+                " of 2024 R1-pre0. Please use the latest preview or the unified installer."
+            )
+
         helper_op.inputs.materials_container(self._material_operators.material_provider.outputs)
         string_field = helper_op.outputs.material_names()
         material_ids = string_field.scoping.ids
@@ -161,7 +168,6 @@ class CompositeModelImpl:
             names[string_field.data[string_field.scoping.index(mat_id)]] = mat_id
 
         return names
-
 
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
