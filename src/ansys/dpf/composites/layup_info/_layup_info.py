@@ -219,7 +219,7 @@ def get_dpf_material_id_by_analysis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
 ) -> Dict[str, np.int64]:
-    """Get Dict that maps analysis ply names to dpf_material_ids.
+    """Get the dictionary that maps analysis ply names to DPF material IDs.
 
     Parameters
     ----------
