@@ -204,7 +204,7 @@ def get_dpf_material_id_by_analyis_ply_map(
 
     Note
     ----
-    Cache the output because the computation can be performance critical.
+    Cache the output because the computation can be performance-critical.
     """
     warn(
         "`get_dpf_material_id_by_analyis_ply_map` is deprecated. "
