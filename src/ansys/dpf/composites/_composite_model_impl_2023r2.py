@@ -195,7 +195,7 @@ class CompositeModelImpl2023R2:
 
     @property
     def material_names(self) -> Dict[str, int]:
-        """Material ID to name map"""
+        """Get material name to DPF material ID map."""
         raise NotImplementedError(
             "material_names is not implemented"
             " for this version of DPF. Please upgrade to 7.0 (2024 R1)"

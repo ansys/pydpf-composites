@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
+from warnings import warn
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
