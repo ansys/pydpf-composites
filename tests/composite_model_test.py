@@ -14,7 +14,7 @@ from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxS
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
-from ansys.dpf.composites.server_helpers import version_older_than
+from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
 
 from .helper import Timer
 
@@ -83,16 +83,17 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids
 
-    ref_material_names = [
-        "Epoxy Carbon UD (230 GPa) Prepreg",
-        "Epoxy Carbon Woven (230 GPa) Wet",
-        "Honeycomb",
-        "Structural Steel",
-    ]
-    mat_names = composite_model.material_names
-    assert len(mat_names) == len(ref_material_names)
-    for mat_name in ref_material_names:
-        assert mat_name in mat_names.keys()
+    if version_equal_or_later(dpf_server, "7.0"):
+        ref_material_names = [
+            "Epoxy Carbon UD (230 GPa) Prepreg",
+            "Epoxy Carbon Woven (230 GPa) Wet",
+            "Honeycomb",
+            "Structural Steel",
+        ]
+        mat_names = composite_model.material_names
+        assert len(mat_names) == len(ref_material_names)
+        for mat_name in ref_material_names:
+            assert mat_name in mat_names.keys()
 
     timer.add("After getting properties")
 
