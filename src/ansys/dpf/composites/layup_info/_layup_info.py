@@ -226,7 +226,7 @@ def get_dpf_material_id_by_analysis_ply_map(
     mesh
         DPF Meshed region enriched with lay-up information
     data_source_or_streams_provider:
-        DPF data source with rst file or streams_provider. The streams provider is
+        DPF data source with RST file or streams provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
 
     Note
