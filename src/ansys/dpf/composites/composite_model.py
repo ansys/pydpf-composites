@@ -108,7 +108,7 @@ class CompositeModel:
 
     @property
     def material_names(self) -> Dict[str, int]:
-        """Material ID to name map"""
+        """Get material name to DPF material ID map."""
         return self._implementation.material_names
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
