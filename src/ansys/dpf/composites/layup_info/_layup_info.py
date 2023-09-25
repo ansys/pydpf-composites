@@ -231,7 +231,7 @@ def get_dpf_material_id_by_analysis_ply_map(
 
     Note
     ----
-    Cache the output because the computation can be performance critical.
+    Cache the output because the computation can be performance-critical.
     """
     # Note: The stream_provider_or_data_source is not strictly needed for this workflow
     # We just need it because get_element_info_provider provider needs it (which needs
