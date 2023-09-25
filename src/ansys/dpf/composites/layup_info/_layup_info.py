@@ -204,7 +204,7 @@ def get_dpf_material_id_by_analyis_ply_map(
 
     Note
     ----
-    Cache the output because the computation can be performance critical.
+    Cache the output because the computation can be performance-critical.
     """
     warn(
         "`get_dpf_material_id_by_analyis_ply_map` is deprecated. "
@@ -219,19 +219,19 @@ def get_dpf_material_id_by_analysis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
 ) -> Dict[str, np.int64]:
-    """Get Dict that maps analysis ply names to dpf_material_ids.
+    """Get the dictionary that maps analysis ply names to DPF material IDs.
 
     Parameters
     ----------
     mesh
         DPF Meshed region enriched with lay-up information
     data_source_or_streams_provider:
-        DPF data source with rst file or streams_provider. The streams provider is
-        available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
+        DPF data source with RST file or streams provider. The streams provider is
+        available from the :attr:`.CompositeModel.core_model` attribute (under ``metadata.streams_provider``).
 
     Note
     ----
-    Cache the output because the computation can be performance critical.
+    Cache the output because the computation can be performance-critical.
     """
     # Note: The stream_provider_or_data_source is not strictly needed for this workflow
     # We just need it because get_element_info_provider provider needs it (which needs
