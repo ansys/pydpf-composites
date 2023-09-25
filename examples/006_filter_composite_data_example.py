@@ -27,7 +27,7 @@ from ansys.dpf.composites.example_helper import get_continuous_fiber_example_fil
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
-    get_dpf_material_id_by_analyis_ply_map,
+    get_dpf_material_id_by_analysis_ply_map,
 )
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,

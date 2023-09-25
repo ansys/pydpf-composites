@@ -7,7 +7,7 @@ from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
     get_analysis_ply_index_to_name_map,
-    get_dpf_material_id_by_analyis_ply_map,
+    get_dpf_material_id_by_analysis_ply_map,
     get_element_info_provider,
 )
 from ansys.dpf.composites.layup_info.material_operators import get_material_operators
@@ -26,7 +26,7 @@ def test_get_analysis_ply_material_id_map(dpf_server):
     files = get_basic_shell_files()
     setup_result = setup_operators(dpf_server, files)
 
-    material_map = get_dpf_material_id_by_analyis_ply_map(
+    material_map = get_dpf_material_id_by_analysis_ply_map(
         setup_result.mesh, setup_result.streams_provider
     )
 
