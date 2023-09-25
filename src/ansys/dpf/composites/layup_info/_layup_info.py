@@ -208,7 +208,7 @@ def get_dpf_material_id_by_analyis_ply_map(
     """
     warn(
         "`get_dpf_material_id_by_analyis_ply_map` is deprecated. "
-        "Please use `get_dpf_material_id_by_analysis_ply_map`.",
+        " and was replaced by `get_dpf_material_id_by_analysis_ply_map`.",
         category=DeprecationWarning,
         stacklevel=2,
     )

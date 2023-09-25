@@ -41,9 +41,8 @@ def get_unit_system(
         if default_unit_system is None:
             raise RuntimeError(
                 "The result file does not specify a unit system."
-                " Please define a default unit system. "
-                "A default unit system can be passed when "
-                "creating a CompositeModel."
+                " A default unit system must be defined.. "
+                "It can be passed when creating a CompositeModel."
             )
         return default_unit_system
     else:

@@ -149,15 +149,17 @@ class CompositeModelImpl:
         """
         Material name to DPF material ID map.
 
-        Can be used to filter analysis plies or element layers.
+        This property can be used to filter analysis plies
+        or element layers.
         """
         try:
             helper_op = dpf.Operator("composite::materials_container_helper")
         except Exception as exc:
             raise RuntimeError(
                 f"Operator composite::materials_container_helper doesn't exist. "
-                f"This could be because the server version is 2024 R1-pre0. Please use "
-                f"the latest preview or the unified installer. Error: {exc}"
+                f"This could be because the server version is 2024 R1-pre0. The "
+                f"latest preview or the unified installer can be used instead. "
+                f"Error: {exc}"
             ) from exc
 
         helper_op.inputs.materials_container(self._material_operators.material_provider.outputs)
