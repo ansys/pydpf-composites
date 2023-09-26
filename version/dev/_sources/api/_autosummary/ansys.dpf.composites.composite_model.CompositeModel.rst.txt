@@ -69,6 +69,7 @@ CompositeModel
       CompositeModel.composite_files
       CompositeModel.core_model
       CompositeModel.data_sources
+      CompositeModel.material_names
       CompositeModel.material_operators
    
    

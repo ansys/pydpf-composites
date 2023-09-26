@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>get_constant_property_dict &#8212; PyDPF Composites</title>
+    <title>material_names &#8212; PyDPF Composites</title>
 
   
   
@@ -58,7 +58,7 @@
     <script src="../../_static/js/table.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="../../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.material_names';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
@@ -66,8 +66,8 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="get_element_info" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_info.html" />
-    <link rel="prev" title="get_analysis_plies" href="ansys.dpf.composites.composite_model.CompositeModel.get_analysis_plies.html" />
+    <link rel="next" title="material_operators" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html" />
+    <link rel="prev" title="data_sources" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -308,7 +308,7 @@ document.write(`
           <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
           <li class="nav-item nav-item-2"><a href="../composite_model.html" >Composite model</a> » </li>
           <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.composite_model.CompositeModel.html" accesskey="U">CompositeModel</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">get_constant_property_dict</a></li> 
+        <li class="nav-item nav-item-this"><a href="">material_names</a></li> 
       </ul>
     </div></div>
   </div>
@@ -436,7 +436,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids.html">get_all_layered_element_ids</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids_for_composite_definition_label.html">get_all_layered_element_ids_for_composite_definition_label</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_analysis_plies.html">get_analysis_plies</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">get_constant_property_dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict.html">get_constant_property_dict</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_info.html">get_element_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_laminate_offset.html">get_element_laminate_offset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_layup_operator.html">get_layup_operator</a></li>
@@ -448,7 +448,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_files.html">composite_files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html">core_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html">data_sources</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_names.html">material_names</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">material_names</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html">material_operators</a></li>
 </ul>
 </li>
@@ -491,32 +491,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="get-constant-property-dict">
-<h1>get_constant_property_dict<a class="headerlink" href="#get-constant-property-dict" title="Permalink to this heading">#</a></h1>
-<dl class="py method">
-<dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict">
-<span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">get_constant_property_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict" title="Permalink to this definition">#</a></dt>
-<dd><p>Get a dictionary with constant properties.</p>
-<p>Returns a dictionary with <code class="docutils literal notranslate"><span class="pre">dpf_material_id</span></code> as the key and
-a dictionary with the requested properties as the value. Only constant properties
-are supported. Variable properties are evaluated at their
-default values.</p>
-<p>This method can be slow to evaluate and should not
-be called in a loop.</p>
+  <section id="material-names">
+<h1>material_names<a class="headerlink" href="#material-names" title="Permalink to this heading">#</a></h1>
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel.material_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">material_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel.material_names" title="Permalink to this definition">#</a></dt>
+<dd><p>Get material name to DPF material ID map.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>material_properties</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Collection" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty" title="ansys.dpf.composites.layup_info.material_properties.MaterialProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>]) – List of the requested material properties.</p></li>
-<li><p><strong>composite_definition_label</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Label of the composite definition, which is the
-dictionary key in the <a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles.composite</span></code></a>
-attribute. This parameter is only required for assemblies.
-See the note about assemblies in the description for the <a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a> class.
-The dictionary only contains the materials of the analysis plies defined
-in the specified composite definition.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int64</span></code>, <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty" title="ansys.dpf.composites.layup_info.material_properties.MaterialProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -540,7 +523,7 @@ in the specified composite definition.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict"><code class="docutils literal notranslate"><span class="pre">CompositeModel.get_constant_property_dict()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.dpf.composites.composite_model.CompositeModel.material_names"><code class="docutils literal notranslate"><span class="pre">CompositeModel.material_names</span></code></a></li>
 </ul>
   </nav></div>
 
@@ -549,7 +532,7 @@ in the specified composite definition.</p></li>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict.rst.txt">
+    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.material_names.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

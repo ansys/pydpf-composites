@@ -493,7 +493,7 @@ DPF server, and retrieving the example files.</p>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">AnalysisPlyInfoProvider</span><span class="p">,</span>
     <span class="n">get_all_analysis_ply_names</span><span class="p">,</span>
-    <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">,</span>
+    <span class="n">get_dpf_material_id_by_analysis_ply_map</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.select_indices</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">get_selected_indices</span><span class="p">,</span>
@@ -604,7 +604,7 @@ for all plies that have a material with DPF material ID.
 Note: It is not possible to get a DPF material ID for a
 given material name. It is only possible to get a DPF material
 ID from an analysis ply.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a> <span class="o">=</span> <span class="n">get_dpf_material_id_by_analyis_ply_map</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a> <span class="o">=</span> <span class="n">get_dpf_material_id_by_analysis_ply_map</span><span class="p">(</span>
     <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">data_source_or_streams_provider</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span>
 <span class="p">)</span>
 <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">ud_material_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_map</span></a><span class="p">[</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span><span class="p">]</span>
@@ -629,7 +629,7 @@ ID from an analysis ply.</p>
 </div>
 
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/sphx_glr_006_filter_composite_data_example_003.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.482 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.551 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-006-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/adf87dd096add9a8ebb88eb4ce7f189b/006_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">006_filter_composite_data_example.py</span></code></a></p>
