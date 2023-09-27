@@ -143,7 +143,7 @@ class CompositeModelImpl2023R2:
             warn(
                 "The post-processing of composite models with multiple lay-up"
                 " definitions (assemblies) is deprecated with DPF servers older than 7.0"
-                " (2024 R1). Please use DPF server 7.0 or later.",
+                " (2024 R1). DPF server 7.0 or later should be used instead.",
                 DeprecationWarning,
                 stacklevel=2,
             )
@@ -192,6 +192,15 @@ class CompositeModelImpl2023R2:
     def material_operators(self) -> MaterialOperators:
         """Material operators."""
         return self._material_operators
+
+    @property
+    def material_names(self) -> Dict[str, int]:
+        """Get material name to DPF material ID map."""
+        raise NotImplementedError(
+            "material_names is not implemented"
+            " for this version of DPF. DPF server 7.0 (2024 R1)"
+            " or later should be used instead."
+        )
 
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
@@ -550,8 +559,9 @@ class CompositeModelImpl2023R2:
         """Get all layered element IDs."""
         raise NotImplementedError(
             "get_all_layered_element_ids is not implemented"
-            " for this version of DPF. Please upgrade to 7.0 (2024 R1)"
-            " or later. Use get_all_layered_element_ids_for_composite_definition_label"
+            " for this version of DPF. DPF server 7.0 (2024 R1)"
+            " or later should be used instead. Use "
+            "get_all_layered_element_ids_for_composite_definition_label"
             " instead."
         )
 
