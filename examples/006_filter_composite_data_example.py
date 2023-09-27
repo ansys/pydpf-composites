@@ -27,7 +27,7 @@ from ansys.dpf.composites.example_helper import get_continuous_fiber_example_fil
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
-    get_dpf_material_id_by_analyis_ply_map,
+    get_dpf_material_id_by_analysis_ply_map,
 )
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
@@ -123,7 +123,7 @@ composite_model.get_mesh().plot(ply_result_field)
 # Note: It is not possible to get a DPF material ID for a
 # given material name. It is only possible to get a DPF material
 # ID from an analysis ply.
-material_map = get_dpf_material_id_by_analyis_ply_map(
+material_map = get_dpf_material_id_by_analysis_ply_map(
     composite_model.get_mesh(), data_source_or_streams_provider=composite_model.data_sources.rst
 )
 ud_material_id = material_map["P1L1__ud_patch ns1"]
