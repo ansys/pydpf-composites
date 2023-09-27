@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>margin_of_safety &#8212; PyDPF Composites</title>
+    <title>material_names &#8212; PyDPF Composites</title>
 
   
   
@@ -58,7 +58,7 @@
     <script src="../../_static/js/table.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="../../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.material_names';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3';
@@ -66,8 +66,8 @@
     <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="name" href="ansys.dpf.composites.sampling_point.SamplingPoint.name.html" />
-    <link rel="prev" title="is_uptodate" href="ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate.html" />
+    <link rel="next" title="material_operators" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html" />
+    <link rel="prev" title="data_sources" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -306,9 +306,9 @@ document.write(`
 </li>
  
           <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
-          <li class="nav-item nav-item-2"><a href="../sampling_point.html" >Sampling point</a> » </li>
-          <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.sampling_point.SamplingPoint.html" accesskey="U">SamplingPoint</a> » </li>
-        <li class="nav-item nav-item-this"><a href="">margin_of_safety</a></li> 
+          <li class="nav-item nav-item-2"><a href="../composite_model.html" >Composite model</a> » </li>
+          <li class="nav-item nav-item-3"><a href="ansys.dpf.composites.composite_model.CompositeModel.html" accesskey="U">CompositeModel</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">material_names</a></li> 
       </ul>
     </div></div>
   </div>
@@ -429,55 +429,38 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../composite_model.html">Composite model</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../composite_model.html">Composite model</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.html">CompositeModel</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses.html">add_interlaminar_normal_stresses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria.html">evaluate_failure_criteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids.html">get_all_layered_element_ids</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_all_layered_element_ids_for_composite_definition_label.html">get_all_layered_element_ids_for_composite_definition_label</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_analysis_plies.html">get_analysis_plies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_constant_property_dict.html">get_constant_property_dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_info.html">get_element_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_element_laminate_offset.html">get_element_laminate_offset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_layup_operator.html">get_layup_operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_mesh.html">get_mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_property_for_all_layers.html">get_property_for_all_layers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_result_times_or_frequencies.html">get_result_times_or_frequencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point.html">get_sampling_point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_definition_labels.html">composite_definition_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.composite_files.html">composite_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html">core_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html">data_sources</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">material_names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html">material_operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../composite_scope.html">Composite scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constants.html">Constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_sources.html">Data sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../failure_criteria.html">Failure criteria</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layup_info.html">Lay-up information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../result_definition.html">Result definition</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../sampling_point.html">Sampling point</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.html">SamplingPoint</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_ply_sequence_to_plot.html">add_ply_sequence_to_plot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.add_results_to_plot.html">add_results_to_plot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices.html">get_indices</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots.html">get_offsets_by_spots</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_ply_wise_critical_failures.html">get_ply_wise_critical_failures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_polar_plot.html">get_polar_plot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_result_plots.html">get_result_plots</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.analysis_plies.html">analysis_plies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e1.html">e1</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e12.html">e12</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e13.html">e13</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e2.html">e2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e23.html">e23</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.e3.html">e3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.element_id.html">element_id</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.failure_modes.html">failure_modes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.inverse_reserve_factor.html">inverse_reserve_factor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate.html">is_uptodate</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">margin_of_safety</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.name.html">name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.number_of_plies.html">number_of_plies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.offsets.html">offsets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E1.html">polar_properties_E1</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_E2.html">polar_properties_E2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.polar_properties_G12.html">polar_properties_G12</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor.html">reserve_factor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.results.html">results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s1.html">s1</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s12.html">s12</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s13.html">s13</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s2.html">s2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s23.html">s23</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.s3.html">s3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply.html">spots_per_ply</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPointFigure.html">SamplingPointFigure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.sampling_point.FailureResult.html">FailureResult</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling_point.html">Sampling point</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../server_helpers.html">Server helpers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../select_indices.html">Select elementary indices</a></li>
 </ul>
@@ -508,16 +491,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="margin-of-safety">
-<h1>margin_of_safety<a class="headerlink" href="#margin-of-safety" title="Permalink to this heading">#</a></h1>
+  <section id="material-names">
+<h1>material_names<a class="headerlink" href="#material-names" title="Permalink to this heading">#</a></h1>
 <dl class="py property">
-<dt class="sig sig-object py" id="ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SamplingPoint.</span></span><span class="sig-name descname"><span class="pre">margin_of_safety</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety" title="Permalink to this definition">#</a></dt>
-<dd><p>Lowest margin of safety of each ply.</p>
-<p>This attribute is equivalent to the safety margin.</p>
+<dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel.material_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">material_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel.material_names" title="Permalink to this definition">#</a></dt>
+<dd><p>Get material name to DPF material ID map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -541,13 +523,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety"><code class="docutils literal notranslate"><span class="pre">SamplingPoint.margin_of_safety</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.dpf.composites.composite_model.CompositeModel.material_names"><code class="docutils literal notranslate"><span class="pre">CompositeModel.material_names</span></code></a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.margin_of_safety.rst.txt">
+    <a href="../../_sources/api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.material_names.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

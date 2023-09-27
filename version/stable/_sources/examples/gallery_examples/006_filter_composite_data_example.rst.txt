@@ -51,7 +51,7 @@ Import dependencies.
     from ansys.dpf.composites.layup_info import (
         AnalysisPlyInfoProvider,
         get_all_analysis_ply_names,
-        get_dpf_material_id_by_analyis_ply_map,
+        get_dpf_material_id_by_analysis_ply_map,
     )
     from ansys.dpf.composites.select_indices import (
         get_selected_indices,
@@ -273,7 +273,7 @@ ID from an analysis ply.
 
 .. code-block:: default
 
-    material_map = get_dpf_material_id_by_analyis_ply_map(
+    material_map = get_dpf_material_id_by_analysis_ply_map(
         composite_model.get_mesh(), data_source_or_streams_provider=composite_model.data_sources.rst
     )
     ud_material_id = material_map["P1L1__ud_patch ns1"]
@@ -309,7 +309,7 @@ ID from an analysis ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.516 seconds)
+   **Total running time of the script:** ( 0 minutes  2.212 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
