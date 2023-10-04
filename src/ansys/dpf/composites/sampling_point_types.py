@@ -1,6 +1,7 @@
 """Wrapper for the sampling point operator."""
+from collections.abc import Collection, Sequence
 import dataclasses
-from typing import Any, Collection, List, Protocol, Sequence, Union
+from typing import Any, Protocol, Union
 
 import numpy as np
 import numpy.typing as npt
@@ -246,7 +247,7 @@ class SamplingPoint(Protocol):
             Factor for scaling the thickness of core plies.
         """
 
-    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
+    def get_ply_wise_critical_failures(self) -> list[FailureResult]:
         """Get the critical failure value and modes per ply."""
 
     def get_polar_plot(

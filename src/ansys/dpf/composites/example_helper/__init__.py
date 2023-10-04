@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 import os
 import tempfile
-from typing import Dict, List, Optional, cast
+from typing import Optional, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -25,14 +25,14 @@ class _ContinuousFiberCompositeFiles:
 
 @dataclass
 class _ContinuousFiberCompositesExampleFilenames:
-    rst: List[str]
-    composite: Dict[str, _ContinuousFiberCompositeFiles]
+    rst: list[str]
+    composite: dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
 
 
 @dataclass
 class _ShortFiberCompositesExampleFilenames:
-    rst: List[str]
+    rst: list[str]
     dsdat: str
     engineering_data: str
 
@@ -69,7 +69,7 @@ class _ShortFiberExampleLocation:
     files: _ShortFiberCompositesExampleFilenames
 
 
-_continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
+_continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
     "shell": _ContinuousFiberExampleLocation(
         directory="shell",
         files=_ContinuousFiberCompositesExampleFilenames(
@@ -120,7 +120,7 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
     ),
 }
 
-_short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
+_short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
     "short_fiber": _ShortFiberExampleLocation(
         directory="short_fiber",
         files=_ShortFiberCompositesExampleFilenames(

@@ -1,7 +1,8 @@
 """Lay-up information provider."""
 
+from collections.abc import Collection, Sequence
 from dataclasses import dataclass
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
+from typing import Any, Optional, Union, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -106,7 +107,7 @@ _supported_element_types = [181, 281, 185, 186, 187, 190]
 Map of keyopt_8 to number of spots.
 Example: Element 181 with keyopt8==1 has two spots
 """
-_n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
+_n_spots_by_element_type_and_keyopt_dict: dict[int, dict[int, int]] = {
     181: {0: 0, 1: 2, 2: 3},
     281: {0: 0, 1: 2, 2: 3},
     185: {0: 0, 1: 2},
@@ -191,7 +192,7 @@ class AnalysisPlyInfoProvider:
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
-) -> Dict[str, np.int64]:
+) -> dict[str, np.int64]:
     """Get Dict that maps analysis ply names to dpf_material_ids.
 
     Parameters
@@ -218,7 +219,7 @@ def get_dpf_material_id_by_analyis_ply_map(
 def get_dpf_material_id_by_analysis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
-) -> Dict[str, np.int64]:
+) -> dict[str, np.int64]:
     """Get the dictionary that maps analysis ply names to DPF material IDs.
 
     Parameters
@@ -273,7 +274,7 @@ def get_dpf_material_id_by_analysis_ply_map(
 
 def get_analysis_ply_index_to_name_map(
     mesh: MeshedRegion,
-) -> Dict[int, str]:
+) -> dict[int, str]:
     """Get Dict that maps analysis ply indices to analysis ply names.
 
     The resulting dict can be used to map from the indices stored in
@@ -291,7 +292,7 @@ def get_analysis_ply_index_to_name_map(
                 mesh, analysis_ply_name, skip_check=True
             )
             first_element_id = analysis_ply_property_field.scoping.id(0)
-            analysis_ply_indices: List[int] = local_field.get_entity_data_by_id(first_element_id)
+            analysis_ply_indices: list[int] = local_field.get_entity_data_by_id(first_element_id)
 
             layer_index = analysis_ply_property_field.get_entity_data(0)[0]
             assert layer_index is not None

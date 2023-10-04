@@ -1,6 +1,6 @@
 """Helpers to connect to or start a DPF server with the DPF Composites plugin."""
 import os
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Callable, Optional, Union
 
 from ansys.dpf.core import connect_to_server
 from ansys.dpf.core import server as _dpf_server
@@ -68,7 +68,7 @@ def connect_to_or_start_server(
     if port_in_env is not None:
         port = int(port_in_env)
 
-    connect_kwargs: Dict[str, Union[int, str]] = {}
+    connect_kwargs: dict[str, Union[int, str]] = {}
     if port is not None:
         connect_kwargs["port"] = port
     if ip is not None:

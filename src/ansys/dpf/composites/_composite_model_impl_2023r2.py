@@ -1,5 +1,6 @@
 """Composite Model Interface 2023R2."""
-from typing import Collection, Dict, List, Optional, Sequence, cast
+from collections.abc import Collection, Sequence
+from typing import Optional, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -129,7 +130,7 @@ class CompositeModelImpl2023R2:
             engineering_data_source=self._data_sources.engineering_data,
         )
 
-        self._composite_infos: Dict[str, CompositeInfo] = {}
+        self._composite_infos: dict[str, CompositeInfo] = {}
         for composite_definition_label in self._data_sources.old_composite_sources:
             self._composite_infos[composite_definition_label] = CompositeInfo(
                 data_sources=self._data_sources,
@@ -194,7 +195,7 @@ class CompositeModelImpl2023R2:
         return self._material_operators
 
     @property
-    def material_names(self) -> Dict[str, int]:
+    def material_names(self) -> dict[str, int]:
         """Get material name to DPF material ID map."""
         raise NotImplementedError(
             "material_names is not implemented"
@@ -476,7 +477,7 @@ class CompositeModelImpl2023R2:
         self,
         material_properties: Collection[MaterialProperty],
         composite_definition_label: Optional[str] = None,
-    ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+    ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
         Returns a dictionary with ``dpf_material_id`` as the key and
@@ -584,7 +585,7 @@ class CompositeModelImpl2023R2:
                 " Or update the the latest version."
             )
         return cast(
-            List[int],
+            list[int],
             self.get_mesh(composite_definition_label)
             .property_field("element_layer_indices")
             .scoping.ids,
