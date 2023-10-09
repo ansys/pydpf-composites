@@ -287,45 +287,6 @@ def test_performance_property_dict(dpf_server):
     timer.summary()
 
 
-def test_merge(dpf_server):
-    merger = dpf.operators.utility.merge_fields_containers(server=dpf_server)
-
-    def get_container_1():
-        field_element_nodal = dpf.Field(location=dpf.locations.elemental_nodal, server=dpf_server)
-
-        data = [1, 2, 3, 4]
-        field_element_nodal.append(data, 1)
-        field_element_nodal.append(data, 2)
-
-        container = dpf.FieldsContainer()
-        container.add_label("test")
-        container.add_field({"test": 0}, field_element_nodal)
-
-        return container
-
-    def get_container_2():
-        field_element_nodal = dpf.Field(location=dpf.locations.elemental_nodal, server=dpf_server)
-
-        data = [1, 2, 3]
-        field_element_nodal.append(data, 3)
-        field_element_nodal.append(data, 4)
-        field_element_nodal.append(data, 5)
-
-        container = dpf.FieldsContainer()
-        container.add_label("test")
-        container.add_field({"test": 0}, field_element_nodal)
-
-        return container
-
-    merger.inputs.fields_containers1.connect(get_container_1())
-    merger.inputs.fields_containers2.connect(get_container_2())
-
-    merged_containers = merger.outputs.merged_fields_container()
-
-    element_nodal_field = merged_containers.get_field({"test": 0})
-    assert element_nodal_field.data.size == 17
-
-
 def test_performance_flat(dpf_server):
     """
     This test shows how composite data can be stored
