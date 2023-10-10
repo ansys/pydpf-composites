@@ -1,6 +1,7 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
-from typing import Any, Callable, Collection, Dict, List, Optional, Sequence, cast
+from collections.abc import Collection, Sequence
+from typing import Any, Callable, Optional, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -145,7 +146,7 @@ class CompositeModelImpl:
         return self._material_operators
 
     @property
-    def material_names(self) -> Dict[str, int]:
+    def material_names(self) -> dict[str, int]:
         """
         Material name to DPF material ID map.
 
@@ -524,7 +525,7 @@ class CompositeModelImpl:
         self,
         material_properties: Collection[MaterialProperty],
         composite_definition_label: Optional[str] = None,
-    ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+    ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
         This method returns a dictionary with ``dpf_material_id`` as the key and
@@ -606,7 +607,7 @@ class CompositeModelImpl:
     def get_all_layered_element_ids(self) -> Sequence[int]:
         """Get all layered element IDs."""
         return cast(
-            List[int],
+            list[int],
             self.get_mesh().property_field("element_layer_indices").scoping.ids,
         )
 

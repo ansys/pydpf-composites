@@ -1,5 +1,6 @@
 """Functions to get elementary indices based on filter input."""
-from typing import Collection, Optional
+from collections.abc import Collection
+from typing import Optional
 
 import numpy as np
 from numpy.typing import NDArray

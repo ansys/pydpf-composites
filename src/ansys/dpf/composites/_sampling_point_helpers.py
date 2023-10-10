@@ -1,5 +1,6 @@
 """Wrapper for the sampling point operator."""
-from typing import Any, Collection, Dict, List, Sequence, cast
+from collections.abc import Collection, Sequence
+from typing import Any, cast
 
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
@@ -70,7 +71,7 @@ def get_data_from_sp_results(*args: Any, results: Any) -> npt.NDArray[np.float64
 
 
 def get_indices_from_sp(
-    interface_indices: Dict[Spot, int],
+    interface_indices: dict[Spot, int],
     number_of_plies: int,
     spots_per_ply: int,
     spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
@@ -124,7 +125,7 @@ def get_offsets_by_spots_from_sp(
 
 def get_ply_wise_critical_failures_from_sp(
     sampling_point: SamplingPoint,
-) -> List[FailureResult]:
+) -> list[FailureResult]:
     """Get the critical failure value and modes per ply."""
     num_plies = sampling_point.number_of_plies
 

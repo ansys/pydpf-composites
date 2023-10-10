@@ -1,7 +1,8 @@
 """Wrapper for the sampling point operator."""
+from collections.abc import Collection, Sequence
 import hashlib
 import json
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union
+from typing import Any, Optional, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import UnitSystem
@@ -89,7 +90,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._result_definition = result_definition
 
         self._spots_per_ply = 0
-        self._interface_indices: Dict[Spot, int] = {}
+        self._interface_indices: dict[Spot, int] = {}
         self._name = name
         used_server = get_or_create_server(server)
         if not used_server:
@@ -400,7 +401,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._update_and_check_results()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
-    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
+    def get_ply_wise_critical_failures(self) -> list[FailureResult]:
         """Get the critical failure value and modes per ply."""
         self._update_and_check_results()
         return get_ply_wise_critical_failures_from_sp(self)

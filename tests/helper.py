@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import os
 import pathlib
 import time
-from typing import List, Union
+from typing import Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
@@ -123,7 +123,7 @@ def get_dummy_data_files(distributed: bool = False):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell"
 
     if distributed:
-        rst_path: Union[_PATH, List[_PATH]] = [
+        rst_path: Union[_PATH, list[_PATH]] = [
             os.path.join(TEST_DATA_ROOT_DIR, f"distributed_shell{i}.rst") for i in range(2)
         ]
     else:

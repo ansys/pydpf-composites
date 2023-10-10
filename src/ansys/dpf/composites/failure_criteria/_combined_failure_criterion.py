@@ -1,7 +1,8 @@
 """Combined Failure Criterion."""
 
+from collections.abc import Sequence
 import json
-from typing import Any, Dict, Sequence
+from typing import Any
 
 from ._failure_criterion_base import FailureCriterionBase
 
@@ -36,7 +37,7 @@ class CombinedFailureCriterion:
         failure_criteria:
             List of failure criteria.
         """
-        self._failure_criteria: Dict[str, FailureCriterionBase] = {}
+        self._failure_criteria: dict[str, FailureCriterionBase] = {}
         for fc in failure_criteria:
             self.insert(fc)
 
@@ -48,7 +49,7 @@ class CombinedFailureCriterion:
     def _set_name(self, value: str) -> None:
         self._name = value
 
-    def _get_failure_criteria(self) -> Dict[str, FailureCriterionBase]:
+    def _get_failure_criteria(self) -> dict[str, FailureCriterionBase]:
         return self._failure_criteria
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
@@ -100,7 +101,7 @@ class CombinedFailureCriterion:
 
         return self._failure_criteria.pop(key)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Return the combined failure criterion as a dictionary.
 
         Returns

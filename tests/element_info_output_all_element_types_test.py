@@ -1,6 +1,6 @@
+from collections.abc import Collection
 from dataclasses import dataclass
 import pathlib
-from typing import Collection, Dict
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Field, MeshedRegion, PropertyField
@@ -72,7 +72,7 @@ def test_all_element_types(dpf_server):
 
     def get_expected_output(
         with_mid: bool, only_top_bot_of_stack: bool
-    ) -> Dict[int, ExpectedOutput]:
+    ) -> dict[int, ExpectedOutput]:
         if with_mid:
             n_spots_shell = 3
         else:
