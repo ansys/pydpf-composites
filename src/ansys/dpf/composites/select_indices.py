@@ -56,6 +56,10 @@ def get_selected_indices(
     Notes
     -----
     Returns an empty selection if any of the collections is empty.
+
+    The indices (nodes, layers and spots) are 0-based. Pay attention to this
+    when using the "composite::minmax_per_element_operator" where the
+    min/max layer indices are 1-based.
     """
     if layers is None:
         layer_indices: Collection[int] = range(element_info.n_layers)
