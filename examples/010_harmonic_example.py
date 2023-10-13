@@ -131,6 +131,8 @@ for phase in sweep_phases:
     failure_evaluator.inputs.strains_container(strain_at_phase)
     failure_evaluator.inputs.mesh(composite_model.get_mesh())
 
+    # Note: the min/max layer indices are 1-based since
+    # WB 2024 R1 (server version 7 and above)
     minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
     minmax_per_element.inputs.fields_container(failure_evaluator)
     minmax_per_element.inputs.mesh(composite_model.get_mesh())

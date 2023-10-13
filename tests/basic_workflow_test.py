@@ -87,6 +87,8 @@ def test_basic_workflow(dpf_server, distributed_rst):
     failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
     failure_evaluator.inputs.mesh(mesh_provider.outputs.mesh)
 
+    # Note: the min/max layer indices are 1-based since
+    # WB 2024 R1 (server version 7 and above)
     minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
     minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
     minmax_per_element.inputs.mesh(mesh_provider.outputs.mesh)
