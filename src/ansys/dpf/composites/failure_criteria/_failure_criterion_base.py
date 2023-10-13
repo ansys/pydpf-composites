@@ -1,7 +1,8 @@
 """Defines the base class of composite failure criterion."""
 
+from collections.abc import Sequence
 import json
-from typing import Any, Dict, Sequence
+from typing import Any
 
 
 class FailureCriterionBase:
@@ -26,7 +27,7 @@ class FailureCriterionBase:
     )
     name = property(_get_name, doc="Name of the failure criterion. Read only.")
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """:return: a dict with all properties."""
         properties = self._get_properties(exclude=["name"])
 

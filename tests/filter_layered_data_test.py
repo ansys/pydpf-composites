@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Field
@@ -23,10 +23,10 @@ from .helper import get_basic_shell_files, setup_operators
 def get_result_field(
     element_info_provider: ElementInfoProvider,
     input_field: Field,
-    layers: Optional[List[int]] = None,
-    corner_nodes: Optional[List[int]] = None,
-    spots: Optional[List[Spot]] = None,
-    element_ids: Optional[List[int]] = None,
+    layers: Optional[list[int]] = None,
+    corner_nodes: Optional[list[int]] = None,
+    spots: Optional[list[Spot]] = None,
+    element_ids: Optional[list[int]] = None,
     dpf_material_id: Optional[np.int64] = None,
 ):
     """

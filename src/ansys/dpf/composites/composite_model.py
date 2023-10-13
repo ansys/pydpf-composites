@@ -1,5 +1,6 @@
 """Composite Model."""
-from typing import Collection, Dict, Optional, Sequence
+from collections.abc import Collection, Sequence
+from typing import Optional
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
@@ -107,7 +108,7 @@ class CompositeModel:
         return self._implementation.material_operators
 
     @property
-    def material_names(self) -> Dict[str, int]:
+    def material_names(self) -> dict[str, int]:
         """Get material name to DPF material ID map."""
         return self._implementation.material_names
 
@@ -303,7 +304,7 @@ class CompositeModel:
         self,
         material_properties: Collection[MaterialProperty],
         composite_definition_label: Optional[str] = None,
-    ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+    ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
         Returns a dictionary with ``dpf_material_id`` as the key and

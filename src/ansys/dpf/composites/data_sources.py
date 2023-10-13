@@ -1,8 +1,9 @@
 """Composite data sources."""
+from collections.abc import Sequence
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Callable, Dict, List, Optional, Sequence, Union, cast
+from typing import Callable, Optional, Union, cast
 
 from ansys.dpf.core import DataSources
 
@@ -45,8 +46,8 @@ class CompositeDefinitionFiles:
 class ContinuousFiberCompositesFiles:
     """Provides the container for continuous fiber composite file paths."""
 
-    rst: List[_PATH]
-    composite: Dict[str, CompositeDefinitionFiles]
+    rst: list[_PATH]
+    composite: dict[str, CompositeDefinitionFiles]
     engineering_data: _PATH
     # True if files are local and false if files
     # have already been uploaded to the server
@@ -54,8 +55,8 @@ class ContinuousFiberCompositesFiles:
 
     def __init__(
         self,
-        rst: Union[List[_PATH], _PATH],
-        composite: Dict[str, CompositeDefinitionFiles],
+        rst: Union[list[_PATH], _PATH],
+        composite: dict[str, CompositeDefinitionFiles],
         engineering_data: _PATH,
         files_are_local: bool = True,
     ) -> None:
@@ -89,7 +90,7 @@ class ContinuousFiberCompositesFiles:
         super().__setattr__(prop, val)
 
     @staticmethod
-    def _get_rst_list(value: Union[List[_PATH], _PATH]) -> List[_PATH]:
+    def _get_rst_list(value: Union[list[_PATH], _PATH]) -> list[_PATH]:
         if isinstance(value, (str, pathlib.Path)):
             value = [value]
         return value  # type: ignore
@@ -99,7 +100,7 @@ class ContinuousFiberCompositesFiles:
 class ShortFiberCompositesFiles:
     """Provides the container for short fiber composite file paths."""
 
-    rst: List[_PATH]
+    rst: list[_PATH]
     dsdat: _PATH
     engineering_data: _PATH
     # True if files are local and false if files
@@ -108,7 +109,7 @@ class ShortFiberCompositesFiles:
 
     def __init__(
         self,
-        rst: Union[List[_PATH], _PATH],
+        rst: Union[list[_PATH], _PATH],
         dsdat: _PATH,
         engineering_data: _PATH,
         files_are_local: bool = True,
@@ -142,7 +143,7 @@ class ShortFiberCompositesFiles:
         super().__setattr__(prop, val)
 
     @staticmethod
-    def _get_rst_list(value: Union[List[_PATH], _PATH]) -> List[_PATH]:
+    def _get_rst_list(value: Union[list[_PATH], _PATH]) -> list[_PATH]:
         if isinstance(value, (str, pathlib.Path)):
             value = [value]
         return value  # type: ignore
@@ -177,7 +178,7 @@ class CompositeDataSources:
     composite: DataSources
     engineering_data: DataSources
 
-    old_composite_sources: Dict[str, DataSources]
+    old_composite_sources: dict[str, DataSources]
 
 
 def _get_mapping_path_file_from_definitions_path_if_exists(
@@ -489,7 +490,7 @@ def get_composite_files_from_workbench_result_folder(
 
 
 def _get_data_sources_from_rst_files(
-    rst_files: List[_PATH],
+    rst_files: list[_PATH],
 ) -> DataSources:
     """Get a DPF data sources object from a list of RST files.
 

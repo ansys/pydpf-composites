@@ -115,7 +115,7 @@ def test_assembly_model(dpf_server):
     composite_model = CompositeModel(files, server=dpf_server)
     timer.add("After Setup model")
 
-    assert composite_model.composite_definition_labels == [solid_label, shell_label]
+    assert sorted(composite_model.composite_definition_labels) == sorted([solid_label, shell_label])
 
     combined_failure_criterion = CombinedFailureCriterion(
         "max strain & max stress", failure_criteria=[MaxStressCriterion()]

@@ -24,7 +24,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
+python = ">=3.9,<3.13"
 packaging = "*"
 numpy = "^1.22"
 build = {version = "^0.8.0", optional = true}
@@ -119,6 +119,6 @@ ignored-classes = [
 ]
 
 [tool.mypy]
-python_version = 3.8
+python_version = 3.9
 mypy_path = "$MYPY_CONFIG_FILE_DIR/src:$MYPY_CONFIG_FILE_DIR/tests"
 ignore_missing_imports = true

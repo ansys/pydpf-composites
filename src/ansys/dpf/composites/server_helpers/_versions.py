@@ -1,5 +1,4 @@
 import dataclasses
-from typing import Dict
 
 from ansys.dpf.core.server_types import BaseServer
 from packaging import version
@@ -12,7 +11,7 @@ class _DpfVersionInfo:
     description: str
 
 
-_DPF_VERSIONS: Dict[str, _DpfVersionInfo] = {
+_DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
     "5.0": _DpfVersionInfo("5.0", "2023 R1", "Initial release of DPF Composites."),
     "7.0": _DpfVersionInfo("7.0", "2024 R1", "DPF Composites plugin with sub-operators."),
 }

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import namedtuple
+from collections.abc import Mapping
 from contextlib import closing
 import os
 import pathlib
@@ -8,7 +9,6 @@ import socket
 import subprocess
 import sys
 from types import MappingProxyType
-from typing import Mapping
 import uuid
 
 import ansys.dpf.core as dpf

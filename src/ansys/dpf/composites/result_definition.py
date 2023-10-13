@@ -1,9 +1,10 @@
 """Object to represent the result definition used by the failure operator in DPF Composites."""
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from enum import Enum
 import json
-from typing import Any, Dict, List, Optional, Sequence, Union
+from typing import Any, Optional, Union
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
@@ -147,12 +148,12 @@ class ResultDefinition:
         self._composite_scopes = value
 
     @property
-    def rst_files(self) -> List[_PATH]:
+    def rst_files(self) -> list[_PATH]:
         """Path of the result (RST) files."""
         return self._rst_files
 
     @rst_files.setter
-    def rst_files(self, value: List[_PATH]) -> None:
+    def rst_files(self, value: list[_PATH]) -> None:
         self._rst_files = list(value)
 
     @property
@@ -216,7 +217,7 @@ class ResultDefinition:
     def max_chunk_size(self, value: int) -> None:
         self._max_chunk_size = value
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Get the result definition in a dictionary representation."""
         cfc = self.combined_failure_criterion
         if not cfc:
@@ -243,9 +244,9 @@ class ResultDefinition:
 
         def get_scope(
             result_definition_scope: ResultDefinitionScope,
-            rst_files: List[_PATH],
+            rst_files: list[_PATH],
             material_file: _PATH,
-        ) -> Dict[str, Any]:
+        ) -> dict[str, Any]:
             write_for_full_scope = result_definition_scope.write_data_for_full_element_scope
             mapping_entry = []
             if result_definition_scope.mapping_file is not None:
