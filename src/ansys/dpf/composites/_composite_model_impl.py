@@ -331,8 +331,8 @@ class CompositeModelImpl:
             # Ensure that sandwich criteria are evaluated
             evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
 
-            # Note: the min/max layer indices are 1-based since
-            # WB 2024 R1 (server version 7 and above)
+            # Note: the min/max layer indices are 1-based starting with
+            # Workbench 2024 R1 (DPF server 7.1)
             minmax_el_op = dpf.Operator("composite::minmax_per_element_operator")
             minmax_el_op.inputs.fields_container(
                 evaluate_failure_criterion_per_scope_op.outputs.failure_container
