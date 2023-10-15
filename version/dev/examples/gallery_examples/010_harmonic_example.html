@@ -619,6 +619,8 @@ and phase</p>
     <span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">strains_container</span><span class="p">(</span><span class="n">strain_at_phase</span><span class="p">)</span>
     <span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 
+    <span class="c1"># Note: the min/max layer indices are 1-based starting with</span>
+    <span class="c1"># Workbench 2024 R1 (DPF server 7.1)</span>
     <span class="n">minmax_per_element</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::minmax_per_element_operator&quot;</span><span class="p">)</span>
     <span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(</span><span class="n">failure_evaluator</span><span class="p">)</span>
     <span class="n">minmax_per_element</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
@@ -698,7 +700,7 @@ at each frequency, because we look only at the element that has the highest IRF 
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">axs</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">max_value_for_each_freq_crit_element</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_010_harmonic_example_002.png" srcset="../../_images/sphx_glr_010_harmonic_example_002.png" alt="010 harmonic example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7ff824651370&gt;]
+<img src="../../_images/sphx_glr_010_harmonic_example_002.png" srcset="../../_images/sphx_glr_010_harmonic_example_002.png" alt="010 harmonic example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7faeb7b902e0&gt;]
 </pre></div>
 </div>
 <p>Compute the critical phase</p>
@@ -730,12 +732,12 @@ at each frequency, because we look only at the element that has the highest IRF 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The critical failure mode is </span><span class="si">{</span><a href="https://docs.python.org/dev/library/enum.html#enum.Enum" title="enum.Enum" class="sphx-glr-backref-module-enum sphx-glr-backref-type-py-class"><span class="n">FailureModeEnum</span></a><span class="p">(</span><span class="nb">int</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">critical_mode</span></a><span class="p">))</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The critical ply is P1L1__ModelingPly.1.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The critical ply is P1L1__ModelingPly.3.
 The maximum IRF is 0.17852210868866686.
 The critical failure mode is s1c.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  22.140 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  12.036 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-010-harmonic-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/670b11ce26b761ff64735af981a9c12a/010_harmonic_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">010_harmonic_example.py</span></code></a></p>

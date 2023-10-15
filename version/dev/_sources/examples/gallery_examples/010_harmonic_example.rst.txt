@@ -236,7 +236,7 @@ In the end each container contains a field for each combination of frequency
 and phase
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-165
+.. GENERATED FROM PYTHON SOURCE LINES 117-167
 
 .. code-block:: default
 
@@ -257,6 +257,8 @@ and phase
         failure_evaluator.inputs.strains_container(strain_at_phase)
         failure_evaluator.inputs.mesh(composite_model.get_mesh())
 
+        # Note: the min/max layer indices are 1-based starting with
+        # Workbench 2024 R1 (DPF server 7.1)
         minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
         minmax_per_element.inputs.fields_container(failure_evaluator)
         minmax_per_element.inputs.mesh(composite_model.get_mesh())
@@ -295,13 +297,13 @@ and phase
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-169
+.. GENERATED FROM PYTHON SOURCE LINES 168-171
 
 Compute maximum over all the phases and frequencies for each element and plot the resulting
 IRF values
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-175
+.. GENERATED FROM PYTHON SOURCE LINES 171-177
 
 .. code-block:: default
 
@@ -321,14 +323,14 @@ IRF values
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-180
+.. GENERATED FROM PYTHON SOURCE LINES 178-182
 
 Detailed analysis of the critical element
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Identify the element with the maximum IRF
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-184
+.. GENERATED FROM PYTHON SOURCE LINES 182-186
 
 .. code-block:: default
 
@@ -349,13 +351,13 @@ Identify the element with the maximum IRF
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-188
+.. GENERATED FROM PYTHON SOURCE LINES 187-190
 
 Scope container with all frequencies and phases to critical element so we can plot
 the critical IRF over all the frequencies
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 188-193
+.. GENERATED FROM PYTHON SOURCE LINES 190-195
 
 .. code-block:: default
 
@@ -371,14 +373,14 @@ the critical IRF over all the frequencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 194-198
+.. GENERATED FROM PYTHON SOURCE LINES 196-200
 
 Compute the maximum IRF over all the phases for each frequency and plot the result for
 the critical element. Note: this can be different from maximum overall IRF
 at each frequency, because we look only at the element that has the highest IRF overall.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 198-211
+.. GENERATED FROM PYTHON SOURCE LINES 200-213
 
 .. code-block:: default
 
@@ -409,16 +411,16 @@ at each frequency, because we look only at the element that has the highest IRF 
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7ff824651370>]
+    [<matplotlib.lines.Line2D object at 0x7faeb7b902e0>]
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 212-214
+.. GENERATED FROM PYTHON SOURCE LINES 214-216
 
 Compute the critical phase
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-221
+.. GENERATED FROM PYTHON SOURCE LINES 216-223
 
 .. code-block:: default
 
@@ -442,12 +444,12 @@ Compute the critical phase
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 222-224
+.. GENERATED FROM PYTHON SOURCE LINES 224-226
 
 Compute critical layer and critical failure mode.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 224-239
+.. GENERATED FROM PYTHON SOURCE LINES 226-241
 
 .. code-block:: default
 
@@ -474,7 +476,7 @@ Compute critical layer and critical failure mode.
 
  .. code-block:: none
 
-    The critical ply is P1L1__ModelingPly.1.
+    The critical ply is P1L1__ModelingPly.3.
     The maximum IRF is 0.17852210868866686.
     The critical failure mode is s1c.
 
@@ -484,7 +486,7 @@ Compute critical layer and critical failure mode.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  22.140 seconds)
+   **Total running time of the script:** ( 0 minutes  12.036 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_010_harmonic_example.py:
