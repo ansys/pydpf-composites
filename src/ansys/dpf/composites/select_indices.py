@@ -56,6 +56,11 @@ def get_selected_indices(
     Notes
     -----
     Returns an empty selection if any of the collections is empty.
+
+    The indices (nodes, layers, and spots) are 0-based. Pay attention to this
+    when using the "composite::minmax_per_element_operator" or
+    func:`~evaluate_failure_criteria` where the min/max layer indices
+    are 1-based starting with Workbench 2024 R1 (DPF server 7.1).
     """
     if layers is None:
         layer_indices: Collection[int] = range(element_info.n_layers)
