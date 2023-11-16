@@ -47,10 +47,20 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # %%
 # Plot IRF
 # ~~~~~~~~
-# Plot the maximum IRF per element.
+# Plot the maximum IRF per (solid) element.
 output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
 irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
+
+# %%
+# Plot IRF
+# ~~~~~~~~
+# Plot the maximum IRF on the reference surface
+irf_field = output_all_elements.get_field(
+    {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
+)
+irf_field.plot()
+
 
 # %%
 # Get element information

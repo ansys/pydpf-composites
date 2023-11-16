@@ -1,8 +1,17 @@
 """Collection of constants used across PyDPF Composites."""
-
 from enum import IntEnum
 
-__all__ = ("Spot", "Sym3x3TensorComponent", "FailureOutput")
+__all__ = (
+    "Spot",
+    "Sym3x3TensorComponent",
+    "FailureOutput",
+    "REF_SURFACE_NAME",
+    "FAILURE_LABEL",
+    "TIME_LABEL",
+)
+
+FAILURE_LABEL = "failure_label"
+TIME_LABEL = "time"
 
 
 class Spot(IntEnum):
@@ -33,3 +42,11 @@ class FailureOutput(IntEnum):
     FAILURE_MODE = 0
     FAILURE_VALUE = 1
     MAX_LAYER_INDEX = 2
+    FAILURE_MODE_REF_SURFACE = 3
+    FAILURE_VALUE_REF_SURFACE = 4
+    MAX_GLOBAL_LAYER_IN_STACK = 5
+    MAX_LOCAL_LAYER_IN_ELEMENT = 6
+    MAX_SOLID_ELEMENT_ID = 7
+
+
+REF_SURFACE_NAME = "Reference Surface"
