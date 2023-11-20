@@ -176,14 +176,15 @@ class CompositeModelImpl:
             unit_system=self._unit_system,
         )
 
-        self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
-            data_sources=self.data_sources.composite, unit_system=self._unit_system
-        )
+        if version_equal_or_later(self._server, "8.0"):
+            self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
+                data_sources=self.data_sources.composite, unit_system=self._unit_system
+            )
 
-        self._map_to_reference_surface_operator = _get_map_to_reference_surface_operator(
-            reference_surface_and_mapping_field=self._reference_surface_and_mapping_field,
-            element_layer_indices_field=self.get_mesh().property_field("element_layer_indices"),
-        )
+            self._map_to_reference_surface_operator = _get_map_to_reference_surface_operator(
+                reference_surface_and_mapping_field=self._reference_surface_and_mapping_field,
+                element_layer_indices_field=self.get_mesh().property_field("element_layer_indices"),
+            )
 
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
