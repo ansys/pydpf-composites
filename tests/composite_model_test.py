@@ -216,6 +216,13 @@ def test_assembly_model(dpf_server):
         9: 1,
         10: 1,
     }
+
+    if not version_equal_or_later(dpf_server, "7.1"):
+        for element_id in expected_layer_index:
+            # Older versions of the server returned a layer index that starts
+            # at 0 instead of 1
+            expected_layer_index[element_id] -= 1
+
     check_output(FailureOutput.MAX_LAYER_INDEX, expected_layer_index)
 
     expected_output_ref_surface = {
