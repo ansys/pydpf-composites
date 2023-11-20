@@ -142,9 +142,11 @@ def test_model_with_multiple_timesteps(dpf_server):
         check_field_size(FailureOutput.FAILURE_MODE)
         check_field_size(FailureOutput.FAILURE_MODE_REF_SURFACE)
         check_field_size(FailureOutput.MAX_LAYER_INDEX)
-        check_field_size(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK)
-        check_field_size(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT)
-        check_field_size(FailureOutput.MAX_SOLID_ELEMENT_ID)
+
+        if version_equal_or_later(dpf_server, "7.1"):
+            check_field_size(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK)
+            check_field_size(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT)
+            check_field_size(FailureOutput.MAX_SOLID_ELEMENT_ID)
 
 
 def test_assembly_model(dpf_server):
