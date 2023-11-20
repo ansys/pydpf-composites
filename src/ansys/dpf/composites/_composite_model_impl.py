@@ -457,8 +457,7 @@ class CompositeModelImpl:
                 "No output is generated! Please check the scope (element and ply ids)."
             )
 
-        # Todo we need to update this version once the prerelease version bump has happened
-        if version_equal_or_later(self._server, "7.1"):
+        if version_equal_or_later(self._server, "8.0"):
             self._map_to_reference_surface_operator.inputs.min_container(
                 min_merger.outputs.merged_fields_container()
             )

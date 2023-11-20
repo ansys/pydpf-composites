@@ -142,7 +142,7 @@ def test_model_with_multiple_timesteps(dpf_server):
         check_field_size(FailureOutput.FAILURE_MODE)
         check_field_size(FailureOutput.MAX_LAYER_INDEX)
 
-        if version_equal_or_later(dpf_server, "7.1"):
+        if version_equal_or_later(dpf_server, "8.0"):
             check_field_size(FailureOutput.FAILURE_MODE_REF_SURFACE)
             check_field_size(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK)
             check_field_size(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT)
@@ -232,7 +232,7 @@ def test_assembly_model(dpf_server):
         4: 1.11311715,
     }
 
-    if version_equal_or_later(dpf_server, "7.1"):
+    if version_equal_or_later(dpf_server, "8.0"):
         check_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_ref_surface)
 
         expected_output_local_layer = {

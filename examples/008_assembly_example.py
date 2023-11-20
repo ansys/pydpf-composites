@@ -60,7 +60,7 @@ irf_field.plot()
 # Plot IRF
 # ~~~~~~~~
 # Plot the maximum IRF on the reference surface
-if version_equal_or_later(server, "7.1"):
+if version_equal_or_later(server, "8.0"):
     irf_field = output_all_elements.get_field(
         {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
     )
