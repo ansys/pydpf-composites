@@ -22,7 +22,11 @@ from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_older_than
+from ansys.dpf.composites.server_helpers import (
+    connect_to_or_start_server,
+    version_equal_or_later,
+    version_older_than,
+)
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
@@ -56,10 +60,11 @@ irf_field.plot()
 # Plot IRF
 # ~~~~~~~~
 # Plot the maximum IRF on the reference surface
-irf_field = output_all_elements.get_field(
-    {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
-)
-irf_field.plot()
+if version_equal_or_later(server, "7.1"):
+    irf_field = output_all_elements.get_field(
+        {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
+    )
+    irf_field.plot()
 
 
 # %%

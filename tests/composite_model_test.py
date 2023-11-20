@@ -129,10 +129,22 @@ def test_model_with_multiple_timesteps(dpf_server):
         )
 
         # Note evaluate_failure_criteria supports only a single time step
-        irf_field = failure_output.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+        irf_field = failure_output.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
 
         for element_id, expected_value in expected_data_by_time_index[time_index].items():
             assert irf_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
+
+        # Just check that the other fields are available
+        def check_field_size(failure_label: FailureOutput):
+            field = failure_output.get_field({FAILURE_LABEL: failure_label})
+            assert len(field.scoping.ids) == 4
+
+        check_field_size(FailureOutput.FAILURE_MODE)
+        check_field_size(FailureOutput.FAILURE_MODE_REF_SURFACE)
+        check_field_size(FailureOutput.MAX_LAYER_INDEX)
+        check_field_size(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK)
+        check_field_size(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT)
+        check_field_size(FailureOutput.MAX_SOLID_ELEMENT_ID)
 
 
 def test_assembly_model(dpf_server):
@@ -210,31 +222,33 @@ def test_assembly_model(dpf_server):
         3: 1.11311715,
         4: 1.11311715,
     }
-    check_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_ref_surface)
 
-    expected_output_local_layer = {
-        1: 2,
-        2: 2,
-        3: 2,
-        4: 2,
-    }
-    check_output(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer)
+    if version_equal_or_later(dpf_server, "7.1"):
+        check_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_ref_surface)
 
-    expected_output_global_layer = {
-        1: 2,
-        2: 2,
-        3: 2,
-        4: 2,
-    }
-    check_output(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer)
+        expected_output_local_layer = {
+            1: 2,
+            2: 2,
+            3: 2,
+            4: 2,
+        }
+        check_output(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer)
 
-    expected_output_solid_element = {
-        1: 5,
-        2: 6,
-        3: 1,
-        4: 2,
-    }
-    check_output(FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element)
+        expected_output_global_layer = {
+            1: 2,
+            2: 2,
+            3: 2,
+            4: 2,
+        }
+        check_output(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer)
+
+        expected_output_solid_element = {
+            1: 5,
+            2: 6,
+            3: 1,
+            4: 2,
+        }
+        check_output(FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element)
 
     property_dict = composite_model.get_constant_property_dict(
         [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label
