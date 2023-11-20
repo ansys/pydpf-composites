@@ -71,11 +71,13 @@ jobs:
       - name: "Pull pydpf container(s)"
         # 2023r2_pre1 is used to test backward compatibility. Also update testenv in tox.ini
         # if other containers must be tested.
+
+        # TBD: add more containers?
+        # docker pull ghcr.io/ansys/pydpf-composites:2023r2
+        # docker pull ghcr.io/ansys/pydpf-composites:2024r1
         run:  |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-    #      docker pull ghcr.io/ansys/pydpf-composites:2024r1
           docker pull ghcr.io/ansys/pydpf-composites:2024r1_pre0
-    #      docker pull ghcr.io/ansys/pydpf-composites:2023r2
           docker pull ghcr.io/ansys/pydpf-composites:2023r2_pre1
 
       - name: "Checkout the project"
