@@ -87,7 +87,7 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids
 
-    if version_equal_or_later(dpf_server, "7.0"):
+    if version_equal_or_later(dpf_server, "7.1"):
         ref_material_names = [
             "Epoxy Carbon UD (230 GPa) Prepreg",
             "Epoxy Carbon Woven (230 GPa) Wet",
