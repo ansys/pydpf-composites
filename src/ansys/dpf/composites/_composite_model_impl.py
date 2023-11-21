@@ -77,7 +77,7 @@ def _merge_containers(
     out_container.labels = [TIME_LABEL, FAILURE_LABEL]
     out_container.time_freq_support = non_ref_surface_container.time_freq_support
 
-    def add_to_output_container(time_id: int, source_container: FieldsContainer) -> FieldsContainer:
+    def add_to_output_container(time_id: int, source_container: FieldsContainer) -> None:
         fields = source_container.get_fields({TIME_LABEL: time_id})
         for field in fields:
             failure_enum = _get_failure_enum_from_name(field.name)
