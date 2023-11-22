@@ -4,4 +4,4 @@ from typing import Union
 
 __all__ = ["PATH"]
 
-PATH = Union[str, os.PathLike]
+PATH = Union[str, os.PathLike[str]]
