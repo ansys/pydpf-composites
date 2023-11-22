@@ -149,7 +149,6 @@ class ShortFiberCompositesFiles:
         return value  # type: ignore
 
 
-# roosre June 2023: todo add deprecation warning where composite definition label is used
 @dataclass(frozen=True)
 class CompositeDataSources:
     """Provides data sources related to the composite lay-up.
@@ -157,6 +156,7 @@ class CompositeDataSources:
     Parameters
     ----------
     rst:
+        Result file. Currently only RST (MAPDL) is supported.
 
     material_support:
         NOTE: The 'material_support' is explicitly listed since it is currently not
@@ -165,6 +165,7 @@ class CompositeDataSources:
         material support from the first RST file. This is a workaround until the
         support for distributed RST is added.
     engineering_data:
+        File with the material properties.
 
     old_composite_sources:
         This member is used to support assemblies in combination with the old
@@ -175,7 +176,7 @@ class CompositeDataSources:
 
     rst: DataSources
     material_support: DataSources
-    composite: DataSources
+    composite: Optional[DataSources]
     engineering_data: DataSources
 
     old_composite_sources: dict[str, DataSources]
@@ -542,7 +543,6 @@ def get_composites_data_sources(
     old_composite_data_sources = {}
 
     for key, composite_files in continuous_composite_files.composite.items():
-        old_datasource = DataSources()
         if set_part_key:
             composite_data_source.add_file_path_for_specified_result(
                 composite_files.definition, _LAYUPFILE_INDEX_KEY, key
@@ -566,6 +566,10 @@ def get_composites_data_sources(
         ##### End of block
 
         old_composite_data_sources[key] = old_datasource
+
+    # Reset composite data source if no composite files are provided because a data source cannot be empty
+    if len(continuous_composite_files.composite) == 0:
+        composite_data_source = None
 
     return CompositeDataSources(
         rst=rst_data_source,

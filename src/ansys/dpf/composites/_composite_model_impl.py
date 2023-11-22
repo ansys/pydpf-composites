@@ -106,11 +106,13 @@ class CompositeModelImpl:
             data_sources=self.data_sources,
             material_operators=self.material_operators,
             unit_system=self._unit_system,
+            rst_stream_provider=self._get_rst_streams_provider()
         )
 
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self._get_rst_streams_provider(),
+            material_provider=self.material_operators.material_provider,
         )
         self._layup_properties_provider = LayupPropertiesProvider(
             layup_provider=self._layup_provider, mesh=self.get_mesh()
@@ -168,8 +170,8 @@ class CompositeModelImpl:
         material_ids = string_field.scoping.ids
 
         names = {}
-        for mat_id in material_ids:
-            names[string_field.data[string_field.scoping.index(mat_id)]] = mat_id
+        for dpf_mat_id in material_ids:
+            names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
 
         return names
 
@@ -277,7 +279,9 @@ class CompositeModelImpl:
         chunking_generator = dpf.Operator("composite::scope_generator")
         chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
-        chunking_generator.inputs.data_sources(self.data_sources.composite)
+        if self.data_sources.composite:
+            chunking_generator.inputs.data_sources(self.data_sources.composite)
+
         if element_scope_in:
             element_scope = dpf.Scoping(location="elemental")
             element_scope.ids = element_scope_in

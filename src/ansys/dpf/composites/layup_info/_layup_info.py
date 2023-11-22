@@ -21,7 +21,7 @@ from .._indexer import (
     PropertyFieldIndexerWithDataPointer,
     PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
-from ..server_helpers import version_older_than
+from ..server_helpers import version_older_than, version_equal_or_later
 from ._enums import LayupProperty
 
 
@@ -339,6 +339,7 @@ class ElementInfoProvider:
         keyopt_8_values: PropertyField,
         keyopt_3_values: PropertyField,
         material_ids: PropertyField,
+        solver_material_ids: Optional[PropertyField] = None,
         no_bounds_checks: bool = False,
     ):
         """Initialize ElementInfoProvider."""
@@ -371,6 +372,13 @@ class ElementInfoProvider:
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
+
+        self.solver_material_to_dpf_id = {}
+        if solver_material_ids is not None:
+            for dpf_mat_id in solver_material_ids.scoping.ids:
+                mapdl_mat_ids = solver_material_ids.get_entity_data_by_id(dpf_mat_id)
+                for mapdl_mat_id in mapdl_mat_ids:
+                    self.solver_material_to_dpf_id[mapdl_mat_id] = dpf_mat_id
 
     def get_element_info(self, element_id: int) -> Optional[ElementInfo]:
         """Get :class:`~ElementInfo` for a given element id.
@@ -415,6 +423,16 @@ class ElementInfoProvider:
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
             is_layered = True
+        elif self.solver_material_to_dpf_id:
+            is_layered = False
+            n_layers = 1
+            field_mat = self.mesh.elements.materials_field
+            if field_mat:
+                mapdl_mat_id = field_mat.get_entity_data_by_id(element_id)
+                if len(mapdl_mat_id) != 1:
+                    raise RuntimeError(f"Could not evaluate material of element {element_id}. \
+                      One material is expected by the return value is {mapdl_mat_id}.")
+                dpf_material_ids = np.array([self.solver_material_to_dpf_id[mapdl_mat_id[0]]], dtype=np.int64)
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
@@ -439,6 +457,7 @@ class ElementInfoProvider:
 def get_element_info_provider(
     mesh: MeshedRegion,
     stream_provider_or_data_source: Union[Operator, DataSources],
+    material_provider: Optional[Operator] = None,
     no_bounds_checks: bool = False,
 ) -> ElementInfoProvider:
     """Get :class:`~ElementInfoProvider` Object.
@@ -448,6 +467,8 @@ def get_element_info_provider(
     mesh
     stream_provider_or_data_source
         dpf stream provider or dpf data source
+    material_provider
+        DPF operator that provides material information.
     no_bounds_checks
         Disable bounds checks. Improves
         performance but can result in cryptic error messages
@@ -487,6 +508,13 @@ def get_element_info_provider(
                 )
             raise RuntimeError(message)
 
+    if material_provider and version_equal_or_later(mesh._server, "8.0"):
+        helper_op = dpf.Operator("composite::materials_container_helper")
+        helper_op.inputs.materials_container(material_provider.outputs)
+        solver_material_ids = helper_op.outputs.solver_material_ids()
+    else:
+        solver_material_ids = None
+
     fields = {
         "layer_indices": mesh.property_field("element_layer_indices"),
         "element_types_apdl": mesh.property_field("apdl_element_type"),
@@ -494,6 +522,7 @@ def get_element_info_provider(
         "keyopt_8_values": get_keyopt_property_field(8),
         "keyopt_3_values": get_keyopt_property_field(3),
         "material_ids": mesh.property_field("element_layered_material_ids"),
+        "solver_material_ids": solver_material_ids
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
