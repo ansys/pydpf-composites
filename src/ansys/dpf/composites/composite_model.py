@@ -147,6 +147,7 @@ class CompositeModel:
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -171,6 +172,8 @@ class CompositeModel:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            A higher value results in more memory consumption, but faster evaluation.
 
             .. note::
 
@@ -179,7 +182,11 @@ class CompositeModel:
 
         """
         return self._implementation.evaluate_failure_criteria(
-            combined_criterion, composite_scope, measure, write_data_for_full_element_scope
+            combined_criterion,
+            composite_scope,
+            measure,
+            write_data_for_full_element_scope,
+            max_chunk_size,
         )
 
     def get_sampling_point(

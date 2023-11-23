@@ -4,13 +4,17 @@ from ansys.dpf.core import unit_systems
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
 from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     get_composite_files_from_workbench_result_folder,
 )
-from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+from ansys.dpf.composites.failure_criteria import (
+    CombinedFailureCriterion,
+    FailureModeEnum,
+    MaxStressCriterion,
+)
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
@@ -83,7 +87,7 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
     assert [ply["id"] for ply in sampling_point.analysis_plies] == analysis_ply_ids
 
-    if version_equal_or_later(dpf_server, "7.0"):
+    if version_equal_or_later(dpf_server, "7.1"):
         ref_material_names = [
             "Epoxy Carbon UD (230 GPa) Prepreg",
             "Epoxy Carbon Woven (230 GPa) Wet",
@@ -98,6 +102,51 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
     timer.add("After getting properties")
 
     timer.summary()
+
+
+def test_model_with_multiple_timesteps(dpf_server):
+    TEST_DATA_ROOT_DIR = (
+        pathlib.Path(__file__).parent / "data" / "workflow_example" / "multiple_time_steps"
+    )
+
+    data_files = get_composite_files_from_workbench_result_folder(TEST_DATA_ROOT_DIR)
+
+    composite_model = CompositeModel(data_files, server=dpf_server)
+
+    combined_failure_criterion = CombinedFailureCriterion(
+        "max stress", failure_criteria=[MaxStressCriterion()]
+    )
+
+    expected_data_by_time_index = {
+        0: {1: 1.47927903, 2: 1.47927903, 3: 1.3673715, 4: 1.3673715},
+        1: {1: 0.09834992, 2: 0.09834992, 3: 0.06173922, 4: 0.06173922},
+    }
+
+    for time_index, time in enumerate(composite_model.get_result_times_or_frequencies()):
+        failure_output = composite_model.evaluate_failure_criteria(
+            combined_criterion=combined_failure_criterion,
+            composite_scope=CompositeScope(time=time),
+        )
+
+        # Note evaluate_failure_criteria supports only a single time step
+        irf_field = failure_output.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
+
+        for element_id, expected_value in expected_data_by_time_index[time_index].items():
+            assert irf_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
+
+        # Just check that the other fields are available
+        def check_field_size(failure_label: FailureOutput):
+            field = failure_output.get_field({FAILURE_LABEL: failure_label})
+            assert len(field.scoping.ids) == 4
+
+        check_field_size(FailureOutput.FAILURE_MODE)
+        check_field_size(FailureOutput.MAX_LAYER_INDEX)
+
+        if version_equal_or_later(dpf_server, "8.0"):
+            check_field_size(FailureOutput.FAILURE_MODE_REF_SURFACE)
+            check_field_size(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK)
+            check_field_size(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT)
+            check_field_size(FailureOutput.MAX_SOLID_ELEMENT_ID)
 
 
 def test_assembly_model(dpf_server):
@@ -127,6 +176,12 @@ def test_assembly_model(dpf_server):
     )
 
     timer.add("After get failure output")
+
+    def check_output(failure_label: FailureOutput, expected_output: dict[int, float]):
+        for element_id, expected_value in expected_output.items():
+            failure_field = failure_output.get_field({FAILURE_LABEL: failure_label})
+            assert failure_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
+
     expected_output = {
         1: 1.11311715,
         2: 1.11311715,
@@ -137,9 +192,72 @@ def test_assembly_model(dpf_server):
         9: 0.62122959,
         10: 0.62122959,
     }
+    check_output(FailureOutput.FAILURE_VALUE, expected_output)
 
-    for element_id, expected_value in expected_output.items():
-        assert failure_output[1].get_entity_data_by_id(element_id) == pytest.approx(expected_value)
+    expected_modes = {
+        1: FailureModeEnum.s1t.value,
+        2: FailureModeEnum.s1t.value,
+        5: FailureModeEnum.s2t.value,
+        6: FailureModeEnum.s2t.value,
+        7: FailureModeEnum.na.value,
+        8: FailureModeEnum.na.value,
+        9: FailureModeEnum.s2t.value,
+        10: FailureModeEnum.s2t.value,
+    }
+    check_output(FailureOutput.FAILURE_MODE, expected_modes)
+
+    expected_layer_index = {
+        1: 2,
+        2: 2,
+        5: 2,
+        6: 2,
+        7: 1,
+        8: 1,
+        9: 1,
+        10: 1,
+    }
+
+    if not version_equal_or_later(dpf_server, "7.1"):
+        for element_id in expected_layer_index:
+            # Older versions of the server returned a layer index that starts
+            # at 0 instead of 1
+            expected_layer_index[element_id] -= 1
+
+    check_output(FailureOutput.MAX_LAYER_INDEX, expected_layer_index)
+
+    expected_output_ref_surface = {
+        1: 1.85777034,
+        2: 1.85777034,
+        3: 1.11311715,
+        4: 1.11311715,
+    }
+
+    if version_equal_or_later(dpf_server, "8.0"):
+        check_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_ref_surface)
+
+        expected_output_local_layer = {
+            1: 2,
+            2: 2,
+            3: 2,
+            4: 2,
+        }
+        check_output(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer)
+
+        expected_output_global_layer = {
+            1: 2,
+            2: 2,
+            3: 2,
+            4: 2,
+        }
+        check_output(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer)
+
+        expected_output_solid_element = {
+            1: 5,
+            2: 6,
+            3: 1,
+            4: 2,
+        }
+        check_output(FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element)
 
     property_dict = composite_model.get_constant_property_dict(
         [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label
