@@ -372,6 +372,7 @@ class ElementInfoProvider:
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
+        self.apdl_material_field = self.mesh.elements.materials_field
 
         self.solver_material_to_dpf_id = {}
         if solver_material_ids is not None:
@@ -426,12 +427,11 @@ class ElementInfoProvider:
         elif self.solver_material_to_dpf_id:
             is_layered = False
             n_layers = 1
-            field_mat = self.mesh.elements.materials_field
-            if field_mat:
-                mapdl_mat_id = field_mat.get_entity_data_by_id(element_id)
+            if self.apdl_material_field:
+                mapdl_mat_id = self.apdl_material_field.get_entity_data_by_id(element_id)
                 if len(mapdl_mat_id) != 1:
                     raise RuntimeError(f"Could not evaluate material of element {element_id}. \
-                      One material is expected by the return value is {mapdl_mat_id}.")
+                      One material ID is expected but the value is {mapdl_mat_id}.")
                 dpf_material_ids = np.array([self.solver_material_to_dpf_id[mapdl_mat_id[0]]], dtype=np.int64)
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
