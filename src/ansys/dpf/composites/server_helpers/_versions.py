@@ -13,9 +13,10 @@ class _DpfVersionInfo:
 
 _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
     "5.0": _DpfVersionInfo("5.0", "2023 R1", "Initial release of DPF Composites."),
-    "7.0": _DpfVersionInfo("7.0", "2024 R1", "DPF Composites plugin with sub-operators."),
-    "8.0": _DpfVersionInfo("8.0", "2024 R2", "DPF Composites with plot on reference surface \
-        and section data from RST."),
+    "7.0": _DpfVersionInfo("7.0", "2024 R1 pre 0", "DPF Composites plugin with sub-operators."),
+    "7.1": _DpfVersionInfo("7.1", "2024 R1", "DPF Composites: layer index starts at 1. Material names."),
+    "8.0": _DpfVersionInfo("8.0", "2024 R2 pre 0", "DPF Composites: reference surface support and \
+                                                   and section data from RST"),
 }
 
 def _check_key(ver: str) -> None:
