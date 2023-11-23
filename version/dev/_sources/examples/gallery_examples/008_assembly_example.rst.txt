@@ -37,7 +37,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-27
+.. GENERATED FROM PYTHON SOURCE LINES 20-31
 
 .. code-block:: default
 
@@ -46,7 +46,11 @@ Load Ansys libraries.
     from ansys.dpf.composites.constants import FailureOutput
     from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-    from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_older_than
+    from ansys.dpf.composites.server_helpers import (
+        connect_to_or_start_server,
+        version_equal_or_later,
+        version_older_than,
+    )
 
 
 
@@ -55,11 +59,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-29
+.. GENERATED FROM PYTHON SOURCE LINES 32-33
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-32
+.. GENERATED FROM PYTHON SOURCE LINES 33-36
 
 .. code-block:: default
 
@@ -73,13 +77,13 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-36
+.. GENERATED FROM PYTHON SOURCE LINES 37-40
 
 Configure combined failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configure the combined failure crition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-45
 
 .. code-block:: default
 
@@ -95,13 +99,13 @@ Configure the combined failure crition.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-45
+.. GENERATED FROM PYTHON SOURCE LINES 46-49
 
 Set up model
 ~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-47
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 .. code-block:: default
 
@@ -114,13 +118,13 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-51
+.. GENERATED FROM PYTHON SOURCE LINES 52-55
 
 Plot IRF
 ~~~~~~~~
-Plot the maximum IRF per element.
+Plot the maximum IRF per (solid) element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-55
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 .. code-block:: default
 
@@ -138,7 +142,34 @@ Plot the maximum IRF per element.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-63
+.. GENERATED FROM PYTHON SOURCE LINES 60-63
+
+Plot IRF
+~~~~~~~~
+Plot the maximum IRF on the reference surface
+
+.. GENERATED FROM PYTHON SOURCE LINES 63-70
+
+.. code-block:: default
+
+    if version_equal_or_later(server, "8.0"):
+        irf_field = output_all_elements.get_field(
+            {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
+        )
+        irf_field.plot()
+
+
+
+
+
+.. offlineviewer:: examples/gallery_examples/images/sphx_glr_008_assembly_example_002.vtksz
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 71-78
 
 Get element information
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,7 +179,7 @@ the layup properties must be queried with the correct composite definition label
 following gets element information for all layered elements.
 For DPF Server versions 7.0 and later, element information can be retrieved directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-78
+.. GENERATED FROM PYTHON SOURCE LINES 78-93
 
 .. code-block:: default
 
@@ -177,7 +208,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.314 seconds)
+   **Total running time of the script:** ( 0 minutes  11.258 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:

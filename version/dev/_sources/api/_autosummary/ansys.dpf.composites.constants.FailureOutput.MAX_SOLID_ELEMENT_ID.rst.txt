@@ -1,0 +1,6 @@
+MAX\_SOLID\_ELEMENT\_ID
+=======================
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: FailureOutput.MAX_SOLID_ELEMENT_ID
