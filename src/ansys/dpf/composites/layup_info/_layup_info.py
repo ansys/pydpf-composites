@@ -4,6 +4,7 @@ from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from typing import Any, Optional, Union, cast
 from warnings import warn
+from enum import Enum
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -58,6 +59,14 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
             f"Available analysis plies: {available_analysis_plies}"
         )
     return mesh.property_field(property_field_name)
+
+
+#  Note: must be in sync with the LayupModelContextTypeEnum in the C++ code
+class LayupModelModelContextType(Enum):
+    NOT_AVAILABLE = 0  # no layup data
+    ACP = 1  # lay-up data was read from ACP
+    RST = 2  # lay-up data was read from RST
+    MIXED = 3  # lay-up data was read from RST and ACP
 
 
 @dataclass(frozen=True)
