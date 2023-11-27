@@ -69,6 +69,8 @@ Here are some key features of PyDPF Composites:
 * Postprocessing of homogeneous elements.
 
 
+.. _limitations:
+
 Limitations
 '''''''''''
 - Only the Mechanical APDL solver is supported.
@@ -89,6 +91,6 @@ Limitations
   information, see `Import of Legacy Mechanical APDL Composite Models`_ in the Ansys Help.
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
-.. _Import of Legacy Mechanical APDL Composite Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v231/en/acp_ug/acp_import_legacy_APDL_comp.html
+.. _Import of Legacy Mechanical APDL Composite Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v232/en/acp_ug/acp_import_legacy_APDL_comp.html
 .. _Compatibility: https://dpf.docs.pyansys.com/version/stable/getting_started/compatibility.html
 .. _Ansys DPF: https://dpf.docs.pyansys.com/version/stable/

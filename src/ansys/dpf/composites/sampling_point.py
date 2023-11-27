@@ -23,9 +23,11 @@ from ._sampling_point_helpers import (
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info.material_operators import MaterialOperators
+from .layup_info._layup_info import _get_layup_model_context
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 from .unit_system import get_unit_system
+from .server_helpers import version_equal_or_later
 
 
 class SamplingPointNew(SamplingPoint):
@@ -329,8 +331,11 @@ class SamplingPointNew(SamplingPoint):
         )
         evaluate_failure_criterion_per_scope_op.inputs.stream_provider(self._rst_streams_provider)
         evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
-        has_layup_provider = True
-        evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
+        if version_equal_or_later(self._meshed_region._server, "8.0"):
+            layup_model_context = _get_layup_model_context(self._layup_provider)
+            evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(layup_model_context)
+        else:
+            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(True)
         evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )

@@ -30,6 +30,7 @@ from .layup_info._reference_surface import (
     _get_map_to_reference_surface_operator,
     _get_reference_surface_and_mapping_field,
 )
+from .layup_info._layup_info import _get_layup_model_context
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasureEnum
@@ -182,7 +183,7 @@ class CompositeModelImpl:
         # int32 is not supported in the Python API. See bug 946754.
         # 218 is the pin of LayupModelContext
         if version_equal_or_later(self._server, "8.0"):
-            self.layup_model_type = LayupModelModelContextType(self._layup_provider.get_output(218, int))
+            self.layup_model_type = LayupModelModelContextType(_get_layup_model_context(self._layup_provider))
         else:
             self.layup_model_type = LayupModelModelContextType.ACP if len(composite_files.composite) > 0 else LayupModelModelContextType.NOT_AVAILABLE
 

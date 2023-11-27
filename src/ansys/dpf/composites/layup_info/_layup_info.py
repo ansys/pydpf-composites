@@ -61,6 +61,11 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
     return mesh.property_field(property_field_name)
 
 
+def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
+    """Get the lay-up model context from the lay-up provider."""
+    return layup_provider.get_output(218, int)
+
+
 #  Note: must be in sync with the LayupModelContextTypeEnum in the C++ code
 class LayupModelModelContextType(Enum):
     NOT_AVAILABLE = 0  # no layup data
