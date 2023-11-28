@@ -15,7 +15,7 @@ def _get_composite_data_sources_for_layup_provider(
     """
     Prepare DataSources of composite for the DPF server.
 
-    Ensure that DataSources object is compatible with the version of the layup provider.
+    Ensure that the ``DataSources`` object is compatible with the version of the lay-up provider.
     """
 
     if data_sources.composite is None:
