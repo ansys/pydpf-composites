@@ -7,7 +7,7 @@ Failure analysis of an MAPDL (RST) model
 This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-
 only and ACP-based workflow is that `composite` of the :class:`.ContinuousFiberCompositesFiles` class
-is empty and so the section data are automatically loaded from the RST file.
+is empty, and so the section data are automatically loaded from the RST file.
 
 The engineering data file (XML or ENGD) with the material properties is needed anyway.
 Otherwise, the material properties cannot be mapped. It is recommended
