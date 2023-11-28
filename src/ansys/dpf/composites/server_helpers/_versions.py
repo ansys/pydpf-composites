@@ -21,7 +21,7 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
         "8.0",
         "2024 R2 pre 0",
         "DPF Composites: reference surface support and \
-                                                   and section data from RST",
+                                                   section data from RST",
     ),
 }
 
