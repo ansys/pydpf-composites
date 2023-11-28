@@ -20,8 +20,8 @@ or ACP (Ansys Composite PrePost) standalone.
 
 You can set the material UUID in Mechanical APDL with the ``MP,UVID,<material index>,<value>`` command.
 
-This workflow is supported since version 2024 R2 (DPF Server version 8.0). A few advanced features are
-not supported with the RST onl workflow. Refer to Section :ref:`limitations` for details.
+This workflow is supported in 2024 R2 (DPF Server version 8.0) and later. A few advanced features are
+not supported with the RST onl workflow. For more information, see :ref:`limitations`.
 """
 # %%
 # Set up analysis
