@@ -159,7 +159,7 @@ class CompositeDataSources:
         Result file. Currently only RST (MAPDL) is supported.
 
     material_support:
-        NOTE: The 'material_support' is explicitly listed since it is currently not
+        NOTE: The ``material_support`` parameter is explicitly listed because it is currently not
         supported (by the DPF Core) to use a distributed RST file as source for the
         material support. Instead, we create a separate DataSources object for the
         material support from the first RST file. This is a workaround until the
