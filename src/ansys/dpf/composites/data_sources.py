@@ -167,7 +167,7 @@ class CompositeDataSources:
     engineering_data:
         File with the material properties.
 
-    old_composite_sources:
+    old_composite_sources :
         This member is used to support assemblies in combination with the old
         DPF server (<7.0). It should be removed once the support of this
         server version is dropped.
