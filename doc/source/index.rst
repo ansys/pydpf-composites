@@ -56,7 +56,7 @@ Key features
 
 Here are some key features of PyDPF Composites:
 
-* Post-processing of layered shell and solid elements, whether they were preprocessed by ACP or not.
+* Postprocessing of layered shell and solid elements, whether they were preprocessed by ACP or not.
 * Failure criteria evaluation as shown in :ref:`Composite failure analysis <sphx_glr_examples_gallery_examples_001_failure_operator_example.py>`.
 * A :class:`.SamplingPoint` class for extracting and visualizing a result over the entire thickness of a laminate as shown in
   :ref:`Sampling point <sphx_glr_examples_gallery_examples_002_sampling_point_example.py>`.
