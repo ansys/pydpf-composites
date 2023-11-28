@@ -1,25 +1,27 @@
 """
 .. _rst_workflow_example:
 
-Failure Analysis of an MAPDL (RST) Model
+Failure analysis of an MAPDL (RST) model
 ----------------------------------------
 
-The post-processing of a MAPDL (RST) model with layered elements which was not
-preprocessed by ACP is shown by this example. The difference between the RST
-only and ACP based workflow is that `composite` of :class:`.ContinuousFiberCompositesFiles`
-is empty and so the section data are automatically loaded from the RST file.
+This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
+preprocessed by ACP. The difference between the RST-
+only and ACP-based workflow is that `composite` of the :class:`.ContinuousFiberCompositesFiles` class
+is empty, and so the section data are automatically loaded from the RST file.
 
 The engineering data file (XML or ENGD) with the material properties is needed anyway.
-Otherwise, the material properties cannot be mapped. It is recommended
-to create it before solving the model. The engineering data file can be either generated with
-Ansys Workbench or ACP (Ansys Composite PrePost) standalone. Important: The material UUIDs
-in the engineering data file must be identical to the UUIDs in the Mechanical APDL (RST file).
-The material UUID can be set in Mechanical APDL with
-the command ``MP,UVID,<material index>,<value>``.
+Otherwise, the material properties cannot be mapped. You should create it before
+solving the model. You can generate the engineering data file with either Ansys Workbench
+or ACP (Ansys Composite PrePost) standalone.
 
-This workflow is supported since version 2024 R2 (DPF Server version 8.0).
-A few advanced features are not supported with the RST only workflow.
-Refer to Section :ref:`limitations` for details.
+ .. important
+    The material UUIDs in the engineering data file must be identical
+    to the UUIDs in the Mechanical APDL (RST file).
+
+You can set the material UUID in Mechanical APDL with the ``MP,UVID,<material index>,<value>`` command.
+
+This workflow is supported in 2024 R2 (DPF Server version 8.0) and later. A few advanced features are
+not supported with the RST onl workflow. For more information, see :ref:`limitations`.
 """
 # %%
 # Set up analysis
@@ -29,16 +31,17 @@ Refer to Section :ref:`limitations` for details.
 #
 # Load Ansys libraries.
 
-from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
-    FaceSheetWrinklingCriterion,
     MaxStrainCriterion,
     MaxStressCriterion,
     VonMisesCriterion,
+    FaceSheetWrinklingCriterion,
+    ShearCrimpingCriterion,
 )
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
@@ -47,7 +50,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 server = connect_to_or_start_server()
 
 # %%
-# Get input files (RST and material.engd but skip the ACP layup file)
+# Get input files (RST and material.engd but skip the ACP layup file).
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell", True)
 print(composite_files_on_server)
 
