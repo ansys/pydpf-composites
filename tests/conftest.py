@@ -58,7 +58,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         DOCKER_IMAGE_TAG_KEY,
         action="store",
-        default="latest",
+        default="mapdl_section_data",
         help="Tag of pydpf-composites container to start for the tests. Default is 'latest'.",
     )
 
