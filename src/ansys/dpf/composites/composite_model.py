@@ -141,6 +141,15 @@ class CompositeModel:
         """
         return self._implementation.get_layup_operator(composite_definition_label)
 
+    @property
+    def layup_model_type(self):
+        """Get the context type of the lay-up model.
+
+        The type specifies whether the lay-up data was loaded from an ACP model, RST, or both.
+        Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        """
+        return self._implementation.layup_model_type
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,

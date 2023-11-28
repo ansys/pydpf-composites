@@ -219,6 +219,15 @@ class CompositeModelImpl2023R2:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
         return self._composite_infos[composite_definition_label].layup_provider
 
+    @property
+    def layup_model_type(self):
+        """Get the context type of the lay-up model."""
+        raise NotImplementedError(
+            "layup_model_type is not implemented"
+            " for this version of DPF. DPF server 8.0 (2024 R2)"
+            " or later should be used instead."
+        )
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,

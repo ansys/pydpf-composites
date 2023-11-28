@@ -181,11 +181,10 @@ class CompositeModelImpl:
 
         # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
         # int32 is not supported in the Python API. See bug 946754.
-        # 218 is the pin of LayupModelContext
         if version_equal_or_later(self._server, "8.0"):
-            self.layup_model_type = LayupModelModelContextType(_get_layup_model_context(self._layup_provider))
+            self._layup_model_type = LayupModelModelContextType(_get_layup_model_context(self._layup_provider))
         else:
-            self.layup_model_type = LayupModelModelContextType.ACP if len(composite_files.composite) > 0 else LayupModelModelContextType.NOT_AVAILABLE
+            self._layup_model_type = LayupModelModelContextType.ACP if len(composite_files.composite) > 0 else LayupModelModelContextType.NOT_AVAILABLE
 
         if self._supports_reference_surface_operators():
             self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
@@ -285,6 +284,14 @@ class CompositeModelImpl:
 
         """
         return self._layup_provider
+
+    @property
+    def layup_model_type(self):
+        """Get the context type of the lay-up model.
+
+        Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        """
+        return self._layup_model_type
 
     @_deprecated_composite_definition_label
     def evaluate_failure_criteria(

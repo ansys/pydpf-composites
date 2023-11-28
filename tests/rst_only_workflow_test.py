@@ -15,7 +15,6 @@ from ansys.dpf.composites.failure_criteria import (
 )
 from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map, \
     LayupModelModelContextType
-from ansys.dpf.composites.layup_info._layup_info import _get_layup_model_context
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
 
@@ -30,6 +29,9 @@ def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
         # TODO: remove once backend issue #856638 is resolved
         pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 
+    if version_older_than(dpf_server, "8.0"):
+        pytest.xfail("Section data from RST is supported since server vesion 8.0 (2024 R2).")
+
     timer = Timer()
 
     # remove composite definitions from ContinuousFiberCompositesFiles so that the section
@@ -37,8 +39,7 @@ def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
     data_files.composite = {}
 
     composite_model = CompositeModel(data_files, server=dpf_server)
-    layup_operator = composite_model.get_layup_operator()
-    assert _get_layup_model_context(layup_operator) == LayupModelModelContextType.RST.value
+    assert composite_model.layup_model_type == LayupModelModelContextType.RST
 
     timer.add("After Setup model")
 
