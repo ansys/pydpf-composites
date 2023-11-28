@@ -567,7 +567,8 @@ def get_composites_data_sources(
 
         old_composite_data_sources[key] = old_datasource
 
-    # Reset composite data source if no composite files are provided because a data source cannot be empty
+    # Reset composite data source if no composite files are provided because a
+    # data source cannot be empty
     if len(continuous_composite_files.composite) == 0:
         composite_data_source = None
 

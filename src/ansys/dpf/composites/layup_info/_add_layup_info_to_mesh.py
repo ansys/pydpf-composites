@@ -13,11 +13,10 @@ def _get_composite_data_sources_for_layup_provider(
     data_sources: CompositeDataSources, composite_definition_label: Optional[str] = None
 ) -> Optional[DataSources]:
     """
-    Prepare DataSources of composite for the DPF server.
+    Extract the DataSources object depending on the server version.
 
     Ensure that DataSources object is compatible with the version of the layup provider.
     """
-
     if data_sources.composite is None:
         return None
 
@@ -77,12 +76,11 @@ def add_layup_info_to_mesh(
         attribute. This parameter is only required for assemblies.
         See the note about assemblies in the description for the :class:`.CompositeModel` class.
     rst_stream_provider:
-        Pass RST stream to load section data directly from the RST file. Support with DPF 2024R2
-        (8.0) and later.
+        Pass RST stream to load the section data directly from the RST file. This parameter is
+        supported in DPF version 8.0 (2024 R2) and later.
 
     Returns
     -------
-    :
         Lay-up provider operator.
     """
     # Set up the lay-up provider.
@@ -116,6 +114,7 @@ def add_layup_info_to_mesh(
 
     if rst_stream_provider:
         from ..server_helpers import version_equal_or_later
+
         if version_equal_or_later(layup_provider._server, "8.0"):
             layup_provider.inputs.rst_stream(rst_stream_provider)
 

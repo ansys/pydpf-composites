@@ -11,13 +11,15 @@ is empty and so the section data are automatically loaded from the RST file.
 
 The engineering data file (XML or ENGD) with the material properties is needed anyway.
 Otherwise, the material properties cannot be mapped. It is recommended
-to create it before solving the model. The engineering data file can be either generated with Ansys Workbench
-or ACP (Ansys Composite PrePost) standalone. Important: The material UUIDs in the engineering data file
-must be identical to the UUIDs in the Mechanical APDL (RST file).
-The material UUID can be set in Mechanical APDL with the command ``MP,UVID,<material index>,<value>``.
+to create it before solving the model. The engineering data file can be either generated with
+Ansys Workbench or ACP (Ansys Composite PrePost) standalone. Important: The material UUIDs
+in the engineering data file must be identical to the UUIDs in the Mechanical APDL (RST file).
+The material UUID can be set in Mechanical APDL with
+the command ``MP,UVID,<material index>,<value>``.
 
-This workflow is supported since version 2024 R2 (DPF Server version 8.0). A few advanced features are
-not supported with the RST onl workflow. Refer to Section :ref:`limitations` for details.
+This workflow is supported since version 2024 R2 (DPF Server version 8.0).
+A few advanced features are not supported with the RST onl workflow.
+Refer to Section :ref:`limitations` for details.
 """
 # %%
 # Set up analysis
@@ -27,17 +29,16 @@ not supported with the RST onl workflow. Refer to Section :ref:`limitations` for
 #
 # Load Ansys libraries.
 
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     CoreFailureCriterion,
+    FaceSheetWrinklingCriterion,
     MaxStrainCriterion,
     MaxStressCriterion,
     VonMisesCriterion,
-    FaceSheetWrinklingCriterion,
-    ShearCrimpingCriterion,
 )
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 

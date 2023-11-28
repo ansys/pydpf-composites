@@ -2,9 +2,9 @@
 
 from collections.abc import Collection, Sequence
 from dataclasses import dataclass
+from enum import Enum
 from typing import Any, Optional, Union, cast
 from warnings import warn
-from enum import Enum
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -22,7 +22,7 @@ from .._indexer import (
     PropertyFieldIndexerWithDataPointer,
     PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
-from ..server_helpers import version_older_than, version_equal_or_later
+from ..server_helpers import version_equal_or_later, version_older_than
 from ._enums import LayupProperty
 
 
@@ -68,6 +68,7 @@ def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
 
 #  Note: must be in sync with the LayupModelContextTypeEnum in the C++ code
 class LayupModelModelContextType(Enum):
+    """Specifi"""
     NOT_AVAILABLE = 0  # no layup data
     ACP = 1  # lay-up data was read from ACP
     RST = 2  # lay-up data was read from RST
@@ -444,9 +445,13 @@ class ElementInfoProvider:
             if self.apdl_material_field:
                 mapdl_mat_id = self.apdl_material_field.get_entity_data_by_id(element_id)
                 if len(mapdl_mat_id) != 1:
-                    raise RuntimeError(f"Could not evaluate material of element {element_id}. \
-                      One material ID is expected but the value is {mapdl_mat_id}.")
-                dpf_material_ids = np.array([self.solver_material_to_dpf_id[mapdl_mat_id[0]]], dtype=np.int64)
+                    raise RuntimeError(
+                        f"Could not evaluate material of element {element_id}. \
+                      One material ID is expected but the value is {mapdl_mat_id}."
+                    )
+                dpf_material_ids = np.array(
+                    [self.solver_material_to_dpf_id[mapdl_mat_id[0]]], dtype=np.int64
+                )
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
@@ -536,7 +541,7 @@ def get_element_info_provider(
         "keyopt_8_values": get_keyopt_property_field(8),
         "keyopt_3_values": get_keyopt_property_field(3),
         "material_ids": mesh.property_field("element_layered_material_ids"),
-        "solver_material_ids": solver_material_ids
+        "solver_material_ids": solver_material_ids,
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)

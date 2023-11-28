@@ -21,16 +21,16 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
-    LayupPropertiesProvider,
     LayupModelModelContextType,
+    LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
 )
+from .layup_info._layup_info import _get_layup_model_context
 from .layup_info._reference_surface import (
     _get_map_to_reference_surface_operator,
     _get_reference_surface_and_mapping_field,
 )
-from .layup_info._layup_info import _get_layup_model_context
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasureEnum
@@ -176,15 +176,21 @@ class CompositeModelImpl:
             data_sources=self.data_sources,
             material_operators=self.material_operators,
             unit_system=self._unit_system,
-            rst_stream_provider=self._get_rst_streams_provider()
+            rst_stream_provider=self._get_rst_streams_provider(),
         )
 
         # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
         # int32 is not supported in the Python API. See bug 946754.
         if version_equal_or_later(self._server, "8.0"):
-            self._layup_model_type = LayupModelModelContextType(_get_layup_model_context(self._layup_provider))
+            self._layup_model_type = LayupModelModelContextType(
+                _get_layup_model_context(self._layup_provider)
+            )
         else:
-            self._layup_model_type = LayupModelModelContextType.ACP if len(composite_files.composite) > 0 else LayupModelModelContextType.NOT_AVAILABLE
+            self._layup_model_type = (
+                LayupModelModelContextType.ACP
+                if len(composite_files.composite) > 0
+                else LayupModelModelContextType.NOT_AVAILABLE
+            )
 
         if self._supports_reference_surface_operators():
             self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
@@ -416,7 +422,9 @@ class CompositeModelImpl:
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
             if version_equal_or_later(self._server, "8.0"):
-                evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(self.layup_model_type.value)
+                evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(
+                    self.layup_model_type.value
+                )
             else:
                 evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
                     self.layup_model_type != LayupModelModelContextType.NOT_AVAILABLE
@@ -445,8 +453,10 @@ class CompositeModelImpl:
                 self.material_operators.material_support_provider.outputs
             )
 
-            if (self.layup_model_type != LayupModelModelContextType.NOT_AVAILABLE and
-                    write_data_for_full_element_scope):
+            if (
+                self.layup_model_type != LayupModelModelContextType.NOT_AVAILABLE
+                and write_data_for_full_element_scope
+            ):
                 add_default_data_op = dpf.Operator("composite::add_default_data")
                 add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
                 add_default_data_op.inputs.time_id(
@@ -770,8 +780,10 @@ class CompositeModelImpl:
         if not version_equal_or_later(self._server, "8.0"):
             return False
 
-        if (self.layup_model_type == LayupModelModelContextType.ACP or
-                self.layup_model_type == LayupModelModelContextType.MIXED):
+        if (
+            self.layup_model_type == LayupModelModelContextType.ACP
+            or self.layup_model_type == LayupModelModelContextType.MIXED
+        ):
             return True
 
         return False

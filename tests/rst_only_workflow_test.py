@@ -1,20 +1,21 @@
 import numpy.testing
 import pytest
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
 
+from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
+from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
-    FailureModeEnum,
-    MaxStressCriterion,
-    HashinCriterion,
-    FaceSheetWrinklingCriterion,
     CoreFailureCriterion,
+    FaceSheetWrinklingCriterion,
+    HashinCriterion,
+    MaxStressCriterion,
     ShearCrimpingCriterion,
-    PuckCriterion
 )
-from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map, \
-    LayupModelModelContextType
+from ansys.dpf.composites.layup_info import (
+    LayerProperty,
+    LayupModelModelContextType,
+    get_analysis_ply_index_to_name_map,
+)
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
 
@@ -44,12 +45,14 @@ def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
     timer.add("After Setup model")
 
     combined_failure_criterion = CombinedFailureCriterion(
-        "max stress", failure_criteria=[MaxStressCriterion(),
-                                        HashinCriterion(hd=True, dim=3),
-                                        CoreFailureCriterion(),
-                                        FaceSheetWrinklingCriterion(),
-                                        ShearCrimpingCriterion()
-                                        ]
+        "max stress",
+        failure_criteria=[
+            MaxStressCriterion(),
+            HashinCriterion(hd=True, dim=3),
+            CoreFailureCriterion(),
+            FaceSheetWrinklingCriterion(),
+            ShearCrimpingCriterion(),
+        ],
     )
 
     failure_output = composite_model.evaluate_failure_criteria(
@@ -77,10 +80,14 @@ def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
     }
     element_id = 1
     for layer_property, value in expected_values.items():
-        numpy.testing.assert_allclose(composite_model.get_property_for_all_layers(layer_property, element_id), value)
+        numpy.testing.assert_allclose(
+            composite_model.get_property_for_all_layers(layer_property, element_id), value
+        )
 
     # shear angles, analysis plies and offset are not available in the RST file
-    assert composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id) is None
+    assert (
+        composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id) is None
+    )
     assert composite_model.get_element_laminate_offset(element_id) is None
     assert composite_model.get_analysis_plies(element_id) is None
 
@@ -91,7 +98,9 @@ def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
         combined_criterion=combined_failure_criterion, element_id=1
     )
 
-    assert [ply["thickness"] for ply in sampling_point.analysis_plies] == expected_values[LayerProperty.THICKNESSES]
+    assert [ply["thickness"] for ply in sampling_point.analysis_plies] == expected_values[
+        LayerProperty.THICKNESSES
+    ]
 
     if version_equal_or_later(dpf_server, "7.1"):
         ref_material_names = [

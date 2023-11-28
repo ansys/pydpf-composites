@@ -187,7 +187,6 @@ class PropertyFieldIndexerWithDataPointer:
 class FieldIndexerWithDataPointer:
     """Indexer for a dpf field with data pointer."""
 
-
     def __init__(self, field: Field):
         """Create indexer and get data."""
         if field.scoping.size > 0:

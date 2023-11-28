@@ -15,7 +15,11 @@ from ansys.dpf.composites.failure_criteria import (
     FailureModeEnum,
     MaxStressCriterion,
 )
-from ansys.dpf.composites.layup_info import LayerProperty, get_analysis_ply_index_to_name_map, LayupModelModelContextType
+from ansys.dpf.composites.layup_info import (
+    LayerProperty,
+    LayupModelModelContextType,
+    get_analysis_ply_index_to_name_map,
+)
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
