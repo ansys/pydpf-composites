@@ -292,7 +292,7 @@ class CompositeModelImpl:
         return self._layup_provider
 
     @property
-    def layup_model_type(self):
+    def layup_model_type(self) -> LayupModelModelContextType:
         """Get the context type of the lay-up model.
 
         Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
@@ -776,7 +776,7 @@ class CompositeModelImpl:
             )
 
     # Whether the reference surface operators are available or supported by the server
-    def _supports_reference_surface_operators(self):
+    def _supports_reference_surface_operators(self) -> bool:
         if not version_equal_or_later(self._server, "8.0"):
             return False
 

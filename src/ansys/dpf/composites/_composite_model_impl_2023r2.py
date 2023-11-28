@@ -20,6 +20,7 @@ from .layup_info import (
     ElementInfo,
     LayerProperty,
     LayupPropertiesProvider,
+    LayupModelModelContextType,
     add_layup_info_to_mesh,
     get_element_info_provider,
 )
@@ -220,7 +221,7 @@ class CompositeModelImpl2023R2:
         return self._composite_infos[composite_definition_label].layup_provider
 
     @property
-    def layup_model_type(self):
+    def layup_model_type(self) -> LayupModelModelContextType:
         """Get the context type of the lay-up model."""
         raise NotImplementedError(
             "layup_model_type is not implemented"

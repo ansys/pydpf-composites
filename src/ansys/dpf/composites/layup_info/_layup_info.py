@@ -63,12 +63,13 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
 
 def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
     """Get the lay-up model context from the lay-up provider."""
-    return layup_provider.get_output(218, int)
+    return cast(int, layup_provider.get_output(218, int))
 
 
 #  Note: must be in sync with the LayupModelContextTypeEnum in the C++ code
 class LayupModelModelContextType(Enum):
     """Specifi"""
+
     NOT_AVAILABLE = 0  # no layup data
     ACP = 1  # lay-up data was read from ACP
     RST = 2  # lay-up data was read from RST
