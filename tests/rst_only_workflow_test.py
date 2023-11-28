@@ -13,7 +13,7 @@ from ansys.dpf.composites.failure_criteria import (
 )
 from ansys.dpf.composites.layup_info import (
     LayerProperty,
-    LayupModelModelContextType,
+    LayupModelContextType,
     get_analysis_ply_index_to_name_map,
 )
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
@@ -40,7 +40,7 @@ def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
     data_files.composite = {}
 
     composite_model = CompositeModel(data_files, server=dpf_server)
-    assert composite_model.layup_model_type == LayupModelModelContextType.RST
+    assert composite_model.layup_model_type == LayupModelContextType.RST
 
     timer.add("After Setup model")
 

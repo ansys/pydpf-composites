@@ -79,9 +79,6 @@ def add_layup_info_to_mesh(
         Pass RST stream to load the section data directly from the RST file. This parameter is
         supported in DPF version 8.0 (2024 R2) and later.
 
-    Returns
-    -------
-        Lay-up provider operator.
     """
     # Set up the lay-up provider.
     # Reads the composite definition file and enriches the mesh

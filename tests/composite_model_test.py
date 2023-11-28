@@ -17,7 +17,7 @@ from ansys.dpf.composites.failure_criteria import (
 )
 from ansys.dpf.composites.layup_info import (
     LayerProperty,
-    LayupModelModelContextType,
+    LayupModelContextType,
     get_analysis_ply_index_to_name_map,
 )
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
@@ -38,7 +38,7 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
     composite_model = CompositeModel(data_files, server=dpf_server)
     if version_equal_or_later(dpf_server, "8.0"):
-        assert composite_model.layup_model_type == LayupModelModelContextType.ACP
+        assert composite_model.layup_model_type == LayupModelContextType.ACP
     timer.add("After Setup model")
 
     combined_failure_criterion = CombinedFailureCriterion(

@@ -21,7 +21,7 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
-    LayupModelModelContextType,
+    LayupModelContextType,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
@@ -182,14 +182,14 @@ class CompositeModelImpl:
         # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
         # int32 is not supported in the Python API. See bug 946754.
         if version_equal_or_later(self._server, "8.0"):
-            self._layup_model_type = LayupModelModelContextType(
+            self._layup_model_type = LayupModelContextType(
                 _get_layup_model_context(self._layup_provider)
             )
         else:
             self._layup_model_type = (
-                LayupModelModelContextType.ACP
+                LayupModelContextType.ACP
                 if len(composite_files.composite) > 0
-                else LayupModelModelContextType.NOT_AVAILABLE
+                else LayupModelContextType.NOT_AVAILABLE
             )
 
         if self._supports_reference_surface_operators():
@@ -292,7 +292,7 @@ class CompositeModelImpl:
         return self._layup_provider
 
     @property
-    def layup_model_type(self) -> LayupModelModelContextType:
+    def layup_model_type(self) -> LayupModelContextType:
         """Get the context type of the lay-up model.
 
         Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
@@ -427,7 +427,7 @@ class CompositeModelImpl:
                 )
             else:
                 evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
-                    self.layup_model_type != LayupModelModelContextType.NOT_AVAILABLE
+                    self.layup_model_type != LayupModelContextType.NOT_AVAILABLE
                 )
             evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
                 self._layup_provider.outputs.section_data_container
@@ -454,7 +454,7 @@ class CompositeModelImpl:
             )
 
             if (
-                self.layup_model_type != LayupModelModelContextType.NOT_AVAILABLE
+                self.layup_model_type != LayupModelContextType.NOT_AVAILABLE
                 and write_data_for_full_element_scope
             ):
                 add_default_data_op = dpf.Operator("composite::add_default_data")
@@ -781,8 +781,8 @@ class CompositeModelImpl:
             return False
 
         if (
-            self.layup_model_type == LayupModelModelContextType.ACP
-            or self.layup_model_type == LayupModelModelContextType.MIXED
+            self.layup_model_type == LayupModelContextType.ACP
+            or self.layup_model_type == LayupModelContextType.MIXED
         ):
             return True
 

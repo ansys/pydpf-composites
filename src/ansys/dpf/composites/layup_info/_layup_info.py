@@ -67,7 +67,7 @@ def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
 
 
 #  Note: Must be in sync with the ``LayupModelContextTypeEnum`` object in the C++ code.
-class LayupModelModelContextType(Enum):
+class LayupModelContextType(Enum):
     """Type of the lay-up information."""
 
     NOT_AVAILABLE = 0  # no layup data
