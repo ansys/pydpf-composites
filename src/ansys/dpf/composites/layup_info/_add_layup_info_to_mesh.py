@@ -114,6 +114,7 @@ def add_layup_info_to_mesh(
 
     if rst_stream_provider:
         from ..server_helpers import version_equal_or_later
+
         # pylint: disable=protected-access
         if version_equal_or_later(layup_provider._server, "8.0"):
             layup_provider.inputs.rst_stream(rst_stream_provider)
