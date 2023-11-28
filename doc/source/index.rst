@@ -87,7 +87,7 @@ Limitations
     always supported thanks to the scripting
   - Plotting results on the reference surface of a laminate.
 
-  Note: MAPDL models which have not been preprocessed with ACP can be converted. For more
+  Note: MAPDL models that have not been preprocessed with ACP can be converted. For more
   information, see `Import of Legacy Mechanical APDL Composite Models`_ in the Ansys Help.
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
