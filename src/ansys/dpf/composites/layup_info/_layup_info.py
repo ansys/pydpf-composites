@@ -66,7 +66,7 @@ def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
     return layup_provider.get_output(218, int)
 
 
-#  Note: must be in sync with the LayupModelContextTypeEnum in the C++ code
+#  Note: Must be in sync with the ``LayupModelContextTypeEnum`` object in the C++ code.
 class LayupModelModelContextType(Enum):
     NOT_AVAILABLE = 0  # no layup data
     ACP = 1  # lay-up data was read from ACP
