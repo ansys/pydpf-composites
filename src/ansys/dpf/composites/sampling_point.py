@@ -331,6 +331,7 @@ class SamplingPointNew(SamplingPoint):
         )
         evaluate_failure_criterion_per_scope_op.inputs.stream_provider(self._rst_streams_provider)
         evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
+        # pylint: disable=protected-access
         if version_equal_or_later(self._meshed_region._server, "8.0"):
             layup_model_context = _get_layup_model_context(self._layup_provider)
             evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(

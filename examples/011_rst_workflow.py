@@ -18,7 +18,7 @@ The material UUID can be set in Mechanical APDL with
 the command ``MP,UVID,<material index>,<value>``.
 
 This workflow is supported since version 2024 R2 (DPF Server version 8.0).
-A few advanced features are not supported with the RST onl workflow.
+A few advanced features are not supported with the RST only workflow.
 Refer to Section :ref:`limitations` for details.
 """
 # %%

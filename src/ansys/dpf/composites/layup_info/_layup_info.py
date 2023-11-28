@@ -68,7 +68,7 @@ def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
 
 #  Note: must be in sync with the LayupModelContextTypeEnum in the C++ code
 class LayupModelModelContextType(Enum):
-    """Specifi"""
+    """Type of the lay-up information."""
 
     NOT_AVAILABLE = 0  # no layup data
     ACP = 1  # lay-up data was read from ACP
@@ -528,6 +528,7 @@ def get_element_info_provider(
                 )
             raise RuntimeError(message)
 
+    # pylint: disable=protected-access
     if material_provider and version_equal_or_later(mesh._server, "8.0"):
         helper_op = dpf.Operator("composite::materials_container_helper")
         helper_op.inputs.materials_container(material_provider.outputs)

@@ -142,7 +142,7 @@ class CompositeModel:
         return self._implementation.get_layup_operator(composite_definition_label)
 
     @property
-    def layup_model_type(self) -> LayupModelModelContextType
+    def layup_model_type(self) -> LayupModelModelContextType:
         """Get the context type of the lay-up model.
 
         The type specifies whether the lay-up data was loaded from an ACP model, RST, or both.

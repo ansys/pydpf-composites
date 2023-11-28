@@ -25,13 +25,13 @@ SEPARATOR = "::"
 
 
 def test_composite_model_with_rst_only(dpf_server, data_files, distributed_rst):
-    """Test features of the composite model whith sectin data from the RST file only."""
+    """Test features of the composite model with section data from the RST file only."""
     if distributed_rst:
         # TODO: remove once backend issue #856638 is resolved
         pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 
     if version_older_than(dpf_server, "8.0"):
-        pytest.xfail("Section data from RST is supported since server vesion 8.0 (2024 R2).")
+        pytest.xfail("Section data from RST is supported since server version 8.0 (2024 R2).")
 
     timer = Timer()
 

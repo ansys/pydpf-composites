@@ -19,8 +19,8 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
-    LayupPropertiesProvider,
     LayupModelModelContextType,
+    LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
 )
