@@ -4,8 +4,8 @@
 Failure analysis of an MAPDL (RST) model
 ----------------------------------------
 
-The post-processing of a MAPDL (RST) model with layered elements which was not
-preprocessed by ACP is shown by this example. The difference between the RST
+This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
+preprocessed by ACP. The difference between the RST-
 only and ACP based workflow is that `composite` of :class:`.ContinuousFiberCompositesFiles`
 is empty and so the section data are automatically loaded from the RST file.
 
