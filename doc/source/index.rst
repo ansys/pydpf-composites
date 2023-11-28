@@ -75,7 +75,7 @@ Limitations
 '''''''''''
 - Only the Mechanical APDL solver is supported.
 - The following operators and features are only supported if the model was preprocessed with ACP
-  and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel`:
+  and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel` class.
   - The evaluation of the failure criteria for sandwich (:class:`FaceSheetWrinklingCriterion`, :class:`ShearCrimpingCriterion`)
     for solid elements. Layered shell elements are always supported.
   - The computation of interlaminar normal stresses (s3) for layered shell elements.
