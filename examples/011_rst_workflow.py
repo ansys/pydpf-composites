@@ -10,11 +10,15 @@ only and ACP-based workflow is that `composite` of the :class:`.ContinuousFiberC
 is empty, and so the section data are automatically loaded from the RST file.
 
 The engineering data file (XML or ENGD) with the material properties is needed anyway.
-Otherwise, the material properties cannot be mapped. It is recommended
-to create it before solving the model. The engineering data file can be either generated with Ansys Workbench
-or ACP (Ansys Composite PrePost) standalone. Important: The material UUIDs in the engineering data file
-must be identical to the UUIDs in the Mechanical APDL (RST file).
-The material UUID can be set in Mechanical APDL with the command ``MP,UVID,<material index>,<value>``.
+Otherwise, the material properties cannot be mapped. You should create it before
+solving the model. You can generate the engineering data file with either Ansys Workbench
+or ACP (Ansys Composite PrePost) standalone.
+
+ .. important
+    The material UUIDs in the engineering data file must be identical
+    to the UUIDs in the Mechanical APDL (RST file).
+
+You can set the material UUID in Mechanical APDL with the ``MP,UVID,<material index>,<value>`` command.
 
 This workflow is supported since version 2024 R2 (DPF Server version 8.0). A few advanced features are
 not supported with the RST onl workflow. Refer to Section :ref:`limitations` for details.
