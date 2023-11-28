@@ -83,7 +83,7 @@ Limitations
     This limitation does not affect (layered) solid elements.
   - The support of variable materials and material fields. Without ACP, only the
     temperature is considered for the evaluation of variable material properties.
-  - Global plies, ply-wise scoping, and ly-wise failure criteria. Layer-wise post-processing is
+  - Global plies, ply-wise scoping, and ply-wise failure criteria. Layer-wise post-processing is
     always supported thanks to the scripting
   - Plotting results on the reference surface of a laminate.
 
