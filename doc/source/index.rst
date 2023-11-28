@@ -83,8 +83,8 @@ Limitations
     This limitation does not affect (layered) solid elements.
   - The support of variable materials and material fields. Without ACP, only the
     temperature is considered for the evaluation of variable material properties.
-  - Global plies, ply-wise scoping, and ply-wise failure criteria. Layer-wise post-processing is
-    always supported thanks to the scripting
+  - Global plies, and scoping by plies. Layer-wise post-processing is
+    always supported.
   - Plotting results on the reference surface of a laminate.
 
   Note: MAPDL models that have not been preprocessed with ACP can be converted. For more
