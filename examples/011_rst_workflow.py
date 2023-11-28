@@ -1,7 +1,7 @@
 """
 .. _rst_workflow_example:
 
-Failure Analysis of an MAPDL (RST) Model
+Failure analysis of an MAPDL (RST) model
 ----------------------------------------
 
 The post-processing of a MAPDL (RST) model with layered elements which was not
