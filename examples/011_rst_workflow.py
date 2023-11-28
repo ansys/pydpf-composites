@@ -50,7 +50,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 server = connect_to_or_start_server()
 
 # %%
-# Get input files (RST and material.engd but skip the ACP layup file)
+# Get input files (RST and material.engd but skip the ACP layup file).
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell", True)
 print(composite_files_on_server)
 
