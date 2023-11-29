@@ -74,21 +74,26 @@ Here are some key features of PyDPF Composites:
 Limitations
 '''''''''''
 - Only the Mechanical APDL solver is supported.
-- The following operators and features are only supported if the model was preprocessed with ACP
-  and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel` class.
-  - The evaluation of the failure criteria for sandwich (:class:`FaceSheetWrinklingCriterion`, :class:`ShearCrimpingCriterion`) classes
+- The following operators and features are only supported if the model was
+  preprocessed with ACP and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel` class.
+
+  - The evaluation of the failure criteria for sandwich
+    (:class:`FaceSheetWrinklingCriterion <.failure_criteria.FaceSheetWrinklingCriterion>`, :class:`ShearCrimpingCriterion <.failure_criteria.ShearCrimpingCriterion>`)
     for solid elements. Layered shell elements are always supported.
+
   - The computation of interlaminar normal stresses (s3) for layered shell elements.
-    Otherwise, s3 is zero. This also affects 3D failure criteria which use s3, such as Puck 3D.
-    This limitation does not affect (layered) solid elements.
+    Otherwise, s3 is zero. This also affects 3D failure criteria which use s3,
+    such as Puck 3D. This limitation does not affect (layered) solid elements.
+
   - The support of variable materials and material fields. Without ACP, only the
     temperature is considered for the evaluation of variable material properties.
-  - Global plies, and scoping by plies. Layer-wise post-processing is
-    always supported.
+
+  - Global plies, and scoping by plies. Layer-wise post-processing is always supported.
+
   - Plotting results on the reference surface of a laminate.
 
-  Note: MAPDL models that have not been preprocessed with ACP can be converted. For more
-  information, see `Import of Legacy Mechanical APDL Composite Models`_ in the Ansys Help.
+Note: MAPDL models that have not been preprocessed with ACP can be converted. For more
+information, see `Import of Legacy Mechanical APDL Composite Models`_ in the Ansys Help.
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
 .. _Import of Legacy Mechanical APDL Composite Models: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v232/en/acp_ug/acp_import_legacy_APDL_comp.html

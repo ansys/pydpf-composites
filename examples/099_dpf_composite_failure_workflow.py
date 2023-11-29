@@ -1,5 +1,5 @@
 """
-.. _basic_example:
+.. _basic_example_composite_failure_workflow:
 
 DPF composite failure workflow
 ------------------------------

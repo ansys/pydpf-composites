@@ -14,9 +14,9 @@ Otherwise, the material properties cannot be mapped. You should create it before
 solving the model. You can generate the engineering data file with either Ansys Workbench
 or ACP (Ansys Composite PrePost) standalone.
 
- .. important
-    The material UUIDs in the engineering data file must be identical
-    to the UUIDs in the Mechanical APDL (RST file).
+.. important::
+   The material UUIDs in the engineering data file must be identical
+   to the UUIDs in the Mechanical APDL (RST file).
 
 You can set the material UUID in Mechanical APDL with
 the ``MP,UVID,<material index>,<value>`` command.
