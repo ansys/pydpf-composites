@@ -126,7 +126,7 @@ class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
             self._max_id = 0
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
