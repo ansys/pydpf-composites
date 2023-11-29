@@ -208,7 +208,7 @@ class FieldIndexerWithDataPointer:
             self._data_pointer = np.array([], dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.double]]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
