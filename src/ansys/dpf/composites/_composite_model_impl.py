@@ -490,7 +490,7 @@ class CompositeModelImpl:
 
         if merge_index == 0:
             raise RuntimeError(
-                "No output is generated! Please check the scope (element and ply ids)."
+                "No output is generated! Check the scope (element and ply IDs)."
             )
 
         if self._supports_reference_surface_operators():
