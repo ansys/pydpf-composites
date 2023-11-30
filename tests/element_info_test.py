@@ -1,9 +1,9 @@
 import os
 import pathlib
-import pytest
 
 from ansys.dpf.core import unit_systems
 import numpy as np
+import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.data_sources import (
@@ -12,7 +12,6 @@ from ansys.dpf.composites.data_sources import (
 )
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
-
 from ansys.dpf.composites.server_helpers import version_older_than
 
 SEPARATOR = "::"
