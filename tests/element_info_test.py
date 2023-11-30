@@ -1,5 +1,6 @@
 import os
 import pathlib
+import pytest
 
 from ansys.dpf.core import unit_systems
 import numpy as np
@@ -11,6 +12,8 @@ from ansys.dpf.composites.data_sources import (
 )
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
+
+from ansys.dpf.composites.server_helpers import version_older_than
 
 SEPARATOR = "::"
 
@@ -25,6 +28,9 @@ def test_section_definitions_from_multiple_sources(dpf_server):
     the material ID from the EBLOCK must be used. The test ensures that
     the element provider handles this correctly.
     """
+    if version_older_than(dpf_server, "8.0"):
+        pytest.xfail("Section data from RST is supported since server version 8.0 (2024 R2).")
+
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mixed_acp_rst_model"
 
     files = ContinuousFiberCompositesFiles(
@@ -74,6 +80,9 @@ def test_element_info_for_homogeneous_solids_and_beams(dpf_server):
     Element 33 - 57: layered shells
     Element 58 - 61: beams
     """
+    if version_older_than(dpf_server, "8.0"):
+        pytest.xfail("Section data from RST is supported since server version 8.0 (2024 R2).")
+
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "model_with_beams_shells_solids"
     model_name = "model_with_beams_shells_solids"
     files = ContinuousFiberCompositesFiles(

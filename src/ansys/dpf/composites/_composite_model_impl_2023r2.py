@@ -385,7 +385,7 @@ class CompositeModelImpl2023R2:
         Parameters
         ----------
         element_id:
-            Element ID or label.
+            Element ID/label.
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
