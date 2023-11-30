@@ -446,12 +446,10 @@ class ElementInfoProvider:
             mapdl_mat_id = self.apdl_material_indexer.by_id(element_id)
             if mapdl_mat_id:
                 dpf_material_ids = np.array(
-                    [self.solver_material_to_dpf_id[mapdl_mat_id[0]]], dtype=np.int64
+                    [self.solver_material_to_dpf_id[mapdl_mat_id]], dtype=np.int64
                 )
             else:
-                raise RuntimeError(
-                    f"Could not evaluate material of element {element_id}."
-                )
+                raise RuntimeError(f"Could not evaluate material of element {element_id}.")
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
