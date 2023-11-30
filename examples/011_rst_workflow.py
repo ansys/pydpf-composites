@@ -5,24 +5,23 @@ Failure analysis of an MAPDL (RST) model
 ----------------------------------------
 
 This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
-preprocessed by ACP. The difference between the RST-
-only and ACP-based workflow is that `composite` of the :class:`.ContinuousFiberCompositesFiles`
+preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
+`composite` of the :class:`.ContinuousFiberCompositesFiles`
 class is empty, and so the section data are automatically loaded from the RST file.
 
 The engineering data file (XML or ENGD) with the material properties is needed anyway.
-Otherwise, the material properties cannot be mapped. You should create it before
-solving the model. You can generate the engineering data file with either Ansys Workbench
-or ACP (Ansys Composite PrePost) standalone.
+Otherwise, the material properties cannot be mapped.
 
 .. important::
    The material UUIDs in the engineering data file must be identical
    to the UUIDs in the Mechanical APDL (RST file).
 
-You can set the material UUID in Mechanical APDL with
-the ``MP,UVID,<material index>,<value>`` command.
+At the end of this example, two workflows are shown on how to create
+the engineering data file based on a MAPDL model and how to set the
+material UUIDs in MAPDL.
 
-This workflow is supported in 2024 R2 (DPF Server version 8.0) and later.
-A few advanced features are not supported with the RST only workflow.
+The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
+and later. A few advanced features are not supported with the RST only workflow.
 For more information, see :ref:`limitations`.
 """
 # %%
@@ -92,3 +91,24 @@ irf_field.plot()
 sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=2)
 sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
 sampling_plot.figure.show()
+
+
+# %%
+# Create Engineering Data file and set material UUIDs in MAPDL
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Here are two workflows for setting up the engineering data file
+# and the material UUIDs in MAPDL. The material UUIDs must be set
+# in MAPDL before the model is solved.
+#
+# With WB and Engineering Data:
+#   - Create an External Model system in WB and load the solver input file
+#   - Link the External Model with an Engineering Data system and update it
+#   - Save the project and copy the generated engineering data file (EngineeringData.xml)
+#   - For each material, look for the ``DataTransferID``, go to MAPDL and set the material
+#     UUIDs with the ``MP,UVID,<material index>,<value>`` command
+#
+# With ACP Standalone (for constant material properties only):
+#   - Start ACP, go to *File - Import Model* and load the solver input file (CDB)
+#   - Go to the Materials folder and export the engineering data file (Ansys Workbench XML)
+#   - For each material, look for the ``DataTransferID``, go to MAPDL and set the material
+#     UUID with the ``MP,UVID,<material index>,<value>`` command.

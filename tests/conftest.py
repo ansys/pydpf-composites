@@ -30,6 +30,7 @@ ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
 ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 DOCKER_IMAGE_TAG_KEY = "--image-tag"
+DEFAULT_DOCKER_IMAGE_TAG = "mapdl_section_data"  # set to latest for development
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -58,7 +59,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         DOCKER_IMAGE_TAG_KEY,
         action="store",
-        default="mapdl_section_data",
+        default=DEFAULT_DOCKER_IMAGE_TAG,
         help="Tag of pydpf-composites container to start for the tests. Default is 'latest'.",
     )
 
@@ -259,7 +260,7 @@ def dpf_server(request: pytest.FixtureRequest):
     ]
 
     if len(active_options) > 1:
-        if (docker_image_tag is not None) and docker_image_tag == "latest":
+        if (docker_image_tag is not None) and docker_image_tag == DEFAULT_DOCKER_IMAGE_TAG:
             # We don't want to fail if docker_image_tag is not set explicitly
             # because it has a default value.
             docker_image_tag = None
