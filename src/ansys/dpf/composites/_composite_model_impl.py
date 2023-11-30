@@ -21,10 +21,12 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
+    LayupModelContextType,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
 )
+from .layup_info._layup_info import _get_layup_model_context
 from .layup_info._reference_surface import (
     _get_map_to_reference_surface_operator,
     _get_reference_surface_and_mapping_field,
@@ -174,9 +176,23 @@ class CompositeModelImpl:
             data_sources=self.data_sources,
             material_operators=self.material_operators,
             unit_system=self._unit_system,
+            rst_stream_provider=self._get_rst_streams_provider(),
         )
 
+        # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
+        # int32 is not supported in the Python API. See bug 946754.
         if version_equal_or_later(self._server, "8.0"):
+            self._layup_model_type = LayupModelContextType(
+                _get_layup_model_context(self._layup_provider)
+            )
+        else:
+            self._layup_model_type = (
+                LayupModelContextType.ACP
+                if len(composite_files.composite) > 0
+                else LayupModelContextType.NOT_AVAILABLE
+            )
+
+        if self._supports_reference_surface_operators():
             self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
                 data_sources=self.data_sources.composite, unit_system=self._unit_system
             )
@@ -189,6 +205,7 @@ class CompositeModelImpl:
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self._get_rst_streams_provider(),
+            material_provider=self.material_operators.material_provider,
         )
         self._layup_properties_provider = LayupPropertiesProvider(
             layup_provider=self._layup_provider, mesh=self.get_mesh()
@@ -246,8 +263,8 @@ class CompositeModelImpl:
         material_ids = string_field.scoping.ids
 
         names = {}
-        for mat_id in material_ids:
-            names[string_field.data[string_field.scoping.index(mat_id)]] = mat_id
+        for dpf_mat_id in material_ids:
+            names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
 
         return names
 
@@ -273,6 +290,14 @@ class CompositeModelImpl:
 
         """
         return self._layup_provider
+
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model.
+
+        Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        """
+        return self._layup_model_type
 
     @_deprecated_composite_definition_label
     def evaluate_failure_criteria(
@@ -332,8 +357,6 @@ class CompositeModelImpl:
             # is irrelevant for cases without a ply scope, we set it to False here.
             write_data_for_full_element_scope = False
 
-        has_layup_provider = len(self._composite_files.composite) > 0
-
         # configure primary scoping
         scope_config = dpf.DataTree()
         if time_in:
@@ -355,7 +378,9 @@ class CompositeModelImpl:
         chunking_generator = dpf.Operator("composite::scope_generator")
         chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
-        chunking_generator.inputs.data_sources(self.data_sources.composite)
+        if self.data_sources.composite:
+            chunking_generator.inputs.data_sources(self.data_sources.composite)
+
         if element_scope_in:
             element_scope = dpf.Scoping(location="elemental")
             element_scope.ids = element_scope_in
@@ -396,7 +421,14 @@ class CompositeModelImpl:
                 self._get_rst_streams_provider()
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
-            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
+            if version_equal_or_later(self._server, "8.0"):
+                evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(
+                    self.layup_model_type.value
+                )
+            else:
+                evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
+                    self.layup_model_type != LayupModelContextType.NOT_AVAILABLE
+                )
             evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
                 self._layup_provider.outputs.section_data_container
             )
@@ -421,7 +453,10 @@ class CompositeModelImpl:
                 self.material_operators.material_support_provider.outputs
             )
 
-            if has_layup_provider and write_data_for_full_element_scope:
+            if (
+                self.layup_model_type != LayupModelContextType.NOT_AVAILABLE
+                and write_data_for_full_element_scope
+            ):
                 add_default_data_op = dpf.Operator("composite::add_default_data")
                 add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
                 add_default_data_op.inputs.time_id(
@@ -454,11 +489,9 @@ class CompositeModelImpl:
             merge_index = merge_index + 1
 
         if merge_index == 0:
-            raise RuntimeError(
-                "No output is generated! Please check the scope (element and ply ids)."
-            )
+            raise RuntimeError("No output is generated! Check the scope (element and ply IDs).")
 
-        if version_equal_or_later(self._server, "8.0"):
+        if self._supports_reference_surface_operators():
             self._map_to_reference_surface_operator.inputs.min_container(
                 min_merger.outputs.merged_fields_container()
             )
@@ -739,3 +772,16 @@ class CompositeModelImpl:
                 f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
                 f"Specify a key explicitly."
             )
+
+    # Whether the reference surface operators are available or supported by the server
+    def _supports_reference_surface_operators(self) -> bool:
+        if not version_equal_or_later(self._server, "8.0"):
+            return False
+
+        if (
+            self.layup_model_type == LayupModelContextType.ACP
+            or self.layup_model_type == LayupModelContextType.MIXED
+        ):
+            return True
+
+        return False

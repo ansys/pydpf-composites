@@ -19,6 +19,7 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
+    LayupModelContextType,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
@@ -219,6 +220,15 @@ class CompositeModelImpl2023R2:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
         return self._composite_infos[composite_definition_label].layup_provider
 
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model."""
+        raise NotImplementedError(
+            "layup_model_type is not implemented"
+            " for this version of DPF. DPF server 8.0 (2024 R2)"
+            " or later should be used instead."
+        )
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
@@ -375,7 +385,7 @@ class CompositeModelImpl2023R2:
         Parameters
         ----------
         element_id:
-            Element ID or label.
+            Element ID/label.
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`

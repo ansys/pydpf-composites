@@ -179,6 +179,7 @@ def get_short_fiber_example_files(
 def get_continuous_fiber_example_files(
     server: dpf.server,
     example_key: str,
+    skip_acp_layup_files: bool = False,
 ) -> ContinuousFiberCompositesFiles:
     """Get continuous fiber example file by example key.
 
@@ -197,16 +198,17 @@ def get_continuous_fiber_example_files(
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         all_composite_files = {}
-        for key, composite_examples_files_for_scope in example_files.files.composite.items():
-            composite_files = CompositeDefinitionFiles(
-                definition=get_server_path(composite_examples_files_for_scope.definition),
-            )
-            if composite_examples_files_for_scope.mapping is not None:
-                composite_files.mapping = get_server_path(
-                    composite_examples_files_for_scope.mapping
+        if not skip_acp_layup_files:
+            for key, composite_examples_files_for_scope in example_files.files.composite.items():
+                composite_files = CompositeDefinitionFiles(
+                    definition=get_server_path(composite_examples_files_for_scope.definition),
                 )
+                if composite_examples_files_for_scope.mapping is not None:
+                    composite_files.mapping = get_server_path(
+                        composite_examples_files_for_scope.mapping
+                    )
 
-            all_composite_files[key] = composite_files
+                all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
             rst=[get_server_path(rst_path) for rst_path in example_files.files.rst],
