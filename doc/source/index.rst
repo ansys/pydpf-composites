@@ -83,7 +83,7 @@ Limitations
     for solid elements. Layered shell elements are always supported.
 
   - The computation of interlaminar normal stresses (s3) for layered shell elements.
-    Otherwise, s3 is zero. This also affects 3D failure criteria which use s3,
+    Without ACP layup definitions, s3 is always zero. This also affects 3D failure criteria which use s3,
     such as Puck 3D. This limitation does not affect (layered) solid elements.
 
   - The support of variable materials and material fields. Without ACP, only the
