@@ -57,8 +57,8 @@ irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILUR
 irf_field.plot()
 
 # %%
-# Plot IRF
-# ~~~~~~~~
+# Plot IRF on the reference surface
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Plot the maximum IRF on the reference surface
 if version_equal_or_later(server, "8.0"):
     irf_field = output_all_elements.get_field(
@@ -72,7 +72,7 @@ if version_equal_or_later(server, "8.0"):
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # In the assembly, two composite definitions exist: one with a "shell" label
 # and one with a "solid" label. For DPF Server versions earlier than 7.0,
-# the layup properties must be queried with the correct composite definition label. The code
+# the lay-up properties must be queried with the correct composite definition label. The code
 # following gets element information for all layered elements.
 # For DPF Server versions 7.0 and later, element information can be retrieved directly.
 

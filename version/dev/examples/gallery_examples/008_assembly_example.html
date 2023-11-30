@@ -433,7 +433,8 @@ document.write(`
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Postprocess an assembly</a></li>
 <li class="toctree-l1"><a class="reference internal" href="009_short_fiber_orientation_tensor.html">Plot of the orientation tensor for short fiber composites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="010_harmonic_example.html">Postprocess a harmonic analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="011_dpf_composite_failure_workflow.html">DPF composite failure workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="011_rst_workflow.html">Failure analysis of an MAPDL (RST) model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="099_dpf_composite_failure_workflow.html">DPF composite failure workflow</a></li>
 </ul>
 </div>
 </nav></div>
@@ -559,8 +560,8 @@ DPF server, and retrieving the example files.</p>
 
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/sphx_glr_008_assembly_example_001.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </section>
-<section id="id1">
-<h2>Plot IRF<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="plot-irf-on-the-reference-surface">
+<h2>Plot IRF on the reference surface<a class="headerlink" href="#plot-irf-on-the-reference-surface" title="Permalink to this heading">#</a></h2>
 <p>Plot the maximum IRF on the reference surface</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">version_equal_or_later</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;8.0&quot;</span><span class="p">):</span>
     <span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_all_elements</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span>
@@ -576,7 +577,7 @@ DPF server, and retrieving the example files.</p>
 <h2>Get element information<a class="headerlink" href="#get-element-information" title="Permalink to this heading">#</a></h2>
 <p>In the assembly, two composite definitions exist: one with a “shell” label
 and one with a “solid” label. For DPF Server versions earlier than 7.0,
-the layup properties must be queried with the correct composite definition label. The code
+the lay-up properties must be queried with the correct composite definition label. The code
 following gets element information for all layered elements.
 For DPF Server versions 7.0 and later, element information can be retrieved directly.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">version_older_than</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;7.0&quot;</span><span class="p">):</span>
@@ -595,7 +596,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
         <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  11.203 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  13.627 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-008-assembly-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ec32918505e614b7d8ffd6b6cb203b86/008_assembly_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">008_assembly_example.py</span></code></a></p>
@@ -631,7 +632,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-combined-failure-criterion">Configure combined failure criterion</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-model">Set up model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-irf">Plot IRF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Plot IRF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-irf-on-the-reference-surface">Plot IRF on the reference surface</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-element-information">Get element information</a></li>
 </ul>
   </nav></div>

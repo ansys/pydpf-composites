@@ -18,6 +18,7 @@ General features to access information on the composite lay-up.
     LayerProperty
     LayupPropertiesProvider
     LayupProperty
+    LayupModelContextType
 
 
 Material properties

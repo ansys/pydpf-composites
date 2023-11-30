@@ -437,6 +437,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayerProperty.html">LayerProperty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupPropertiesProvider.html">LayupPropertiesProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupProperty.html">LayupProperty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupModelContextType.html">LayupModelContextType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html">MaterialProperty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.get_constant_property.html">get_constant_property</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids.html">get_all_dpf_material_ids</a></li>
@@ -521,7 +522,7 @@ document.write(`
 <h1>add_layup_info_to_mesh<a class="headerlink" href="#add-layup-info-to-mesh" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.layup_info.add_layup_info_to_mesh">
-<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.</span></span><span class="sig-name descname"><span class="pre">add_layup_info_to_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_operators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.add_layup_info_to_mesh" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.</span></span><span class="sig-name descname"><span class="pre">add_layup_info_to_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_operators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite_definition_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rst_stream_provider</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.add_layup_info_to_mesh" title="Permalink to this definition">#</a></dt>
 <dd><p>Add lay-up information to the mesh.</p>
 <p>Creates a lay-up provider operator that is run and returned.</p>
 <dl class="field-list simple">
@@ -536,13 +537,12 @@ attribute.</p></li>
 dictionary key in the <a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.composite"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles.composite</span></code></a>
 attribute. This parameter is only required for assemblies.
 See the note about assemblies in the description for the <a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a> class.</p></li>
+<li><p><strong>rst_stream_provider</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Pass RST stream to load the section data directly from the RST file. This parameter is
+supported in DPF version 8.0 (2024 R2) and later.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Lay-up provider operator.</p>
 </dd>
 </dl>
 </dd></dl>
