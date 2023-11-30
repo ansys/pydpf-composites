@@ -96,7 +96,7 @@ class FieldIndexerNoDataPointer:
             self._data = np.array([], dtype=np.double)
 
     def by_id(self, entity_id: int) -> Optional[np.double]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
@@ -126,7 +126,7 @@ class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
             self._max_id = 0
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
@@ -162,7 +162,7 @@ class PropertyFieldIndexerWithDataPointer:
             self._data_pointer = np.array([], dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
@@ -208,7 +208,7 @@ class FieldIndexerWithDataPointer:
             self._data_pointer = np.array([], dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.double]]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
