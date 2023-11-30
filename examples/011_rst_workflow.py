@@ -6,19 +6,19 @@ Failure analysis of an MAPDL (RST) model
 
 This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
-`composite` of the :class:`.ContinuousFiberCompositesFiles`
-class is empty, and so the section data are automatically loaded from the RST file.
+the section data are loaded from the RST file instead of the ACP layup file.
+This happens automatically if the parameter `composite` of the
+:class:`.ContinuousFiberCompositesFiles` class is not set.
 
 The engineering data file (XML or ENGD) with the material properties is needed anyway.
 Otherwise, the material properties cannot be mapped.
-
-.. important::
-   The material UUIDs in the engineering data file must be identical
-   to the UUIDs in the Mechanical APDL (RST file).
-
 At the end of this example, two workflows are shown on how to create
 the engineering data file based on a MAPDL model and how to set the
 material UUIDs in MAPDL.
+
+.. important::
+   The material UUIDs in the engineering data file must be identical
+   to the UUIDs in Mechanical APDL (RST file).
 
 The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
 and later. A few advanced features are not supported with the RST only workflow.
