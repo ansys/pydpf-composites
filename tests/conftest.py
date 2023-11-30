@@ -30,7 +30,7 @@ ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
 ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 DOCKER_IMAGE_TAG_KEY = "--image-tag"
-DEFAULT_DOCKER_IMAGE_TAG = "mapdl_section_data"  # set to latest for development
+DEFAULT_DOCKER_IMAGE_TAG = "latest"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
