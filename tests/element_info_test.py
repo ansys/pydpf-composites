@@ -9,11 +9,7 @@ from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
 )
-from ansys.dpf.composites.failure_criteria import (
-    CombinedFailureCriterion,
-    FailureModeEnum,
-    MaxStressCriterion,
-)
+from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 
 SEPARATOR = "::"
@@ -26,7 +22,8 @@ def test_section_definitions_from_multiple_sources(dpf_server):
     Element 1: lay-up from ACP
     Element 2: section from MAPDL / RST
     Element 3: section from MAPDL with one layer which has material 0. So
-    the material ID from the EBLOCK must be used. -> ensure that the element provider handles this correctly.
+    the material ID from the EBLOCK must be used. The test ensures that
+    the element provider handles this correctly.
     """
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mixed_acp_rst_model"
 
