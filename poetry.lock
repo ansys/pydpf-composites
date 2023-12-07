@@ -3053,13 +3053,13 @@ files = [
 
 [[package]]
 name = "pyvista"
-version = "0.42.3"
+version = "0.43.0"
 description = "Easier Pythonic interface to VTK"
 optional = true
 python-versions = ">=3.8"
 files = [
-    {file = "pyvista-0.42.3-py3-none-any.whl", hash = "sha256:b6170689209eec58246b32abb3c5f99246b45948e51228504cda2d4d301e7463"},
-    {file = "pyvista-0.42.3.tar.gz", hash = "sha256:00159cf0dea05c1ecfd1695c8c6ccfcfff71b0744c9997fc0276e661dc052351"},
+    {file = "pyvista-0.43.0-py3-none-any.whl", hash = "sha256:b062ba699956b0fff2d34398db15b276ca836de67d262c51e361d816c00e8004"},
+    {file = "pyvista-0.43.0.tar.gz", hash = "sha256:0118060d56de7f9b583405723ddd8f77f20d7d8af601ad7c0b0521c6302069cf"},
 ]
 
 [package.dependencies]
@@ -3067,22 +3067,22 @@ ipywidgets = {version = "*", optional = true, markers = "extra == \"jupyter\""}
 jupyter-server-proxy = {version = "*", optional = true, markers = "extra == \"jupyter\""}
 matplotlib = ">=3.0.1"
 nest-asyncio = {version = "*", optional = true, markers = "extra == \"jupyter\""}
-numpy = "*"
+numpy = ">=1.21.0"
 pillow = "*"
 pooch = "*"
 scooby = ">=0.5.1"
 trame = {version = ">=2.5.2", optional = true, markers = "extra == \"jupyter\""}
-trame-client = {version = ">=2.10.0", optional = true, markers = "extra == \"jupyter\""}
+trame-client = {version = ">=2.12.7", optional = true, markers = "extra == \"jupyter\""}
 trame-server = {version = ">=2.11.7", optional = true, markers = "extra == \"jupyter\""}
 trame-vtk = {version = ">=2.5.8", optional = true, markers = "extra == \"jupyter\""}
 trame-vuetify = {version = ">=2.3.1", optional = true, markers = "extra == \"jupyter\""}
 vtk = "*"
 
 [package.extras]
-all = ["pyvista[colormaps,io,jupyter,trame]"]
+all = ["pyvista[colormaps,io,jupyter]"]
 colormaps = ["cmocean", "colorcet"]
 io = ["imageio", "meshio (>=5.2)"]
-jupyter = ["ipywidgets", "jupyter-server-proxy", "nest-asyncio", "trame (>=2.5.2)", "trame-client (>=2.10.0)", "trame-server (>=2.11.7)", "trame-vtk (>=2.5.8)", "trame-vuetify (>=2.3.1)"]
+jupyter = ["ipywidgets", "jupyter-server-proxy", "nest-asyncio", "trame (>=2.5.2)", "trame-client (>=2.12.7)", "trame-server (>=2.11.7)", "trame-vtk (>=2.5.8)", "trame-vuetify (>=2.3.1)"]
 
 [[package]]
 name = "pywin32"
@@ -4084,13 +4084,13 @@ trame-server = ">=2.12.0"
 
 [[package]]
 name = "trame-client"
-version = "2.12.5"
+version = "2.13.0"
 description = "Internal client of trame"
 optional = true
 python-versions = "*"
 files = [
-    {file = "trame-client-2.12.5.tar.gz", hash = "sha256:5cdd954612750aabef4de49f59bf4e8b21d32f322f81bf98fc6c6c4bb63ac92b"},
-    {file = "trame_client-2.12.5-py3-none-any.whl", hash = "sha256:d6ccee2b7658ed33e976cc14ea765dd10469c4ee8badd06bbf545c19b0c0d625"},
+    {file = "trame-client-2.13.0.tar.gz", hash = "sha256:506ac725b062d2a6c9305481c64d5e980527274a2a2370c7c564ebcb7e4ee587"},
+    {file = "trame_client-2.13.0-py3-none-any.whl", hash = "sha256:8407c26b90c5656e20c5cf6e0aa11773c439c2abd0355431cc9f78b58a7fddc2"},
 ]
 
 [package.extras]
