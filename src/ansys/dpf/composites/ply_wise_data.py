@@ -6,6 +6,8 @@ from typing import Union
 from ansys.dpf.core import Field, MeshedRegion, Operator, operators
 from ansys.dpf.gate.common import locations
 
+__all__ = ("ReductionStrategy", "get_ply_wise_data")
+
 
 class ReductionStrategy(Enum):
     """The reduction strategy to get from spot values (BOT, MID, TOP) to a single value."""

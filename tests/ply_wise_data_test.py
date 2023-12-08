@@ -44,6 +44,15 @@ ALL_TENSOR_COMPONENTS = [
 ]
 
 
+def get_all_spot_values_first_element_first_node(stress_field, component=0):
+    all_spot_values = []
+    entity_data = stress_field.get_entity_data_by_id(1)[:, component]
+    number_of_nodes = 4
+    for spot_index in range(3):
+        all_spot_values.append(entity_data[spot_index * number_of_nodes])
+    return all_spot_values
+
+
 def test_get_ply_wise_data(dpf_server):
     files = get_basic_shell_files()
 
@@ -52,14 +61,6 @@ def test_get_ply_wise_data(dpf_server):
     stress_result_op = composite_model.core_model.results.stress()
     stress_result_op.inputs.bool_rotate_to_global(False)
     stress_field = stress_result_op.outputs.fields_container()[0]
-
-    def get_all_spot_values_first_element_first_node(stress_field, component=0):
-        all_spot_values = []
-        entity_data = stress_field.get_entity_data_by_id(1)[:, component]
-        number_of_nodes = 4
-        for spot_index in range(3):
-            all_spot_values.append(entity_data[spot_index * number_of_nodes])
-        return all_spot_values
 
     first_ply = "P1L1__woven_45"
 
@@ -82,6 +83,7 @@ def test_get_ply_wise_data(dpf_server):
 
             assert len(elemental_nodal_data.scoping.ids) == 4
             assert len(elemental_nodal_data.get_entity_data_by_id(element_id)) == 4
+            assert elemental_nodal_data.location == locations.elemental_nodal
 
             assert np.allclose(
                 elemental_nodal_data.get_entity_data_by_id(element_id)[first_node_index],
@@ -98,6 +100,7 @@ def test_get_ply_wise_data(dpf_server):
             )
             assert len(elemental_data.scoping.ids) == 4
             assert len(elemental_data.get_entity_data_by_id(element_id)) == 1
+            assert elemental_data.location == locations.elemental
 
             assert np.allclose(
                 elemental_data.get_entity_data_by_id(element_id)[first_node_index],
@@ -114,6 +117,7 @@ def test_get_ply_wise_data(dpf_server):
             )
             assert len(nodal_data.scoping.ids) == 9
             assert len(nodal_data.get_entity_data_by_id(element_id)) == 1
+            assert nodal_data.location == locations.nodal
 
             # Select node that only belongs to element 1
             # no averaging needed
