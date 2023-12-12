@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
       - name: Install dependencies
@@ -73,13 +73,15 @@ jobs:
         # if other containers must be tested.
         run:  |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker pull ghcr.io/ansys/pydpf-composites:2024r1_pre0
+          docker pull ghcr.io/ansys/pydpf-composites:2024r1
           docker pull ghcr.io/ansys/pydpf-composites:2023r2_pre1
 
       - name: "Checkout the project"
         uses: actions/checkout@v4
 
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -127,7 +129,7 @@ jobs:
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
       - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.9
       - name: Install dependencies
@@ -166,7 +168,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 

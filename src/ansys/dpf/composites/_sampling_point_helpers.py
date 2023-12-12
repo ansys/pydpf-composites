@@ -194,7 +194,6 @@ def add_ply_sequence_to_plot_to_sp(
     width = x_bound[1] - x_bound[0]
 
     for index, ply in enumerate(sampling_point.analysis_plies):
-        angle = float(ply["angle"])
         hatch = "x" if ply["is_core"] else ""
 
         height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
@@ -202,7 +201,11 @@ def add_ply_sequence_to_plot_to_sp(
         axes.add_patch(Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch))
         mat = ply["material"]
         th = float(ply["thickness"])
-        text = f"{mat}\nangle={angle:.3}, th={th:.3}"
+        if "angle" in ply.keys():
+            angle = float(ply["angle"])
+            text = f"{mat}\nangle={angle:.3}, th={th:.3}"
+        else:
+            text = f"{mat}\nth={th:.3}"
         axes.annotate(
             text=text,
             xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),

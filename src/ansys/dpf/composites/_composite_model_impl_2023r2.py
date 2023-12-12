@@ -19,6 +19,7 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
+    LayupModelContextType,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
@@ -219,12 +220,22 @@ class CompositeModelImpl2023R2:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
         return self._composite_infos[composite_definition_label].layup_provider
 
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model."""
+        raise NotImplementedError(
+            "layup_model_type is not implemented"
+            " for this version of DPF. DPF server 8.0 (2024 R2)"
+            " or later should be used instead."
+        )
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -249,6 +260,8 @@ class CompositeModelImpl2023R2:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            A higher value results in more memory consumption, but faster evaluation.
 
             .. note::
 
@@ -372,7 +385,7 @@ class CompositeModelImpl2023R2:
         Parameters
         ----------
         element_id:
-            Element ID or label.
+            Element ID/label.
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`

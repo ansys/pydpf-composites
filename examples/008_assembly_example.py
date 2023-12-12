@@ -22,7 +22,11 @@ from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_older_than
+from ansys.dpf.composites.server_helpers import (
+    connect_to_or_start_server,
+    version_equal_or_later,
+    version_older_than,
+)
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
@@ -47,17 +51,28 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # %%
 # Plot IRF
 # ~~~~~~~~
-# Plot the maximum IRF per element.
+# Plot the maximum IRF per (solid) element.
 output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
 irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
+
+# %%
+# Plot IRF on the reference surface
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Plot the maximum IRF on the reference surface
+if version_equal_or_later(server, "8.0"):
+    irf_field = output_all_elements.get_field(
+        {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
+    )
+    irf_field.plot()
+
 
 # %%
 # Get element information
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # In the assembly, two composite definitions exist: one with a "shell" label
 # and one with a "solid" label. For DPF Server versions earlier than 7.0,
-# the layup properties must be queried with the correct composite definition label. The code
+# the lay-up properties must be queried with the correct composite definition label. The code
 # following gets element information for all layered elements.
 # For DPF Server versions 7.0 and later, element information can be retrieved directly.
 

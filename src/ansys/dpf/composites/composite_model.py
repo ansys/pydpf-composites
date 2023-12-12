@@ -12,7 +12,7 @@ from ._composite_model_factory import _composite_model_factory
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayerProperty
+from .layup_info import ElementInfo, LayerProperty, LayupModelContextType
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasureEnum
@@ -141,12 +141,22 @@ class CompositeModel:
         """
         return self._implementation.get_layup_operator(composite_definition_label)
 
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model.
+
+        The type specifies whether the lay-up data was loaded from an ACP model, RST, or both.
+        Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        """
+        return self._implementation.layup_model_type
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -171,6 +181,8 @@ class CompositeModel:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            A higher value results in more memory consumption, but faster evaluation.
 
             .. note::
 
@@ -179,7 +191,11 @@ class CompositeModel:
 
         """
         return self._implementation.evaluate_failure_criteria(
-            combined_criterion, composite_scope, measure, write_data_for_full_element_scope
+            combined_criterion,
+            composite_scope,
+            measure,
+            write_data_for_full_element_scope,
+            max_chunk_size,
         )
 
     def get_sampling_point(
