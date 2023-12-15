@@ -171,7 +171,31 @@ Implement a custom failure criterion: basic max strain
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.png
+        :alt: 004 get material properties example
+        :srcset: /examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_004_get_material_properties_example_001.vtksz
 
 
 
@@ -181,7 +205,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  9.825 seconds)
+   **Total running time of the script:** ( 0 minutes  8.812 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:

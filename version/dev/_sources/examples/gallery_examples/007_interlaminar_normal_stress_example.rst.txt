@@ -207,7 +207,31 @@ Plot the maximum s3 of each element.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_001.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_001.png
+        :alt: 007 interlaminar normal stress example
+        :srcset: /examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_001.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_001.vtksz
 
 
 
@@ -249,7 +273,31 @@ Plot s3 at the mid-plane of a certain ply.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_002.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_002.png
+        :alt: 007 interlaminar normal stress example
+        :srcset: /examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_002.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_007_interlaminar_normal_stress_example_002.vtksz
 
 
 
@@ -259,7 +307,7 @@ Plot s3 at the mid-plane of a certain ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  12.730 seconds)
+   **Total running time of the script:** ( 0 minutes  12.684 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_007_interlaminar_normal_stress_example.py:

@@ -151,7 +151,31 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.png
+        :alt: 003 short fiber example
+        :srcset: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_003_short_fiber_example_001.vtksz
 
 
 
@@ -169,7 +193,31 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.png
+        :alt: 003 short fiber example
+        :srcset: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_003_short_fiber_example_002.vtksz
 
 
 
@@ -224,7 +272,31 @@ Compute and plot the maximum failure value per element.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.png
+        :alt: 003 short fiber example
+        :srcset: /examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_003_short_fiber_example_003.vtksz
 
 
 
@@ -234,7 +306,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.044 seconds)
+   **Total running time of the script:** ( 0 minutes  4.989 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:

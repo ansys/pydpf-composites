@@ -177,7 +177,31 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.png
+        :alt: 009 short fiber orientation tensor
+        :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.vtksz
 
 
 
@@ -195,7 +219,31 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.png
+        :alt: 009 short fiber orientation tensor
+        :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_002.vtksz
 
 
 
@@ -271,7 +319,31 @@ Plot some components of the fiber orientation tensor.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.png
+        :alt: 009 short fiber orientation tensor
+        :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.vtksz
 
 
 
@@ -287,7 +359,31 @@ Plot some components of the fiber orientation tensor.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.png
+        :alt: 009 short fiber orientation tensor
+        :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.vtksz
 
 
 
@@ -302,7 +398,31 @@ Plot some components of the fiber orientation tensor.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.png
+        :alt: 009 short fiber orientation tensor
+        :srcset: /examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.vtksz
 
 
 
@@ -312,7 +432,7 @@ Plot some components of the fiber orientation tensor.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.547 seconds)
+   **Total running time of the script:** ( 0 minutes  6.400 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:

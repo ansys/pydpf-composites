@@ -135,7 +135,31 @@ Plot the maximum IRF per (solid) element.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_008_assembly_example_001.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_008_assembly_example_001.png
+        :alt: 008 assembly example
+        :srcset: /examples/gallery_examples/images/sphx_glr_008_assembly_example_001.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_008_assembly_example_001.vtksz
 
 
 
@@ -162,7 +186,31 @@ Plot the maximum IRF on the reference surface
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_008_assembly_example_002.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_008_assembly_example_002.png
+        :alt: 008 assembly example
+        :srcset: /examples/gallery_examples/images/sphx_glr_008_assembly_example_002.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_008_assembly_example_002.vtksz
 
 
 
@@ -208,7 +256,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  11.358 seconds)
+   **Total running time of the script:** ( 0 minutes  11.376 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:

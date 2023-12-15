@@ -153,7 +153,31 @@ Evaluate failures for the entire model
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_001_failure_operator_example_001.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_001_failure_operator_example_001.png
+        :alt: 001 failure operator example
+        :srcset: /examples/gallery_examples/images/sphx_glr_001_failure_operator_example_001.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_001_failure_operator_example_001.vtksz
 
 
 
@@ -178,7 +202,31 @@ Scope failure evaluation to a certain element scope.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_001_failure_operator_example_002.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_001_failure_operator_example_002.png
+        :alt: 001 failure operator example
+        :srcset: /examples/gallery_examples/images/sphx_glr_001_failure_operator_example_002.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_001_failure_operator_example_002.vtksz
 
 
 
@@ -202,7 +250,31 @@ Scope failure evaluation by plies.
 
 
 
-.. offlineviewer:: examples/gallery_examples/images/sphx_glr_001_failure_operator_example_003.vtksz
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_001_failure_operator_example_003.png
+        :alt: 001 failure operator example
+        :srcset: /examples/gallery_examples/images/sphx_glr_001_failure_operator_example_003.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_001_failure_operator_example_003.vtksz
 
 
 
@@ -212,7 +284,7 @@ Scope failure evaluation by plies.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  32.949 seconds)
+   **Total running time of the script:** ( 0 minutes  32.411 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_001_failure_operator_example.py:
