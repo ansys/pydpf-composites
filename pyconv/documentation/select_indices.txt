@@ -1,0 +1,153 @@
+Submodule ansys.dpf.composites.select_indices
+    Documentation:
+    Functions to get elementary indices based on filter input.
+
+    Class AnalysisPlyInfoProvider(mesh: ansys.dpf.core.meshed_region.MeshedRegion, name: str)
+        Documentation:
+        AnalysisPlyInfoProvider. Can be used to compute the layer indices of a given analysis ply.
+
+            Parameters
+            ----------
+            mesh
+                DPF MeshedRegion with lay-up information.
+            name
+                Analysis Ply Name
+    
+
+        Function get_layer_index_by_element_id(self, element_id: int) -> Optional[numpy.int64]
+            Documentation:
+            Get the layer index for the analysis ply in a given element.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+
+        
+
+        Function ply_element_ids(self) -> collections.abc.Sequence[numpy.int64]
+            Documentation:
+            Return list of element labels of the analysis ply.
+
+    Class ElementInfo(id: int, n_layers: int, n_corner_nodes: int, n_spots: int, is_layered: bool, element_type: int, dpf_material_ids: numpy.ndarray[typing.Any, numpy.dtype[numpy.int64]], is_shell: bool, number_of_nodes_per_spot_plane: int) -> None
+        Documentation:
+        Provides lay-up information for an element.
+
+            Use the :class:`~ElementInfoProvider` class to obtain the
+            :class:`~ElementInfo` class for an element.
+
+            Parameters
+            ----------
+            id
+                Element ID or label.
+            n_layers
+                Number of layers. For non-layered elements, the value is ``1``.
+            n_corner_nodes
+                Number of corner nodes (without midside nodes).
+            n_spots
+                Number of spots (through-the-thickness integration points) per layer.
+            element_type
+                APDL element type. For example, ``181`` for layered shells.
+            dpf_material_ids
+                List of DPF material IDs for all layers.
+            is_shell
+                Whether the element is a shell element.
+            number_of_nodes_per_spot_plane
+                Number of nodes per output plane. The value is equal
+                to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
+                divided by two for layered solid elements. The value is equal to ``-1``
+                for non-layered elements.
+    
+
+    Class Spot(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Implements an interface to access the spots of the results of layered elements.
+
+        Enum BOTTOM
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+        Enum MIDDLE
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+        Enum TOP
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+    Function get_selected_indices(element_info: ansys.dpf.composites.layup_info._layup_info.ElementInfo, layers: Optional[collections.abc.Collection[int]] = None, nodes: Optional[collections.abc.Collection[int]] = None, spots: Optional[collections.abc.Collection[ansys.dpf.composites.constants.Spot]] = None, disable_checks: bool = False) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.int64]]
+        Documentation:
+        Get elementary indices based on element information, layers, nodes, and spots.
+
+            Parameters
+            ----------
+            element_info
+                Lay-up information for the element.
+            layers
+                List of selected layers.
+            nodes
+                List of selected corner nodes.
+            spots
+                List of selected spots.
+            disable_checks:
+                Whether to disable checks. Set to ``True`` to disable checks.
+                Disabling checks results in better performance but potentially
+                cryptic error messages or invalid indices.
+
+            Returns
+            -------
+            NDArray:
+                Array of selected indices.
+
+
+            Notes
+            -----
+            Returns an empty selection if any of the collections is empty.
+
+            The indices (nodes, layers, and spots) are 0-based. Pay attention to this
+            when using the "composite::minmax_per_element_operator" or
+            :func:`evaluate_failure_criteria
+            <ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria>`
+            where the min/max layer indices
+            are 1-based starting with Workbench 2024 R1 (DPF server 7.1).
+    
+
+    Function get_selected_indices_by_analysis_ply(analysis_ply_info_provider: ansys.dpf.composites.layup_info._layup_info.AnalysisPlyInfoProvider, element_info: ansys.dpf.composites.layup_info._layup_info.ElementInfo) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.int64]]
+        Documentation:
+        Get selected indices by analysis ply.
+
+            Selects all indices that are in a layer with the given analysis ply
+
+            Parameters
+            ----------
+            analysis_ply_info_provider: AnalysisPlyInfoProvider
+                Provider for the analysis ply information.
+            element_info: ElementInfo
+                Lay-up information for the element.
+
+            Returns
+            -------
+            NDArray[int64]:
+                Selected elementary indices.
+    
+
+    Function get_selected_indices_by_dpf_material_ids(element_info: ansys.dpf.composites.layup_info._layup_info.ElementInfo, dpf_material_ids: collections.abc.Collection[numpy.int64]) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.int64]]
+        Documentation:
+        Get selected indices by DPF material IDs.
+
+            This method selects all indices that are in a layer with one of the selected materials.
+
+            Parameters
+            ----------
+            element_info: ElementInfo
+                Lay-up information for the element.
+            dpf_material_ids
+                Collection of DPF materials.
+
+            Returns
+            -------
+            NDArray[int64]:
+                Selected elementary indices
+
+    
+

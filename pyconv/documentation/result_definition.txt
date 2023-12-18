@@ -1,0 +1,199 @@
+Submodule ansys.dpf.composites.result_definition
+    Documentation:
+    Object to represent the result definition used by the failure operator in DPF Composites.
+
+    Class CombinedFailureCriterion(name: str = 'CombinedFailureCriterion', failure_criteria: collections.abc.Sequence[ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase] = ())
+        Documentation:
+        Defines the combined failure criterion.
+
+            This class can be used in combination with the failure evaluator operator in
+            DPF Composites.
+
+            Examples
+            --------
+                >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+                >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+                >>> combined_failure.insert(max_stress)
+
+    
+
+        Property failure_criteria
+            Documentation:
+            List of failure criteria. Use insert and remove to edit the list.
+
+        Function insert(self, fc: ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase) -> None
+            Documentation:
+            Add a failure criterion to a list of selected criteria.
+
+                    Parameters
+                    ----------
+                    fc:
+                        Failure criterion to add. If a failure criterion of the same type
+                        already exists, it is overwritten.
+
+                    Examples
+                    --------
+                        >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+                        >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+                                                            s12=True, s13=True, s23=True)
+                        >>> combined_failure.insert(max_stress)
+
+        
+
+        Property name
+            Documentation:
+            Name of the combined failure criterion.
+
+        Function remove(self, key: str) -> ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase
+            Documentation:
+            Remove a failure criterion.
+
+                    Parameters
+                    ----------
+                    key:
+                        Name of the failure criterion.
+
+                    Returns
+                    -------
+                    :
+                        Removed failure criterion or ``None``.
+
+                    Examples
+                    --------
+                        >>> combined_failure.remove("Max Stress")
+
+        
+
+        Function to_dict(self) -> dict[str, typing.Any]
+            Documentation:
+            Return the combined failure criterion as a dictionary.
+
+                    Returns
+                    -------
+                    :
+                        JSON dictionary that can be used for the result definition
+                        of the DPF Composites Failure evaluator operator.
+        
+
+        Function to_json(self) -> str
+            Documentation:
+            Return the combined failure criterion as a JSON dictionary.
+
+                    Returns
+                    -------
+                    :
+                       String representation (``json.dumps`` file) that can be used for the result definition
+                       of the DPF Composites Failure evaluator operator.
+        
+
+    Class FailureMeasureEnum(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides available failure measures.
+
+        Enum INVERSE_RESERVE_FACTOR
+            Documentation:
+            Provides available failure measures.
+
+        Enum MARGIN_OF_SAFETY
+            Documentation:
+            Provides available failure measures.
+
+        Enum RESERVE_FACTOR
+            Documentation:
+            Provides available failure measures.
+
+    Class ResultDefinition(name: str, combined_failure_criterion: ansys.dpf.composites.failure_criteria._combined_failure_criterion.CombinedFailureCriterion, composite_scopes: collections.abc.Sequence[ansys.dpf.composites.result_definition.ResultDefinitionScope], rst_files: collections.abc.Sequence[typing.Union[str, os.PathLike[str]]], material_file: Union[str, os.PathLike[str]], measure: str = 'inverse_reserve_factor', stress_strain_eval_mode: str = 'rst_file', time: Optional[float] = None, expression: str = 'composite_failure', max_chunk_size: int = 50000)
+        Documentation:
+        Represents the result definition of DPF Composites.
+
+            This class is used to configure the DPF operators ``composite::failure_evaluator``
+            and ``composite::sampling_point_evaluator``.
+
+    
+
+        Function check_has_single_scope(self, msg: str) -> None
+            Documentation:
+            Check that the result definition has one scope.
+
+        Property combined_failure_criterion
+            Documentation:
+            Configuration of the failure criteria such as maximum stress, puck, and wrinkling.
+
+        Property expression
+            Documentation:
+            Type of the result. The supported type is ``"composite_failure"``.
+
+        Property material_file
+            Documentation:
+            Path of the material files that store the material properties.
+
+                    Supported formats are XML and ENGD.
+        
+
+        Property max_chunk_size
+            Documentation:
+            Maximum chunk size (number of elements) for the result evaluation.
+
+                    Small chunks reduce the maximum peak of memory, but too many chunks causes
+                    some overhead. The default is 50,000. Use ``-1`` to disable chunking.
+        
+
+        Property measure
+            Documentation:
+            Return type of the failure values.
+
+                    Supported types are ``"inverse_reserve_factor"``, ``"safety_factor"``,
+                    and ``"safety_margin"``.
+        
+
+        Property name
+            Documentation:
+            Custom name.
+
+        Property rst_files
+            Documentation:
+            Path of the result (RST) files.
+
+        Property scopes
+            Documentation:
+            Scopes of the result definition.
+
+        Property stress_strain_eval_mode
+            Documentation:
+            Results loaded from a result (RST) file by default.
+
+                    You can set this property to ``"mapdl_live"`` to activate on-the-fly
+                    strain and stress evaluation. This property can be used if the result
+                    file contains only the primary results (deformations).
+        
+
+        Property time
+            Documentation:
+            Time or solution step.
+
+                    DPF Composites automatically selects the last time step if time is not set.
+
+                    You can use the :meth:`.CompositeModel.get_result_times_or_frequencies` method
+                    to list the available times or frequencies in the result file.
+        
+
+        Function to_dict(self) -> dict[str, typing.Any]
+            Documentation:
+            Get the result definition in a dictionary representation.
+
+        Function to_json(self) -> str
+            Documentation:
+            Convert the dictionary representation of the result definition to a JSON dictionary.
+
+    Class ResultDefinitionScope(composite_definition: Union[str, os.PathLike[str]], element_scope: collections.abc.Sequence[int] = <factory>, ply_scope: collections.abc.Sequence[str] = <factory>, named_selection_scope: collections.abc.Sequence[str] = <factory>, mapping_file: Union[str, os.PathLike[str], NoneType] = None, write_data_for_full_element_scope: bool = True) -> None
+        Documentation:
+        Provides the result definition scope.
+
+        Property mapping_file
+            Documentation:
+            typing.Union[str, os.PathLike[str], NoneType]
+
+        Property write_data_for_full_element_scope
+            Documentation:
+            <class 'bool'>
+

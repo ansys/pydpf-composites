@@ -1,0 +1,172 @@
+Submodule ansys.dpf.composites.data_sources
+    Documentation:
+    Composite data sources.
+
+    Class CompositeDataSources(rst: ansys.dpf.core.data_sources.DataSources, material_support: ansys.dpf.core.data_sources.DataSources, composite: Optional[ansys.dpf.core.data_sources.DataSources], engineering_data: ansys.dpf.core.data_sources.DataSources, old_composite_sources: dict[str, ansys.dpf.core.data_sources.DataSources]) -> None
+        Documentation:
+        Provides data sources related to the composite lay-up.
+
+            Parameters
+            ----------
+            rst:
+                Result file. Currently only RST (MAPDL) is supported.
+
+            material_support:
+                NOTE: The ``material_support`` parameter is explicitly listed because it is currently not
+                supported (by the DPF Core) to use a distributed RST file as source for the
+                material support. Instead, we create a separate DataSources object for the
+                material support from the first RST file. This is a workaround until the
+                support for distributed RST is added.
+            engineering_data:
+                File with the material properties.
+
+            old_composite_sources :
+                Member used to support assemblies in combination with the old
+                DPF server (<7.0). It should be removed once the support of this
+                server version is dropped.
+
+    
+
+    Class CompositeDefinitionFiles(definition: Union[str, os.PathLike[str]], mapping: Union[str, os.PathLike[str], NoneType] = None) -> None
+        Documentation:
+        Provides the container for composite definition file paths.
+
+        Property mapping
+            Documentation:
+            typing.Union[str, os.PathLike[str], NoneType]
+
+    Class ContinuousFiberCompositesFiles(rst: Union[list[Union[str, os.PathLike[str]]], str, os.PathLike[str]], composite: dict[str, ansys.dpf.composites.data_sources.CompositeDefinitionFiles], engineering_data: Union[str, os.PathLike[str]], files_are_local: bool = True) -> None
+        Documentation:
+        Provides the container for continuous fiber composite file paths.
+
+        Property files_are_local
+            Documentation:
+            <class 'bool'>
+
+    Class ShortFiberCompositesFiles(rst: Union[list[Union[str, os.PathLike[str]]], str, os.PathLike[str]], dsdat: Union[str, os.PathLike[str]], engineering_data: Union[str, os.PathLike[str]], files_are_local: bool = True) -> None
+        Documentation:
+        Provides the container for short fiber composite file paths.
+
+        Property files_are_local
+            Documentation:
+            <class 'bool'>
+
+    Function composite_files_from_workbench_harmonic_analysis(result_folder_modal: Union[str, os.PathLike[str]], result_folder_harmonic: Union[str, os.PathLike[str]]) -> ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles
+        Documentation:
+        Get a ``ContinuousFiberCompositesFiles`` object for a harmonic analysis.
+
+            Parameters
+            ----------
+            result_folder_modal : str
+               Result folder of the Modal solution.
+               In the Modal system, right-click the **solution** item in the Ansys Mechanical tree
+               and select **Open Solver Files Directory** to obtain the result folder.
+            result_folder_harmonic : str
+               Result folder of the Harmonic Response solution.
+               In the Harmonic Response system,
+               right-click the **solution** item in the Ansys Mechanical tree
+               and select **Open Solver Files Directory** to obtain the result folder.
+
+    
+
+    Function get_composite_files_from_workbench_result_folder(result_folder: Union[str, os.PathLike[str]], ensure_composite_definitions_found: bool = True) -> ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles
+        Documentation:
+        Get a ``ContinuousFiberCompositesFiles`` object from a result folder.
+
+            This function assumes a typical Workbench folder structure for a composite
+            simulation. If this method is not able to build the ``ContinuousFiberCompositesFiles``
+            object, you can follow these steps:
+
+            In the main Workbench window, activate the files panel by selecting
+            **View > Files**. This shows the location of all files used in the
+            workbench project. You can determine the different attributes of the
+            ``ContinuousFiberCompositesFiles`` object:
+
+            -   ``rst``: A list of files containing either the single ``file.rst``
+                file that belongs to the cell ID of the solution, or the distributed
+                ``file0.rst`` to ``fileN.rst`` files.
+
+            -   ``engineering_data``: The ``MatML.xml`` file in the same folder as the RST file.
+
+            -   ``composite``: There can be multiple composite definitions,
+                one definition for each ACP system if shell data is transferred
+                and one definition for each solid model if solid data is transferred.
+                All the ``ACPCompositeDefinitions.h5`` and ``ACPSolidModel*.h5``
+                files that are used in the solution must be added to the
+                ``ContinuousFiberCompositesFiles.composite`` dictionary.
+                The key can be chosen freely. Next to the ``ACPCompositeDefinitions.h5``
+                and ``ACPSolidModel\*.h5`` files, corresponding ``ACPCompositeDefinitions.mapping``
+                and ``ACPSolidModel*.mapping`` files can be found (optional).
+                If they exist, they must be added as well.
+
+            The following example shows how a
+            :class:`.ContinuousFiberCompositesFiles` object can be built.
+            The project in this example has two **ACP Pre** systems, one that exports
+            shell information and one that exports solid information.
+
+            The files are located in these locations:
+
+            Result file:
+
+            - ``project_root_folder/dp0/SYS/MECH/file.rst``
+
+            Engineering data file:
+
+            - ``project_root_folder/dp0/SYS/MECH/MatML.xml``
+
+            Composite definition and mapping files for the solid model:
+
+            - ``project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5``
+            - ``project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping``
+
+            Composite definition and mapping files for the shell model:
+
+            - ``project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5``
+            - ``project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping``
+
+            The code creates the corresponding ``ContinuousFiberCompositesFiles`` object::
+
+                ContinuousFiberCompositesFiles(
+                    rst=["project_root_folder/dp0/SYS/MECH/file.rst"],
+                    composite={
+                       "solid": CompositeDefinitionFiles(
+                            definition="project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.h5",
+                            mapping="project_root_folder/dp0/ACP-Pre-1/ACPSolidModel_SM.mapping"
+                        ),
+                       "shell": CompositeDefinitionFiles(
+                            definition="project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.h5",
+                            mapping="project_root_folder/dp0/ACP-Pre-2/ACPCompositeDefinitions.mapping"
+                        )
+                    },
+                    engineering_data="project_root_folder/dp0/SYS/MECH/MatML.xml"
+                )
+
+            Parameters
+            ----------
+            result_folder :
+               Result folder of the solution. Right-click the **solution** item in the Ansys Mechanical tree
+               and select **Open Solver Files Directory** to obtain the result folder.
+            ensure_composite_definitions_found :
+                Whether to check if at least one composite definition (shell or solid) has been found.
+    
+
+    Function get_composites_data_sources(continuous_composite_files: ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles) -> ansys.dpf.composites.data_sources.CompositeDataSources
+        Documentation:
+        Create DPF data sources from a ``ContinuousFiberCompositeFiles`` object.
+
+            Parameters
+            ----------
+            continuous_composite_files
+    
+
+    Function get_short_fiber_composites_data_sources(short_fiber_composites_files: ansys.dpf.composites.data_sources.ShortFiberCompositesFiles) -> ansys.dpf.core.data_sources.DataSources
+        Documentation:
+
+            Create DPF data sources from a ``ShortFiberCompositeFiles`` object.
+
+            Parameters
+            ----------
+            short_fiber_composite_files :
+                Container for short fiber composite file paths.
+    
+

@@ -1,0 +1,80 @@
+Submodule ansys.dpf.composites.server_helpers.server_helpers
+    Documentation:
+    Utilities for managing the DPF server.
+
+    Helper functions for managing the DPF server, in particular for loading
+    the DPF Composites plugin.
+
+
+    Function connect_to_or_start_server(port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None) -> Any
+        Documentation:
+        Connect to or start a DPF server with the DPF Composites plugin loaded.
+
+            .. note::
+
+                If a port or IP address is set, this method tries to connect to the server specified
+                and the ``ansys_path`` parameter is ignored. If no parameters are set, a local server
+                from the latest available Ansys installation is started.
+
+            Parameters
+            ----------
+            port :
+                Port that the DPF server is listening on.
+            ip :
+                IP address for the DPF server.
+            ansys_path :
+                Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v232``.
+                This parameter is ignored if either the port or IP address is set.
+
+            Returns
+            -------
+            :
+                DPF server.
+    
+
+    Function load_composites_plugin(server: ansys.dpf.core.server_types.BaseServer, ansys_path: Optional[str] = None) -> None
+        Documentation:
+        Load composites plugins and its dependencies.
+
+            Parameters
+            ----------
+            server:
+            ansys_path:
+                Ansys root path, for example C:\\Program Files\\ANSYS Inc\\v232.
+                If None, it is assumed that all the plugins and their dependencies
+                are found in the PATH/LD_LIBRARY_PATH. If ansys_path
+                is set, the composite_operators and
+                Ans.Dpf.EngineeringData plugins are loaded from their location
+                in the installer.
+    
+
+    Function upload_continuous_fiber_composite_files_to_server(data_files: ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles, server: ansys.dpf.core.server_types.BaseServer) -> ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles
+        Documentation:
+        Upload continuous fiber composites files to server.
+
+            Note: If server.local_server == True the data_files are returned unmodified.
+
+            Parameters
+            ----------
+            data_files
+            server
+    
+
+    Function upload_short_fiber_composite_files_to_server(data_files: ansys.dpf.composites.data_sources.ShortFiberCompositesFiles, server: ansys.dpf.core.server_types.BaseServer) -> ansys.dpf.composites.data_sources.ShortFiberCompositesFiles
+        Documentation:
+        Upload short fiber composites files to server.
+
+            Parameters
+            ----------
+            data_files
+            server
+    
+
+    Function version_equal_or_later(server: ansys.dpf.core.server_types.BaseServer, ver: str) -> bool
+        Documentation:
+        Evaluate if the dpf server is equal or newer than the given version.
+
+    Function version_older_than(server: ansys.dpf.core.server_types.BaseServer, ver: str) -> bool
+        Documentation:
+        Evaluate if the dpf server is older than the given version.
+

@@ -1,0 +1,1140 @@
+Submodule ansys.dpf.composites.composite_model
+    Documentation:
+    Composite Model.
+
+    Class CombinedFailureCriterion(name: str = 'CombinedFailureCriterion', failure_criteria: collections.abc.Sequence[ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase] = ())
+        Documentation:
+        Defines the combined failure criterion.
+
+            This class can be used in combination with the failure evaluator operator in
+            DPF Composites.
+
+            Examples
+            --------
+                >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+                >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+                >>> combined_failure.insert(max_stress)
+
+    
+
+        Property failure_criteria
+            Documentation:
+            List of failure criteria. Use insert and remove to edit the list.
+
+        Function insert(self, fc: ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase) -> None
+            Documentation:
+            Add a failure criterion to a list of selected criteria.
+
+                    Parameters
+                    ----------
+                    fc:
+                        Failure criterion to add. If a failure criterion of the same type
+                        already exists, it is overwritten.
+
+                    Examples
+                    --------
+                        >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+                        >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+                                                            s12=True, s13=True, s23=True)
+                        >>> combined_failure.insert(max_stress)
+
+        
+
+        Property name
+            Documentation:
+            Name of the combined failure criterion.
+
+        Function remove(self, key: str) -> ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase
+            Documentation:
+            Remove a failure criterion.
+
+                    Parameters
+                    ----------
+                    key:
+                        Name of the failure criterion.
+
+                    Returns
+                    -------
+                    :
+                        Removed failure criterion or ``None``.
+
+                    Examples
+                    --------
+                        >>> combined_failure.remove("Max Stress")
+
+        
+
+        Function to_dict(self) -> dict[str, typing.Any]
+            Documentation:
+            Return the combined failure criterion as a dictionary.
+
+                    Returns
+                    -------
+                    :
+                        JSON dictionary that can be used for the result definition
+                        of the DPF Composites Failure evaluator operator.
+        
+
+        Function to_json(self) -> str
+            Documentation:
+            Return the combined failure criterion as a JSON dictionary.
+
+                    Returns
+                    -------
+                    :
+                       String representation (``json.dumps`` file) that can be used for the result definition
+                       of the DPF Composites Failure evaluator operator.
+        
+
+    Class CompositeDataSources(rst: ansys.dpf.core.data_sources.DataSources, material_support: ansys.dpf.core.data_sources.DataSources, composite: Optional[ansys.dpf.core.data_sources.DataSources], engineering_data: ansys.dpf.core.data_sources.DataSources, old_composite_sources: dict[str, ansys.dpf.core.data_sources.DataSources]) -> None
+        Documentation:
+        Provides data sources related to the composite lay-up.
+
+            Parameters
+            ----------
+            rst:
+                Result file. Currently only RST (MAPDL) is supported.
+
+            material_support:
+                NOTE: The ``material_support`` parameter is explicitly listed because it is currently not
+                supported (by the DPF Core) to use a distributed RST file as source for the
+                material support. Instead, we create a separate DataSources object for the
+                material support from the first RST file. This is a workaround until the
+                support for distributed RST is added.
+            engineering_data:
+                File with the material properties.
+
+            old_composite_sources :
+                Member used to support assemblies in combination with the old
+                DPF server (<7.0). It should be removed once the support of this
+                server version is dropped.
+
+    
+
+    Class CompositeModel(composite_files: ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles, server: ansys.dpf.core.server_types.BaseServer, default_unit_system: Optional[ansys.dpf.core.unit_system.UnitSystem] = None)
+        Documentation:
+        Provides access to the basic composite postprocessing functionality.
+
+            On initialization, the ``CompositeModel`` class automatically adds composite lay-up
+            information to the meshed regions. It prepares the providers for different lay-up properties
+            so that they can be efficiently evaluated. The composite_files provided are automatically
+            uploaded to the server if needed.
+
+            .. note::
+
+                When creating a ``CompositeModel`` instance, several providers are created and
+                lay-up information is added to the DPF meshed regions. Depending on the use
+                case, it can be more efficient to create the providers separately.
+
+                The handling of models with multiple composite definition files (assemblies)
+                differ depending on the version of the DPF server. The handling is simplified
+                with DPF Server 7.0 (2024 R1) or later and the full assembly can be post-processed
+                in the same way as a model with a single ACP model.
+
+                Before DPF Server 7.0 (2024 R1):
+
+                For assemblies with multiple composite definition files, separate meshes and
+                lay-up operators are generated (wrapped by the ``CompositeInfo`` class). This
+                is needed because the lay-up provider can only add the data of a single
+                composite definitions file to a mesh. All functions that depend on composite
+                definitions mut be called with the correct ``composite_definition_label``
+                parameter. The layered elements that get information from a given
+                composite definition label can be determined by calling
+                :meth:`.CompositeModel.get_all_layered_element_ids_for_composite_definition_label`.
+                All the elements that are not part of a composite definition are either homogeneous
+                solids or layered models defined outside of an ACP model. The
+                :meth:`.CompositeModel.composite_definition_labels` command returns all available composite
+                definition labels. For more information, see
+                :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py`.
+
+
+            Parameters
+            ----------
+            composite_files:
+                Use the :func:`.get_composite_files_from_workbench_result_folder` function to obtain
+                the :class:`.ContinuousFiberCompositesFiles` object.
+            server:
+                DPF Server on which the model is created
+            default_unit_system:
+                Unit system that is used if the result file
+                does not specify the unit system. This happens
+                for pure MAPDL projects.
+    
+
+        Function add_interlaminar_normal_stresses(self, stresses: ansys.dpf.core.fields_container.FieldsContainer, strains: ansys.dpf.core.fields_container.FieldsContainer, composite_definition_label: Optional[str] = None) -> None
+            Documentation:
+            Add interlaminar normal stresses to the stresses fields container.
+
+                    Interlaminar normal stresses (s3) are not available for layered shells.
+                    This function performs a post-processing step which computes s3 and adds
+                    it to the stress field. s3 is automatically computed if a formulation
+                    of a failure criterion depends on this stress component, for instance
+                    :class:`Puck 3D <.failure_criteria.PuckCriterion>` .
+
+                    For a usage example, see
+                    :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py`.
+
+                    Parameters
+                    ----------
+                    stresses:
+                        Stresses fields container to add interlaminar normal stresses to.
+                    strains:
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+                        Interlaminar normal stresses are only added to the layered elements defined
+                        in the specified composite definition.
+        
+
+        Property composite_definition_labels
+            Documentation:
+            All composite definition labels in the model.
+
+                    This property is only relevant for assemblies.
+        
+
+        Property composite_files
+            Documentation:
+            Get the composite file paths on the server.
+
+        Property core_model
+            Documentation:
+            Underlying DPF core model.
+
+        Property data_sources
+            Documentation:
+            Composite data sources.
+
+        Function evaluate_failure_criteria(self, combined_criterion: ansys.dpf.composites.failure_criteria._combined_failure_criterion.CombinedFailureCriterion, composite_scope: Optional[ansys.dpf.composites.composite_scope.CompositeScope] = None, measure: ansys.dpf.composites.result_definition.FailureMeasureEnum = <FailureMeasureEnum.INVERSE_RESERVE_FACTOR: 'inverse_reserve_factor'>, write_data_for_full_element_scope: bool = True, max_chunk_size: int = 50000) -> ansys.dpf.core.fields_container.FieldsContainer
+            Documentation:
+            Get a fields container with the evaluated failure criteria.
+
+                    The fields container contains the maximum per element if the measure
+                    is :attr:`.FailureMeasureEnum.INVERSE_RESERVE_FACTOR` and the minimum per element
+                    if the measure is :attr:`.FailureMeasureEnum.MARGIN_OF_SAFETY` or
+                    :attr:`.FailureMeasureEnum.RESERVE_FACTOR`.
+
+                    Parameters
+                    ----------
+                    combined_criterion :
+                        Combined failure criterion to evaluate.
+                    composite_scope :
+                        Composite scope on which to evaluate the failure criteria. If empty, the criteria
+                        is evaluated on the full model. If the time is not set, the last time or
+                        frequency in the result file is used.
+                    measure :
+                        Failure measure to evaluate.
+                    write_data_for_full_element_scope :
+                        Whether each element in the element scope is to get a
+                        (potentially zero) failure value, even elements that are not
+                        part of ``composite_scope.plies``. If no element scope is
+                        specified (``composite_scope.elements``), a (potentially zero)
+                        failure value is written for all elements.
+                    max_chunk_size:
+                        A higher value results in more memory consumption, but faster evaluation.
+
+                        .. note::
+
+                            For some special element types such as beams,
+                            ``write_data_for_full_element_scope=True`` is not supported.
+
+        
+
+        Function get_all_layered_element_ids(self) -> collections.abc.Sequence[int]
+            Documentation:
+            Get all element IDs with lay-up data.
+
+        Function get_all_layered_element_ids_for_composite_definition_label(self, composite_definition_label: Optional[str] = None) -> collections.abc.Sequence[int]
+            Documentation:
+            Get all layered element IDs that belong to a composite definition label.
+
+                    Parameters
+                    ----------
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        
+
+        Function get_analysis_plies(self, element_id: int, composite_definition_label: Optional[str] = None) -> Optional[collections.abc.Sequence[str]]
+            Documentation:
+            Get analysis ply names.
+
+                    This method returns ``None`` if the element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element ID or label.
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+                        The dictionary only contains the analysis plies in the specified composite
+                        definition.
+        
+
+        Function get_constant_property_dict(self, material_properties: collections.abc.Collection[ansys.dpf.composites.layup_info.material_properties.MaterialProperty], composite_definition_label: Optional[str] = None) -> dict[numpy.int64, dict[ansys.dpf.composites.layup_info.material_properties.MaterialProperty, float]]
+            Documentation:
+            Get a dictionary with constant properties.
+
+                    Returns a dictionary with ``dpf_material_id`` as the key and
+                    a dictionary with the requested properties as the value. Only constant properties
+                    are supported. Variable properties are evaluated at their
+                    default values.
+
+                    This method can be slow to evaluate and should not
+                    be called in a loop.
+
+                    Parameters
+                    ----------
+                    material_properties:
+                        List of the requested material properties.
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+                        The dictionary only contains the materials of the analysis plies defined
+                        in the specified composite definition.
+        
+
+        Function get_element_info(self, element_id: int, composite_definition_label: Optional[str] = None) -> Optional[ansys.dpf.composites.layup_info._layup_info.ElementInfo]
+            Documentation:
+            Get element information for an element ID.
+
+                    This method returns ``None`` if the element type is not supported.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element ID or label.
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        
+
+        Function get_element_laminate_offset(self, element_id: int, composite_definition_label: Optional[str] = None) -> Optional[numpy.float64]
+            Documentation:
+            Get the laminate offset of an element.
+
+                    THis method returns ``None`` if the element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element ID or label.
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        
+
+        Function get_layup_operator(self, composite_definition_label: Optional[str] = None) -> ansys.dpf.core.dpf_operator.Operator
+            Documentation:
+            Get the lay-up operator.
+
+                    Parameters
+                    ----------
+                    composite_definition_label :
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+
+        
+
+        Function get_mesh(self, composite_definition_label: Optional[str] = None) -> ansys.dpf.core.meshed_region.MeshedRegion
+            Documentation:
+            Get the underlying DPF meshed region.
+
+                    The meshed region contains the lay-up information.
+
+                    Parameters
+                    ----------
+                    composite_definition_label :
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        
+
+        Function get_property_for_all_layers(self, layup_property: ansys.dpf.composites.layup_info._enums.LayerProperty, element_id: int, composite_definition_label: Optional[str] = None) -> Optional[numpy.ndarray[Any, numpy.dtype[numpy.float64]]]
+            Documentation:
+            Get a layer property for an element ID.
+
+                    Returns a numpy array with the values of the property for all the layers.
+                    Values are ordered from bottom to top.
+
+                    This method returns ``None`` if the element is not layered.
+
+                    Parameters
+                    ----------
+                    layup_property:
+                        Lay-up property.
+                    element_id:
+                        Element ID or label.
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        
+
+        Function get_result_times_or_frequencies(self) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+            Documentation:
+            Get the times or frequencies in the result file.
+
+        Function get_sampling_point(self, combined_criterion: ansys.dpf.composites.failure_criteria._combined_failure_criterion.CombinedFailureCriterion, element_id: int, time: Optional[float] = None, composite_definition_label: Optional[str] = None) -> ansys.dpf.composites.sampling_point_types.SamplingPoint
+            Documentation:
+            Get a sampling point for an element ID and failure criteria.
+
+                    Parameters
+                    ----------
+                    combined_criterion:
+                        Combined failure criterion to evaluate.
+                    element_id:
+                        Element ID or label of the sampling point.
+                    time:
+                        Time or frequency at which to evaluate the sampling point. If ``None``,
+                        the last time or frequency in the result file is used.
+                    composite_definition_label:
+                        Label of the composite definition, which is the
+                        dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                        attribute. This parameter is only required for assemblies.
+                        See the note about assemblies in the description for the :class:`CompositeModel` class.
+        
+
+        Property layup_model_type
+            Documentation:
+            Get the context type of the lay-up model.
+
+                    The type specifies whether the lay-up data was loaded from an ACP model, RST, or both.
+                    Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        
+
+        Property material_names
+            Documentation:
+            Get material name to DPF material ID map.
+
+        Property material_operators
+            Documentation:
+            Material operators.
+
+    Class CompositeScope(elements: Optional[collections.abc.Sequence[int]] = None, plies: Optional[collections.abc.Sequence[str]] = None, time: Optional[float] = None, named_selections: Optional[collections.abc.Sequence[str]] = None) -> None
+        Documentation:
+        Provides the composite scope.
+
+            This class defines which part of the model and solution step are selected.
+
+            Parameters
+            ----------
+            elements:
+                List of elements.
+            plies:
+                List of plies.
+            time:
+                Time or frequency. You can use the
+                :meth:`.CompositeModel.get_result_times_or_frequencies` method
+                to list the solution steps.
+            named_selections:
+                List of element sets.
+                Use `composite_model.get_mesh().available_named_selections` to list
+                all named selections.
+
+            Notes
+            -----
+            If more than one scope (``elements``, ``named_selections`` and ``plies``)
+            is set, then the final element scope is the intersection
+            of the defined parameters. All elements are selected if no parameter is set.
+
+    
+
+        Property elements
+            Documentation:
+            typing.Optional[collections.abc.Sequence[int]]
+
+        Property named_selections
+            Documentation:
+            typing.Optional[collections.abc.Sequence[str]]
+
+        Property plies
+            Documentation:
+            typing.Optional[collections.abc.Sequence[str]]
+
+        Property time
+            Documentation:
+            typing.Optional[float]
+
+    Class ContinuousFiberCompositesFiles(rst: Union[list[Union[str, os.PathLike[str]]], str, os.PathLike[str]], composite: dict[str, ansys.dpf.composites.data_sources.CompositeDefinitionFiles], engineering_data: Union[str, os.PathLike[str]], files_are_local: bool = True) -> None
+        Documentation:
+        Provides the container for continuous fiber composite file paths.
+
+        Property files_are_local
+            Documentation:
+            <class 'bool'>
+
+    Class ElementInfo(id: int, n_layers: int, n_corner_nodes: int, n_spots: int, is_layered: bool, element_type: int, dpf_material_ids: numpy.ndarray[typing.Any, numpy.dtype[numpy.int64]], is_shell: bool, number_of_nodes_per_spot_plane: int) -> None
+        Documentation:
+        Provides lay-up information for an element.
+
+            Use the :class:`~ElementInfoProvider` class to obtain the
+            :class:`~ElementInfo` class for an element.
+
+            Parameters
+            ----------
+            id
+                Element ID or label.
+            n_layers
+                Number of layers. For non-layered elements, the value is ``1``.
+            n_corner_nodes
+                Number of corner nodes (without midside nodes).
+            n_spots
+                Number of spots (through-the-thickness integration points) per layer.
+            element_type
+                APDL element type. For example, ``181`` for layered shells.
+            dpf_material_ids
+                List of DPF material IDs for all layers.
+            is_shell
+                Whether the element is a shell element.
+            number_of_nodes_per_spot_plane
+                Number of nodes per output plane. The value is equal
+                to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
+                divided by two for layered solid elements. The value is equal to ``-1``
+                for non-layered elements.
+    
+
+    Class FailureMeasureEnum(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides available failure measures.
+
+        Enum INVERSE_RESERVE_FACTOR
+            Documentation:
+            Provides available failure measures.
+
+        Enum MARGIN_OF_SAFETY
+            Documentation:
+            Provides available failure measures.
+
+        Enum RESERVE_FACTOR
+            Documentation:
+            Provides available failure measures.
+
+    Class LayerProperty(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides the layer properties available.
+
+        Enum ANGLES
+            Documentation:
+            Provides the layer properties available.
+
+        Enum SHEAR_ANGLES
+            Documentation:
+            Provides the layer properties available.
+
+        Enum THICKNESSES
+            Documentation:
+            Provides the layer properties available.
+
+    Class LayupModelContextType(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Type of the lay-up information.
+
+        Enum ACP
+            Documentation:
+            Type of the lay-up information.
+
+        Enum MIXED
+            Documentation:
+            Type of the lay-up information.
+
+        Enum NOT_AVAILABLE
+            Documentation:
+            Type of the lay-up information.
+
+        Enum RST
+            Documentation:
+            Type of the lay-up information.
+
+    Class MaterialOperators(material_provider: ansys.dpf.core.dpf_operator.Operator, material_support_provider: ansys.dpf.core.dpf_operator.Operator, result_info_provider: ansys.dpf.core.dpf_operator.Operator)
+        Documentation:
+        Provides the container for material-related operators.
+
+            Parameters
+            ----------
+            material_support_provider:
+                The material support provider takes care of mapping the materials in the RST file to
+                the materials in the composite definitions.
+                The material support contains all the materials from the RST file. Currently
+                the output of this operator cannot be inspected in Python.
+            material_provider:
+                Outputs the ``MaterialsContainer``, which can be used to
+                evaluate material properties. This container cannot be
+                queried in Python, but it can be passed to other DPF operators
+                that evaluate the properties.
+            result_info_provider:
+                Provides the ``ResultInfo`` object.
+    
+
+        Property material_provider
+            Documentation:
+            Get material_provider.
+
+        Property material_support_provider
+            Documentation:
+            Get material_support_provider.
+
+        Property result_info_provider
+            Documentation:
+            Get result_info_provider.
+
+    Class MaterialProperty(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides the material properties that are available.
+
+        Enum Engineering_Constants_E
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_E1
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_E2
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_E3
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_G12
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_G13
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_G23
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_nu
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_nu12
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_nu13
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Engineering_Constants_nu23
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Fabric_Fiber_Angle_phi
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Hill_Yield_Criterion_R11
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Hill_Yield_Criterion_R12
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Hill_Yield_Criterion_R13
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Hill_Yield_Criterion_R22
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Hill_Yield_Criterion_R23
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Hill_Yield_Criterion_R33
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Larc_Constants_fracture_angle_under_compression
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Larc_Constants_fracture_toughness_mode_1
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Larc_Constants_fracture_toughness_mode_2
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Larc_Constants_fracture_toughness_ratio
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_interface_weakening_factor
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_m
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_p_21_neg
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_p_21_pos
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_p_22_neg
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_p_22_pos
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Puck_Constants_s
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Specific_Heat_cp
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eSxy
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eSxz
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eSyz
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eXc
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eXt
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eYc
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eYt
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eZc
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_eZt
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Strain_Limits_effective_strain
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Sxy
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Sxz
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Syz
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Xc
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Xt
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Yc
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Yt
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Zc
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Stress_Limits_Zt
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Tensile_Yield_Strength_effective_stress
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Conductivity_K
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Conductivity_K1
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Conductivity_K2
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Conductivity_K3
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Expansion_Coefficients_a
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Expansion_Coefficients_aX
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Expansion_Coefficients_aY
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Thermal_Expansion_Coefficients_aZ
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Tsai_Wu_Constant_xy
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Tsai_Wu_Constant_xz
+            Documentation:
+            Provides the material properties that are available.
+
+        Enum Tsai_Wu_Constant_yz
+            Documentation:
+            Provides the material properties that are available.
+
+    Class SamplingPoint(*args, **kwargs)
+        Documentation:
+        Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
+
+            Use :meth:`.CompositeModel.get_sampling_point` to get a sampling point object.
+            This class provides for plotting the lay-up and results at a certain point of the
+            layered structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
+            ``failure_modes``, are always from the bottom to the top of the laminate (along
+            the element normal direction). Postprocessing results such as ``e1`` are returned
+            as flat arrays where ``self.spots_per_ply`` can be used to compute the index for
+            a certain ply.
+
+            Notes
+            -----
+            The results of layered elements are stored per integration point. A layered shell element
+            has a number of in-plane integration points (depending on the integration scheme) and
+            typically three integration points through the thickness. The through-the-thickness
+            integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
+            and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
+
+            The ``SamplingPoint`` class returns three results per layer (one for each spot) because
+            the results of the in-plane integration points are interpolated to the centroid of the element.
+            The following table shows an example of a laminate with three layers. So a result, such as
+            ``s1`` has nine values, three for each ply.
+
+            +------------+------------+------------------------+
+            | Layer      | Index      | Spot                   |
+            +============+============+========================+
+            |            | - 8        | - TOP of Layer 3       |
+            | Layer 3    | - 7        | - MIDDLE of Layer 3    |
+            |            | - 6        | - BOTTOM of Layer 3    |
+            +------------+------------+------------------------+
+            |            | - 5        | - TOP of Layer 2       |
+            | Layer 2    | - 4        | - MIDDLE of Layer 2    |
+            |            | - 3        | - BOTTOM of Layer 2    |
+            +------------+------------+------------------------+
+            |            | - 2        | - TOP of Layer 1       |
+            | Layer 1    | - 1        | - MIDDLE of Layer 1    |
+            |            | - 0        | - BOTTOM of Layer 1    |
+            +------------+------------+------------------------+
+
+            The get_indices and get_offsets_by_spots methods simplify the indexing and
+            filtering of the data.
+    
+
+        Function add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None
+            Documentation:
+            Add the stacking (ply and text) to an axis or plot.
+
+                    Parameters
+                    ----------
+                    axes :
+                        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+        
+
+        Function add_results_to_plot(self, axes: Any, components: collections.abc.Sequence[str], spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.TOP: 3>), core_scale_factor: float = 1.0, title: str = '', xlabel: str = '') -> None
+            Documentation:
+            Add results (strain, stress, or failure values) to an ``Axes`` object.
+
+                    Parameters
+                    ----------
+                    axes :
+                        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+                    components :
+                        List of result components. Valid components for
+                        strain are ``"e1"``, ``"e2"``, ``"e3"``, ``"e12"``, ``"e13"``,
+                        and ``"e23"`` Valid components for stress are ``"s1",`` ``"s2"``,
+                        ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. Valid components
+                        for failure are ``"inverse_reserve_factor"``, ``"reserve_factor"``,
+                        and ``"margin_of_safety"``.
+                    spots :
+                        Collection of spots (interfaces).
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+                    title :
+                        Title of the plot. This parameter is ignored if empty.
+                    xlabel :
+                        Becomes the label of the x-axis. This parameter is ignored if empty.
+
+                    Examples
+                    --------
+                        >>> import matplotlib.pyplot as plt
+                        >>> fig, ax1 = plt.subplots()
+                        >>> sampling_point.add_results_to_plot(ax1,
+                                                              ["s13", "s23", "s3"],
+                                                              [Spot.BOTTOM, Spot.TOP],
+                                                              0.1, "Interlaminar Stresses", "[MPa]")
+        
+
+        Property analysis_plies
+            Documentation:
+            List of analysis plies from the bottom to the top.
+
+                    This attribute returns a list of ply data, such as angle, thickness and material name,
+                    as a dictionary.
+        
+
+        Property e1
+            Documentation:
+            Strains in the material 1 direction of each ply.
+
+        Property e12
+            Documentation:
+            In-plane shear strains e12 of each ply.
+
+        Property e13
+            Documentation:
+            Out-of-plane shear strains e13 of each ply.
+
+        Property e2
+            Documentation:
+            Strains in the material 2 direction of each ply.
+
+        Property e23
+            Documentation:
+            Out-of-plane shear strains e23 of each ply.
+
+        Property e3
+            Documentation:
+            Strains in the material 3 direction of each ply.
+
+        Property element_id
+            Documentation:
+            Element label for sampling the laminate.
+
+                    This attribute returns ``-1`` if the element ID is not set.
+        
+
+        Property failure_modes
+            Documentation:
+            Critical failure mode of each ply.
+
+        Function get_indices(self, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> collections.abc.Sequence[int]
+            Documentation:
+            Get the indices of the selected spots (interfaces) for each ply.
+
+                    The indices are sorted from bottom to top.
+                    For instance, this method can be used to access the stresses at the bottom of each ply.
+
+                    Parameters
+                    ----------
+                    spots :
+                        Collection of spots. Only the indices of the bottom interfaces of plies
+                        are returned if ``[Spot.BOTTOM]`` is set.
+
+                    Examples
+                    --------
+                        >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
+
+        
+
+        Function get_offsets_by_spots(self, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>), core_scale_factor: float = 1.0) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+            Documentation:
+            Access the y coordinates of the selected spots (interfaces) for each ply.
+
+                    Parameters
+                    ----------
+                    spots :
+                        Collection of spots.
+
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+        
+
+        Function get_ply_wise_critical_failures(self) -> list[ansys.dpf.composites.sampling_point_types.FailureResult]
+            Documentation:
+            Get the critical failure value and modes per ply.
+
+        Function get_polar_plot(self, components: collections.abc.Sequence[str] = ('E1', 'E2', 'G12')) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+            Documentation:
+            Create a standard polar plot to visualize the polar properties of the laminate.
+
+                    Parameters
+                    ----------
+                    components :
+                        Stiffness quantities to plot.
+
+                    Examples
+                    --------
+                        >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
+        
+
+        Function get_result_plots(self, strain_components: collections.abc.Sequence[str] = ('e1', 'e2', 'e3', 'e12', 'e13', 'e23'), stress_components: collections.abc.Sequence[str] = ('s1', 's2', 's3', 's12', 's13', 's23'), failure_components: collections.abc.Sequence[ansys.dpf.composites.result_definition.FailureMeasureEnum] = (<FailureMeasureEnum.INVERSE_RESERVE_FACTOR: 'inverse_reserve_factor'>, <FailureMeasureEnum.RESERVE_FACTOR: 'safety_factor'>, <FailureMeasureEnum.MARGIN_OF_SAFETY: 'safety_margin'>), show_failure_modes: bool = False, create_laminate_plot: bool = True, core_scale_factor: float = 1.0, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+            Documentation:
+            Generate a figure with a grid of axes (plot) for each selected result entity.
+
+                    Parameters
+                    ----------
+                    strain_components
+                        Strain entities of interest. Supported values are ``"e1"``, ``"e2"``,
+                        ``"e3"``, ``"e12"``, ``"e13"``, and ``"e23"``. The plot is skipped
+                        if the list is empty.
+                    stress_components
+                        Stress entities of interest. Supported values are ``"s1"``, ``"s2"``,
+                        ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. The plot is skipped
+                        if the list is empty.
+                    failure_components
+                        Failure values of interest. Values supported are ``"irf"``, ``"rf"``,
+                        and ``"mos"``. The plot is skipped if the list is empty.
+                    show_failure_modes
+                        WHether to add the critical failure mode to the failure plot.
+                    create_laminate_plot
+                        Whether to plot the stacking sequence of the laminate, including text information
+                        such as material, thickness, and angle.
+                    core_scale_factor
+                        Factor for scaling the thickness of core plies.
+                    spots
+                        Spots (interfaces) to show results at.
+
+                    Examples
+                    --------
+                        >>> figure, axes = sampling_point.get_result_plots()
+
+        
+
+        Property inverse_reserve_factor
+            Documentation:
+            Critical inverse reserve factor of each ply.
+
+        Property is_uptodate
+            Documentation:
+            True if the Sampling Point is up-to-date.
+
+        Property margin_of_safety
+            Documentation:
+            Lowest margin of safety of each ply.
+
+                    This attribute is equivalent to the safety margin.
+        
+
+        Property name
+            Documentation:
+            Name of the object.
+
+        Property number_of_plies
+            Documentation:
+            Number of plies.
+
+        Property offsets
+            Documentation:
+            Z coordinates for each interface and ply.
+
+        Property polar_properties_E1
+            Documentation:
+            Polar property E1 of the laminate.
+
+        Property polar_properties_E2
+            Documentation:
+            Polar property E2 of the laminate.
+
+        Property polar_properties_G12
+            Documentation:
+            Polar property G12 of the laminate.
+
+        Property reserve_factor
+            Documentation:
+            Lowest reserve factor of each ply.
+
+                    This attribute is equivalent to the safety factor.
+        
+
+        Property results
+            Documentation:
+            Results of the sampling point results as a JSON dictionary.
+
+        Property s1
+            Documentation:
+            Stresses in the material 1 direction of each ply.
+
+        Property s12
+            Documentation:
+            In-plane shear stresses s12 of each ply.
+
+        Property s13
+            Documentation:
+            Out-of-plane shear stresses s13 of each ply.
+
+        Property s2
+            Documentation:
+            Stresses in the material 2 direction of each ply.
+
+        Property s23
+            Documentation:
+            Out-of-plane shear stresses s23 of each ply.
+
+        Property s3
+            Documentation:
+            Stresses in the material 3 direction of each ply.
+
+        Property spots_per_ply
+            Documentation:
+            Number of through-the-thickness integration points per ply.
+

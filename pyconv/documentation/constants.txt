@@ -1,0 +1,111 @@
+Submodule ansys.dpf.composites.constants
+    Documentation:
+    Collection of constants used across PyDPF Composites.
+
+    Class FailureOutput(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides failure output types.
+
+            The enum value corresponds to the index in the fields container.
+    
+
+        Enum FAILURE_MODE
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum FAILURE_MODE_REF_SURFACE
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum FAILURE_VALUE
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum FAILURE_VALUE_REF_SURFACE
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum MAX_GLOBAL_LAYER_IN_STACK
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum MAX_LAYER_INDEX
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum MAX_LOCAL_LAYER_IN_ELEMENT
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+        Enum MAX_SOLID_ELEMENT_ID
+            Documentation:
+            Provides failure output types.
+
+                The enum value corresponds to the index in the fields container.
+    
+
+    Class Spot(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Implements an interface to access the spots of the results of layered elements.
+
+        Enum BOTTOM
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+        Enum MIDDLE
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+        Enum TOP
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+    Class Sym3x3TensorComponent(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides tensor indices for symmetrical 3x3 tensors.
+
+        Enum TENSOR11
+            Documentation:
+            Provides tensor indices for symmetrical 3x3 tensors.
+
+        Enum TENSOR21
+            Documentation:
+            Provides tensor indices for symmetrical 3x3 tensors.
+
+        Enum TENSOR22
+            Documentation:
+            Provides tensor indices for symmetrical 3x3 tensors.
+
+        Enum TENSOR31
+            Documentation:
+            Provides tensor indices for symmetrical 3x3 tensors.
+
+        Enum TENSOR32
+            Documentation:
+            Provides tensor indices for symmetrical 3x3 tensors.
+
+        Enum TENSOR33
+            Documentation:
+            Provides tensor indices for symmetrical 3x3 tensors.
+

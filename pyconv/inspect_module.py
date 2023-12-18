@@ -1,23 +1,14 @@
-import dataclasses
 import inspect
 import os.path
 import textwrap
+from enum import Enum
 
 MAIN_PACKAGE_NAME = "ansys.dpf.composites"
 TAB_SIZE = 4
-
-
-@dataclasses.dataclass
-class Details:
-    name: str
-    package_path: str
-    type: str  # make string enum
-    members: dict
-    documentation: str
-
+END_OF_PARAGRAPH = "\n\n"
 
 def inspect_main_module(module):
-    doc_string = ""
+    doc_string = {}
     members = inspect.getmembers(module)
     imports_from_all = []
     module_name = None
@@ -31,20 +22,21 @@ def inspect_main_module(module):
         raise Exception("Module name not found!")
 
     print(f"Pressing module {module_name}: __all__ = {imports_from_all}")
-    doc_string += f"{module_name}: {module.__doc__}\n"
+    doc_string[module_name] = f"{module.__doc__}{END_OF_PARAGRAPH}"
 
-    level = 1
+    level = 0
 
     for name, value in members:
         if name in imports_from_all:
             if inspect.ismodule(value):
-                doc_string = inspect_submodule(value, doc_string, level)
+                doc_string[name] = ""
+                doc_string[name] = inspect_submodule(value, doc_string[name], level)
             elif inspect.isclass(value):
-                doc_string = inspect_class(value, doc_string, level)
+                doc_string[module_name] = inspect_class(value, doc_string[module_name], level)
             elif inspect.isfunction(value):
-                doc_string = document_function(value, doc_string, level)
+                doc_string[module_name] = document_function(value, doc_string[module_name], level)
             elif inspect.ismethod(value):
-                doc_string = inspect_method(value, doc_string, level)
+                doc_string[module_name] = inspect_method(value, doc_string[module_name], level)
             elif isinstance(value, property):
                 raise Exception("Property found! Not implemented on level module")
 
@@ -52,16 +44,28 @@ def inspect_main_module(module):
 
 
 def inspect_submodule(sub_module, doc_string, level):
-    print("Submodule: ", sub_module)
     submodule_name = sub_module.__name__.split(".")[-1]
     doc_string += f"{' '*TAB_SIZE*level}Submodule {inspect.getmodule(sub_module).__package__}.{submodule_name}\n"
-    doc_string += f"{' '*TAB_SIZE*(level+1)}Documentation:\n{textwrap.indent(sub_module.__doc__, ' '*TAB_SIZE*(level+1))}\n"
-    members = inspect.getmembers(composites.composite_model)
+    doc_string += (f"{' '*TAB_SIZE*(level+1)}Documentation:\n"
+                   f"{textwrap.indent(sub_module.__doc__, ' '*TAB_SIZE*(level+1))}{END_OF_PARAGRAPH}"
+                   )
+    members = inspect.getmembers(sub_module)
+
+    imports_from_all = []
+    for name, value in members:
+        if name == "__all__":
+            imports_from_all = list(value)
+            break
+
     level += 1
     for name, value in members:
+        package_name = ""
         if not name.startswith("_"):
-            package_name = inspect.getmodule(value).__package__
-            if package_name.startswith(MAIN_PACKAGE_NAME):
+            module = inspect.getmodule(value)
+            if module:
+                package_name = module.__package__
+
+        if name in imports_from_all or package_name.startswith(MAIN_PACKAGE_NAME):
                 print("   process ansys.dpf.composites submodule: ", submodule_name)
                 if inspect.ismodule(value):
                     doc_string = inspect_submodule(value, doc_string, level)
@@ -82,7 +86,12 @@ def inspect_class(module_class, doc_string, level):
     class_members = inspect.getmembers(module_class)
     class_name = module_class.__name__
     doc_string += f"{' ' * TAB_SIZE * level}Class {class_name}{inspect.signature(module_class)}\n"
-    doc_string += f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n{textwrap.indent(module_class.__doc__, ' ' * TAB_SIZE * (level + 1))}\n"
+    doc_string += (f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n"
+                   f"{textwrap.indent(module_class.__doc__, ' ' * TAB_SIZE * (level + 1))}{END_OF_PARAGRAPH}")
+
+    annotations = inspect.get_annotations(module_class)
+    if annotations:
+        print("has annotations: ", annotations)
 
     level += 1
     for name, value in class_members:
@@ -97,13 +106,19 @@ def inspect_class(module_class, doc_string, level):
                 doc_string = inspect_method(value, doc_string, level)
             elif isinstance(value, property):
                 doc_string = document_property(name, value.__doc__, doc_string, level)
+            elif isinstance(value, Enum):
+                doc_string = document_enum(name, value.__doc__, doc_string, level)
+            elif name in annotations:
+                doc_string = document_property(name, str(annotations[name]), doc_string, level)
 
     return doc_string
 
 
 def document_function(member, doc_string, level):
     doc_string += f"{' ' * TAB_SIZE * level}Function {member.__name__}{inspect.signature(member)}\n"
-    doc_string += f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n{textwrap.indent(member.__doc__, ' ' * TAB_SIZE * (level + 1))}\n"
+    doc_string += (f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n"
+                   f"{textwrap.indent(member.__doc__, ' ' * TAB_SIZE * (level + 1))}{END_OF_PARAGRAPH}"
+                   )
     return doc_string
 
 
@@ -114,14 +129,24 @@ def inspect_method(member, doc_string, level):
 
 def document_property(name, doc, doc_string, level):
     doc_string += f"{' ' * TAB_SIZE * level}Property {name}\n"
-    doc_string += f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n{textwrap.indent(doc, ' ' * TAB_SIZE * (level + 1))}\n"
+    doc_string += (f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n"
+                   f"{textwrap.indent(doc, ' ' * TAB_SIZE * (level + 1))}{END_OF_PARAGRAPH}"
+                   )
+    return doc_string
+
+def document_enum(name, doc, doc_string, level):
+    doc_string += f"{' ' * TAB_SIZE * level}Enum {name}\n"
+    doc_string += (f"{' ' * TAB_SIZE * (level + 1)}Documentation:\n"
+                   f"{textwrap.indent(doc, ' ' * TAB_SIZE * (level + 1))}{END_OF_PARAGRAPH}"
+                   )
     return doc_string
 
 
 if __name__ == "__main__":
     import ansys.dpf.composites as composites
 
-    doc_string = inspect_main_module(composites)
+    doc_strings = inspect_main_module(composites)
     dir = os.path.dirname(__file__)
-    with open(os.path.join(dir, "documentation_plain_text.txt"), "w") as f:
-        f.write(doc_string)
+    for name, doc_string in doc_strings.items():
+        with open(os.path.join(dir, "documentation", f"{name}.txt"), "w") as f:
+            f.write(doc_string)

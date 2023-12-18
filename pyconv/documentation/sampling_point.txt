@@ -1,0 +1,826 @@
+Submodule ansys.dpf.composites.sampling_point
+    Documentation:
+    Wrapper for the sampling point operator.
+
+    Class CombinedFailureCriterion(name: str = 'CombinedFailureCriterion', failure_criteria: collections.abc.Sequence[ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase] = ())
+        Documentation:
+        Defines the combined failure criterion.
+
+            This class can be used in combination with the failure evaluator operator in
+            DPF Composites.
+
+            Examples
+            --------
+                >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+                >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True, s12=True, s13=True, s23=True)
+                >>> combined_failure.insert(max_stress)
+
+    
+
+        Property failure_criteria
+            Documentation:
+            List of failure criteria. Use insert and remove to edit the list.
+
+        Function insert(self, fc: ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase) -> None
+            Documentation:
+            Add a failure criterion to a list of selected criteria.
+
+                    Parameters
+                    ----------
+                    fc:
+                        Failure criterion to add. If a failure criterion of the same type
+                        already exists, it is overwritten.
+
+                    Examples
+                    --------
+                        >>> combined_failure = CombinedFailureCriterion("max_stress 3D")
+                        >>> max_stress = MaxStressCriterion(s1=True, s2=True, s3=True,
+                                                            s12=True, s13=True, s23=True)
+                        >>> combined_failure.insert(max_stress)
+
+        
+
+        Property name
+            Documentation:
+            Name of the combined failure criterion.
+
+        Function remove(self, key: str) -> ansys.dpf.composites.failure_criteria._failure_criterion_base.FailureCriterionBase
+            Documentation:
+            Remove a failure criterion.
+
+                    Parameters
+                    ----------
+                    key:
+                        Name of the failure criterion.
+
+                    Returns
+                    -------
+                    :
+                        Removed failure criterion or ``None``.
+
+                    Examples
+                    --------
+                        >>> combined_failure.remove("Max Stress")
+
+        
+
+        Function to_dict(self) -> dict[str, typing.Any]
+            Documentation:
+            Return the combined failure criterion as a dictionary.
+
+                    Returns
+                    -------
+                    :
+                        JSON dictionary that can be used for the result definition
+                        of the DPF Composites Failure evaluator operator.
+        
+
+        Function to_json(self) -> str
+            Documentation:
+            Return the combined failure criterion as a JSON dictionary.
+
+                    Returns
+                    -------
+                    :
+                       String representation (``json.dumps`` file) that can be used for the result definition
+                       of the DPF Composites Failure evaluator operator.
+        
+
+    Class FailureMeasureEnum(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides available failure measures.
+
+        Enum INVERSE_RESERVE_FACTOR
+            Documentation:
+            Provides available failure measures.
+
+        Enum MARGIN_OF_SAFETY
+            Documentation:
+            Provides available failure measures.
+
+        Enum RESERVE_FACTOR
+            Documentation:
+            Provides available failure measures.
+
+    Class FailureResult(mode: str, inverse_reserve_factor: float, safety_factor: float, safety_margin: float) -> None
+        Documentation:
+        Provides the components of a failure result.
+
+    Class MaterialOperators(material_provider: ansys.dpf.core.dpf_operator.Operator, material_support_provider: ansys.dpf.core.dpf_operator.Operator, result_info_provider: ansys.dpf.core.dpf_operator.Operator)
+        Documentation:
+        Provides the container for material-related operators.
+
+            Parameters
+            ----------
+            material_support_provider:
+                The material support provider takes care of mapping the materials in the RST file to
+                the materials in the composite definitions.
+                The material support contains all the materials from the RST file. Currently
+                the output of this operator cannot be inspected in Python.
+            material_provider:
+                Outputs the ``MaterialsContainer``, which can be used to
+                evaluate material properties. This container cannot be
+                queried in Python, but it can be passed to other DPF operators
+                that evaluate the properties.
+            result_info_provider:
+                Provides the ``ResultInfo`` object.
+    
+
+        Property material_provider
+            Documentation:
+            Get material_provider.
+
+        Property material_support_provider
+            Documentation:
+            Get material_support_provider.
+
+        Property result_info_provider
+            Documentation:
+            Get result_info_provider.
+
+    Class SamplingPoint(*args, **kwargs)
+        Documentation:
+        Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
+
+            Use :meth:`.CompositeModel.get_sampling_point` to get a sampling point object.
+            This class provides for plotting the lay-up and results at a certain point of the
+            layered structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
+            ``failure_modes``, are always from the bottom to the top of the laminate (along
+            the element normal direction). Postprocessing results such as ``e1`` are returned
+            as flat arrays where ``self.spots_per_ply`` can be used to compute the index for
+            a certain ply.
+
+            Notes
+            -----
+            The results of layered elements are stored per integration point. A layered shell element
+            has a number of in-plane integration points (depending on the integration scheme) and
+            typically three integration points through the thickness. The through-the-thickness
+            integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
+            and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
+
+            The ``SamplingPoint`` class returns three results per layer (one for each spot) because
+            the results of the in-plane integration points are interpolated to the centroid of the element.
+            The following table shows an example of a laminate with three layers. So a result, such as
+            ``s1`` has nine values, three for each ply.
+
+            +------------+------------+------------------------+
+            | Layer      | Index      | Spot                   |
+            +============+============+========================+
+            |            | - 8        | - TOP of Layer 3       |
+            | Layer 3    | - 7        | - MIDDLE of Layer 3    |
+            |            | - 6        | - BOTTOM of Layer 3    |
+            +------------+------------+------------------------+
+            |            | - 5        | - TOP of Layer 2       |
+            | Layer 2    | - 4        | - MIDDLE of Layer 2    |
+            |            | - 3        | - BOTTOM of Layer 2    |
+            +------------+------------+------------------------+
+            |            | - 2        | - TOP of Layer 1       |
+            | Layer 1    | - 1        | - MIDDLE of Layer 1    |
+            |            | - 0        | - BOTTOM of Layer 1    |
+            +------------+------------+------------------------+
+
+            The get_indices and get_offsets_by_spots methods simplify the indexing and
+            filtering of the data.
+    
+
+        Function add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None
+            Documentation:
+            Add the stacking (ply and text) to an axis or plot.
+
+                    Parameters
+                    ----------
+                    axes :
+                        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+        
+
+        Function add_results_to_plot(self, axes: Any, components: collections.abc.Sequence[str], spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.TOP: 3>), core_scale_factor: float = 1.0, title: str = '', xlabel: str = '') -> None
+            Documentation:
+            Add results (strain, stress, or failure values) to an ``Axes`` object.
+
+                    Parameters
+                    ----------
+                    axes :
+                        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+                    components :
+                        List of result components. Valid components for
+                        strain are ``"e1"``, ``"e2"``, ``"e3"``, ``"e12"``, ``"e13"``,
+                        and ``"e23"`` Valid components for stress are ``"s1",`` ``"s2"``,
+                        ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. Valid components
+                        for failure are ``"inverse_reserve_factor"``, ``"reserve_factor"``,
+                        and ``"margin_of_safety"``.
+                    spots :
+                        Collection of spots (interfaces).
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+                    title :
+                        Title of the plot. This parameter is ignored if empty.
+                    xlabel :
+                        Becomes the label of the x-axis. This parameter is ignored if empty.
+
+                    Examples
+                    --------
+                        >>> import matplotlib.pyplot as plt
+                        >>> fig, ax1 = plt.subplots()
+                        >>> sampling_point.add_results_to_plot(ax1,
+                                                              ["s13", "s23", "s3"],
+                                                              [Spot.BOTTOM, Spot.TOP],
+                                                              0.1, "Interlaminar Stresses", "[MPa]")
+        
+
+        Property analysis_plies
+            Documentation:
+            List of analysis plies from the bottom to the top.
+
+                    This attribute returns a list of ply data, such as angle, thickness and material name,
+                    as a dictionary.
+        
+
+        Property e1
+            Documentation:
+            Strains in the material 1 direction of each ply.
+
+        Property e12
+            Documentation:
+            In-plane shear strains e12 of each ply.
+
+        Property e13
+            Documentation:
+            Out-of-plane shear strains e13 of each ply.
+
+        Property e2
+            Documentation:
+            Strains in the material 2 direction of each ply.
+
+        Property e23
+            Documentation:
+            Out-of-plane shear strains e23 of each ply.
+
+        Property e3
+            Documentation:
+            Strains in the material 3 direction of each ply.
+
+        Property element_id
+            Documentation:
+            Element label for sampling the laminate.
+
+                    This attribute returns ``-1`` if the element ID is not set.
+        
+
+        Property failure_modes
+            Documentation:
+            Critical failure mode of each ply.
+
+        Function get_indices(self, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> collections.abc.Sequence[int]
+            Documentation:
+            Get the indices of the selected spots (interfaces) for each ply.
+
+                    The indices are sorted from bottom to top.
+                    For instance, this method can be used to access the stresses at the bottom of each ply.
+
+                    Parameters
+                    ----------
+                    spots :
+                        Collection of spots. Only the indices of the bottom interfaces of plies
+                        are returned if ``[Spot.BOTTOM]`` is set.
+
+                    Examples
+                    --------
+                        >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
+
+        
+
+        Function get_offsets_by_spots(self, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>), core_scale_factor: float = 1.0) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+            Documentation:
+            Access the y coordinates of the selected spots (interfaces) for each ply.
+
+                    Parameters
+                    ----------
+                    spots :
+                        Collection of spots.
+
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+        
+
+        Function get_ply_wise_critical_failures(self) -> list[ansys.dpf.composites.sampling_point_types.FailureResult]
+            Documentation:
+            Get the critical failure value and modes per ply.
+
+        Function get_polar_plot(self, components: collections.abc.Sequence[str] = ('E1', 'E2', 'G12')) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+            Documentation:
+            Create a standard polar plot to visualize the polar properties of the laminate.
+
+                    Parameters
+                    ----------
+                    components :
+                        Stiffness quantities to plot.
+
+                    Examples
+                    --------
+                        >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
+        
+
+        Function get_result_plots(self, strain_components: collections.abc.Sequence[str] = ('e1', 'e2', 'e3', 'e12', 'e13', 'e23'), stress_components: collections.abc.Sequence[str] = ('s1', 's2', 's3', 's12', 's13', 's23'), failure_components: collections.abc.Sequence[ansys.dpf.composites.result_definition.FailureMeasureEnum] = (<FailureMeasureEnum.INVERSE_RESERVE_FACTOR: 'inverse_reserve_factor'>, <FailureMeasureEnum.RESERVE_FACTOR: 'safety_factor'>, <FailureMeasureEnum.MARGIN_OF_SAFETY: 'safety_margin'>), show_failure_modes: bool = False, create_laminate_plot: bool = True, core_scale_factor: float = 1.0, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+            Documentation:
+            Generate a figure with a grid of axes (plot) for each selected result entity.
+
+                    Parameters
+                    ----------
+                    strain_components
+                        Strain entities of interest. Supported values are ``"e1"``, ``"e2"``,
+                        ``"e3"``, ``"e12"``, ``"e13"``, and ``"e23"``. The plot is skipped
+                        if the list is empty.
+                    stress_components
+                        Stress entities of interest. Supported values are ``"s1"``, ``"s2"``,
+                        ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. The plot is skipped
+                        if the list is empty.
+                    failure_components
+                        Failure values of interest. Values supported are ``"irf"``, ``"rf"``,
+                        and ``"mos"``. The plot is skipped if the list is empty.
+                    show_failure_modes
+                        WHether to add the critical failure mode to the failure plot.
+                    create_laminate_plot
+                        Whether to plot the stacking sequence of the laminate, including text information
+                        such as material, thickness, and angle.
+                    core_scale_factor
+                        Factor for scaling the thickness of core plies.
+                    spots
+                        Spots (interfaces) to show results at.
+
+                    Examples
+                    --------
+                        >>> figure, axes = sampling_point.get_result_plots()
+
+        
+
+        Property inverse_reserve_factor
+            Documentation:
+            Critical inverse reserve factor of each ply.
+
+        Property is_uptodate
+            Documentation:
+            True if the Sampling Point is up-to-date.
+
+        Property margin_of_safety
+            Documentation:
+            Lowest margin of safety of each ply.
+
+                    This attribute is equivalent to the safety margin.
+        
+
+        Property name
+            Documentation:
+            Name of the object.
+
+        Property number_of_plies
+            Documentation:
+            Number of plies.
+
+        Property offsets
+            Documentation:
+            Z coordinates for each interface and ply.
+
+        Property polar_properties_E1
+            Documentation:
+            Polar property E1 of the laminate.
+
+        Property polar_properties_E2
+            Documentation:
+            Polar property E2 of the laminate.
+
+        Property polar_properties_G12
+            Documentation:
+            Polar property G12 of the laminate.
+
+        Property reserve_factor
+            Documentation:
+            Lowest reserve factor of each ply.
+
+                    This attribute is equivalent to the safety factor.
+        
+
+        Property results
+            Documentation:
+            Results of the sampling point results as a JSON dictionary.
+
+        Property s1
+            Documentation:
+            Stresses in the material 1 direction of each ply.
+
+        Property s12
+            Documentation:
+            In-plane shear stresses s12 of each ply.
+
+        Property s13
+            Documentation:
+            Out-of-plane shear stresses s13 of each ply.
+
+        Property s2
+            Documentation:
+            Stresses in the material 2 direction of each ply.
+
+        Property s23
+            Documentation:
+            Out-of-plane shear stresses s23 of each ply.
+
+        Property s3
+            Documentation:
+            Stresses in the material 3 direction of each ply.
+
+        Property spots_per_ply
+            Documentation:
+            Number of through-the-thickness integration points per ply.
+
+    Class SamplingPointFigure(figure: Any, axes: Any) -> None
+        Documentation:
+        Provides the sampling point figure and axes.
+
+    Class SamplingPointNew(name: str, element_id: int, combined_criterion: ansys.dpf.composites.failure_criteria._combined_failure_criterion.CombinedFailureCriterion, material_operators: ansys.dpf.composites.layup_info.material_operators.MaterialOperators, meshed_region: ansys.dpf.core.meshed_region.MeshedRegion, layup_provider: ansys.dpf.core.dpf_operator.Operator, rst_streams_provider: ansys.dpf.core.dpf_operator.Operator, rst_data_source: ansys.dpf.core.data_sources.DataSources, default_unit_system: Optional[ansys.dpf.core.unit_system.UnitSystem] = None, time: Optional[float] = None)
+        Documentation:
+        Implements the ``Sampling Point`` object that wraps the DPF sampling point operator.
+
+            This class provides for plotting the lay-up and results at a certain point of the
+            layered structure. The results, including ``analysis_plies``, ``e1``, ``s12``, and
+            ``failure_modes``, are always from the bottom to the top of the laminate (along
+            the element normal direction). Postprocessing results such as ``e1`` are returned
+            as flat arrays where ``self.spots_per_ply`` can be used to compute the index for
+            a certain ply.
+
+            Parameters
+            ----------
+            name :
+                Name of the object.
+
+            Notes
+            -----
+            The results of layered elements are stored per integration point. A layered shell element
+            has a number of in-plane integration points (depending on the integration scheme) and
+            typically three integration points through the thickness. The through-the-thickness
+            integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
+            and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
+
+            The ``SamplingPoint`` class returns three results per layer (one for each spot) because
+            the results of the in-plane integration points are interpolated to the centroid of the element.
+            The following table shows an example of a laminate with three layers. So a result, such as
+            ``s1`` has nine values, three for each ply.
+
+            +------------+------------+------------------------+
+            | Layer      | Index      | Spot                   |
+            +============+============+========================+
+            |            | - 8        | - TOP of Layer 3       |
+            | Layer 3    | - 7        | - MIDDLE of Layer 3    |
+            |            | - 6        | - BOTTOM of Layer 3    |
+            +------------+------------+------------------------+
+            |            | - 5        | - TOP of Layer 2       |
+            | Layer 2    | - 4        | - MIDDLE of Layer 2    |
+            |            | - 3        | - BOTTOM of Layer 2    |
+            +------------+------------+------------------------+
+            |            | - 2        | - TOP of Layer 1       |
+            | Layer 1    | - 1        | - MIDDLE of Layer 1    |
+            |            | - 0        | - BOTTOM of Layer 1    |
+            +------------+------------+------------------------+
+
+            The get_indices and get_offsets_by_spots methods simplify the indexing and
+            filtering of the data.
+    
+
+        Function add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None
+            Documentation:
+            Add the stacking (ply and text) to an axis or plot.
+
+                    Parameters
+                    ----------
+                    axes :
+                        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+        
+
+        Function add_results_to_plot(self, axes: Any, components: collections.abc.Sequence[str], spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.TOP: 3>), core_scale_factor: float = 1.0, title: str = '', xlabel: str = '') -> None
+            Documentation:
+            Add results (strain, stress, or failure values) to an ``Axes`` object.
+
+                    Parameters
+                    ----------
+                    axes :
+                        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+                    components :
+                        List of result components. Valid components for
+                        strain are ``"e1"``, ``"e2"``, ``"e3"``, ``"e12"``, ``"e13"``,
+                        and ``"e23"`` Valid components for stress are ``"s1",`` ``"s2"``,
+                        ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. Valid components
+                        for failure are ``"inverse_reserve_factor"``, ``"reserve_factor"``,
+                        and ``"margin_of_safety"``.
+                    spots :
+                        Collection of spots (interfaces).
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+                    title :
+                        Title of the plot. This parameter is ignored if empty.
+                    xlabel :
+                        Becomes the label of the x-axis. This parameter is ignored if empty.
+
+                    Examples
+                    --------
+                        >>> import matplotlib.pyplot as plt
+                        >>> fig, ax1 = plt.subplots()
+                        >>> sampling_point.add_results_to_plot(ax1,
+                                                              ["s13", "s23", "s3"],
+                                                              [Spot.BOTTOM, Spot.TOP],
+                                                              0.1, "Interlaminar Stresses", "[MPa]")
+        
+
+        Property analysis_plies
+            Documentation:
+            List of analysis plies from the bottom to the top.
+
+                    This attribute returns a list of ply data, such as angle, thickness and material name,
+                    as a dictionary.
+        
+
+        Property combined_criterion
+            Documentation:
+            Element label for sampling the laminate.
+
+        Property e1
+            Documentation:
+            Strains in the material 1 direction of each ply.
+
+        Property e12
+            Documentation:
+            In-plane shear strains e12 of each ply.
+
+        Property e13
+            Documentation:
+            Out-of-plane shear strains e13 of each ply.
+
+        Property e2
+            Documentation:
+            Strains in the material 2 direction of each ply.
+
+        Property e23
+            Documentation:
+            Out-of-plane shear strains e23 of each ply.
+
+        Property e3
+            Documentation:
+            Strains in the material 3 direction of each ply.
+
+        Property element_id
+            Documentation:
+            Element label for sampling the laminate.
+
+        Property failure_modes
+            Documentation:
+            Critical failure mode of each ply.
+
+        Function get_indices(self, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> collections.abc.Sequence[int]
+            Documentation:
+            Get the indices of the selected spots (interfaces) for each ply.
+
+                    The indices are sorted from bottom to top.
+                    For instance, this method can be used to access the stresses at the bottom of each ply.
+
+                    Parameters
+                    ----------
+                    spots :
+                        Collection of spots. Only the indices of the bottom interfaces of plies
+                        are returned if ``[Spot.BOTTOM]`` is set.
+
+                    Examples
+                    --------
+                        >>> ply_top_indices = sampling_point.get_indices([Spot.TOP])
+
+        
+
+        Function get_offsets_by_spots(self, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>), core_scale_factor: float = 1.0) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+            Documentation:
+            Access the y coordinates of the selected spots (interfaces) for each ply.
+
+                    Parameters
+                    ----------
+                    spots :
+                        Collection of spots.
+
+                    core_scale_factor :
+                        Factor for scaling the thickness of core plies.
+        
+
+        Function get_ply_wise_critical_failures(self) -> list[ansys.dpf.composites.sampling_point_types.FailureResult]
+            Documentation:
+            Get the critical failure value and modes per ply.
+
+        Function get_polar_plot(self, components: collections.abc.Sequence[str] = ('E1', 'E2', 'G12')) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+            Documentation:
+            Create a standard polar plot to visualize the polar properties of the laminate.
+
+                    Parameters
+                    ----------
+                    components :
+                        Stiffness quantities to plot.
+
+                    Examples
+                    --------
+                        >>> figure, axes = sampling_point.get_polar_plot(components=["E1", "G12"])
+        
+
+        Function get_result_plots(self, strain_components: collections.abc.Sequence[str] = ('e1', 'e2', 'e3', 'e12', 'e13', 'e23'), stress_components: collections.abc.Sequence[str] = ('s1', 's2', 's3', 's12', 's13', 's23'), failure_components: collections.abc.Sequence[ansys.dpf.composites.result_definition.FailureMeasureEnum] = (<FailureMeasureEnum.INVERSE_RESERVE_FACTOR: 'inverse_reserve_factor'>, <FailureMeasureEnum.RESERVE_FACTOR: 'safety_factor'>, <FailureMeasureEnum.MARGIN_OF_SAFETY: 'safety_margin'>), show_failure_modes: bool = False, create_laminate_plot: bool = True, core_scale_factor: float = 1.0, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+            Documentation:
+            Generate a figure with a grid of axes (plot) for each selected result entity.
+
+                    Parameters
+                    ----------
+                    strain_components
+                        Strain entities of interest. Supported values are ``"e1"``, ``"e2"``,
+                        ``"e3"``, ``"e12"``, ``"e13"``, and ``"e23"``. The plot is skipped
+                        if the list is empty.
+                    stress_components
+                        Stress entities of interest. Supported values are ``"s1"``, ``"s2"``,
+                        ``"s3"``, ``"s12"``, ``"s13"``, and ``"s23"``. The plot is skipped
+                        if the list is empty.
+                    failure_components
+                        Failure values of interest. Values supported are ``"irf"``, ``"rf"``,
+                        and ``"mos"``. The plot is skipped if the list is empty.
+                    show_failure_modes
+                        WHether to add the critical failure mode to the failure plot.
+                    create_laminate_plot
+                        Whether to plot the stacking sequence of the laminate, including text information
+                        such as material, thickness, and angle.
+                    core_scale_factor
+                        Factor for scaling the thickness of core plies.
+                    spots
+                        Spots (interfaces) to show results at.
+
+                    Examples
+                    --------
+                        >>> figure, axes = sampling_point.get_result_plots()
+
+        
+
+        Property inverse_reserve_factor
+            Documentation:
+            Critical inverse reserve factor of each ply.
+
+        Property is_uptodate
+            Documentation:
+            True if the results are up-to-date.
+
+        Property margin_of_safety
+            Documentation:
+            Lowest margin of safety of each ply.
+
+                    This attribute is equivalent to the safety margin.
+        
+
+        Property name
+            Documentation:
+            Name of the object.
+
+        Property number_of_plies
+            Documentation:
+            Number of plies.
+
+        Property offsets
+            Documentation:
+            Z coordinates for each interface and ply.
+
+        Property polar_properties_E1
+            Documentation:
+            Polar property E1 of the laminate.
+
+        Property polar_properties_E2
+            Documentation:
+            Polar property E2 of the laminate.
+
+        Property polar_properties_G12
+            Documentation:
+            Polar property G12 of the laminate.
+
+        Property reserve_factor
+            Documentation:
+            Lowest reserve factor of each ply.
+
+                    This attribute is equivalent to the safety factor.
+        
+
+        Property results
+            Documentation:
+            Results of the sampling point operator as a JSON dictionary.
+
+        Function run(self) -> None
+            Documentation:
+            Build and run the DPF operator network and cache the results.
+
+        Property s1
+            Documentation:
+            Stresses in the material 1 direction of each ply.
+
+        Property s12
+            Documentation:
+            In-plane shear stresses s12 of each ply.
+
+        Property s13
+            Documentation:
+            Out-of-plane shear stresses s13 of each ply.
+
+        Property s2
+            Documentation:
+            Stresses in the material 2 direction of each ply.
+
+        Property s23
+            Documentation:
+            Out-of-plane shear stresses s23 of each ply.
+
+        Property s3
+            Documentation:
+            Stresses in the material 3 direction of each ply.
+
+        Property spots_per_ply
+            Documentation:
+            Number of through-the-thickness integration points per ply.
+
+    Class Spot(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Implements an interface to access the spots of the results of layered elements.
+
+        Enum BOTTOM
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+        Enum MIDDLE
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+        Enum TOP
+            Documentation:
+            Implements an interface to access the spots of the results of layered elements.
+
+    Function add_ply_sequence_to_plot_to_sp(sampling_point: ansys.dpf.composites.sampling_point_types.SamplingPoint, axes: Any, core_scale_factor: float = 1.0) -> None
+        Documentation:
+        Add the stacking (ply and text) to an axis or plot.
+
+    Function add_results_to_plot_to_sp(sampling_point: ansys.dpf.composites.sampling_point_types.SamplingPoint, axes: Any, components: collections.abc.Sequence[str], spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.TOP: 3>), core_scale_factor: float = 1.0, title: str = '', xlabel: str = '') -> None
+        Documentation:
+        Add results (strain, stress, or failure values) to an ``Axes`` object.
+
+    Function get_analysis_plies_from_sp(results: Any) -> collections.abc.Sequence[typing.Any]
+        Documentation:
+        List of analysis plies from the bottom to the top.
+
+            This attribute returns a list of ply data, such as angle, thickness and material name,
+            as a dictionary.
+    
+
+    Function get_data_from_sp_results(*args: Any, results: Any) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+        Documentation:
+        Extract data from the result dict.
+
+            The result object of the sampling point is a (nested) JSON dict. The args are the keys
+            to dive into the results and extract the according data.
+            For example: get_data_from_sp_results("results", "stresses", "s1", results=sp.results)
+            returns the stresses in the material direction.
+    
+
+    Function get_indices_from_sp(interface_indices: dict[ansys.dpf.composites.constants.Spot, int], number_of_plies: int, spots_per_ply: int, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> collections.abc.Sequence[int]
+        Documentation:
+        Get the indices of the selected spots (interfaces) for each ply.
+
+    Function get_offsets_by_spots_from_sp(sampling_point: ansys.dpf.composites.sampling_point_types.SamplingPoint, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>), core_scale_factor: float = 1.0) -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+        Documentation:
+        Access the y coordinates of the selected spots (interfaces) for each ply.
+
+    Function get_ply_wise_critical_failures_from_sp(sampling_point: ansys.dpf.composites.sampling_point_types.SamplingPoint) -> list[ansys.dpf.composites.sampling_point_types.FailureResult]
+        Documentation:
+        Get the critical failure value and modes per ply.
+
+    Function get_polar_plot_from_sp(sampling_point: ansys.dpf.composites.sampling_point_types.SamplingPoint, components: collections.abc.Sequence[str] = ('E1', 'E2', 'G12')) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+        Documentation:
+        Create a standard polar plot to visualize the polar properties of the laminate.
+
+    Function get_result_plots_from_sp(sampling_point: ansys.dpf.composites.sampling_point_types.SamplingPoint, strain_components: collections.abc.Sequence[str] = ('e1', 'e2', 'e3', 'e12', 'e13', 'e23'), stress_components: collections.abc.Sequence[str] = ('s1', 's2', 's3', 's12', 's13', 's23'), failure_components: collections.abc.Sequence[ansys.dpf.composites.result_definition.FailureMeasureEnum] = (<FailureMeasureEnum.INVERSE_RESERVE_FACTOR: 'inverse_reserve_factor'>, <FailureMeasureEnum.RESERVE_FACTOR: 'safety_factor'>, <FailureMeasureEnum.MARGIN_OF_SAFETY: 'safety_margin'>), show_failure_modes: bool = False, create_laminate_plot: bool = True, core_scale_factor: float = 1.0, spots: collections.abc.Collection[ansys.dpf.composites.constants.Spot] = (<Spot.BOTTOM: 1>, <Spot.MIDDLE: 2>, <Spot.TOP: 3>)) -> ansys.dpf.composites.sampling_point_types.SamplingPointFigure
+        Documentation:
+        Generate a figure with a grid of axes (plot) for each selected result entity.
+
+    Function get_unit_system(data_source_or_streams_provider: Union[ansys.dpf.core.data_sources.DataSources, ansys.dpf.core.dpf_operator.Operator], default_unit_system: Optional[ansys.dpf.core.unit_system.UnitSystem] = None) -> Union[ansys.dpf.core.unit_system.UnitSystem, ansys.dpf.core.dpf_operator.Operator]
+        Documentation:
+        Get unit_system from rst DataSources.
+
+            Returns the ResultInfo from the result file or
+            the default_unit_system if no unit system is found in the result file
+            (for example for pure mapdl result files).
+
+            Parameters
+            ----------
+            data_source_or_streams_provider:
+                DPF Data Source or streams provider containing a rst file.
+            default_unit_system:
+                Default Unit system that is used if the rst file does not contain
+                a unit system.
+    
+
+    Function version_equal_or_later(server: ansys.dpf.core.server_types.BaseServer, ver: str) -> bool
+        Documentation:
+        Evaluate if the dpf server is equal or newer than the given version.
+

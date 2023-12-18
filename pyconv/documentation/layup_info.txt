@@ -1,0 +1,750 @@
+Submodule ansys.dpf.composites.layup_info.layup_info
+    Documentation:
+    Provides methods for reading the composite lay-up information.
+
+    Class AnalysisPlyInfoProvider(mesh: ansys.dpf.core.meshed_region.MeshedRegion, name: str)
+        Documentation:
+        AnalysisPlyInfoProvider. Can be used to compute the layer indices of a given analysis ply.
+
+            Parameters
+            ----------
+            mesh
+                DPF MeshedRegion with lay-up information.
+            name
+                Analysis Ply Name
+    
+
+        Function get_layer_index_by_element_id(self, element_id: int) -> Optional[numpy.int64]
+            Documentation:
+            Get the layer index for the analysis ply in a given element.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+
+        
+
+        Function ply_element_ids(self) -> collections.abc.Sequence[numpy.int64]
+            Documentation:
+            Return list of element labels of the analysis ply.
+
+    Class ElementInfo(id: int, n_layers: int, n_corner_nodes: int, n_spots: int, is_layered: bool, element_type: int, dpf_material_ids: numpy.ndarray[typing.Any, numpy.dtype[numpy.int64]], is_shell: bool, number_of_nodes_per_spot_plane: int) -> None
+        Documentation:
+        Provides lay-up information for an element.
+
+            Use the :class:`~ElementInfoProvider` class to obtain the
+            :class:`~ElementInfo` class for an element.
+
+            Parameters
+            ----------
+            id
+                Element ID or label.
+            n_layers
+                Number of layers. For non-layered elements, the value is ``1``.
+            n_corner_nodes
+                Number of corner nodes (without midside nodes).
+            n_spots
+                Number of spots (through-the-thickness integration points) per layer.
+            element_type
+                APDL element type. For example, ``181`` for layered shells.
+            dpf_material_ids
+                List of DPF material IDs for all layers.
+            is_shell
+                Whether the element is a shell element.
+            number_of_nodes_per_spot_plane
+                Number of nodes per output plane. The value is equal
+                to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
+                divided by two for layered solid elements. The value is equal to ``-1``
+                for non-layered elements.
+    
+
+    Class ElementInfoProvider(mesh: ansys.dpf.core.meshed_region.MeshedRegion, layer_indices: ansys.dpf.core.property_field.PropertyField, element_types_apdl: ansys.dpf.core.property_field.PropertyField, element_types_dpf: ansys.dpf.core.property_field.PropertyField, keyopt_8_values: ansys.dpf.core.property_field.PropertyField, keyopt_3_values: ansys.dpf.core.property_field.PropertyField, material_ids: ansys.dpf.core.property_field.PropertyField, solver_material_ids: Optional[ansys.dpf.core.property_field.PropertyField] = None, no_bounds_checks: bool = False)
+        Documentation:
+        Provider for :class:`~ElementInfo`.
+
+            Use :func:`~get_element_info_provider` to create :class:`~ElementInfoProvider`
+            objects.
+
+            Initialize the class before a loop and
+            call :func:`~get_element_info` for each element.
+
+            Note that the :class:`~ElementInfoProvider` class is not fully supported for
+            distributed RST files. The :func:`~get_element_info` method will raise an
+            exception if the DPF server version does not support reading the required
+            information.
+
+            Parameters
+            ----------
+            mesh
+            layer_indices
+            element_types_apdl
+            element_types_dpf
+            keyopt_8_values
+            keyopt_3_values
+            material_ids
+            no_bounds_checks
+                Disable bounds checks.
+                Results in better performance but potentially cryptic
+                error messages
+    
+
+        Function get_element_info(self, element_id: int) -> Optional[ansys.dpf.composites.layup_info._layup_info.ElementInfo]
+            Documentation:
+            Get :class:`~ElementInfo` for a given element id.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+
+                    Returns
+                    -------
+                    Optional[ElementInfo]:
+                        Returns None if element type is not supported
+        
+
+    Class LayerProperty(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Provides the layer properties available.
+
+        Enum ANGLES
+            Documentation:
+            Provides the layer properties available.
+
+        Enum SHEAR_ANGLES
+            Documentation:
+            Provides the layer properties available.
+
+        Enum THICKNESSES
+            Documentation:
+            Provides the layer properties available.
+
+    Class LayupModelContextType(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Type of the lay-up information.
+
+        Enum ACP
+            Documentation:
+            Type of the lay-up information.
+
+        Enum MIXED
+            Documentation:
+            Type of the lay-up information.
+
+        Enum NOT_AVAILABLE
+            Documentation:
+            Type of the lay-up information.
+
+        Enum RST
+            Documentation:
+            Type of the lay-up information.
+
+    Class LayupPropertiesProvider(layup_provider: ansys.dpf.core.dpf_operator.Operator, mesh: ansys.dpf.core.meshed_region.MeshedRegion)
+        Documentation:
+        Provider for lay-up properties.
+
+            Some properties such as layered dpf_material_ids and
+            information about the element type are available
+            through the :class:`~ElementInfoProvider`.
+
+            Parameters
+            ----------
+            layup_provider:
+                Use :func:`~add_layup_info_to_mesh` to obtain a lay-up provider.
+            mesh
+    
+
+        Function get_analysis_plies(self, element_id: int) -> Optional[collections.abc.Sequence[str]]
+            Documentation:
+            Get analysis ply names. Returns None if element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+
+        
+
+        Function get_element_laminate_offset(self, element_id: int) -> Optional[numpy.float64]
+            Documentation:
+            Get laminate offset of element. Returns None if element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+
+        
+
+        Function get_layer_angles(self, element_id: int) -> Optional[numpy.ndarray[Any, numpy.dtype[numpy.float64]]]
+            Documentation:
+            Get angles for all layers. Returns None if element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+        
+
+        Function get_layer_shear_angles(self, element_id: int) -> Optional[numpy.ndarray[Any, numpy.dtype[numpy.float64]]]
+            Documentation:
+            Get shear angle for all layers. Returns None if element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+        
+
+        Function get_layer_thicknesses(self, element_id: int) -> Optional[numpy.ndarray[Any, numpy.dtype[numpy.float64]]]
+            Documentation:
+            Get thicknesses for all layers. Returns None if element is not layered.
+
+                    Parameters
+                    ----------
+                    element_id:
+                        Element Id/Label
+
+        
+
+    Class LayupProperty(value, names=None, *, module=None, qualname=None, type=None, start=1)
+        Documentation:
+        Enum for lay-up properties.
+
+            Values correspond to labels in the output container of the lay-up provider.
+    
+
+        Enum ANGLE
+            Documentation:
+            Enum for lay-up properties.
+
+                Values correspond to labels in the output container of the lay-up provider.
+    
+
+        Enum LAMINATE_OFFSET
+            Documentation:
+            Enum for lay-up properties.
+
+                Values correspond to labels in the output container of the lay-up provider.
+    
+
+        Enum SHEAR_ANGLE
+            Documentation:
+            Enum for lay-up properties.
+
+                Values correspond to labels in the output container of the lay-up provider.
+    
+
+        Enum THICKNESS
+            Documentation:
+            Enum for lay-up properties.
+
+                Values correspond to labels in the output container of the lay-up provider.
+    
+
+    Function add_layup_info_to_mesh(data_sources: ansys.dpf.composites.data_sources.CompositeDataSources, material_operators: ansys.dpf.composites.layup_info.material_operators.MaterialOperators, mesh: ansys.dpf.core.meshed_region.MeshedRegion, unit_system: Union[ansys.dpf.core.unit_system.UnitSystem, ansys.dpf.core.dpf_operator.Operator, NoneType] = None, composite_definition_label: Optional[str] = None, rst_stream_provider: Optional[ansys.dpf.core.dpf_operator.Operator] = None) -> ansys.dpf.core.dpf_operator.Operator
+        Documentation:
+        Add lay-up information to the mesh.
+
+            Creates a lay-up provider operator that is run and returned.
+
+            Parameters
+            ----------
+            data_sources:
+                DPF data sources available from the :attr:`.CompositeModel.data_sources` attribute.
+            mesh:
+                DPF meshed region available from the :meth:`.CompositeModel.get_mesh` method.
+            material_operators:
+               MaterialOperators object available from the :attr:`.CompositeModel.material_operators`
+               attribute.
+            unit_system:
+                Unit system specification
+            composite_definition_label:
+                Label of the composite definition, which is the
+                dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
+                attribute. This parameter is only required for assemblies.
+                See the note about assemblies in the description for the :class:`.CompositeModel` class.
+            rst_stream_provider:
+                Pass RST stream to load the section data directly from the RST file. This parameter is
+                supported in DPF version 8.0 (2024 R2) and later.
+
+    
+
+    Function get_all_analysis_ply_names(mesh: ansys.dpf.core.meshed_region.MeshedRegion) -> collections.abc.Collection[str]
+        Documentation:
+        Get names of all available analysis plies.
+
+    Function get_analysis_ply_index_to_name_map(mesh: ansys.dpf.core.meshed_region.MeshedRegion) -> dict[int, str]
+        Documentation:
+        Get Dict that maps analysis ply indices to analysis ply names.
+
+            The resulting dict can be used to map from the indices stored in
+            mesh.property_field("layer_to_analysis_ply") to the analysis ply name
+
+            Parameters
+            ----------
+            mesh
+                DPF Meshed region enriched with lay-up information
+    
+
+    Function get_dpf_material_id_by_analyis_ply_map(mesh: ansys.dpf.core.meshed_region.MeshedRegion, data_source_or_streams_provider: Union[ansys.dpf.core.data_sources.DataSources, ansys.dpf.core.dpf_operator.Operator]) -> dict[str, numpy.int64]
+        Documentation:
+        Get Dict that maps analysis ply names to dpf_material_ids.
+
+            Parameters
+            ----------
+            mesh
+                DPF Meshed region enriched with lay-up information
+            data_source_or_streams_provider:
+                DPF data source with rst file or streams_provider. The streams provider is
+                available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
+
+            Note
+            ----
+            Cache the output because the computation can be performance-critical.
+    
+
+    Function get_dpf_material_id_by_analysis_ply_map(mesh: ansys.dpf.core.meshed_region.MeshedRegion, data_source_or_streams_provider: Union[ansys.dpf.core.data_sources.DataSources, ansys.dpf.core.dpf_operator.Operator]) -> dict[str, numpy.int64]
+        Documentation:
+        Get the dictionary that maps analysis ply names to DPF material IDs.
+
+            Parameters
+            ----------
+            mesh
+                DPF Meshed region enriched with lay-up information
+            data_source_or_streams_provider:
+                DPF data source with RST file or streams provider. The streams provider is
+                available from the :attr:`.CompositeModel.core_model` attribute
+                (under ``metadata.streams_provider``).
+
+            Note
+            ----
+            Cache the output because the computation can be performance-critical.
+    
+
+    Function get_element_info_provider(mesh: ansys.dpf.core.meshed_region.MeshedRegion, stream_provider_or_data_source: Union[ansys.dpf.core.dpf_operator.Operator, ansys.dpf.core.data_sources.DataSources], material_provider: Optional[ansys.dpf.core.dpf_operator.Operator] = None, no_bounds_checks: bool = False) -> ansys.dpf.composites.layup_info._layup_info.ElementInfoProvider
+        Documentation:
+        Get :class:`~ElementInfoProvider` Object.
+
+            Parameters
+            ----------
+            mesh
+            stream_provider_or_data_source
+                dpf stream provider or dpf data source
+            material_provider
+                DPF operator that provides material information.
+            no_bounds_checks
+                Disable bounds checks. Improves
+                performance but can result in cryptic error messages
+
+            Returns
+            -------
+            ElementInfoProvider
+
+            Notes
+            -----
+                Either a data_source or a stream_provider is required
+    
+
+    Submodule ansys.dpf.composites.layup_info.material_operators
+        Documentation:
+        Helper function to get material-related operators.
+
+        Class MaterialOperators(material_provider: ansys.dpf.core.dpf_operator.Operator, material_support_provider: ansys.dpf.core.dpf_operator.Operator, result_info_provider: ansys.dpf.core.dpf_operator.Operator)
+            Documentation:
+            Provides the container for material-related operators.
+
+                Parameters
+                ----------
+                material_support_provider:
+                    The material support provider takes care of mapping the materials in the RST file to
+                    the materials in the composite definitions.
+                    The material support contains all the materials from the RST file. Currently
+                    the output of this operator cannot be inspected in Python.
+                material_provider:
+                    Outputs the ``MaterialsContainer``, which can be used to
+                    evaluate material properties. This container cannot be
+                    queried in Python, but it can be passed to other DPF operators
+                    that evaluate the properties.
+                result_info_provider:
+                    Provides the ``ResultInfo`` object.
+    
+
+            Property material_provider
+                Documentation:
+                Get material_provider.
+
+            Property material_support_provider
+                Documentation:
+                Get material_support_provider.
+
+            Property result_info_provider
+                Documentation:
+                Get result_info_provider.
+
+        Function get_material_operators(rst_data_source: ansys.dpf.core.data_sources.DataSources, engineering_data_source: ansys.dpf.core.data_sources.DataSources, unit_system: Union[ansys.dpf.core.unit_system.UnitSystem, ansys.dpf.core.dpf_operator.Operator, NoneType] = None) -> ansys.dpf.composites.layup_info.material_operators.MaterialOperators
+            Documentation:
+            Get material properties related to operators.
+
+                Parameters
+                ----------
+                rst_data_source
+                    Data source that contains a RST file. Note that multiple (distributed)
+                    RST files are not supported.
+                engineering_data_source
+                    Data source that contains the Engineering Data file.
+                unit_system:
+                    Unit System
+                ----------
+
+    
+
+    Submodule ansys.dpf.composites.layup_info.material_properties
+        Documentation:
+        Helpers to get material properties.
+
+        Class MaterialProperty(value, names=None, *, module=None, qualname=None, type=None, start=1)
+            Documentation:
+            Provides the material properties that are available.
+
+            Enum Engineering_Constants_E
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_E1
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_E2
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_E3
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_G12
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_G13
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_G23
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_nu
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_nu12
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_nu13
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Engineering_Constants_nu23
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Fabric_Fiber_Angle_phi
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Hill_Yield_Criterion_R11
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Hill_Yield_Criterion_R12
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Hill_Yield_Criterion_R13
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Hill_Yield_Criterion_R22
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Hill_Yield_Criterion_R23
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Hill_Yield_Criterion_R33
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Larc_Constants_fracture_angle_under_compression
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Larc_Constants_fracture_toughness_mode_1
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Larc_Constants_fracture_toughness_mode_2
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Larc_Constants_fracture_toughness_ratio
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_interface_weakening_factor
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_m
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_p_21_neg
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_p_21_pos
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_p_22_neg
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_p_22_pos
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Puck_Constants_s
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Specific_Heat_cp
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eSxy
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eSxz
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eSyz
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eXc
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eXt
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eYc
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eYt
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eZc
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_eZt
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Strain_Limits_effective_strain
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Sxy
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Sxz
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Syz
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Xc
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Xt
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Yc
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Yt
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Zc
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Stress_Limits_Zt
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Tensile_Yield_Strength_effective_stress
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Conductivity_K
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Conductivity_K1
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Conductivity_K2
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Conductivity_K3
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Expansion_Coefficients_a
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Expansion_Coefficients_aX
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Expansion_Coefficients_aY
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Thermal_Expansion_Coefficients_aZ
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Tsai_Wu_Constant_xy
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Tsai_Wu_Constant_xz
+                Documentation:
+                Provides the material properties that are available.
+
+            Enum Tsai_Wu_Constant_yz
+                Documentation:
+                Provides the material properties that are available.
+
+        Function get_all_dpf_material_ids(mesh: ansys.dpf.core.meshed_region.MeshedRegion, data_source_or_streams_provider: Union[ansys.dpf.core.data_sources.DataSources, ansys.dpf.core.dpf_operator.Operator]) -> collections.abc.Collection[numpy.int64]
+            Documentation:
+            Get all DPF material IDs.
+
+                Parameters
+                ----------
+                mesh:
+                    DPF meshed region enriched with lay-up information.
+                data_source_or_streams_provider:
+                    DPF data source or stream provider that contains the RST file.
+    
+
+        Function get_constant_property(material_property: ansys.dpf.composites.layup_info.material_properties.MaterialProperty, dpf_material_id: numpy.int64, materials_provider: ansys.dpf.core.dpf_operator.Operator, unit_system: Union[ansys.dpf.core.unit_system.UnitSystem, ansys.dpf.core.dpf_operator.Operator]) -> float
+            Documentation:
+            Get a constant material property.
+
+                Only constant properties are supported. Variable properties are evaluated at their
+                default values.
+
+                Parameters
+                ----------
+                material_property:
+                    Material property.
+                dpf_material_id:
+                    DPF material ID.
+                materials_provider:
+                    DPF Materials provider operator. This value is available from the
+                    :attr:`.CompositeModel.material_operators` attribute.
+                unit_system:
+    
+
+        Function get_constant_property_dict(material_properties: collections.abc.Collection[ansys.dpf.composites.layup_info.material_properties.MaterialProperty], materials_provider: ansys.dpf.core.dpf_operator.Operator, data_source_or_streams_provider: Union[ansys.dpf.core.data_sources.DataSources, ansys.dpf.core.dpf_operator.Operator], mesh: ansys.dpf.core.meshed_region.MeshedRegion) -> dict[numpy.int64, dict[ansys.dpf.composites.layup_info.material_properties.MaterialProperty, float]]
+            Documentation:
+            Get a dictionary with constant properties.
+
+                Returns a dictionary with the DPF material ID as a key and
+                a dictionary with the requested properties as the value. Only constant properties
+                are supported. Variable properties are evaluated at their
+                default values.
+                Because this method can be slow to evaluate, it should not
+                be called in a loop.
+
+                Parameters
+                ----------
+                material_properties:
+                    Material properties to request.
+                materials_provider:
+                    DPF Materials provider operator. This value is Available from the
+                    :attr:`.CompositeModel.material_operators` attribute.
+                data_source_or_streams_provider:
+                    DPF data source or stream provider that contains the RST file.
+                mesh:
+                    DPF meshed region enriched with lay-up information.
+    
+
+        Function get_element_info_provider(mesh: ansys.dpf.core.meshed_region.MeshedRegion, stream_provider_or_data_source: Union[ansys.dpf.core.dpf_operator.Operator, ansys.dpf.core.data_sources.DataSources], material_provider: Optional[ansys.dpf.core.dpf_operator.Operator] = None, no_bounds_checks: bool = False) -> ansys.dpf.composites.layup_info._layup_info.ElementInfoProvider
+            Documentation:
+            Get :class:`~ElementInfoProvider` Object.
+
+                Parameters
+                ----------
+                mesh
+                stream_provider_or_data_source
+                    dpf stream provider or dpf data source
+                material_provider
+                    DPF operator that provides material information.
+                no_bounds_checks
+                    Disable bounds checks. Improves
+                    performance but can result in cryptic error messages
+
+                Returns
+                -------
+                ElementInfoProvider
+
+                Notes
+                -----
+                    Either a data_source or a stream_provider is required
+    
+
+        Function get_unit_system(data_source_or_streams_provider: Union[ansys.dpf.core.data_sources.DataSources, ansys.dpf.core.dpf_operator.Operator], default_unit_system: Optional[ansys.dpf.core.unit_system.UnitSystem] = None) -> Union[ansys.dpf.core.unit_system.UnitSystem, ansys.dpf.core.dpf_operator.Operator]
+            Documentation:
+            Get unit_system from rst DataSources.
+
+                Returns the ResultInfo from the result file or
+                the default_unit_system if no unit system is found in the result file
+                (for example for pure mapdl result files).
+
+                Parameters
+                ----------
+                data_source_or_streams_provider:
+                    DPF Data Source or streams provider containing a rst file.
+                default_unit_system:
+                    Default Unit system that is used if the rst file does not contain
+                    a unit system.
+    
+
