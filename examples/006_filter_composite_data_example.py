@@ -41,7 +41,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
-server = connect_to_or_start_server(port=50054)
+server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
 
 # %%
