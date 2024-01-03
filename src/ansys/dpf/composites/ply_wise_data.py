@@ -63,6 +63,7 @@ def get_ply_wise_data(
     elemental_nodal_data = filter_ply_data_op.outputs.field()
 
     if requested_location == locations.elemental_nodal:
+        elemental_nodal_data.location = locations.elemental_nodal
         return elemental_nodal_data
 
     if requested_location == locations.elemental:
