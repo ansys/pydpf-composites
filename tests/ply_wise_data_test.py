@@ -6,6 +6,7 @@ import numpy as np
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Sym3x3TensorComponent
 from ansys.dpf.composites.ply_wise_data import ReductionStrategy, get_ply_wise_data
+from ansys.dpf.composites.server_helpers import version_equal_or_later
 
 from .helper import get_basic_shell_files
 
@@ -55,6 +56,8 @@ def get_all_spot_values_first_element_first_node(stress_field, component=0):
 
 
 def test_get_ply_wise_data(dpf_server):
+    if not version_equal_or_later(dpf_server, "8.0"):
+        return
     files = get_basic_shell_files()
 
     composite_model = CompositeModel(files, server=dpf_server)
