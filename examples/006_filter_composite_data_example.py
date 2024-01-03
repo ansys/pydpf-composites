@@ -37,7 +37,7 @@ from ansys.dpf.composites.select_indices import (
     get_selected_indices_by_analysis_ply,
     get_selected_indices_by_dpf_material_ids,
 )
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_equal_or_later
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
@@ -76,16 +76,17 @@ all_ply_names
 # the elemental location which implies averaging over all nodes in an element.
 # Using :func:`.get_ply_wise_data` has the advantage that all the averaging and filtering
 # is done on the server side.
-elemental_max = get_ply_wise_data(
-    field=stress_field,
-    ply_name="P1L1__ud_patch ns1",
-    mesh=composite_model.get_mesh(),
-    component=Sym3x3TensorComponent.TENSOR11,
-    reduction_strategy=ReductionStrategy.MAX,
-    requested_location=dpf.locations.elemental,
-)
+if version_equal_or_later(server, "8.0"):
+    elemental_max = get_ply_wise_data(
+        field=stress_field,
+        ply_name="P1L1__ud_patch ns1",
+        mesh=composite_model.get_mesh(),
+        component=Sym3x3TensorComponent.TENSOR11,
+        reduction_strategy=ReductionStrategy.MAX,
+        requested_location=dpf.locations.elemental,
+    )
 
-composite_model.get_mesh().plot(elemental_max)
+    composite_model.get_mesh().plot(elemental_max)
 
 
 # %%
