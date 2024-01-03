@@ -6,7 +6,8 @@ import numpy as np
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Sym3x3TensorComponent
 from ansys.dpf.composites.ply_wise_data import ReductionStrategy, get_ply_wise_data
-from tests.helper import get_basic_shell_files
+
+from .helper import get_basic_shell_files
 
 
 def get_reduced_value(all_spot_values: Sequence[float], reduction_strategy: ReductionStrategy):
