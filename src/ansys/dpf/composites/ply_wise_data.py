@@ -33,7 +33,7 @@ def get_ply_wise_data(
     Parameters
     ----------
     field:
-        The field to extract data from.
+        Field to extract data from.
     ply_name:
         The name of the ply to extract data from.
     mesh:
