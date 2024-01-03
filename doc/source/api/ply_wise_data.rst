@@ -1,5 +1,5 @@
-Data sources
-------------
+Ply wise data
+-------------
 
 .. module:: ansys.dpf.composites.ply_wise_data
 
