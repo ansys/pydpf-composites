@@ -1,4 +1,4 @@
-"""Methods to get ply wise data from a result field."""
+"""Methods to get ply-wise data from a result field."""
 
 from enum import Enum, IntEnum
 from typing import Union
