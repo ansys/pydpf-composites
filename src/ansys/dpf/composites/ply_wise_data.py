@@ -1,4 +1,4 @@
-"""Methods to get ply wise data from a result field."""
+"""Methods to get ply-wise data from a result field."""
 
 from enum import Enum, IntEnum
 from typing import Union
@@ -33,20 +33,20 @@ def get_ply_wise_data(
     Parameters
     ----------
     field:
-        The field to extract data from.
+        Field to extract data from.
     ply_name:
-        The name of the ply to extract data from.
-    mesh:
-        The meshed region. Needs to be enriched with composite information.
-        Use CompositeModel.get_mesh() to get the meshed region.
-    reduction_strategy:
-        The reduction strategy to get from spot values (BOT, MID, TOP) to a single value
-        per corner node and layer. The default is AVG.
-    requested_location:
-        The location of the output field. The default is elemental_nodal. Supported are
-        elemental_nodal, elemental, and nodal.
-    component:
-        The component to extract data from. Can be an int or an IntEnum. The default is 0.
+        Name of the ply to extract data from.
+    mesh :
+        Meshed region. Needs to be enriched with composite information.
+        Use the ``CompositeModel.get_mesh()`` method to get the meshed region.
+    reduction_strategy :
+        Reduction strategy for getting from spot values (BOT, MID, TOP) to a single value
+        per corner node and layer. The default is ``AVG``.
+    requested_location :
+        Location of the output field. The default is ``"elemental_nodal"``. Options are
+        ``"elemental"``, ``"elemental_nodal"``, and ``"nodal"``.
+    component : int or IntEnum, optional
+        Component to extract data from. The default is ``0``.
     """
     component_int = component.value if isinstance(component, IntEnum) else component
     component_selector = operators.logic.component_selector()
