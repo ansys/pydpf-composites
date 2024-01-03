@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Delete untagged package versions"
-        uses: ansys/actions/hk-package-clean-untagged@v4
+        uses: ansys/actions/hk-package-clean-untagged@v5
         with:
           package-name: 'pydpf-composites'
           allow-last-days: '14'
