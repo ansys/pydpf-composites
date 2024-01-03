@@ -45,7 +45,7 @@ def get_ply_wise_data(
     requested_location :
         Location of the output field. The default is ``"elemental_nodal"``. Options are
         ``"elemental"``, ``"elemental_nodal"``, and ``"nodal"``.
-    component : int or IntEnum, optional
+    component :
         Component to extract data from. The default is ``0``.
     """
     component_int = component.value if isinstance(component, IntEnum) else component
