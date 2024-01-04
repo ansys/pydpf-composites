@@ -118,6 +118,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "fatigue": _ContinuousFiberExampleLocation(
+        directory="fatigue",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
