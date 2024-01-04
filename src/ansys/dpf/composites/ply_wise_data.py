@@ -66,6 +66,10 @@ def get_ply_wise_data(
         return elemental_nodal_data
 
     if requested_location == locations.elemental:
+        # Note Jan 2024 we currently always average over the nodes in an element. It would also be
+        # useful to be able to get the max or min value over the nodes in an element.
+        # This could be done with the max_by_entity_operator but this workflow is currently
+        # broken due to BUG 964544
         elemental_nodal_to_elemental = operators.averaging.elemental_mean()
         elemental_nodal_to_elemental.inputs.field.connect(elemental_nodal_data)
         out_field = elemental_nodal_to_elemental.outputs.field()
