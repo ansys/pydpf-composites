@@ -4,14 +4,14 @@
 Filter result data by different criteria
 ----------------------------------------
 
-This example shows how data filtering can be used for custom postprocessing of
+This example shows how you can use data filtering for custom postprocessing of
 layered composites. You can filter strains and stresses by material, layer, or
 analysis ply. Filtering by analysis ply is implemented on the server side and
-exposed with the function :func:`.get_ply_wise_data`. In this case the data is
-filtered (and reduced) on the server side and only the resulting field is returned
+exposed with the :func:`.get_ply_wise_data` function. In this case, the data is
+filtered (and reduced) on the server side, and only the resulting field is returned
 to the client. This is the recommended way to filter data if possible.
-For more complex filtering, the data is transferred to the client and side and filtered
-using numpy functionality.
+For more complex filtering, the data is transferred to the client side and filtered
+using NumPy functionality.
 The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see :ref:`select_indices`.
@@ -68,13 +68,13 @@ all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 all_ply_names
 
 # %%
-# The easiest way to filter data by analysis ply is to use the function :func:`.get_ply_wise_data`.
+# The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
 # This function supports different reduction strategies such as computing the average
 # or maximum/minimum over the spot locations.
 # It also supports selecting a specific spot (TOP, MID, BOT) directly.
-# In this example we select the maximum value over all spots for each node and then request
-# the elemental location which implies averaging over all nodes in an element.
-# Using :func:`.get_ply_wise_data` has the advantage that all the averaging and filtering
+# This example selects the maximum value over all spots for each node and then requests
+# the elemental location that implies averaging over all nodes in an element.
+# Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging and filtering
 # is done on the server side.
 if version_equal_or_later(server, "8.0"):
     elemental_max = get_ply_wise_data(
@@ -90,11 +90,11 @@ if version_equal_or_later(server, "8.0"):
 
 
 # %%
-# Generic client side filtering
+# Generic client-side filtering
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This example shows how to filter data by layer, spot, and node using the generic filtering on
 # the client side.
-# Here we plot stress values in the material direction for the first node and top spot.
+# It plots stress values in the material direction for the first node and top spot.
 
 # %%
 # Get element information for all elements and show the first one as an example.
@@ -123,7 +123,7 @@ composite_model.get_mesh().plot(result_field)
 
 
 # %%
-# Filtering by material
+# Filter by material
 # ~~~~~~~~~~~~~~~~~~~~~
 # Loop over all elements and get the maximum stress in the material direction
 # for all plies that have a specific UD material.

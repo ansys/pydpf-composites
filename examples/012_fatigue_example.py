@@ -5,18 +5,17 @@ Evaluate fatigue for a composite plate
 --------------------------------------
 
 This example shows how to evaluate fatigue for a flat plate.
-It shows how PyPDF Composites can be used to select specific layers and define a custom
+It shows how you can use PyPDF Composites to select specific layers and define a custom
 combination method. For this example, the custom combination method is stress in fibre
 direction.
 
-A random load time series is created, and taking into account that the load is assumed
-proportional, rainflow counting is applied to load time series.
-Load ranges are then applied on the stress combination method and damage is evaluated
+A random load time series is created. Taking into account that the load is assumed
+proportional, rainflow counting is applied to the load time series.
+Load ranges are then applied on the stress combination method, and damage is evaluated
 by using a dummy S-N curve.
 
 Be aware that the fatpack package is not developed by Ansys, so it is the responsibility
-of the user to verify that it works as expected. For further details:
-https://pypi.org/project/fatpack/
+of the user to verify that it works as expected. For more information, see the `fatback package <https://pypi.org/project/fatpack/>`_,
 
 """
 
@@ -76,7 +75,7 @@ component = Sym3x3TensorComponent.TENSOR11
 # Load time series and apply rainflow counting
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # A random time series is created. Load is assumed proportional, so rainflow counting
-# can be directly done on load time series, to get load ranges.
+# can be directly done on the load time series to get the load ranges.
 # No mean stress correction is applied.
 #
 load_factor_time_series = np.random.normal(-1, 2.5, size=100)
@@ -94,9 +93,9 @@ load_range_factors = fatpack.find_rainflow_ranges(load_factor_time_series)
 # %%
 # S-N curve
 # ~~~~~~~~~
-# A dummy S-N curve is created. Please be aware that this is not based on any
-# experimental data. We choose Sc to be the orthotropic stress limit in fiber direction
-# and Nc to be 1.
+# A dummy S-N curve is created. Note that this curve is not based on any
+# experimental data. Sc is chosen to be the orthotropic stress limit in the fiber direction.
+# and Nc is set to 1.
 #
 Sc = 1979
 Nc = 1
@@ -118,7 +117,7 @@ plt.ylabel("Stress range (MPa)")
 # Damage evaluation
 # ~~~~~~~~~~~~~~~~~
 # Stress S11 at time 1 and layer P1L1__ModelingPly.2 are read
-# for each load range and its damage is evaluated, using the dummy S-N curve
+# for each load range. Its damage is evaluated using the dummy S-N curve.
 #
 
 damage_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)

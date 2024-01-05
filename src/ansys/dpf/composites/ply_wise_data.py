@@ -10,7 +10,7 @@ __all__ = ("ReductionStrategy", "get_ply_wise_data")
 
 
 class ReductionStrategy(Enum):
-    """The reduction strategy to get from spot values (BOT, MID, TOP) to a single value."""
+    """Provides the reduction strategy for getting from spot values (BOT, MID, TOP) to a single value."""
 
     MIN = "MIN"
     MAX = "MAX"
@@ -37,7 +37,7 @@ def get_ply_wise_data(
     ply_name:
         Name of the ply to extract data from.
     mesh :
-        Meshed region. Needs to be enriched with composite information.
+        Meshed region that needs to be enriched with composite information.
         Use the ``CompositeModel.get_mesh()`` method to get the meshed region.
     reduction_strategy :
         Reduction strategy for getting from spot values (BOT, MID, TOP) to a single value
