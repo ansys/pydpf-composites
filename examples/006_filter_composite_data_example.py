@@ -94,7 +94,7 @@ if version_equal_or_later(server, "8.0"):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This example shows how to filter data by layer, spot, and node using the generic filtering on
 # the client side.
-# Here we plot stress values in the material direction for the first node and top spot.
+# It plots stress values in the material direction for the first node and top spot.
 
 # %%
 # Get element information for all elements and show the first one as an example.
