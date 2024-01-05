@@ -15,7 +15,8 @@ Load ranges are then applied on the stress combination method, and damage is eva
 by using a dummy S-N curve.
 
 Be aware that the fatpack package is not developed by Ansys, so it is the responsibility
-of the user to verify that it works as expected. For more information, see the `fatback package <https://pypi.org/project/fatpack/>`_,
+of the user to verify that it works as expected. For more information, see the
+`fatpack package <https://pypi.org/project/fatpack/>`_,
 
 """
 
