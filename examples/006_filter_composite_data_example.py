@@ -4,7 +4,7 @@
 Filter result data by different criteria
 ----------------------------------------
 
-This example shows how data filtering can be used for custom postprocessing of
+This example shows how you can use data filtering for custom postprocessing of
 layered composites. You can filter strains and stresses by material, layer, or
 analysis ply. Filtering by analysis ply is implemented on the server side and
 exposed with the function :func:`.get_ply_wise_data`. In this case the data is
