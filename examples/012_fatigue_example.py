@@ -94,9 +94,9 @@ load_range_factors = fatpack.find_rainflow_ranges(load_factor_time_series)
 # %%
 # S-N curve
 # ~~~~~~~~~
-# A dummy S-N curve is created. Please be aware that this is not based on any
-# experimental data. We choose Sc to be the orthotropic stress limit in fiber direction
-# and Nc to be 1.
+# A dummy S-N curve is created. Note that this curve is not based on any
+# experimental data. Sc is chosen to be the orthotropic stress limit in the fiber direction.
+# and Nc is set to 1.
 #
 Sc = 1979
 Nc = 1
