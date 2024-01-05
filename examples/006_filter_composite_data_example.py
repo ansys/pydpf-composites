@@ -90,7 +90,7 @@ if version_equal_or_later(server, "8.0"):
 
 
 # %%
-# Generic client side filtering
+# Generic client-side filtering
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This example shows how to filter data by layer, spot, and node using the generic filtering on
 # the client side.
@@ -123,7 +123,7 @@ composite_model.get_mesh().plot(result_field)
 
 
 # %%
-# Filtering by material
+# Filter by material
 # ~~~~~~~~~~~~~~~~~~~~~
 # Loop over all elements and get the maximum stress in the material direction
 # for all plies that have a specific UD material.
