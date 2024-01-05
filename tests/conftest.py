@@ -194,11 +194,7 @@ class InstalledServer:
         self.ansys_path = ansys_path
 
     def __enter__(self):
-        context = dpf.server.server_context.ServerContext(
-            dpf.server_context.LicensingContextType.premium
-        )
-
-        server = dpf.start_local_server(ansys_path=self.ansys_path, context=context)
+        server = dpf.start_local_server(ansys_path=self.ansys_path)
         return ServerContext(port=None, platform=sys.platform, server=server)
 
     def __exit__(self, *args):
@@ -300,9 +296,7 @@ def dpf_server(request: pytest.FixtureRequest):
         server = _try_until_timeout(start_server, "Failed to start server.")
 
         _wait_until_server_is_up(server)
-        server.apply_context(
-            dpf.server.server_context.ServerContext(dpf.server_context.LicensingContextType.premium)
-        )
+
         load_composites_plugin(server, ansys_path=installer_path)
 
         yield server
