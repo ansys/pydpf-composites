@@ -68,7 +68,7 @@ all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 all_ply_names
 
 # %%
-# The easiest way to filter data by analysis ply is to use the function :func:`.get_ply_wise_data`.
+# The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
 # This function supports different reduction strategies such as computing the average
 # or maximum/minimum over the spot locations.
 # It also supports selecting a specific spot (TOP, MID, BOT) directly.
