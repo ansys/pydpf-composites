@@ -9,8 +9,8 @@ It shows how you can use PyPDF Composites to select specific layers and define a
 combination method. For this example, the custom combination method is stress in fibre
 direction.
 
-A random load time series is created, and taking into account that the load is assumed
-proportional, rainflow counting is applied to load time series.
+A random load time series is created. Taking into account that the load is assumed
+proportional, rainflow counting is applied to the load time series.
 Load ranges are then applied on the stress combination method and damage is evaluated
 by using a dummy S-N curve.
 
