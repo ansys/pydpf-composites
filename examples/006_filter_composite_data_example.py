@@ -123,7 +123,7 @@ composite_model.get_mesh().plot(result_field)
 
 
 # %%
-# Filtering by material
+# Filter by material
 # ~~~~~~~~~~~~~~~~~~~~~
 # Loop over all elements and get the maximum stress in the material direction
 # for all plies that have a specific UD material.
