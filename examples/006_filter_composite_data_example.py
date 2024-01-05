@@ -90,7 +90,7 @@ if version_equal_or_later(server, "8.0"):
 
 
 # %%
-# Generic client side filtering
+# Generic client-side filtering
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This example shows how to filter data by layer, spot, and node using the generic filtering on
 # the client side.
