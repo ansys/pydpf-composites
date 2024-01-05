@@ -10,8 +10,8 @@ analysis ply. Filtering by analysis ply is implemented on the server side and
 exposed with the :func:`.get_ply_wise_data` function. In this case, the data is
 filtered (and reduced) on the server side, and only the resulting field is returned
 to the client. This is the recommended way to filter data if possible.
-For more complex filtering, the data is transferred to the client and side and filtered
-using numpy functionality.
+For more complex filtering, the data is transferred to the client side and filtered
+using NumPy functionality.
 The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see :ref:`select_indices`.
