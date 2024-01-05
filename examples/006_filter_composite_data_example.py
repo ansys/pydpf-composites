@@ -72,9 +72,9 @@ all_ply_names
 # This function supports different reduction strategies such as computing the average
 # or maximum/minimum over the spot locations.
 # It also supports selecting a specific spot (TOP, MID, BOT) directly.
-# In this example we select the maximum value over all spots for each node and then request
-# the elemental location which implies averaging over all nodes in an element.
-# Using :func:`.get_ply_wise_data` has the advantage that all the averaging and filtering
+# This example selects the maximum value over all spots for each node and then requests
+# the elemental location that implies averaging over all nodes in an element.
+# Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging and filtering
 # is done on the server side.
 if version_equal_or_later(server, "8.0"):
     elemental_max = get_ply_wise_data(
