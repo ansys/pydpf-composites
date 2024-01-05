@@ -5,35 +5,35 @@ import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Sym3x3TensorComponent
-from ansys.dpf.composites.ply_wise_data import ReductionStrategy, get_ply_wise_data
+from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.server_helpers import version_equal_or_later
 
 from .helper import get_basic_shell_files
 
 
-def get_reduced_value(all_spot_values: Sequence[float], reduction_strategy: ReductionStrategy):
-    if reduction_strategy == ReductionStrategy.AVG:
+def get_reduced_value(all_spot_values: Sequence[float], reduction_strategy: SpotReductionStrategy):
+    if reduction_strategy == SpotReductionStrategy.AVG:
         return sum(all_spot_values) / len(all_spot_values)
-    if reduction_strategy == ReductionStrategy.MIN:
+    if reduction_strategy == SpotReductionStrategy.MIN:
         return min(all_spot_values)
-    if reduction_strategy == ReductionStrategy.MAX:
+    if reduction_strategy == SpotReductionStrategy.MAX:
         return max(all_spot_values)
-    if reduction_strategy == ReductionStrategy.BOT:
+    if reduction_strategy == SpotReductionStrategy.BOT:
         return all_spot_values[0]
-    if reduction_strategy == ReductionStrategy.MID:
+    if reduction_strategy == SpotReductionStrategy.MID:
         return all_spot_values[2]
-    if reduction_strategy == ReductionStrategy.TOP:
+    if reduction_strategy == SpotReductionStrategy.TOP:
         return all_spot_values[1]
     raise ValueError(f"Unknown reduction strategy: {reduction_strategy}")
 
 
 ALL_REDUCTION_STRATEGIES = [
-    ReductionStrategy.AVG,
-    ReductionStrategy.MIN,
-    ReductionStrategy.MAX,
-    ReductionStrategy.BOT,
-    ReductionStrategy.MID,
-    ReductionStrategy.TOP,
+    SpotReductionStrategy.AVG,
+    SpotReductionStrategy.MIN,
+    SpotReductionStrategy.MAX,
+    SpotReductionStrategy.BOT,
+    SpotReductionStrategy.MID,
+    SpotReductionStrategy.TOP,
 ]
 
 ALL_TENSOR_COMPONENTS = [
@@ -82,7 +82,7 @@ def test_get_ply_wise_data(dpf_server):
                 first_ply,
                 composite_model.get_mesh(),
                 component=component,
-                reduction_strategy=reduction_strategy,
+                spot_reduction_strategy=reduction_strategy,
             )
 
             assert len(elemental_nodal_data.scoping.ids) == 4
@@ -99,7 +99,7 @@ def test_get_ply_wise_data(dpf_server):
                 first_ply,
                 composite_model.get_mesh(),
                 component=component,
-                reduction_strategy=reduction_strategy,
+                spot_reduction_strategy=reduction_strategy,
                 requested_location=locations.elemental,
             )
             assert len(elemental_data.scoping.ids) == 4
@@ -116,7 +116,7 @@ def test_get_ply_wise_data(dpf_server):
                 first_ply,
                 composite_model.get_mesh(),
                 component=component,
-                reduction_strategy=reduction_strategy,
+                spot_reduction_strategy=reduction_strategy,
                 requested_location=locations.nodal,
             )
             assert len(nodal_data.scoping.ids) == 9

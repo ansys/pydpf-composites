@@ -6,10 +6,10 @@ from typing import Union
 from ansys.dpf.core import Field, MeshedRegion, Operator, operators
 from ansys.dpf.gate.common import locations
 
-__all__ = ("ReductionStrategy", "get_ply_wise_data")
+__all__ = ("SpotReductionStrategy", "get_ply_wise_data")
 
 
-class ReductionStrategy(Enum):
+class SpotReductionStrategy(Enum):
     """Provides the strategy for getting from spot values (BOT, MID, TOP) to a single value."""
 
     MIN = "MIN"
@@ -24,7 +24,7 @@ def get_ply_wise_data(
     field: Field,
     ply_name: str,
     mesh: MeshedRegion,
-    reduction_strategy: ReductionStrategy = ReductionStrategy.AVG,
+    spot_reduction_strategy: SpotReductionStrategy = SpotReductionStrategy.AVG,
     requested_location: str = locations.elemental_nodal,
     component: Union[IntEnum, int] = 0,
 ) -> Field:
@@ -39,12 +39,15 @@ def get_ply_wise_data(
     mesh :
         Meshed region that needs to be enriched with composite information.
         Use the ``CompositeModel.get_mesh()`` method to get the meshed region.
-    reduction_strategy :
+    spot_reduction_strategy :
         Reduction strategy for getting from spot values (BOT, MID, TOP) to a single value
         per corner node and layer. The default is ``AVG``.
     requested_location :
-        Location of the output field. The default is ``"elemental_nodal"``. Options are
-        ``"elemental"``, ``"elemental_nodal"``, and ``"nodal"``.
+        Location of the output field. Important: The function always averages nodal values
+        for ``"elemental"`` or ``"nodal"`` locations,
+        irrespective of ``"spot_reduction_strategy"``.
+        Options are ``"elemental"``, ``"elemental_nodal"``, and ``"nodal"``.
+        The default is ``"elemental_nodal"``.
     component :
         Component to extract data from. The default is ``0``.
     """
@@ -59,7 +62,7 @@ def get_ply_wise_data(
     filter_ply_data_op.inputs.field(single_component_field)
     filter_ply_data_op.inputs.mesh(mesh)
     filter_ply_data_op.inputs.ply_id(ply_name)
-    filter_ply_data_op.inputs.reduction_strategy(reduction_strategy.value)
+    filter_ply_data_op.inputs.reduction_strategy(spot_reduction_strategy.value)
     elemental_nodal_data = filter_ply_data_op.outputs.field()
 
     if requested_location == locations.elemental_nodal:

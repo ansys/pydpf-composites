@@ -6,7 +6,7 @@ Ply wise data
 .. autosummary::
     :toctree: _autosummary
 
-    ReductionStrategy
+    SpotReductionStrategy
     get_ply_wise_data
 
 
