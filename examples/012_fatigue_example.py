@@ -118,7 +118,7 @@ plt.ylabel("Stress range (MPa)")
 # Damage evaluation
 # ~~~~~~~~~~~~~~~~~
 # Stress S11 at time 1 and layer P1L1__ModelingPly.2 are read
-# for each load range and its damage is evaluated, using the dummy S-N curve
+# for each load range. Its damage is evaluated using the dummy S-N curve.
 #
 
 damage_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
