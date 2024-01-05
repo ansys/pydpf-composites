@@ -5,7 +5,7 @@ Evaluate fatigue for a composite plate
 --------------------------------------
 
 This example shows how to evaluate fatigue for a flat plate.
-It shows how PyPDF Composites can be used to select specific layers and define a custom
+It shows how you can use PyPDF Composites to select specific layers and define a custom
 combination method. For this example, the custom combination method is stress in fibre
 direction.
 
