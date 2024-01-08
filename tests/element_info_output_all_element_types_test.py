@@ -12,6 +12,7 @@ from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_dpf_material_ids,
 )
+from ansys.dpf.composites.server_helpers import upload_file_to_unique_folder
 
 
 @dataclass(frozen=True)
@@ -112,7 +113,7 @@ def test_all_element_types(dpf_server):
     def check_output(rst_file, expected_output):
         rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
         if not dpf_server.local_server:
-            rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+            rst_path = upload_file_to_unique_folder(rst_path, server=dpf_server)
 
         rst_data_source = dpf.DataSources(rst_path)
 
@@ -189,7 +190,7 @@ def test_document_error_cases_indices(dpf_server):
         rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
 
         if not dpf_server.local_server:
-            rst_path = dpf.upload_file_in_tmp_folder(rst_path, server=dpf_server)
+            rst_path = upload_file_to_unique_folder(rst_path, server=dpf_server)
 
         rst_data_source = dpf.DataSources(rst_path)
 
