@@ -13,8 +13,8 @@ from ..data_sources import (
 )
 
 
-def upload_file_to_unique_folder(path_on_client: _PATH, server: BaseServer) -> str:
-    """Upload file to a unique folder on the server.
+def upload_file_to_unique_tmp_folder(path_on_client: _PATH, server: BaseServer) -> str:
+    """Upload file to a unique temporary folder on the server.
 
     Parameters
     ----------
@@ -27,8 +27,11 @@ def upload_file_to_unique_folder(path_on_client: _PATH, server: BaseServer) -> s
         dpf.make_tmp_dir_server()
     )  # Returns the dpf tmp folder (only one per server)
     path_on_client = pathlib.Path(path_on_client)
-    tmp_dir_unique = tmp_dir / str(uuid.uuid4())
-    path_on_server = (tmp_dir_unique / path_on_client.name).as_posix()
+    if server.os == "posix":
+        path_on_server = str(tmp_dir) + "/" + str(uuid.uuid4()) + "/" + path_on_client.name
+    else:
+        path_on_server = str(tmp_dir) + "\\" + str(uuid.uuid4()) + "\\" + path_on_client.name
+
     uploaded_path = cast(str, dpf.upload_file(path_on_client, path_on_server, server=server))
     if uploaded_path == "":
         raise RuntimeError(
@@ -54,7 +57,7 @@ def upload_short_fiber_composite_files_to_server(
         return data_files
 
     def upload(filename: _PATH) -> str:
-        return upload_file_to_unique_folder(filename, server=server)
+        return upload_file_to_unique_tmp_folder(filename, server=server)
 
     return ShortFiberCompositesFiles(
         rst=[upload(filename) for filename in data_files.rst],
@@ -82,7 +85,7 @@ def upload_continuous_fiber_composite_files_to_server(
         return data_files
 
     def upload(filename: _PATH) -> _PATH:
-        return upload_file_to_unique_folder(filename, server=server)
+        return upload_file_to_unique_tmp_folder(filename, server=server)
 
     all_composite_files = {}
     for key, composite_files_by_scope in data_files.composite.items():

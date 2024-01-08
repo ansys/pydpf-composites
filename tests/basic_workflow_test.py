@@ -4,7 +4,7 @@ import pathlib
 import ansys.dpf.core as dpf
 import pytest
 
-from ansys.dpf.composites.server_helpers import upload_file_to_unique_folder
+from ansys.dpf.composites.server_helpers import upload_file_to_unique_tmp_folder
 
 from .utils import get_basic_combined_failure_criterion
 
@@ -22,10 +22,12 @@ def test_basic_workflow(dpf_server, distributed_rst):
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
     if not dpf_server.local_server:
-        rst_paths = [upload_file_to_unique_folder(path, server=dpf_server) for path in rst_paths]
+        rst_paths = [
+            upload_file_to_unique_tmp_folder(path, server=dpf_server) for path in rst_paths
+        ]
 
-        h5_path = upload_file_to_unique_folder(h5_path, server=dpf_server)
-        material_path = upload_file_to_unique_folder(material_path, server=dpf_server)
+        h5_path = upload_file_to_unique_tmp_folder(h5_path, server=dpf_server)
+        material_path = upload_file_to_unique_tmp_folder(material_path, server=dpf_server)
 
     eng_data_path = material_path
     composite_definitions_path = h5_path

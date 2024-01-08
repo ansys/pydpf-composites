@@ -48,15 +48,20 @@ def test_section_definitions_from_multiple_sources(dpf_server):
         files, server=dpf_server, default_unit_system=unit_systems.solver_nmm
     )
 
+    ud_mat_id = composite_model.material_names["Epoxy Carbon UD (230 GPa) Wet"]
+    woven_mat_id = composite_model.material_names["Epoxy Carbon Woven (230 GPa) Prepreg"]
     element_1 = composite_model.get_element_info(1)
     assert element_1.is_layered
-    assert all(element_1.dpf_material_ids == np.array([2, 2, 1, 1, 2, 2]))
+    assert all(
+        element_1.dpf_material_ids
+        == np.array([ud_mat_id, ud_mat_id, woven_mat_id, woven_mat_id, ud_mat_id, ud_mat_id])
+    )
     element_2 = composite_model.get_element_info(2)
     assert element_2.is_layered
-    assert all(element_2.dpf_material_ids == np.array([1, 2, 1]))
+    assert all(element_2.dpf_material_ids == np.array([woven_mat_id, ud_mat_id, woven_mat_id]))
     element_3 = composite_model.get_element_info(3)
     assert element_3.is_layered
-    assert all(element_3.dpf_material_ids == np.array([2]))
+    assert all(element_3.dpf_material_ids == np.array([ud_mat_id]))
 
     combined_failure_criterion = CombinedFailureCriterion(
         "max stress", failure_criteria=[MaxStressCriterion()]
