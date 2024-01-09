@@ -7,7 +7,7 @@ Filter result data by different criteria
 This example shows how data filtering can be used for custom postprocessing of
 layered composites. You can filter strains and stresses by material, layer, or
 analysis ply. Filtering by analysis ply is implemented on the server side and
-exposed with the function :func:`.get_ply_wise_data`. In this case the data is
+exposed with the :func:`.get_ply_wise_data` function. In this case, the data is
 filtered (and reduced) on the server side and only the resulting field is returned
 to the client. This is the recommended way to filter data if possible.
 For more complex filtering, the data is transferred to the client side and filtered
@@ -68,14 +68,14 @@ all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 all_ply_names
 
 # %%
-# The easiest way to filter data by analysis ply is to use the function :func:`.get_ply_wise_data`.
-# This function supports different reduction strategies such as computing the average
-# or maximum/minimum over the spot locations.
+# The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
+# This function supports different reduction strategies such as computing the average,
+# maximum, or minimum over the spot locations.
 # It also supports selecting a specific spot (TOP, MID, BOT) directly.
-# In this example we select the maximum value over all spots for each node and then request
-# the elemental location which implies averaging over all nodes in an element.
-# Using :func:`.get_ply_wise_data` has the advantage that all the averaging and filtering
-# is done on the server side.
+# This example selects the maximum value over all spots for each node and then requests
+# the elemental location, which implies averaging over all nodes in an element.
+# Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
+#  and filtering is done on the server side.
 if version_equal_or_later(server, "8.0"):
     elemental_max = get_ply_wise_data(
         field=stress_field,
@@ -94,7 +94,7 @@ if version_equal_or_later(server, "8.0"):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This example shows how to filter data by layer, spot, and node using the generic filtering on
 # the client side.
-# Here we plot stress values in the material direction for the first node and top spot.
+# This code plots stress values in the material direction for the first node and top spot.
 
 # %%
 # Get element information for all elements and show the first one as an example.
