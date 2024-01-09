@@ -10,7 +10,7 @@ __all__ = ("ReductionStrategy", "get_ply_wise_data")
 
 
 class ReductionStrategy(Enum):
-    """Provides the reduction strategy for getting from spot values (BOT, MID, TOP) to a single value."""
+    """Provides the reduction strategy for getting from spot values to a single value."""
 
     MIN = "MIN"
     MAX = "MAX"
