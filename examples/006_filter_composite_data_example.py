@@ -75,7 +75,7 @@ all_ply_names
 # This example selects the maximum value over all spots for each node and then requests
 # the elemental location, which implies averaging over all nodes in an element.
 # Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
-#  and filtering is done on the server side.
+# and filtering is done on the server side.
 if version_equal_or_later(server, "8.0"):
     elemental_max = get_ply_wise_data(
         field=stress_field,
