@@ -79,8 +79,9 @@ component = Sym3x3TensorComponent.TENSOR11
 # can be directly done on the load time series to get the load ranges.
 # No mean stress correction is applied.
 #
-load_factor_time_series = np.random.normal(-1, 2.5, size=100)
-x = np.linspace(1, 100, 100)
+number_of_times = 100
+load_factor_time_series = np.random.normal(-1, 2.5, size=number_of_times)
+x = np.linspace(1, number_of_times, number_of_times)
 plt.xlabel("Load Index")
 plt.ylabel("Load Factor")
 plt.plot(x, load_factor_time_series, color="red")
