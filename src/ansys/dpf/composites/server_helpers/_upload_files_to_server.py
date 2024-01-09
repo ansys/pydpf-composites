@@ -19,9 +19,9 @@ def upload_file_to_unique_tmp_folder(path_on_client: _PATH, server: BaseServer) 
     Parameters
     ----------
     path_on_client:
-        file path on the client side to upload
+        Client side path of the file which should be uploaded to the server.
     server:
-        Dpf server
+        DPF server.
     """
     tmp_dir = pathlib.Path(
         dpf.make_tmp_dir_server()
@@ -36,7 +36,7 @@ def upload_file_to_unique_tmp_folder(path_on_client: _PATH, server: BaseServer) 
     if uploaded_path == "":
         raise RuntimeError(
             f"Failed to upload file {path_on_client} to server. "
-            f"Attempted to upload to {path_on_server}"
+            f"Attempted to upload to {path_on_server}."
         )
     return uploaded_path
 
