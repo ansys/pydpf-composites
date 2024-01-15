@@ -219,8 +219,8 @@ def get_dpf_material_id_by_analyis_ply_map(
         DPF data source with rst file or streams_provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
 
-    Note
-    ----
+    Notes
+    -----
     Cache the output because the computation can be performance-critical.
     """
     warn(
