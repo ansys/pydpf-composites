@@ -31,7 +31,7 @@ from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
-from ansys.dpf.composites.ply_wise_data import ReductionStrategy, get_ply_wise_data
+from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
@@ -82,7 +82,7 @@ if version_equal_or_later(server, "8.0"):
         ply_name="P1L1__ud_patch ns1",
         mesh=composite_model.get_mesh(),
         component=Sym3x3TensorComponent.TENSOR11,
-        reduction_strategy=ReductionStrategy.MAX,
+        spot_reduction_strategy=SpotReductionStrategy.MAX,
         requested_location=dpf.locations.elemental,
     )
 
