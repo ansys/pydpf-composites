@@ -1,0 +1,6 @@
+MAX
+===
+
+.. currentmodule:: ansys.dpf.composites.ply_wise_data
+
+.. autoattribute:: ReductionStrategy.MAX

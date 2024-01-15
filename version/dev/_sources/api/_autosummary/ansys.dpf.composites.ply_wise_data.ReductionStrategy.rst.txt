@@ -1,0 +1,31 @@
+﻿.. vale off
+
+ReductionStrategy
+=================
+
+.. currentmodule:: ansys.dpf.composites.ply_wise_data
+
+.. autoclass:: ReductionStrategy
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ReductionStrategy.MIN
+      ReductionStrategy.MAX
+      ReductionStrategy.AVG
+      ReductionStrategy.BOT
+      ReductionStrategy.MID
+      ReductionStrategy.TOP
+   
+   
+
+.. vale on
