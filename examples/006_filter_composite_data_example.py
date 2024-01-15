@@ -4,7 +4,7 @@
 Filter result data by different criteria
 ----------------------------------------
 
-This example shows how you can use data filtering for custom postprocessing of
+This example shows how data filtering can be used for custom postprocessing of
 layered composites. You can filter strains and stresses by material, layer, or
 analysis ply. Filtering by analysis ply is implemented on the server side and
 exposed with the :func:`.get_ply_wise_data` function. In this case, the data is
@@ -82,7 +82,7 @@ if version_equal_or_later(server, "8.0"):
         ply_name="P1L1__ud_patch ns1",
         mesh=composite_model.get_mesh(),
         component=Sym3x3TensorComponent.TENSOR11,
-        reduction_strategy=SpotReductionStrategy.MAX,
+        spot_reduction_strategy=SpotReductionStrategy.MAX,
         requested_location=dpf.locations.elemental,
     )
 
