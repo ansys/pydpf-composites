@@ -8,10 +8,10 @@ This example shows how you can use data filtering for custom postprocessing of
 layered composites. You can filter strains and stresses by material, layer, or
 analysis ply. Filtering by analysis ply is implemented on the server side and
 exposed with the :func:`.get_ply_wise_data` function. In this case, the data is
-filtered (and reduced) on the server side, and only the resulting field is returned
+filtered (and reduced) on the server side and only the resulting field is returned
 to the client. This is the recommended way to filter data if possible.
 For more complex filtering, the data is transferred to the client side and filtered
-using NumPy functionality.
+using numpy functionality.
 The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see :ref:`select_indices`.
@@ -69,20 +69,20 @@ all_ply_names
 
 # %%
 # The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
-# This function supports different reduction strategies such as computing the average
-# or maximum/minimum over the spot locations.
+# This function supports different reduction strategies such as computing the average,
+# maximum, or minimum over the spot locations.
 # It also supports selecting a specific spot (TOP, MID, BOT) directly.
 # This example selects the maximum value over all spots for each node and then requests
-# the elemental location that implies averaging over all nodes in an element.
-# Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging and
-# filtering is done on the server side.
+# the elemental location, which implies averaging over all nodes in an element.
+# Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
+# and filtering is done on the server side.
 if version_equal_or_later(server, "8.0"):
     elemental_max = get_ply_wise_data(
         field=stress_field,
         ply_name="P1L1__ud_patch ns1",
         mesh=composite_model.get_mesh(),
         component=Sym3x3TensorComponent.TENSOR11,
-        spot_reduction_strategy=SpotReductionStrategy.MAX,
+        reduction_strategy=SpotReductionStrategy.MAX,
         requested_location=dpf.locations.elemental,
     )
 
@@ -94,7 +94,7 @@ if version_equal_or_later(server, "8.0"):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This example shows how to filter data by layer, spot, and node using the generic filtering on
 # the client side.
-# It plots stress values in the material direction for the first node and top spot.
+# This code plots stress values in the material direction for the first node and top spot.
 
 # %%
 # Get element information for all elements and show the first one as an example.
