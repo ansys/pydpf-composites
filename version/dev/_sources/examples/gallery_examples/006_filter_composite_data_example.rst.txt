@@ -55,7 +55,7 @@ Import dependencies.
     from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
     from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
-    from ansys.dpf.composites.ply_wise_data import ReductionStrategy, get_ply_wise_data
+    from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
     from ansys.dpf.composites.select_indices import (
         get_selected_indices,
         get_selected_indices_by_analysis_ply,
@@ -178,7 +178,7 @@ and filtering is done on the server side.
             ply_name="P1L1__ud_patch ns1",
             mesh=composite_model.get_mesh(),
             component=Sym3x3TensorComponent.TENSOR11,
-            reduction_strategy=ReductionStrategy.MAX,
+            spot_reduction_strategy=SpotReductionStrategy.MAX,
             requested_location=dpf.locations.elemental,
         )
 
@@ -450,7 +450,7 @@ in the material direction in this ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.720 seconds)
+   **Total running time of the script:** ( 0 minutes  5.258 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
