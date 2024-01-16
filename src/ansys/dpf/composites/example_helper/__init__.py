@@ -35,6 +35,7 @@ from ..data_sources import (
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
+from ..server_helpers import upload_file_to_unique_tmp_folder
 
 EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
@@ -140,6 +141,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "fatigue": _ContinuousFiberExampleLocation(
+        directory="fatigue",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
@@ -167,7 +178,7 @@ def _download_and_upload_file(
     urllib.request.urlretrieve(file_url, local_path)
     if server.local_server:
         return local_path
-    return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
+    return upload_file_to_unique_tmp_folder(local_path, server=server)
 
 
 def get_short_fiber_example_files(
