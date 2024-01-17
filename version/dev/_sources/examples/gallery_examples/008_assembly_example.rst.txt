@@ -28,7 +28,7 @@ The assembly consists of a shell and solid composite model. The
 :class:`Composite Model <.CompositeModel>` class is used to access
 the data of the different parts.
 
-.. GENERATED FROM PYTHON SOURCE LINES 14-20
+.. GENERATED FROM PYTHON SOURCE LINES 36-42
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -37,7 +37,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-31
+.. GENERATED FROM PYTHON SOURCE LINES 42-53
 
 .. code-block:: default
 
@@ -59,11 +59,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-33
+.. GENERATED FROM PYTHON SOURCE LINES 54-55
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-36
+.. GENERATED FROM PYTHON SOURCE LINES 55-58
 
 .. code-block:: default
 
@@ -77,13 +77,13 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-40
+.. GENERATED FROM PYTHON SOURCE LINES 59-62
 
 Configure combined failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configure the combined failure crition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-45
+.. GENERATED FROM PYTHON SOURCE LINES 62-67
 
 .. code-block:: default
 
@@ -99,13 +99,13 @@ Configure the combined failure crition.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-49
+.. GENERATED FROM PYTHON SOURCE LINES 68-71
 
 Set up model
 ~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-51
+.. GENERATED FROM PYTHON SOURCE LINES 71-73
 
 .. code-block:: default
 
@@ -118,13 +118,13 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-55
+.. GENERATED FROM PYTHON SOURCE LINES 74-77
 
 Plot IRF
 ~~~~~~~~
 Plot the maximum IRF per (solid) element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-59
+.. GENERATED FROM PYTHON SOURCE LINES 77-81
 
 .. code-block:: default
 
@@ -166,13 +166,13 @@ Plot the maximum IRF per (solid) element.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-63
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
 
 Plot IRF on the reference surface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Plot the maximum IRF on the reference surface
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-70
+.. GENERATED FROM PYTHON SOURCE LINES 85-92
 
 .. code-block:: default
 
@@ -217,7 +217,7 @@ Plot the maximum IRF on the reference surface
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-78
+.. GENERATED FROM PYTHON SOURCE LINES 93-100
 
 Get element information
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,7 +227,7 @@ the lay-up properties must be queried with the correct composite definition labe
 following gets element information for all layered elements.
 For DPF Server versions 7.0 and later, element information can be retrieved directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-93
+.. GENERATED FROM PYTHON SOURCE LINES 100-115
 
 .. code-block:: default
 
@@ -256,7 +256,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.498 seconds)
+   **Total running time of the script:** ( 0 minutes  11.384 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:

@@ -37,7 +37,7 @@ operators that are needed to evaluate composite failure criteria.
     Additionally, :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`
     shows how helper functions can be used to obtain composite result data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-31
+.. GENERATED FROM PYTHON SOURCE LINES 46-53
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -47,7 +47,7 @@ preparing files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-49
+.. GENERATED FROM PYTHON SOURCE LINES 53-71
 
 .. code-block:: default
 
@@ -76,11 +76,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-51
+.. GENERATED FROM PYTHON SOURCE LINES 72-73
 
 Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-67
+.. GENERATED FROM PYTHON SOURCE LINES 73-89
 
 .. code-block:: default
 
@@ -107,11 +107,11 @@ Configure the combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-69
+.. GENERATED FROM PYTHON SOURCE LINES 90-91
 
 Start a DPF server and prepare files
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-74
+.. GENERATED FROM PYTHON SOURCE LINES 91-96
 
 .. code-block:: default
 
@@ -127,13 +127,13 @@ Start a DPF server and prepare files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-78
+.. GENERATED FROM PYTHON SOURCE LINES 97-100
 
 Initialize DPF model and data sources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Initialize the DPF model and the data sources.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-91
+.. GENERATED FROM PYTHON SOURCE LINES 100-113
 
 .. code-block:: default
 
@@ -157,13 +157,13 @@ Initialize the DPF model and the data sources.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-95
+.. GENERATED FROM PYTHON SOURCE LINES 114-117
 
 Set up providers
 ~~~~~~~~~~~~~~~~
 Set up the mesh provider.
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-97
+.. GENERATED FROM PYTHON SOURCE LINES 117-119
 
 .. code-block:: default
 
@@ -176,14 +176,14 @@ Set up the mesh provider.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-102
+.. GENERATED FROM PYTHON SOURCE LINES 120-124
 
 Set up the material support provider.
 The material support provider takes care of mapping the materials in the RST file to
 the materials in the composite definitions.
 The material support contains all materials from the RST file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-108
+.. GENERATED FROM PYTHON SOURCE LINES 124-130
 
 .. code-block:: default
 
@@ -200,12 +200,12 @@ The material support contains all materials from the RST file.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-111
+.. GENERATED FROM PYTHON SOURCE LINES 131-133
 
 Set up the result information provider, which gets
 the unit system from the RST file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-114
+.. GENERATED FROM PYTHON SOURCE LINES 133-136
 
 .. code-block:: default
 
@@ -219,14 +219,14 @@ the unit system from the RST file.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-119
+.. GENERATED FROM PYTHON SOURCE LINES 137-141
 
 Set up the material provider
 The material provider combines the material support in the engineering data
 XML file and the unit system. Its output can be used to evaluate material
 properties.
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-126
+.. GENERATED FROM PYTHON SOURCE LINES 141-148
 
 .. code-block:: default
 
@@ -244,12 +244,12 @@ properties.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-129
+.. GENERATED FROM PYTHON SOURCE LINES 149-151
 
 Set up the lay-up provider, which reads the composite definition file
 and enriches the mesh with the composite lay-up information.
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-138
+.. GENERATED FROM PYTHON SOURCE LINES 151-160
 
 .. code-block:: default
 
@@ -269,7 +269,7 @@ and enriches the mesh with the composite lay-up information.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-144
+.. GENERATED FROM PYTHON SOURCE LINES 161-166
 
 Set up result operators
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -277,7 +277,7 @@ Set up result operators for strains and stresses.
 ``rotate_to_global`` is ``False`` because the postprocessing engine expects the
 results to be in the element coordinate system (material coordinate system).
 
-.. GENERATED FROM PYTHON SOURCE LINES 144-152
+.. GENERATED FROM PYTHON SOURCE LINES 166-174
 
 .. code-block:: default
 
@@ -296,7 +296,7 @@ results to be in the element coordinate system (material coordinate system).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-158
+.. GENERATED FROM PYTHON SOURCE LINES 175-180
 
 Set up failure evaluator
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -304,7 +304,7 @@ Set up the failure evaluator, which combines the results and
 evaluates all failure criteria. The output contains the
 maximum failure criteria for each integration point.
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-165
+.. GENERATED FROM PYTHON SOURCE LINES 180-187
 
 .. code-block:: default
 
@@ -322,14 +322,14 @@ maximum failure criteria for each integration point.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-170
+.. GENERATED FROM PYTHON SOURCE LINES 188-192
 
 Compute and plot failure criteria
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Use the output of the multiple failure criteria operator to
 compute the minimum and maximum failure criteria for each element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 170-177
+.. GENERATED FROM PYTHON SOURCE LINES 192-199
 
 .. code-block:: default
 
@@ -347,12 +347,12 @@ compute the minimum and maximum failure criteria for each element.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-180
+.. GENERATED FROM PYTHON SOURCE LINES 200-202
 
 Plot the maximum and minimum values.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-182
+.. GENERATED FROM PYTHON SOURCE LINES 202-204
 
 .. code-block:: default
 
@@ -395,7 +395,7 @@ Plot the maximum and minimum values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.196 seconds)
+   **Total running time of the script:** ( 0 minutes  14.166 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_099_dpf_composite_failure_workflow.py:

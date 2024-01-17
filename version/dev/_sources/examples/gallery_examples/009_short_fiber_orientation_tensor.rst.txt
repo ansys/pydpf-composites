@@ -33,7 +33,7 @@ refer to the Short Fiber Composites help.
 
     To run this example you first need to install the SciPy package.
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-25
+.. GENERATED FROM PYTHON SOURCE LINES 41-47
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -42,7 +42,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-34
+.. GENERATED FROM PYTHON SOURCE LINES 47-56
 
 .. code-block:: default
 
@@ -62,7 +62,7 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-40
+.. GENERATED FROM PYTHON SOURCE LINES 57-62
 
 Start a DPF server and copy the example files into the current working directory.
 These files are needed:
@@ -70,7 +70,7 @@ These files are needed:
 * Mechanical APDL result (RST) file containing the simulation results
 * Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-43
+.. GENERATED FROM PYTHON SOURCE LINES 62-65
 
 .. code-block:: default
 
@@ -84,13 +84,13 @@ These files are needed:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-47
+.. GENERATED FROM PYTHON SOURCE LINES 66-69
 
 Set up data sources
 ~~~~~~~~~~~~~~~~~~~
 Set up the data sources.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-49
+.. GENERATED FROM PYTHON SOURCE LINES 69-71
 
 .. code-block:: default
 
@@ -103,13 +103,13 @@ Set up the data sources.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-53
+.. GENERATED FROM PYTHON SOURCE LINES 72-75
 
 Initialize DPF model
 ~~~~~~~~~~~~~~~~~~~~
 Initialize the DPF model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-56
+.. GENERATED FROM PYTHON SOURCE LINES 75-78
 
 .. code-block:: default
 
@@ -123,12 +123,12 @@ Initialize the DPF model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-59
+.. GENERATED FROM PYTHON SOURCE LINES 79-81
 
 Should your mesh contain both solid and shell elements, for visualization purposes
 it can be useful to scope the mesh to the solid ones.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-69
+.. GENERATED FROM PYTHON SOURCE LINES 81-91
 
 .. code-block:: default
 
@@ -149,14 +149,14 @@ it can be useful to scope the mesh to the solid ones.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-74
+.. GENERATED FROM PYTHON SOURCE LINES 92-96
 
 Plot input data
 ~~~~~~~~~~~~~~~
 Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-88
+.. GENERATED FROM PYTHON SOURCE LINES 96-110
 
 .. code-block:: default
 
@@ -208,7 +208,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-93
+.. GENERATED FROM PYTHON SOURCE LINES 111-115
 
 .. code-block:: default
 
@@ -250,13 +250,13 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-97
+.. GENERATED FROM PYTHON SOURCE LINES 116-119
 
 Compute results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Reconstruct the fiber orientation tensor in the global coordinate system.
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-129
+.. GENERATED FROM PYTHON SOURCE LINES 119-151
 
 .. code-block:: default
 
@@ -299,13 +299,13 @@ Reconstruct the fiber orientation tensor in the global coordinate system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-133
+.. GENERATED FROM PYTHON SOURCE LINES 152-155
 
 Plot results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Plot some components of the fiber orientation tensor.
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-140
+.. GENERATED FROM PYTHON SOURCE LINES 155-162
 
 .. code-block:: default
 
@@ -350,7 +350,7 @@ Plot some components of the fiber orientation tensor.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 141-143
+.. GENERATED FROM PYTHON SOURCE LINES 163-165
 
 .. code-block:: default
 
@@ -390,7 +390,7 @@ Plot some components of the fiber orientation tensor.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 144-145
+.. GENERATED FROM PYTHON SOURCE LINES 166-167
 
 .. code-block:: default
 
@@ -432,7 +432,7 @@ Plot some components of the fiber orientation tensor.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.106 seconds)
+   **Total running time of the script:** ( 0 minutes  6.804 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:

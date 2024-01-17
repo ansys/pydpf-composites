@@ -37,7 +37,7 @@ Be aware that the fatpack package is not developed by Ansys, so it is the respon
 of the user to verify that it works as expected. For more information, see the
 `fatpack package <https://pypi.org/project/fatpack/>`_,
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-31
+.. GENERATED FROM PYTHON SOURCE LINES 47-53
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -46,7 +46,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries and numpy, matplotlib and fatpack
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-43
+.. GENERATED FROM PYTHON SOURCE LINES 53-65
 
 .. code-block:: default
 
@@ -69,11 +69,11 @@ Load Ansys libraries and numpy, matplotlib and fatpack
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-45
+.. GENERATED FROM PYTHON SOURCE LINES 66-67
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
+.. GENERATED FROM PYTHON SOURCE LINES 67-70
 
 .. code-block:: default
 
@@ -87,11 +87,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
+.. GENERATED FROM PYTHON SOURCE LINES 71-72
 
 Create a composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-52
+.. GENERATED FROM PYTHON SOURCE LINES 72-74
 
 .. code-block:: default
 
@@ -104,17 +104,17 @@ Create a composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-56
+.. GENERATED FROM PYTHON SOURCE LINES 75-78
 
 Read stresses and define a specific layer and a component of stress tensor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-59
+.. GENERATED FROM PYTHON SOURCE LINES 80-81
 
 Read stresses
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-64
+.. GENERATED FROM PYTHON SOURCE LINES 81-86
 
 .. code-block:: default
 
@@ -130,11 +130,11 @@ Read stresses
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-66
+.. GENERATED FROM PYTHON SOURCE LINES 87-88
 
 Select layer P1L1__ModelingPly.2
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-70
+.. GENERATED FROM PYTHON SOURCE LINES 88-92
 
 .. code-block:: default
 
@@ -149,11 +149,11 @@ Select layer P1L1__ModelingPly.2
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-72
+.. GENERATED FROM PYTHON SOURCE LINES 93-94
 
 Select Sigma11 as the combination method
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-75
+.. GENERATED FROM PYTHON SOURCE LINES 94-97
 
 .. code-block:: default
 
@@ -167,7 +167,7 @@ Select Sigma11 as the combination method
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-82
+.. GENERATED FROM PYTHON SOURCE LINES 98-104
 
 Load time series and apply rainflow counting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,7 +176,7 @@ can be directly done on the load time series to get the load ranges.
 No mean stress correction is applied.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-90
+.. GENERATED FROM PYTHON SOURCE LINES 104-112
 
 .. code-block:: default
 
@@ -202,15 +202,15 @@ No mean stress correction is applied.
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7fa12e0240a0>]
+    [<matplotlib.lines.Line2D object at 0x7fd558d59910>]
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-92
+.. GENERATED FROM PYTHON SOURCE LINES 113-114
 
 Fatpack package is used for doing the rainflow counting
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-95
+.. GENERATED FROM PYTHON SOURCE LINES 114-117
 
 .. code-block:: default
 
@@ -224,7 +224,7 @@ Fatpack package is used for doing the rainflow counting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-102
+.. GENERATED FROM PYTHON SOURCE LINES 118-124
 
 S-N curve
 ~~~~~~~~~
@@ -233,7 +233,7 @@ experimental data. Sc is chosen to be twice the orthotropic stress limit in the 
 and Nc is set to 1.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-118
+.. GENERATED FROM PYTHON SOURCE LINES 124-140
 
 .. code-block:: default
 
@@ -271,7 +271,7 @@ and Nc is set to 1.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-124
+.. GENERATED FROM PYTHON SOURCE LINES 141-146
 
 Damage evaluation
 ~~~~~~~~~~~~~~~~~
@@ -279,7 +279,7 @@ Stress S11 at time 1 and layer P1L1__ModelingPly.2 are read
 for each load range. Its damage is evaluated using the dummy S-N curve.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-144
+.. GENERATED FROM PYTHON SOURCE LINES 146-166
 
 .. code-block:: default
 
@@ -310,11 +310,11 @@ for each load range. Its damage is evaluated using the dummy S-N curve.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-146
+.. GENERATED FROM PYTHON SOURCE LINES 167-168
 
 Plot damage
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-149
+.. GENERATED FROM PYTHON SOURCE LINES 168-171
 
 .. code-block:: default
 
@@ -355,13 +355,13 @@ Plot damage
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-153
+.. GENERATED FROM PYTHON SOURCE LINES 172-175
 
 Identify the element with the maximum damage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-157
+.. GENERATED FROM PYTHON SOURCE LINES 175-179
 
 .. code-block:: default
 
@@ -378,7 +378,7 @@ Identify the element with the maximum damage
  .. code-block:: none
 
     The element with highest damage is 27.
-    The highest damage value is 2.6410390501317054e-06.
+    The highest damage value is 2.710592806559958e-07.
 
 
 
@@ -386,7 +386,7 @@ Identify the element with the maximum damage
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.212 seconds)
+   **Total running time of the script:** ( 0 minutes  6.487 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_012_fatigue_example.py:

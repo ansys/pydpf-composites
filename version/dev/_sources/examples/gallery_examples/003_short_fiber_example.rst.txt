@@ -39,7 +39,7 @@ a short glass fiber reinforced thermoplastic injection molded from both sides.
     The evaluation of failure criteria in short fiber workflows is a
     beta feature, introduced in Ansys 2021 R2.
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-31
+.. GENERATED FROM PYTHON SOURCE LINES 47-53
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -48,7 +48,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-38
+.. GENERATED FROM PYTHON SOURCE LINES 53-60
 
 .. code-block:: default
 
@@ -66,7 +66,7 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-45
+.. GENERATED FROM PYTHON SOURCE LINES 61-67
 
 Start a DPF server and copy the example files into the current working directory.
 These files are needed:
@@ -75,7 +75,7 @@ These files are needed:
 * Engineering Data (MATML) file containing the material properties of the composite
 * Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
+.. GENERATED FROM PYTHON SOURCE LINES 67-70
 
 .. code-block:: default
 
@@ -89,13 +89,13 @@ These files are needed:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-52
+.. GENERATED FROM PYTHON SOURCE LINES 71-74
 
 Set up data sources
 ~~~~~~~~~~~~~~~~~~~
 Set up the data sources.
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-54
+.. GENERATED FROM PYTHON SOURCE LINES 74-76
 
 .. code-block:: default
 
@@ -108,13 +108,13 @@ Set up the data sources.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-58
+.. GENERATED FROM PYTHON SOURCE LINES 77-80
 
 Initialize DPF model
 ~~~~~~~~~~~~~~~~~~~~
 Initialize the DPF model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-61
+.. GENERATED FROM PYTHON SOURCE LINES 80-83
 
 .. code-block:: default
 
@@ -128,14 +128,14 @@ Initialize the DPF model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-66
+.. GENERATED FROM PYTHON SOURCE LINES 84-88
 
 Plot results
 ~~~~~~~~~~~~
 Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-75
+.. GENERATED FROM PYTHON SOURCE LINES 88-97
 
 .. code-block:: default
 
@@ -182,7 +182,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-80
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
 
 .. code-block:: default
 
@@ -224,14 +224,14 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-85
+.. GENERATED FROM PYTHON SOURCE LINES 103-107
 
 Configure and evaluate
 ~~~~~~~~~~~~~~~~~~~~~~
 Configure the short fiber failure criterion evaluator and evaluate.
 Note that you can specify optional time and mesh scoping inputs.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-91
+.. GENERATED FROM PYTHON SOURCE LINES 107-113
 
 .. code-block:: default
 
@@ -248,13 +248,13 @@ Note that you can specify optional time and mesh scoping inputs.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-95
+.. GENERATED FROM PYTHON SOURCE LINES 114-117
 
 Compute and plot results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Compute and plot the maximum failure value per element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-106
+.. GENERATED FROM PYTHON SOURCE LINES 117-128
 
 .. code-block:: default
 
@@ -306,7 +306,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.844 seconds)
+   **Total running time of the script:** ( 0 minutes  5.069 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:

@@ -35,7 +35,7 @@ The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see :ref:`select_indices`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-27
+.. GENERATED FROM PYTHON SOURCE LINES 43-49
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -44,7 +44,7 @@ DPF server, and retrieving the example files.
 
 Import dependencies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-42
+.. GENERATED FROM PYTHON SOURCE LINES 49-64
 
 .. code-block:: default
 
@@ -70,11 +70,11 @@ Import dependencies.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-44
+.. GENERATED FROM PYTHON SOURCE LINES 65-66
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-47
+.. GENERATED FROM PYTHON SOURCE LINES 66-69
 
 .. code-block:: default
 
@@ -88,13 +88,13 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-51
+.. GENERATED FROM PYTHON SOURCE LINES 70-73
 
 Set up model
 ~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-53
+.. GENERATED FROM PYTHON SOURCE LINES 73-75
 
 .. code-block:: default
 
@@ -107,13 +107,13 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-57
+.. GENERATED FROM PYTHON SOURCE LINES 76-79
 
 Get result data
 ~~~~~~~~~~~~~~~
 Get the stress field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-61
+.. GENERATED FROM PYTHON SOURCE LINES 79-83
 
 .. code-block:: default
 
@@ -128,16 +128,16 @@ Get the stress field.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-64
+.. GENERATED FROM PYTHON SOURCE LINES 84-86
 
 Filter data by analysis ply
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-67
+.. GENERATED FROM PYTHON SOURCE LINES 88-89
 
 List all available analysis plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-70
+.. GENERATED FROM PYTHON SOURCE LINES 89-92
 
 .. code-block:: default
 
@@ -157,7 +157,7 @@ List all available analysis plies.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-79
+.. GENERATED FROM PYTHON SOURCE LINES 93-101
 
 The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
 This function supports different reduction strategies such as computing the average,
@@ -168,7 +168,7 @@ the elemental location, which implies averaging over all nodes in an element.
 Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
 and filtering is done on the server side.
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-92
+.. GENERATED FROM PYTHON SOURCE LINES 101-114
 
 .. code-block:: default
 
@@ -219,7 +219,7 @@ and filtering is done on the server side.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-98
+.. GENERATED FROM PYTHON SOURCE LINES 115-120
 
 Generic client-side filtering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,11 +227,11 @@ This example shows how to filter data by layer, spot, and node using the generic
 the client side.
 This code plots stress values in the material direction for the first node and top spot.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-101
+.. GENERATED FROM PYTHON SOURCE LINES 122-123
 
 Get element information for all elements and show the first one as an example.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-105
+.. GENERATED FROM PYTHON SOURCE LINES 123-127
 
 .. code-block:: default
 
@@ -252,11 +252,11 @@ Get element information for all elements and show the first one as an example.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-107
+.. GENERATED FROM PYTHON SOURCE LINES 128-129
 
 Get filtered data
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-125
+.. GENERATED FROM PYTHON SOURCE LINES 129-147
 
 .. code-block:: default
 
@@ -312,14 +312,14 @@ Get filtered data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-130
+.. GENERATED FROM PYTHON SOURCE LINES 148-152
 
 Filter by material
 ~~~~~~~~~~~~~~~~~~~~~
 Loop over all elements and get the maximum stress in the material direction
 for all plies that have a specific UD material.
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-152
+.. GENERATED FROM PYTHON SOURCE LINES 152-174
 
 .. code-block:: default
 
@@ -379,14 +379,14 @@ for all plies that have a specific UD material.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-157
+.. GENERATED FROM PYTHON SOURCE LINES 175-179
 
 Filter by analysis ply on the client side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Loop over all elements that contain a given ply and plot the maximum stress value
 in the material direction in this ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-180
+.. GENERATED FROM PYTHON SOURCE LINES 179-202
 
 .. code-block:: default
 
@@ -450,7 +450,7 @@ in the material direction in this ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.875 seconds)
+   **Total running time of the script:** ( 0 minutes  6.851 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:

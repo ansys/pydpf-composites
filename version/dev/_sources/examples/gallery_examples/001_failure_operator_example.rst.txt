@@ -36,7 +36,7 @@ allows you to assess different type of materials and failure modes at once.
 The scoping enables you to evaluate the minimum and maximum failures per element
 or select a list of materials or plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-27
+.. GENERATED FROM PYTHON SOURCE LINES 43-49
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -45,7 +45,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-40
+.. GENERATED FROM PYTHON SOURCE LINES 49-62
 
 .. code-block:: default
 
@@ -69,11 +69,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-42
+.. GENERATED FROM PYTHON SOURCE LINES 63-64
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-45
+.. GENERATED FROM PYTHON SOURCE LINES 64-67
 
 .. code-block:: default
 
@@ -87,13 +87,13 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-49
+.. GENERATED FROM PYTHON SOURCE LINES 68-71
 
 Configure combined failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-61
+.. GENERATED FROM PYTHON SOURCE LINES 71-83
 
 .. code-block:: default
 
@@ -116,13 +116,13 @@ Configure the combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-65
+.. GENERATED FROM PYTHON SOURCE LINES 84-87
 
 Set up model and evaluate failures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-68
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
 
 .. code-block:: default
 
@@ -136,11 +136,11 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-70
+.. GENERATED FROM PYTHON SOURCE LINES 91-92
 
 Evaluate failures for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-76
+.. GENERATED FROM PYTHON SOURCE LINES 92-98
 
 .. code-block:: default
 
@@ -184,11 +184,11 @@ Evaluate failures for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-78
+.. GENERATED FROM PYTHON SOURCE LINES 99-100
 
 Scope failure evaluation to a certain element scope.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-85
+.. GENERATED FROM PYTHON SOURCE LINES 100-107
 
 .. code-block:: default
 
@@ -233,11 +233,11 @@ Scope failure evaluation to a certain element scope.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-87
+.. GENERATED FROM PYTHON SOURCE LINES 108-109
 
 Scope failure evaluation by plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-93
+.. GENERATED FROM PYTHON SOURCE LINES 109-115
 
 .. code-block:: default
 
@@ -284,7 +284,7 @@ Scope failure evaluation by plies.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  21.123 seconds)
+   **Total running time of the script:** ( 0 minutes  33.016 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_001_failure_operator_example.py:

@@ -43,7 +43,7 @@ The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8
 and later. A few advanced features are not supported with the RST only workflow.
 For more information, see :ref:`limitations`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-34
+.. GENERATED FROM PYTHON SOURCE LINES 50-56
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -52,7 +52,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-48
+.. GENERATED FROM PYTHON SOURCE LINES 56-70
 
 .. code-block:: default
 
@@ -77,11 +77,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
+.. GENERATED FROM PYTHON SOURCE LINES 71-72
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-52
+.. GENERATED FROM PYTHON SOURCE LINES 72-74
 
 .. code-block:: default
 
@@ -94,11 +94,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-54
+.. GENERATED FROM PYTHON SOURCE LINES 75-76
 
 Get input files (RST and material.engd but skip the ACP layup file).
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-57
+.. GENERATED FROM PYTHON SOURCE LINES 76-79
 
 .. code-block:: default
 
@@ -113,18 +113,18 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140455144580864/aca8e225-eef1-453a-8b8d-0e39b74e17e6/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140455144580864/384b0837-c51e-469f-974b-7fa713855adc/material.engd', files_are_local=False)
+    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp139906462508800/282615f2-cb97-4f96-84fe-9c59d4101033/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp139906462508800/410b27ba-8527-45c5-a6ac-7fbfeffd2340/material.engd', files_are_local=False)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-61
+.. GENERATED FROM PYTHON SOURCE LINES 80-83
 
 Configure combined failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-73
+.. GENERATED FROM PYTHON SOURCE LINES 83-95
 
 .. code-block:: default
 
@@ -147,13 +147,13 @@ Configure the combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-77
+.. GENERATED FROM PYTHON SOURCE LINES 96-99
 
 Set up model and evaluate failures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-80
+.. GENERATED FROM PYTHON SOURCE LINES 99-102
 
 .. code-block:: default
 
@@ -167,11 +167,11 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-82
+.. GENERATED FROM PYTHON SOURCE LINES 103-104
 
 Evaluate failures for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-88
+.. GENERATED FROM PYTHON SOURCE LINES 104-110
 
 .. code-block:: default
 
@@ -215,12 +215,12 @@ Evaluate failures for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-91
+.. GENERATED FROM PYTHON SOURCE LINES 111-113
 
 Create and plot a sampling point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-96
+.. GENERATED FROM PYTHON SOURCE LINES 113-118
 
 .. code-block:: default
 
@@ -241,7 +241,7 @@ Create and plot a sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-115
+.. GENERATED FROM PYTHON SOURCE LINES 119-137
 
 Create Engineering Data file and set material UUIDs in MAPDL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -265,7 +265,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  10.292 seconds)
+   **Total running time of the script:** ( 0 minutes  17.652 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:
