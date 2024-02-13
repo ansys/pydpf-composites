@@ -164,13 +164,13 @@ plotting = ["imageio (<2.28.1)", "imageio-ffmpeg", "matplotlib (>=3.2)", "pyvist
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.13.3"
+version = "0.13.4"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 optional = true
 python-versions = ">=3.9,<4"
 files = [
-    {file = "ansys_sphinx_theme-0.13.3-py3-none-any.whl", hash = "sha256:c87f006a891d286ae7fa2b975ad42cb236c98e3e7aab28ffb1956335be254ea3"},
-    {file = "ansys_sphinx_theme-0.13.3.tar.gz", hash = "sha256:6dbe4002c5f45ad3189d9e59f8e41d3773700ba334c19383073e7912c1e3e278"},
+    {file = "ansys_sphinx_theme-0.13.4-py3-none-any.whl", hash = "sha256:d01f289e881a91d77d0fb6c6ec31c286798b49e095f211b9b168290a238ed297"},
+    {file = "ansys_sphinx_theme-0.13.4.tar.gz", hash = "sha256:95c01dd45466f3a147f31771b4d3b8ed5495df405f2c3d2b1cd897ccef8c8b3d"},
 ]
 
 [package.dependencies]
@@ -2711,13 +2711,13 @@ xxhash = ["xxhash (>=1.4.3)"]
 
 [[package]]
 name = "pre-commit"
-version = "3.6.0"
+version = "3.6.1"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 optional = true
 python-versions = ">=3.9"
 files = [
-    {file = "pre_commit-3.6.0-py2.py3-none-any.whl", hash = "sha256:c255039ef399049a5544b6ce13d135caba8f2c28c3b4033277a788f434308376"},
-    {file = "pre_commit-3.6.0.tar.gz", hash = "sha256:d30bad9abf165f7785c15a21a1f46da7d0677cb00ee7ff4c579fd38922efe15d"},
+    {file = "pre_commit-3.6.1-py2.py3-none-any.whl", hash = "sha256:9fe989afcf095d2c4796ce7c553cf28d4d4a9b9346de3cda079bcf40748454a4"},
+    {file = "pre_commit-3.6.1.tar.gz", hash = "sha256:c90961d8aa706f75d60935aba09469a6b0bcb8345f127c3fbee4bdc5f114cf4b"},
 ]
 
 [package.dependencies]
