@@ -77,8 +77,11 @@ def get_result_field(
                             element_info, layers=layers, nodes=corner_nodes, spots=spots
                         )
 
-                    value = strain_data[selected_indices][:, component]
-                    local_result_field.append(value, element_id)
+                    values = strain_data[selected_indices][:, component]
+                    # Conversion to a list is a temporary workaround
+                    # because the append method does currently not work
+                    # reliably for slices of numpy arrays
+                    local_result_field.append(list(values), element_id)
                 else:
                     local_result_field.append(strain_data[selected_indices, component], element_id)
     return result_field
