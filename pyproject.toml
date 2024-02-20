@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 # Check https://python-poetry.org/docs/pyproject/ for all available sections
 name = "ansys-dpf-composites"
 version = "0.4.0"
-description = "A python wrapper for ansys dpf composites"
+description = "Post-processing of composite structures based on Ansys DPF"
 license = "MIT"
 authors = ["ANSYS, Inc. <ansys.support@ansys.com>"]
 maintainers = ["PyAnsys developers <pyansys.maintainers@ansys.com>"]
@@ -24,7 +24,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
+python = ">=3.9,<3.13"
 packaging = "*"
 numpy = "^1.22"
 build = {version = "^0.8.0", optional = true}
@@ -40,15 +40,15 @@ pytest = {version = "^7.1.2", optional = true}
 pytest-cov = {version = "^3.0.0", optional = true}
 mypy = {version = "^1.2.0", optional = true}
 mypy-extensions = {version = "^1.0.0", optional = true}
-# If this version changes also the link in doc/src/conf.py intersphinx-mapping has to change
 ansys-dpf-core = ">=0.8,<1"
 matplotlib = {version = "^3.5.0"}
-pyvista = {version = ">=0.36.1,<1", extras=["jupyter"], optional=true}
+pyvista = {version = ">=0.40.2,<1", extras=["jupyter", "trame"], optional=true}
 pre-commit = {version = "*", optional = true}
 # Upper bound because there is a problem with examples in versions > 1.20.1
 sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
 pylint = {version = "^2.13", optional = true}
 scipy = {version = ">=1.9.0", optional = true}
+fatpack = {version = ">=0.5", optional = true}
 pytest-rerunfailures = {version = "^11.1.2", optional = true}
 
 [tool.poetry.extras]
@@ -71,10 +71,11 @@ all = [
     "pre-commit",
     "pypandoc",
     "scipy",
+    "fatpack",
     "sphinx-autodoc-typehints",
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
-    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy", "pyvista"]
+    "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy", "pyvista", "fatpack"]
 test = ["pytest", "pytest-cov", "pytest-rerunfailures"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
@@ -120,6 +121,6 @@ ignored-classes = [
 ]
 
 [tool.mypy]
-python_version = 3.8
+python_version = 3.9
 mypy_path = "$MYPY_CONFIG_FILE_DIR/src:$MYPY_CONFIG_FILE_DIR/tests"
 ignore_missing_imports = true

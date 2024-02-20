@@ -1,7 +1,30 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Wrapper for the sampling point operator."""
+from collections.abc import Collection, Sequence
 import hashlib
 import json
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union
+from typing import Any, Optional, Union
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import UnitSystem
@@ -89,7 +112,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._result_definition = result_definition
 
         self._spots_per_ply = 0
-        self._interface_indices: Dict[Spot, int] = {}
+        self._interface_indices: dict[Spot, int] = {}
         self._name = name
         used_server = get_or_create_server(server)
         if not used_server:
@@ -400,7 +423,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._update_and_check_results()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
-    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
+    def get_ply_wise_critical_failures(self) -> list[FailureResult]:
         """Get the critical failure value and modes per ply."""
         self._update_and_check_results()
         return get_ply_wise_critical_failures_from_sp(self)

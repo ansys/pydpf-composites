@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Indexer helper classes."""
 from dataclasses import dataclass
 from typing import Optional, Protocol, cast
@@ -85,13 +107,18 @@ class FieldIndexerNoDataPointer:
 
     def __init__(self, field: Field):
         """Create indexer and get data."""
-        index_by_id = setup_index_by_id(field.scoping)
-        self._indices = index_by_id.mapping
-        self._max_id = index_by_id.max_id
-        self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+            self._max_id = index_by_id.max_id
+            self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
+        else:
+            self._indices = np.array([], dtype=np.int64)
+            self._max_id = 0
+            self._data = np.array([], dtype=np.double)
 
     def by_id(self, entity_id: int) -> Optional[np.double]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
@@ -110,18 +137,27 @@ class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
 
     def __init__(self, field: PropertyField):
         """Create indexer and get data."""
-        index_by_id = setup_index_by_id(field.scoping)
-        self._indices = index_by_id.mapping
-        self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+            self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+            self._max_id = index_by_id.max_id
+        else:
+            self._indices = np.array([], dtype=np.int64)
+            self._data = np.array([], dtype=np.int64)
+            self._max_id = 0
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
         entity_id
         """
-        return cast(np.int64, self._data[self._indices[entity_id]])
+        if entity_id > self._max_id:
+            return None
+        else:
+            return cast(np.int64, self._data[self._indices[entity_id]])
 
 
 class PropertyFieldIndexerWithDataPointer:
@@ -129,19 +165,26 @@ class PropertyFieldIndexerWithDataPointer:
 
     def __init__(self, field: PropertyField):
         """Create indexer and get data."""
-        index_by_id = setup_index_by_id(field.scoping)
-        self._indices = index_by_id.mapping
-        self._max_id = index_by_id.max_id
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+            self._max_id = index_by_id.max_id
 
-        self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-        self._n_components = field.component_count
+            self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+            self._n_components = field.component_count
 
-        self._data_pointer: NDArray[np.int64] = np.append(
-            field._data_pointer, len(self._data) * self._n_components
-        )
+            self._data_pointer: NDArray[np.int64] = np.append(
+                field._data_pointer, len(self._data) * self._n_components
+            )
+        else:
+            self._max_id = 0
+            self._indices = np.array([], dtype=np.int64)
+            self._data = np.array([], dtype=np.int64)
+            self._n_components = 0
+            self._data_pointer = np.array([], dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
@@ -168,19 +211,26 @@ class FieldIndexerWithDataPointer:
 
     def __init__(self, field: Field):
         """Create indexer and get data."""
-        index_by_id = setup_index_by_id(field.scoping)
-        self._indices = index_by_id.mapping
-        self._max_id = index_by_id.max_id
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+            self._max_id = index_by_id.max_id
 
-        self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
-        self._n_components = field.component_count
+            self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
+            self._n_components = field.component_count
 
-        self._data_pointer: NDArray[np.int64] = np.append(
-            field._data_pointer, len(self._data) * self._n_components
-        )
+            self._data_pointer: NDArray[np.int64] = np.append(
+                field._data_pointer, len(self._data) * self._n_components
+            )
+        else:
+            self._max_id = 0
+            self._indices = np.array([], dtype=np.int64)
+            self._data = np.array([], dtype=np.double)
+            self._n_components = 0
+            self._data_pointer = np.array([], dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.double]]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------
@@ -207,19 +257,24 @@ class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
 
     def __init__(self, field: PropertyField):
         """Create indexer and get data."""
-        index_by_id = setup_index_by_id(field.scoping)
-        self._indices = index_by_id.mapping
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
 
-        self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+            self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+            self._n_components = field.component_count
 
-        self._n_components = field.component_count
-
-        self._data_pointer: NDArray[np.int64] = np.append(
-            field._data_pointer, len(self._data) * self._n_components
-        )
+            self._data_pointer: NDArray[np.int64] = np.append(
+                field._data_pointer, len(self._data) * self._n_components
+            )
+        else:
+            self._indices = np.array([], dtype=np.int64)
+            self._data = np.array([], dtype=np.int64)
+            self._n_components = 0
+            self._data_pointer = np.array([], dtype=np.int64)
 
     def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        """Get index by id.
+        """Get index by ID.
 
         Parameters
         ----------

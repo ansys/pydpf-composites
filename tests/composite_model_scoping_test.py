@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import pathlib
 
 import numpy as np
@@ -58,8 +80,8 @@ def test_composite_model_named_selection_scope(dpf_server, data_files, distribut
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
     irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
-    assert irfs.data[0] == pytest.approx(1.4792790331384016, 1e-8)
-    assert irfs.data[1] == pytest.approx(1.3673715033617213, 1e-8)
+    assert irfs.get_entity_data_by_id(2) == pytest.approx(1.4792790331384016, 1e-8)
+    assert irfs.get_entity_data_by_id(3) == pytest.approx(1.3673715033617213, 1e-8)
 
 
 def test_composite_model_ply_scope(dpf_server):
@@ -102,21 +124,50 @@ def test_composite_model_ply_scope(dpf_server):
     if version_older_than(dpf_server, "7.0"):
         # the old implementation did not allow to distinguish between plies of the different parts.
         # So both plies select the shell and solid elements.
+        expected_irfs_by_element_id = {
+            1: 0.66603946,
+            2: 0.66603946,
+            7: 3.24925826,
+            8: 3.24925826,
+            9: 0.52981576,
+            10: 0.52981576,
+        }
+
+        expected_modes_by_element_id = {1: 310.0, 2: 310.0, 7: 310.0, 8: 310.0, 9: 212.0, 10: 222.0}
         assert len(irfs.data) == 6
-        assert irfs.data == pytest.approx(
-            np.array([0.66603946, 0.66603946, 3.24925826, 0.52981576, 3.24925826, 0.52981576]),
-            abs=1e-3,
-        )
-        assert modes.data == pytest.approx(
-            np.array([310.0, 310.0, 310.0, 222.0, 310.0, 212.0]), abs=0.1
-        )
+        for element_id in irfs.scoping.ids:
+            assert expected_irfs_by_element_id[element_id] == pytest.approx(
+                irfs.get_entity_data_by_id(element_id), abs=1e-3
+            )
+            assert expected_modes_by_element_id[element_id] == pytest.approx(
+                modes.get_entity_data_by_id(element_id), abs=0.1
+            )
+
     else:
         # ply scoping is now part specific thanks to the labels
         assert len(irfs.data) == 4
-        assert irfs.data == pytest.approx(
-            np.array([0.14762838, 0.14762838, 3.24925826, 3.24925826]), abs=1e-3
-        )
-        assert modes.data == pytest.approx(np.array([222, 212, 310, 310]), abs=0.1)
+
+        expected_irfs_by_element_id = {
+            1: 0.14762838,
+            2: 0.14762838,
+            7: 3.24925826,
+            8: 3.24925826,
+        }
+
+        expected_modes_by_element_id = {
+            1: 222,
+            2: 212,
+            7: 310,
+            8: 310,
+        }
+
+        for element_id in irfs.scoping.ids:
+            assert irfs.get_entity_data_by_id(element_id) == pytest.approx(
+                expected_irfs_by_element_id[element_id], abs=1e-3
+            )
+            assert modes.get_entity_data_by_id(element_id) == pytest.approx(
+                expected_modes_by_element_id[element_id], abs=1e-1
+            )
 
 
 def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, distributed_rst):
@@ -147,8 +198,15 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
     modes = failure_container.get_field({"failure_label": FailureOutput.FAILURE_MODE})
     assert len(irfs.data) == 2
     assert len(modes.data) == 2
-    assert irfs.data == pytest.approx(np.array([0.49282684, 0.32568454]), abs=1e-3)
-    assert modes.data == pytest.approx(np.array([222.0, 222.0]), abs=1e-1)
+    expected_irfs_by_id = {2: 0.49282684, 3: 0.32568454}
+    expected_modes_by_id = {2: 222.0, 3: 222.0}
+    for element_id in irfs.scoping.ids:
+        assert irfs.get_entity_data_by_id(element_id) == pytest.approx(
+            expected_irfs_by_id[element_id], abs=1e-3
+        )
+        assert modes.get_entity_data_by_id(element_id) == pytest.approx(
+            expected_modes_by_id[element_id], abs=1e-1
+        )
 
 
 def test_composite_model_time_scope(dpf_server):
@@ -173,6 +231,5 @@ def test_composite_model_time_scope(dpf_server):
         scope = CompositeScope(time=time)
         failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
         irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
-        modes = failure_container.get_field({"failure_label": FailureOutput.FAILURE_MODE})
         assert len(irfs.data) == 4
         assert max(irfs.data) == pytest.approx(expected_max_irf, abs=1e-6)

@@ -1,6 +1,29 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Wrapper for the sampling point operator."""
+from collections.abc import Collection, Sequence
 import json
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union
+from typing import Any, Optional, Union
 
 from ansys.dpf.core import UnitSystem
 import numpy as np
@@ -21,9 +44,11 @@ from ._sampling_point_helpers import (
 )
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
+from .layup_info._layup_info import _get_layup_model_context
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
+from .server_helpers import version_equal_or_later
 from .unit_system import get_unit_system
 
 
@@ -101,7 +126,7 @@ class SamplingPointNew(SamplingPoint):
         self._rst_data_source = rst_data_source
 
         self._spots_per_ply = 0
-        self._interface_indices: Dict[Spot, int] = {}
+        self._interface_indices: dict[Spot, int] = {}
         self._results: Any = None
         self._is_uptodate = False
         self._unit_system = get_unit_system(self._rst_data_source, default_unit_system)
@@ -328,8 +353,14 @@ class SamplingPointNew(SamplingPoint):
         )
         evaluate_failure_criterion_per_scope_op.inputs.stream_provider(self._rst_streams_provider)
         evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
-        has_layup_provider = True
-        evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
+        # pylint: disable=protected-access
+        if version_equal_or_later(self._meshed_region._server, "8.0"):
+            layup_model_context = _get_layup_model_context(self._layup_provider)
+            evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(
+                layup_model_context
+            )
+        else:
+            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(True)
         evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
@@ -448,7 +479,7 @@ class SamplingPointNew(SamplingPoint):
         self._update_and_check_results()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
-    def get_ply_wise_critical_failures(self) -> List[FailureResult]:
+    def get_ply_wise_critical_failures(self) -> list[FailureResult]:
         """Get the critical failure value and modes per ply."""
         self._update_and_check_results()
         return get_ply_wise_critical_failures_from_sp(self)

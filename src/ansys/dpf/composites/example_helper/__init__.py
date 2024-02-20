@@ -1,9 +1,31 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Helper to get example files."""
 
 from dataclasses import dataclass
 import os
 import tempfile
-from typing import Dict, List, Optional, cast
+from typing import Optional, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -13,6 +35,7 @@ from ..data_sources import (
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
+from ..server_helpers import upload_file_to_unique_tmp_folder
 
 EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
@@ -25,14 +48,14 @@ class _ContinuousFiberCompositeFiles:
 
 @dataclass
 class _ContinuousFiberCompositesExampleFilenames:
-    rst: List[str]
-    composite: Dict[str, _ContinuousFiberCompositeFiles]
+    rst: list[str]
+    composite: dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
 
 
 @dataclass
 class _ShortFiberCompositesExampleFilenames:
-    rst: List[str]
+    rst: list[str]
     dsdat: str
     engineering_data: str
 
@@ -69,7 +92,7 @@ class _ShortFiberExampleLocation:
     files: _ShortFiberCompositesExampleFilenames
 
 
-_continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
+_continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
     "shell": _ContinuousFiberExampleLocation(
         directory="shell",
         files=_ContinuousFiberCompositesExampleFilenames(
@@ -118,9 +141,19 @@ _continuous_fiber_examples: Dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "fatigue": _ContinuousFiberExampleLocation(
+        directory="fatigue",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
 }
 
-_short_fiber_examples: Dict[str, _ShortFiberExampleLocation] = {
+_short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
     "short_fiber": _ShortFiberExampleLocation(
         directory="short_fiber",
         files=_ShortFiberCompositesExampleFilenames(
@@ -145,7 +178,7 @@ def _download_and_upload_file(
     urllib.request.urlretrieve(file_url, local_path)
     if server.local_server:
         return local_path
-    return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
+    return upload_file_to_unique_tmp_folder(local_path, server=server)
 
 
 def get_short_fiber_example_files(
@@ -179,6 +212,7 @@ def get_short_fiber_example_files(
 def get_continuous_fiber_example_files(
     server: dpf.server,
     example_key: str,
+    skip_acp_layup_files: bool = False,
 ) -> ContinuousFiberCompositesFiles:
     """Get continuous fiber example file by example key.
 
@@ -197,16 +231,17 @@ def get_continuous_fiber_example_files(
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
         all_composite_files = {}
-        for key, composite_examples_files_for_scope in example_files.files.composite.items():
-            composite_files = CompositeDefinitionFiles(
-                definition=get_server_path(composite_examples_files_for_scope.definition),
-            )
-            if composite_examples_files_for_scope.mapping is not None:
-                composite_files.mapping = get_server_path(
-                    composite_examples_files_for_scope.mapping
+        if not skip_acp_layup_files:
+            for key, composite_examples_files_for_scope in example_files.files.composite.items():
+                composite_files = CompositeDefinitionFiles(
+                    definition=get_server_path(composite_examples_files_for_scope.definition),
                 )
+                if composite_examples_files_for_scope.mapping is not None:
+                    composite_files.mapping = get_server_path(
+                        composite_examples_files_for_scope.mapping
+                    )
 
-            all_composite_files[key] = composite_files
+                all_composite_files[key] = composite_files
 
         return ContinuousFiberCompositesFiles(
             rst=[get_server_path(rst_path) for rst_path in example_files.files.rst],

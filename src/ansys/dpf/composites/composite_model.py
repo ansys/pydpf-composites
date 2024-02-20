@@ -1,5 +1,28 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Composite Model."""
-from typing import Collection, Dict, Optional, Sequence
+from collections.abc import Collection, Sequence
+from typing import Optional
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
@@ -11,7 +34,7 @@ from ._composite_model_factory import _composite_model_factory
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayerProperty
+from .layup_info import ElementInfo, LayerProperty, LayupModelContextType
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialProperty
 from .result_definition import FailureMeasureEnum
@@ -106,6 +129,11 @@ class CompositeModel:
         """Material operators."""
         return self._implementation.material_operators
 
+    @property
+    def material_names(self) -> dict[str, int]:
+        """Get material name to DPF material ID map."""
+        return self._implementation.material_names
+
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
@@ -135,12 +163,22 @@ class CompositeModel:
         """
         return self._implementation.get_layup_operator(composite_definition_label)
 
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model.
+
+        The type specifies whether the lay-up data was loaded from an ACP model, RST, or both.
+        Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        """
+        return self._implementation.layup_model_type
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -165,6 +203,8 @@ class CompositeModel:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            A higher value results in more memory consumption, but faster evaluation.
 
             .. note::
 
@@ -173,7 +213,11 @@ class CompositeModel:
 
         """
         return self._implementation.evaluate_failure_criteria(
-            combined_criterion, composite_scope, measure, write_data_for_full_element_scope
+            combined_criterion,
+            composite_scope,
+            measure,
+            write_data_for_full_element_scope,
+            max_chunk_size,
         )
 
     def get_sampling_point(
@@ -298,7 +342,7 @@ class CompositeModel:
         self,
         material_properties: Collection[MaterialProperty],
         composite_definition_label: Optional[str] = None,
-    ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+    ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
         Returns a dictionary with ``dpf_material_id`` as the key and

@@ -8,7 +8,7 @@ PyDPF Composites
    :target: https://docs.pyansys.com/
    :alt: PyAnsys
 
-.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.8-blue
+.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.9-blue
    :target: https://pypi.org/project/ansys-dpf-composites/
    :alt: Python
 
@@ -33,13 +33,14 @@ PyDPF Composites
    :alt: Black
 
 
-PyDPF Composites is a Python wrapper for Ansys DPF composites. It implements
-classes on top of DPF Composites operators and data accessors for short
-fiber and layered composites (layered shell and solid elements). This module
-can be used to postprocess fiber reinforced plastics and layered composites and
-to implement custom failure criteria and computation. For information demonstrating
-the behavior and usage of PyDPF Composites, see `Examples`_ in the DPF Composite
-documentation.
+PyDPF Composites enables the post-processing of composite structures based on
+`Ansys DPF`_ and the DPF Composites plugin. So it is a Python wrapper which
+implements classes on top of DPF Composites operators and data accessors for
+short fiber and layered composites (layered shell and solid elements). This
+module can be used to postprocess fiber reinforced plastics and layered
+composites, and to implement custom failure criteria and computation. For
+information demonstrating the behavior and usage of PyDPF Composites,
+see `Examples`_ in the DPF Composite documentation.
 
 .. START_MARKER_FOR_SPHINX_DOCS
 
@@ -102,7 +103,7 @@ server is started.
 
 #.  Run tests with a Docker container:
 
-    Follow the steps in `Getting The DPF Server Docker Image`_ to get
+    Follow the steps in `Getting the DPF server Docker image`_ to get
     and run the DPF docker image. Run the tests with the following command
 
     .. code:: bash
@@ -129,7 +130,7 @@ server is started.
 Build documentation
 ===================
 
-Follow the description in `Getting The DPF Server Docker Image`_ image to get
+Follow the description in `Getting the DPF server Docker image`_ image to get
 and run the dpf docker image.
 
 On Windows, build the documentation with:
@@ -194,5 +195,6 @@ released versions.
 .. _pytest: https://docs.pytest.org/en/stable/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _tox: https://tox.wiki/
-.. _Examples: https://composites.dpf.docs.pyansys.com/dev/examples/index.html
-.. _Getting The DPF Server Docker Image: https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image
+.. _Examples: https://composites.dpf.docs.pyansys.com/version/stable/examples/index.html
+.. _Getting the DPF server Docker image: https://composites.dpf.docs.pyansys.com/version/stable/intro.html#getting-the-dpf-server-docker-image
+.. _Ansys DPF: https://dpf.docs.pyansys.com/version/stable/

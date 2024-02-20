@@ -1,9 +1,32 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Object to represent the result definition used by the failure operator in DPF Composites."""
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from enum import Enum
 import json
-from typing import Any, Dict, List, Optional, Sequence, Union
+from typing import Any, Optional, Union
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
@@ -147,12 +170,12 @@ class ResultDefinition:
         self._composite_scopes = value
 
     @property
-    def rst_files(self) -> List[_PATH]:
+    def rst_files(self) -> list[_PATH]:
         """Path of the result (RST) files."""
         return self._rst_files
 
     @rst_files.setter
-    def rst_files(self, value: List[_PATH]) -> None:
+    def rst_files(self, value: list[_PATH]) -> None:
         self._rst_files = list(value)
 
     @property
@@ -216,7 +239,7 @@ class ResultDefinition:
     def max_chunk_size(self, value: int) -> None:
         self._max_chunk_size = value
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Get the result definition in a dictionary representation."""
         cfc = self.combined_failure_criterion
         if not cfc:
@@ -243,9 +266,9 @@ class ResultDefinition:
 
         def get_scope(
             result_definition_scope: ResultDefinitionScope,
-            rst_files: List[_PATH],
+            rst_files: list[_PATH],
             material_file: _PATH,
-        ) -> Dict[str, Any]:
+        ) -> dict[str, Any]:
             write_for_full_scope = result_definition_scope.write_data_for_full_element_scope
             mapping_entry = []
             if result_definition_scope.mapping_file is not None:

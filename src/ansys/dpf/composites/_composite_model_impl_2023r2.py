@@ -1,5 +1,28 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Composite Model Interface 2023R2."""
-from typing import Collection, Dict, List, Optional, Sequence, cast
+from collections.abc import Collection, Sequence
+from typing import Optional, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -18,6 +41,7 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
+    LayupModelContextType,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
@@ -129,7 +153,7 @@ class CompositeModelImpl2023R2:
             engineering_data_source=self._data_sources.engineering_data,
         )
 
-        self._composite_infos: Dict[str, CompositeInfo] = {}
+        self._composite_infos: dict[str, CompositeInfo] = {}
         for composite_definition_label in self._data_sources.old_composite_sources:
             self._composite_infos[composite_definition_label] = CompositeInfo(
                 data_sources=self._data_sources,
@@ -143,7 +167,7 @@ class CompositeModelImpl2023R2:
             warn(
                 "The post-processing of composite models with multiple lay-up"
                 " definitions (assemblies) is deprecated with DPF servers older than 7.0"
-                " (2024 R1). Please use DPF server 7.0 or later.",
+                " (2024 R1). DPF server 7.0 or later should be used instead.",
                 DeprecationWarning,
                 stacklevel=2,
             )
@@ -193,6 +217,15 @@ class CompositeModelImpl2023R2:
         """Material operators."""
         return self._material_operators
 
+    @property
+    def material_names(self) -> dict[str, int]:
+        """Get material name to DPF material ID map."""
+        raise NotImplementedError(
+            "material_names is not implemented"
+            " for this version of DPF. DPF server 7.0 (2024 R1)"
+            " or later should be used instead."
+        )
+
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
 
@@ -209,12 +242,22 @@ class CompositeModelImpl2023R2:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
         return self._composite_infos[composite_definition_label].layup_provider
 
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model."""
+        raise NotImplementedError(
+            "layup_model_type is not implemented"
+            " for this version of DPF. DPF server 8.0 (2024 R2)"
+            " or later should be used instead."
+        )
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
         composite_scope: Optional[CompositeScope] = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
+        max_chunk_size: int = 50000,
     ) -> FieldsContainer:
         """Get a fields container with the evaluated failure criteria.
 
@@ -239,6 +282,8 @@ class CompositeModelImpl2023R2:
             part of ``composite_scope.plies``. If no element scope is
             specified (``composite_scope.elements``), a (potentially zero)
             failure value is written for all elements.
+        max_chunk_size:
+            A higher value results in more memory consumption, but faster evaluation.
 
             .. note::
 
@@ -362,7 +407,7 @@ class CompositeModelImpl2023R2:
         Parameters
         ----------
         element_id:
-            Element ID or label.
+            Element ID/label.
         composite_definition_label:
             Label of the composite definition, which is the
             dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
@@ -467,7 +512,7 @@ class CompositeModelImpl2023R2:
         self,
         material_properties: Collection[MaterialProperty],
         composite_definition_label: Optional[str] = None,
-    ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+    ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
         Returns a dictionary with ``dpf_material_id`` as the key and
@@ -550,8 +595,9 @@ class CompositeModelImpl2023R2:
         """Get all layered element IDs."""
         raise NotImplementedError(
             "get_all_layered_element_ids is not implemented"
-            " for this version of DPF. Please upgrade to 7.0 (2024 R1)"
-            " or later. Use get_all_layered_element_ids_for_composite_definition_label"
+            " for this version of DPF. DPF server 7.0 (2024 R1)"
+            " or later should be used instead. Use "
+            "get_all_layered_element_ids_for_composite_definition_label"
             " instead."
         )
 
@@ -574,7 +620,7 @@ class CompositeModelImpl2023R2:
                 " Or update the the latest version."
             )
         return cast(
-            List[int],
+            list[int],
             self.get_mesh(composite_definition_label)
             .property_field("element_layer_indices")
             .scoping.ids,

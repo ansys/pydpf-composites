@@ -1,5 +1,28 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Wrapper for the sampling point operator."""
-from typing import Any, Collection, Dict, List, Sequence, cast
+from collections.abc import Collection, Sequence
+from typing import Any, cast
 
 from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
@@ -70,7 +93,7 @@ def get_data_from_sp_results(*args: Any, results: Any) -> npt.NDArray[np.float64
 
 
 def get_indices_from_sp(
-    interface_indices: Dict[Spot, int],
+    interface_indices: dict[Spot, int],
     number_of_plies: int,
     spots_per_ply: int,
     spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
@@ -124,7 +147,7 @@ def get_offsets_by_spots_from_sp(
 
 def get_ply_wise_critical_failures_from_sp(
     sampling_point: SamplingPoint,
-) -> List[FailureResult]:
+) -> list[FailureResult]:
     """Get the critical failure value and modes per ply."""
     num_plies = sampling_point.number_of_plies
 
@@ -193,7 +216,6 @@ def add_ply_sequence_to_plot_to_sp(
     width = x_bound[1] - x_bound[0]
 
     for index, ply in enumerate(sampling_point.analysis_plies):
-        angle = float(ply["angle"])
         hatch = "x" if ply["is_core"] else ""
 
         height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
@@ -201,7 +223,11 @@ def add_ply_sequence_to_plot_to_sp(
         axes.add_patch(Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch))
         mat = ply["material"]
         th = float(ply["thickness"])
-        text = f"{mat}\nangle={angle:.3}, th={th:.3}"
+        if "angle" in ply.keys():
+            angle = float(ply["angle"])
+            text = f"{mat}\nangle={angle:.3}, th={th:.3}"
+        else:
+            text = f"{mat}\nth={th:.3}"
         axes.annotate(
             text=text,
             xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),

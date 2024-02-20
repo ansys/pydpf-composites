@@ -1,5 +1,26 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import dataclasses
-from typing import Dict
 
 from ansys.dpf.core.server_types import BaseServer
 from packaging import version
@@ -12,9 +33,18 @@ class _DpfVersionInfo:
     description: str
 
 
-_DPF_VERSIONS: Dict[str, _DpfVersionInfo] = {
+_DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
     "5.0": _DpfVersionInfo("5.0", "2023 R1", "Initial release of DPF Composites."),
-    "7.0": _DpfVersionInfo("7.0", "2024 R1", "DPF Composites plugin with sub-operators."),
+    "7.0": _DpfVersionInfo("7.0", "2024 R1 pre 0", "DPF Composites plugin with sub-operators."),
+    "7.1": _DpfVersionInfo(
+        "7.1", "2024 R1", "DPF Composites: layer index starts at 1. Material names."
+    ),
+    "8.0": _DpfVersionInfo(
+        "8.0",
+        "2024 R2 pre 0",
+        "DPF Composites: reference surface support and \
+                                                   section data from RST",
+    ),
 }
 
 

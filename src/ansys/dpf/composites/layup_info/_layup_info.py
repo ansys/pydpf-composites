@@ -1,7 +1,32 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Lay-up information provider."""
 
+from collections.abc import Collection, Sequence
 from dataclasses import dataclass
-from typing import Any, Collection, Dict, List, Optional, Sequence, Union, cast
+from enum import Enum
+from typing import Any, Optional, Union, cast
+from warnings import warn
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, PropertyField
@@ -19,7 +44,7 @@ from .._indexer import (
     PropertyFieldIndexerWithDataPointer,
     PropertyFieldIndexerWithDataPointerNoBoundsCheck,
 )
-from ..server_helpers import version_older_than
+from ..server_helpers import version_equal_or_later, version_older_than
 from ._enums import LayupProperty
 
 
@@ -56,6 +81,21 @@ def _get_analysis_ply(mesh: MeshedRegion, name: str, skip_check: bool = False) -
             f"Available analysis plies: {available_analysis_plies}"
         )
     return mesh.property_field(property_field_name)
+
+
+def _get_layup_model_context(layup_provider: dpf.Operator) -> int:
+    """Get the lay-up model context from the lay-up provider."""
+    return cast(int, layup_provider.get_output(218, int))
+
+
+#  Note: Must be in sync with the ``LayupModelContextTypeEnum`` object in the C++ code.
+class LayupModelContextType(Enum):
+    """Type of the lay-up information."""
+
+    NOT_AVAILABLE = 0  # no layup data
+    ACP = 1  # lay-up data was read from ACP
+    RST = 2  # lay-up data was read from RST
+    MIXED = 3  # lay-up data was read from RST and ACP
 
 
 @dataclass(frozen=True)
@@ -105,7 +145,7 @@ _supported_element_types = [181, 281, 185, 186, 187, 190]
 Map of keyopt_8 to number of spots.
 Example: Element 181 with keyopt8==1 has two spots
 """
-_n_spots_by_element_type_and_keyopt_dict: Dict[int, Dict[int, int]] = {
+_n_spots_by_element_type_and_keyopt_dict: dict[int, dict[int, int]] = {
     181: {0: 0, 1: 2, 2: 3},
     281: {0: 0, 1: 2, 2: 3},
     185: {0: 0, 1: 2},
@@ -190,7 +230,7 @@ class AnalysisPlyInfoProvider:
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: Union[DataSources, Operator],
-) -> Dict[str, np.int64]:
+) -> dict[str, np.int64]:
     """Get Dict that maps analysis ply names to dpf_material_ids.
 
     Parameters
@@ -200,6 +240,38 @@ def get_dpf_material_id_by_analyis_ply_map(
     data_source_or_streams_provider:
         DPF data source with rst file or streams_provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
+
+    Notes
+    -----
+    Cache the output because the computation can be performance-critical.
+    """
+    warn(
+        "`get_dpf_material_id_by_analyis_ply_map` is deprecated. "
+        " and was replaced by `get_dpf_material_id_by_analysis_ply_map`.",
+        category=DeprecationWarning,
+        stacklevel=2,
+    )
+    return get_dpf_material_id_by_analysis_ply_map(mesh, data_source_or_streams_provider)
+
+
+def get_dpf_material_id_by_analysis_ply_map(
+    mesh: MeshedRegion,
+    data_source_or_streams_provider: Union[DataSources, Operator],
+) -> dict[str, np.int64]:
+    """Get the dictionary that maps analysis ply names to DPF material IDs.
+
+    Parameters
+    ----------
+    mesh
+        DPF Meshed region enriched with lay-up information
+    data_source_or_streams_provider:
+        DPF data source with RST file or streams provider. The streams provider is
+        available from the :attr:`.CompositeModel.core_model` attribute
+        (under ``metadata.streams_provider``).
+
+    Note
+    ----
+    Cache the output because the computation can be performance-critical.
     """
     # Note: The stream_provider_or_data_source is not strictly needed for this workflow
     # We just need it because get_element_info_provider provider needs it (which needs
@@ -240,7 +312,7 @@ def get_dpf_material_id_by_analyis_ply_map(
 
 def get_analysis_ply_index_to_name_map(
     mesh: MeshedRegion,
-) -> Dict[int, str]:
+) -> dict[int, str]:
     """Get Dict that maps analysis ply indices to analysis ply names.
 
     The resulting dict can be used to map from the indices stored in
@@ -258,7 +330,7 @@ def get_analysis_ply_index_to_name_map(
                 mesh, analysis_ply_name, skip_check=True
             )
             first_element_id = analysis_ply_property_field.scoping.id(0)
-            analysis_ply_indices: List[int] = local_field.get_entity_data_by_id(first_element_id)
+            analysis_ply_indices: list[int] = local_field.get_entity_data_by_id(first_element_id)
 
             layer_index = analysis_ply_property_field.get_entity_data(0)[0]
             assert layer_index is not None
@@ -305,6 +377,7 @@ class ElementInfoProvider:
         keyopt_8_values: PropertyField,
         keyopt_3_values: PropertyField,
         material_ids: PropertyField,
+        solver_material_ids: Optional[PropertyField] = None,
         no_bounds_checks: bool = False,
     ):
         """Initialize ElementInfoProvider."""
@@ -337,6 +410,14 @@ class ElementInfoProvider:
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
+        self.apdl_material_indexer = get_indexer_no_data_pointer(self.mesh.elements.materials_field)
+
+        self.solver_material_to_dpf_id = {}
+        if solver_material_ids is not None:
+            for dpf_mat_id in solver_material_ids.scoping.ids:
+                mapdl_mat_ids = solver_material_ids.get_entity_data_by_id(dpf_mat_id)
+                for mapdl_mat_id in mapdl_mat_ids:
+                    self.solver_material_to_dpf_id[mapdl_mat_id] = dpf_mat_id
 
     def get_element_info(self, element_id: int) -> Optional[ElementInfo]:
         """Get :class:`~ElementInfo` for a given element id.
@@ -381,6 +462,16 @@ class ElementInfoProvider:
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
             is_layered = True
+        elif self.solver_material_to_dpf_id:
+            is_layered = False
+            n_layers = 1
+            mapdl_mat_id = self.apdl_material_indexer.by_id(element_id)
+            if mapdl_mat_id:
+                dpf_material_ids = np.array(
+                    [self.solver_material_to_dpf_id[mapdl_mat_id]], dtype=np.int64
+                )
+            else:
+                raise RuntimeError(f"Could not evaluate material of element {element_id}.")
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
         if corner_nodes_dpf < 0:
@@ -405,6 +496,7 @@ class ElementInfoProvider:
 def get_element_info_provider(
     mesh: MeshedRegion,
     stream_provider_or_data_source: Union[Operator, DataSources],
+    material_provider: Optional[Operator] = None,
     no_bounds_checks: bool = False,
 ) -> ElementInfoProvider:
     """Get :class:`~ElementInfoProvider` Object.
@@ -414,6 +506,8 @@ def get_element_info_provider(
     mesh
     stream_provider_or_data_source
         dpf stream provider or dpf data source
+    material_provider
+        DPF operator that provides material information.
     no_bounds_checks
         Disable bounds checks. Improves
         performance but can result in cryptic error messages
@@ -453,6 +547,14 @@ def get_element_info_provider(
                 )
             raise RuntimeError(message)
 
+    # pylint: disable=protected-access
+    if material_provider and version_equal_or_later(mesh._server, "8.0"):
+        helper_op = dpf.Operator("composite::materials_container_helper")
+        helper_op.inputs.materials_container(material_provider.outputs)
+        solver_material_ids = helper_op.outputs.solver_material_ids()
+    else:
+        solver_material_ids = None
+
     fields = {
         "layer_indices": mesh.property_field("element_layer_indices"),
         "element_types_apdl": mesh.property_field("apdl_element_type"),
@@ -460,6 +562,7 @@ def get_element_info_provider(
         "keyopt_8_values": get_keyopt_property_field(8),
         "keyopt_3_values": get_keyopt_property_field(3),
         "material_ids": mesh.property_field("element_layered_material_ids"),
+        "solver_material_ids": solver_material_ids,
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)

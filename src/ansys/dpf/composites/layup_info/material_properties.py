@@ -1,6 +1,29 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Helpers to get material properties."""
+from collections.abc import Collection
 from enum import Enum
-from typing import Collection, Dict, Set, Union, cast
+from typing import Union, cast
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 import numpy as np
@@ -136,7 +159,7 @@ def get_all_dpf_material_ids(
         DPF data source or stream provider that contains the RST file.
     """
     element_info_provider = get_element_info_provider(mesh, data_source_or_streams_provider)
-    all_material_ids: Set["np.int64"] = set()
+    all_material_ids: set["np.int64"] = set()
     for element_id in mesh.elements.scoping.ids:
         element_info = element_info_provider.get_element_info(element_id)
         if element_info is not None:
@@ -149,7 +172,7 @@ def get_constant_property_dict(
     materials_provider: Operator,
     data_source_or_streams_provider: Union[DataSources, Operator],
     mesh: MeshedRegion,
-) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+) -> dict[np.int64, dict[MaterialProperty, float]]:
     """Get a dictionary with constant properties.
 
     Returns a dictionary with the DPF material ID as a key and
@@ -171,7 +194,7 @@ def get_constant_property_dict(
     mesh:
         DPF meshed region enriched with lay-up information.
     """
-    properties: Dict[np.int64, Dict[MaterialProperty, float]] = {}
+    properties: dict[np.int64, dict[MaterialProperty, float]] = {}
     unit_system = get_unit_system(data_source_or_streams_provider)
     for dpf_material_id in get_all_dpf_material_ids(
         mesh=mesh, data_source_or_streams_provider=data_source_or_streams_provider

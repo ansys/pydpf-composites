@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Helper functions to add lay-up information to a DPF meshed region."""
 from typing import Optional
 from warnings import warn
@@ -11,12 +33,15 @@ from .material_operators import MaterialOperators
 
 def _get_composite_data_sources_for_layup_provider(
     data_sources: CompositeDataSources, composite_definition_label: Optional[str] = None
-) -> DataSources:
+) -> Optional[DataSources]:
     """
-    Prepare DataSources of composite for the DPF server.
+    Extract the DataSources object depending on the server version.
 
-    Ensure that DataSources object is compatible with the version of the layup provider.
+    Ensure that the ``DataSources`` object is compatible with the version of the lay-up provider.
     """
+    if data_sources.composite is None:
+        return None
+
     # import is here because of circular dependencies
     from ..server_helpers import version_older_than
 
@@ -50,6 +75,7 @@ def add_layup_info_to_mesh(
     mesh: MeshedRegion,
     unit_system: Optional[UnitSystemProvider] = None,
     composite_definition_label: Optional[str] = None,
+    rst_stream_provider: Optional[Operator] = None,
 ) -> Operator:
     """Add lay-up information to the mesh.
 
@@ -71,21 +97,24 @@ def add_layup_info_to_mesh(
         dictionary key in the :attr:`.ContinuousFiberCompositesFiles.composite`
         attribute. This parameter is only required for assemblies.
         See the note about assemblies in the description for the :class:`.CompositeModel` class.
-    Returns
-    -------
-    :
-        Lay-up provider operator.
-    """
-    composite_data_sources = _get_composite_data_sources_for_layup_provider(
-        data_sources, composite_definition_label
-    )
+    rst_stream_provider:
+        Pass RST stream to load the section data directly from the RST file. This parameter is
+        supported in DPF version 8.0 (2024 R2) and later.
 
+    """
     # Set up the lay-up provider.
     # Reads the composite definition file and enriches the mesh
     # with the composite lay-up information.
     layup_provider = Operator("composite::layup_provider_operator")
     layup_provider.inputs.mesh(mesh)
-    layup_provider.inputs.data_sources(composite_data_sources)
+
+    composite_data_sources = _get_composite_data_sources_for_layup_provider(
+        data_sources, composite_definition_label
+    )
+
+    if composite_data_sources:
+        layup_provider.inputs.data_sources(composite_data_sources)
+
     layup_provider.inputs.abstract_field_support(
         material_operators.material_support_provider.outputs.abstract_field_support
     )
@@ -101,6 +130,14 @@ def add_layup_info_to_mesh(
         unit_system = material_operators.result_info_provider
 
     layup_provider.inputs.unit_system(unit_system)
+
+    if rst_stream_provider:
+        from ..server_helpers import version_equal_or_later
+
+        # pylint: disable=protected-access
+        if version_equal_or_later(layup_provider._server, "8.0"):
+            layup_provider.inputs.rst_stream(rst_stream_provider)
+
     layup_provider.run()
 
     return layup_provider

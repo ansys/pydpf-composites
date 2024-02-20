@@ -1,8 +1,31 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Composite data sources."""
+from collections.abc import Sequence
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Callable, Dict, List, Optional, Sequence, Union, cast
+from typing import Callable, Optional, Union, cast
 
 from ansys.dpf.core import DataSources
 
@@ -45,8 +68,8 @@ class CompositeDefinitionFiles:
 class ContinuousFiberCompositesFiles:
     """Provides the container for continuous fiber composite file paths."""
 
-    rst: List[_PATH]
-    composite: Dict[str, CompositeDefinitionFiles]
+    rst: list[_PATH]
+    composite: dict[str, CompositeDefinitionFiles]
     engineering_data: _PATH
     # True if files are local and false if files
     # have already been uploaded to the server
@@ -54,8 +77,8 @@ class ContinuousFiberCompositesFiles:
 
     def __init__(
         self,
-        rst: Union[List[_PATH], _PATH],
-        composite: Dict[str, CompositeDefinitionFiles],
+        rst: Union[list[_PATH], _PATH],
+        composite: dict[str, CompositeDefinitionFiles],
         engineering_data: _PATH,
         files_are_local: bool = True,
     ) -> None:
@@ -75,19 +98,31 @@ class ContinuousFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
         """
-        if isinstance(rst, (str, pathlib.Path)):
-            rst = [rst]
         self.rst = rst  # type: ignore
         self.composite = composite
         self.engineering_data = engineering_data
         self.files_are_local = files_are_local
+
+    # The constructor pretends that rst can also be just a path
+    # but the property rst must be a list
+    def __setattr__(self, prop, val):  # type: ignore
+        """Convert values if needed."""
+        if prop == "rst":
+            val = self._get_rst_list(val)
+        super().__setattr__(prop, val)
+
+    @staticmethod
+    def _get_rst_list(value: Union[list[_PATH], _PATH]) -> list[_PATH]:
+        if isinstance(value, (str, pathlib.Path)):
+            value = [value]
+        return value  # type: ignore
 
 
 @dataclass
 class ShortFiberCompositesFiles:
     """Provides the container for short fiber composite file paths."""
 
-    rst: List[_PATH]
+    rst: list[_PATH]
     dsdat: _PATH
     engineering_data: _PATH
     # True if files are local and false if files
@@ -96,7 +131,7 @@ class ShortFiberCompositesFiles:
 
     def __init__(
         self,
-        rst: Union[List[_PATH], _PATH],
+        rst: Union[list[_PATH], _PATH],
         dsdat: _PATH,
         engineering_data: _PATH,
         files_are_local: bool = True,
@@ -116,15 +151,26 @@ class ShortFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
         """
-        if isinstance(rst, (str, pathlib.Path)):
-            rst = [rst]
         self.rst = rst  # type: ignore
         self.dsdat = dsdat
         self.engineering_data = engineering_data
         self.files_are_local = files_are_local
 
+    # The constructor pretends that rst can also be just a path
+    # but the property rst must be a list.
+    def __setattr__(self, prop, val):  # type: ignore
+        """Convert values if needed."""
+        if prop == "rst":
+            val = self._get_rst_list(val)
+        super().__setattr__(prop, val)
 
-# roosre June 2023: todo add deprecation warning where composite definition label is used
+    @staticmethod
+    def _get_rst_list(value: Union[list[_PATH], _PATH]) -> list[_PATH]:
+        if isinstance(value, (str, pathlib.Path)):
+            value = [value]
+        return value  # type: ignore
+
+
 @dataclass(frozen=True)
 class CompositeDataSources:
     """Provides data sources related to the composite lay-up.
@@ -132,17 +178,19 @@ class CompositeDataSources:
     Parameters
     ----------
     rst:
+        Result file. Currently only RST (MAPDL) is supported.
 
     material_support:
-        NOTE: The 'material_support' is explicitly listed since it is currently not
+        NOTE: The ``material_support`` parameter is explicitly listed because it is currently not
         supported (by the DPF Core) to use a distributed RST file as source for the
         material support. Instead, we create a separate DataSources object for the
         material support from the first RST file. This is a workaround until the
         support for distributed RST is added.
     engineering_data:
+        File with the material properties.
 
-    old_composite_sources:
-        This member is used to support assemblies in combination with the old
+    old_composite_sources :
+        Member used to support assemblies in combination with the old
         DPF server (<7.0). It should be removed once the support of this
         server version is dropped.
 
@@ -150,10 +198,10 @@ class CompositeDataSources:
 
     rst: DataSources
     material_support: DataSources
-    composite: DataSources
+    composite: Optional[DataSources]
     engineering_data: DataSources
 
-    old_composite_sources: Dict[str, DataSources]
+    old_composite_sources: dict[str, DataSources]
 
 
 def _get_mapping_path_file_from_definitions_path_if_exists(
@@ -465,7 +513,7 @@ def get_composite_files_from_workbench_result_folder(
 
 
 def _get_data_sources_from_rst_files(
-    rst_files: List[_PATH],
+    rst_files: list[_PATH],
 ) -> DataSources:
     """Get a DPF data sources object from a list of RST files.
 
@@ -517,7 +565,6 @@ def get_composites_data_sources(
     old_composite_data_sources = {}
 
     for key, composite_files in continuous_composite_files.composite.items():
-        old_datasource = DataSources()
         if set_part_key:
             composite_data_source.add_file_path_for_specified_result(
                 composite_files.definition, _LAYUPFILE_INDEX_KEY, key
@@ -541,6 +588,11 @@ def get_composites_data_sources(
         ##### End of block
 
         old_composite_data_sources[key] = old_datasource
+
+    # Reset composite data source if no composite files are provided because a
+    # data source cannot be empty
+    if len(continuous_composite_files.composite) == 0:
+        composite_data_source = None
 
     return CompositeDataSources(
         rst=rst_data_source,

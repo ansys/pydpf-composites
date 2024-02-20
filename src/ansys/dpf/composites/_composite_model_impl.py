@@ -1,6 +1,29 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Composite Model Interface."""
 # New interface after 2023 R2
-from typing import Any, Callable, Collection, Dict, List, Optional, Sequence, cast
+from collections.abc import Collection, Sequence
+from typing import Any, Callable, Optional, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -10,6 +33,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from .composite_scope import CompositeScope
+from .constants import FAILURE_LABEL, REF_SURFACE_NAME, TIME_LABEL, FailureOutput
 from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
@@ -19,15 +43,24 @@ from .failure_criteria import CombinedFailureCriterion
 from .layup_info import (
     ElementInfo,
     LayerProperty,
+    LayupModelContextType,
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
+)
+from .layup_info._layup_info import _get_layup_model_context
+from .layup_info._reference_surface import (
+    _get_map_to_reference_surface_operator,
+    _get_reference_surface_and_mapping_field,
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
 from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
 from .result_definition import FailureMeasureEnum
 from .sampling_point import SamplingPointNew
-from .server_helpers import upload_continuous_fiber_composite_files_to_server
+from .server_helpers import (
+    upload_continuous_fiber_composite_files_to_server,
+    version_equal_or_later,
+)
 from .unit_system import get_unit_system
 
 
@@ -47,6 +80,66 @@ def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
         return func(*args, **kwargs)
 
     return inner
+
+
+def _merge_containers(
+    non_ref_surface_container: FieldsContainer, ref_surface_container: FieldsContainer
+) -> FieldsContainer:
+    """
+    Merge the results fields container.
+
+    Merges the results fields container of the non-reference surface and the reference surface.
+    """
+    assert sorted(non_ref_surface_container.labels) == sorted(ref_surface_container.labels)
+
+    ref_surface_time_ids = ref_surface_container.get_available_ids_for_label(TIME_LABEL)
+    non_ref_surface_time_ids = non_ref_surface_container.get_available_ids_for_label(TIME_LABEL)
+
+    assert sorted(ref_surface_time_ids) == sorted(non_ref_surface_time_ids)
+
+    out_container = dpf.FieldsContainer()
+    out_container.labels = [TIME_LABEL, FAILURE_LABEL]
+    out_container.time_freq_support = non_ref_surface_container.time_freq_support
+
+    def add_to_output_container(time_id: int, source_container: FieldsContainer) -> None:
+        fields = source_container.get_fields({TIME_LABEL: time_id})
+        for field in fields:
+            failure_enum = _get_failure_enum_from_name(field.name)
+            out_container.add_field({TIME_LABEL: time_id, FAILURE_LABEL: failure_enum}, field)
+
+    for current_time_id in ref_surface_time_ids:
+        add_to_output_container(current_time_id, ref_surface_container)
+        add_to_output_container(current_time_id, non_ref_surface_container)
+
+    return out_container
+
+
+def _get_failure_enum_from_name(name: str) -> FailureOutput:
+    if name.startswith("Failure Mode"):
+        if name.endswith(REF_SURFACE_NAME):
+            return FailureOutput.FAILURE_MODE_REF_SURFACE
+        else:
+            return FailureOutput.FAILURE_MODE
+
+    if name.startswith("IRF") or name.startswith("SF") or name.startswith("SM"):
+        if name.endswith(REF_SURFACE_NAME):
+            return FailureOutput.FAILURE_VALUE_REF_SURFACE
+        else:
+            return FailureOutput.FAILURE_VALUE
+
+    if name.startswith("Layer Index"):
+        return FailureOutput.MAX_LAYER_INDEX
+
+    if name.startswith("Global Layer in Stack"):
+        return FailureOutput.MAX_GLOBAL_LAYER_IN_STACK
+
+    if name.startswith("Local Layer in Element"):
+        return FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT
+
+    if name.startswith("Solid Element Id"):
+        return FailureOutput.MAX_SOLID_ELEMENT_ID
+
+    raise RuntimeError("Could not determine failure output from name: " + name)
 
 
 class CompositeModelImpl:
@@ -105,11 +198,36 @@ class CompositeModelImpl:
             data_sources=self.data_sources,
             material_operators=self.material_operators,
             unit_system=self._unit_system,
+            rst_stream_provider=self._get_rst_streams_provider(),
         )
+
+        # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
+        # int32 is not supported in the Python API. See bug 946754.
+        if version_equal_or_later(self._server, "8.0"):
+            self._layup_model_type = LayupModelContextType(
+                _get_layup_model_context(self._layup_provider)
+            )
+        else:
+            self._layup_model_type = (
+                LayupModelContextType.ACP
+                if len(composite_files.composite) > 0
+                else LayupModelContextType.NOT_AVAILABLE
+            )
+
+        if self._supports_reference_surface_operators():
+            self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
+                data_sources=self.data_sources.composite, unit_system=self._unit_system
+            )
+
+            self._map_to_reference_surface_operator = _get_map_to_reference_surface_operator(
+                reference_surface_and_mapping_field=self._reference_surface_and_mapping_field,
+                element_layer_indices_field=self.get_mesh().property_field("element_layer_indices"),
+            )
 
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self._get_rst_streams_provider(),
+            material_provider=self.material_operators.material_provider,
         )
         self._layup_properties_provider = LayupPropertiesProvider(
             layup_provider=self._layup_provider, mesh=self.get_mesh()
@@ -144,6 +262,34 @@ class CompositeModelImpl:
         """Material operators."""
         return self._material_operators
 
+    @property
+    def material_names(self) -> dict[str, int]:
+        """
+        Material name to DPF material ID map.
+
+        This property can be used to filter analysis plies
+        or element layers.
+        """
+        try:
+            helper_op = dpf.Operator("composite::materials_container_helper")
+        except Exception as exc:
+            raise RuntimeError(
+                f"Operator composite::materials_container_helper doesn't exist. "
+                f"This could be because the server version is 2024 R1-pre0. The "
+                f"latest preview or the unified installer can be used instead. "
+                f"Error: {exc}"
+            ) from exc
+
+        helper_op.inputs.materials_container(self._material_operators.material_provider.outputs)
+        string_field = helper_op.outputs.material_names()
+        material_ids = string_field.scoping.ids
+
+        names = {}
+        for dpf_mat_id in material_ids:
+            names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
+
+        return names
+
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
@@ -166,6 +312,14 @@ class CompositeModelImpl:
 
         """
         return self._layup_provider
+
+    @property
+    def layup_model_type(self) -> LayupModelContextType:
+        """Get the context type of the lay-up model.
+
+        Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
+        """
+        return self._layup_model_type
 
     @_deprecated_composite_definition_label
     def evaluate_failure_criteria(
@@ -225,8 +379,6 @@ class CompositeModelImpl:
             # is irrelevant for cases without a ply scope, we set it to False here.
             write_data_for_full_element_scope = False
 
-        has_layup_provider = len(self._composite_files.composite) > 0
-
         # configure primary scoping
         scope_config = dpf.DataTree()
         if time_in:
@@ -241,14 +393,16 @@ class CompositeModelImpl:
             scope_config_reader_op.inputs.ply_ids(selected_plies_op.outputs.strings)
 
         # configure operator to chunk the scope
-        chunking_data_tree = dpf.DataTree({"max_chunk_size": 50000})
+        chunking_data_tree = dpf.DataTree({"max_chunk_size": max_chunk_size})
         if ns_in:
             chunking_data_tree.add({"named_selections": ns_in})
 
         chunking_generator = dpf.Operator("composite::scope_generator")
         chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
-        chunking_generator.inputs.data_sources(self.data_sources.composite)
+        if self.data_sources.composite:
+            chunking_generator.inputs.data_sources(self.data_sources.composite)
+
         if element_scope_in:
             element_scope = dpf.Scoping(location="elemental")
             element_scope.ids = element_scope_in
@@ -289,7 +443,14 @@ class CompositeModelImpl:
                 self._get_rst_streams_provider()
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
-            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(has_layup_provider)
+            if version_equal_or_later(self._server, "8.0"):
+                evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(
+                    self.layup_model_type.value
+                )
+            else:
+                evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(
+                    self.layup_model_type != LayupModelContextType.NOT_AVAILABLE
+                )
             evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
                 self._layup_provider.outputs.section_data_container
             )
@@ -302,6 +463,8 @@ class CompositeModelImpl:
             # Ensure that sandwich criteria are evaluated
             evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
 
+            # Note: the min/max layer indices are 1-based starting with
+            # Workbench 2024 R1 (DPF server 7.1)
             minmax_el_op = dpf.Operator("composite::minmax_per_element_operator")
             minmax_el_op.inputs.fields_container(
                 evaluate_failure_criterion_per_scope_op.outputs.failure_container
@@ -312,7 +475,10 @@ class CompositeModelImpl:
                 self.material_operators.material_support_provider.outputs
             )
 
-            if has_layup_provider and write_data_for_full_element_scope:
+            if (
+                self.layup_model_type != LayupModelContextType.NOT_AVAILABLE
+                and write_data_for_full_element_scope
+            ):
                 add_default_data_op = dpf.Operator("composite::add_default_data")
                 add_default_data_op.inputs.requested_element_scoping(chunking_generator.outputs)
                 add_default_data_op.inputs.time_id(
@@ -345,14 +511,31 @@ class CompositeModelImpl:
             merge_index = merge_index + 1
 
         if merge_index == 0:
-            raise RuntimeError(
-                "No output is generated! Please check the scope (element and ply ids)."
+            raise RuntimeError("No output is generated! Check the scope (element and ply IDs).")
+
+        if self._supports_reference_surface_operators():
+            self._map_to_reference_surface_operator.inputs.min_container(
+                min_merger.outputs.merged_fields_container()
+            )
+            self._map_to_reference_surface_operator.inputs.max_container(
+                max_merger.outputs.merged_fields_container()
             )
 
-        if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
-            return max_merger.outputs.merged_fields_container()
+            if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
+                return _merge_containers(
+                    max_merger.outputs.merged_fields_container(),
+                    self._map_to_reference_surface_operator.outputs.max_container(),
+                )
+            else:
+                return _merge_containers(
+                    min_merger.outputs.merged_fields_container(),
+                    self._map_to_reference_surface_operator.outputs.min_container(),
+                )
         else:
-            return min_merger.outputs.merged_fields_container()
+            if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
+                return max_merger.outputs.merged_fields_container()
+            else:
+                return min_merger.outputs.merged_fields_container()
 
     @_deprecated_composite_definition_label
     def get_sampling_point(
@@ -496,7 +679,7 @@ class CompositeModelImpl:
         self,
         material_properties: Collection[MaterialProperty],
         composite_definition_label: Optional[str] = None,
-    ) -> Dict[np.int64, Dict[MaterialProperty, float]]:
+    ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
         This method returns a dictionary with ``dpf_material_id`` as the key and
@@ -578,7 +761,7 @@ class CompositeModelImpl:
     def get_all_layered_element_ids(self) -> Sequence[int]:
         """Get all layered element IDs."""
         return cast(
-            List[int],
+            list[int],
             self.get_mesh().property_field("element_layer_indices").scoping.ids,
         )
 
@@ -611,3 +794,16 @@ class CompositeModelImpl:
                 f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
                 f"Specify a key explicitly."
             )
+
+    # Whether the reference surface operators are available or supported by the server
+    def _supports_reference_surface_operators(self) -> bool:
+        if not version_equal_or_later(self._server, "8.0"):
+            return False
+
+        if (
+            self.layup_model_type == LayupModelContextType.ACP
+            or self.layup_model_type == LayupModelContextType.MIXED
+        ):
+            return True
+
+        return False

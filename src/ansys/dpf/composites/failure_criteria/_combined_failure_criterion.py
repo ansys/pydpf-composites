@@ -1,7 +1,30 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Combined Failure Criterion."""
 
+from collections.abc import Sequence
 import json
-from typing import Any, Dict, Sequence
+from typing import Any
 
 from ._failure_criterion_base import FailureCriterionBase
 
@@ -36,7 +59,7 @@ class CombinedFailureCriterion:
         failure_criteria:
             List of failure criteria.
         """
-        self._failure_criteria: Dict[str, FailureCriterionBase] = {}
+        self._failure_criteria: dict[str, FailureCriterionBase] = {}
         for fc in failure_criteria:
             self.insert(fc)
 
@@ -48,7 +71,7 @@ class CombinedFailureCriterion:
     def _set_name(self, value: str) -> None:
         self._name = value
 
-    def _get_failure_criteria(self) -> Dict[str, FailureCriterionBase]:
+    def _get_failure_criteria(self) -> dict[str, FailureCriterionBase]:
         return self._failure_criteria
 
     name = property(_get_name, _set_name, doc="Name of the combined failure criterion.")
@@ -100,7 +123,7 @@ class CombinedFailureCriterion:
 
         return self._failure_criteria.pop(key)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Return the combined failure criterion as a dictionary.
 
         Returns

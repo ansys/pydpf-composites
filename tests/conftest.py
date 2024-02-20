@@ -1,6 +1,29 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from __future__ import annotations
 
 from collections import namedtuple
+from collections.abc import Mapping
 from contextlib import closing
 import os
 import pathlib
@@ -8,7 +31,6 @@ import socket
 import subprocess
 import sys
 from types import MappingProxyType
-from typing import Mapping
 import uuid
 
 import ansys.dpf.core as dpf
@@ -30,6 +52,7 @@ ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
 ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 DOCKER_IMAGE_TAG_KEY = "--image-tag"
+DEFAULT_DOCKER_IMAGE_TAG = "latest"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -58,7 +81,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         DOCKER_IMAGE_TAG_KEY,
         action="store",
-        default="latest",
+        default=DEFAULT_DOCKER_IMAGE_TAG,
         help="Tag of pydpf-composites container to start for the tests. Default is 'latest'.",
     )
 
@@ -193,11 +216,7 @@ class InstalledServer:
         self.ansys_path = ansys_path
 
     def __enter__(self):
-        context = dpf.server.server_context.ServerContext(
-            dpf.server_context.LicensingContextType.premium
-        )
-
-        server = dpf.start_local_server(ansys_path=self.ansys_path, context=context)
+        server = dpf.start_local_server(ansys_path=self.ansys_path)
         return ServerContext(port=None, platform=sys.platform, server=server)
 
     def __exit__(self, *args):
@@ -259,7 +278,7 @@ def dpf_server(request: pytest.FixtureRequest):
     ]
 
     if len(active_options) > 1:
-        if (docker_image_tag is not None) and docker_image_tag == "latest":
+        if (docker_image_tag is not None) and docker_image_tag == DEFAULT_DOCKER_IMAGE_TAG:
             # We don't want to fail if docker_image_tag is not set explicitly
             # because it has a default value.
             docker_image_tag = None
@@ -299,9 +318,7 @@ def dpf_server(request: pytest.FixtureRequest):
         server = _try_until_timeout(start_server, "Failed to start server.")
 
         _wait_until_server_is_up(server)
-        server.apply_context(
-            dpf.server.server_context.ServerContext(dpf.server_context.LicensingContextType.premium)
-        )
+
         load_composites_plugin(server, ansys_path=installer_path)
 
         yield server

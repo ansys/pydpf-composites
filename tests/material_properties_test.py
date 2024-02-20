@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import ansys.dpf.core as dpf
 import numpy as np
 import pytest
@@ -7,7 +29,7 @@ from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     get_all_analysis_ply_names,
     get_analysis_ply_index_to_name_map,
-    get_dpf_material_id_by_analyis_ply_map,
+    get_dpf_material_id_by_analysis_ply_map,
     get_element_info_provider,
 )
 from ansys.dpf.composites.layup_info.material_operators import get_material_operators
@@ -26,7 +48,7 @@ def test_get_analysis_ply_material_id_map(dpf_server):
     files = get_basic_shell_files()
     setup_result = setup_operators(dpf_server, files)
 
-    material_map = get_dpf_material_id_by_analyis_ply_map(
+    material_map = get_dpf_material_id_by_analysis_ply_map(
         setup_result.mesh, setup_result.streams_provider
     )
 
