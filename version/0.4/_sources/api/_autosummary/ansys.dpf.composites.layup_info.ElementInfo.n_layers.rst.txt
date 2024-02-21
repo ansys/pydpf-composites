@@ -1,0 +1,6 @@
+n\_layers
+=========
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: ElementInfo.n_layers

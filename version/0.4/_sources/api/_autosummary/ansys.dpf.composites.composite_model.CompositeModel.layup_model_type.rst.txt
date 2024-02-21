@@ -1,0 +1,6 @@
+layup\_model\_type
+==================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoproperty:: CompositeModel.layup_model_type

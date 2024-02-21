@@ -1,0 +1,6 @@
+measure
+=======
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoproperty:: ResultDefinition.measure

@@ -1,0 +1,6 @@
+MIXED
+=====
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: LayupModelContextType.MIXED

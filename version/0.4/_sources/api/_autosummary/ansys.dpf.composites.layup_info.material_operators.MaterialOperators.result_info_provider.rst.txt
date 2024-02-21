@@ -1,0 +1,6 @@
+result\_info\_provider
+======================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_operators
+
+.. autoproperty:: MaterialOperators.result_info_provider

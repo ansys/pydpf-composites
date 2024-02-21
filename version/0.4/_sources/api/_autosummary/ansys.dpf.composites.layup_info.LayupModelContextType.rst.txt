@@ -1,0 +1,29 @@
+﻿.. vale off
+
+LayupModelContextType
+=====================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: LayupModelContextType
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      LayupModelContextType.NOT_AVAILABLE
+      LayupModelContextType.ACP
+      LayupModelContextType.RST
+      LayupModelContextType.MIXED
+   
+   
+
+.. vale on

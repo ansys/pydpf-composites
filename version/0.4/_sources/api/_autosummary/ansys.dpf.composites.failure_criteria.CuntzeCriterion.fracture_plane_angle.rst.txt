@@ -1,0 +1,6 @@
+fracture\_plane\_angle
+======================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: CuntzeCriterion.fracture_plane_angle

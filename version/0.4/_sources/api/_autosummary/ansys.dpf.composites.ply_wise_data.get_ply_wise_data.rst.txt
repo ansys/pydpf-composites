@@ -1,0 +1,6 @@
+﻿get\_ply\_wise\_data
+====================
+
+.. currentmodule:: ansys.dpf.composites.ply_wise_data
+
+.. autofunction:: get_ply_wise_data
