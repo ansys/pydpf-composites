@@ -164,13 +164,13 @@ plotting = ["imageio (<2.28.1)", "imageio-ffmpeg", "matplotlib (>=3.2)", "pyvist
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.14.0"
+version = "0.14.1"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 optional = true
 python-versions = ">=3.9,<4"
 files = [
-    {file = "ansys_sphinx_theme-0.14.0-py3-none-any.whl", hash = "sha256:3ef0dcb5f6c491c876f1e5f4ed63f7acff7b5763ffc991b7bbf9336b11c3f029"},
-    {file = "ansys_sphinx_theme-0.14.0.tar.gz", hash = "sha256:e576f1a61a660d01e186e8413ebc6bc9c6c132c66e5b626a24a8a0ba9de5e138"},
+    {file = "ansys_sphinx_theme-0.14.1-py3-none-any.whl", hash = "sha256:b8f6bd0a5d2ac13db6e8c45cb1fb8120cbbd843f58606a9b37a15f40ed3352c6"},
+    {file = "ansys_sphinx_theme-0.14.1.tar.gz", hash = "sha256:ac1fdf744591cb2021dd4a088715802ba01a0f810ffa3af081c1dc0800f32e60"},
 ]
 
 [package.dependencies]
