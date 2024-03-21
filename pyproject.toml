@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 # Check https://python-poetry.org/docs/pyproject/ for all available sections
 name = "ansys-dpf-composites"
 # Switch to released version of dpf core releasing pydpf-composites!
-version = "0.3.dev0"
+version = "0.4.dev0"
 description = "Post-processing of composite structures based on Ansys DPF"
 license = "MIT"
 authors = ["ANSYS, Inc. <ansys.support@ansys.com>"]
@@ -15,7 +15,7 @@ readme = "README.rst"
 repository = "https://github.com/ansys/pydpf-composites"
 documentation = "https://composites.dpf.docs.pyansys.com"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
