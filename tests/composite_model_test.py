@@ -177,7 +177,29 @@ def test_model_with_multiple_timesteps(dpf_server):
             check_field_size(FailureOutput.MAX_SOLID_ELEMENT_ID)
 
 
-def test_assembly_model(dpf_server):
+_MAX_RESERVE_FACTOR = 1000.0
+
+
+def _get_margin_of_safety_from_irf(irf: float) -> float:
+    return _get_reserve_factor_from_irf(irf) - 1.0
+
+
+def _get_reserve_factor_from_irf(irf: float) -> float:
+    if irf > 0.0:
+        return min(1.0 / irf, _MAX_RESERVE_FACTOR)
+    else:
+        return _MAX_RESERVE_FACTOR
+
+
+@pytest.mark.parametrize(
+    "failure_measure",
+    [
+        FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
+        FailureMeasureEnum.RESERVE_FACTOR,
+        FailureMeasureEnum.MARGIN_OF_SAFETY,
+    ],
+)
+def test_assembly_model(dpf_server, failure_measure):
     """Verify the handling of assemblies."""
 
     timer = Timer()
@@ -201,16 +223,26 @@ def test_assembly_model(dpf_server):
     failure_output = composite_model.evaluate_failure_criteria(
         combined_criterion=combined_failure_criterion,
         composite_scope=CompositeScope(),
+        measure=failure_measure,
     )
 
     timer.add("After get failure output")
 
-    def check_output(failure_label: FailureOutput, expected_output: dict[int, float]):
+    def check_value_output(failure_label: FailureOutput, expected_output: dict[int, float]):
+        for element_id, expected_value in expected_output.items():
+            if failure_measure == FailureMeasureEnum.MARGIN_OF_SAFETY:
+                expected_value = _get_margin_of_safety_from_irf(expected_value)
+            elif failure_measure == FailureMeasureEnum.RESERVE_FACTOR:
+                expected_value = _get_reserve_factor_from_irf(expected_value)
+            failure_field = failure_output.get_field({FAILURE_LABEL: failure_label})
+            assert failure_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
+
+    def check_mode_output(failure_label: FailureOutput, expected_output: dict[int, float]):
         for element_id, expected_value in expected_output.items():
             failure_field = failure_output.get_field({FAILURE_LABEL: failure_label})
             assert failure_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
 
-    expected_output = {
+    expected_irf_output = {
         1: 1.11311715,
         2: 1.11311715,
         5: 1.85777034,
@@ -220,7 +252,7 @@ def test_assembly_model(dpf_server):
         9: 0.62122959,
         10: 0.62122959,
     }
-    check_output(FailureOutput.FAILURE_VALUE, expected_output)
+    check_value_output(FailureOutput.FAILURE_VALUE, expected_irf_output)
 
     expected_modes = {
         1: FailureModeEnum.s1t.value,
@@ -232,7 +264,7 @@ def test_assembly_model(dpf_server):
         9: FailureModeEnum.s2t.value,
         10: FailureModeEnum.s2t.value,
     }
-    check_output(FailureOutput.FAILURE_MODE, expected_modes)
+    check_mode_output(FailureOutput.FAILURE_MODE, expected_modes)
 
     expected_layer_index = {
         1: 2,
@@ -251,9 +283,9 @@ def test_assembly_model(dpf_server):
             # at 0 instead of 1
             expected_layer_index[element_id] -= 1
 
-    check_output(FailureOutput.MAX_LAYER_INDEX, expected_layer_index)
+    check_mode_output(FailureOutput.MAX_LAYER_INDEX, expected_layer_index)
 
-    expected_output_ref_surface = {
+    expected_output_irf_ref_surface = {
         1: 1.85777034,
         2: 1.85777034,
         3: 1.11311715,
@@ -261,7 +293,7 @@ def test_assembly_model(dpf_server):
     }
 
     if version_equal_or_later(dpf_server, "8.0"):
-        check_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_ref_surface)
+        check_value_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_irf_ref_surface)
 
         expected_output_local_layer = {
             1: 2,
@@ -269,7 +301,7 @@ def test_assembly_model(dpf_server):
             3: 2,
             4: 2,
         }
-        check_output(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer)
+        check_mode_output(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer)
 
         expected_output_global_layer = {
             1: 2,
@@ -277,7 +309,7 @@ def test_assembly_model(dpf_server):
             3: 2,
             4: 2,
         }
-        check_output(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer)
+        check_mode_output(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer)
 
         expected_output_solid_element = {
             1: 5,
@@ -285,7 +317,7 @@ def test_assembly_model(dpf_server):
             3: 1,
             4: 2,
         }
-        check_output(FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element)
+        check_mode_output(FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element)
 
     property_dict = composite_model.get_constant_property_dict(
         [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label

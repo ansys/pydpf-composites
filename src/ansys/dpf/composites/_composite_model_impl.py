@@ -521,21 +521,12 @@ class CompositeModelImpl:
                 max_merger.outputs.merged_fields_container()
             )
 
-            if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
-                return _merge_containers(
-                    max_merger.outputs.merged_fields_container(),
-                    self._map_to_reference_surface_operator.outputs.max_container(),
-                )
-            else:
-                return _merge_containers(
-                    min_merger.outputs.merged_fields_container(),
-                    self._map_to_reference_surface_operator.outputs.min_container(),
-                )
+            return _merge_containers(
+                max_merger.outputs.merged_fields_container(),
+                self._map_to_reference_surface_operator.outputs.max_container(),
+            )
         else:
-            if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
-                return max_merger.outputs.merged_fields_container()
-            else:
-                return min_merger.outputs.merged_fields_container()
+            return max_merger.outputs.merged_fields_container()
 
     @_deprecated_composite_definition_label
     def get_sampling_point(
