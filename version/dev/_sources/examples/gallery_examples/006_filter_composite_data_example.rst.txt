@@ -256,7 +256,7 @@ Get element information for all elements and show the first one as an example.
 
 Get filtered data
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-147
+.. GENERATED FROM PYTHON SOURCE LINES 129-149
 
 .. code-block:: default
 
@@ -273,7 +273,9 @@ Get filtered data
             )
 
             value = stress_data[selected_indices][:, component]
-            local_result_field.append(value, element_id)
+            # value needs to be passed as list because dpf does not support numpy
+            # slices in the append call.
+            local_result_field.append(value.tolist(), element_id)
 
     composite_model.get_mesh().plot(result_field)
 
@@ -312,14 +314,14 @@ Get filtered data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-152
+.. GENERATED FROM PYTHON SOURCE LINES 150-154
 
 Filter by material
 ~~~~~~~~~~~~~~~~~~~~~
 Loop over all elements and get the maximum stress in the material direction
 for all plies that have a specific UD material.
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-174
+.. GENERATED FROM PYTHON SOURCE LINES 154-176
 
 .. code-block:: default
 
@@ -379,14 +381,14 @@ for all plies that have a specific UD material.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 175-179
+.. GENERATED FROM PYTHON SOURCE LINES 177-181
 
 Filter by analysis ply on the client side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Loop over all elements that contain a given ply and plot the maximum stress value
 in the material direction in this ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-202
+.. GENERATED FROM PYTHON SOURCE LINES 181-204
 
 .. code-block:: default
 
@@ -450,7 +452,7 @@ in the material direction in this ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.644 seconds)
+   **Total running time of the script:** ( 0 minutes  4.700 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
