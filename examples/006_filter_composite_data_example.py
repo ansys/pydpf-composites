@@ -139,7 +139,7 @@ with result_field.as_local_field() as local_result_field:
         )
 
         value = stress_data[selected_indices][:, component]
-        # value needs to be passed as list because dpf does not support numpyy
+        # value needs to be passed as list because dpf does not support numpy
         # slices in the append call.
         local_result_field.append(list(value), element_id)
 
