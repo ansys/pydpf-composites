@@ -166,7 +166,7 @@ def test_filter_by_global_ply(dpf_server):
                 component = 0
                 value = strain_data[selected_indices][:, component]
 
-                local_result_field.append(value, element_id)
+                local_result_field.append(list(value), element_id)
 
     # Ply is only present in element 1 and 2
     assert list(result_field.scoping.ids) == [1, 2]
