@@ -525,14 +525,11 @@ class CompositeModelImpl:
             converter_op.inputs.fields_container(ref_surface_max_container)
             converter_op.run()
 
-            return _merge_containers(
-                max_merger.outputs.merged_fields_container(), ref_surface_max_container
-            )
+            return _merge_containers(overall_max_container, ref_surface_max_container)
         else:
-            overall_max_container = max_merger.outputs.merged_fields_container()
             converter_op = dpf.Operator("composite::failure_measure_converter")
             converter_op.inputs.measure_type(measure.value)
-            converter_op.inputs.fields_container(overall_max_container)
+            converter_op.inputs.fields_container(max_merger.outputs.merged_fields_container())
             converter_op.run()
             return max_container
 
