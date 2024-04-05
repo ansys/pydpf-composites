@@ -498,14 +498,6 @@ class CompositeModelImpl:
             min_container = minmax_el_op.outputs.field_min()
             max_container = minmax_el_op.outputs.field_max()
 
-            converter_op = dpf.Operator("composite::failure_measure_converter")
-            converter_op.inputs.fields_container(min_container)
-            converter_op.inputs.measure_type(measure.value)
-            converter_op.run()
-
-            converter_op.inputs.fields_container(max_container)
-            converter_op.run()
-
             min_merger.connect(merge_index, min_container)
             max_merger.connect(merge_index, max_container)
             merge_index = merge_index + 1
@@ -514,19 +506,35 @@ class CompositeModelImpl:
             raise RuntimeError("No output is generated! Check the scope (element and ply IDs).")
 
         if self._supports_reference_surface_operators():
+            overall_max_container = max_merger.outputs.merged_fields_container()
+
             self._map_to_reference_surface_operator.inputs.min_container(
                 min_merger.outputs.merged_fields_container()
             )
-            self._map_to_reference_surface_operator.inputs.max_container(
-                max_merger.outputs.merged_fields_container()
+            self._map_to_reference_surface_operator.inputs.max_container(overall_max_container)
+
+            ref_surface_max_container = (
+                self._map_to_reference_surface_operator.outputs.max_container()
             )
 
+            converter_op = dpf.Operator("composite::failure_measure_converter")
+            converter_op.inputs.measure_type(measure.value)
+            converter_op.inputs.fields_container(overall_max_container)
+            converter_op.run()
+
+            converter_op.inputs.fields_container(ref_surface_max_container)
+            converter_op.run()
+
             return _merge_containers(
-                max_merger.outputs.merged_fields_container(),
-                self._map_to_reference_surface_operator.outputs.max_container(),
+                max_merger.outputs.merged_fields_container(), ref_surface_max_container
             )
         else:
-            return max_merger.outputs.merged_fields_container()
+            overall_max_container = max_merger.outputs.merged_fields_container()
+            converter_op = dpf.Operator("composite::failure_measure_converter")
+            converter_op.inputs.measure_type(measure.value)
+            converter_op.inputs.fields_container(overall_max_container)
+            converter_op.run()
+            return max_container
 
     @_deprecated_composite_definition_label
     def get_sampling_point(
