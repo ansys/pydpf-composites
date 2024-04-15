@@ -139,7 +139,9 @@ with result_field.as_local_field() as local_result_field:
         )
 
         value = stress_data[selected_indices][:, component]
-        local_result_field.append(value, element_id)
+        # value needs to be passed as list because dpf does not support numpy
+        # slices in the append call.
+        local_result_field.append(value.tolist(), element_id)
 
 composite_model.get_mesh().plot(result_field)
 
