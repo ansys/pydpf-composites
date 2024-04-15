@@ -81,7 +81,7 @@ def get_result_field(
                     # Conversion to a list is a temporary workaround
                     # because the append method does currently not work
                     # reliably for slices of numpy arrays
-                    local_result_field.append(list(values), element_id)
+                    local_result_field.append(values.tolist(), element_id)
                 else:
                     local_result_field.append(strain_data[selected_indices, component], element_id)
     return result_field
@@ -166,7 +166,7 @@ def test_filter_by_global_ply(dpf_server):
                 component = 0
                 value = strain_data[selected_indices][:, component]
 
-                local_result_field.append(value, element_id)
+                local_result_field.append(value.tolist(), element_id)
 
     # Ply is only present in element 1 and 2
     assert list(result_field.scoping.ids) == [1, 2]
