@@ -523,26 +523,20 @@ class CompositeModelImpl:
             converter_op.inputs.fields_container(overall_max_container)
             converter_op.run()
             converter_op.inputs.fields_container(ref_surface_max_container)
+            converter_op.run()
 
-            if version_older_than(self._server, "8.1"):
+            if version_older_than(self._server, "8.2"):
                 # For versions before 8.1, the Reference Surface suffix
                 # is not correctly preserved by the failure_measure_converter
                 # We add the suffix manually here.
-                reference_surface_suffix = " Reference Surface"
-
-                def add_ref_surface_suffix(field: dpf.Field) -> None:
-                    field.name = field.name + reference_surface_suffix
-
-                add_ref_surface_suffix(
-                    ref_surface_max_container.get_field(
-                        {FAILURE_LABEL: FailureOutput.FAILURE_MODE_REF_SURFACE}
-                    )
-                )
-                add_ref_surface_suffix(
-                    ref_surface_max_container.get_field(
-                        {FAILURE_LABEL: FailureOutput.FAILURE_VALUE_REF_SURFACE}
-                    )
-                )
+                for field in ref_surface_max_container:
+                    if (
+                        field.name.startswith("IRF")
+                        or field.name.startswith("SF")
+                        or field.name.startswith("SM")
+                    ):
+                        assert not field.name.endswith(REF_SURFACE_NAME)
+                        field.name = field.name + " " + REF_SURFACE_NAME
 
             return _merge_containers(overall_max_container, ref_surface_max_container)
         else:
