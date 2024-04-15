@@ -526,7 +526,7 @@ class CompositeModelImpl:
             converter_op.run()
 
             if version_older_than(self._server, "8.2"):
-                # For versions before 8.1, the Reference Surface suffix
+                # For versions before 8.2, the Reference Surface suffix
                 # is not correctly preserved by the failure_measure_converter
                 # We add the suffix manually here.
                 for field in ref_surface_max_container:
@@ -536,7 +536,10 @@ class CompositeModelImpl:
                         or field.name.startswith("SM")
                     ):
                         assert not field.name.endswith(REF_SURFACE_NAME)
-                        field.name = field.name + " " + REF_SURFACE_NAME
+                        # Set name in field definition, because setting
+                        # the name directly is not supported for older dpf versions
+                        field_definition = field.field_definition
+                        field_definition.name = field_definition.name + " " + REF_SURFACE_NAME
 
             return _merge_containers(overall_max_container, ref_surface_max_container)
         else:
