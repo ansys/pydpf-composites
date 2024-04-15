@@ -60,6 +60,7 @@ from .sampling_point import SamplingPointNew
 from .server_helpers import (
     upload_continuous_fiber_composite_files_to_server,
     version_equal_or_later,
+    version_older_than,
 )
 from .unit_system import get_unit_system
 
@@ -521,9 +522,27 @@ class CompositeModelImpl:
             converter_op.inputs.measure_type(measure.value)
             converter_op.inputs.fields_container(overall_max_container)
             converter_op.run()
-
             converter_op.inputs.fields_container(ref_surface_max_container)
-            converter_op.run()
+
+            if version_older_than(self._server, "8.1"):
+                # For versions before 8.1, the Reference Surface suffix
+                # is not correctly preserved by the failure_measure_converter
+                # We add the suffix manually here.
+                reference_surface_suffix = " Reference Surface"
+
+                def add_ref_surface_suffix(field: dpf.Field) -> None:
+                    field.name = field.name + reference_surface_suffix
+
+                add_ref_surface_suffix(
+                    ref_surface_max_container.get_field(
+                        {FAILURE_LABEL: FailureOutput.FAILURE_MODE_REF_SURFACE}
+                    )
+                )
+                add_ref_surface_suffix(
+                    ref_surface_max_container.get_field(
+                        {FAILURE_LABEL: FailureOutput.FAILURE_VALUE_REF_SURFACE}
+                    )
+                )
 
             return _merge_containers(overall_max_container, ref_surface_max_container)
         else:
