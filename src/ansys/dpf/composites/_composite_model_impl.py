@@ -60,6 +60,7 @@ from .sampling_point import SamplingPointNew
 from .server_helpers import (
     upload_continuous_fiber_composite_files_to_server,
     version_equal_or_later,
+    version_older_than,
 )
 from .unit_system import get_unit_system
 
@@ -498,14 +499,6 @@ class CompositeModelImpl:
             min_container = minmax_el_op.outputs.field_min()
             max_container = minmax_el_op.outputs.field_max()
 
-            converter_op = dpf.Operator("composite::failure_measure_converter")
-            converter_op.inputs.fields_container(min_container)
-            converter_op.inputs.measure_type(measure.value)
-            converter_op.run()
-
-            converter_op.inputs.fields_container(max_container)
-            converter_op.run()
-
             min_merger.connect(merge_index, min_container)
             max_merger.connect(merge_index, max_container)
             merge_index = merge_index + 1
@@ -514,28 +507,47 @@ class CompositeModelImpl:
             raise RuntimeError("No output is generated! Check the scope (element and ply IDs).")
 
         if self._supports_reference_surface_operators():
+            overall_max_container = max_merger.outputs.merged_fields_container()
+
             self._map_to_reference_surface_operator.inputs.min_container(
                 min_merger.outputs.merged_fields_container()
             )
-            self._map_to_reference_surface_operator.inputs.max_container(
-                max_merger.outputs.merged_fields_container()
+            self._map_to_reference_surface_operator.inputs.max_container(overall_max_container)
+
+            ref_surface_max_container = (
+                self._map_to_reference_surface_operator.outputs.max_container()
             )
 
-            if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
-                return _merge_containers(
-                    max_merger.outputs.merged_fields_container(),
-                    self._map_to_reference_surface_operator.outputs.max_container(),
-                )
-            else:
-                return _merge_containers(
-                    min_merger.outputs.merged_fields_container(),
-                    self._map_to_reference_surface_operator.outputs.min_container(),
-                )
+            converter_op = dpf.Operator("composite::failure_measure_converter")
+            converter_op.inputs.measure_type(measure.value)
+            converter_op.inputs.fields_container(overall_max_container)
+            converter_op.run()
+            converter_op.inputs.fields_container(ref_surface_max_container)
+            converter_op.run()
+
+            if version_older_than(self._server, "8.2"):
+                # For versions before 8.2, the Reference Surface suffix
+                # is not correctly preserved by the failure_measure_converter
+                # We add the suffix manually here.
+                for field in ref_surface_max_container:
+                    if (
+                        field.name.startswith("IRF")
+                        or field.name.startswith("SF")
+                        or field.name.startswith("SM")
+                    ):
+                        assert not field.name.endswith(REF_SURFACE_NAME)
+                        # Set name in field definition, because setting
+                        # the name directly is not supported for older dpf versions
+                        field_definition = field.field_definition
+                        field_definition.name = field_definition.name + " " + REF_SURFACE_NAME
+
+            return _merge_containers(overall_max_container, ref_surface_max_container)
         else:
-            if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
-                return max_merger.outputs.merged_fields_container()
-            else:
-                return min_merger.outputs.merged_fields_container()
+            converter_op = dpf.Operator("composite::failure_measure_converter")
+            converter_op.inputs.measure_type(measure.value)
+            converter_op.inputs.fields_container(max_merger.outputs.merged_fields_container())
+            converter_op.run()
+            return max_container
 
     @_deprecated_composite_definition_label
     def get_sampling_point(
