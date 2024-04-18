@@ -1073,6 +1073,10 @@ div.nboutput
   background-color: transparent;
 }
 
+aside.topic > p {
+  color: var(--pst-color-text-base) !important;
+}
+
 /*
 ############
 Border lines
@@ -1128,4 +1132,42 @@ a:hover {
 a:visited,
 a:visited:hover {
   color: var(--pst-color-link-visted);
+}
+
+/* Cheat sheet sidebar */
+
+.sidebar-cheatsheets h4 {
+  font-weight: var(--pst-sidebar-header-font-weight) !important;
+  font-size: var(--pst-sidebar-header-font-size) !important;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-cheatsheets a {
+  display: inline-flex;
+  border: 0.5px solid var(--pst-color-border);
+  padding: 0.25rem;
+  max-width: 80%;
+}
+
+.sidebar-cheatsheets a:hover {
+  background-color: var(--pst-color-border);
+  color: var(--pst-color-text-base);
+}
+
+.sidebar-cheatsheets img {
+  padding: 0rem;
+}
+
+.bd-sidebar-primary {
+  padding: 0.5rem;
+}
+
+/* Do not display object domain namespace when documenting objects.
+
+   Example: class ansys.module.foo.Foo.method -> method
+
+  */
+
+.sig-prename.descclassname {
+  display: none;
 }

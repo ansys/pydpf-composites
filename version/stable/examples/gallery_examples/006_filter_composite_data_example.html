@@ -661,7 +661,9 @@ This code plots stress values in the material direction for the first node and t
         <span class="p">)</span>
 
         <span class="n">value</span> <span class="o">=</span> <span class="n">stress_data</span><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a><span class="p">][:,</span> <span class="n">component</span><span class="p">]</span>
-        <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+        <span class="c1"># value needs to be passed as list because dpf does not support numpy</span>
+        <span class="c1"># slices in the append call.</span>
+        <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
 <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result_field</span><span class="p">)</span>
 </pre></div>
@@ -759,7 +761,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_004.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.236 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  6.194 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-006-filter-composite-data-example-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/adf87dd096add9a8ebb88eb4ce7f189b/006_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">006_filter_composite_data_example.py</span></code></a></p>
@@ -865,7 +867,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
   <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
     >Ansys Sphinx Theme</a
   >
-  0.13.3. <br />Last updated on
+  0.15.2. <br />Last updated on
   <span id="date"></span>
 </p>
 <script>
