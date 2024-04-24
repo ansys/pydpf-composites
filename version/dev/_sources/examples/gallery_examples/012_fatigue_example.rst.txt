@@ -202,7 +202,7 @@ No mean stress correction is applied.
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7f8426ff1490>]
+    [<matplotlib.lines.Line2D object at 0x7f2ffb76dca0>]
 
 
 
@@ -378,7 +378,7 @@ Identify the element with the maximum damage
  .. code-block:: none
 
     The element with highest damage is 27.
-    The highest damage value is 2.012800277467647e-06.
+    The highest damage value is 1.2931950096963925e-06.
 
 
 
@@ -386,7 +386,7 @@ Identify the element with the maximum damage
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.602 seconds)
+   **Total running time of the script:** ( 0 minutes  4.320 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_012_fatigue_example.py:
