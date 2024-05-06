@@ -78,7 +78,9 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # Get the stress field.
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
-stress_field = stress_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
+stress_field_material_coord = stress_operator.get_output(
+    pin=0, output_type=dpf.types.fields_container
+)[0]
 
 # %%
 # Filter data by analysis ply
@@ -99,8 +101,8 @@ all_ply_names
 # Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
 # and filtering is done on the server side.
 if version_equal_or_later(server, "8.0"):
-    elemental_max = get_ply_wise_data(
-        field=stress_field,
+    elemental_values = get_ply_wise_data(
+        field=stress_field_material_coord,
         ply_name="P1L1__ud_patch ns1",
         mesh=composite_model.get_mesh(),
         component=Sym3x3TensorComponent.TENSOR11,
@@ -108,7 +110,28 @@ if version_equal_or_later(server, "8.0"):
         requested_location=dpf.locations.elemental,
     )
 
-    composite_model.get_mesh().plot(elemental_max)
+    composite_model.get_mesh().plot(elemental_values)
+
+# %%
+# The results can also be requested in global coordinates. This example gets the stress values in
+# the global coordinate system, selects the top spot of a selected ply and averages the values
+# over neighbouring nodes to get nodal results.
+stress_operator.inputs.bool_rotate_to_global(True)
+stress_field_global_coord = stress_operator.get_output(
+    pin=0, output_type=dpf.types.fields_container
+)[0]
+
+if version_equal_or_later(server, "8.0"):
+    nodal_values = get_ply_wise_data(
+        field=stress_field_global_coord,
+        ply_name="P1L1__ud_patch ns1",
+        mesh=composite_model.get_mesh(),
+        component=Sym3x3TensorComponent.TENSOR11,
+        spot_reduction_strategy=SpotReductionStrategy.TOP,
+        requested_location=dpf.locations.nodal,
+    )
+
+    composite_model.get_mesh().plot(nodal_values)
 
 
 # %%
@@ -120,7 +143,7 @@ if version_equal_or_later(server, "8.0"):
 
 # %%
 # Get element information for all elements and show the first one as an example.
-element_ids = stress_field.scoping.ids
+element_ids = stress_field_material_coord.scoping.ids
 element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
 element_infos[0]
 
@@ -129,9 +152,9 @@ element_infos[0]
 component = Sym3x3TensorComponent.TENSOR11
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with result_field.as_local_field() as local_result_field:
-    element_ids = stress_field.scoping.ids
+    element_ids = stress_field_material_coord.scoping.ids
     for element_id in element_ids:
-        stress_data = stress_field.get_entity_data_by_id(element_id)
+        stress_data = stress_field_material_coord.get_entity_data_by_id(element_id)
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
         selected_indices = get_selected_indices(
@@ -157,13 +180,13 @@ component = Sym3x3TensorComponent.TENSOR11
 
 material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with material_result_field.as_local_field() as local_result_field:
-    element_ids = stress_field.scoping.ids
+    element_ids = stress_field_material_coord.scoping.ids
 
     for element_id in element_ids:
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
         if ud_material_id in element_info.dpf_material_ids:
-            stress_data = stress_field.get_entity_data_by_id(element_id)
+            stress_data = stress_field_material_coord.get_entity_data_by_id(element_id)
             selected_indices = get_selected_indices_by_dpf_material_ids(
                 element_info, [ud_material_id]
             )
@@ -189,7 +212,7 @@ with ply_result_field.as_local_field() as local_result_field:
     element_ids = analysis_ply_info_provider.property_field.scoping.ids
 
     for element_id in element_ids:
-        stress_data = stress_field.get_entity_data_by_id(element_id)
+        stress_data = stress_field_material_coord.get_entity_data_by_id(element_id)
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
         selected_indices = get_selected_indices_by_analysis_ply(
