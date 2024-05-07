@@ -114,7 +114,7 @@ if version_equal_or_later(server, "8.0"):
 
 # %%
 # The results can also be requested in global coordinates. This example gets the stress values in
-# the global coordinate system, selects the top spot of a selected ply and averages the values
+# the global coordinate system, selects the top spot of a selected ply, and averages the values
 # over neighbouring nodes to get nodal results.
 stress_operator.inputs.bool_rotate_to_global(True)
 stress_field_global_coord = stress_operator.get_output(
