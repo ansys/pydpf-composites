@@ -186,9 +186,11 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     )
 
     corner_nodes_by_element_type[all_element_types] = [
-        dpf.element_types.descriptor(element_type).n_corner_nodes
-        if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
-        else -1
+        (
+            dpf.element_types.descriptor(element_type).n_corner_nodes
+            if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
+            else -1
+        )
         for element_type in all_element_types
     ]
     return corner_nodes_by_element_type

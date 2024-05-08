@@ -275,7 +275,7 @@ class CompositeModelImpl:
             helper_op = dpf.Operator("composite::materials_container_helper")
         except Exception as exc:
             raise RuntimeError(
-                f"Operator composite::materials_container_helper doesn't exist. "
+                f"Operator composite::materials_container_helper doesn't exist. "  # noqa: E231
                 f"This could be because the server version is 2024 R1-pre0. The "
                 f"latest preview or the unified installer can be used instead. "
                 f"Error: {exc}"

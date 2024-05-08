@@ -1,4 +1,5 @@
 """Sphinx documentation configuration file."""
+
 from datetime import datetime
 import os
 
@@ -47,7 +48,7 @@ html_theme_options = {
         ("PyAnsys", "https://docs.pyansys.com/"),
     ],
     "switcher": {
-        "json_url": f"https://{cname}/versions.json",
+        "json_url": f"https://{cname}/versions.json",  # noqa: E231
         "version_match": get_version_match(__version__),
     },
     "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
@@ -86,6 +87,11 @@ nitpick_ignore = [
 nitpick_ignore_regex = [
     ("py:class", r"numpy\..*"),
     ("py:class", ".*FailureCriterionBase"),  # implementation detail, not documented
+    # IntEnums which derive from int which has doc strings which start with lowercase.
+    ("py:class", "ansys.dpf.composites.constants.Spot"),
+    ("py:class", "ansys.dpf.composites.constants.Sym3x3TensorComponent"),
+    ("py:class", "ansys.dpf.composites.constants.LayerProperty"),
+    ("py:class", "ansys.dpf.composites.constants.LayupProperty"),
 ]
 
 # sphinx_autodoc_typehints configuration

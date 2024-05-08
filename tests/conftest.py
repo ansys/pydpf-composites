@@ -94,14 +94,19 @@ class DockerProcess:
 
     def __enter__(self):
         cmd = ["docker", "run"]
+
+        def get_volume_arg(source_dir, target_dir):
+            posix_path = pathlib.Path(source_dir).as_posix()
+            return f"/{posix_path.replace(':', '')}:{target_dir}"  # noqa: E231
+
         for source_dir, target_dir in self.mount_directories.items():
-            cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
+            cmd += ["-v" + get_volume_arg(source_dir, target_dir)]
         if sys.platform == "linux":
-            cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
+            cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]  # noqa: E231
 
         cmd += [
             "-p",
-            f"{self.port}:50052/tcp",
+            f"{self.port}:50052/tcp",  # noqa: E231
             "-e",
             "HOME=/tmp",
             "-e",
@@ -181,7 +186,7 @@ class DockerProcess:
         out = subprocess.check_output(["docker", "stop", self.name])
         self.process_stdout.write(str(out))
 
-        self.process_stdout.write(f"docker ps after stopping the container:\n")
+        self.process_stdout.write(f"docker ps after stopping the container:\n")  # noqa: E231
         self.process_stdout.write(f"\n")
         out = subprocess.check_output(["docker", "ps"])
         self.process_stdout.write(str(out))
@@ -294,7 +299,7 @@ def dpf_server(request: pytest.FixtureRequest):
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
 
-            image_name = f"ghcr.io/ansys/pydpf-composites:{docker_image_tag}"
+            image_name = f"ghcr.io/ansys/pydpf-composites:{docker_image_tag}"  # noqa: E231
 
             return DockerProcess(
                 server_out_file=server_log_stdout,
