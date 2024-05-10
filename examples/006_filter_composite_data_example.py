@@ -75,7 +75,9 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # %%
 # Get result data
 # ~~~~~~~~~~~~~~~
-# Get the stress field.
+# Get the stress field. By default, the stress operator returns the stresses in global coordinates.
+# To get the stresses in the material coordinate system, the ``bool_rotate_to_global``
+# input is set to ``False``.
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
 stress_field_material_coord = stress_operator.get_output(
