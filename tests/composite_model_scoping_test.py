@@ -107,7 +107,7 @@ def test_composite_model_ply_scope(dpf_server):
         ply_ids = ["P1L1__core", f"P1L1__woven_45.2"]
     else:
         analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
-        ply_ids = [f"{solid_label}::P1L1__core", f"{shell_label}::P1L1__woven_45.2"]  # noqa: E231
+        ply_ids = [f"{solid_label}::P1L1__core", f"{shell_label}::P1L1__woven_45.2"]
 
     for ply in ply_ids:
         assert ply in analysis_plies

@@ -186,7 +186,7 @@ class DockerProcess:
         out = subprocess.check_output(["docker", "stop", self.name])
         self.process_stdout.write(str(out))
 
-        self.process_stdout.write(f"docker ps after stopping the container:\n")  # noqa: E231
+        self.process_stdout.write(f"docker ps after stopping the container:\n")
         self.process_stdout.write(f"\n")
         out = subprocess.check_output(["docker", "ps"])
         self.process_stdout.write(str(out))
