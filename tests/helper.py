@@ -51,7 +51,7 @@ class Timer:
         print("Timer summary")
         for diff in diffs:
             print(diff)
-        print(f"Total:{self._get_sum()}")  # noqa: E231
+        print(f"Total:{self._get_sum()}")
         print("")
 
     def get_runtime_without_first_step(self):

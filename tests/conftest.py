@@ -97,16 +97,16 @@ class DockerProcess:
 
         def get_volume_arg(source_dir, target_dir):
             posix_path = pathlib.Path(source_dir).as_posix()
-            return f"/{posix_path.replace(':', '')}:{target_dir}"  # noqa: E231
+            return f"/{posix_path.replace(':', '')}:{target_dir}"
 
         for source_dir, target_dir in self.mount_directories.items():
             cmd += ["-v" + get_volume_arg(source_dir, target_dir)]
         if sys.platform == "linux":
-            cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]  # noqa: E231
+            cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
 
         cmd += [
             "-p",
-            f"{self.port}:50052/tcp",  # noqa: E231
+            f"{self.port}:50052/tcp",
             "-e",
             "HOME=/tmp",
             "-e",
@@ -299,7 +299,7 @@ def dpf_server(request: pytest.FixtureRequest):
             process_log_stdout = TEST_ROOT_DIR / "logs" / f"process_log_out-{uid}.txt"
             process_log_stderr = TEST_ROOT_DIR / "logs" / f"process_log_err-{uid}.txt"
 
-            image_name = f"ghcr.io/ansys/pydpf-composites:{docker_image_tag}"  # noqa: E231
+            image_name = f"ghcr.io/ansys/pydpf-composites:{docker_image_tag}"
 
             return DockerProcess(
                 server_out_file=server_log_stdout,

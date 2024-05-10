@@ -55,9 +55,7 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
 
 def _check_key(ver: str) -> None:
     if ver not in _DPF_VERSIONS.keys():
-        msg = ", ".join(
-            [f"{index}:{ver.server_version}" for index, ver in _DPF_VERSIONS.items()]  # noqa: E231
-        )
+        msg = ", ".join([f"{index}:{ver.server_version}" for index, ver in _DPF_VERSIONS.items()])
         raise RuntimeError(f"Invalid key `{ver}`. Allowed values are {msg}.")
 
 

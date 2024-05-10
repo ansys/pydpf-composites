@@ -225,9 +225,9 @@ def add_ply_sequence_to_plot_to_sp(
         th = float(ply["thickness"])
         if "angle" in ply.keys():
             angle = float(ply["angle"])
-            text = f"{mat}\nangle={angle:.3}, th={th:.3}"  # noqa: E231
+            text = f"{mat}\nangle={angle:.3}, th={th:.3}"
         else:
-            text = f"{mat}\nth={th:.3}"  # noqa: E231
+            text = f"{mat}\nth={th:.3}"
         axes.annotate(
             text=text,
             xy=(origin[0] + width / 2.0, origin[1] + height / 2.0),
@@ -314,7 +314,7 @@ def get_result_plots_from_sp(
             labels = []
             first_axis.set_ylabel("z-Coordinates (scaled)")
         else:
-            labels = [f"{t:.3}" for t in ticks]  # noqa: E231
+            labels = [f"{t:.3}" for t in ticks]
             first_axis.set_ylabel("z-Coordinates [length]")
 
         first_axis.set_yticks(ticks=ticks, labels=labels)
