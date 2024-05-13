@@ -107,19 +107,23 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-79
+.. GENERATED FROM PYTHON SOURCE LINES 76-81
 
 Get result data
 ~~~~~~~~~~~~~~~
-Get the stress field.
+Get the stress field. By default, the stress operator returns the stresses in global coordinates.
+To get the stresses in the material coordinate system, the ``bool_rotate_to_global``
+input is set to ``False``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-83
+.. GENERATED FROM PYTHON SOURCE LINES 81-87
 
 .. code-block:: default
 
     stress_operator = composite_model.core_model.results.stress()
     stress_operator.inputs.bool_rotate_to_global(False)
-    stress_field = stress_operator.get_output(pin=0, output_type=dpf.types.fields_container)[0]
+    stress_field_material_coord = stress_operator.get_output(
+        pin=0, output_type=dpf.types.fields_container
+    )[0]
 
 
 
@@ -128,16 +132,16 @@ Get the stress field.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-86
+.. GENERATED FROM PYTHON SOURCE LINES 88-90
 
 Filter data by analysis ply
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-89
+.. GENERATED FROM PYTHON SOURCE LINES 92-93
 
 List all available analysis plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-92
+.. GENERATED FROM PYTHON SOURCE LINES 93-96
 
 .. code-block:: default
 
@@ -157,7 +161,7 @@ List all available analysis plies.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-101
+.. GENERATED FROM PYTHON SOURCE LINES 97-105
 
 The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
 This function supports different reduction strategies such as computing the average,
@@ -168,13 +172,13 @@ the elemental location, which implies averaging over all nodes in an element.
 Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
 and filtering is done on the server side.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-114
+.. GENERATED FROM PYTHON SOURCE LINES 105-117
 
 .. code-block:: default
 
     if version_equal_or_later(server, "8.0"):
-        elemental_max = get_ply_wise_data(
-            field=stress_field,
+        elemental_values = get_ply_wise_data(
+            field=stress_field_material_coord,
             ply_name="P1L1__ud_patch ns1",
             mesh=composite_model.get_mesh(),
             component=Sym3x3TensorComponent.TENSOR11,
@@ -182,8 +186,7 @@ and filtering is done on the server side.
             requested_location=dpf.locations.elemental,
         )
 
-        composite_model.get_mesh().plot(elemental_max)
-
+        composite_model.get_mesh().plot(elemental_values)
 
 
 
@@ -219,65 +222,32 @@ and filtering is done on the server side.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-120
+.. GENERATED FROM PYTHON SOURCE LINES 118-121
 
-Generic client-side filtering
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This example shows how to filter data by layer, spot, and node using the generic filtering on
-the client side.
-This code plots stress values in the material direction for the first node and top spot.
+The results can also be requested in global coordinates. This example gets the stress values in
+the global coordinate system, selects the top spot of a selected ply, and averages the values
+over neighbouring nodes to get nodal results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-123
-
-Get element information for all elements and show the first one as an example.
-
-.. GENERATED FROM PYTHON SOURCE LINES 123-127
+.. GENERATED FROM PYTHON SOURCE LINES 121-139
 
 .. code-block:: default
 
-    element_ids = stress_field.scoping.ids
-    element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
-    element_infos[0]
+    stress_operator.inputs.bool_rotate_to_global(True)
+    stress_field_global_coord = stress_operator.get_output(
+        pin=0, output_type=dpf.types.fields_container
+    )[0]
 
+    if version_equal_or_later(server, "8.0"):
+        nodal_values = get_ply_wise_data(
+            field=stress_field_global_coord,
+            ply_name="P1L1__ud_patch ns1",
+            mesh=composite_model.get_mesh(),
+            component=Sym3x3TensorComponent.TENSOR11,
+            spot_reduction_strategy=SpotReductionStrategy.TOP,
+            requested_location=dpf.locations.nodal,
+        )
 
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    ElementInfo(id=1, n_layers=6, n_corner_nodes=4, n_spots=3, is_layered=True, element_type=181, dpf_material_ids=array([3, 2, 2, 1, 2, 3]), is_shell=True, number_of_nodes_per_spot_plane=4)
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 128-129
-
-Get filtered data
-
-.. GENERATED FROM PYTHON SOURCE LINES 129-149
-
-.. code-block:: default
-
-    component = Sym3x3TensorComponent.TENSOR11
-    result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
-    with result_field.as_local_field() as local_result_field:
-        element_ids = stress_field.scoping.ids
-        for element_id in element_ids:
-            stress_data = stress_field.get_entity_data_by_id(element_id)
-            element_info = composite_model.get_element_info(element_id)
-            assert element_info is not None
-            selected_indices = get_selected_indices(
-                element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.TOP]
-            )
-
-            value = stress_data[selected_indices][:, component]
-            # value needs to be passed as list because dpf does not support numpy
-            # slices in the append call.
-            local_result_field.append(value.tolist(), element_id)
-
-    composite_model.get_mesh().plot(result_field)
+        composite_model.get_mesh().plot(nodal_values)
 
 
 
@@ -314,38 +284,66 @@ Get filtered data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-154
+.. GENERATED FROM PYTHON SOURCE LINES 140-145
 
-Filter by material
-~~~~~~~~~~~~~~~~~~~~~
-Loop over all elements and get the maximum stress in the material direction
-for all plies that have a specific UD material.
+Generic client-side filtering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This example shows how to filter data by layer, spot, and node using the generic filtering on
+the client side.
+This code plots stress values in the material direction for the first node and top spot.
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-176
+.. GENERATED FROM PYTHON SOURCE LINES 147-148
+
+Get element information for all elements and show the first one as an example.
+
+.. GENERATED FROM PYTHON SOURCE LINES 148-152
 
 .. code-block:: default
 
+    element_ids = stress_field_material_coord.scoping.ids
+    element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
+    element_infos[0]
 
-    ud_material_id = composite_model.material_names["Epoxy Carbon UD (230 GPa) Prepreg"]
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    ElementInfo(id=1, n_layers=6, n_corner_nodes=4, n_spots=3, is_layered=True, element_type=181, dpf_material_ids=array([3, 2, 2, 1, 2, 3]), is_shell=True, number_of_nodes_per_spot_plane=4)
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 153-154
+
+Get filtered data
+
+.. GENERATED FROM PYTHON SOURCE LINES 154-174
+
+.. code-block:: default
+
     component = Sym3x3TensorComponent.TENSOR11
-
-    material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
-    with material_result_field.as_local_field() as local_result_field:
-        element_ids = stress_field.scoping.ids
-
+    result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+    with result_field.as_local_field() as local_result_field:
+        element_ids = stress_field_material_coord.scoping.ids
         for element_id in element_ids:
+            stress_data = stress_field_material_coord.get_entity_data_by_id(element_id)
             element_info = composite_model.get_element_info(element_id)
             assert element_info is not None
-            if ud_material_id in element_info.dpf_material_ids:
-                stress_data = stress_field.get_entity_data_by_id(element_id)
-                selected_indices = get_selected_indices_by_dpf_material_ids(
-                    element_info, [ud_material_id]
-                )
+            selected_indices = get_selected_indices(
+                element_info, layers=[element_info.n_layers - 1], nodes=[0], spots=[Spot.TOP]
+            )
 
-                value = np.max(stress_data[selected_indices][:, component])
-                local_result_field.append([value], element_id)
+            value = stress_data[selected_indices][:, component]
+            # value needs to be passed as list because dpf does not support numpy
+            # slices in the append call.
+            local_result_field.append(value.tolist(), element_id)
 
-    composite_model.get_mesh().plot(material_result_field)
+    composite_model.get_mesh().plot(result_field)
+
 
 
 
@@ -381,40 +379,39 @@ for all plies that have a specific UD material.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-181
+.. GENERATED FROM PYTHON SOURCE LINES 175-179
 
-Filter by analysis ply on the client side
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Loop over all elements that contain a given ply and plot the maximum stress value
-in the material direction in this ply.
+Filter by material
+~~~~~~~~~~~~~~~~~~~~~
+Loop over all elements and get the maximum stress in the material direction
+for all plies that have a specific UD material.
 
-.. GENERATED FROM PYTHON SOURCE LINES 181-204
+.. GENERATED FROM PYTHON SOURCE LINES 179-201
 
 .. code-block:: default
 
+
+    ud_material_id = composite_model.material_names["Epoxy Carbon UD (230 GPa) Prepreg"]
     component = Sym3x3TensorComponent.TENSOR11
 
-    analysis_ply_info_provider = AnalysisPlyInfoProvider(
-        mesh=composite_model.get_mesh(), name="P1L1__ud_patch ns1"
-    )
-
-    ply_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
-    with ply_result_field.as_local_field() as local_result_field:
-        element_ids = analysis_ply_info_provider.property_field.scoping.ids
+    material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+    with material_result_field.as_local_field() as local_result_field:
+        element_ids = stress_field_material_coord.scoping.ids
 
         for element_id in element_ids:
-            stress_data = stress_field.get_entity_data_by_id(element_id)
             element_info = composite_model.get_element_info(element_id)
             assert element_info is not None
-            selected_indices = get_selected_indices_by_analysis_ply(
-                analysis_ply_info_provider, element_info
-            )
+            if ud_material_id in element_info.dpf_material_ids:
+                stress_data = stress_field_material_coord.get_entity_data_by_id(element_id)
+                selected_indices = get_selected_indices_by_dpf_material_ids(
+                    element_info, [ud_material_id]
+                )
 
-            value = np.max(stress_data[selected_indices][:, component])
-            local_result_field.append([value], element_id)
+                value = np.max(stress_data[selected_indices][:, component])
+                local_result_field.append([value], element_id)
 
+    composite_model.get_mesh().plot(material_result_field)
 
-    composite_model.get_mesh().plot(ply_result_field)
 
 
 
@@ -449,10 +446,78 @@ in the material direction in this ply.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 202-206
+
+Filter by analysis ply on the client side
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Loop over all elements that contain a given ply and plot the maximum stress value
+in the material direction in this ply.
+
+.. GENERATED FROM PYTHON SOURCE LINES 206-229
+
+.. code-block:: default
+
+    component = Sym3x3TensorComponent.TENSOR11
+
+    analysis_ply_info_provider = AnalysisPlyInfoProvider(
+        mesh=composite_model.get_mesh(), name="P1L1__ud_patch ns1"
+    )
+
+    ply_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+    with ply_result_field.as_local_field() as local_result_field:
+        element_ids = analysis_ply_info_provider.property_field.scoping.ids
+
+        for element_id in element_ids:
+            stress_data = stress_field_material_coord.get_entity_data_by_id(element_id)
+            element_info = composite_model.get_element_info(element_id)
+            assert element_info is not None
+            selected_indices = get_selected_indices_by_analysis_ply(
+                analysis_ply_info_provider, element_info
+            )
+
+            value = np.max(stress_data[selected_indices][:, component])
+            local_result_field.append([value], element_id)
+
+
+    composite_model.get_mesh().plot(ply_result_field)
+
+
+
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_005.png
+        :alt: 006 filter composite data example
+        :srcset: /examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_005.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_005.vtksz
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.835 seconds)
+   **Total running time of the script:** ( 0 minutes  4.238 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
