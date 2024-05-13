@@ -94,8 +94,13 @@ class DockerProcess:
 
     def __enter__(self):
         cmd = ["docker", "run"]
+
+        def get_volume_arg(source_dir, target_dir):
+            posix_path = pathlib.Path(source_dir).as_posix()
+            return f"/{posix_path.replace(':', '')}:{target_dir}"
+
         for source_dir, target_dir in self.mount_directories.items():
-            cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
+            cmd += ["-v" + get_volume_arg(source_dir, target_dir)]
         if sys.platform == "linux":
             cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
 

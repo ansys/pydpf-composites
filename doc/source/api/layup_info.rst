@@ -15,8 +15,10 @@ General features to access information on the composite lay-up.
     AnalysisPlyInfoProvider
     ElementInfoProvider
     ElementInfo
-    LayerProperty
     LayupPropertiesProvider
+
+    :template: autosummary/no_methods_doc/base.rst.jinja2
+    LayerProperty
     LayupProperty
     LayupModelContextType
 
@@ -39,10 +41,12 @@ example shows how to evaluate material properties.
 .. autosummary::
     :toctree: _autosummary
 
-    MaterialProperty
     get_constant_property
     get_all_dpf_material_ids
     get_constant_property_dict
+    :template: autosummary/no_methods_doc/base.rst.jinja2
+    MaterialProperty
+
 
 
 Material operators
