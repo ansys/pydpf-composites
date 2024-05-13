@@ -1,0 +1,6 @@
+removeprefix
+============
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: FailureMeasureEnum.removeprefix

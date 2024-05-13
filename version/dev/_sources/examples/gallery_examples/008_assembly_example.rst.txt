@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_008_assembly_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_008_assembly_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -39,7 +39,7 @@ Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 42-53
 
-.. code-block:: default
+.. code-block:: Python
 
 
     from ansys.dpf.composites.composite_model import CompositeModel
@@ -65,7 +65,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 55-58
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "assembly")
@@ -85,7 +85,7 @@ Configure the combined failure crition.
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-67
 
-.. code-block:: default
+.. code-block:: Python
 
     combined_fc = CombinedFailureCriterion(
         name="failure of all materials",
@@ -107,7 +107,7 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 71-73
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -126,7 +126,7 @@ Plot the maximum IRF per (solid) element.
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-81
 
-.. code-block:: default
+.. code-block:: Python
 
     output_all_elements = composite_model.evaluate_failure_criteria(combined_criterion=combined_fc)
     irf_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
@@ -174,7 +174,7 @@ Plot the maximum IRF on the reference surface
 
 .. GENERATED FROM PYTHON SOURCE LINES 85-92
 
-.. code-block:: default
+.. code-block:: Python
 
     if version_equal_or_later(server, "8.0"):
         irf_field = output_all_elements.get_field(
@@ -229,7 +229,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. GENERATED FROM PYTHON SOURCE LINES 100-115
 
-.. code-block:: default
+.. code-block:: Python
 
 
     if version_older_than(server, "7.0"):
@@ -256,7 +256,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.968 seconds)
+   **Total running time of the script:** (0 minutes 4.952 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:
@@ -265,14 +265,13 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 008_assembly_example.ipynb <008_assembly_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 008_assembly_example.py <008_assembly_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 008_assembly_example.ipynb <008_assembly_example.ipynb>`
 
 
 .. only:: html

@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Failure analysis of an MAPDL (RST) model &#8212; PyDPF Composites</title>
 
@@ -30,16 +29,16 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=35e44410" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -48,17 +47,14 @@
  
 <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/js/table.js"></script>
+    <script src="../../_static/documentation_options.js?v=59a9b892"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/table.js?v=b64f5182"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/011_rst_workflow';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
@@ -66,7 +62,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
-    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Evaluate fatigue for a composite plate" href="012_fatigue_example.html" />
@@ -531,11 +527,11 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-011-rst-workflow-py"><span class="std std-ref">here</span></a>
-to download the full example code</p>
+<p><a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-011-rst-workflow-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="failure-analysis-of-an-mapdl-rst-model">
-<span id="rst-workflow-example"></span><span id="sphx-glr-examples-gallery-examples-011-rst-workflow-py"></span><h1>Failure analysis of an MAPDL (RST) model<a class="headerlink" href="#failure-analysis-of-an-mapdl-rst-model" title="Permalink to this heading">#</a></h1>
+<span id="rst-workflow-example"></span><span id="sphx-glr-examples-gallery-examples-011-rst-workflow-py"></span><h1>Failure analysis of an MAPDL (RST) model<a class="headerlink" href="#failure-analysis-of-an-mapdl-rst-model" title="Link to this heading">#</a></h1>
 <p>This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
 the section data are loaded from the RST file instead of the ACP layup file.
@@ -555,11 +551,11 @@ to the UUIDs in Mechanical APDL (RST file).</p>
 and later. A few advanced features are not supported with the RST only workflow.
 For more information, see <a class="reference internal" href="../../index.html#limitations"><span class="std std-ref">Limitations</span></a>.</p>
 <section id="set-up-analysis">
-<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of loading Ansys libraries, connecting to the
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
@@ -574,22 +570,22 @@ DPF server, and retrieving the example files.</p>
 </pre></div>
 </div>
 <p>Start a DPF server and copy the example files into the current working directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Get input files (RST and material.engd but skip the ACP layup file).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp140375536686848/1f5caceb-13ad-48bd-9189-597b7c2077be/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140375536686848/b0e078c7-34ac-45f5-bdfb-56a47ee50797/material.engd&#39;, files_are_local=False)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp140423183980288/246a1dab-4664-48cd-bcb4-2552c5fc41c6/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140423183980288/6240c9eb-9de8-47c3-9e8d-7ebc96c44987/material.engd&#39;, files_are_local=False)
 </pre></div>
 </div>
 </section>
 <section id="configure-combined-failure-criterion">
-<h2>Configure combined failure criterion<a class="headerlink" href="#configure-combined-failure-criterion" title="Permalink to this heading">#</a></h2>
+<h2>Configure combined failure criterion<a class="headerlink" href="#configure-combined-failure-criterion" title="Link to this heading">#</a></h2>
 <p>Configure the combined failure criterion.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">combined_fc</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">combined_fc</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;failure of all materials&quot;</span><span class="p">,</span>
     <span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span>
         <span class="n">MaxStrainCriterion</span><span class="p">(),</span>
@@ -603,13 +599,13 @@ DPF server, and retrieving the example files.</p>
 </div>
 </section>
 <section id="set-up-model-and-evaluate-failures">
-<h2>Set up model and evaluate failures<a class="headerlink" href="#set-up-model-and-evaluate-failures" title="Permalink to this heading">#</a></h2>
+<h2>Set up model and evaluate failures<a class="headerlink" href="#set-up-model-and-evaluate-failures" title="Link to this heading">#</a></h2>
 <p>Set up the composite model.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Evaluate failures for the entire model</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">output_all_elements</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">evaluate_failure_criteria</span><span class="p">(</span>
     <span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">irf_field</span> <span class="o">=</span> <span class="n">output_all_elements</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">FAILURE_VALUE</span><span class="p">})</span>
@@ -630,15 +626,15 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="create-and-plot-a-sampling-point">
-<h2>Create and plot a sampling point<a class="headerlink" href="#create-and-plot-a-sampling-point" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<h2>Create and plot a sampling point<a class="headerlink" href="#create-and-plot-a-sampling-point" title="Link to this heading">#</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sampling_plot</span> <span class="o">=</span> <span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">(</span><span class="n">core_scale_factor</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.show" title="matplotlib.figure.Figure.show" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">sampling_plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_011_rst_workflow_002.png" srcset="../../_images/sphx_glr_011_rst_workflow_002.png" alt="Strains, Stresses, Failures" class = "sphx-glr-single-img"/></section>
 <section id="create-engineering-data-file-and-set-material-uuids-in-mapdl">
-<h2>Create Engineering Data file and set material UUIDs in MAPDL<a class="headerlink" href="#create-engineering-data-file-and-set-material-uuids-in-mapdl" title="Permalink to this heading">#</a></h2>
+<h2>Create Engineering Data file and set material UUIDs in MAPDL<a class="headerlink" href="#create-engineering-data-file-and-set-material-uuids-in-mapdl" title="Link to this heading">#</a></h2>
 <p>Here are two workflows for setting up the engineering data file
 and the material UUIDs in MAPDL. The material UUIDs must be set
 in MAPDL before the model is solved.</p>
@@ -659,13 +655,13 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
 </ul>
 </dd>
 </dl>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  6.088 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.566 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-rst-workflow-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/9f63dcc312465189dcab4d8698a044bd/011_rst_workflow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">011_rst_workflow.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d13337ce8445f69a22967b872b601ca2/011_rst_workflow.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">011_rst_workflow.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/9f63dcc312465189dcab4d8698a044bd/011_rst_workflow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">011_rst_workflow.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -747,7 +743,7 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     <br/>
   </p>
 </div>

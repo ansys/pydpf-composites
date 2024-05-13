@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_011_rst_workflow.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_011_rst_workflow.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -54,7 +54,7 @@ Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 56-70
 
-.. code-block:: default
+.. code-block:: Python
 
 
     from ansys.dpf.composites.composite_model import CompositeModel
@@ -83,7 +83,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 72-74
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
 
@@ -100,7 +100,7 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
 .. GENERATED FROM PYTHON SOURCE LINES 76-79
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell", True)
     print(composite_files_on_server)
@@ -113,7 +113,7 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140375536686848/1f5caceb-13ad-48bd-9189-597b7c2077be/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140375536686848/b0e078c7-34ac-45f5-bdfb-56a47ee50797/material.engd', files_are_local=False)
+    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140423183980288/246a1dab-4664-48cd-bcb4-2552c5fc41c6/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140423183980288/6240c9eb-9de8-47c3-9e8d-7ebc96c44987/material.engd', files_are_local=False)
 
 
 
@@ -126,7 +126,7 @@ Configure the combined failure criterion.
 
 .. GENERATED FROM PYTHON SOURCE LINES 83-95
 
-.. code-block:: default
+.. code-block:: Python
 
 
     combined_fc = CombinedFailureCriterion(
@@ -155,7 +155,7 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 99-102
 
-.. code-block:: default
+.. code-block:: Python
 
 
     composite_model = CompositeModel(composite_files_on_server, server)
@@ -173,7 +173,7 @@ Evaluate failures for the entire model
 
 .. GENERATED FROM PYTHON SOURCE LINES 104-110
 
-.. code-block:: default
+.. code-block:: Python
 
     output_all_elements = composite_model.evaluate_failure_criteria(
         combined_criterion=combined_fc,
@@ -222,7 +222,7 @@ Create and plot a sampling point
 
 .. GENERATED FROM PYTHON SOURCE LINES 113-118
 
-.. code-block:: default
+.. code-block:: Python
 
     sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=2)
     sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
@@ -265,7 +265,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.088 seconds)
+   **Total running time of the script:** (0 minutes 6.566 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:
@@ -274,14 +274,13 @@ With ACP Standalone (for constant material properties only):
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 011_rst_workflow.ipynb <011_rst_workflow.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 011_rst_workflow.py <011_rst_workflow.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 011_rst_workflow.ipynb <011_rst_workflow.ipynb>`
 
 
 .. only:: html

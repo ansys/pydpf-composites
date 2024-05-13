@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Plot of the orientation tensor for short fiber composites &#8212; PyDPF Composites</title>
 
@@ -30,16 +29,16 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=35e44410" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -48,17 +47,14 @@
  
 <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/js/table.js"></script>
+    <script src="../../_static/documentation_options.js?v=59a9b892"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/table.js?v=b64f5182"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/009_short_fiber_orientation_tensor';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
@@ -66,7 +62,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
-    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Postprocess a harmonic analysis" href="010_harmonic_example.html" />
@@ -531,11 +527,11 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-009-short-fiber-orientation-tensor-py"><span class="std std-ref">here</span></a>
-to download the full example code</p>
+<p><a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-009-short-fiber-orientation-tensor-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="plot-of-the-orientation-tensor-for-short-fiber-composites">
-<span id="short-fiber-orientation-tensor"></span><span id="sphx-glr-examples-gallery-examples-009-short-fiber-orientation-tensor-py"></span><h1>Plot of the orientation tensor for short fiber composites<a class="headerlink" href="#plot-of-the-orientation-tensor-for-short-fiber-composites" title="Permalink to this heading">#</a></h1>
+<span id="short-fiber-orientation-tensor"></span><span id="sphx-glr-examples-gallery-examples-009-short-fiber-orientation-tensor-py"></span><h1>Plot of the orientation tensor for short fiber composites<a class="headerlink" href="#plot-of-the-orientation-tensor-for-short-fiber-composites" title="Link to this heading">#</a></h1>
 <p>This example shows how to reconstruct and plot the components
 of the fiber orientation tensor in the global coordinate system.</p>
 <p>For more details about the fiber orientation tensor,
@@ -545,11 +541,11 @@ refer to the Short Fiber Composites help.</p>
 <p>To run this example you first need to install the SciPy package.</p>
 </div>
 <section id="set-up-analysis">
-<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of loading Ansys libraries, connecting to the
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.spatial.transform</span> <span class="kn">import</span> <span class="n">Rotation</span>
 
@@ -564,28 +560,28 @@ These files are needed:</p>
 <li><p>Mechanical APDL result (RST) file containing the simulation results</p></li>
 <li><p>Mechanical APDL input file (DS.DAT) containing the fiber orientation tensor data</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_short_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;short_fiber&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="set-up-data-sources">
-<h2>Set up data sources<a class="headerlink" href="#set-up-data-sources" title="Permalink to this heading">#</a></h2>
+<h2>Set up data sources<a class="headerlink" href="#set-up-data-sources" title="Link to this heading">#</a></h2>
 <p>Set up the data sources.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">get_short_fiber_composites_data_sources</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">data_sources</span> <span class="o">=</span> <span class="n">get_short_fiber_composites_data_sources</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="initialize-dpf-model">
-<h2>Initialize DPF model<a class="headerlink" href="#initialize-dpf-model" title="Permalink to this heading">#</a></h2>
+<h2>Initialize DPF model<a class="headerlink" href="#initialize-dpf-model" title="Link to this heading">#</a></h2>
 <p>Initialize the DPF model.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">data_sources</span><span class="o">=</span><span class="n">data_sources</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">data_sources</span><span class="o">=</span><span class="n">data_sources</span><span class="p">)</span>
 <span class="n">mesh</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">meshed_region</span>
 </pre></div>
 </div>
 <p>Should your mesh contain both solid and shell elements, for visualization purposes
 it can be useful to scope the mesh to the solid ones.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solid_scoping_op = dpf.operators.scoping.on_mesh_property(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># solid_scoping_op = dpf.operators.scoping.on_mesh_property(</span>
 <span class="c1">#   property_name=&#39;solid_elements&#39;,</span>
 <span class="c1">#   mesh=mesh,</span>
 <span class="c1"># )</span>
@@ -597,10 +593,10 @@ it can be useful to scope the mesh to the solid ones.</p>
 </div>
 </section>
 <section id="plot-input-data">
-<h2>Plot input data<a class="headerlink" href="#plot-input-data" title="Permalink to this heading">#</a></h2>
+<h2>Plot input data<a class="headerlink" href="#plot-input-data" title="Link to this heading">#</a></h2>
 <p>Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">field_variable_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::inistate_field_variables_provider&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">field_variable_provider</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;composite::inistate_field_variables_provider&quot;</span><span class="p">)</span>
 <span class="n">field_variable_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">data_sources</span><span class="p">)</span>
 <span class="n">field_variable_provider</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
 
@@ -627,7 +623,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_001.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a22</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">field_variable_dict</span></a><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">A22_NAME</span></a><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">a22</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">field_variable_dict</span></a><span class="p">[</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">A22_NAME</span></a><span class="p">]</span>
 <span class="n">a22</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -645,9 +641,9 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="compute-results">
-<h2>Compute results<a class="headerlink" href="#compute-results" title="Permalink to this heading">#</a></h2>
+<h2>Compute results<a class="headerlink" href="#compute-results" title="Link to this heading">#</a></h2>
 <p>Reconstruct the fiber orientation tensor in the global coordinate system.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">a11</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">a11</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
 <span class="c1"># Alternatively, you could for instance scope to a named selection with</span>
 <span class="c1"># &gt;&gt;&gt; element_ids = model.metadata.meshed_region.named_selection(&#39;CENTER&#39;).ids</span>
 
@@ -681,9 +677,9 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="plot-results">
-<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h2>
+<h2>Plot results<a class="headerlink" href="#plot-results" title="Link to this heading">#</a></h2>
 <p>Plot some components of the fiber orientation tensor.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">aXX</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">aXX</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">aYY</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">aXZ</span> <span class="o">=</span> <span class="n">fiber_orientation_tensor_fc</span><span class="o">.</span><span class="n">select_component</span><span class="p">(</span><span class="mi">5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -702,7 +698,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_003.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aYY</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ayy&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Ayy plot&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aYY</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ayy&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Ayy plot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sd-tab-set docutils">
@@ -717,7 +713,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_004.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aXZ</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Axz&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Axz plot&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aXZ</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Axz&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Axz plot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sd-tab-set docutils">
@@ -732,13 +728,13 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_009_short_fiber_orientation_tensor_005.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.783 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.756 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-009-short-fiber-orientation-tensor-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/f7afa37a2e0689eada6f12b28988b27f/009_short_fiber_orientation_tensor.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">009_short_fiber_orientation_tensor.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/0bcdfbedac49d41195123163588b6c5b/009_short_fiber_orientation_tensor.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">009_short_fiber_orientation_tensor.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/f7afa37a2e0689eada6f12b28988b27f/009_short_fiber_orientation_tensor.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">009_short_fiber_orientation_tensor.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -821,7 +817,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     <br/>
   </p>
 </div>

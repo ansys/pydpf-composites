@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -44,7 +44,7 @@ Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 47-56
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import ansys.dpf.core as dpf
@@ -72,7 +72,7 @@ These files are needed:
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-65
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
@@ -92,7 +92,7 @@ Set up the data sources.
 
 .. GENERATED FROM PYTHON SOURCE LINES 69-71
 
-.. code-block:: default
+.. code-block:: Python
 
     data_sources = get_short_fiber_composites_data_sources(composite_files_on_server)
 
@@ -111,7 +111,7 @@ Initialize the DPF model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 75-78
 
-.. code-block:: default
+.. code-block:: Python
 
     model = dpf.Model(data_sources=data_sources)
     mesh = model.metadata.meshed_region
@@ -130,7 +130,7 @@ it can be useful to scope the mesh to the solid ones.
 
 .. GENERATED FROM PYTHON SOURCE LINES 81-91
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # solid_scoping_op = dpf.operators.scoping.on_mesh_property(
@@ -158,7 +158,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 .. GENERATED FROM PYTHON SOURCE LINES 96-110
 
-.. code-block:: default
+.. code-block:: Python
 
     field_variable_provider = dpf.Operator("composite::inistate_field_variables_provider")
     field_variable_provider.inputs.data_sources(data_sources)
@@ -210,7 +210,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 .. GENERATED FROM PYTHON SOURCE LINES 111-115
 
-.. code-block:: default
+.. code-block:: Python
 
 
     a22 = field_variable_dict[A22_NAME]
@@ -258,7 +258,7 @@ Reconstruct the fiber orientation tensor in the global coordinate system.
 
 .. GENERATED FROM PYTHON SOURCE LINES 119-151
 
-.. code-block:: default
+.. code-block:: Python
 
 
     element_ids = a11.scoping.ids
@@ -307,7 +307,7 @@ Plot some components of the fiber orientation tensor.
 
 .. GENERATED FROM PYTHON SOURCE LINES 155-162
 
-.. code-block:: default
+.. code-block:: Python
 
 
     aXX = fiber_orientation_tensor_fc.select_component(0)[0]
@@ -352,7 +352,7 @@ Plot some components of the fiber orientation tensor.
 
 .. GENERATED FROM PYTHON SOURCE LINES 163-165
 
-.. code-block:: default
+.. code-block:: Python
 
     mesh.plot(aYY, title="Ayy", text="Ayy plot")
 
@@ -392,7 +392,7 @@ Plot some components of the fiber orientation tensor.
 
 .. GENERATED FROM PYTHON SOURCE LINES 166-167
 
-.. code-block:: default
+.. code-block:: Python
 
     mesh.plot(aXZ, title="Axz", text="Axz plot")
 
@@ -432,7 +432,7 @@ Plot some components of the fiber orientation tensor.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.783 seconds)
+   **Total running time of the script:** (0 minutes 5.756 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:
@@ -441,14 +441,13 @@ Plot some components of the fiber orientation tensor.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 009_short_fiber_orientation_tensor.ipynb <009_short_fiber_orientation_tensor.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 009_short_fiber_orientation_tensor.py <009_short_fiber_orientation_tensor.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 009_short_fiber_orientation_tensor.ipynb <009_short_fiber_orientation_tensor.ipynb>`
 
 
 .. only:: html

@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -46,7 +46,7 @@ Import dependencies.
 
 .. GENERATED FROM PYTHON SOURCE LINES 49-64
 
-.. code-block:: default
+.. code-block:: Python
 
     import ansys.dpf.core as dpf
     import numpy as np
@@ -76,7 +76,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 66-69
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
@@ -96,7 +96,7 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 73-75
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -117,7 +117,7 @@ input is set to ``False``.
 
 .. GENERATED FROM PYTHON SOURCE LINES 81-87
 
-.. code-block:: default
+.. code-block:: Python
 
     stress_operator = composite_model.core_model.results.stress()
     stress_operator.inputs.bool_rotate_to_global(False)
@@ -143,7 +143,7 @@ List all available analysis plies.
 
 .. GENERATED FROM PYTHON SOURCE LINES 93-96
 
-.. code-block:: default
+.. code-block:: Python
 
     all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
     all_ply_names
@@ -174,7 +174,7 @@ and filtering is done on the server side.
 
 .. GENERATED FROM PYTHON SOURCE LINES 105-117
 
-.. code-block:: default
+.. code-block:: Python
 
     if version_equal_or_later(server, "8.0"):
         elemental_values = get_ply_wise_data(
@@ -230,7 +230,7 @@ over neighbouring nodes to get nodal results.
 
 .. GENERATED FROM PYTHON SOURCE LINES 121-139
 
-.. code-block:: default
+.. code-block:: Python
 
     stress_operator.inputs.bool_rotate_to_global(True)
     stress_field_global_coord = stress_operator.get_output(
@@ -298,7 +298,7 @@ Get element information for all elements and show the first one as an example.
 
 .. GENERATED FROM PYTHON SOURCE LINES 148-152
 
-.. code-block:: default
+.. code-block:: Python
 
     element_ids = stress_field_material_coord.scoping.ids
     element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
@@ -323,7 +323,7 @@ Get filtered data
 
 .. GENERATED FROM PYTHON SOURCE LINES 154-174
 
-.. code-block:: default
+.. code-block:: Python
 
     component = Sym3x3TensorComponent.TENSOR11
     result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
@@ -388,7 +388,7 @@ for all plies that have a specific UD material.
 
 .. GENERATED FROM PYTHON SOURCE LINES 179-201
 
-.. code-block:: default
+.. code-block:: Python
 
 
     ud_material_id = composite_model.material_names["Epoxy Carbon UD (230 GPa) Prepreg"]
@@ -455,7 +455,7 @@ in the material direction in this ply.
 
 .. GENERATED FROM PYTHON SOURCE LINES 206-229
 
-.. code-block:: default
+.. code-block:: Python
 
     component = Sym3x3TensorComponent.TENSOR11
 
@@ -517,7 +517,7 @@ in the material direction in this ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.238 seconds)
+   **Total running time of the script:** (0 minutes 4.658 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
@@ -526,14 +526,13 @@ in the material direction in this ply.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 006_filter_composite_data_example.ipynb <006_filter_composite_data_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 006_filter_composite_data_example.py <006_filter_composite_data_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 006_filter_composite_data_example.ipynb <006_filter_composite_data_example.ipynb>`
 
 
 .. only:: html

@@ -1,16 +1,9 @@
-﻿.. vale off
-
-Spot
+﻿Spot
 ====
 
 .. currentmodule:: ansys.dpf.composites.constants
 
 .. autoclass:: Spot
-
-   
-
-   
-   
 
    
    
@@ -19,10 +12,18 @@ Spot
    .. autosummary::
       :toctree:
    
-      Spot.BOTTOM
-      Spot.MIDDLE
-      Spot.TOP
+      
+      
+      
+      
+      
+        Spot.BOTTOM
+      
+      
+        Spot.MIDDLE
+      
+      
+        Spot.TOP
+      
    
    
-
-.. vale on

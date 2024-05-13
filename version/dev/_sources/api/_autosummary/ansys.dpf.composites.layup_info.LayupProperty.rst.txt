@@ -1,16 +1,9 @@
-﻿.. vale off
-
-LayupProperty
+﻿LayupProperty
 =============
 
 .. currentmodule:: ansys.dpf.composites.layup_info
 
 .. autoclass:: LayupProperty
-
-   
-
-   
-   
 
    
    
@@ -19,11 +12,21 @@ LayupProperty
    .. autosummary::
       :toctree:
    
-      LayupProperty.ANGLE
-      LayupProperty.SHEAR_ANGLE
-      LayupProperty.THICKNESS
-      LayupProperty.LAMINATE_OFFSET
+      
+      
+      
+      
+      
+        LayupProperty.ANGLE
+      
+      
+        LayupProperty.SHEAR_ANGLE
+      
+      
+        LayupProperty.THICKNESS
+      
+      
+        LayupProperty.LAMINATE_OFFSET
+      
    
    
-
-.. vale on

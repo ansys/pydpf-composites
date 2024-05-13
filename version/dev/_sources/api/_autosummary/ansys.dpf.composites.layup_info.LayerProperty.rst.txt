@@ -1,16 +1,9 @@
-﻿.. vale off
-
-LayerProperty
+﻿LayerProperty
 =============
 
 .. currentmodule:: ansys.dpf.composites.layup_info
 
 .. autoclass:: LayerProperty
-
-   
-
-   
-   
 
    
    
@@ -19,10 +12,18 @@ LayerProperty
    .. autosummary::
       :toctree:
    
-      LayerProperty.THICKNESSES
-      LayerProperty.ANGLES
-      LayerProperty.SHEAR_ANGLES
+      
+      
+      
+      
+      
+        LayerProperty.THICKNESSES
+      
+      
+        LayerProperty.ANGLES
+      
+      
+        LayerProperty.SHEAR_ANGLES
+      
    
    
-
-.. vale on

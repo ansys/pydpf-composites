@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Filter result data by different criteria &#8212; PyDPF Composites</title>
 
@@ -30,16 +29,16 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=35e44410" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -48,17 +47,14 @@
  
 <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/js/table.js"></script>
+    <script src="../../_static/documentation_options.js?v=59a9b892"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/table.js?v=b64f5182"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/006_filter_composite_data_example';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
@@ -66,7 +62,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
-    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Interlaminar normal stresses" href="007_interlaminar_normal_stress_example.html" />
@@ -531,11 +527,11 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">here</span></a>
-to download the full example code</p>
+<p><a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="filter-result-data-by-different-criteria">
-<span id="filter-composite-data"></span><span id="sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"></span><h1>Filter result data by different criteria<a class="headerlink" href="#filter-result-data-by-different-criteria" title="Permalink to this heading">#</a></h1>
+<span id="filter-composite-data"></span><span id="sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"></span><h1>Filter result data by different criteria<a class="headerlink" href="#filter-result-data-by-different-criteria" title="Link to this heading">#</a></h1>
 <p>This example shows how data filtering can be used for custom postprocessing of
 layered composites. You can filter strains and stresses by material, layer, or
 analysis ply. Filtering by analysis ply is implemented on the server side and
@@ -548,11 +544,11 @@ The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see <a class="reference internal" href="../../api/select_indices.html#select-indices"><span class="std std-ref">Select elementary indices</span></a>.</p>
 <section id="set-up-analysis">
-<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of importing dependencies, connecting to the
 DPF server, and retrieving the example files.</p>
 <p>Import dependencies.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
@@ -569,24 +565,24 @@ DPF server, and retrieving the example files.</p>
 </pre></div>
 </div>
 <p>Start a DPF server and copy the example files into the current working directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="set-up-model">
-<h2>Set up model<a class="headerlink" href="#set-up-model" title="Permalink to this heading">#</a></h2>
+<h2>Set up model<a class="headerlink" href="#set-up-model" title="Link to this heading">#</a></h2>
 <p>Set up the composite model.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="get-result-data">
-<h2>Get result data<a class="headerlink" href="#get-result-data" title="Permalink to this heading">#</a></h2>
+<h2>Get result data<a class="headerlink" href="#get-result-data" title="Link to this heading">#</a></h2>
 <p>Get the stress field. By default, the stress operator returns the stresses in global coordinates.
 To get the stresses in the material coordinate system, the <code class="docutils literal notranslate"><span class="pre">bool_rotate_to_global</span></code>
 input is set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">stress_field_material_coord</span> <span class="o">=</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span>
     <span class="n">pin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">fields_container</span>
@@ -595,9 +591,9 @@ input is set to <code class="docutils literal notranslate"><span class="pre">Fal
 </div>
 </section>
 <section id="filter-data-by-analysis-ply">
-<h2>Filter data by analysis ply<a class="headerlink" href="#filter-data-by-analysis-ply" title="Permalink to this heading">#</a></h2>
+<h2>Filter data by analysis ply<a class="headerlink" href="#filter-data-by-analysis-ply" title="Link to this heading">#</a></h2>
 <p>List all available analysis plies.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a>
 </pre></div>
 </div>
@@ -612,7 +608,7 @@ This example selects the maximum value over all spots for each node and then req
 the elemental location, which implies averaging over all nodes in an element.
 Using the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.ply_wise_data.get_ply_wise_data.html#ansys.dpf.composites.ply_wise_data.get_ply_wise_data" title="ansys.dpf.composites.ply_wise_data.get_ply_wise_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ply_wise_data()</span></code></a> function has the advantage that all the averaging
 and filtering is done on the server side.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">version_equal_or_later</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;8.0&quot;</span><span class="p">):</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">version_equal_or_later</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;8.0&quot;</span><span class="p">):</span>
     <span class="n">elemental_values</span> <span class="o">=</span> <span class="n">get_ply_wise_data</span><span class="p">(</span>
         <span class="n">field</span><span class="o">=</span><span class="n">stress_field_material_coord</span><span class="p">,</span>
         <span class="n">ply_name</span><span class="o">=</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span><span class="p">,</span>
@@ -640,7 +636,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 <p>The results can also be requested in global coordinates. This example gets the stress values in
 the global coordinate system, selects the top spot of a selected ply, and averages the values
 over neighbouring nodes to get nodal results.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">stress_field_global_coord</span> <span class="o">=</span> <span class="n">stress_operator</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span>
     <span class="n">pin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">fields_container</span>
 <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -672,12 +668,12 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="generic-client-side-filtering">
-<h2>Generic client-side filtering<a class="headerlink" href="#generic-client-side-filtering" title="Permalink to this heading">#</a></h2>
+<h2>Generic client-side filtering<a class="headerlink" href="#generic-client-side-filtering" title="Link to this heading">#</a></h2>
 <p>This example shows how to filter data by layer, spot, and node using the generic filtering on
 the client side.
 This code plots stress values in the material direction for the first node and top spot.</p>
 <p>Get element information for all elements and show the first one as an example.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">stress_field_material_coord</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">element_ids</span> <span class="o">=</span> <span class="n">stress_field_material_coord</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span> <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">]</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
@@ -686,7 +682,7 @@ This code plots stress values in the material direction for the first node and t
 </pre></div>
 </div>
 <p>Get filtered data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
 <span class="n">result_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">result_field</span><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
     <span class="n">element_ids</span> <span class="o">=</span> <span class="n">stress_field_material_coord</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
@@ -720,10 +716,10 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="filter-by-material">
-<h2>Filter by material<a class="headerlink" href="#filter-by-material" title="Permalink to this heading">#</a></h2>
+<h2>Filter by material<a class="headerlink" href="#filter-by-material" title="Link to this heading">#</a></h2>
 <p>Loop over all elements and get the maximum stress in the material direction
 for all plies that have a specific UD material.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">ud_material_id</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">material_names</span><span class="p">[</span><span class="s2">&quot;Epoxy Carbon UD (230 GPa) Prepreg&quot;</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">ud_material_id</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">material_names</span><span class="p">[</span><span class="s2">&quot;Epoxy Carbon UD (230 GPa) Prepreg&quot;</span><span class="p">]</span>
 <span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
 
 <span class="n">material_result_field</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span><span class="p">)</span>
@@ -759,10 +755,10 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="filter-by-analysis-ply-on-the-client-side">
-<h2>Filter by analysis ply on the client side<a class="headerlink" href="#filter-by-analysis-ply-on-the-client-side" title="Permalink to this heading">#</a></h2>
+<h2>Filter by analysis ply on the client side<a class="headerlink" href="#filter-by-analysis-ply-on-the-client-side" title="Link to this heading">#</a></h2>
 <p>Loop over all elements that contain a given ply and plot the maximum stress value
 in the material direction in this ply.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">component</span> <span class="o">=</span> <span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span>
 
 <span class="n">analysis_ply_info_provider</span> <span class="o">=</span> <span class="n">AnalysisPlyInfoProvider</span><span class="p">(</span>
     <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;P1L1__ud_patch ns1&quot;</span>
@@ -799,13 +795,13 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_006_filter_composite_data_example_005.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
 </div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.238 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.658 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-006-filter-composite-data-example-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/adf87dd096add9a8ebb88eb4ce7f189b/006_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">006_filter_composite_data_example.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e9c4514d88ba65ac55929ae83e7c1bee/006_filter_composite_data_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">006_filter_composite_data_example.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/adf87dd096add9a8ebb88eb4ce7f189b/006_filter_composite_data_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">006_filter_composite_data_example.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -889,7 +885,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     <br/>
   </p>
 </div>

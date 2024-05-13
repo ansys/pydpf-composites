@@ -10,6 +10,154 @@ FailureMeasureEnum
    
 
    
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      FailureMeasureEnum.encode
+      
+      
+      FailureMeasureEnum.replace
+      
+      
+      FailureMeasureEnum.split
+      
+      
+      FailureMeasureEnum.rsplit
+      
+      
+      FailureMeasureEnum.join
+      
+      
+      FailureMeasureEnum.capitalize
+      
+      
+      FailureMeasureEnum.casefold
+      
+      
+      FailureMeasureEnum.title
+      
+      
+      FailureMeasureEnum.center
+      
+      
+      FailureMeasureEnum.count
+      
+      
+      FailureMeasureEnum.expandtabs
+      
+      
+      FailureMeasureEnum.find
+      
+      
+      FailureMeasureEnum.partition
+      
+      
+      FailureMeasureEnum.index
+      
+      
+      FailureMeasureEnum.ljust
+      
+      
+      FailureMeasureEnum.lower
+      
+      
+      FailureMeasureEnum.lstrip
+      
+      
+      FailureMeasureEnum.rfind
+      
+      
+      FailureMeasureEnum.rindex
+      
+      
+      FailureMeasureEnum.rjust
+      
+      
+      FailureMeasureEnum.rstrip
+      
+      
+      FailureMeasureEnum.rpartition
+      
+      
+      FailureMeasureEnum.splitlines
+      
+      
+      FailureMeasureEnum.strip
+      
+      
+      FailureMeasureEnum.swapcase
+      
+      
+      FailureMeasureEnum.translate
+      
+      
+      FailureMeasureEnum.upper
+      
+      
+      FailureMeasureEnum.startswith
+      
+      
+      FailureMeasureEnum.endswith
+      
+      
+      FailureMeasureEnum.removeprefix
+      
+      
+      FailureMeasureEnum.removesuffix
+      
+      
+      FailureMeasureEnum.isascii
+      
+      
+      FailureMeasureEnum.islower
+      
+      
+      FailureMeasureEnum.isupper
+      
+      
+      FailureMeasureEnum.istitle
+      
+      
+      FailureMeasureEnum.isspace
+      
+      
+      FailureMeasureEnum.isdecimal
+      
+      
+      FailureMeasureEnum.isdigit
+      
+      
+      FailureMeasureEnum.isnumeric
+      
+      
+      FailureMeasureEnum.isalpha
+      
+      
+      FailureMeasureEnum.isalnum
+      
+      
+      FailureMeasureEnum.isidentifier
+      
+      
+      FailureMeasureEnum.isprintable
+      
+      
+      FailureMeasureEnum.zfill
+      
+      
+      FailureMeasureEnum.format
+      
+      
+      FailureMeasureEnum.format_map
+      
+      
+      FailureMeasureEnum.maketrans
+      
+      
+   
    
 
    

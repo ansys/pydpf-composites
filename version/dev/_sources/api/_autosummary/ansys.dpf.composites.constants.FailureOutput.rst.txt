@@ -1,16 +1,9 @@
-﻿.. vale off
-
-FailureOutput
+﻿FailureOutput
 =============
 
 .. currentmodule:: ansys.dpf.composites.constants
 
 .. autoclass:: FailureOutput
-
-   
-
-   
-   
 
    
    
@@ -19,15 +12,33 @@ FailureOutput
    .. autosummary::
       :toctree:
    
-      FailureOutput.FAILURE_MODE
-      FailureOutput.FAILURE_VALUE
-      FailureOutput.MAX_LAYER_INDEX
-      FailureOutput.FAILURE_MODE_REF_SURFACE
-      FailureOutput.FAILURE_VALUE_REF_SURFACE
-      FailureOutput.MAX_GLOBAL_LAYER_IN_STACK
-      FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT
-      FailureOutput.MAX_SOLID_ELEMENT_ID
+      
+      
+      
+      
+      
+        FailureOutput.FAILURE_MODE
+      
+      
+        FailureOutput.FAILURE_VALUE
+      
+      
+        FailureOutput.MAX_LAYER_INDEX
+      
+      
+        FailureOutput.FAILURE_MODE_REF_SURFACE
+      
+      
+        FailureOutput.FAILURE_VALUE_REF_SURFACE
+      
+      
+        FailureOutput.MAX_GLOBAL_LAYER_IN_STACK
+      
+      
+        FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT
+      
+      
+        FailureOutput.MAX_SOLID_ELEMENT_ID
+      
    
    
-
-.. vale on

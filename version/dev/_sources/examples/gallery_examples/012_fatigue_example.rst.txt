@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_012_fatigue_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_012_fatigue_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -48,7 +48,7 @@ Load Ansys libraries and numpy, matplotlib and fatpack
 
 .. GENERATED FROM PYTHON SOURCE LINES 53-65
 
-.. code-block:: default
+.. code-block:: Python
 
     import ansys.dpf.core as dpf
     import fatpack
@@ -75,7 +75,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 67-70
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "fatigue")
@@ -93,7 +93,7 @@ Create a composite model
 
 .. GENERATED FROM PYTHON SOURCE LINES 72-74
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -116,7 +116,7 @@ Read stresses
 
 .. GENERATED FROM PYTHON SOURCE LINES 81-86
 
-.. code-block:: default
+.. code-block:: Python
 
     stress_operator = composite_model.core_model.results.stress()
     stress_operator.inputs.bool_rotate_to_global(False)
@@ -136,7 +136,7 @@ Select layer P1L1__ModelingPly.2
 
 .. GENERATED FROM PYTHON SOURCE LINES 88-92
 
-.. code-block:: default
+.. code-block:: Python
 
     analysis_ply_info_provider = AnalysisPlyInfoProvider(
         mesh=composite_model.get_mesh(), name="P1L1__ModelingPly.2"
@@ -155,7 +155,7 @@ Select Sigma11 as the combination method
 
 .. GENERATED FROM PYTHON SOURCE LINES 94-97
 
-.. code-block:: default
+.. code-block:: Python
 
     component = Sym3x3TensorComponent.TENSOR11
 
@@ -178,7 +178,7 @@ No mean stress correction is applied.
 
 .. GENERATED FROM PYTHON SOURCE LINES 104-112
 
-.. code-block:: default
+.. code-block:: Python
 
     number_of_times = 100
     load_factor_time_series = np.random.normal(-1, 2.5, size=number_of_times)
@@ -202,7 +202,7 @@ No mean stress correction is applied.
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7f096f0bf460>]
+    [<matplotlib.lines.Line2D object at 0x7ffba92be300>]
 
 
 
@@ -212,7 +212,7 @@ Fatpack package is used for doing the rainflow counting
 
 .. GENERATED FROM PYTHON SOURCE LINES 114-117
 
-.. code-block:: default
+.. code-block:: Python
 
     load_range_factors = fatpack.find_rainflow_ranges(load_factor_time_series)
 
@@ -235,7 +235,7 @@ and Nc is set to 1.
 
 .. GENERATED FROM PYTHON SOURCE LINES 124-140
 
-.. code-block:: default
+.. code-block:: Python
 
     Sc = 2 * 1979
     Nc = 1
@@ -281,7 +281,7 @@ for each load range. Its damage is evaluated using the dummy S-N curve.
 
 .. GENERATED FROM PYTHON SOURCE LINES 146-166
 
-.. code-block:: default
+.. code-block:: Python
 
 
     damage_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
@@ -316,7 +316,7 @@ Plot damage
 
 .. GENERATED FROM PYTHON SOURCE LINES 168-171
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model.get_mesh().plot(damage_result_field, text="Fatigue Damage")
 
@@ -363,7 +363,7 @@ Identify the element with the maximum damage
 
 .. GENERATED FROM PYTHON SOURCE LINES 175-179
 
-.. code-block:: default
+.. code-block:: Python
 
     maximum_element_scoping = damage_result_field.max().scoping
     max_element_id = maximum_element_scoping[0]
@@ -378,7 +378,7 @@ Identify the element with the maximum damage
  .. code-block:: none
 
     The element with highest damage is 27.
-    The highest damage value is 2.0971241181076273e-07.
+    The highest damage value is 4.6074870238318654e-08.
 
 
 
@@ -386,7 +386,7 @@ Identify the element with the maximum damage
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.520 seconds)
+   **Total running time of the script:** (0 minutes 2.567 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_012_fatigue_example.py:
@@ -395,14 +395,13 @@ Identify the element with the maximum damage
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 012_fatigue_example.ipynb <012_fatigue_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 012_fatigue_example.py <012_fatigue_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 012_fatigue_example.ipynb <012_fatigue_example.ipynb>`
 
 
 .. only:: html

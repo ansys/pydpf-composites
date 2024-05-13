@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_002_sampling_point_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_002_sampling_point_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -44,7 +44,7 @@ Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 48-61
 
-.. code-block:: default
+.. code-block:: Python
 
 
     from ansys.dpf.composites.composite_model import CompositeModel
@@ -72,7 +72,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 63-66
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
@@ -90,7 +90,7 @@ Configure the combined failure criterion
 
 .. GENERATED FROM PYTHON SOURCE LINES 68-78
 
-.. code-block:: default
+.. code-block:: Python
 
     combined_fc = CombinedFailureCriterion(
         name="failure of all materials",
@@ -117,7 +117,7 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 82-84
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -134,7 +134,7 @@ Create a sampling point
 
 .. GENERATED FROM PYTHON SOURCE LINES 86-88
 
-.. code-block:: default
+.. code-block:: Python
 
     sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=3)
 
@@ -155,7 +155,7 @@ Plot results uing preconfigured plots. For more information, see the
 
 .. GENERATED FROM PYTHON SOURCE LINES 94-103
 
-.. code-block:: default
+.. code-block:: Python
 
     sampling_point_plot = sampling_point.get_result_plots(
         strain_components=[],  # do not plot strains
@@ -184,7 +184,7 @@ Plot polar properties.
 
 .. GENERATED FROM PYTHON SOURCE LINES 105-107
 
-.. code-block:: default
+.. code-block:: Python
 
     sampling_point_plot = sampling_point.get_polar_plot(["E1", "G12"])
 
@@ -209,7 +209,7 @@ uses Matplotlib to generate a custom plot of results ``s13`` and ``s23``.
 
 .. GENERATED FROM PYTHON SOURCE LINES 112-131
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import matplotlib.pyplot as plt
@@ -248,7 +248,7 @@ This code uses Matplotlib to generate a custom plot of results ``e12`` and ``e2`
 
 .. GENERATED FROM PYTHON SOURCE LINES 133-150
 
-.. code-block:: default
+.. code-block:: Python
 
 
     interfaces = [Spot.BOTTOM, Spot.TOP]
@@ -291,7 +291,7 @@ This code plots the lay-up only.
 
 .. GENERATED FROM PYTHON SOURCE LINES 152-155
 
-.. code-block:: default
+.. code-block:: Python
 
     fig2, layup_axes = plt.subplots()
     sampling_point.add_ply_sequence_to_plot(layup_axes)
@@ -317,7 +317,7 @@ You can change the element ID of the sampling point to generate another plot.
 
 .. GENERATED FROM PYTHON SOURCE LINES 160-169
 
-.. code-block:: default
+.. code-block:: Python
 
     sampling_point.element_id = 4
     sampling_point_plot = sampling_point.get_result_plots(
@@ -343,7 +343,7 @@ You can change the element ID of the sampling point to generate another plot.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.692 seconds)
+   **Total running time of the script:** (0 minutes 5.286 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_002_sampling_point_example.py:
@@ -352,14 +352,13 @@ You can change the element ID of the sampling point to generate another plot.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 002_sampling_point_example.ipynb <002_sampling_point_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 002_sampling_point_example.py <002_sampling_point_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 002_sampling_point_example.ipynb <002_sampling_point_example.ipynb>`
 
 
 .. only:: html

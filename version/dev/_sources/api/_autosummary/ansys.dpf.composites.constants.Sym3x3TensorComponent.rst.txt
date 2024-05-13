@@ -1,16 +1,9 @@
-﻿.. vale off
-
-Sym3x3TensorComponent
+﻿Sym3x3TensorComponent
 =====================
 
 .. currentmodule:: ansys.dpf.composites.constants
 
 .. autoclass:: Sym3x3TensorComponent
-
-   
-
-   
-   
 
    
    
@@ -19,13 +12,27 @@ Sym3x3TensorComponent
    .. autosummary::
       :toctree:
    
-      Sym3x3TensorComponent.TENSOR11
-      Sym3x3TensorComponent.TENSOR22
-      Sym3x3TensorComponent.TENSOR33
-      Sym3x3TensorComponent.TENSOR21
-      Sym3x3TensorComponent.TENSOR31
-      Sym3x3TensorComponent.TENSOR32
+      
+      
+      
+      
+      
+        Sym3x3TensorComponent.TENSOR11
+      
+      
+        Sym3x3TensorComponent.TENSOR22
+      
+      
+        Sym3x3TensorComponent.TENSOR33
+      
+      
+        Sym3x3TensorComponent.TENSOR21
+      
+      
+        Sym3x3TensorComponent.TENSOR31
+      
+      
+        Sym3x3TensorComponent.TENSOR32
+      
    
    
-
-.. vale on

@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_010_harmonic_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_010_harmonic_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -44,7 +44,7 @@ Load Ansys libraries and matplotlib
 
 .. GENERATED FROM PYTHON SOURCE LINES 49-65
 
-.. code-block:: default
+.. code-block:: Python
 
     import ansys.dpf.core as dpf
     import matplotlib.pyplot as plt
@@ -75,7 +75,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 67-70
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "harmonic")
@@ -93,7 +93,7 @@ Create a composite model
 
 .. GENERATED FROM PYTHON SOURCE LINES 72-75
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -111,7 +111,7 @@ Define a failure criterion
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-85
 
-.. code-block:: default
+.. code-block:: Python
 
     combined_fc = CombinedFailureCriterion(
         name="My Failure Criteria",
@@ -137,7 +137,7 @@ Get complex stresses and strains at all frequencies
 
 .. GENERATED FROM PYTHON SOURCE LINES 90-96
 
-.. code-block:: default
+.. code-block:: Python
 
     stress_operator = composite_model.core_model.results.stress.on_all_time_freqs()
     stress_operator.inputs.bool_rotate_to_global(False)
@@ -159,7 +159,7 @@ Get operators that provide material data
 
 .. GENERATED FROM PYTHON SOURCE LINES 99-105
 
-.. code-block:: default
+.. code-block:: Python
 
     material_operators = get_material_operators(
         composite_model.data_sources.rst,
@@ -182,7 +182,7 @@ too much time.
 
 .. GENERATED FROM PYTHON SOURCE LINES 109-114
 
-.. code-block:: default
+.. code-block:: Python
 
     min_frequency = -180
     max_frequency = 180
@@ -204,7 +204,7 @@ the failure mode and the layer index in which the failure occurs.
 
 .. GENERATED FROM PYTHON SOURCE LINES 118-133
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # This is a bit confusing, but DPF uses the same label for Frequency and Time
@@ -238,7 +238,7 @@ and phase
 
 .. GENERATED FROM PYTHON SOURCE LINES 139-189
 
-.. code-block:: default
+.. code-block:: Python
 
     for phase in sweep_phases:
         # Stress & strains at sweeping phase
@@ -305,7 +305,7 @@ IRF values
 
 .. GENERATED FROM PYTHON SOURCE LINES 193-199
 
-.. code-block:: default
+.. code-block:: Python
 
     min_max_over_all_op = dpf.operators.min_max.min_max_by_entity()
     min_max_over_all_op.inputs.fields_container.connect(all_phases_and_freqs_failure_value_fc)
@@ -356,7 +356,7 @@ Identify the element with the maximum IRF
 
 .. GENERATED FROM PYTHON SOURCE LINES 204-208
 
-.. code-block:: default
+.. code-block:: Python
 
     maximum_element_scoping = max_over_freq_and_phases_f.max().scoping
     max_element_id = maximum_element_scoping[0]
@@ -383,7 +383,7 @@ the critical IRF over all the frequencies
 
 .. GENERATED FROM PYTHON SOURCE LINES 212-217
 
-.. code-block:: default
+.. code-block:: Python
 
     rescope_to_crit_element_op = dpf.operators.scoping.rescope_fc()
     rescope_to_crit_element_op.inputs.fields_container.connect(all_phases_and_freqs_failure_value_fc)
@@ -406,7 +406,7 @@ at each frequency, because we look only at the element that has the highest IRF 
 
 .. GENERATED FROM PYTHON SOURCE LINES 222-235
 
-.. code-block:: default
+.. code-block:: Python
 
     min_max_over_phases_op = dpf.operators.min_max.min_max_over_label_fc()
     min_max_over_phases_op.inputs.fields_container.connect(all_phases_and_freqs_critical_element_fc)
@@ -435,7 +435,7 @@ at each frequency, because we look only at the element that has the highest IRF 
  .. code-block:: none
 
 
-    [<matplotlib.lines.Line2D object at 0x7f096eef41f0>]
+    [<matplotlib.lines.Line2D object at 0x7ffba934c8c0>]
 
 
 
@@ -446,7 +446,7 @@ Compute the critical phase
 
 .. GENERATED FROM PYTHON SOURCE LINES 238-245
 
-.. code-block:: default
+.. code-block:: Python
 
     freq_id_highest_IRF = max_value_for_each_freq_crit_element.max().scoping[0]
     index_highest_IRF = max_value_for_each_freq_crit_element.scoping.index(freq_id_highest_IRF)
@@ -475,7 +475,7 @@ Compute critical layer and critical failure mode.
 
 .. GENERATED FROM PYTHON SOURCE LINES 248-263
 
-.. code-block:: default
+.. code-block:: Python
 
     max_layer_at_critical_phase_and_time_f = all_phases_and_freqs_critical_layer_fc.get_field(
         {FREQ_LABEL: freq_id_highest_IRF, PHASE_LABEL: critical_phase_at_critical_freq}
@@ -510,7 +510,7 @@ Compute critical layer and critical failure mode.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  11.427 seconds)
+   **Total running time of the script:** (0 minutes 11.022 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_010_harmonic_example.py:
@@ -519,14 +519,13 @@ Compute critical layer and critical failure mode.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 010_harmonic_example.ipynb <010_harmonic_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 010_harmonic_example.py <010_harmonic_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 010_harmonic_example.ipynb <010_harmonic_example.ipynb>`
 
 
 .. only:: html

@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -50,7 +50,7 @@ Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 53-60
 
-.. code-block:: default
+.. code-block:: Python
 
     import ansys.dpf.core as dpf
 
@@ -77,7 +77,7 @@ These files are needed:
 
 .. GENERATED FROM PYTHON SOURCE LINES 67-70
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_short_fiber_example_files(server, "short_fiber")
@@ -97,7 +97,7 @@ Set up the data sources.
 
 .. GENERATED FROM PYTHON SOURCE LINES 74-76
 
-.. code-block:: default
+.. code-block:: Python
 
     data_sources = get_short_fiber_composites_data_sources(composite_files_on_server)
 
@@ -116,7 +116,7 @@ Initialize the DPF model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 80-83
 
-.. code-block:: default
+.. code-block:: Python
 
     model = dpf.Model(data_sources=data_sources)
     mesh = model.metadata.meshed_region
@@ -137,7 +137,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 .. GENERATED FROM PYTHON SOURCE LINES 88-97
 
-.. code-block:: default
+.. code-block:: Python
 
     field_variable_provider = dpf.Operator("composite::inistate_field_variables_provider")
     field_variable_provider.inputs.data_sources(data_sources)
@@ -184,7 +184,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 .. GENERATED FROM PYTHON SOURCE LINES 98-102
 
-.. code-block:: default
+.. code-block:: Python
 
 
     a22 = field_variables[1]
@@ -233,7 +233,7 @@ Note that you can specify optional time and mesh scoping inputs.
 
 .. GENERATED FROM PYTHON SOURCE LINES 107-113
 
-.. code-block:: default
+.. code-block:: Python
 
     sf_op = dpf.Operator("composite::short_fiber_failure_criterion_evaluator")
     sf_op.inputs.streams_container(model.metadata.streams_provider)
@@ -256,7 +256,7 @@ Compute and plot the maximum failure value per element.
 
 .. GENERATED FROM PYTHON SOURCE LINES 117-128
 
-.. code-block:: default
+.. code-block:: Python
 
     mat_support_operator = dpf.Operator("mat_support_provider")
     mat_support_operator.connect(4, data_sources)
@@ -306,7 +306,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.197 seconds)
+   **Total running time of the script:** (0 minutes 3.043 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:
@@ -315,14 +315,13 @@ Compute and plot the maximum failure value per element.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 003_short_fiber_example.ipynb <003_short_fiber_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 003_short_fiber_example.py <003_short_fiber_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 003_short_fiber_example.ipynb <003_short_fiber_example.ipynb>`
 
 
 .. only:: html

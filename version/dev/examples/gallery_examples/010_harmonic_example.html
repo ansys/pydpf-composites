@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Postprocess a harmonic analysis &#8212; PyDPF Composites</title>
 
@@ -30,16 +29,16 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=35e44410" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -48,17 +47,14 @@
  
 <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/js/table.js"></script>
+    <script src="../../_static/documentation_options.js?v=59a9b892"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/table.js?v=b64f5182"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/010_harmonic_example';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
@@ -66,7 +62,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
-    <link rel="shortcut icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Failure analysis of an MAPDL (RST) model" href="011_rst_workflow.html" />
@@ -531,11 +527,11 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-010-harmonic-example-py"><span class="std std-ref">here</span></a>
-to download the full example code</p>
+<p><a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-010-harmonic-example-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="postprocess-a-harmonic-analysis">
-<span id="harmonic-example"></span><span id="sphx-glr-examples-gallery-examples-010-harmonic-example-py"></span><h1>Postprocess a harmonic analysis<a class="headerlink" href="#postprocess-a-harmonic-analysis" title="Permalink to this heading">#</a></h1>
+<span id="harmonic-example"></span><span id="sphx-glr-examples-gallery-examples-010-harmonic-example-py"></span><h1>Postprocess a harmonic analysis<a class="headerlink" href="#postprocess-a-harmonic-analysis" title="Link to this heading">#</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using a Workbench project,
@@ -546,11 +542,11 @@ method to obtain the input files.</p>
 It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
 space and shows how to identify the critical failure mode and the critical layer.</p>
 <section id="set-up-analysis">
-<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Permalink to this heading">#</a></h2>
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of loading the required modules, connecting to the
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries and matplotlib</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
@@ -568,16 +564,16 @@ DPF server, and retrieving the example files.</p>
 </pre></div>
 </div>
 <p>Start a DPF server and copy the example files into the current working directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;harmonic&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Create a composite model</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Define a failure criterion</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">combined_fc</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">combined_fc</span> <span class="o">=</span> <span class="n">CombinedFailureCriterion</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;My Failure Criteria&quot;</span><span class="p">,</span>
     <span class="n">failure_criteria</span><span class="o">=</span><span class="p">[</span>
         <span class="n">MaxStressCriterion</span><span class="p">(),</span>
@@ -588,9 +584,9 @@ DPF server, and retrieving the example files.</p>
 </div>
 </section>
 <section id="obtain-stresses-and-strains-and-compute-max-irf-over-all-phases-and-frequencies">
-<h2>Obtain stresses and strains and compute max IRF over all phases and frequencies<a class="headerlink" href="#obtain-stresses-and-strains-and-compute-max-irf-over-all-phases-and-frequencies" title="Permalink to this heading">#</a></h2>
+<h2>Obtain stresses and strains and compute max IRF over all phases and frequencies<a class="headerlink" href="#obtain-stresses-and-strains-and-compute-max-irf-over-all-phases-and-frequencies" title="Link to this heading">#</a></h2>
 <p>Get complex stresses and strains at all frequencies</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="o">.</span><span class="n">on_all_time_freqs</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">stress_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="o">.</span><span class="n">on_all_time_freqs</span><span class="p">()</span>
 <span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">strain_operator</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">elastic_strain</span><span class="o">.</span><span class="n">on_all_time_freqs</span><span class="p">()</span>
@@ -598,7 +594,7 @@ DPF server, and retrieving the example files.</p>
 </pre></div>
 </div>
 <p>Get operators that provide material data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">material_operators</span> <span class="o">=</span> <span class="n">get_material_operators</span><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">material_operators</span> <span class="o">=</span> <span class="n">get_material_operators</span><span class="p">(</span>
     <span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">,</span>
     <span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">engineering_data</span><span class="p">,</span>
     <span class="n">get_unit_system</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">rst</span><span class="p">),</span>
@@ -607,7 +603,7 @@ DPF server, and retrieving the example files.</p>
 </div>
 <p>Define the frequency sweep. This is relatively coarse so the example does not take
 too much time.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">min_frequency</span></a> <span class="o">=</span> <span class="o">-</span><span class="mi">180</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">min_frequency</span></a> <span class="o">=</span> <span class="o">-</span><span class="mi">180</span>
 <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_frequency</span></a> <span class="o">=</span> <span class="mi">180</span>
 <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">frequency_step</span></a> <span class="o">=</span> <span class="mi">60</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#range" title="builtins.range" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sweep_phases</span></a> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">min_frequency</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_frequency</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">frequency_step</span></a><span class="p">)</span>
@@ -615,7 +611,7 @@ too much time.</p>
 </div>
 <p>Initialize result containers. We create a result container for the failure value,
 the failure mode and the layer index in which the failure occurs.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a bit confusing, but DPF uses the same label for Frequency and Time</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a bit confusing, but DPF uses the same label for Frequency and Time</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FREQ_LABEL</span></a> <span class="o">=</span> <span class="s2">&quot;time&quot;</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">PHASE_LABEL</span></a> <span class="o">=</span> <span class="s2">&quot;phase&quot;</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FAILURE_LABEL</span></a> <span class="o">=</span> <span class="s2">&quot;failure_label&quot;</span>
@@ -633,7 +629,7 @@ the failure mode and the layer index in which the failure occurs.</p>
 The result is added to the field containers declared in the previous cell.
 In the end each container contains a field for each combination of frequency
 and phase</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">phase</span></a> <span class="ow">in</span> <a href="https://docs.python.org/dev/library/stdtypes.html#range" title="builtins.range" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sweep_phases</span></a><span class="p">:</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">phase</span></a> <span class="ow">in</span> <a href="https://docs.python.org/dev/library/stdtypes.html#range" title="builtins.range" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sweep_phases</span></a><span class="p">:</span>
     <span class="c1"># Stress &amp; strains at sweeping phase</span>
     <span class="n">stress_at_phase</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sweeping_phase_fc</span><span class="p">(</span>
         <span class="n">fields_container</span><span class="o">=</span><span class="n">stress_operator</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">phase</span></a><span class="p">),</span> <span class="n">unit_name</span><span class="o">=</span><span class="s2">&quot;deg&quot;</span><span class="p">,</span> <span class="n">abs_value</span><span class="o">=</span><span class="kc">False</span>
@@ -686,7 +682,7 @@ and phase</p>
 </div>
 <p>Compute maximum over all the phases and frequencies for each element and plot the resulting
 IRF values</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_over_all_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">min_max_by_entity</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_over_all_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">min_max_by_entity</span><span class="p">()</span>
 <span class="n">min_max_over_all_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">all_phases_and_freqs_failure_value_fc</span><span class="p">)</span>
 <span class="n">max_over_freq_and_phases_f</span> <span class="o">=</span> <span class="n">min_max_over_all_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="p">()</span>
 
@@ -707,9 +703,9 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 </section>
 <section id="detailed-analysis-of-the-critical-element">
-<h2>Detailed analysis of the critical element<a class="headerlink" href="#detailed-analysis-of-the-critical-element" title="Permalink to this heading">#</a></h2>
+<h2>Detailed analysis of the critical element<a class="headerlink" href="#detailed-analysis-of-the-critical-element" title="Link to this heading">#</a></h2>
 <p>Identify the element with the maximum IRF</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">maximum_element_scoping</span> <span class="o">=</span> <span class="n">max_over_freq_and_phases_f</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">scoping</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">maximum_element_scoping</span> <span class="o">=</span> <span class="n">max_over_freq_and_phases_f</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">scoping</span>
 <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_element_id</span></a> <span class="o">=</span> <span class="n">maximum_element_scoping</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The element with highest IRF is </span><span class="si">{</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_element_id</span></a><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
@@ -719,7 +715,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </div>
 <p>Scope container with all frequencies and phases to critical element so we can plot
 the critical IRF over all the frequencies</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rescope_to_crit_element_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">rescope_fc</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">rescope_to_crit_element_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">rescope_fc</span><span class="p">()</span>
 <span class="n">rescope_to_crit_element_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">all_phases_and_freqs_failure_value_fc</span><span class="p">)</span>
 <span class="n">rescope_to_crit_element_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh_scoping</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">maximum_element_scoping</span><span class="p">)</span>
 <span class="n">all_phases_and_freqs_critical_element_fc</span> <span class="o">=</span> <span class="n">rescope_to_crit_element_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()</span>
@@ -728,7 +724,7 @@ the critical IRF over all the frequencies</p>
 <p>Compute the maximum IRF over all the phases for each frequency and plot the result for
 the critical element. Note: this can be different from maximum overall IRF
 at each frequency, because we look only at the element that has the highest IRF overall.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_over_phases_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">min_max_over_label_fc</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_over_phases_op</span> <span class="o">=</span> <span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">min_max_over_label_fc</span><span class="p">()</span>
 <span class="n">min_max_over_phases_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">all_phases_and_freqs_critical_element_fc</span><span class="p">)</span>
 <span class="n">min_max_over_phases_op</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FREQ_LABEL</span></a><span class="p">)</span>
 <span class="n">max_value_for_each_freq_crit_element</span> <span class="o">=</span> <span class="n">min_max_over_phases_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">field_max</span><span class="p">()</span>
@@ -741,11 +737,11 @@ at each frequency, because we look only at the element that has the highest IRF 
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">axs</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">max_value_for_each_freq_crit_element</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_010_harmonic_example_002.png" srcset="../../_images/sphx_glr_010_harmonic_example_002.png" alt="010 harmonic example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7f096eef41f0&gt;]
+<img src="../../_images/sphx_glr_010_harmonic_example_002.png" srcset="../../_images/sphx_glr_010_harmonic_example_002.png" alt="010 harmonic example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7ffba934c8c0&gt;]
 </pre></div>
 </div>
 <p>Compute the critical phase</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_id_highest_IRF</span></a> <span class="o">=</span> <span class="n">max_value_for_each_freq_crit_element</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">scoping</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_id_highest_IRF</span></a> <span class="o">=</span> <span class="n">max_value_for_each_freq_crit_element</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">scoping</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">index_highest_IRF</span></a> <span class="o">=</span> <span class="n">max_value_for_each_freq_crit_element</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_id_highest_IRF</span></a><span class="p">)</span>
 <span class="n">critical_phases_over_freqs</span> <span class="o">=</span> <span class="n">min_max_over_phases_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">domain_ids_max</span><span class="p">()</span>
 <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">critical_phase_at_critical_freq</span></a> <span class="o">=</span> <span class="n">critical_phases_over_freqs</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">index_highest_IRF</span></a><span class="p">]</span>
@@ -756,7 +752,7 @@ at each frequency, because we look only at the element that has the highest IRF 
 </pre></div>
 </div>
 <p>Compute critical layer and critical failure mode.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">max_layer_at_critical_phase_and_time_f</span> <span class="o">=</span> <span class="n">all_phases_and_freqs_critical_layer_fc</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">max_layer_at_critical_phase_and_time_f</span> <span class="o">=</span> <span class="n">all_phases_and_freqs_critical_layer_fc</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span>
     <span class="p">{</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FREQ_LABEL</span></a><span class="p">:</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_id_highest_IRF</span></a><span class="p">,</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">PHASE_LABEL</span></a><span class="p">:</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">critical_phase_at_critical_freq</span></a><span class="p">}</span>
 <span class="p">)</span>
 <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">max_layer_index</span></a> <span class="o">=</span> <span class="n">max_layer_at_critical_phase_and_time_f</span><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_element_id</span></a><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -778,13 +774,13 @@ The maximum IRF is 0.17852210868866686.
 The critical failure mode is s1c.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  11.427 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 11.022 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-010-harmonic-example-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/670b11ce26b761ff64735af981a9c12a/010_harmonic_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">010_harmonic_example.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4c486dc0d97fc4b3038705c75677aae3/010_harmonic_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">010_harmonic_example.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/670b11ce26b761ff64735af981a9c12a/010_harmonic_example.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">010_harmonic_example.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -864,7 +860,7 @@ The critical failure mode is s1c.
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     <br/>
   </p>
 </div>

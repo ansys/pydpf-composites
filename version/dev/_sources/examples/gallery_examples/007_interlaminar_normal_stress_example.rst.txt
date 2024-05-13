@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_007_interlaminar_normal_stress_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_007_interlaminar_normal_stress_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -54,7 +54,7 @@ Load Ansys libraries.
 
 .. GENERATED FROM PYTHON SOURCE LINES 58-68
 
-.. code-block:: default
+.. code-block:: Python
 
     import ansys.dpf.core as dpf
     from ansys.dpf.core import unit_systems
@@ -79,7 +79,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 70-73
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "ins")
@@ -99,7 +99,7 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-81
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(
         composite_files_on_server, server, default_unit_system=unit_systems.solver_mks
@@ -120,7 +120,7 @@ the results to be in the element coordinate system (material coordinate system).
 
 .. GENERATED FROM PYTHON SOURCE LINES 85-91
 
-.. code-block:: default
+.. code-block:: Python
 
     strain_operator = composite_model.core_model.results.elastic_strain()
     strain_operator.inputs.bool_rotate_to_global(False)
@@ -144,7 +144,7 @@ The ``INS`` operator stores the stresses in the provided stress field.
 
 .. GENERATED FROM PYTHON SOURCE LINES 96-101
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model.add_interlaminar_normal_stresses(
         stresses=stress_operator.outputs.fields_container(),
@@ -166,7 +166,7 @@ Get the first stress field.
 
 .. GENERATED FROM PYTHON SOURCE LINES 105-107
 
-.. code-block:: default
+.. code-block:: Python
 
     stress_field = stress_operator.outputs.fields_container()[0]
 
@@ -183,7 +183,7 @@ Plot the maximum s3 of each element.
 
 .. GENERATED FROM PYTHON SOURCE LINES 109-128
 
-.. code-block:: default
+.. code-block:: Python
 
 
     s3_component = Sym3x3TensorComponent.TENSOR33
@@ -244,7 +244,7 @@ Plot s3 at the mid-plane of a certain ply.
 
 .. GENERATED FROM PYTHON SOURCE LINES 130-154
 
-.. code-block:: default
+.. code-block:: Python
 
 
     analysis_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
@@ -307,7 +307,7 @@ Plot s3 at the mid-plane of a certain ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.881 seconds)
+   **Total running time of the script:** (0 minutes 7.333 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_007_interlaminar_normal_stress_example.py:
@@ -316,14 +316,13 @@ Plot s3 at the mid-plane of a certain ply.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 007_interlaminar_normal_stress_example.ipynb <007_interlaminar_normal_stress_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 007_interlaminar_normal_stress_example.py <007_interlaminar_normal_stress_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 007_interlaminar_normal_stress_example.ipynb <007_interlaminar_normal_stress_example.ipynb>`
 
 
 .. only:: html

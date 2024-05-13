@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_005_get_layup_properties_example.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_gallery_examples_005_get_layup_properties_example.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -41,7 +41,7 @@ Import dependencies.
 
 .. GENERATED FROM PYTHON SOURCE LINES 43-50
 
-.. code-block:: default
+.. code-block:: Python
 
     from matplotlib import pyplot as plt
     import numpy as np
@@ -63,7 +63,7 @@ Start a DPF server and copy the example files into the current working directory
 
 .. GENERATED FROM PYTHON SOURCE LINES 52-55
 
-.. code-block:: default
+.. code-block:: Python
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
@@ -83,7 +83,7 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 59-61
 
-.. code-block:: default
+.. code-block:: Python
 
     composite_model = CompositeModel(composite_files_on_server, server)
 
@@ -102,7 +102,7 @@ Get lay-up properties for all elements and show the first one as an example.
 
 .. GENERATED FROM PYTHON SOURCE LINES 65-73
 
-.. code-block:: default
+.. code-block:: Python
 
     element_id = 1
     thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
@@ -127,7 +127,7 @@ Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-95
 
-.. code-block:: default
+.. code-block:: Python
 
     y_coordinates = offset + np.cumsum(thicknesses)
     y_centers = y_coordinates - thicknesses / 2
@@ -162,7 +162,7 @@ Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.042 seconds)
+   **Total running time of the script:** (0 minutes 1.463 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_005_get_layup_properties_example.py:
@@ -171,14 +171,13 @@ Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: 005_get_layup_properties_example.ipynb <005_get_layup_properties_example.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 005_get_layup_properties_example.py <005_get_layup_properties_example.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 005_get_layup_properties_example.ipynb <005_get_layup_properties_example.ipynb>`
 
 
 .. only:: html
