@@ -162,7 +162,7 @@ Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.463 seconds)
+   **Total running time of the script:** (0 minutes 4.199 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_005_get_layup_properties_example.py:
