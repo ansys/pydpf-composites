@@ -23,7 +23,7 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
 from collections.abc import Collection, Sequence
-from typing import Any, Callable, Optional, cast
+from typing import Optional, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -35,11 +35,10 @@ from numpy.typing import NDArray
 from ._composite_model_impl_helpers import (
     _create_material_container_helper_op,
     _deprecated_composite_definition_label,
-    _get_failure_enum_from_name,
     _merge_containers,
 )
 from .composite_scope import CompositeScope
-from .constants import FAILURE_LABEL, REF_SURFACE_NAME, TIME_LABEL, FailureOutput
+from .constants import REF_SURFACE_NAME
 from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,

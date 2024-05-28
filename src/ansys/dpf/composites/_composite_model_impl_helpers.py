@@ -22,47 +22,14 @@
 
 """Composite Model Interface."""
 # New interface after 2023 R2
-from collections.abc import Collection, Sequence
-from typing import Any, Callable, Optional, cast
+from collections.abc import Sequence
+from typing import Any, Callable
 from warnings import warn
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import FieldsContainer, MeshedRegion, Operator, UnitSystem
-from ansys.dpf.core.server_types import BaseServer
-import numpy as np
-from numpy.typing import NDArray
+from ansys.dpf.core import FieldsContainer, Operator
 
-from .composite_scope import CompositeScope
 from .constants import FAILURE_LABEL, REF_SURFACE_NAME, TIME_LABEL, FailureOutput
-from .data_sources import (
-    CompositeDataSources,
-    ContinuousFiberCompositesFiles,
-    get_composites_data_sources,
-)
-from .failure_criteria import CombinedFailureCriterion
-from .layup_info import (
-    ElementInfo,
-    LayerProperty,
-    LayupModelContextType,
-    LayupPropertiesProvider,
-    add_layup_info_to_mesh,
-    get_element_info_provider,
-)
-from .layup_info._layup_info import _get_layup_model_context
-from .layup_info._reference_surface import (
-    _get_map_to_reference_surface_operator,
-    _get_reference_surface_and_mapping_field,
-)
-from .layup_info.material_operators import MaterialOperators, get_material_operators
-from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
-from .result_definition import FailureMeasureEnum
-from .sampling_point import SamplingPointNew
-from .server_helpers import (
-    upload_continuous_fiber_composite_files_to_server,
-    version_equal_or_later,
-    version_older_than,
-)
-from .unit_system import get_unit_system
 
 
 def _create_material_container_helper_op(material_provider: Operator) -> Operator:
