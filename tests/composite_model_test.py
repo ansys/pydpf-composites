@@ -127,6 +127,20 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
         for mat_name in ref_material_names:
             assert mat_name in mat_names.keys()
 
+    # Note: server version of the current 2025 R1 pre0 build
+    # is still 8.2. This should become 8.3 or 9.0 soon.
+    if version_equal_or_later(dpf_server, "8.2"):
+        ref_ply_types = [
+            "regular",
+            "woven",
+            "honeycomb core",
+            "isotropic",
+        ]
+        ply_types = composite_model.ply_types
+        assert len(ply_types) == len(ref_ply_types)
+        for p_type in ref_ply_types:
+            assert p_type in ply_types.keys()
+
     timer.add("After getting properties")
 
     timer.summary()

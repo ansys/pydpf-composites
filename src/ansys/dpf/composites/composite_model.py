@@ -134,6 +134,11 @@ class CompositeModel:
         """Get material name to DPF material ID map."""
         return self._implementation.material_names
 
+    @property
+    def ply_types(self) -> dict[str, int]:
+        """Get ply type to DPF material ID map."""
+        return self._implementation.ply_types
+
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 

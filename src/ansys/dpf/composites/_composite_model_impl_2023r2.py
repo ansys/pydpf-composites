@@ -226,6 +226,15 @@ class CompositeModelImpl2023R2:
             " or later should be used instead."
         )
 
+    @property
+    def ply_types(self) -> dict[str, int]:
+        """Get ply types to DPF material ID map."""
+        raise NotImplementedError(
+            "ply_types is not implemented"
+            " for this version of DPF. DPF server 8.0 (2025 R1)"
+            " or later should be used instead."
+        )
+
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
 

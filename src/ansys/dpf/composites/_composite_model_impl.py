@@ -62,86 +62,13 @@ from .server_helpers import (
     version_equal_or_later,
     version_older_than,
 )
+from ._composite_model_impl_helpers import (
+    _create_material_container_helper_op,
+    _deprecated_composite_definition_label,
+    _merge_containers,
+    _get_failure_enum_from_name
+)
 from .unit_system import get_unit_system
-
-
-def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
-    """Emit a warning when the deprecated ``composite_definition_label`` is used."""
-    function_arg = "composite_definition_label"
-
-    def inner(*args: Sequence[Any], **kwargs: Sequence[Any]) -> Any:
-        if function_arg in kwargs.keys():
-            if kwargs[function_arg]:
-                warn(
-                    f"Use of {function_arg} is deprecated. Function {func.__name__}."
-                    " can be called without this argument.",
-                    category=DeprecationWarning,
-                    stacklevel=2,
-                )
-        return func(*args, **kwargs)
-
-    return inner
-
-
-def _merge_containers(
-    non_ref_surface_container: FieldsContainer, ref_surface_container: FieldsContainer
-) -> FieldsContainer:
-    """
-    Merge the results fields container.
-
-    Merges the results fields container of the non-reference surface and the reference surface.
-    """
-    assert sorted(non_ref_surface_container.labels) == sorted(ref_surface_container.labels)
-
-    ref_surface_time_ids = ref_surface_container.get_available_ids_for_label(TIME_LABEL)
-    non_ref_surface_time_ids = non_ref_surface_container.get_available_ids_for_label(TIME_LABEL)
-
-    assert sorted(ref_surface_time_ids) == sorted(non_ref_surface_time_ids)
-
-    out_container = dpf.FieldsContainer()
-    out_container.labels = [TIME_LABEL, FAILURE_LABEL]
-    out_container.time_freq_support = non_ref_surface_container.time_freq_support
-
-    def add_to_output_container(time_id: int, source_container: FieldsContainer) -> None:
-        fields = source_container.get_fields({TIME_LABEL: time_id})
-        for field in fields:
-            failure_enum = _get_failure_enum_from_name(field.name)
-            out_container.add_field({TIME_LABEL: time_id, FAILURE_LABEL: failure_enum}, field)
-
-    for current_time_id in ref_surface_time_ids:
-        add_to_output_container(current_time_id, ref_surface_container)
-        add_to_output_container(current_time_id, non_ref_surface_container)
-
-    return out_container
-
-
-def _get_failure_enum_from_name(name: str) -> FailureOutput:
-    if name.startswith("Failure Mode"):
-        if name.endswith(REF_SURFACE_NAME):
-            return FailureOutput.FAILURE_MODE_REF_SURFACE
-        else:
-            return FailureOutput.FAILURE_MODE
-
-    if name.startswith("IRF") or name.startswith("SF") or name.startswith("SM"):
-        if name.endswith(REF_SURFACE_NAME):
-            return FailureOutput.FAILURE_VALUE_REF_SURFACE
-        else:
-            return FailureOutput.FAILURE_VALUE
-
-    if name.startswith("Layer Index"):
-        return FailureOutput.MAX_LAYER_INDEX
-
-    if name.startswith("Global Layer in Stack"):
-        return FailureOutput.MAX_GLOBAL_LAYER_IN_STACK
-
-    if name.startswith("Local Layer in Element"):
-        return FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT
-
-    if name.startswith("Solid Element Id"):
-        return FailureOutput.MAX_SOLID_ELEMENT_ID
-
-    raise RuntimeError("Could not determine failure output from name: " + name)
-
 
 class CompositeModelImpl:
     """Provides access to the basic composite postprocessing functionality.
@@ -269,19 +196,9 @@ class CompositeModelImpl:
         Material name to DPF material ID map.
 
         This property can be used to filter analysis plies
-        or element layers.
+        or element layers by material name.
         """
-        try:
-            helper_op = dpf.Operator("composite::materials_container_helper")
-        except Exception as exc:
-            raise RuntimeError(
-                f"Operator composite::materials_container_helper doesn't exist. "
-                f"This could be because the server version is 2024 R1-pre0. The "
-                f"latest preview or the unified installer can be used instead. "
-                f"Error: {exc}"
-            ) from exc
-
-        helper_op.inputs.materials_container(self._material_operators.material_provider.outputs)
+        helper_op = _create_material_container_helper_op(self._material_operators.material_provider)
         string_field = helper_op.outputs.material_names()
         material_ids = string_field.scoping.ids
 
@@ -290,6 +207,32 @@ class CompositeModelImpl:
             names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
 
         return names
+
+    @property
+    def ply_types(self) -> dict[str, int]:
+        """
+        Ply type to DPF material ID map.
+
+        This property can be used to filter analysis plies
+        or element layers by ply type. Ply type is one of
+        the following values ``regular``,
+        ``woven``, ``honeycomb core``, ``sandwich core``,
+        ``isotropic homogeneous core``, ``orthotropic homogeneous core``,
+        ``isotropic``, ``adhesive``, ``undefined``. Regular stands for uni-directional.
+        """
+        helper_op = _create_material_container_helper_op(self._material_operators.material_provider)
+        if hasattr(helper_op.outputs, "ply_types"):
+            string_field = helper_op.outputs.ply_types()
+            material_ids = string_field.scoping.ids
+            ply_types = {}
+            for dpf_mat_id in material_ids:
+                ply_types[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
+
+            return ply_types
+        else:
+            raise RuntimeError("Ply types are not available in the current server version. "
+                               "Use at least 2025 R1 pre0.")
+
 
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
