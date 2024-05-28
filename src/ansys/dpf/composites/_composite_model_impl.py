@@ -32,6 +32,12 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
+from ._composite_model_impl_helpers import (
+    _create_material_container_helper_op,
+    _deprecated_composite_definition_label,
+    _get_failure_enum_from_name,
+    _merge_containers,
+)
 from .composite_scope import CompositeScope
 from .constants import FAILURE_LABEL, REF_SURFACE_NAME, TIME_LABEL, FailureOutput
 from .data_sources import (
@@ -62,13 +68,8 @@ from .server_helpers import (
     version_equal_or_later,
     version_older_than,
 )
-from ._composite_model_impl_helpers import (
-    _create_material_container_helper_op,
-    _deprecated_composite_definition_label,
-    _merge_containers,
-    _get_failure_enum_from_name
-)
 from .unit_system import get_unit_system
+
 
 class CompositeModelImpl:
     """Provides access to the basic composite postprocessing functionality.
@@ -230,9 +231,10 @@ class CompositeModelImpl:
 
             return ply_types
         else:
-            raise RuntimeError("Ply types are not available in the current server version. "
-                               "Use at least 2025 R1 pre0.")
-
+            raise RuntimeError(
+                "Ply types are not available in the current server version. "
+                "Use at least 2025 R1 pre0."
+            )
 
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:

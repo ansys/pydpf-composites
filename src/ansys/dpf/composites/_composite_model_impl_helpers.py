@@ -64,6 +64,7 @@ from .server_helpers import (
 )
 from .unit_system import get_unit_system
 
+
 def _create_material_container_helper_op(material_provider: Operator) -> Operator:
     try:
         helper_op = dpf.Operator("composite::materials_container_helper")
@@ -76,6 +77,7 @@ def _create_material_container_helper_op(material_provider: Operator) -> Operato
         ) from exc
     helper_op.inputs.materials_container(material_provider.outputs)
     return helper_op
+
 
 def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:
     """Emit a warning when the deprecated ``composite_definition_label`` is used."""
