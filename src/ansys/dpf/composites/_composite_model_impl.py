@@ -216,8 +216,8 @@ class CompositeModelImpl:
         This property can be used to filter analysis plies
         or element layers by ply type. Ply type is one of
         the following values ``regular``,
-        ``woven``, ``honeycomb core``, ``sandwich core``,
-        ``isotropic homogeneous core``, ``orthotropic homogeneous core``,
+        ``woven``, ``honeycomb_core``,
+        ``isotropic_homogeneous_core``, ``orthotropic_homogeneous_core``,
         ``isotropic``, ``adhesive``, ``undefined``. Regular stands for uni-directional.
         """
         helper_op = _create_material_container_helper_op(self._material_operators.material_provider)
@@ -232,7 +232,7 @@ class CompositeModelImpl:
         else:
             raise RuntimeError(
                 "Ply types are not available in the current server version. "
-                "Use at least 2025 R1 pre0."
+                "Use at least 9.0 (2025 R1 pre0)."
             )
 
     @_deprecated_composite_definition_label

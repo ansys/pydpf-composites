@@ -50,6 +50,11 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
         "2024 R2 pre 2",
         "DPF Composites: Failure measure conversion preserves Reference Surface suffix",
     ),
+    "9.0": _DpfVersionInfo(
+        "9.0",
+        "2025 R1 pre 0",
+        "DPF Composites: exposure of ply type.",
+    ),
 }
 
 
