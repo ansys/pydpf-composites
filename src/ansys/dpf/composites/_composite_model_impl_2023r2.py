@@ -231,7 +231,7 @@ class CompositeModelImpl2023R2:
         """Get ply types to DPF material ID map."""
         raise NotImplementedError(
             "ply_types is not implemented"
-            " for this version of DPF. DPF server 8.0 (2025 R1)"
+            " for this version of DPF. DPF server 9.0 (2025 R1 pre0)"
             " or later should be used instead."
         )
 
