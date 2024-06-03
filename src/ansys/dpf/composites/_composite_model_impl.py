@@ -227,7 +227,7 @@ class CompositeModelImpl:
         helper_op = self._material_operators.material_container_helper_op
         if helper_op is None:
             raise RuntimeError(
-                "The used DPF server does not support the requested data."
+                "The used DPF server does not support the requested data. "
                 "Use version 2024 R1-pre0 or later."
             )
         material_name_field = helper_op.outputs.material_names()
