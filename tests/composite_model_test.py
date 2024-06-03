@@ -129,67 +129,45 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
         metadata = composite_model.material_metadata
 
+        solver_mat_ids = 4*[0]
+        ply_types = 4*["unknown"]
+        if version_equal_or_later(dpf_server, "8.2"):
+            solver_mat_ids = [5, 4, 3, 2]
         if version_equal_or_later(dpf_server, "9.0"):
-            ref_metadata = {
-                1: MaterialMetadata(
-                    dpf_material_id=1,
-                    material_name="Honeycomb",
-                    ply_type="honeycomb_core",
-                    solver_material_id=5,
-                ),
-                2: MaterialMetadata(
-                    dpf_material_id=2,
-                    material_name="Epoxy Carbon UD (230 GPa) Prepreg",
-                    ply_type="regular",
-                    solver_material_id=4,
-                ),
-                3: MaterialMetadata(
-                    dpf_material_id=3,
-                    material_name="Epoxy Carbon Woven (230 GPa) Wet",
-                    ply_type="woven",
-                    solver_material_id=3,
-                ),
-                4: MaterialMetadata(
-                    dpf_material_id=4,
-                    material_name="Structural Steel",
-                    ply_type="undefined",
-                    solver_material_id=2,
-                ),
-            }
-        else:
-            ref_metadata = {
-                1: MaterialMetadata(
-                    dpf_material_id=1,
-                    material_name="Honeycomb",
-                    ply_type="unknown",
-                    solver_material_id=5,
-                ),
-                2: MaterialMetadata(
-                    dpf_material_id=2,
-                    material_name="Epoxy Carbon UD (230 GPa) Prepreg",
-                    ply_type="unknown",
-                    solver_material_id=4,
-                ),
-                3: MaterialMetadata(
-                    dpf_material_id=3,
-                    material_name="Epoxy Carbon Woven (230 GPa) Wet",
-                    ply_type="unknown",
-                    solver_material_id=3,
-                ),
-                4: MaterialMetadata(
-                    dpf_material_id=4,
-                    material_name="Structural Steel",
-                    ply_type="unknown",
-                    solver_material_id=2,
-                ),
-            }
+            ply_types = ["honeycomb_core", "regular", "woven", "undefined"]
+
+        ref_metadata = {
+            1: MaterialMetadata(
+                dpf_material_id=1,
+                material_name="Honeycomb",
+                ply_type=ply_types[0],
+                solver_material_id=solver_mat_ids[0],
+            ),
+            2: MaterialMetadata(
+                dpf_material_id=2,
+                material_name="Epoxy Carbon UD (230 GPa) Prepreg",
+                ply_type=ply_types[1],
+                solver_material_id=solver_mat_ids[1],
+            ),
+            3: MaterialMetadata(
+                dpf_material_id=3,
+                material_name="Epoxy Carbon Woven (230 GPa) Wet",
+                ply_type=ply_types[2],
+                solver_material_id=solver_mat_ids[2],
+            ),
+            4: MaterialMetadata(
+                dpf_material_id=4,
+                material_name="Structural Steel",
+                ply_type=ply_types[3],
+                solver_material_id=solver_mat_ids[3],
+            ),
+        }
 
         assert len(metadata) == len(ref_metadata)
         for dpf_material_id, ref_data in ref_metadata.items():
             assert metadata[dpf_material_id] == ref_data
 
     timer.add("After getting properties")
-
     timer.summary()
 
 

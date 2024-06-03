@@ -228,12 +228,12 @@ class MaterialMetadata:
         Ply type. One of regular, woven, honeycomb_core,
         isotropic_homogeneous_core, orthotropic_homogeneous_core,
         isotropic, adhesive, undefined. Regular stands for uni-directional.
-        `unknown` is used of the ply type is not available.
+        `undefined` is used of the ply type is not available.
     solver_material_id:
         Material index of the solver. 0 if data is not available
     """
 
     dpf_material_id: int = 0
     material_name: str = ""
-    ply_type: str = "unknown"
+    ply_type: str = "undefined"
     solver_material_id: int = 0
