@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:39.520** total execution time for 13 files **from all galleries**:
+**01:17.093** total execution time for 13 files **from all galleries**:
 
 .. container::
 
@@ -33,41 +33,41 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py` (``../../examples/001_failure_operator_example.py``)
-     - 00:20.448
+     - 00:16.050
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_010_harmonic_example.py` (``../../examples/010_harmonic_example.py``)
-     - 00:14.681
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_011_rst_workflow.py` (``../../examples/011_rst_workflow.py``)
-     - 00:08.765
+     - 00:10.936
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``../../examples/007_interlaminar_normal_stress_example.py``)
-     - 00:08.078
+     - 00:07.469
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py` (``../../examples/002_sampling_point_example.py``)
-     - 00:07.989
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_099_dpf_composite_failure_workflow.py` (``../../examples/099_dpf_composite_failure_workflow.py``)
-     - 00:07.401
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``../../examples/008_assembly_example.py``)
-     - 00:06.576
+     - 00:05.935
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``../../examples/009_short_fiber_orientation_tensor.py``)
-     - 00:06.143
+     - 00:05.775
      - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py` (``../../examples/004_get_material_properties_example.py``)
-     - 00:05.041
+   * - :ref:`sphx_glr_examples_gallery_examples_011_rst_workflow.py` (``../../examples/011_rst_workflow.py``)
+     - 00:05.048
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``../../examples/008_assembly_example.py``)
+     - 00:04.905
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_099_dpf_composite_failure_workflow.py` (``../../examples/099_dpf_composite_failure_workflow.py``)
+     - 00:04.890
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``../../examples/006_filter_composite_data_example.py``)
-     - 00:04.612
+     - 00:04.558
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_012_fatigue_example.py` (``../../examples/012_fatigue_example.py``)
-     - 00:04.483
+     - 00:03.613
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py` (``../../examples/004_get_material_properties_example.py``)
+     - 00:03.552
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_003_short_fiber_example.py` (``../../examples/003_short_fiber_example.py``)
-     - 00:03.636
+     - 00:03.032
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py` (``../../examples/005_get_layup_properties_example.py``)
-     - 00:01.668
+     - 00:01.330
      - 0.0
