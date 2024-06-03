@@ -230,9 +230,8 @@ class MaterialMetadata:
         isotropic, adhesive, undefined. Regular stands for uni-directional.
         `undefined` is used of the ply type is not available.
     solver_material_id:
-        Material index of the solver. 0 if data is not available
+        Material index of the solver. 0 if data is not available.
     """
-
     dpf_material_id: int = 0
     material_name: str = ""
     ply_type: str = "undefined"
