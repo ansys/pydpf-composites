@@ -166,13 +166,13 @@ resolved_reference = "b9de698ff3ded7be5275b10d082e22940368308a"
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.16.4"
+version = "0.16.5"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 optional = true
 python-versions = "<4,>=3.9"
 files = [
-    {file = "ansys_sphinx_theme-0.16.4-py3-none-any.whl", hash = "sha256:20f25c22e470fb9d7392dc968dd7964d8d41970b52e1758b9eead1ab1f4124de"},
-    {file = "ansys_sphinx_theme-0.16.4.tar.gz", hash = "sha256:bcd7b5846bf81970166dd2a7a22539f316145350f3b4c0083199e952efb1e2b5"},
+    {file = "ansys_sphinx_theme-0.16.5-py3-none-any.whl", hash = "sha256:3546b1a9fde6aebbe5d1a762470248d1e3a24d70c26c6eb334d6a9f1b986e5c9"},
+    {file = "ansys_sphinx_theme-0.16.5.tar.gz", hash = "sha256:21e23524e92be937b8e6b2efc1eaa6b1afa3d500d48d4260ef4596337fdc7732"},
 ]
 
 [package.dependencies]
