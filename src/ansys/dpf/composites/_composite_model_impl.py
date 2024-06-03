@@ -231,7 +231,10 @@ class CompositeModelImpl:
                 "Use version 2024 R1-pre0 or later."
             )
         material_name_field = helper_op.outputs.material_names()
-        solver_id_field = helper_op.outputs.solver_material_ids()
+        if hasattr(helper_op.outputs, "solver_material_ids"):
+            solver_id_field = helper_op.outputs.solver_material_ids()
+        else:
+            solver_id_field = None
         material_ids = material_name_field.scoping.ids
         if hasattr(helper_op.outputs, "ply_types"):
             ply_type_field = helper_op.outputs.ply_types()
@@ -250,7 +253,11 @@ class CompositeModelImpl:
                     if ply_type_field
                     else "unknown"
                 ),
-                solver_material_id=solver_id_field.data[solver_id_field.scoping.index(dpf_mat_id)],
+                solver_material_id=(
+                    solver_id_field.data[solver_id_field.scoping.index(dpf_mat_id)]
+                    if solver_id_field
+                    else 0
+                ),
             )
 
         return metadata
