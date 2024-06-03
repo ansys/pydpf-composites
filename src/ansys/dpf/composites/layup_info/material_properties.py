@@ -22,6 +22,7 @@
 
 """Helpers to get material properties."""
 from collections.abc import Collection
+from dataclasses import dataclass
 from enum import Enum
 from typing import Union, cast
 
@@ -29,6 +30,7 @@ from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 import numpy as np
 
 __all__ = (
+    "MaterialMetadata",
     "MaterialProperty",
     "get_constant_property",
     "get_all_dpf_material_ids",
@@ -209,3 +211,29 @@ def get_constant_property_dict(
             )
             properties[dpf_material_id][material_property] = constant_property
     return properties
+
+
+@dataclass(frozen=True)
+class MaterialMetadata:
+    """
+    Material metadata such as name and ply type.
+
+    Parameters
+    ----------
+    dpf_material_id:
+        Material index in the DPF materials container.
+    material_name:
+        Name of the material. Is empty if the name is not available.
+    ply_type:
+        Ply type. One of regular, woven, honeycomb_core,
+        isotropic_homogeneous_core, orthotropic_homogeneous_core,
+        isotropic, adhesive, undefined. Regular stands for uni-directional.
+        `unknown` is used of the ply type is not available.
+    solver_material_id:
+        Material index of the solver.
+    """
+
+    dpf_material_id: int = 0
+    material_name: str = ""
+    ply_type: str = "unknown"
+    solver_material_id: int = 0

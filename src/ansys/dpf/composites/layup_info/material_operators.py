@@ -26,6 +26,8 @@ from warnings import warn
 
 from ansys.dpf.core import DataSources, Operator
 
+from ansys.dpf.composites.server_helpers import version_equal_or_later
+
 __all__ = ("MaterialOperators", "get_material_operators")
 
 from ansys.dpf.composites.unit_system import UnitSystemProvider
@@ -61,6 +63,14 @@ class MaterialOperators:
         self._material_support_provider = material_support_provider
         self._result_info_provider = result_info_provider
 
+        if version_equal_or_later(self._material_provider._server, "7.1"):
+            self._material_container_helper_op = Operator("composite::materials_container_helper")
+            self._material_container_helper_op.inputs.materials_container(
+                self._material_provider.outputs
+            )
+        else:
+            self._material_container_helper_op = None
+
     @property
     def result_info_provider(self) -> Operator:
         """Get result_info_provider."""
@@ -82,6 +92,17 @@ class MaterialOperators:
     def material_provider(self) -> Operator:
         """Get material_provider."""
         return self._material_provider
+
+    @property
+    def material_container_helper_op(self) -> Operator:
+        """
+        Get material container helper operator.
+
+        This operator can be used to access metadata of the materials.
+        Return value is None if the server version does not support this operator.
+        The minimum version is 2024 R1-pre0 (7.1).
+        """
+        return self._material_container_helper_op
 
 
 def get_material_operators(

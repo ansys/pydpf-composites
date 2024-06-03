@@ -36,7 +36,7 @@ from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info import ElementInfo, LayerProperty, LayupModelContextType
 from .layup_info.material_operators import MaterialOperators
-from .layup_info.material_properties import MaterialProperty
+from .layup_info.material_properties import MaterialMetadata, MaterialProperty
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import SamplingPoint
 
@@ -135,9 +135,9 @@ class CompositeModel:
         return self._implementation.material_names
 
     @property
-    def ply_types(self) -> dict[str, int]:
-        """Get ply type to DPF material ID map."""
-        return self._implementation.ply_types
+    def material_metadata(self) -> dict[int, MaterialMetadata]:
+        """PF material ID to metadata map."""
+        return self._implementation.material_metadata
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.

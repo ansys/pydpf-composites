@@ -27,23 +27,9 @@ from typing import Any, Callable
 from warnings import warn
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import FieldsContainer, Operator
+from ansys.dpf.core import FieldsContainer
 
 from .constants import FAILURE_LABEL, REF_SURFACE_NAME, TIME_LABEL, FailureOutput
-
-
-def _create_material_container_helper_op(material_provider: Operator) -> Operator:
-    try:
-        helper_op = dpf.Operator("composite::materials_container_helper")
-    except Exception as exc:
-        raise RuntimeError(
-            f"Operator composite::materials_container_helper doesn't exist. "
-            f"This could be because the server version is 2024 R1-pre0. The "
-            f"latest preview or the unified installer can be used instead. "
-            f"Error: {exc}"
-        ) from exc
-    helper_op.inputs.materials_container(material_provider.outputs)
-    return helper_op
 
 
 def _deprecated_composite_definition_label(func: Callable[..., Any]) -> Any:

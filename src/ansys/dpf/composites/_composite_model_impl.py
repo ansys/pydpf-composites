@@ -32,11 +32,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from ._composite_model_impl_helpers import (
-    _create_material_container_helper_op,
-    _deprecated_composite_definition_label,
-    _merge_containers,
-)
+from ._composite_model_impl_helpers import _deprecated_composite_definition_label, _merge_containers
 from .composite_scope import CompositeScope
 from .constants import REF_SURFACE_NAME
 from .data_sources import (
@@ -59,7 +55,11 @@ from .layup_info._reference_surface import (
     _get_reference_surface_and_mapping_field,
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
-from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
+from .layup_info.material_properties import (
+    MaterialMetadata,
+    MaterialProperty,
+    get_constant_property_dict,
+)
 from .result_definition import FailureMeasureEnum
 from .sampling_point import SamplingPointNew
 from .server_helpers import (
@@ -198,7 +198,13 @@ class CompositeModelImpl:
         This property can be used to filter analysis plies
         or element layers by material name.
         """
-        helper_op = _create_material_container_helper_op(self._material_operators.material_provider)
+        helper_op = self._material_operators.material_container_helper_op
+        if helper_op is None:
+            raise RuntimeError(
+                "The used DPF server does not support the requested data. "
+                "Use version 2024 R1-pre0 or later."
+            )
+
         string_field = helper_op.outputs.material_names()
         material_ids = string_field.scoping.ids
 
@@ -209,31 +215,45 @@ class CompositeModelImpl:
         return names
 
     @property
-    def ply_types(self) -> dict[str, int]:
+    def material_metadata(self) -> dict[int, MaterialMetadata]:
         """
-        Ply type to DPF material ID map.
+        DPF material ID to metadata map of the materials.
 
-        This property can be used to filter analysis plies
-        or element layers by ply type. Ply type is one of
-        the following values ``regular``,
-        ``woven``, ``honeycomb_core``,
-        ``isotropic_homogeneous_core``, ``orthotropic_homogeneous_core``,
-        ``isotropic``, ``adhesive``, ``undefined``. Regular stands for uni-directional.
+        This data can be used to filter analysis plies
+        or element layers by ply type, material name etc.
+
+        Note: ply type is only available in DPF server version 9.0 (2025 R1 pre0) and later.
         """
-        helper_op = _create_material_container_helper_op(self._material_operators.material_provider)
-        if hasattr(helper_op.outputs, "ply_types"):
-            string_field = helper_op.outputs.ply_types()
-            material_ids = string_field.scoping.ids
-            ply_types = {}
-            for dpf_mat_id in material_ids:
-                ply_types[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
-
-            return ply_types
-        else:
+        helper_op = self._material_operators.material_container_helper_op
+        if helper_op is None:
             raise RuntimeError(
-                "Ply types are not available in the current server version. "
-                "Use at least 9.0 (2025 R1 pre0)."
+                "The used DPF server does not support the requested data."
+                "Use version 2024 R1-pre0 or later."
             )
+        material_name_field = helper_op.outputs.material_names()
+        solver_id_field = helper_op.outputs.solver_material_ids()
+        material_ids = material_name_field.scoping.ids
+        if hasattr(helper_op.outputs, "ply_types"):
+            ply_type_field = helper_op.outputs.ply_types()
+        else:
+            ply_type_field = None
+
+        metadata = {}
+        for dpf_mat_id in material_ids:
+            metadata[dpf_mat_id] = MaterialMetadata(
+                dpf_material_id=dpf_mat_id,
+                material_name=material_name_field.data[
+                    material_name_field.scoping.index(dpf_mat_id)
+                ],
+                ply_type=(
+                    ply_type_field.data[ply_type_field.scoping.index(dpf_mat_id)]
+                    if ply_type_field
+                    else "unknown"
+                ),
+                solver_material_id=solver_id_field.data[solver_id_field.scoping.index(dpf_mat_id)],
+            )
+
+        return metadata
 
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
