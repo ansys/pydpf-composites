@@ -129,8 +129,8 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
         metadata = composite_model.material_metadata
 
-        solver_mat_ids = 4*[0]
-        ply_types = 4*["unknown"]
+        solver_mat_ids = 4 * [0]
+        ply_types = 4 * ["unknown"]
         if version_equal_or_later(dpf_server, "8.2"):
             solver_mat_ids = [5, 4, 3, 2]
         if version_equal_or_later(dpf_server, "9.0"):
