@@ -251,12 +251,12 @@ class CompositeModelImpl:
                 ply_type=(
                     ply_type_field.data[ply_type_field.scoping.index(dpf_mat_id)]
                     if ply_type_field
-                    else "unknown"
+                    else None
                 ),
                 solver_material_id=(
                     solver_id_field.data[solver_id_field.scoping.index(dpf_mat_id)]
                     if solver_id_field
-                    else 0
+                    else None
                 ),
             )
 

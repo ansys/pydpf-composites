@@ -24,7 +24,7 @@
 from collections.abc import Collection
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union, cast
+from typing import Optional, Union, cast
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 import numpy as np
@@ -228,11 +228,13 @@ class MaterialMetadata:
         Ply type. One of regular, woven, honeycomb_core,
         isotropic_homogeneous_core, orthotropic_homogeneous_core,
         isotropic, adhesive, undefined. Regular stands for uni-directional.
-        `undefined` is used of the ply type is not available.
+        None if the DPF server older than 2025 R1 pre 0 (9.0).
     solver_material_id:
-        Material index of the solver. 0 if data is not available.
+        Material index of the solver.
+        None if DPF server older than 2024 R1 pre 0 (8.0).
     """
+
     dpf_material_id: int = 0
     material_name: str = ""
-    ply_type: str = "undefined"
-    solver_material_id: int = 0
+    ply_type: Optional[str] = None
+    solver_material_id: Optional[int] = None
