@@ -66,8 +66,8 @@
     <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="material_provider" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider.html" />
-    <link rel="prev" title="Larc_Constants_fracture_toughness_mode_2" href="ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Larc_Constants_fracture_toughness_mode_2.html" />
+    <link rel="next" title="material_container_helper_op" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_container_helper_op.html" />
+    <link rel="prev" title="solver_material_id" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <link rel="canonical" href="https://composites.dpf.docs.pyansys.com/version/stable/api/_autosummary/ansys.dpf.composites.layup_info.material_operators.MaterialOperators.html" />
@@ -467,7 +467,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids.html">get_all_dpf_material_ids</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict.html">get_constant_property_dict</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html">MaterialProperty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.html">MaterialMetadata</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">MaterialOperators</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_container_helper_op.html">material_container_helper_op</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider.html">material_provider</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider.html">material_support_provider</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider.html">result_info_provider</a></li>
@@ -559,15 +561,15 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>material_support_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.12.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – The material support provider takes care of mapping the materials in the RST file to
+<li><p><strong>material_support_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.12.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – The material support provider takes care of mapping the materials in the RST file to
 the materials in the composite definitions.
 The material support contains all the materials from the RST file. Currently
 the output of this operator cannot be inspected in Python.</p></li>
-<li><p><strong>material_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.12.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – Outputs the <code class="docutils literal notranslate"><span class="pre">MaterialsContainer</span></code>, which can be used to
+<li><p><strong>material_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.12.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – Outputs the <code class="docutils literal notranslate"><span class="pre">MaterialsContainer</span></code>, which can be used to
 evaluate material properties. This container cannot be
 queried in Python, but it can be passed to other DPF operators
 that evaluate the properties.</p></li>
-<li><p><strong>result_info_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.12.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – Provides the <code class="docutils literal notranslate"><span class="pre">ResultInfo</span></code> object.</p></li>
+<li><p><strong>result_info_provider</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.12.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>) – Provides the <code class="docutils literal notranslate"><span class="pre">ResultInfo</span></code> object.</p></li>
 </ul>
 </dd>
 </dl>
@@ -579,13 +581,16 @@ that evaluate the properties.</p></li>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.material_provider</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_container_helper_op.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_container_helper_op" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_container_helper_op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.material_container_helper_op</span></code></a></p></td>
+<td><p>Get material container helper operator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.material_provider</span></code></a></p></td>
 <td><p>Get material_provider.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.material_support_provider</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.material_support_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.material_support_provider</span></code></a></p></td>
 <td><p>Get material_support_provider.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.result_info_provider</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators.result_info_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators.result_info_provider</span></code></a></p></td>
 <td><p>Get result_info_provider.</p></td>
 </tr>
 </tbody>

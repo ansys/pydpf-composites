@@ -70,6 +70,7 @@ CompositeModel
       CompositeModel.core_model
       CompositeModel.data_sources
       CompositeModel.layup_model_type
+      CompositeModel.material_metadata
       CompositeModel.material_names
       CompositeModel.material_operators
    

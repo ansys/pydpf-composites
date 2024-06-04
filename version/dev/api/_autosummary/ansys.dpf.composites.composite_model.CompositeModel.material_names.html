@@ -67,7 +67,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="material_operators" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html" />
-    <link rel="prev" title="layup_model_type" href="ansys.dpf.composites.composite_model.CompositeModel.layup_model_type.html" />
+    <link rel="prev" title="material_metadata" href="ansys.dpf.composites.composite_model.CompositeModel.material_metadata.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <link rel="canonical" href="https://composites.dpf.docs.pyansys.com/version/stable/api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.material_names.html" />
@@ -467,6 +467,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.core_model.html">core_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.data_sources.html">data_sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.layup_model_type.html">layup_model_type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_metadata.html">material_metadata</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">material_names</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.composite_model.CompositeModel.material_operators.html">material_operators</a></li>
 </ul>
@@ -561,7 +562,9 @@ document.write(`
 <dl class="py property">
 <dt class="sig sig-object py" id="ansys.dpf.composites.composite_model.CompositeModel.material_names">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CompositeModel.</span></span><span class="sig-name descname"><span class="pre">material_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ansys.dpf.composites.composite_model.CompositeModel.material_names" title="Link to this definition">#</a></dt>
-<dd><p>Get material name to DPF material ID map.</p>
+<dd><p>Material name to DPF material ID map.</p>
+<p>This property can be used to filter analysis plies
+or element layers by material name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>

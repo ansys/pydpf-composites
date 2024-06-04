@@ -46,6 +46,7 @@ example shows how to evaluate material properties.
     get_constant_property_dict
     :template: autosummary/no_methods_doc/base.rst.jinja2
     MaterialProperty
+    MaterialMetadata
 
 
 
