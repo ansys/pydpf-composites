@@ -36,7 +36,7 @@ from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
 from .layup_info import ElementInfo, LayerProperty, LayupModelContextType
 from .layup_info.material_operators import MaterialOperators
-from .layup_info.material_properties import MaterialProperty
+from .layup_info.material_properties import MaterialMetadata, MaterialProperty
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import SamplingPoint
 
@@ -131,8 +131,25 @@ class CompositeModel:
 
     @property
     def material_names(self) -> dict[str, int]:
-        """Get material name to DPF material ID map."""
+        """
+        Material name to DPF material ID map.
+
+        This property can be used to filter analysis plies
+        or element layers by material name.
+        """
         return self._implementation.material_names
+
+    @property
+    def material_metadata(self) -> dict[int, MaterialMetadata]:
+        """
+        DPF material ID to metadata map of the materials.
+
+        This data can be used to filter analysis plies
+        or element layers by ply type, material name etc.
+
+        Note: ply type is only available in DPF server version 9.0 (2025 R1 pre0) and later.
+        """
+        return self._implementation.material_metadata
 
     def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.

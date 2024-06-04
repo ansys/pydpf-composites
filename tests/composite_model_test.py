@@ -42,7 +42,7 @@ from ansys.dpf.composites.layup_info import (
     LayupModelContextType,
     get_analysis_ply_index_to_name_map,
 )
-from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
+from ansys.dpf.composites.layup_info.material_properties import MaterialMetadata, MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
 
@@ -127,8 +127,47 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
         for mat_name in ref_material_names:
             assert mat_name in mat_names.keys()
 
-    timer.add("After getting properties")
+        metadata = composite_model.material_metadata
 
+        solver_mat_ids = 4 * [None]
+        ply_types = 4 * [None]
+        if version_equal_or_later(dpf_server, "8.0"):
+            solver_mat_ids = [5, 4, 3, 2]
+        if version_equal_or_later(dpf_server, "9.0"):
+            ply_types = ["honeycomb_core", "regular", "woven", "undefined"]
+
+        ref_metadata = {
+            1: MaterialMetadata(
+                dpf_material_id=1,
+                material_name="Honeycomb",
+                ply_type=ply_types[0],
+                solver_material_id=solver_mat_ids[0],
+            ),
+            2: MaterialMetadata(
+                dpf_material_id=2,
+                material_name="Epoxy Carbon UD (230 GPa) Prepreg",
+                ply_type=ply_types[1],
+                solver_material_id=solver_mat_ids[1],
+            ),
+            3: MaterialMetadata(
+                dpf_material_id=3,
+                material_name="Epoxy Carbon Woven (230 GPa) Wet",
+                ply_type=ply_types[2],
+                solver_material_id=solver_mat_ids[2],
+            ),
+            4: MaterialMetadata(
+                dpf_material_id=4,
+                material_name="Structural Steel",
+                ply_type=ply_types[3],
+                solver_material_id=solver_mat_ids[3],
+            ),
+        }
+
+        assert len(metadata) == len(ref_metadata)
+        for dpf_material_id, ref_data in ref_metadata.items():
+            assert metadata[dpf_material_id] == ref_data
+
+    timer.add("After getting properties")
     timer.summary()
 
 
