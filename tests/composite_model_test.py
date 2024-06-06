@@ -40,6 +40,7 @@ from ansys.dpf.composites.failure_criteria import (
 from ansys.dpf.composites.layup_info import (
     LayerProperty,
     LayupModelContextType,
+    get_all_analysis_ply_names,
     get_analysis_ply_index_to_name_map,
 )
 from ansys.dpf.composites.layup_info.material_properties import MaterialMetadata, MaterialProperty
@@ -539,3 +540,50 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
+
+
+def test_composite_model_with_imported_solid_models(dpf_server):
+    """
+    Imported solid models are slightly different if compared with shell parts
+    and standard solid models. For instance, they have analysis plies which are
+    not linked to a layered elements. These are called filler plies.
+
+    In addition, the show on reference surface feature used the skin of the
+    solid mesh instead of a predefined reference surface.
+    This general test ensures that the composite model can handle these.
+
+    The model has one shell part, one standard solid model and
+    an imported solid model which are all
+    """
+    result_folder = pathlib.Path(__file__).parent / "data" / "assemby_imported_solid_model"
+
+    # Create the composite files object that contains
+    # the results file, the material properties file, and the
+    # composite definitions
+    composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+
+    # Create a composite model
+    composite_model = CompositeModel(composite_files, dpf_server)
+
+    analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
+    ref_plies = [
+        "Setup 2_shell::P1L1__ModelingPly.2",
+        "Setup_solid::P1L1__ModelingPly.2",
+        "Setup 3_solid::P1L1__ModelingPly.1",
+        "Setup 3_solid::P1L1__ModelingPly.3",
+        "Setup 3_solid::filler_Structural Steel",
+        "Setup 3_solid::P1L1__ModelingPly.2",
+        "Setup 2_shell::P1L1__ModelingPly.1",
+        "Setup_solid::P1L1__ModelingPly.1",
+    ]
+    assert set(analysis_plies) == set(ref_plies)
+
+    # Evaluate combined failure criterion
+    combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
+    failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
+
+    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    assert irf_field.size == 160
+
+    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE})
+    assert irf_field.size == 103
