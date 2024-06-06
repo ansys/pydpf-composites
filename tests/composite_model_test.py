@@ -582,8 +582,17 @@ def test_composite_model_with_imported_solid_models(dpf_server):
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
-    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    irf_field = failure_result.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     assert irf_field.size == 160
 
-    irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE})
+    irf_field = failure_result.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE_REF_SURFACE})
     assert irf_field.size == 103
+
+    for failure_output in [
+        FailureOutput.FAILURE_MODE_REF_SURFACE,
+        FailureOutput.MAX_GLOBAL_LAYER_IN_STACK,
+        FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT,
+        FailureOutput.MAX_SOLID_ELEMENT_ID,
+    ]:
+        field = failure_result.get_field({FAILURE_LABEL: failure_output})
+        assert field.size == 103
