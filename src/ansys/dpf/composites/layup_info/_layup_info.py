@@ -340,8 +340,8 @@ def get_analysis_ply_index_to_name_map(
             # they are linked to homogeneous elements only. So, they are not
             # part of layer_to_analysis_ply. This filler plies can occur in
             # imported solid models.
-            # The analysis ply indices can be retrieved from the
-            # analysis_ply property fields direction as soon as the
+            # The analysis ply indices can be retrieved from
+            # analysis_ply_property_field as soon as the
             # properties of PropertyField are available in Python.
             if first_element_id not in element_ids:
                 continue
