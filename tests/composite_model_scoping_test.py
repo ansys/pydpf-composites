@@ -26,7 +26,7 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.constants import FailureOutput, FAILURE_LABEL
+from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
 from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -253,8 +253,7 @@ def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
     # Evaluate combined failure criterion
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
     failure_result = composite_model.evaluate_failure_criteria(
-        combined_criterion=combined_failure_criterion,
-        composite_scope=CompositeScope(plies=plies)
+        combined_criterion=combined_failure_criterion, composite_scope=CompositeScope(plies=plies)
     )
 
     # check the on reference surface data

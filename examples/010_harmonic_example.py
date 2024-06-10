@@ -50,7 +50,7 @@ import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import FailureOutput, FAILURE_LABEL
+from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
