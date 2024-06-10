@@ -542,7 +542,7 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
     failure_container = composite_model.evaluate_failure_criteria(cfc)
 
 
-def test_composite_model_with_imported_solid_models(dpf_server):
+def test_composite_model_with_imported_solid_model_assembly(dpf_server):
     """
     Imported solid models are slightly different if compared with shell parts
     and standard solid models. For instance, they have analysis plies which are
@@ -556,22 +556,19 @@ def test_composite_model_with_imported_solid_models(dpf_server):
     an imported solid model which are all
     """
     result_folder = pathlib.Path(__file__).parent / "data" / "assemby_imported_solid_model"
-
-    # Create the composite files object that contains
-    # the results file, the material properties file, and the
-    # composite definitions
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
 
     # Create a composite model
     composite_model = CompositeModel(composite_files, dpf_server)
 
+    # ensure that all analysis plies are available, also the filler plies
     analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
     ref_plies = [
         "Setup 2_shell::P1L1__ModelingPly.2",
         "Setup_solid::P1L1__ModelingPly.2",
         "Setup 3_solid::P1L1__ModelingPly.1",
         "Setup 3_solid::P1L1__ModelingPly.3",
-        "Setup 3_solid::filler_Structural Steel",
+        "Setup 3_solid::filler_Epoxy Carbon Woven (230 GPa) Prepreg",
         "Setup 3_solid::P1L1__ModelingPly.2",
         "Setup 2_shell::P1L1__ModelingPly.1",
         "Setup_solid::P1L1__ModelingPly.1",
@@ -583,16 +580,15 @@ def test_composite_model_with_imported_solid_models(dpf_server):
     failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
     irf_field = failure_result.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
-    assert irf_field.size == 160
+    assert irf_field.size == 84
 
-    irf_field = failure_result.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE_REF_SURFACE})
-    assert irf_field.size == 103
-
+    # check the on reference surface data
     for failure_output in [
+        FailureOutput.FAILURE_VALUE_REF_SURFACE,
         FailureOutput.FAILURE_MODE_REF_SURFACE,
         FailureOutput.MAX_GLOBAL_LAYER_IN_STACK,
         FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT,
         FailureOutput.MAX_SOLID_ELEMENT_ID,
     ]:
         field = failure_result.get_field({FAILURE_LABEL: failure_output})
-        assert field.size == 103
+        assert field.size == 60
