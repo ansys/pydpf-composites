@@ -556,8 +556,10 @@ def test_composite_model_with_imported_solid_model_assembly(dpf_server):
     an imported solid model which are all
     """
     if version_older_than(dpf_server, "9.0"):
-        pytest.xfail("The post-processing of imported solid models is supported"
-                     " with version 9.0 (2025 R1) or later.")
+        pytest.xfail(
+            "The post-processing of imported solid models is supported"
+            " with version 9.0 (2025 R1) or later."
+        )
 
     result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
