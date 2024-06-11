@@ -555,12 +555,6 @@ def test_composite_model_with_imported_solid_model_assembly(dpf_server):
     The model has one shell part, one standard solid model and
     an imported solid model which are all
     """
-    if version_older_than(dpf_server, "9.0"):
-        pytest.xfail(
-            "The post-processing of imported solid models is supported"
-            " with version 9.0 (2025 R1) or later."
-        )
-
     result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
 
@@ -597,4 +591,11 @@ def test_composite_model_with_imported_solid_model_assembly(dpf_server):
         FailureOutput.MAX_SOLID_ELEMENT_ID,
     ]:
         field = failure_result.get_field({FAILURE_LABEL: failure_output})
-        assert field.size == 60
+        if version_older_than(dpf_server, "9.0"):
+            # old servers do not extract the reference surface
+            # of imported solid models. So the reference surface mesh
+            # contains only the shell elements and reference surface of the
+            # standard solid model.
+            assert field.size == 18
+        else:
+            assert field.size == 60
