@@ -325,8 +325,9 @@ def get_analysis_ply_index_to_name_map(
     mesh
         DPF Meshed region enriched with lay-up information
 
-    Note: Analysis plies of ACP's imported solid model which are linked
-    to homogeneous elements only are currently skipped.
+    .. note::
+    Analysis plies of ACP's imported solid model that are linked only
+    to homogeneous elements are currently skipped.
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
