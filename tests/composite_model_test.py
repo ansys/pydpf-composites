@@ -555,7 +555,7 @@ def test_composite_model_with_imported_solid_model_assembly(dpf_server):
     This general test ensures that the composite model can handle these.
 
     The model has one shell part, one standard solid model and
-    an imported solid model which are all.
+    an imported solid model.
     """
     result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
