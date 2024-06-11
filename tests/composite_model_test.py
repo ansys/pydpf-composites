@@ -544,12 +544,14 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
 
 def test_composite_model_with_imported_solid_model_assembly(dpf_server):
     """
+    Tests the show on reference surface option for imported solid models.
+
     Imported solid models are slightly different if compared with shell parts
     and standard solid models. For instance, they have analysis plies which are
     not linked to a layered elements. These are called filler plies.
 
-    In addition, the show on reference surface feature used the skin of the
-    solid mesh instead of a predefined reference surface.
+    In addition, the `show on reference surface` option uses the skin of the
+    imported solid mesh instead of a predefined reference surface.
     This general test ensures that the composite model can handle these.
 
     The model has one shell part, one standard solid model and

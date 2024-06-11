@@ -237,8 +237,10 @@ def test_composite_model_time_scope(dpf_server):
 
 def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
     """Ensure that the ply-wise scoping works in combination with the reference surface plot."""
-    result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
+    if version_older_than(dpf_server, "8.0"):
+        pytest.xfail("Not supported because of limitations in the handling of assemblies.")
 
+    result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
 
     # Create a composite model
@@ -265,6 +267,7 @@ def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
         FailureOutput.MAX_SOLID_ELEMENT_ID,
     ]:
         field = failure_result.get_field({FAILURE_LABEL: failure_output})
+
         if version_equal_or_later(dpf_server, "9.0"):
             assert field.size == 21
         elif version_equal_or_later(dpf_server, "8.0"):
@@ -274,7 +277,6 @@ def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
             # standard solid model.
             assert field.size == 12
         else:
-            # Server of 2024 R1 and before do not support results on the reference
-            # surface at all. It is tested that the operator update
-            # completes without error nevertheless.
-            pass
+            # Servers before 8.0 are not tested because of several limitations:
+            # handling of assemblies, reference surface not supported
+            assert False
