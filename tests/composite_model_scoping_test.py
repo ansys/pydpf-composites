@@ -237,6 +237,9 @@ def test_composite_model_time_scope(dpf_server):
 
 def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
     """Ensure that the ply-wise scoping works in combination with the reference surface plot."""
+    if version_older_than(dpf_server, "9.0"):
+        pytest.xfail("The post-processing of imported solid models is supported with version 9.0 (2025 R1) or later.")
+
     result_folder = pathlib.Path(__file__).parent / "data" / "assemby_imported_solid_model"
 
     composite_files = get_composite_files_from_workbench_result_folder(result_folder)
