@@ -591,11 +591,16 @@ def test_composite_model_with_imported_solid_model_assembly(dpf_server):
         FailureOutput.MAX_SOLID_ELEMENT_ID,
     ]:
         field = failure_result.get_field({FAILURE_LABEL: failure_output})
-        if version_older_than(dpf_server, "9.0"):
-            # old servers do not extract the reference surface
+        if version_equal_or_later(dpf_server, "9.0"):
+            assert field.size == 60
+        elif version_equal_or_later(dpf_server, "8.0"):
+            # Servers of the 2024 R2 series do not extract the reference surface
             # of imported solid models. So the reference surface mesh
             # contains only the shell elements and reference surface of the
             # standard solid model.
             assert field.size == 18
         else:
-            assert field.size == 60
+            # Server of 2024 R1 and before do not support results on the reference
+            # surface at all. It is tested that the operator update
+            # completes without error nevertheless.
+            pass

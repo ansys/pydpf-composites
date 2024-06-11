@@ -35,7 +35,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
 )
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
-from ansys.dpf.composites.server_helpers._versions import version_older_than
+from ansys.dpf.composites.server_helpers._versions import version_equal_or_later, version_older_than
 
 from .helper import get_basic_shell_files
 
@@ -265,11 +265,16 @@ def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
         FailureOutput.MAX_SOLID_ELEMENT_ID,
     ]:
         field = failure_result.get_field({FAILURE_LABEL: failure_output})
-        if version_older_than(dpf_server, "9.0"):
-            # old servers do not extract the reference surface
+        if version_equal_or_later(dpf_server, "9.0"):
+            assert field.size == 21
+        elif version_equal_or_later(dpf_server, "8.0"):
+            # Servers of the 2024 R2 series do not extract the reference surface
             # of imported solid models. So the reference surface mesh
             # contains only the shell elements and reference surface of the
             # standard solid model.
             assert field.size == 12
         else:
-            assert field.size == 21
+            # Server of 2024 R1 and before do not support results on the reference
+            # surface at all. It is tested that the operator update
+            # completes without error nevertheless.
+            pass
