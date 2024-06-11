@@ -564,18 +564,21 @@ def test_composite_model_with_imported_solid_model_assembly(dpf_server):
     composite_model = CompositeModel(composite_files, dpf_server)
 
     # ensure that all analysis plies are available, also the filler plies
-    analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
-    ref_plies = [
-        "Setup 2_shell::P1L1__ModelingPly.2",
-        "Setup_solid::P1L1__ModelingPly.2",
-        "Setup 3_solid::P1L1__ModelingPly.1",
-        "Setup 3_solid::P1L1__ModelingPly.3",
-        "Setup 3_solid::filler_Epoxy Carbon Woven (230 GPa) Prepreg",
-        "Setup 3_solid::P1L1__ModelingPly.2",
-        "Setup 2_shell::P1L1__ModelingPly.1",
-        "Setup_solid::P1L1__ModelingPly.1",
-    ]
-    assert set(analysis_plies) == set(ref_plies)
+    # The initial version of DPF Composites had limitations in the handling
+    # of assemblies and so the test is skipped for old versions of the server.
+    if version_equal_or_later(dpf_server, "7.0"):
+        analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
+        ref_plies = [
+            "Setup 2_shell::P1L1__ModelingPly.2",
+            "Setup_solid::P1L1__ModelingPly.2",
+            "Setup 3_solid::P1L1__ModelingPly.1",
+            "Setup 3_solid::P1L1__ModelingPly.3",
+            "Setup 3_solid::filler_Epoxy Carbon Woven (230 GPa) Prepreg",
+            "Setup 3_solid::P1L1__ModelingPly.2",
+            "Setup 2_shell::P1L1__ModelingPly.1",
+            "Setup_solid::P1L1__ModelingPly.1",
+        ]
+        assert set(analysis_plies) == set(ref_plies)
 
     # Evaluate combined failure criterion
     combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
