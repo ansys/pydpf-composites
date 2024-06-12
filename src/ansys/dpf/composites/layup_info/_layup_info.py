@@ -324,14 +324,30 @@ def get_analysis_ply_index_to_name_map(
     ----------
     mesh
         DPF Meshed region enriched with lay-up information
+
+    .. note::
+
+        Analysis plies of ACP's imported solid model that are linked only
+        to homogeneous elements are currently skipped.
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
+        element_ids = local_field.scoping.ids
         for analysis_ply_name in get_all_analysis_ply_names(mesh):
             analysis_ply_property_field = _get_analysis_ply(
                 mesh, analysis_ply_name, skip_check=True
             )
             first_element_id = analysis_ply_property_field.scoping.id(0)
+            # analysis plies which represent a filler ply are ignored because
+            # they are linked to homogeneous elements only. So, they are not
+            # part of layer_to_analysis_ply. This filler plies can occur in
+            # imported solid models.
+            # The analysis ply indices can be retrieved from
+            # analysis_ply_property_field as soon as the
+            # properties of PropertyField are available in Python.
+            if first_element_id not in element_ids:
+                continue
+
             analysis_ply_indices: list[int] = local_field.get_entity_data_by_id(first_element_id)
 
             layer_index = analysis_ply_property_field.get_entity_data(0)[0]

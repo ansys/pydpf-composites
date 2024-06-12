@@ -50,7 +50,7 @@ import ansys.dpf.core as dpf
 import matplotlib.pyplot as plt
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -119,7 +119,6 @@ sweep_phases = range(min_frequency, max_frequency, frequency_step)
 # This is a bit confusing, but DPF uses the same label for Frequency and Time
 FREQ_LABEL = "time"
 PHASE_LABEL = "phase"
-FAILURE_LABEL = "failure_label"
 all_phases_and_freqs_failure_value_fc = dpf.FieldsContainer()
 all_phases_and_freqs_failure_value_fc.labels = [FREQ_LABEL, PHASE_LABEL]
 

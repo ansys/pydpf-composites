@@ -53,7 +53,7 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
     "9.0": _DpfVersionInfo(
         "9.0",
         "2025 R1 pre 0",
-        "DPF Composites: exposure of ply type.",
+        "DPF Composites: exposure of ply type and support of imported solid models.",
     ),
 }
 

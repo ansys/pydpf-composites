@@ -26,7 +26,7 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
 from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
@@ -35,7 +35,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
 )
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
-from ansys.dpf.composites.server_helpers._versions import version_older_than
+from ansys.dpf.composites.server_helpers._versions import version_equal_or_later, version_older_than
 
 from .helper import get_basic_shell_files
 
@@ -49,13 +49,13 @@ def test_composite_model_element_scope(dpf_server, data_files):
 
     composite_scope = CompositeScope(elements=[1, 3])
     failure_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     min_id = irfs.scoping.ids[np.argmin(irfs.data)]
     max_id = irfs.scoping.ids[np.argmax(irfs.data)]
 
     composite_scope = CompositeScope(elements=[min_id, max_id])
     max_container = composite_model.evaluate_failure_criteria(cfc, composite_scope)
-    max_irfs = max_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    max_irfs = max_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     assert len(max_irfs.data) == 2
     assert max_irfs.get_entity_data_by_id(min_id)[0] == pytest.approx(min(irfs.data), 1e-8)
     assert max_irfs.get_entity_data_by_id(max_id)[0] == pytest.approx(max(irfs.data), 1e-8)
@@ -78,7 +78,7 @@ def test_composite_model_named_selection_scope(dpf_server, data_files, distribut
 
     scope = CompositeScope(named_selections=[ns_name])
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+    irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
     assert irfs.get_entity_data_by_id(2) == pytest.approx(1.4792790331384016, 1e-8)
     assert irfs.get_entity_data_by_id(3) == pytest.approx(1.3673715033617213, 1e-8)
@@ -118,8 +118,8 @@ def test_composite_model_ply_scope(dpf_server):
 
     scope = CompositeScope(plies=ply_ids)
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
-    modes = failure_container.get_field({"failure_label": FailureOutput.FAILURE_MODE})
+    irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
+    modes = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_MODE})
 
     if version_older_than(dpf_server, "7.0"):
         # the old implementation did not allow to distinguish between plies of the different parts.
@@ -194,8 +194,8 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
 
     scope = CompositeScope(named_selections=[ns_name], plies=ply_ids)
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
-    irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
-    modes = failure_container.get_field({"failure_label": FailureOutput.FAILURE_MODE})
+    irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
+    modes = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_MODE})
     assert len(irfs.data) == 2
     assert len(modes.data) == 2
     expected_irfs_by_id = {2: 0.49282684, 3: 0.32568454}
@@ -230,6 +230,53 @@ def test_composite_model_time_scope(dpf_server):
     for time, expected_max_irf in time_id_and_expected_max_irf.items():
         scope = CompositeScope(time=time)
         failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
-        irfs = failure_container.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+        irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
         assert len(irfs.data) == 4
         assert max(irfs.data) == pytest.approx(expected_max_irf, abs=1e-6)
+
+
+def test_ply_wise_scoping_in_assembly_with_imported_solid_model(dpf_server):
+    """Ensure that the ply-wise scoping works in combination with the reference surface plot."""
+    if version_older_than(dpf_server, "8.0"):
+        pytest.xfail("Not supported because of limitations in the handling of assemblies.")
+
+    result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
+    composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+
+    # Create a composite model
+    composite_model = CompositeModel(composite_files, dpf_server)
+
+    plies = [
+        "Setup 2_shell::P1L1__ModelingPly.2",
+        "Setup_solid::P1L1__ModelingPly.2",
+        "Setup 3_solid::P1L1__ModelingPly.1",
+    ]
+
+    # Evaluate combined failure criterion
+    combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
+    failure_result = composite_model.evaluate_failure_criteria(
+        combined_criterion=combined_failure_criterion, composite_scope=CompositeScope(plies=plies)
+    )
+
+    # check the on reference surface data
+    for failure_output in [
+        FailureOutput.FAILURE_VALUE_REF_SURFACE,
+        FailureOutput.FAILURE_MODE_REF_SURFACE,
+        FailureOutput.MAX_GLOBAL_LAYER_IN_STACK,
+        FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT,
+        FailureOutput.MAX_SOLID_ELEMENT_ID,
+    ]:
+        field = failure_result.get_field({FAILURE_LABEL: failure_output})
+
+        if version_equal_or_later(dpf_server, "9.0"):
+            assert field.size == 21
+        elif version_equal_or_later(dpf_server, "8.0"):
+            # Servers of the 2024 R2 series do not extract the reference surface
+            # of imported solid models. So the reference surface mesh
+            # contains only the shell elements and reference surface of the
+            # standard solid model.
+            assert field.size == 12
+        else:
+            # Servers before 8.0 are not tested because of several limitations:
+            # handling of assemblies, reference surface not supported
+            assert False

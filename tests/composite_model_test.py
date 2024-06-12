@@ -40,6 +40,7 @@ from ansys.dpf.composites.failure_criteria import (
 from ansys.dpf.composites.layup_info import (
     LayerProperty,
     LayupModelContextType,
+    get_all_analysis_ply_names,
     get_analysis_ply_index_to_name_map,
 )
 from ansys.dpf.composites.layup_info.material_properties import MaterialMetadata, MaterialProperty
@@ -539,3 +540,72 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
+
+
+def test_composite_model_with_imported_solid_model_assembly(dpf_server):
+    """
+    Tests the show on reference surface option for imported solid models.
+
+    Imported solid models are slightly different if compared with shell parts
+    and standard solid models. For instance, they have analysis plies which are
+    not linked to a layered elements. These are called filler plies.
+
+    In addition, the `show on reference surface` option uses the skin of the
+    imported solid mesh instead of a predefined reference surface.
+    This general test ensures that the composite model can handle these.
+
+    The model has one shell part, one standard solid model and
+    an imported solid model.
+    """
+    result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
+    composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+
+    # Create a composite model
+    composite_model = CompositeModel(composite_files, dpf_server)
+
+    # ensure that all analysis plies are available, also the filler plies
+    # The initial version of DPF Composites had limitations in the handling
+    # of assemblies and so the test is skipped for old versions of the server.
+    if version_equal_or_later(dpf_server, "7.0"):
+        analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
+        ref_plies = [
+            "Setup 2_shell::P1L1__ModelingPly.2",
+            "Setup_solid::P1L1__ModelingPly.2",
+            "Setup 3_solid::P1L1__ModelingPly.1",
+            "Setup 3_solid::P1L1__ModelingPly.3",
+            "Setup 3_solid::filler_Epoxy Carbon Woven (230 GPa) Prepreg",
+            "Setup 3_solid::P1L1__ModelingPly.2",
+            "Setup 2_shell::P1L1__ModelingPly.1",
+            "Setup_solid::P1L1__ModelingPly.1",
+        ]
+        assert set(analysis_plies) == set(ref_plies)
+
+    # Evaluate combined failure criterion
+    combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
+    failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
+
+    irf_field = failure_result.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
+    assert irf_field.size == 84
+
+    # check the on reference surface data
+    for failure_output in [
+        FailureOutput.FAILURE_VALUE_REF_SURFACE,
+        FailureOutput.FAILURE_MODE_REF_SURFACE,
+        FailureOutput.MAX_GLOBAL_LAYER_IN_STACK,
+        FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT,
+        FailureOutput.MAX_SOLID_ELEMENT_ID,
+    ]:
+        field = failure_result.get_field({FAILURE_LABEL: failure_output})
+        if version_equal_or_later(dpf_server, "9.0"):
+            assert field.size == 60
+        elif version_equal_or_later(dpf_server, "8.0"):
+            # Servers of the 2024 R2 series do not extract the reference surface
+            # of imported solid models. So the reference surface mesh
+            # contains only the shell elements and reference surface of the
+            # standard solid model.
+            assert field.size == 18
+        else:
+            # Server of 2024 R1 and before do not support results on the reference
+            # surface at all. It is tested that the operator update
+            # completes without error nevertheless.
+            pass
