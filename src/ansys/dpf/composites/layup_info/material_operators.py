@@ -151,6 +151,7 @@ def get_material_operators(
     )
     material_provider.inputs.Engineering_data_file(engineering_data_source)
 
+    # pylint: disable=protected-access
     if version_equal_or_later(rst_data_source._server, "9.0"):
         # BUG 1060154: Mechanical adds materials to the MAPDL model for flexible
         # Remote Points etc. These materials should be skipped by adding
