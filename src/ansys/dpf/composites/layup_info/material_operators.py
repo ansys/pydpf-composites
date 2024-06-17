@@ -145,12 +145,18 @@ def get_material_operators(
     # Combines the material support in the engineering data XML file and the unit system.
     # Its output can be used to evaluate material properties.
     material_provider = Operator("eng_data::ans_mat_material_provider")
-    material_provider.inputs.data_sources = engineering_data_source
     material_provider.inputs.unit_system_or_result_info(unit_system)
     material_provider.inputs.abstract_field_support(
         material_support_provider.outputs.abstract_field_support
     )
     material_provider.inputs.Engineering_data_file(engineering_data_source)
+
+    # pylint: disable=protected-access
+    if version_equal_or_later(rst_data_source._server, "9.0"):
+        # BUG 1060154: Mechanical adds materials to the MAPDL model for flexible
+        # Remote Points etc. These materials should be skipped by adding
+        # materials without properties.
+        material_provider.inputs.skip_missing_materials(True)
 
     return MaterialOperators(
         material_provider=material_provider,
