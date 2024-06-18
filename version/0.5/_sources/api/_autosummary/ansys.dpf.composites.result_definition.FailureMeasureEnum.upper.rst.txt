@@ -1,0 +1,6 @@
+upper
+=====
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: FailureMeasureEnum.upper

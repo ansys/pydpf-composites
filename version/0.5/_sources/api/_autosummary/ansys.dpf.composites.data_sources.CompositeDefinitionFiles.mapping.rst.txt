@@ -1,0 +1,6 @@
+mapping
+=======
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: CompositeDefinitionFiles.mapping

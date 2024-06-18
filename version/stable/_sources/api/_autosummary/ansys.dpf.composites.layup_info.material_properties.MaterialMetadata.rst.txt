@@ -1,0 +1,28 @@
+﻿MaterialMetadata
+================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoclass:: MaterialMetadata
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+        MaterialMetadata.dpf_material_id
+      
+      
+        MaterialMetadata.material_name
+      
+      
+        MaterialMetadata.ply_type
+      
+      
+        MaterialMetadata.solver_material_id
+      
+   
+   

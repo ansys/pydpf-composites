@@ -1,0 +1,6 @@
+MAX\_LOCAL\_LAYER\_IN\_ELEMENT
+==============================
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT
