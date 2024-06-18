@@ -43,9 +43,9 @@ pytest = {version = ">=7.1.2", optional = true}
 pytest-cov = {version = ">=3.0.0", optional = true}
 mypy = {version = ">=1.2.0", optional = true}
 mypy-extensions = {version = ">=1.0.0", optional = true}
-ansys-dpf-core = {git = "https://github.com/ansys/pydpf-core.git"}
+#ansys-dpf-core = {git = "https://github.com/ansys/pydpf-core.git"}
 # Switch to released version when we release pydpf-composites!
-#ansys-dpf-core = ">=0.8"
+ansys-dpf-core = ">=0.8"
 matplotlib = {version = ">=3.5.0"}
 pyvista = {version = ">=0.40.2", extras=["jupyter", "trame"], optional=true}
 pre-commit = {version = "*", optional = true}
