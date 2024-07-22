@@ -432,7 +432,7 @@ Plot some components of the fiber orientation tensor.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.782 seconds)
+   **Total running time of the script:** (0 minutes 6.118 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:
@@ -448,6 +448,10 @@ Plot some components of the fiber orientation tensor.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 009_short_fiber_orientation_tensor.py <009_short_fiber_orientation_tensor.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: 009_short_fiber_orientation_tensor.zip <009_short_fiber_orientation_tensor.zip>`
 
 
 .. only:: html

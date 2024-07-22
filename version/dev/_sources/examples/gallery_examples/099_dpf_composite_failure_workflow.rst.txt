@@ -395,7 +395,7 @@ Plot the maximum and minimum values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.957 seconds)
+   **Total running time of the script:** (0 minutes 13.769 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_099_dpf_composite_failure_workflow.py:
@@ -411,6 +411,10 @@ Plot the maximum and minimum values.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 099_dpf_composite_failure_workflow.py <099_dpf_composite_failure_workflow.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: 099_dpf_composite_failure_workflow.zip <099_dpf_composite_failure_workflow.zip>`
 
 
 .. only:: html

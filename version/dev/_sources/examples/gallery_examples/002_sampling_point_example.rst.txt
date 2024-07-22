@@ -343,7 +343,7 @@ You can change the element ID of the sampling point to generate another plot.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.172 seconds)
+   **Total running time of the script:** (0 minutes 15.657 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_002_sampling_point_example.py:
@@ -359,6 +359,10 @@ You can change the element ID of the sampling point to generate another plot.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 002_sampling_point_example.py <002_sampling_point_example.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: 002_sampling_point_example.zip <002_sampling_point_example.zip>`
 
 
 .. only:: html

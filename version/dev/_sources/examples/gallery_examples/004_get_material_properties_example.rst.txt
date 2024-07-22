@@ -205,7 +205,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.160 seconds)
+   **Total running time of the script:** (0 minutes 8.591 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:
@@ -221,6 +221,10 @@ Implement a custom failure criterion: basic max strain
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 004_get_material_properties_example.py <004_get_material_properties_example.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: 004_get_material_properties_example.zip <004_get_material_properties_example.zip>`
 
 
 .. only:: html
