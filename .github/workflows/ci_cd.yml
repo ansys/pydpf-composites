@@ -73,6 +73,7 @@ jobs:
         # if other containers must be tested.
         run:  |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
+          docker pull ghcr.io/ansys/pydpf-composites:2025r1_pre0
           docker pull ghcr.io/ansys/pydpf-composites:2024r2_pre1
           docker pull ghcr.io/ansys/pydpf-composites:2024r2_pre0
           docker pull ghcr.io/ansys/pydpf-composites:2024r1_pre0
