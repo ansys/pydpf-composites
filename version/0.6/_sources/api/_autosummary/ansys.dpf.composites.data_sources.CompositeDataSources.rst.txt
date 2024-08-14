@@ -1,0 +1,37 @@
+﻿.. vale off
+
+CompositeDataSources
+====================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoclass:: CompositeDataSources
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      CompositeDataSources.rst
+      CompositeDataSources.material_support
+      CompositeDataSources.composite
+      CompositeDataSources.engineering_data
+      CompositeDataSources.old_composite_sources
+   
+   
+
+.. vale on

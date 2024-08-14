@@ -1,0 +1,36 @@
+﻿.. vale off
+
+MaterialOperators
+=================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_operators
+
+.. autoclass:: MaterialOperators
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      MaterialOperators.material_container_helper_op
+      MaterialOperators.material_provider
+      MaterialOperators.material_support_provider
+      MaterialOperators.result_info_provider
+   
+   
+
+.. vale on

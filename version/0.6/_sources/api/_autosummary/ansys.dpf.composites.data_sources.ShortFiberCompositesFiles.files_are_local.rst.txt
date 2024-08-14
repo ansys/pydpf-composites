@@ -1,0 +1,6 @@
+files\_are\_local
+=================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: ShortFiberCompositesFiles.files_are_local

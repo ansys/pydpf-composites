@@ -1,0 +1,29 @@
+﻿Spot
+====
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoclass:: Spot
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      
+      
+      
+        Spot.BOTTOM
+      
+      
+        Spot.MIDDLE
+      
+      
+        Spot.TOP
+      
+   
+   

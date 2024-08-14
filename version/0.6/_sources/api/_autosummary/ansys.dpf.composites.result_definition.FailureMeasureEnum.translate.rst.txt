@@ -1,0 +1,6 @@
+translate
+=========
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: FailureMeasureEnum.translate

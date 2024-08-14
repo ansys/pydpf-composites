@@ -1,0 +1,6 @@
+format\_map
+===========
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: FailureMeasureEnum.format_map
