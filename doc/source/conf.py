@@ -3,7 +3,7 @@
 from datetime import datetime
 import os
 
-from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
+from ansys_sphinx_theme import ansys_favicon, get_version_match
 import numpy as np
 import pyvista
 from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
@@ -28,7 +28,6 @@ author = "ANSYS, Inc."
 release = version = __version__
 
 # Select desired logo, theme, and declare the html title
-html_logo = pyansys_logo_black
 html_favicon = ansys_favicon
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "PyDPF Composites"
@@ -41,6 +40,7 @@ add_module_names = True
 cname = os.environ.get("DOCUMENTATION_CNAME", "composites.dpf.docs.pyansys.com")
 
 html_theme_options = {
+    "logo": "pyansys",
     "github_url": "https://github.com/ansys/pydpf-composites",
     "show_prev_next": False,
     "show_breadcrumbs": True,
