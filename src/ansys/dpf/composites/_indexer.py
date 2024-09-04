@@ -66,6 +66,35 @@ class PropertyFieldIndexerArrayValue(Protocol):
         """Get index by id."""
 
 
+def _has_data_pointer(field: PropertyField | Field) -> bool:
+    if field._data_pointer is not None and field._data_pointer.any():
+        return True
+    return False
+
+
+def get_property_field_indexer(field: PropertyField, bounds_check: bool) -> PropertyFieldIndexerSingleValue | PropertyFieldIndexerArrayValue:
+    """Get indexer for a property field.
+
+    Parameters
+    ----------
+    field: property field
+    bounds_check: whether to get the indexer which does bounds check. Less performant but safer.
+    """
+    if bounds_check:
+        if _has_data_pointer(field):
+            return PropertyFieldIndexerWithDataPointer(field)
+        return PropertyFieldIndexerNoDataPointer(field)
+    if _has_data_pointer(field):
+        return PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
+    return PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
+
+
+class FieldIndexSingleValueProtocol(Protocol):
+    """Protocol for single value field indexer."""
+
+    def by_id(self, entity_id: int) -> Optional[np.double]:
+        """Get index by id."""
+
 # General comment for all Indexer:
 # The .data call accesses the actual data. This sends the data over grpc which takes some time
 # It looks like it returns a DpfArray for non-local fields and an numpy array for local fields.
@@ -100,36 +129,6 @@ class PropertyFieldIndexerNoDataPointer:
         if idx < 0:
             return None
         return cast(np.int64, self._data[idx])
-
-
-class FieldIndexerNoDataPointer:
-    """Indexer for a dpf field with no data pointer."""
-
-    def __init__(self, field: Field):
-        """Create indexer and get data."""
-        if field.scoping.size > 0:
-            index_by_id = setup_index_by_id(field.scoping)
-            self._indices = index_by_id.mapping
-            self._max_id = index_by_id.max_id
-            self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
-        else:
-            self._indices = np.array([], dtype=np.int64)
-            self._max_id = 0
-            self._data = np.array([], dtype=np.double)
-
-    def by_id(self, entity_id: int) -> Optional[np.double]:
-        """Get index by ID.
-
-        Parameters
-        ----------
-        entity_id
-        """
-        if entity_id > self._max_id:
-            return None
-        idx = self._indices[entity_id]
-        if idx < 0:
-            return None
-        return cast(np.double, self._data[idx])
 
 
 class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
@@ -206,6 +205,93 @@ class PropertyFieldIndexerWithDataPointer:
         )
 
 
+class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
+    """Indexer for a property field with data pointer and no bounds checks."""
+
+    def __init__(self, field: PropertyField):
+        """Create indexer and get data."""
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+
+            self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+            self._n_components = field.component_count
+
+            self._data_pointer: NDArray[np.int64] = np.append(
+                field._data_pointer, len(self._data) * self._n_components
+            )
+        else:
+            self._indices = np.array([], dtype=np.int64)
+            self._data = np.array([], dtype=np.int64)
+            self._n_components = 0
+            self._data_pointer = np.array([], dtype=np.int64)
+
+    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
+        """Get index by ID.
+
+        Parameters
+        ----------
+        entity_id
+        """
+        idx = self._indices[entity_id]
+        if idx < 0:
+            return None
+        return cast(
+            NDArray[np.int64],
+            self._data[
+                self._data_pointer[idx]
+                // self._n_components : self._data_pointer[idx + 1]
+                // self._n_components
+            ],
+        )
+
+
+# DPF does not set the data pointers if a field has just
+# one value per entity. Therefore, it is unknown if
+# data pointer are set for some field of layered elements, for
+# instance angles, thickness etc.
+def get_field_indexer(field: Field) -> FieldIndexSingleValueProtocol:
+    """Get field indexer based on data pointer.
+
+    Parameters
+    ----------
+    field
+    """
+    if _has_data_pointer(field):
+        return FieldIndexerWithDataPointer(field)
+    return FieldIndexerNoDataPointer(field)
+
+
+class FieldIndexerNoDataPointer:
+    """Indexer for a dpf field with no data pointer."""
+
+    def __init__(self, field: Field):
+        """Create indexer and get data."""
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+            self._max_id = index_by_id.max_id
+            self._data: NDArray[np.double] = np.array(field.data, dtype=np.double)
+        else:
+            self._indices = np.array([], dtype=np.int64)
+            self._max_id = 0
+            self._data = np.array([], dtype=np.double)
+
+    def by_id(self, entity_id: int) -> Optional[np.double]:
+        """Get index by ID.
+
+        Parameters
+        ----------
+        entity_id
+        """
+        if entity_id > self._max_id:
+            return None
+        idx = self._indices[entity_id]
+        if idx < 0:
+            return None
+        return cast(np.double, self._data[idx])
+
+
 class FieldIndexerWithDataPointer:
     """Indexer for a dpf field with data pointer."""
 
@@ -244,47 +330,6 @@ class FieldIndexerWithDataPointer:
             return None
         return cast(
             NDArray[np.double],
-            self._data[
-                self._data_pointer[idx]
-                // self._n_components : self._data_pointer[idx + 1]
-                // self._n_components
-            ],
-        )
-
-
-class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
-    """Indexer for a property field with data pointer and no bounds checks."""
-
-    def __init__(self, field: PropertyField):
-        """Create indexer and get data."""
-        if field.scoping.size > 0:
-            index_by_id = setup_index_by_id(field.scoping)
-            self._indices = index_by_id.mapping
-
-            self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
-            self._n_components = field.component_count
-
-            self._data_pointer: NDArray[np.int64] = np.append(
-                field._data_pointer, len(self._data) * self._n_components
-            )
-        else:
-            self._indices = np.array([], dtype=np.int64)
-            self._data = np.array([], dtype=np.int64)
-            self._n_components = 0
-            self._data_pointer = np.array([], dtype=np.int64)
-
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        """Get index by ID.
-
-        Parameters
-        ----------
-        entity_id
-        """
-        idx = self._indices[entity_id]
-        if idx < 0:
-            return None
-        return cast(
-            NDArray[np.int64],
             self._data[
                 self._data_pointer[idx]
                 // self._n_components : self._data_pointer[idx + 1]
