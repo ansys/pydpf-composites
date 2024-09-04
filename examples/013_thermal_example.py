@@ -136,7 +136,7 @@ with material_result_field.as_local_field() as local_result_field:
                 element_info, [ud_material_id]
             )
 
-            value = np.max(temp_data[selected_indices][:, TEMPERATURE_COMPONENT])
+            value = np.max(temp_data[selected_indices])
             local_result_field.append([value], element_id)
 
 composite_model.get_mesh().plot(material_result_field)

@@ -142,10 +142,13 @@ def get_selected_indices(
     )
     # Todo: Use numpy. Probably use ravel_multi_index method.
     current_index = 0
+
+    num_nodes_per_spot = element_info.number_of_nodes_per_spot_plane if element_info.is_layered else element_info.n_corner_nodes
+
     for layer_index in layer_indices:
-        layer_start_index = layer_index * element_info.n_corner_nodes * element_info.n_spots
+        layer_start_index = layer_index * num_nodes_per_spot * element_info.n_spots
         for spot_index in spot_indices:
-            spot_start_index = layer_start_index + spot_index * element_info.n_corner_nodes
+            spot_start_index = layer_start_index + spot_index * num_nodes_per_spot
             for corner_index in node_indices:
                 all_indices[current_index] = spot_start_index + corner_index
                 current_index = current_index + 1
