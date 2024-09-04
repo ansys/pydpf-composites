@@ -47,6 +47,7 @@ class ExpectedOutput:
     # otherwise it is 2 or 3 for top/bot or top/bot/mid output
     n_spots: int
     is_layered: bool
+    number_of_nodes_per_spot: int
 
 
 @dataclass(frozen=True)
@@ -111,25 +112,25 @@ def test_all_element_types(dpf_server):
 
         n_spots_homogeneous_solid = 0
         return {
-            1: ExpectedOutput(3, 4, 181, n_spots_shell, True),
-            2: ExpectedOutput(3, 3, 181, n_spots_shell, True),
-            3: ExpectedOutput(3, 4, 281, n_spots_shell, True),
-            4: ExpectedOutput(3, 3, 281, n_spots_shell, True),
-            10: ExpectedOutput(1, 8, 185, n_spots_homogeneous_solid, False),
-            11: ExpectedOutput(1, 6, 185, n_spots_homogeneous_solid, False),
-            12: ExpectedOutput(1, 5, 185, n_spots_homogeneous_solid, False),
-            13: ExpectedOutput(1, 4, 185, n_spots_homogeneous_solid, False),
-            20: ExpectedOutput(1, 8, 186, n_spots_homogeneous_solid, False),
-            21: ExpectedOutput(1, 6, 186, n_spots_homogeneous_solid, False),
-            22: ExpectedOutput(1, 5, 186, n_spots_homogeneous_solid, False),
-            23: ExpectedOutput(1, 4, 186, n_spots_homogeneous_solid, False),
-            24: ExpectedOutput(1, 4, 187, n_spots_homogeneous_solid, False),
-            30: ExpectedOutput(3, 8, 185, n_spots_layered_solid, True),
-            31: ExpectedOutput(3, 6, 185, n_spots_layered_solid, True),
-            40: ExpectedOutput(3, 8, 186, n_spots_layered_solid, True),
-            41: ExpectedOutput(3, 6, 186, n_spots_layered_solid, True),
-            50: ExpectedOutput(3, 8, 190, n_spots_layered_solid, True),
-            51: ExpectedOutput(3, 6, 190, n_spots_layered_solid, True),
+            1: ExpectedOutput(3, 4, 181, n_spots_shell, True, 4),
+            2: ExpectedOutput(3, 3, 181, n_spots_shell, True, 3),
+            3: ExpectedOutput(3, 4, 281, n_spots_shell, True, 4),
+            4: ExpectedOutput(3, 3, 281, n_spots_shell, True, 3),
+            10: ExpectedOutput(1, 8, 185, n_spots_homogeneous_solid, False, -1),
+            11: ExpectedOutput(1, 6, 185, n_spots_homogeneous_solid, False, -1),
+            12: ExpectedOutput(1, 5, 185, n_spots_homogeneous_solid, False, -1),
+            13: ExpectedOutput(1, 4, 185, n_spots_homogeneous_solid, False, -1),
+            20: ExpectedOutput(1, 8, 186, n_spots_homogeneous_solid, False, -1),
+            21: ExpectedOutput(1, 6, 186, n_spots_homogeneous_solid, False, -1),
+            22: ExpectedOutput(1, 5, 186, n_spots_homogeneous_solid, False, -1),
+            23: ExpectedOutput(1, 4, 186, n_spots_homogeneous_solid, False, -1),
+            24: ExpectedOutput(1, 4, 187, n_spots_homogeneous_solid, False, -1),
+            30: ExpectedOutput(3, 8, 185, n_spots_layered_solid, True, 4),
+            31: ExpectedOutput(3, 6, 185, n_spots_layered_solid, True, 3),
+            40: ExpectedOutput(3, 8, 186, n_spots_layered_solid, True, 4),
+            41: ExpectedOutput(3, 6, 186, n_spots_layered_solid, True, 3),
+            50: ExpectedOutput(3, 8, 190, n_spots_layered_solid, True, 4),
+            51: ExpectedOutput(3, 6, 190, n_spots_layered_solid, True, 3),
         }
 
     def check_output(rst_file, expected_output):
@@ -184,6 +185,8 @@ def test_all_element_types(dpf_server):
                         corner_nodes_per_layer = element_info.n_corner_nodes
                     else:
                         corner_nodes_per_layer = element_info.n_corner_nodes / 2
+
+                    assert corner_nodes_per_layer == element_info.number_of_nodes_per_spot_plane
                     assert (
                         num_elementary_data
                         == corner_nodes_per_layer * element_info.n_spots * element_info.n_layers
