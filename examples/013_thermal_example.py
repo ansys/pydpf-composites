@@ -86,13 +86,12 @@ composite_files = get_composite_files_from_workbench_result_folder(result_folder
 # It provides access to the mesh, results, lay-up and materials
 composite_model = CompositeModel(composite_files, server)
 
-composite_model.get_element_info(1033)
 # %%
 # Get Temperatures
 # ~~~~~~~~~~~~~~~~
 # The temperatures are stored under structural_temperature
 temp_op = composite_model.core_model.results.structural_temperature()
-temp_fields = temp_op.outputs.fields_container()
+temperatures_fc = temp_op.outputs.fields_container()
 
 # %%
 # Ply-wise results
@@ -104,7 +103,7 @@ all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
 
 nodal_values = get_ply_wise_data(
-    field=temp_fields,
+    field=temperatures_fc,
     ply_name='P1L1__ModelingPly.8',
     mesh=composite_model.get_mesh(),
     component=TEMPERATURE_COMPONENT,
@@ -117,25 +116,22 @@ composite_model.get_mesh().plot(nodal_values)
 # %%
 # Material-wise results
 # ~~~~~~~~~~~~~~~~~~~~~
-# It is also possible to filter the results by material.
+# It is also possible to filter the results by material
+# The maximum temperature per element is extracted
+# for the UD Resin Epoxy/E-Glass material
 
 ud_material_id = composite_model.material_names["UD Resin Epoxy/E-Glass"]
-
-last_temp_field = temp_fields[-1]
-
-element_ids = last_temp_field.scoping.ids
-element_infos = [composite_model.get_element_info(element_id) for element_id in element_ids]
-element_infos[0]
+temperatures_field = temperatures_fc[-1]
 
 material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with material_result_field.as_local_field() as local_result_field:
-    element_ids = last_temp_field.scoping.ids
+    element_ids = temperatures_field.scoping.ids
 
     for element_id in element_ids:
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
         if ud_material_id in element_info.dpf_material_ids:
-            temp_data = last_temp_field.get_entity_data_by_id(element_id)
+            temp_data = temperatures_field.get_entity_data_by_id(element_id)
             selected_indices = get_selected_indices_by_dpf_material_ids(
                 element_info, [ud_material_id]
             )

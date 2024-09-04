@@ -459,8 +459,14 @@ class ElementInfoProvider:
 
         layer_data = self.layer_indices.by_id(element_id)
         if layer_data is not None:
+            # can be of type int for single layer elements or array for multilayer materials
             dpf_material_ids = self.layer_materials.by_id(element_id)
             assert dpf_material_ids is not None
+            if not isinstance(dpf_material_ids, Sequence):
+                dpf_material_ids = np.array(
+                    [dpf_material_ids], dtype=np.int64
+                )
+
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
             is_layered = True
