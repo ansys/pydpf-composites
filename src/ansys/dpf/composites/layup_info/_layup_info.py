@@ -648,7 +648,7 @@ class LayupPropertiesProvider:
             Element Id/Label
 
         """
-        return self._offset_indexer.by_id_as_array(element_id)
+        return self._offset_indexer.by_id(element_id)
 
     def get_analysis_plies(self, element_id: int) -> Optional[Sequence[str]]:
         """Get analysis ply names. Returns None if element is not layered.
