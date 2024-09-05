@@ -22,7 +22,7 @@
 
 """Indexer helper classes."""
 from dataclasses import dataclass
-from typing import Optional, Protocol, cast
+from typing import Optional, Protocol, Union, cast
 
 from ansys.dpf.core import Field, PropertyField, Scoping
 import numpy as np
@@ -62,7 +62,7 @@ class PropertyFieldIndexerProtocol(Protocol):
         """Get indices by id."""
 
 
-def _has_data_pointer(field: PropertyField | Field) -> bool:
+def _has_data_pointer(field: Union[PropertyField, Field]) -> bool:
     if (
         field._data_pointer is not None  # pylint: disable=protected-access
         and field._data_pointer.any()  # pylint: disable=protected-access
