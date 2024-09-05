@@ -40,6 +40,10 @@ from ..server_helpers import upload_file_to_unique_tmp_folder
 EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
 
+# Example URL to run the examples locally
+# EXAMPLE_REPO = "file:////D:/Development/pyansys-example-data/pydpf-composites/"
+
+
 @dataclass
 class _ContinuousFiberCompositeFiles:
     definition: str
@@ -62,7 +66,7 @@ class _ShortFiberCompositesExampleFilenames:
 
 @dataclass
 class _ContinuousFiberExampleLocation:
-    """Location of the a given continuous fiber example in the example_data repo.
+    """Location of a given continuous fiber example in the example_data repo.
 
     Parameters
     ----------
@@ -151,6 +155,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "thermal_solid": _ContinuousFiberExampleLocation(
+        directory="thermal_solid",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPSolidModel_SM.h5"),
+            },
+        ),
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
@@ -168,7 +182,7 @@ def _get_file_url(directory: str, filename: str) -> str:
 
 
 def _download_and_upload_file(
-    directory: str, filename: str, tmpdir: str, server: dpf.server
+        directory: str, filename: str, tmpdir: str, server: dpf.server
 ) -> str:
     """Download example file from example_data repo and upload it the dpf server."""
     file_url = _get_file_url(directory, filename)
@@ -182,8 +196,8 @@ def _download_and_upload_file(
 
 
 def get_short_fiber_example_files(
-    server: dpf.server,
-    example_key: str,
+        server: dpf.server,
+        example_key: str,
 ) -> ShortFiberCompositesFiles:
     """Get short fiber example file by example key.
 
@@ -197,7 +211,6 @@ def get_short_fiber_example_files(
     """
     example_files = _short_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
-
         def get_server_path(filename: str) -> str:
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
@@ -210,9 +223,9 @@ def get_short_fiber_example_files(
 
 
 def get_continuous_fiber_example_files(
-    server: dpf.server,
-    example_key: str,
-    skip_acp_layup_files: bool = False,
+        server: dpf.server,
+        example_key: str,
+        skip_acp_layup_files: bool = False,
 ) -> ContinuousFiberCompositesFiles:
     """Get continuous fiber example file by example key.
 

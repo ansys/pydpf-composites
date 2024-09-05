@@ -33,15 +33,15 @@ Thermal analysis
     method to obtain the input files.
 
 PyDPF Composites can also be used to post-process thermal analyses.
+In this case, the simulation is a two-step analysis. The results of the thermal analysis
+are used as input for a structural analysis. The result file of the structural analysis is
+post-processed. It also includes the temperatures of the thermal analysis.
 The example mimics a PCB which was modeled with Ansys Composites PrePost (ACP).
-The solid model feature of ACP is used to generate the volume mesh.
-Afterward, a thermal analysis is coupled with a static structural analysis.
+where the solid model feature of ACP is used to generate the volume mesh.
 
-This examples shows how to extract the temperatures for a specific ply,
-and material.
-
+In detail, the example shows how to extract the temperatures for a specific ply,
+and a specific material.
 """
-
 
 # %%
 # Set up analysis
@@ -55,29 +55,13 @@ import numpy as np
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import TEMPERATURE_COMPONENT
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
+from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
-from ansys.dpf.composites.select_indices import (
-    get_selected_indices,
-    get_selected_indices_by_analysis_ply,
-    get_selected_indices_by_dpf_material_ids,
-)
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server, version_equal_or_later
-from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
+from ansys.dpf.composites.select_indices import get_selected_indices_by_dpf_material_ids
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 server = connect_to_or_start_server()
-#composite_files = get_continuous_fiber_example_files(server, "thermal_solid")
-
-
-# Folder that opens after clicking "Open Solver Files Directory"
-result_folder = r"D:\ANSYSDev\acp_test_model_data\model_data\postprocessing\temperature\solids\thermal_solids_files\dp0\SYS-4\MECH"
-# result_folder = r"D:\ANSYSDev\acp_test_model_data\model_data\class40\class40_files\dp0\SYS-4\MECH"
-
-# Create the composite files object that contains
-# the results file, the material properties file, and the
-# composite definitions
-composite_files = get_composite_files_from_workbench_result_folder(result_folder)
-
+composite_files = get_continuous_fiber_example_files(server, "thermal_solid")
 
 # %%
 # Initialize the model
@@ -87,8 +71,8 @@ composite_files = get_composite_files_from_workbench_result_folder(result_folder
 composite_model = CompositeModel(composite_files, server)
 
 # %%
-# Get Temperatures
-# ~~~~~~~~~~~~~~~~
+# Get Results - Temperatures
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~
 # The temperatures are stored under structural_temperature
 temp_op = composite_model.core_model.results.structural_temperature()
 temperatures_fc = temp_op.outputs.fields_container()
@@ -97,14 +81,14 @@ temperatures_fc = temp_op.outputs.fields_container()
 # Ply-wise results
 # ~~~~~~~~~~~~~~~~
 # Ply-wise results can be easily extracted using the function
-# :func:`.get_ply_wise_data` and passing the ply name.
+# :func:`.get_ply_wise_data` and by passing the ply name.
 
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
 
 nodal_values = get_ply_wise_data(
     field=temperatures_fc,
-    ply_name='P1L1__ModelingPly.8',
+    ply_name="P1L1__ModelingPly.8",
     mesh=composite_model.get_mesh(),
     component=TEMPERATURE_COMPONENT,
     spot_reduction_strategy=SpotReductionStrategy.MAX,
@@ -117,24 +101,25 @@ composite_model.get_mesh().plot(nodal_values)
 # Material-wise results
 # ~~~~~~~~~~~~~~~~~~~~~
 # It is also possible to filter the results by material
-# The maximum temperature per element is extracted
-# for the UD Resin Epoxy/E-Glass material
+# In this example the element-wise maximum temperature
+# is extracted for the material `Honeycomb Aluminum Alloy`.
+print(composite_model.material_names)
+material_id = composite_model.material_names["Honeycomb Aluminum Alloy"]
 
-ud_material_id = composite_model.material_names["UD Resin Epoxy/E-Glass"]
+# get the last result field
 temperatures_field = temperatures_fc[-1]
 
 material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+# performance optimization: use a local field instead of a field which is pushed to the server
 with material_result_field.as_local_field() as local_result_field:
     element_ids = temperatures_field.scoping.ids
 
     for element_id in element_ids:
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
-        if ud_material_id in element_info.dpf_material_ids:
+        if material_id in element_info.dpf_material_ids:
             temp_data = temperatures_field.get_entity_data_by_id(element_id)
-            selected_indices = get_selected_indices_by_dpf_material_ids(
-                element_info, [ud_material_id]
-            )
+            selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [material_id])
 
             value = np.max(temp_data[selected_indices])
             local_result_field.append([value], element_id)

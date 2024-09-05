@@ -67,12 +67,16 @@ class PropertyFieldIndexerArrayValue(Protocol):
 
 
 def _has_data_pointer(field: PropertyField | Field) -> bool:
-    if field._data_pointer is not None and field._data_pointer.any():
+    if (
+        field._data_pointer is not None and field._data_pointer.any()
+    ):  # pylint: disable=protected-access
         return True
     return False
 
 
-def get_property_field_indexer(field: PropertyField, no_bounds_check: bool) -> PropertyFieldIndexerSingleValue | PropertyFieldIndexerArrayValue:
+def get_property_field_indexer(
+    field: PropertyField, no_bounds_check: bool
+) -> PropertyFieldIndexerSingleValue | PropertyFieldIndexerArrayValue:
     """Get indexer for a property field.
 
     Parameters
@@ -89,12 +93,12 @@ def get_property_field_indexer(field: PropertyField, no_bounds_check: bool) -> P
     return PropertyFieldIndexerNoDataPointer(field)
 
 
-
 class FieldIndexSingleValueProtocol(Protocol):
     """Protocol for single value field indexer."""
 
     def by_id(self, entity_id: int) -> Optional[np.double]:
         """Get index by id."""
+
 
 # General comment for all Indexer:
 # The .data call accesses the actual data. This sends the data over grpc which takes some time

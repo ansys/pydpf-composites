@@ -34,10 +34,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .._indexer import (
-    get_field_indexer,
-    get_property_field_indexer
-)
+from .._indexer import get_field_indexer, get_property_field_indexer
 from ..server_helpers import version_equal_or_later, version_older_than
 from ._enums import LayupProperty
 
@@ -398,7 +395,6 @@ class ElementInfoProvider:
         # focused on the most important properties. We can add different providers
         # for other properties (such as thickness and angles)
 
-
         # Has to be always with bounds checks because it does not contain
         # data for all the elements
 
@@ -412,7 +408,9 @@ class ElementInfoProvider:
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
-        self.apdl_material_indexer = get_property_field_indexer(self.mesh.elements.materials_field, no_bounds_checks)
+        self.apdl_material_indexer = get_property_field_indexer(
+            self.mesh.elements.materials_field, no_bounds_checks
+        )
 
         self.solver_material_to_dpf_id = {}
         if solver_material_ids is not None:
@@ -463,9 +461,7 @@ class ElementInfoProvider:
             dpf_material_ids = self.layer_materials.by_id(element_id)
             assert dpf_material_ids is not None
             if not isinstance(dpf_material_ids, np.ndarray):
-                dpf_material_ids = np.array(
-                    [dpf_material_ids], dtype=np.int64
-                )
+                dpf_material_ids = np.array([dpf_material_ids], dtype=np.int64)
 
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
