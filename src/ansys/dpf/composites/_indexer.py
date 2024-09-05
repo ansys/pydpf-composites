@@ -72,21 +72,22 @@ def _has_data_pointer(field: PropertyField | Field) -> bool:
     return False
 
 
-def get_property_field_indexer(field: PropertyField, bounds_check: bool) -> PropertyFieldIndexerSingleValue | PropertyFieldIndexerArrayValue:
+def get_property_field_indexer(field: PropertyField, no_bounds_check: bool) -> PropertyFieldIndexerSingleValue | PropertyFieldIndexerArrayValue:
     """Get indexer for a property field.
 
     Parameters
     ----------
     field: property field
-    bounds_check: whether to get the indexer which does bounds check. Less performant but safer.
+    no_bounds_check: whether to get the indexer w/o bounds check. More performant but less safe.
     """
-    if bounds_check:
+    if no_bounds_check:
         if _has_data_pointer(field):
-            return PropertyFieldIndexerWithDataPointer(field)
-        return PropertyFieldIndexerNoDataPointer(field)
+            return PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
+        return PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
     if _has_data_pointer(field):
-        return PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
-    return PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
+        return PropertyFieldIndexerWithDataPointer(field)
+    return PropertyFieldIndexerNoDataPointer(field)
+
 
 
 class FieldIndexSingleValueProtocol(Protocol):
@@ -110,10 +111,15 @@ class PropertyFieldIndexerNoDataPointer:
 
     def __init__(self, field: PropertyField):
         """Create indexer and get data."""
-        index_by_id = setup_index_by_id(field.scoping)
-        self._indices = index_by_id.mapping
-        self._max_id = index_by_id.max_id
-        self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+        if field.scoping.size > 0:
+            index_by_id = setup_index_by_id(field.scoping)
+            self._indices = index_by_id.mapping
+            self._max_id = index_by_id.max_id
+            self._data: NDArray[np.int64] = np.array(field.data, dtype=np.int64)
+        else:
+            self._indices = np.array([], dtype=np.int64)
+            self._data = np.array([], dtype=np.int64)
+            self._max_id = 0
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
         """Get index by id.

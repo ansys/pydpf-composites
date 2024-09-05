@@ -205,7 +205,7 @@ class AnalysisPlyInfoProvider:
         """Initialize AnalysisPlyProvider."""
         self.name = name
         self.property_field = _get_analysis_ply(mesh, name)
-        self._layer_indices = get_property_field_indexer(self.property_field)
+        self._layer_indices = get_property_field_indexer(self.property_field, False)
 
     def get_layer_index_by_element_id(self, element_id: int) -> Optional[np.int64]:
         """Get the layer index for the analysis ply in a given element.
