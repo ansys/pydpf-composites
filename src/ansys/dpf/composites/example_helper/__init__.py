@@ -182,7 +182,7 @@ def _get_file_url(directory: str, filename: str) -> str:
 
 
 def _download_and_upload_file(
-        directory: str, filename: str, tmpdir: str, server: dpf.server
+    directory: str, filename: str, tmpdir: str, server: dpf.server
 ) -> str:
     """Download example file from example_data repo and upload it the dpf server."""
     file_url = _get_file_url(directory, filename)
@@ -196,8 +196,8 @@ def _download_and_upload_file(
 
 
 def get_short_fiber_example_files(
-        server: dpf.server,
-        example_key: str,
+    server: dpf.server,
+    example_key: str,
 ) -> ShortFiberCompositesFiles:
     """Get short fiber example file by example key.
 
@@ -211,6 +211,7 @@ def get_short_fiber_example_files(
     """
     example_files = _short_fiber_examples[example_key]
     with tempfile.TemporaryDirectory() as tmpdir:
+
         def get_server_path(filename: str) -> str:
             return _download_and_upload_file(example_files.directory, filename, tmpdir, server)
 
@@ -223,9 +224,9 @@ def get_short_fiber_example_files(
 
 
 def get_continuous_fiber_example_files(
-        server: dpf.server,
-        example_key: str,
-        skip_acp_layup_files: bool = False,
+    server: dpf.server,
+    example_key: str,
+    skip_acp_layup_files: bool = False,
 ) -> ContinuousFiberCompositesFiles:
     """Get continuous fiber example file by example key.
 
