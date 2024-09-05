@@ -23,6 +23,7 @@
 from collections.abc import Collection
 from dataclasses import dataclass
 import pathlib
+import numpy as np
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Field, MeshedRegion, PropertyField
@@ -208,32 +209,33 @@ def test_all_element_types(dpf_server):
     )
 
 
-def test_document_error_cases_indices(dpf_server):
+def get_element_info_provider_for_rst(rst_file, server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data"
+    rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
 
-    def get_layup_info_for_rst(rst_file):
-        rst_path = TEST_DATA_ROOT_DIR / "all_element_types" / rst_file
+    if not server.local_server:
+        rst_path = upload_file_to_unique_tmp_folder(rst_path, server=server)
 
-        if not dpf_server.local_server:
-            rst_path = upload_file_to_unique_tmp_folder(rst_path, server=dpf_server)
+    rst_data_source = dpf.DataSources(rst_path)
 
-        rst_data_source = dpf.DataSources(rst_path)
+    mesh_provider = dpf.Operator("MeshProvider")
+    mesh_provider.inputs.data_sources(rst_data_source)
+    mesh: MeshedRegion = mesh_provider.outputs.mesh()
 
-        mesh_provider = dpf.Operator("MeshProvider")
-        mesh_provider.inputs.data_sources(rst_data_source)
-        mesh: MeshedRegion = mesh_provider.outputs.mesh()
+    with pytest.raises(RuntimeError) as exc_info:
+        layup_info = get_element_info_provider(
+            mesh, stream_provider_or_data_source=rst_data_source
+        )
+    assert str(exc_info.value).startswith("Missing property field in mesh")
+    material_property_field, layer_indices_property_field = get_layup_property_fields()
+    mesh.set_property_field("element_layered_material_ids", material_property_field)
+    mesh.set_property_field("element_layer_indices", layer_indices_property_field)
+    return get_element_info_provider(mesh, stream_provider_or_data_source=rst_data_source)
 
-        with pytest.raises(RuntimeError) as exc_info:
-            layup_info = get_element_info_provider(
-                mesh, stream_provider_or_data_source=rst_data_source
-            )
-        assert str(exc_info.value).startswith("Missing property field in mesh")
-        material_property_field, layer_indices_property_field = get_layup_property_fields()
-        mesh.set_property_field("element_layered_material_ids", material_property_field)
-        mesh.set_property_field("element_layer_indices", layer_indices_property_field)
-        return get_element_info_provider(mesh, stream_provider_or_data_source=rst_data_source)
 
-    layup_info = get_layup_info_for_rst("model_with_all_element_types_minimal_output.rst")
+def test_document_error_cases_indices(dpf_server):
+
+    layup_info = get_element_info_provider_for_rst("model_with_all_element_types_minimal_output.rst", dpf_server)
 
     for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
@@ -251,7 +253,7 @@ def test_document_error_cases_indices(dpf_server):
             "Computation of indices is not supported for non-layered elements."
         )
 
-    layup_info = get_layup_info_for_rst("model_with_all_element_types_all_output.rst")
+    layup_info = get_element_info_provider_for_rst("model_with_all_element_types_all_output.rst", dpf_server)
 
     for element_id in get_element_ids().non_layered:
         with pytest.raises(RuntimeError) as exc_info:
@@ -282,7 +284,7 @@ def test_document_error_cases_indices(dpf_server):
     selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [5])
     assert len(selected_indices) == 0
 
-    layup_info = get_layup_info_for_rst("model_with_all_element_types_all_except_mid_output.rst")
+    layup_info = get_element_info_provider_for_rst("model_with_all_element_types_all_except_mid_output.rst", dpf_server)
 
     for element_id in get_element_ids().layered:
         with pytest.raises(RuntimeError) as exc_info:
@@ -291,3 +293,56 @@ def test_document_error_cases_indices(dpf_server):
         assert str(exc_info.value).startswith(
             "Spot index 2 is greater or equal to the number of spots"
         )
+
+
+def test_select_indices_all_element_types(dpf_server):
+    """
+    Test get_selected_indices for all types of layered elements.
+
+    The test verifies the indices for the first layer, 2nd layer, and
+    2nd layer in combination with spot TOP.
+
+    Note: Non-layered elements are not supported by get_selected_indices
+    """
+    ref_indices_layer_0 = {
+        1: np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),  # 4 node shell181, 3 layers, 3 spots
+        2: np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]),  # 3 node shell181, 3 layers, 2 spots
+        3: np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),  # 8 node shell281, 3 layers, 3 spots
+        4: np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]),  # 6 node shell281, 3 layers, 2 spots
+        30: np.array([0, 1, 2, 3, 4, 5, 6, 7]),  # 8 node solid185
+        31: np.array([0, 1, 2, 3, 4, 5]),  # 6 node solid185
+        40: np.array([0, 1, 2, 3, 4, 5, 6, 7]),  # 20 node solid186
+        41: np.array([0, 1, 2, 3, 4, 5]),  # 15 node solid186
+        50: np.array([0, 1, 2, 3, 4, 5, 6, 7]),  # 8 node solid190
+        51: np.array([0, 1, 2, 3, 4, 5]),  # 6 node solid190
+    }
+
+    element_info_provider = get_element_info_provider_for_rst("model_with_all_element_types_all_output.rst", dpf_server)
+    element_ids = get_element_ids()
+    for elem_id in element_ids.all:
+        element_info = element_info_provider.get_element_info(elem_id)
+        # get_selected_indices is only supported for layered elements
+        if element_info.is_layered:
+            # All indices of the first layer
+            indices = get_selected_indices(element_info, layers=[0])
+            assert (indices == ref_indices_layer_0[elem_id]).all(), f"{element_info}, {indices} != {ref_indices_layer_0[elem_id]}"
+
+            # All indices of the second layer via it's material ID
+            material_id = element_info.dpf_material_ids[1]  # this is equivalent to the second layer
+            indices = get_selected_indices_by_dpf_material_ids(element_info, list([material_id]))
+
+            # Offset indices for the second layer
+            ref_2nd_layer = ref_indices_layer_0[elem_id] + max(ref_indices_layer_0[elem_id]) + 1
+            assert (indices == ref_2nd_layer).all(), f"{element_info}, i{indices} != {ref_2nd_layer}"
+
+            # Indices of the second layer and the top spot
+            indices = get_selected_indices(element_info, layers=[1], spots=[Spot.TOP])
+            num_indices = element_info.number_of_nodes_per_spot_plane
+            if element_info.is_shell:
+                # The order of the spots is bot, top, middle for shells
+                # So the indices in the middle are used to retrieve the data at the top
+                ref_2nd_layer_top = ref_2nd_layer[num_indices:-num_indices]
+            else:
+                # Layered solids have only bottom and top.
+                ref_2nd_layer_top = ref_2nd_layer[-num_indices:]
+            assert (indices == ref_2nd_layer_top).all(), f"{element_info}, {indices} != {ref_2nd_layer_top}"

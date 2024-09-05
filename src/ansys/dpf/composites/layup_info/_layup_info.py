@@ -462,7 +462,7 @@ class ElementInfoProvider:
             # can be of type int for single layer elements or array for multilayer materials
             dpf_material_ids = self.layer_materials.by_id(element_id)
             assert dpf_material_ids is not None
-            if not isinstance(dpf_material_ids, Sequence):
+            if not isinstance(dpf_material_ids, np.ndarray):
                 dpf_material_ids = np.array(
                     [dpf_material_ids], dtype=np.int64
                 )
