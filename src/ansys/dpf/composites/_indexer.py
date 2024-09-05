@@ -52,18 +52,14 @@ def setup_index_by_id(scoping: Scoping) -> IndexToId:
     return IndexToId(mapping=indices, max_id=len(indices) - 1)
 
 
-class PropertyFieldIndexerSingleValue(Protocol):
+class PropertyFieldIndexerProtocol(Protocol):
     """Protocol for single value property field indexer."""
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
         """Get index by id."""
 
-
-class PropertyFieldIndexerArrayValue(Protocol):
-    """Protocol for array valued property field indexer."""
-
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
-        """Get index by id."""
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.int64]]:
+        """Get indices by id."""
 
 
 def _has_data_pointer(field: PropertyField | Field) -> bool:
@@ -76,7 +72,7 @@ def _has_data_pointer(field: PropertyField | Field) -> bool:
 
 def get_property_field_indexer(
     field: PropertyField, no_bounds_check: bool
-) -> PropertyFieldIndexerSingleValue | PropertyFieldIndexerArrayValue:
+) -> PropertyFieldIndexerProtocol:
     """Get indexer for a property field.
 
     Parameters
@@ -93,11 +89,14 @@ def get_property_field_indexer(
     return PropertyFieldIndexerNoDataPointer(field)
 
 
-class FieldIndexSingleValueProtocol(Protocol):
+class FieldIndexexProtocol(Protocol):
     """Protocol for single value field indexer."""
 
     def by_id(self, entity_id: int) -> Optional[np.double]:
         """Get index by id."""
+
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.double]]:
+        """Get indices by id."""
 
 
 # General comment for all Indexer:
@@ -140,6 +139,18 @@ class PropertyFieldIndexerNoDataPointer:
             return None
         return cast(np.int64, self._data[idx])
 
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.int64]]:
+        """Get indices by id.
+
+        Parameters
+        ----------
+        entity_id
+        """
+        value = self.by_id(entity_id)
+        if value is None:
+            return None
+        return np.array([value], dtype=np.int64)
+
 
 class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
     """Indexer for a property field with no data pointer and no bounds checks."""
@@ -168,6 +179,18 @@ class PropertyFieldIndexerNoDataPointerNoBoundsCheck:
         else:
             return cast(np.int64, self._data[self._indices[entity_id]])
 
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.int64]]:
+        """Get indices by id.
+
+        Parameters
+        ----------
+        entity_id
+        """
+        value = self.by_id(entity_id)
+        if value is None:
+            return None
+        return np.array([value], dtype=np.int64)
+
 
 class PropertyFieldIndexerWithDataPointer:
     """Indexer for a property field with data pointer."""
@@ -192,7 +215,10 @@ class PropertyFieldIndexerWithDataPointer:
             self._n_components = 0
             self._data_pointer = np.array([], dtype=np.int64)
 
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
+    def by_id(self, entity_id: int):
+        raise NotImplementedError("PropertyFieldIndexerWithDataPointer does not support by_id.")
+
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         """Get index by ID.
 
         Parameters
@@ -236,7 +262,12 @@ class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
             self._n_components = 0
             self._data_pointer = np.array([], dtype=np.int64)
 
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.int64]]:
+    def by_id(self, entity_id: int):
+        raise NotImplementedError(
+            "PropertyFieldIndexerWithDataPointerNoBoundsCheck does not support by_id."
+        )
+
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         """Get index by ID.
 
         Parameters
@@ -260,7 +291,7 @@ class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
 # one value per entity. Therefore, it is unknown if
 # data pointer are set for some field of layered elements, for
 # instance angles, thickness etc.
-def get_field_indexer(field: Field) -> FieldIndexSingleValueProtocol:
+def get_field_indexer(field: Field) -> FieldIndexexProtocol:
     """Get field indexer based on data pointer.
 
     Parameters
@@ -301,6 +332,18 @@ class FieldIndexerNoDataPointer:
             return None
         return cast(np.double, self._data[idx])
 
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.double]]:
+        """Get indices by id.
+
+        Parameters
+        ----------
+        entity_id
+        """
+        value = self.by_id(entity_id)
+        if value is None:
+            return None
+        return np.array([value], dtype=np.double)
+
 
 class FieldIndexerWithDataPointer:
     """Indexer for a dpf field with data pointer."""
@@ -325,8 +368,11 @@ class FieldIndexerWithDataPointer:
             self._n_components = 0
             self._data_pointer = np.array([], dtype=np.int64)
 
-    def by_id(self, entity_id: int) -> Optional[NDArray[np.double]]:
-        """Get index by ID.
+    def by_id(self, entity_id: int) -> Optional[np.double]:
+        raise NotImplementedError("FieldIndexerWithDataPointer does not support by_id.")
+
+    def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.double]]:
+        """Get indices by ID.
 
         Parameters
         ----------

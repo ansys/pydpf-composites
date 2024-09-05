@@ -368,7 +368,7 @@ def test_performance_flat(dpf_server):
             flat_layer_indices = unraveled_indices[0]
             flat_spot_indices = unraveled_indices[1]
             flat_node_indices = unraveled_indices[2]
-            element_data = indexer_data.by_id(element_id)
+            element_data = indexer_data.by_id_as_array(element_id)
 
             nodes = np.array(local_connectivity.get_entity_data_by_id(element_id))
             num_elementary_data = (

@@ -455,14 +455,11 @@ class ElementInfoProvider:
         if element_type is None:
             raise IndexError(f"No DPF element type for element with id {element_id}.")
 
-        layer_data = self.layer_indices.by_id(element_id)
+        layer_data = self.layer_indices.by_id_as_array(element_id)
         if layer_data is not None:
             # can be of type int for single layer elements or array for multilayer materials
-            dpf_material_ids = self.layer_materials.by_id(element_id)
+            dpf_material_ids = self.layer_materials.by_id_as_array(element_id)
             assert dpf_material_ids is not None
-            if not isinstance(dpf_material_ids, np.ndarray):
-                dpf_material_ids = np.array([dpf_material_ids], dtype=np.int64)
-
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
             is_layered = True
@@ -619,7 +616,7 @@ class LayupPropertiesProvider:
         element_id:
             Element Id/Label
         """
-        return self._angle_indexer.by_id(element_id)
+        return self._angle_indexer.by_id_as_array(element_id)
 
     def get_layer_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get thicknesses for all layers. Returns None if element is not layered.
@@ -630,7 +627,7 @@ class LayupPropertiesProvider:
             Element Id/Label
 
         """
-        return self._thickness_indexer.by_id(element_id)
+        return self._thickness_indexer.by_id_as_array(element_id)
 
     def get_layer_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get shear angle for all layers. Returns None if element is not layered.
@@ -640,7 +637,7 @@ class LayupPropertiesProvider:
         element_id:
             Element Id/Label
         """
-        return self._shear_angle_indexer.by_id(element_id)
+        return self._shear_angle_indexer.by_id_as_array(element_id)
 
     def get_element_laminate_offset(self, element_id: int) -> Optional[np.double]:
         """Get laminate offset of element. Returns None if element is not layered.
@@ -651,7 +648,7 @@ class LayupPropertiesProvider:
             Element Id/Label
 
         """
-        return self._offset_indexer.by_id(element_id)
+        return self._offset_indexer.by_id_as_array(element_id)
 
     def get_analysis_plies(self, element_id: int) -> Optional[Sequence[str]]:
         """Get analysis ply names. Returns None if element is not layered.
@@ -662,7 +659,7 @@ class LayupPropertiesProvider:
             Element Id/Label
 
         """
-        indexes = self._analysis_ply_indexer.by_id(element_id)
-        if indexes is None:
+        indices = self._analysis_ply_indexer.by_id_as_array(element_id)
+        if indices is None:
             return None
-        return [self._index_to_name_map[index] for index in indexes]
+        return [self._index_to_name_map[index] for index in indices]
