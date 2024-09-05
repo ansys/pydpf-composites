@@ -64,7 +64,8 @@ class PropertyFieldIndexerProtocol(Protocol):
 
 def _has_data_pointer(field: PropertyField | Field) -> bool:
     if (
-        field._data_pointer is not None and field._data_pointer.any()  # pylint: disable=protected-access
+        field._data_pointer is not None
+        and field._data_pointer.any()  # pylint: disable=protected-access
     ):
         return True
     return False
@@ -388,7 +389,7 @@ class FieldIndexerWithDataPointer:
         entity_id
         """
         values = self.by_id_as_array(entity_id)
-        if len(values) == 0:
+        if values is None or len(values) == 0:
             return None
         if len(values) == 1:
             return values[0]
