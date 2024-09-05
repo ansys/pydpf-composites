@@ -64,7 +64,7 @@ class PropertyFieldIndexerProtocol(Protocol):
 
 def _has_data_pointer(field: PropertyField | Field) -> bool:
     if (
-        field._data_pointer is not None
+        field._data_pointer is not None  # pylint: disable=protected-access
         and field._data_pointer.any()  # pylint: disable=protected-access
     ):
         return True
@@ -392,7 +392,7 @@ class FieldIndexerWithDataPointer:
         if values is None or len(values) == 0:
             return None
         if len(values) == 1:
-            return values[0]
+            return cast(np.double, values[0])
 
         raise RuntimeError("FieldIndexerWithDataPointer: by_id cannot be used for a list of data.")
 
