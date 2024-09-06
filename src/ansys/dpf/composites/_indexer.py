@@ -399,7 +399,7 @@ class FieldIndexerWithDataPointer:
         # In this case the format of values is [offset, 0, 0., ...]
         offset = values[0]
         if all([v == 0 for v in values[1:]]):
-            return offset
+            return cast(np.double, offset)
 
         raise RuntimeError(
             f"Cannot extract value for entity {entity_id}. "
