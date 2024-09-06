@@ -395,7 +395,7 @@ class FieldIndexerWithDataPointer:
             return cast(np.double, values[0])
 
         # There is an issue with the DPF server 2024r1_pre0 and before.
-        # Values does not have length 1.
+        # Values of the laminate offset field does not have length 1.
         # In this case the format of values is [offset, 0, 0., ...]
         offset = values[0]
         if all([v == 0 for v in values[1:]]):
