@@ -26,21 +26,22 @@
 Thermal analysis
 ----------------
 
+PyDPF Composites can also be used to post-process thermal analyses.
+In this case, the simulation is a two-step analysis where the results of
+a thermal analysis are an input of the structural analysis. So, the RST
+contains temperature and structural results.
+The example mimics a PCB which was modeled with Ansys Composites PrePost (ACP).
+where the solid model feature of ACP is used to generate the volume mesh.
+
+In detail, the example shows how to extract the temperatures for a specific ply,
+and a specific material.
+
 .. note::
 
     When using a Workbench project,
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
-PyDPF Composites can also be used to post-process thermal analyses.
-In this case, the simulation is a two-step analysis. The results of the thermal analysis
-are used as input for a structural analysis. The result file of the structural analysis is
-post-processed. It also includes the temperatures of the thermal analysis.
-The example mimics a PCB which was modeled with Ansys Composites PrePost (ACP).
-where the solid model feature of ACP is used to generate the volume mesh.
-
-In detail, the example shows how to extract the temperatures for a specific ply,
-and a specific material.
 """
 
 # %%
@@ -100,7 +101,7 @@ composite_model.get_mesh().plot(nodal_values)
 # %%
 # Material-wise results
 # ~~~~~~~~~~~~~~~~~~~~~
-# It is also possible to filter the results by material
+# It is also possible to filter the results by material.
 # In this example the element-wise maximum temperature
 # is extracted for the material `Honeycomb Aluminum Alloy`.
 print(composite_model.material_names)
