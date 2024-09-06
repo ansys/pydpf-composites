@@ -313,7 +313,7 @@ Get element information for all elements and show the first one as an example.
  .. code-block:: none
 
 
-    ElementInfo(id=1, n_layers=6, n_corner_nodes=4, n_spots=3, is_layered=True, element_type=181, dpf_material_ids=array([3, 2, 2, 1, 2, 3]), is_shell=True, number_of_nodes_per_spot_plane=4)
+    ElementInfo(id=np.int32(1), n_layers=np.int64(6), n_corner_nodes=np.int64(4), n_spots=3, is_layered=True, element_type=181, dpf_material_ids=array([3, 2, 2, 1, 2, 3]), is_shell=True, number_of_nodes_per_spot_plane=np.int64(4))
 
 
 
@@ -517,7 +517,7 @@ in the material direction in this ply.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.441 seconds)
+   **Total running time of the script:** (0 minutes 4.607 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
