@@ -394,7 +394,18 @@ class FieldIndexerWithDataPointer:
         if len(values) == 1:
             return cast(np.double, values[0])
 
-        raise RuntimeError("FieldIndexerWithDataPointer: by_id cannot be used for a list of data.")
+        # There is an issue with the DPF server 2024r1_pre0 and before.
+        # Values does not have length 1.
+        # In this case the format of values is [offset, 0, 0., ...]
+        offset = values[0]
+        if all([v == 0 for v in values[1:]]):
+            return offset
+
+        raise RuntimeError(
+            f"Cannot extract value for entity {entity_id}. "
+            "Use the latest version of the DPF server to get the correct value. "
+            f"Values: {values}"
+        )
 
     def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.double]]:
         """Get values by ID.
