@@ -66,7 +66,7 @@
     <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="DPF composite failure workflow" href="099_dpf_composite_failure_workflow.html" />
+    <link rel="next" title="Thermal analysis" href="013_thermal_example.html" />
     <link rel="prev" title="Failure analysis of an MAPDL (RST) model" href="011_rst_workflow.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -454,6 +454,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="010_harmonic_example.html">Postprocess a harmonic analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="011_rst_workflow.html">Failure analysis of an MAPDL (RST) model</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Evaluate fatigue for a composite plate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="013_thermal_example.html">Thermal analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="099_dpf_composite_failure_workflow.html">DPF composite failure workflow</a></li>
 </ul>
 </div>
@@ -599,7 +600,7 @@ No mean stress correction is applied.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot" title="matplotlib.pyplot.plot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">load_factor_time_series</span></a><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_012_fatigue_example_001.png" srcset="../../_images/sphx_glr_012_fatigue_example_001.png" alt="012 fatigue example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7f8b4c170770&gt;]
+<img src="../../_images/sphx_glr_012_fatigue_example_001.png" srcset="../../_images/sphx_glr_012_fatigue_example_001.png" alt="012 fatigue example" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D object at 0x7fb2c8145df0&gt;]
 </pre></div>
 </div>
 <p>Fatpack package is used for doing the rainflow counting</p>
@@ -681,10 +682,10 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The element with highest damage is 27.
-The highest damage value is 1.6643128548907954e-07.
+The highest damage value is 1.6047633840998434e-08.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.251 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.547 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-012-fatigue-example-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/99e34e4fb4305deb74fa33fbd83b8981/012_fatigue_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">012_fatigue_example.ipynb</span></code></a></p>
