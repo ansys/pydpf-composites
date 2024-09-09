@@ -366,7 +366,8 @@ def test_get_element_info_all_element_types(dpf_server):
     Test get_element_info for all element types.
 
     The layered elements have one layer only. In this case, the dpf fields do not have data
-    pointers.
+    pointers. In addition, the analysis_ply_layer_indices property field is not available
+    because the model is loaded from an RST file without a lay-up definition file.
     """
     model_path = pathlib.Path(__file__).parent / "data" / "all_element_types"
 
@@ -399,6 +400,4 @@ def test_get_element_info_all_element_types(dpf_server):
     for element_id, ref_indices in expected_indices.items():
         element_info = composite_model.get_element_info(element_id)
         indices = get_selected_indices(element_info, layers=[0], spots=[Spot.TOP])
-        assert (
-            indices == ref_indices
-        ).all(), f"{element_info}, {indices} != {ref_indices}"
+        assert (indices == ref_indices).all(), f"{element_info}, {indices} != {ref_indices}"
