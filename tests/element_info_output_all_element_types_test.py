@@ -37,7 +37,7 @@ from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_dpf_material_ids,
 )
-from ansys.dpf.composites.server_helpers import upload_file_to_unique_tmp_folder
+from ansys.dpf.composites.server_helpers import upload_file_to_unique_tmp_folder, version_older_than
 
 
 @dataclass(frozen=True)
@@ -369,6 +369,12 @@ def test_get_element_info_all_element_types(dpf_server):
     pointers. In addition, the analysis_ply_layer_indices property field is not available
     because the model is loaded from an RST file without a lay-up definition file.
     """
+
+    if version_older_than(dpf_server, "8.0"):
+        pytest.xfail(
+            "Not supported because section data from RST is not implemented before version 8.0."
+        )
+
     model_path = pathlib.Path(__file__).parent / "data" / "all_element_types"
 
     rst_file = model_path / "model_with_all_element_types_all_output_1_layer.rst"
