@@ -25,11 +25,13 @@ from dataclasses import dataclass
 import pathlib
 
 import ansys.dpf.core as dpf
-from ansys.dpf.core import Field, MeshedRegion, PropertyField
+from ansys.dpf.core import Field, MeshedRegion, PropertyField, unit_systems
 import numpy as np
 import pytest
 
+from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Spot
+from ansys.dpf.composites.data_sources import ContinuousFiberCompositesFiles
 from ansys.dpf.composites.layup_info import ElementInfo, get_element_info_provider
 from ansys.dpf.composites.select_indices import (
     get_selected_indices,
@@ -232,7 +234,6 @@ def get_element_info_provider_for_rst(rst_file, server):
 
 
 def test_document_error_cases_indices(dpf_server):
-
     layup_info = get_element_info_provider_for_rst(
         "model_with_all_element_types_minimal_output.rst", dpf_server
     )
@@ -358,3 +359,45 @@ def test_select_indices_all_element_types(dpf_server):
             assert (
                 indices == ref_2nd_layer_top
             ).all(), f"{element_info}, {indices} != {ref_2nd_layer_top}"
+
+
+def test_get_element_info_all_element_types(dpf_server):
+    """
+    Test get_element_info for all element types.
+
+    The layered elements have one layer only. In this case, the dpf fields do not have data
+    pointers.
+    """
+    model_path = pathlib.Path(__file__).parent / "data" / "all_element_types"
+
+    rst_file = model_path / "model_with_all_element_types_all_output_1_layer.rst"
+    mat_xml_file = model_path / "model_with_all_element_types_all_output_1_layer_material.xml"
+
+    composite_files = ContinuousFiberCompositesFiles(
+        rst=[rst_file],
+        composite={},
+        engineering_data=mat_xml_file,
+    )
+
+    composite_model = CompositeModel(
+        composite_files, server=dpf_server, default_unit_system=unit_systems.solver_mks
+    )
+
+    expected_indices = {
+        1: np.array([4, 5, 6, 7], dtype=np.int64),
+        2: np.array([3, 4, 5], dtype=np.int64),
+        3: np.array([4, 5, 6, 7], dtype=np.int64),
+        4: np.array([3, 4, 5], dtype=np.int64),
+        30: np.array([4, 5, 6, 7], dtype=np.int64),
+        31: np.array([3, 4, 5], dtype=np.int64),
+        40: np.array([4, 5, 6, 7], dtype=np.int64),
+        41: np.array([3, 4, 5], dtype=np.int64),
+        50: np.array([4, 5, 6, 7], dtype=np.int64),
+        51: np.array([3, 4, 5], dtype=np.int64),
+    }
+
+    for element_id, ref_indices in expected_indices.items():
+        element_info = composite_model.get_element_info(element_id)
+        assert (
+            get_selected_indices(element_info, layers=[0], spots=[Spot.TOP]) == ref_indices
+        ).all()
