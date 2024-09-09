@@ -45,12 +45,9 @@ result_folder = r"D:\tmp\my_workbench_project\mechanical"
 # Extract the files from the workbench (wb) project and send the to the server.
 composite_files = get_composite_files_from_workbench_result_folder(result_folder)
 
-# %%
 # Configure combined failure criterion
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configure the combined failure criterion.
-
-
 combined_fc = CombinedFailureCriterion(
     name="failure of all materials",
     failure_criteria=[
@@ -61,14 +58,11 @@ combined_fc = CombinedFailureCriterion(
     ],
 )
 
-# %%
 # Set up model and evaluate failures
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Set up the composite model.
-
 composite_model = CompositeModel(composite_files, server)
 
-# %%
 # Evaluate failures for the entire model
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
@@ -85,7 +79,6 @@ output_two_elements = composite_model.evaluate_failure_criteria(
 irf_field = output_two_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
 
-# %%
 # Scope failure evaluation by plies.
 output_woven_plies = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
