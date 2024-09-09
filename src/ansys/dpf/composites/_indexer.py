@@ -56,7 +56,11 @@ class PropertyFieldIndexerProtocol(Protocol):
     """Protocol for single value property field indexer."""
 
     def by_id(self, entity_id: int) -> Optional[np.int64]:
-        """Get index by id."""
+        """
+        Get index by id.
+
+        Note: An exception is thrown if the entry has multiple values.
+        """
 
     def by_id_as_array(self, entity_id: int) -> Optional[NDArray[np.int64]]:
         """Get indices by id."""
