@@ -398,6 +398,7 @@ def test_get_element_info_all_element_types(dpf_server):
 
     for element_id, ref_indices in expected_indices.items():
         element_info = composite_model.get_element_info(element_id)
+        indices = get_selected_indices(element_info, layers=[0], spots=[Spot.TOP])
         assert (
-            get_selected_indices(element_info, layers=[0], spots=[Spot.TOP]) == ref_indices
-        ).all()
+            indices == ref_indices
+        ).all(), f"{element_info}, {indices} != {ref_indices}"
