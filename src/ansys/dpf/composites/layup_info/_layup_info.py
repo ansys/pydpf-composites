@@ -34,16 +34,7 @@ from ansys.dpf.core.server_types import BaseServer
 import numpy as np
 from numpy.typing import NDArray
 
-from .._indexer import (
-    FieldIndexerNoDataPointer,
-    FieldIndexerWithDataPointer,
-    PropertyFieldIndexerArrayValue,
-    PropertyFieldIndexerNoDataPointer,
-    PropertyFieldIndexerNoDataPointerNoBoundsCheck,
-    PropertyFieldIndexerSingleValue,
-    PropertyFieldIndexerWithDataPointer,
-    PropertyFieldIndexerWithDataPointerNoBoundsCheck,
-)
+from .._indexer import get_field_indexer, get_property_field_indexer
 from ..server_helpers import version_equal_or_later, version_older_than
 from ._enums import LayupProperty
 
@@ -211,7 +202,7 @@ class AnalysisPlyInfoProvider:
         """Initialize AnalysisPlyProvider."""
         self.name = name
         self.property_field = _get_analysis_ply(mesh, name)
-        self._layer_indices = PropertyFieldIndexerNoDataPointer(self.property_field)
+        self._layer_indices = get_property_field_indexer(self.property_field, False)
 
     def get_layer_index_by_element_id(self, element_id: int) -> Optional[np.int64]:
         """Get the layer index for the analysis ply in a given element.
@@ -404,31 +395,22 @@ class ElementInfoProvider:
         # focused on the most important properties. We can add different providers
         # for other properties (such as thickness and angles)
 
-        def get_indexer_with_data_pointer(field: PropertyField) -> PropertyFieldIndexerArrayValue:
-            if no_bounds_checks:
-                return PropertyFieldIndexerWithDataPointerNoBoundsCheck(field)
-            else:
-                return PropertyFieldIndexerWithDataPointer(field)
-
-        def get_indexer_no_data_pointer(field: PropertyField) -> PropertyFieldIndexerSingleValue:
-            if no_bounds_checks:
-                return PropertyFieldIndexerNoDataPointerNoBoundsCheck(field)
-            else:
-                return PropertyFieldIndexerNoDataPointer(field)
-
         # Has to be always with bounds checks because it does not contain
         # data for all the elements
-        self.layer_indices = PropertyFieldIndexerWithDataPointer(layer_indices)
-        self.layer_materials = get_indexer_with_data_pointer(material_ids)
 
-        self.apdl_element_types = get_indexer_no_data_pointer(element_types_apdl)
-        self.dpf_element_types = get_indexer_no_data_pointer(element_types_dpf)
-        self.keyopt_8_values = get_indexer_no_data_pointer(keyopt_8_values)
-        self.keyopt_3_values = get_indexer_no_data_pointer(keyopt_3_values)
+        self.layer_indices = get_property_field_indexer(layer_indices, no_bounds_checks)
+        self.layer_materials = get_property_field_indexer(material_ids, no_bounds_checks)
+
+        self.apdl_element_types = get_property_field_indexer(element_types_apdl, no_bounds_checks)
+        self.dpf_element_types = get_property_field_indexer(element_types_dpf, no_bounds_checks)
+        self.keyopt_8_values = get_property_field_indexer(keyopt_8_values, no_bounds_checks)
+        self.keyopt_3_values = get_property_field_indexer(keyopt_3_values, no_bounds_checks)
 
         self.mesh = mesh
         self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
-        self.apdl_material_indexer = get_indexer_no_data_pointer(self.mesh.elements.materials_field)
+        self.apdl_material_indexer = get_property_field_indexer(
+            self.mesh.elements.materials_field, no_bounds_checks
+        )
 
         self.solver_material_to_dpf_id = {}
         if solver_material_ids is not None:
@@ -473,9 +455,10 @@ class ElementInfoProvider:
         if element_type is None:
             raise IndexError(f"No DPF element type for element with id {element_id}.")
 
-        layer_data = self.layer_indices.by_id(element_id)
+        layer_data = self.layer_indices.by_id_as_array(element_id)
         if layer_data is not None:
-            dpf_material_ids = self.layer_materials.by_id(element_id)
+            # can be of type int for single layer elements or array for multilayer materials
+            dpf_material_ids = self.layer_materials.by_id_as_array(element_id)
             assert dpf_material_ids is not None
             assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
             n_layers = layer_data[0]
@@ -605,24 +588,24 @@ class LayupPropertiesProvider:
         layup_outputs_container = layup_provider.outputs.section_data_container()
         composite_label = layup_outputs_container.labels[0]
         angle_field = layup_outputs_container.get_field({composite_label: LayupProperty.ANGLE})
-        self._angle_indexer = FieldIndexerWithDataPointer(angle_field)
+        self._angle_indexer = get_field_indexer(angle_field)
         thickness_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.THICKNESS}
         )
-        self._thickness_indexer = FieldIndexerWithDataPointer(thickness_field)
+        self._thickness_indexer = get_field_indexer(thickness_field)
         shear_angle_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.SHEAR_ANGLE}
         )
-        self._shear_angle_indexer = FieldIndexerWithDataPointer(shear_angle_field)
+        self._shear_angle_indexer = get_field_indexer(shear_angle_field)
         offset_field = layup_outputs_container.get_field(
             {composite_label: LayupProperty.LAMINATE_OFFSET}
         )
-        self._offset_indexer = FieldIndexerNoDataPointer(offset_field)
+        self._offset_indexer = get_field_indexer(offset_field)
 
         self._index_to_name_map = get_analysis_ply_index_to_name_map(mesh)
 
-        self._analysis_ply_indexer = PropertyFieldIndexerWithDataPointer(
-            mesh.property_field("layer_to_analysis_ply")
+        self._analysis_ply_indexer = get_property_field_indexer(
+            mesh.property_field("layer_to_analysis_ply"), False
         )
 
     def get_layer_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
@@ -633,7 +616,7 @@ class LayupPropertiesProvider:
         element_id:
             Element Id/Label
         """
-        return self._angle_indexer.by_id(element_id)
+        return self._angle_indexer.by_id_as_array(element_id)
 
     def get_layer_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get thicknesses for all layers. Returns None if element is not layered.
@@ -644,7 +627,7 @@ class LayupPropertiesProvider:
             Element Id/Label
 
         """
-        return self._thickness_indexer.by_id(element_id)
+        return self._thickness_indexer.by_id_as_array(element_id)
 
     def get_layer_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
         """Get shear angle for all layers. Returns None if element is not layered.
@@ -654,7 +637,7 @@ class LayupPropertiesProvider:
         element_id:
             Element Id/Label
         """
-        return self._shear_angle_indexer.by_id(element_id)
+        return self._shear_angle_indexer.by_id_as_array(element_id)
 
     def get_element_laminate_offset(self, element_id: int) -> Optional[np.double]:
         """Get laminate offset of element. Returns None if element is not layered.
@@ -676,7 +659,7 @@ class LayupPropertiesProvider:
             Element Id/Label
 
         """
-        indexes = self._analysis_ply_indexer.by_id(element_id)
-        if indexes is None:
+        indices = self._analysis_ply_indexer.by_id_as_array(element_id)
+        if indices is None:
             return None
-        return [self._index_to_name_map[index] for index in indexes]
+        return [self._index_to_name_map[index] for index in indices]

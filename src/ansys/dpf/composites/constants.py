@@ -30,10 +30,13 @@ __all__ = (
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
     "TIME_LABEL",
+    "TEMPERATURE_COMPONENT",
 )
 
 FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
+TEMPERATURE_COMPONENT = 0
+REF_SURFACE_NAME = "Reference Surface"
 
 
 class Spot(IntEnum):
@@ -69,6 +72,3 @@ class FailureOutput(IntEnum):
     MAX_GLOBAL_LAYER_IN_STACK = 5
     MAX_LOCAL_LAYER_IN_ELEMENT = 6
     MAX_SOLID_ELEMENT_ID = 7
-
-
-REF_SURFACE_NAME = "Reference Surface"

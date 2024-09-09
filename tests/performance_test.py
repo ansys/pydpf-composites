@@ -27,7 +27,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 import pytest
 
-from ansys.dpf.composites._indexer import FieldIndexerWithDataPointer
+from ansys.dpf.composites._indexer import get_field_indexer
 from ansys.dpf.composites.data_sources import CompositeDefinitionFiles, get_composites_data_sources
 from ansys.dpf.composites.layup_info import (
     LayupPropertiesProvider,
@@ -335,7 +335,7 @@ def test_performance_flat(dpf_server):
     all_data = np.full((setup_result.field.elementary_data_count, 11), -1.0)
     start_index = 0
 
-    indexer_data = FieldIndexerWithDataPointer(setup_result.field)
+    indexer_data = get_field_indexer(setup_result.field)
     timer.add("indexer")
 
     with setup_result.mesh.elements.connectivities_field.as_local_field() as local_connectivity:
@@ -368,7 +368,7 @@ def test_performance_flat(dpf_server):
             flat_layer_indices = unraveled_indices[0]
             flat_spot_indices = unraveled_indices[1]
             flat_node_indices = unraveled_indices[2]
-            element_data = indexer_data.by_id(element_id)
+            element_data = indexer_data.by_id_as_array(element_id)
 
             nodes = np.array(local_connectivity.get_entity_data_by_id(element_id))
             num_elementary_data = (
