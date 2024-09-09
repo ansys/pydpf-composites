@@ -1,8 +1,32 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import os
 import pathlib
 
 import ansys.dpf.core as dpf
 import pytest
+
+from ansys.dpf.composites.server_helpers import upload_file_to_unique_tmp_folder
 
 from .utils import get_basic_combined_failure_criterion
 
@@ -20,10 +44,12 @@ def test_basic_workflow(dpf_server, distributed_rst):
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
     if not dpf_server.local_server:
-        rst_paths = [dpf.upload_file_in_tmp_folder(path, server=dpf_server) for path in rst_paths]
+        rst_paths = [
+            upload_file_to_unique_tmp_folder(path, server=dpf_server) for path in rst_paths
+        ]
 
-        h5_path = dpf.upload_file_in_tmp_folder(h5_path, server=dpf_server)
-        material_path = dpf.upload_file_in_tmp_folder(material_path, server=dpf_server)
+        h5_path = upload_file_to_unique_tmp_folder(h5_path, server=dpf_server)
+        material_path = upload_file_to_unique_tmp_folder(material_path, server=dpf_server)
 
     eng_data_path = material_path
     composite_definitions_path = h5_path

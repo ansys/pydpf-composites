@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Lay-up information provider."""
 
 from collections.abc import Collection, Sequence
@@ -164,9 +186,11 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     )
 
     corner_nodes_by_element_type[all_element_types] = [
-        dpf.element_types.descriptor(element_type).n_corner_nodes
-        if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
-        else -1
+        (
+            dpf.element_types.descriptor(element_type).n_corner_nodes
+            if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
+            else -1
+        )
         for element_type in all_element_types
     ]
     return corner_nodes_by_element_type
@@ -219,8 +243,8 @@ def get_dpf_material_id_by_analyis_ply_map(
         DPF data source with rst file or streams_provider. The streams provider is
         available from :attr:`.CompositeModel.core_model` (under metadata.streams_provider).
 
-    Note
-    ----
+    Notes
+    -----
     Cache the output because the computation can be performance-critical.
     """
     warn(
@@ -300,14 +324,30 @@ def get_analysis_ply_index_to_name_map(
     ----------
     mesh
         DPF Meshed region enriched with lay-up information
+
+    .. note::
+
+        Analysis plies of ACP's imported solid model that are linked only
+        to homogeneous elements are currently skipped.
     """
     analysis_ply_name_to_index_map = {}
     with mesh.property_field("layer_to_analysis_ply").as_local_field() as local_field:
+        element_ids = local_field.scoping.ids
         for analysis_ply_name in get_all_analysis_ply_names(mesh):
             analysis_ply_property_field = _get_analysis_ply(
                 mesh, analysis_ply_name, skip_check=True
             )
             first_element_id = analysis_ply_property_field.scoping.id(0)
+            # analysis plies which represent a filler ply are ignored because
+            # they are linked to homogeneous elements only. So, they are not
+            # part of layer_to_analysis_ply. This filler plies can occur in
+            # imported solid models.
+            # The analysis ply indices can be retrieved from
+            # analysis_ply_property_field as soon as the
+            # properties of PropertyField are available in Python.
+            if first_element_id not in element_ids:
+                continue
+
             analysis_ply_indices: list[int] = local_field.get_entity_data_by_id(first_element_id)
 
             layer_index = analysis_ply_property_field.get_entity_data(0)[0]

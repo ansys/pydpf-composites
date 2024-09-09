@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import pathlib
 
 from ansys.dpf.core import unit_systems
@@ -18,9 +40,10 @@ from ansys.dpf.composites.failure_criteria import (
 from ansys.dpf.composites.layup_info import (
     LayerProperty,
     LayupModelContextType,
+    get_all_analysis_ply_names,
     get_analysis_ply_index_to_name_map,
 )
-from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
+from ansys.dpf.composites.layup_info.material_properties import MaterialMetadata, MaterialProperty
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.server_helpers import version_equal_or_later, version_older_than
 
@@ -105,8 +128,47 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
         for mat_name in ref_material_names:
             assert mat_name in mat_names.keys()
 
-    timer.add("After getting properties")
+        metadata = composite_model.material_metadata
 
+        solver_mat_ids = 4 * [None]
+        ply_types = 4 * [None]
+        if version_equal_or_later(dpf_server, "8.0"):
+            solver_mat_ids = [5, 4, 3, 2]
+        if version_equal_or_later(dpf_server, "9.0"):
+            ply_types = ["honeycomb_core", "regular", "woven", "undefined"]
+
+        ref_metadata = {
+            1: MaterialMetadata(
+                dpf_material_id=1,
+                material_name="Honeycomb",
+                ply_type=ply_types[0],
+                solver_material_id=solver_mat_ids[0],
+            ),
+            2: MaterialMetadata(
+                dpf_material_id=2,
+                material_name="Epoxy Carbon UD (230 GPa) Prepreg",
+                ply_type=ply_types[1],
+                solver_material_id=solver_mat_ids[1],
+            ),
+            3: MaterialMetadata(
+                dpf_material_id=3,
+                material_name="Epoxy Carbon Woven (230 GPa) Wet",
+                ply_type=ply_types[2],
+                solver_material_id=solver_mat_ids[2],
+            ),
+            4: MaterialMetadata(
+                dpf_material_id=4,
+                material_name="Structural Steel",
+                ply_type=ply_types[3],
+                solver_material_id=solver_mat_ids[3],
+            ),
+        }
+
+        assert len(metadata) == len(ref_metadata)
+        for dpf_material_id, ref_data in ref_metadata.items():
+            assert metadata[dpf_material_id] == ref_data
+
+    timer.add("After getting properties")
     timer.summary()
 
 
@@ -155,7 +217,29 @@ def test_model_with_multiple_timesteps(dpf_server):
             check_field_size(FailureOutput.MAX_SOLID_ELEMENT_ID)
 
 
-def test_assembly_model(dpf_server):
+_MAX_RESERVE_FACTOR = 1000.0
+
+
+def _get_margin_of_safety_from_irf(irf: float) -> float:
+    return _get_reserve_factor_from_irf(irf) - 1.0
+
+
+def _get_reserve_factor_from_irf(irf: float) -> float:
+    if irf > 0.0:
+        return min(1.0 / irf, _MAX_RESERVE_FACTOR)
+    else:
+        return _MAX_RESERVE_FACTOR
+
+
+@pytest.mark.parametrize(
+    "failure_measure",
+    [
+        FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
+        FailureMeasureEnum.RESERVE_FACTOR,
+        FailureMeasureEnum.MARGIN_OF_SAFETY,
+    ],
+)
+def test_assembly_model(dpf_server, failure_measure):
     """Verify the handling of assemblies."""
 
     timer = Timer()
@@ -179,16 +263,26 @@ def test_assembly_model(dpf_server):
     failure_output = composite_model.evaluate_failure_criteria(
         combined_criterion=combined_failure_criterion,
         composite_scope=CompositeScope(),
+        measure=failure_measure,
     )
 
     timer.add("After get failure output")
 
-    def check_output(failure_label: FailureOutput, expected_output: dict[int, float]):
+    def check_value_output(failure_label: FailureOutput, expected_output: dict[int, float]):
+        for element_id, expected_value in expected_output.items():
+            if failure_measure == FailureMeasureEnum.MARGIN_OF_SAFETY:
+                expected_value = _get_margin_of_safety_from_irf(expected_value)
+            elif failure_measure == FailureMeasureEnum.RESERVE_FACTOR:
+                expected_value = _get_reserve_factor_from_irf(expected_value)
+            failure_field = failure_output.get_field({FAILURE_LABEL: failure_label})
+            assert failure_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
+
+    def check_mode_or_layer_output(failure_label: FailureOutput, expected_output: dict[int, float]):
         for element_id, expected_value in expected_output.items():
             failure_field = failure_output.get_field({FAILURE_LABEL: failure_label})
             assert failure_field.get_entity_data_by_id(element_id) == pytest.approx(expected_value)
 
-    expected_output = {
+    expected_irf_output = {
         1: 1.11311715,
         2: 1.11311715,
         5: 1.85777034,
@@ -198,7 +292,7 @@ def test_assembly_model(dpf_server):
         9: 0.62122959,
         10: 0.62122959,
     }
-    check_output(FailureOutput.FAILURE_VALUE, expected_output)
+    check_value_output(FailureOutput.FAILURE_VALUE, expected_irf_output)
 
     expected_modes = {
         1: FailureModeEnum.s1t.value,
@@ -210,7 +304,7 @@ def test_assembly_model(dpf_server):
         9: FailureModeEnum.s2t.value,
         10: FailureModeEnum.s2t.value,
     }
-    check_output(FailureOutput.FAILURE_MODE, expected_modes)
+    check_mode_or_layer_output(FailureOutput.FAILURE_MODE, expected_modes)
 
     expected_layer_index = {
         1: 2,
@@ -229,9 +323,9 @@ def test_assembly_model(dpf_server):
             # at 0 instead of 1
             expected_layer_index[element_id] -= 1
 
-    check_output(FailureOutput.MAX_LAYER_INDEX, expected_layer_index)
+    check_mode_or_layer_output(FailureOutput.MAX_LAYER_INDEX, expected_layer_index)
 
-    expected_output_ref_surface = {
+    expected_output_irf_ref_surface = {
         1: 1.85777034,
         2: 1.85777034,
         3: 1.11311715,
@@ -239,7 +333,7 @@ def test_assembly_model(dpf_server):
     }
 
     if version_equal_or_later(dpf_server, "8.0"):
-        check_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_ref_surface)
+        check_value_output(FailureOutput.FAILURE_VALUE_REF_SURFACE, expected_output_irf_ref_surface)
 
         expected_output_local_layer = {
             1: 2,
@@ -247,7 +341,9 @@ def test_assembly_model(dpf_server):
             3: 2,
             4: 2,
         }
-        check_output(FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer)
+        check_mode_or_layer_output(
+            FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT, expected_output_local_layer
+        )
 
         expected_output_global_layer = {
             1: 2,
@@ -255,7 +351,9 @@ def test_assembly_model(dpf_server):
             3: 2,
             4: 2,
         }
-        check_output(FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer)
+        check_mode_or_layer_output(
+            FailureOutput.MAX_GLOBAL_LAYER_IN_STACK, expected_output_global_layer
+        )
 
         expected_output_solid_element = {
             1: 5,
@@ -263,7 +361,9 @@ def test_assembly_model(dpf_server):
             3: 1,
             4: 2,
         }
-        check_output(FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element)
+        check_mode_or_layer_output(
+            FailureOutput.MAX_SOLID_ELEMENT_ID, expected_output_solid_element
+        )
 
     property_dict = composite_model.get_constant_property_dict(
         [MaterialProperty.Stress_Limits_Xt], composite_definition_label=solid_label
@@ -440,3 +540,72 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(cfc)
+
+
+def test_composite_model_with_imported_solid_model_assembly(dpf_server):
+    """
+    Tests the show on reference surface option for imported solid models.
+
+    Imported solid models are slightly different if compared with shell parts
+    and standard solid models. For instance, they have analysis plies which are
+    not linked to a layered elements. These are called filler plies.
+
+    In addition, the `show on reference surface` option uses the skin of the
+    imported solid mesh instead of a predefined reference surface.
+    This general test ensures that the composite model can handle these.
+
+    The model has one shell part, one standard solid model and
+    an imported solid model.
+    """
+    result_folder = pathlib.Path(__file__).parent / "data" / "assembly_imported_solid_model"
+    composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+
+    # Create a composite model
+    composite_model = CompositeModel(composite_files, dpf_server)
+
+    # ensure that all analysis plies are available, also the filler plies
+    # The initial version of DPF Composites had limitations in the handling
+    # of assemblies and so the test is skipped for old versions of the server.
+    if version_equal_or_later(dpf_server, "7.0"):
+        analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
+        ref_plies = [
+            "Setup 2_shell::P1L1__ModelingPly.2",
+            "Setup_solid::P1L1__ModelingPly.2",
+            "Setup 3_solid::P1L1__ModelingPly.1",
+            "Setup 3_solid::P1L1__ModelingPly.3",
+            "Setup 3_solid::filler_Epoxy Carbon Woven (230 GPa) Prepreg",
+            "Setup 3_solid::P1L1__ModelingPly.2",
+            "Setup 2_shell::P1L1__ModelingPly.1",
+            "Setup_solid::P1L1__ModelingPly.1",
+        ]
+        assert set(analysis_plies) == set(ref_plies)
+
+    # Evaluate combined failure criterion
+    combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
+    failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
+
+    irf_field = failure_result.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
+    assert irf_field.size == 84
+
+    # check the on reference surface data
+    for failure_output in [
+        FailureOutput.FAILURE_VALUE_REF_SURFACE,
+        FailureOutput.FAILURE_MODE_REF_SURFACE,
+        FailureOutput.MAX_GLOBAL_LAYER_IN_STACK,
+        FailureOutput.MAX_LOCAL_LAYER_IN_ELEMENT,
+        FailureOutput.MAX_SOLID_ELEMENT_ID,
+    ]:
+        field = failure_result.get_field({FAILURE_LABEL: failure_output})
+        if version_equal_or_later(dpf_server, "9.0"):
+            assert field.size == 60
+        elif version_equal_or_later(dpf_server, "8.0"):
+            # Servers of the 2024 R2 series do not extract the reference surface
+            # of imported solid models. So the reference surface mesh
+            # contains only the shell elements and reference surface of the
+            # standard solid model.
+            assert field.size == 18
+        else:
+            # Server of 2024 R1 and before do not support results on the reference
+            # surface at all. It is tested that the operator update
+            # completes without error nevertheless.
+            pass

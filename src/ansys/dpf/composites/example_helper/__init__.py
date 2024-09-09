@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Helper to get example files."""
 
 from dataclasses import dataclass
@@ -13,6 +35,7 @@ from ..data_sources import (
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
+from ..server_helpers import upload_file_to_unique_tmp_folder
 
 EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
@@ -118,6 +141,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "fatigue": _ContinuousFiberExampleLocation(
+        directory="fatigue",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
@@ -145,7 +178,7 @@ def _download_and_upload_file(
     urllib.request.urlretrieve(file_url, local_path)
     if server.local_server:
         return local_path
-    return cast(str, dpf.upload_file_in_tmp_folder(local_path, server=server))
+    return upload_file_to_unique_tmp_folder(local_path, server=server)
 
 
 def get_short_fiber_example_files(

@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from __future__ import annotations
 
 from collections import namedtuple
@@ -72,8 +94,13 @@ class DockerProcess:
 
     def __enter__(self):
         cmd = ["docker", "run"]
+
+        def get_volume_arg(source_dir, target_dir):
+            posix_path = pathlib.Path(source_dir).as_posix()
+            return f"/{posix_path.replace(':', '')}:{target_dir}"
+
         for source_dir, target_dir in self.mount_directories.items():
-            cmd += ["-v", f"/{pathlib.Path(source_dir).as_posix().replace(':', '')}:{target_dir}"]
+            cmd += ["-v" + get_volume_arg(source_dir, target_dir)]
         if sys.platform == "linux":
             cmd += ["-u", f"{os.getuid()}:{os.getgid()}"]
 
@@ -194,11 +221,7 @@ class InstalledServer:
         self.ansys_path = ansys_path
 
     def __enter__(self):
-        context = dpf.server.server_context.ServerContext(
-            dpf.server_context.LicensingContextType.premium
-        )
-
-        server = dpf.start_local_server(ansys_path=self.ansys_path, context=context)
+        server = dpf.start_local_server(ansys_path=self.ansys_path)
         return ServerContext(port=None, platform=sys.platform, server=server)
 
     def __exit__(self, *args):
@@ -300,9 +323,7 @@ def dpf_server(request: pytest.FixtureRequest):
         server = _try_until_timeout(start_server, "Failed to start server.")
 
         _wait_until_server_is_up(server)
-        server.apply_context(
-            dpf.server.server_context.ServerContext(dpf.server_context.LicensingContextType.premium)
-        )
+
         load_composites_plugin(server, ansys_path=installer_path)
 
         yield server

@@ -1,10 +1,32 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Helpers to connect to or start a DPF server with the DPF Composites plugin."""
 import os
 from typing import Any, Callable, Optional, Union
 
 from ansys.dpf.core import connect_to_server
 from ansys.dpf.core import server as _dpf_server
-from ansys.dpf.core import server_context, start_local_server
+from ansys.dpf.core import start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
@@ -77,16 +99,10 @@ def connect_to_or_start_server(
     if len(list(connect_kwargs.keys())) > 0:
         server = connect_to_server(
             **connect_kwargs,
-            context=_dpf_server.server_context.ServerContext(
-                server_context.LicensingContextType.premium
-            ),
         )
     else:
         server = start_local_server(
             ansys_path=ansys_path,
-            context=_dpf_server.server_context.ServerContext(
-                server_context.LicensingContextType.premium
-            ),
         )
 
     required_version = "6.0"

@@ -16,6 +16,7 @@ For in-depth documentation on the different failure criteria, refer to the ACP h
     data_sources
     failure_criteria
     layup_info
+    ply_wise_data
     result_definition
     sampling_point
     server_helpers

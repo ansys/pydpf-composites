@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Composite Model Interface 2023R2."""
 from collections.abc import Collection, Sequence
 from typing import Optional, cast
@@ -25,7 +47,11 @@ from .layup_info import (
     get_element_info_provider,
 )
 from .layup_info.material_operators import MaterialOperators, get_material_operators
-from .layup_info.material_properties import MaterialProperty, get_constant_property_dict
+from .layup_info.material_properties import (
+    MaterialMetadata,
+    MaterialProperty,
+    get_constant_property_dict,
+)
 from .result_definition import FailureMeasureEnum, ResultDefinition, ResultDefinitionScope
 from .sampling_point_2023r2 import SamplingPoint2023R2
 from .sampling_point_types import SamplingPoint
@@ -204,6 +230,15 @@ class CompositeModelImpl2023R2:
             " or later should be used instead."
         )
 
+    @property
+    def material_metadata(self) -> dict[int, MaterialMetadata]:
+        """DPF Material ID to metadata map. Metadata are for example name and ply type."""
+        raise NotImplementedError(
+            "material_metadata is not implemented"
+            " for this version of DPF. DPF server 9.0 (2025 R1 pre0)"
+            " or later should be used instead."
+        )
+
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
 
@@ -314,10 +349,7 @@ class CompositeModelImpl2023R2:
 
         failure_operator.inputs.result_definition(rd.to_json())
 
-        if measure == FailureMeasureEnum.INVERSE_RESERVE_FACTOR:
-            return failure_operator.outputs.fields_containerMax()
-        else:
-            return failure_operator.outputs.fields_containerMin()
+        return failure_operator.outputs.fields_containerMax()
 
     def get_sampling_point(
         self,

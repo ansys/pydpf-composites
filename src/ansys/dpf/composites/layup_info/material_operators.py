@@ -1,8 +1,32 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Helper function to get material-related operators."""
 from typing import Optional
 from warnings import warn
 
 from ansys.dpf.core import DataSources, Operator
+
+from ansys.dpf.composites.server_helpers import version_equal_or_later
 
 __all__ = ("MaterialOperators", "get_material_operators")
 
@@ -39,6 +63,14 @@ class MaterialOperators:
         self._material_support_provider = material_support_provider
         self._result_info_provider = result_info_provider
 
+        if version_equal_or_later(self._material_provider._server, "7.1"):
+            self._material_container_helper_op = Operator("composite::materials_container_helper")
+            self._material_container_helper_op.inputs.materials_container(
+                self._material_provider.outputs
+            )
+        else:
+            self._material_container_helper_op = None
+
     @property
     def result_info_provider(self) -> Operator:
         """Get result_info_provider."""
@@ -60,6 +92,17 @@ class MaterialOperators:
     def material_provider(self) -> Operator:
         """Get material_provider."""
         return self._material_provider
+
+    @property
+    def material_container_helper_op(self) -> Operator:
+        """
+        Get material container helper operator.
+
+        This operator can be used to access metadata of the materials.
+        Return value is None if the server version does not support this operator.
+        The minimum version is 2024 R1-pre0 (7.1).
+        """
+        return self._material_container_helper_op
 
 
 def get_material_operators(
@@ -102,12 +145,18 @@ def get_material_operators(
     # Combines the material support in the engineering data XML file and the unit system.
     # Its output can be used to evaluate material properties.
     material_provider = Operator("eng_data::ans_mat_material_provider")
-    material_provider.inputs.data_sources = engineering_data_source
     material_provider.inputs.unit_system_or_result_info(unit_system)
     material_provider.inputs.abstract_field_support(
         material_support_provider.outputs.abstract_field_support
     )
     material_provider.inputs.Engineering_data_file(engineering_data_source)
+
+    # pylint: disable=protected-access
+    if version_equal_or_later(rst_data_source._server, "9.0"):
+        # BUG 1060154: Mechanical adds materials to the MAPDL model for flexible
+        # Remote Points etc. These materials should be skipped by adding
+        # materials without properties.
+        material_provider.inputs.skip_missing_materials(True)
 
     return MaterialOperators(
         material_provider=material_provider,

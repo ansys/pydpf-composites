@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import os
 import pathlib
 
@@ -48,15 +70,20 @@ def test_section_definitions_from_multiple_sources(dpf_server):
         files, server=dpf_server, default_unit_system=unit_systems.solver_nmm
     )
 
+    ud_mat_id = composite_model.material_names["Epoxy Carbon UD (230 GPa) Wet"]
+    woven_mat_id = composite_model.material_names["Epoxy Carbon Woven (230 GPa) Prepreg"]
     element_1 = composite_model.get_element_info(1)
     assert element_1.is_layered
-    assert all(element_1.dpf_material_ids == np.array([2, 2, 1, 1, 2, 2]))
+    assert all(
+        element_1.dpf_material_ids
+        == np.array([ud_mat_id, ud_mat_id, woven_mat_id, woven_mat_id, ud_mat_id, ud_mat_id])
+    )
     element_2 = composite_model.get_element_info(2)
     assert element_2.is_layered
-    assert all(element_2.dpf_material_ids == np.array([1, 2, 1]))
+    assert all(element_2.dpf_material_ids == np.array([woven_mat_id, ud_mat_id, woven_mat_id]))
     element_3 = composite_model.get_element_info(3)
     assert element_3.is_layered
-    assert all(element_3.dpf_material_ids == np.array([2]))
+    assert all(element_3.dpf_material_ids == np.array([ud_mat_id]))
 
     combined_failure_criterion = CombinedFailureCriterion(
         "max stress", failure_criteria=[MaxStressCriterion()]
