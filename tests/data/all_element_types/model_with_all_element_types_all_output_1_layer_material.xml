@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EngineeringData version="18.0.0.60" versiondate="29.08.2016 15:02:00">
+  <Materials>
+    <MatML_Doc>
+      <Material>
+        <BulkDetails>
+          <Name>1</Name>
+          <PropertyData property="pr0">
+            <Data format="string">-</Data>
+            <Qualifier name="source">ACP</Qualifier>
+            <Qualifier name="Type">Isotropic</Qualifier>
+          </PropertyData>
+          <PropertyData property="pr1">
+            <Data format="string">-</Data>
+            <Qualifier name="Behavior">Isotropic</Qualifier>
+            <ParameterValue format="float" parameter="pa0">
+              <Data>70000</Data>
+            </ParameterValue>
+            <ParameterValue format="float" parameter="pa1">
+              <Data>0.30000000000000004</Data>
+            </ParameterValue>
+            <ParameterValue format="float" parameter="pa2">
+              <Data>26923.076923076922</Data>
+            </ParameterValue>
+          </PropertyData>
+        </BulkDetails>
+      </Material>
+      <Material>
+        <BulkDetails>
+          <Name>2</Name>
+          <PropertyData property="pr0">
+            <Data format="string">-</Data>
+            <Qualifier name="source">ACP</Qualifier>
+            <Qualifier name="Type">Isotropic</Qualifier>
+          </PropertyData>
+          <PropertyData property="pr1">
+            <Data format="string">-</Data>
+            <Qualifier name="Behavior">Isotropic</Qualifier>
+            <ParameterValue format="float" parameter="pa0">
+              <Data>210000</Data>
+            </ParameterValue>
+            <ParameterValue format="float" parameter="pa1">
+              <Data>0.30000000000000004</Data>
+            </ParameterValue>
+            <ParameterValue format="float" parameter="pa2">
+              <Data>80769.230769230766</Data>
+            </ParameterValue>
+          </PropertyData>
+        </BulkDetails>
+      </Material>
+      <Metadata>
+        <PropertyDetails id="pr0">
+          <Name>Ply Type</Name>
+          <Unitless/>
+        </PropertyDetails>
+        <PropertyDetails id="pr1">
+          <Name>Elasticity</Name>
+          <Unitless/>
+        </PropertyDetails>
+        <ParameterDetails id="pa0">
+          <Name>Young&apos;s Modulus</Name>
+          <Units>
+            <Unit power="-1">
+              <Name>[Length]</Name>
+            </Unit>
+            <Unit>
+              <Name>[Mass]</Name>
+            </Unit>
+            <Unit power="-2">
+              <Name>[Time]</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa1">
+          <Name>Poisson&apos;s Ratio</Name>
+          <Unitless/>
+        </ParameterDetails>
+        <ParameterDetails id="pa2">
+          <Name>Shear Modulus</Name>
+          <Units>
+            <Unit power="-1">
+              <Name>[Length]</Name>
+            </Unit>
+            <Unit>
+              <Name>[Mass]</Name>
+            </Unit>
+            <Unit power="-2">
+              <Name>[Time]</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+      </Metadata>
+    </MatML_Doc>
+  </Materials>
+  <ANSYSWBTransferData>
+    <Materials>
+      <Material>
+        <Name>1</Name>
+        <DataTransferID>2d0cf88a-4ac7-4d14-b949-21b9f3a3f932</DataTransferID>
+      </Material>
+      <Material>
+        <Name>2</Name>
+        <DataTransferID>af1cc58e-261a-40eb-b06c-95c53f017823</DataTransferID>
+      </Material>
+    </Materials>
+  </ANSYSWBTransferData>
+</EngineeringData>

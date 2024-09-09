@@ -40,6 +40,10 @@ from ..server_helpers import upload_file_to_unique_tmp_folder
 EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
 
+# Example URL to run the examples locally
+# EXAMPLE_REPO = "file:////D:/Development/pyansys-example-data/pydpf-composites/"
+
+
 @dataclass
 class _ContinuousFiberCompositeFiles:
     definition: str
@@ -62,7 +66,7 @@ class _ShortFiberCompositesExampleFilenames:
 
 @dataclass
 class _ContinuousFiberExampleLocation:
-    """Location of the a given continuous fiber example in the example_data repo.
+    """Location of a given continuous fiber example in the example_data repo.
 
     Parameters
     ----------
@@ -148,6 +152,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             engineering_data="MatML.xml",
             composite={
                 "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
+    "thermal_solid": _ContinuousFiberExampleLocation(
+        directory="thermal_solid",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPSolidModel_SM.h5"),
             },
         ),
     ),
