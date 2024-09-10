@@ -46,23 +46,22 @@ an user-defined failure criterion.
 #
 # Load Ansys libraries and helper functions
 import ansys.dpf.core as dpf
+
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import FailureOutput
-from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
-from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
-from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
-from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
-from ansys.dpf.composites.select_indices import get_selected_indices
+from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
+from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
+from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
+from ansys.dpf.composites.select_indices import get_selected_indices
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
-#composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
-result_folder = r"D:\tmp\CyclicSymmetryObject_CompositeFailureToolWorkaround_23R2_files\dp0\SYS-2\MECH"
+# composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
+result_folder = r"D:\tmp\cyclic_symmetry_v251_files\dp0\SYS-2\MECH"
 composite_files = get_composite_files_from_workbench_result_folder(result_folder)
 
 # %%
@@ -109,7 +108,7 @@ component_s11 = Sym3x3TensorComponent.TENSOR11
 stress_field = stress_container[0]
 elemental_values = get_ply_wise_data(
     field=stress_field,
-    ply_name='P3L1__ModelingPly.1',
+    ply_name="P3L1__ModelingPly.1",
     mesh=composite_model.get_mesh(),
     component=component_s11,
     spot_reduction_strategy=SpotReductionStrategy.MAX,
@@ -127,12 +126,7 @@ composite_model.get_mesh().plot(elemental_values)
 # Prepare dict with the material properties
 property_xt = MaterialProperty.Stress_Limits_Xt
 property_xc = MaterialProperty.Stress_Limits_Xc
-property_dict = composite_model.get_constant_property_dict(
-    [
-        property_xt,
-        property_xc
-    ]
-)
+property_dict = composite_model.get_constant_property_dict([property_xt, property_xc])
 
 # todo: expose ids in composite model
 elements = composite_model.core_model.metadata.meshed_region.elements

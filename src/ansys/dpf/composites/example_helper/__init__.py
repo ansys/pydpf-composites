@@ -37,11 +37,11 @@ from ..data_sources import (
 )
 from ..server_helpers import upload_file_to_unique_tmp_folder
 
-EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
+# EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
 
 # Example URL to run the examples locally
-# EXAMPLE_REPO = "file:////D:/Development/pyansys-example-data/pydpf-composites/"
+EXAMPLE_REPO = "file:////D:/ANSYSDev/pyansys-example-data/pydpf-composites/"
 
 
 @dataclass
@@ -162,6 +162,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             engineering_data="MatML.xml",
             composite={
                 "shell": _ContinuousFiberCompositeFiles(definition="ACPSolidModel_SM.h5"),
+            },
+        ),
+    ),
+    "cyclic_symmetry": _ContinuousFiberExampleLocation(
+        directory="cyclic_symmetry",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "solid": _ContinuousFiberCompositeFiles(definition="ACPSolidModel_SM.h5"),
             },
         ),
     ),
