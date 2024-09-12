@@ -208,7 +208,7 @@ class CompositeModelImpl2023R2:
 
     def get_element_ids(self) -> Sequence[np.int64]:
         """Get all element labels in the model."""
-        return self.core_model.metadata.meshed_region.elements.scoping.ids
+        return cast(list[int], self.core_model.metadata.meshed_region.elements.scoping.ids)
 
     @property
     def data_sources(self) -> CompositeDataSources:

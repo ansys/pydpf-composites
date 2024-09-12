@@ -166,11 +166,11 @@ class CompositeModel:
         """
         return self._implementation.get_mesh(composite_definition_label)
 
-    def get_rst_streams_provider(self):
+    def get_rst_streams_provider(self) -> Operator:
         """Get the stream provider for the RST file."""
         return self._implementation.get_rst_streams_provider()
 
-    def get_element_ids(self):
+    def get_element_ids(self) -> Sequence[int]
         """
         Get all element IDs (labels) in the model.
 
