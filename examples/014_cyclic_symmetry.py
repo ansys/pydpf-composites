@@ -27,14 +27,13 @@ Cyclic Symmetry
 ---------------
 
 This example shows how to post-process a cyclic symmetry analysis.
-In detail, it shows how to extract stresses and how to implement
+The initial (original) sector can be directly post-processed
+as a standard static structural analysis as shown by this example.
+
+In addition, it is demonstrated how to extract stresses and how to implement
 an user-defined failure criterion.
 
-.. note::
-
-    The :class:`Composite Model<.CompositeModel>` class cannot be used due
-    to a limitation in the current version of the backend.
-
+The post-processing of the expanded sectors is not yet tested.
 """
 
 
@@ -48,10 +47,10 @@ an user-defined failure criterion.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
-from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
+from ansys.dpf.composites.constants import FailureOutput, Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
+from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.select_indices import get_selected_indices
@@ -59,42 +58,30 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
-server = connect_to_or_start_server()
-# composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
-result_folder = r"D:\tmp\cyclic_symmetry_v251_files\dp0\SYS-2\MECH"
-composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+server = connect_to_or_start_server(port=50052)
+composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
 
 # %%
 # Create a composite model
 composite_model = CompositeModel(composite_files, server)
 
 # %%
-# Plot deformations on the expanded model
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
+# Evaluate combined failure criterion
+combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
+failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
-# Get the displacements and expand them
-symmetry_option = 2  # fully expand the model
-u_cyc = composite_model.core_model.results.displacement()
-u_cyc.inputs.read_cyclic(symmetry_option)
-# expand the displacements
-deformations = u_cyc.outputs.fields_container()[0]
-
-# Get and expand the mesh
-mesh_provider = composite_model.core_model.metadata.mesh_provider
-mesh_provider.inputs.read_cyclic(symmetry_option)
-mesh = mesh_provider.outputs.mesh()
-# Plot the expanded deformations
-mesh.plot(deformations)
+# %%
+# Plot the failure results
+irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
+irf_field.plot()
 
 # %%
 # Plot ply-wise stresses
 # ~~~~~~~~~~~~~~~~~~~~~~
-# Stresses of the initial (first) sector are available
-# without any expansion, and they can be used for the
-# post-processing. The same is true for strains.
+# Stresses of the initial (first) sector are directly
+# accessible, and they can be as any other result.
+# The same is true for strains.
 
-# Todo: think about to expose it to the user, similar to get_mesh. get_streams_provider
 rst_stream = composite_model.core_model.metadata.streams_provider
 stress_operator = dpf.operators.result.stress()
 stress_operator.inputs.streams_container.connect(rst_stream)
@@ -128,16 +115,13 @@ property_xt = MaterialProperty.Stress_Limits_Xt
 property_xc = MaterialProperty.Stress_Limits_Xc
 property_dict = composite_model.get_constant_property_dict([property_xt, property_xc])
 
-# todo: expose ids in composite model
-elements = composite_model.core_model.metadata.meshed_region.elements
-ids = elements.scoping.ids
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with result_field.as_local_field() as local_result_field:
-    for element_id in ids:
+    for element_id in composite_model.get_element_ids():
         element_info = composite_model.get_element_info(element_id)
         # process only the layered elements
         if element_info and element_info.is_layered:
-            element_irf_max = 0
+            element_irf_max = 0.0
             stress_data = stress_field.get_entity_data_by_id(element_id)
             for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
                 xt = property_dict[dpf_material_id][property_xt]
@@ -153,8 +137,24 @@ with result_field.as_local_field() as local_result_field:
                     element_irf_max = max(min_s11 / xc, element_irf_max)
 
             local_result_field.append([element_irf_max], element_id)
-        else:
-            pass
-            # print(f"Element ID {element_id} is not processed.")
 
 composite_model.get_mesh().plot(result_field)
+
+# %%
+# Plot deformations on the expanded model
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# The next block shows how results
+
+# Get the displacements and expand them
+symmetry_option = 2  # fully expand the model
+u_cyc = composite_model.core_model.results.displacement()
+u_cyc.inputs.read_cyclic(symmetry_option)
+# expand the displacements
+deformations = u_cyc.outputs.fields_container()[0]
+
+# Get and expand the mesh
+mesh_provider = composite_model.core_model.metadata.mesh_provider
+mesh_provider.inputs.read_cyclic(symmetry_option)
+mesh = mesh_provider.outputs.mesh()
+# Plot the expanded deformations
+mesh.plot(deformations)

@@ -126,7 +126,7 @@ class CompositeModelImpl:
             data_sources=self.data_sources,
             material_operators=self.material_operators,
             unit_system=self._unit_system,
-            rst_stream_provider=self._get_rst_streams_provider(),
+            rst_stream_provider=self.get_rst_streams_provider(),
         )
 
         # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
@@ -154,7 +154,7 @@ class CompositeModelImpl:
 
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
-            stream_provider_or_data_source=self._get_rst_streams_provider(),
+            stream_provider_or_data_source=self.get_rst_streams_provider(),
             material_provider=self.material_operators.material_provider,
         )
         self._layup_properties_provider = LayupPropertiesProvider(
@@ -270,6 +270,10 @@ class CompositeModelImpl:
         """
         return self._core_model.metadata.meshed_region
 
+    def get_element_ids(self) -> Sequence[np.int64]:
+        """Get all element labels in the model."""
+        return self.core_model.metadata.meshed_region.elements.scoping.ids
+
     @_deprecated_composite_definition_label
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
@@ -370,7 +374,7 @@ class CompositeModelImpl:
             chunking_data_tree.add({"named_selections": ns_in})
 
         chunking_generator = dpf.Operator("composite::scope_generator")
-        chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
+        chunking_generator.inputs.stream_provider(self.get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
         if self.data_sources.composite:
             chunking_generator.inputs.data_sources(self.data_sources.composite)
@@ -412,7 +416,7 @@ class CompositeModelImpl:
                 self.material_operators.material_provider.outputs
             )
             evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
-                self._get_rst_streams_provider()
+                self.get_rst_streams_provider()
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
             if version_equal_or_later(self._server, "8.0"):
@@ -555,7 +559,7 @@ class CompositeModelImpl:
             self._material_operators,
             self.get_mesh(),
             self._layup_provider,
-            self._get_rst_streams_provider(),
+            self.get_rst_streams_provider(),
             self._data_sources.rst,
             self._unit_system,
             time_in,
@@ -688,7 +692,7 @@ class CompositeModelImpl:
         return get_constant_property_dict(
             material_properties=material_properties,
             materials_provider=self.material_operators.material_provider,
-            data_source_or_streams_provider=self._get_rst_streams_provider(),
+            data_source_or_streams_provider=self.get_rst_streams_provider(),
             mesh=self.get_mesh(),
         )
 
@@ -766,7 +770,8 @@ class CompositeModelImpl:
         )
         return self.get_all_layered_element_ids()
 
-    def _get_rst_streams_provider(self) -> Operator:
+    def get_rst_streams_provider(self) -> Operator:
+        """Get the stream provider of the result file."""
         return self._core_model.metadata.streams_provider
 
     def _first_composite_definition_label_if_only_one(self) -> str:
