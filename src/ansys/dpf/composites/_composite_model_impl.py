@@ -270,7 +270,7 @@ class CompositeModelImpl:
         """
         return self._core_model.metadata.meshed_region
 
-    def get_element_ids(self) -> Sequence[np.int64]:
+    def get_element_ids(self) -> Sequence[int]:
         """Get all element labels in the model."""
         return cast(list[int], self.core_model.metadata.meshed_region.elements.scoping.ids)
 

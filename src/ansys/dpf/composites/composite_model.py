@@ -170,7 +170,7 @@ class CompositeModel:
         """Get the stream provider for the RST file."""
         return self._implementation.get_rst_streams_provider()
 
-    def get_element_ids(self) -> Sequence[int]
+    def get_element_ids(self) -> Sequence[int]:
         """
         Get all element IDs (labels) in the model.
 

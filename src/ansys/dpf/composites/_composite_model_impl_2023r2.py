@@ -206,7 +206,7 @@ class CompositeModelImpl2023R2:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
         return self._composite_infos[composite_definition_label].mesh
 
-    def get_element_ids(self) -> Sequence[np.int64]:
+    def get_element_ids(self) -> Sequence[int]:
         """Get all element labels in the model."""
         return cast(list[int], self.core_model.metadata.meshed_region.elements.scoping.ids)
 
