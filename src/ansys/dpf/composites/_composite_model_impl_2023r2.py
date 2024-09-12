@@ -648,3 +648,7 @@ class CompositeModelImpl2023R2:
                 f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
                 f"Specify a key explicitly."
             )
+
+    def get_rst_streams_provider(self) -> Operator:
+        """Get the stream provider of the result file."""
+        return self._core_model.metadata.streams_provider
