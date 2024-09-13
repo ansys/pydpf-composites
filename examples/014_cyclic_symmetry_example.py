@@ -64,7 +64,7 @@ composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
 composite_model = CompositeModel(composite_files, server)
 
 # %%
-# Evaluate a combined failure criterion
+# Evaluate a combined failure criterion.
 combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
 failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
