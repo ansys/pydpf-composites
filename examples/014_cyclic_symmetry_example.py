@@ -41,7 +41,7 @@ The postprocessing of expanded sectors is not yet supported.
 # Setting up the analysis consists of loading the required modules, connecting to the
 # DPF server, and retrieving the example files.
 #
-# Load Ansys libraries and helper functions
+# Load Ansys libraries and helper functions.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.composite_model import CompositeModel
