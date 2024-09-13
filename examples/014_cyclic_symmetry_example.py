@@ -23,13 +23,14 @@
 """
 .. _cyclic_symmetry_example:
 
-Cyclic Symmetry
+Cyclic symmetry
 ---------------
 
 This example shows how to post-process a cyclic symmetry analysis.
 The initial (original) sector can be post-processed with the same tools
-as a standard analysis. This is demonstrated by extracting ply-wise
-stresses and the implementation of a custom failure criterion.
+as a standard analysis. This is demonstrated by running a failure analysis,
+extracting ply-wise stresses and the implementation of a custom
+failure criterion.
 
 The post-processing of the expanded sectors is not yet supported.
 """
@@ -63,7 +64,7 @@ composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
 composite_model = CompositeModel(composite_files, server)
 
 # %%
-# Evaluate combined failure criterion
+# Evaluate a combined failure criterion
 combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStressCriterion()])
 failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
@@ -75,8 +76,8 @@ irf_field.plot()
 # %%
 # Plot ply-wise stresses
 # ~~~~~~~~~~~~~~~~~~~~~~
-# All standard features functions of PyDPF Composites
-# can be used to post-process the original (first) sector.
+# All functions in PyDPF Composites can be used to
+# post-process the original (first) sector.
 
 rst_stream = composite_model.core_model.metadata.streams_provider
 stress_operator = dpf.operators.result.stress()
@@ -140,7 +141,8 @@ composite_model.get_mesh().plot(result_field)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # For the sack of completeness, it is shown how to expand the
 # deformations of the cyclic symmetry model. The same can be done
-# for strains and stresses.
+# for strains and stresses. See :ref:`DPF Core documentation <https://dpf.docs.pyansys.com/version/stable/>`
+# for more details.
 
 # Get the displacements and expand them
 symmetry_option = 2  # fully expand the model
