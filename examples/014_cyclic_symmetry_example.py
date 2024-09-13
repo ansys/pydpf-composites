@@ -60,7 +60,7 @@ server = connect_to_or_start_server()
 composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
 
 # %%
-# Create a composite model
+# Create a composite model.
 composite_model = CompositeModel(composite_files, server)
 
 # %%
