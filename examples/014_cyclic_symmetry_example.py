@@ -114,7 +114,7 @@ property_dict = composite_model.get_constant_property_dict([property_xt, propert
 
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with result_field.as_local_field() as local_result_field:
-    # process only the layered elements
+    # Process only the layered elements
     for element_id in composite_model.get_all_layered_element_ids():
         element_info = composite_model.get_element_info(element_id)
         element_irf_max = 0.0
