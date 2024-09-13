@@ -141,8 +141,9 @@ composite_model.get_mesh().plot(result_field)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # For the sack of completeness, it is shown how to expand the
 # deformations of the cyclic symmetry model. The same can be done
-# for strains and stresses. See :ref:`DPF Core documentation <https://dpf.docs.pyansys.com/version/stable/>`
-# for more details.
+# for strains and stresses. See `Ansys DPF`_ for more details.
+#
+# .. _Ansys DPF: https://dpf.docs.pyansys.com/version/stable/
 
 # Get the displacements and expand them
 symmetry_option = 2  # fully expand the model
