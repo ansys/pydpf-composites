@@ -167,17 +167,8 @@ class CompositeModel:
         return self._implementation.get_mesh(composite_definition_label)
 
     def get_rst_streams_provider(self) -> Operator:
-        """Get the stream provider for the RST file."""
+        """Get the streams provider of the loaded result file."""
         return self._implementation.get_rst_streams_provider()
-
-    def get_element_ids(self) -> Sequence[int]:
-        """
-        Get all element IDs (labels) in the model.
-
-        The list can also contain non-layered and non-structural elements
-        such as contact or surface elements.
-        """
-        return self._implementation.get_element_ids()
 
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.

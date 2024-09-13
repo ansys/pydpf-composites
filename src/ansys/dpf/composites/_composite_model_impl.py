@@ -270,10 +270,6 @@ class CompositeModelImpl:
         """
         return self._core_model.metadata.meshed_region
 
-    def get_element_ids(self) -> Sequence[int]:
-        """Get all element labels in the model."""
-        return cast(list[int], self.core_model.metadata.meshed_region.elements.scoping.ids)
-
     @_deprecated_composite_definition_label
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
@@ -771,7 +767,7 @@ class CompositeModelImpl:
         return self.get_all_layered_element_ids()
 
     def get_rst_streams_provider(self) -> Operator:
-        """Get the stream provider of the result file."""
+        """Get the streams provider of the loaded result file."""
         return self._core_model.metadata.streams_provider
 
     def _first_composite_definition_label_if_only_one(self) -> str:
