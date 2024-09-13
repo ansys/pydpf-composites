@@ -69,7 +69,7 @@ combined_failure_criterion = CombinedFailureCriterion(failure_criteria=[MaxStres
 failure_result = composite_model.evaluate_failure_criteria(combined_failure_criterion)
 
 # %%
-# Plot the failure results
+# Plot the failure results.
 irf_field = failure_result.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_field.plot()
 
