@@ -77,7 +77,7 @@ irf_field.plot()
 # Plot ply-wise stresses
 # ~~~~~~~~~~~~~~~~~~~~~~
 # All functions in PyDPF Composites can be used to
-# post-process the original (first) sector.
+# postprocess the initial (original) sector.
 
 rst_stream = composite_model.core_model.metadata.streams_provider
 stress_operator = dpf.operators.result.stress()
