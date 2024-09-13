@@ -32,7 +32,7 @@ as a standard analysis. This is demonstrated by running a failure analysis,
 extracting ply-wise stresses and the implementation of a custom
 failure criterion.
 
-The post-processing of the expanded sectors is not yet supported.
+The postprocessing of expanded sectors is not yet supported.
 """
 
 # %%
