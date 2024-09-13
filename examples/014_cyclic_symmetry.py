@@ -27,15 +27,12 @@ Cyclic Symmetry
 ---------------
 
 This example shows how to post-process a cyclic symmetry analysis.
-The initial (original) sector can be directly post-processed
-as a standard static structural analysis as shown by this example.
+The initial (original) sector can be post-processed with the same tools
+as a standard analysis. This is demonstrated by extracting ply-wise
+stresses and the implementation of a custom failure criterion.
 
-In addition, it is demonstrated how to extract stresses and how to implement
-an user-defined failure criterion.
-
-The post-processing of the expanded sectors is not yet tested.
+The post-processing of the expanded sectors is not yet supported.
 """
-
 
 # %%
 # Set up analysis
@@ -58,7 +55,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
 # Start a DPF server and copy the example files into the current working directory.
-server = connect_to_or_start_server(port=50052)
+server = connect_to_or_start_server()
 composite_files = get_continuous_fiber_example_files(server, "cyclic_symmetry")
 
 # %%
@@ -78,9 +75,8 @@ irf_field.plot()
 # %%
 # Plot ply-wise stresses
 # ~~~~~~~~~~~~~~~~~~~~~~
-# Stresses of the initial (first) sector are directly
-# accessible, and they can be as any other result.
-# The same is true for strains.
+# All standard features functions of PyDPF Composites
+# can be used to post-process the original (first) sector.
 
 rst_stream = composite_model.core_model.metadata.streams_provider
 stress_operator = dpf.operators.result.stress()
@@ -106,7 +102,7 @@ composite_model.get_mesh().plot(elemental_values)
 # %%
 # Custom failure criterion
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-# The following code snippet shows how to implement a custom failure criterion.
+# The following code block shows how to implement a custom failure criterion.
 # It computes the inverse reserve factor for each element with respect to
 # fiber failure. The criterion distinguishes between tension and compression.
 
@@ -117,33 +113,34 @@ property_dict = composite_model.get_constant_property_dict([property_xt, propert
 
 result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with result_field.as_local_field() as local_result_field:
-    for element_id in composite_model.get_element_ids():
+    # process only the layered elements
+    for element_id in composite_model.get_all_layered_element_ids():
         element_info = composite_model.get_element_info(element_id)
-        # process only the layered elements
-        if element_info and element_info.is_layered:
-            element_irf_max = 0.0
-            stress_data = stress_field.get_entity_data_by_id(element_id)
-            for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
-                xt = property_dict[dpf_material_id][property_xt]
-                xc = property_dict[dpf_material_id][property_xc]
-                selected_indices = get_selected_indices(element_info, layers=[layer_index])
-                # Maximum of fiber failure in tension and compression
-                layer_stress_values = stress_data[selected_indices][:, component_s11]
-                max_s11 = max(layer_stress_values)
-                min_s11 = min(layer_stress_values)
-                if xt > 0 and max_s11 > 0:
-                    element_irf_max = max(max_s11 / xt, element_irf_max)
-                if xc < 0 and min_s11 < 0:
-                    element_irf_max = max(min_s11 / xc, element_irf_max)
+        element_irf_max = 0.0
+        stress_data = stress_field.get_entity_data_by_id(element_id)
+        for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
+            xt = property_dict[dpf_material_id][property_xt]
+            xc = property_dict[dpf_material_id][property_xc]
+            selected_indices = get_selected_indices(element_info, layers=[layer_index])
+            # Maximum of fiber failure in tension and compression
+            layer_stress_values = stress_data[selected_indices][:, component_s11]
+            max_s11 = max(layer_stress_values)
+            min_s11 = min(layer_stress_values)
+            if xt > 0 and max_s11 > 0:
+                element_irf_max = max(max_s11 / xt, element_irf_max)
+            if xc < 0 and min_s11 < 0:
+                element_irf_max = max(min_s11 / xc, element_irf_max)
 
-            local_result_field.append([element_irf_max], element_id)
+        local_result_field.append([element_irf_max], element_id)
 
 composite_model.get_mesh().plot(result_field)
 
 # %%
 # Plot deformations on the expanded model
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# The next block shows how results
+# For the sack of completeness, it is shown how to expand the
+# deformations of the cyclic symmetry model. The same can be done
+# for strains and stresses.
 
 # Get the displacements and expand them
 symmetry_option = 2  # fully expand the model
