@@ -28,9 +28,9 @@ Cyclic symmetry
 
 This example shows how to postprocess a cyclic symmetry analysis.
 The initial (original) sector can be postprocessed with the same tools
-as a standard analysis. This is demonstrated by running a failure analysis,
-extracting ply-wise stresses and the implementation of a custom
-failure criterion.
+as a standard analysis. The postprocessing workflow is demonstrated by
+running a failure analysis, extracting ply-wise stresses, and implementing
+a custom failure criterion.
 
 The postprocessing of expanded sectors is not yet supported.
 """
