@@ -139,7 +139,7 @@ composite_model.get_mesh().plot(result_field)
 # %%
 # Plot deformations on the expanded model
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# You can expand the deformations of the cyclic symmetry model as shown below. 
+# You can expand the deformations of the cyclic symmetry model as shown below.
 # The same expansion is possible for strains and stresses. For more information, see `Ansys DPF`_.
 #
 # .. _Ansys DPF: https://dpf.docs.pyansys.com/version/stable/
