@@ -31,8 +31,8 @@ The simulation is a two-step analysis where the results of
 a thermal analysis are an input of the structural analysis.
 Therefore, the RST file contains temperature and structural results.
 
-The example imitates a printed circuit board (PCB) that was 
-modeled with Ansys Composites PrepPost (ACP), using the solid model feature to 
+The example imitates a printed circuit board (PCB) that was
+modeled with Ansys Composites PrepPost (ACP), using the solid model feature to
 generate the volume mesh.
 
 Descriptions of how to extract temperatures for a specific ply
