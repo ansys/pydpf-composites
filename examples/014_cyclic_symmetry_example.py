@@ -28,9 +28,9 @@ Cyclic symmetry
 
 This example shows how to postprocess a cyclic symmetry analysis.
 The initial (original) sector can be postprocessed with the same tools
-as a standard analysis. This is demonstrated by running a failure analysis,
-extracting ply-wise stresses and the implementation of a custom
-failure criterion.
+as a standard analysis. The postprocessing workflow is demonstrated by
+running a failure analysis, extracting ply-wise stresses, and implementing
+a custom failure criterion.
 
 The postprocessing of expanded sectors is not yet supported.
 """
@@ -107,7 +107,7 @@ composite_model.get_mesh().plot(elemental_values)
 # It computes the inverse reserve factor for each element with respect to
 # fiber failure. The criterion distinguishes between tension and compression.
 
-# Prepare dict with the material properties
+# Prepare dict with the material properties.
 property_xt = MaterialProperty.Stress_Limits_Xt
 property_xc = MaterialProperty.Stress_Limits_Xc
 property_dict = composite_model.get_constant_property_dict([property_xt, property_xc])
