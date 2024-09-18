@@ -27,8 +27,8 @@ Thermal analysis
 ----------------
 
 This example shows how to evaluate a thermal analysis.
-The simulation is a two-step analysis where the results of
-a thermal analysis are an input of the structural analysis.
+The simulation's thermal analysis results are also
+the input of a structural analysis.
 Therefore, the RST file contains temperature and structural results.
 
 The example imitates a printed circuit board (PCB) that was
