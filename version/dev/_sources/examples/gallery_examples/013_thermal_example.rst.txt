@@ -23,15 +23,17 @@
 Thermal analysis
 ----------------
 
-PyDPF Composites can also be used to post-process thermal analyses.
-In this case, the simulation is a two-step analysis where the results of
-a thermal analysis are an input of the structural analysis. So, the RST
-contains temperature and structural results.
-The example mimics a PCB which was modeled with Ansys Composites PrePost (ACP).
-where the solid model feature of ACP is used to generate the volume mesh.
+This example shows how to evaluate a thermal analysis.
+The simulation's thermal analysis results are also
+the input of a structural analysis.
+Therefore, the RST file contains temperature and structural results.
 
-In detail, the example shows how to extract the temperatures for a specific ply,
-and a specific material.
+The example imitates a printed circuit board (PCB) that was
+modeled with Ansys Composites PrepPost (ACP), using the solid model feature to
+generate the volume mesh.
+
+Descriptions of how to extract temperatures for a specific ply
+and material are provided.
 
 .. note::
 
@@ -39,7 +41,7 @@ and a specific material.
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-53
+.. GENERATED FROM PYTHON SOURCE LINES 50-55
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -47,7 +49,7 @@ Setting up the analysis consists of loading the required modules, connecting to 
 DPF server, and retrieving the example files.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-67
+.. GENERATED FROM PYTHON SOURCE LINES 55-69
 
 .. code-block:: Python
 
@@ -72,14 +74,14 @@ DPF server, and retrieving the example files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-72
+.. GENERATED FROM PYTHON SOURCE LINES 70-74
 
 Initialize the model
 ~~~~~~~~~~~~~~~~~~~~
-The composite model is initialized with the composite files and the server.
-It provides access to the mesh, results, lay-up and materials
+Initialize the composite model with the composite files and server.
+The model provides access to the mesh, results, lay-up, and materials.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-74
+.. GENERATED FROM PYTHON SOURCE LINES 74-76
 
 .. code-block:: Python
 
@@ -92,13 +94,13 @@ It provides access to the mesh, results, lay-up and materials
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-78
+.. GENERATED FROM PYTHON SOURCE LINES 77-80
 
-Get Results - Temperatures
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-The temperatures are stored under structural_temperature
+Get temperature results
+~~~~~~~~~~~~~~~~~~~~~~~
+The temperatures are stored under ``structural_temperature``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-81
+.. GENERATED FROM PYTHON SOURCE LINES 80-83
 
 .. code-block:: Python
 
@@ -112,14 +114,14 @@ The temperatures are stored under structural_temperature
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-86
+.. GENERATED FROM PYTHON SOURCE LINES 84-88
 
-Ply-wise results
-~~~~~~~~~~~~~~~~
-Ply-wise results can be easily extracted using the function
-:func:`.get_ply_wise_data` and by passing the ply name.
+Get ply results
+~~~~~~~~~~~~~~~
+Extract the ply-wise results by passing the ply name
+to the function :func:`.get_ply_wise_data`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-101
+.. GENERATED FROM PYTHON SOURCE LINES 88-103
 
 .. code-block:: Python
 
@@ -178,15 +180,15 @@ Ply-wise results can be easily extracted using the function
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-107
+.. GENERATED FROM PYTHON SOURCE LINES 104-109
 
-Material-wise results
-~~~~~~~~~~~~~~~~~~~~~
-It is also possible to filter the results by material.
-In this example the element-wise maximum temperature
+Get material results
+~~~~~~~~~~~~~~~~~~~~
+You can filter the results by material.
+In this example, the element-wise maximum temperature
 is extracted for the material `Honeycomb Aluminum Alloy`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-129
+.. GENERATED FROM PYTHON SOURCE LINES 109-131
 
 .. code-block:: Python
 
@@ -255,7 +257,7 @@ is extracted for the material `Honeycomb Aluminum Alloy`.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.589 seconds)
+   **Total running time of the script:** (0 minutes 4.333 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_013_thermal_example.py:

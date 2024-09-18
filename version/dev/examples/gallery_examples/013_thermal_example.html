@@ -529,14 +529,15 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="thermal-analysis">
 <span id="thermal-example"></span><span id="sphx-glr-examples-gallery-examples-013-thermal-example-py"></span><h1>Thermal analysis<a class="headerlink" href="#thermal-analysis" title="Link to this heading">#</a></h1>
-<p>PyDPF Composites can also be used to post-process thermal analyses.
-In this case, the simulation is a two-step analysis where the results of
-a thermal analysis are an input of the structural analysis. So, the RST
-contains temperature and structural results.
-The example mimics a PCB which was modeled with Ansys Composites PrePost (ACP).
-where the solid model feature of ACP is used to generate the volume mesh.</p>
-<p>In detail, the example shows how to extract the temperatures for a specific ply,
-and a specific material.</p>
+<p>This example shows how to evaluate a thermal analysis.
+The simulation’s thermal analysis results are also
+the input of a structural analysis.
+Therefore, the RST file contains temperature and structural results.</p>
+<p>The example imitates a printed circuit board (PCB) that was
+modeled with Ansys Composites PrepPost (ACP), using the solid model feature to
+generate the volume mesh.</p>
+<p>Descriptions of how to extract temperatures for a specific ply
+and material are provided.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using a Workbench project,
@@ -565,24 +566,24 @@ DPF server, and retrieving the example files.</p>
 </section>
 <section id="initialize-the-model">
 <h2>Initialize the model<a class="headerlink" href="#initialize-the-model" title="Link to this heading">#</a></h2>
-<p>The composite model is initialized with the composite files and the server.
-It provides access to the mesh, results, lay-up and materials</p>
+<p>Initialize the composite model with the composite files and server.
+The model provides access to the mesh, results, lay-up, and materials.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="n">composite_files</span><span class="p">,</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.server_types.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="get-results-temperatures">
-<h2>Get Results - Temperatures<a class="headerlink" href="#get-results-temperatures" title="Link to this heading">#</a></h2>
-<p>The temperatures are stored under structural_temperature</p>
+<section id="get-temperature-results">
+<h2>Get temperature results<a class="headerlink" href="#get-temperature-results" title="Link to this heading">#</a></h2>
+<p>The temperatures are stored under <code class="docutils literal notranslate"><span class="pre">structural_temperature</span></code>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.structural_temperature.html#module-ansys.dpf.core.operators.result.structural_temperature" title="ansys.dpf.core.operators.result.structural_temperature" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">temp_op</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">structural_temperature</span><span class="p">()</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_fc</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.structural_temperature.html#ansys.dpf.core.operators.result.structural_temperature.structural_temperature.outputs" title="ansys.dpf.core.operators.result.structural_temperature.structural_temperature.outputs" class="sphx-glr-backref-module-ansys-dpf-core-operators-result-structural_temperature sphx-glr-backref-type-py-property"><span class="n">temp_op</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span></a><span class="p">()</span>
 </pre></div>
 </div>
 </section>
-<section id="ply-wise-results">
-<h2>Ply-wise results<a class="headerlink" href="#ply-wise-results" title="Link to this heading">#</a></h2>
-<p>Ply-wise results can be easily extracted using the function
-<a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.ply_wise_data.get_ply_wise_data.html#ansys.dpf.composites.ply_wise_data.get_ply_wise_data" title="ansys.dpf.composites.ply_wise_data.get_ply_wise_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ply_wise_data()</span></code></a> and by passing the ply name.</p>
+<section id="get-ply-results">
+<h2>Get ply results<a class="headerlink" href="#get-ply-results" title="Link to this heading">#</a></h2>
+<p>Extract the ply-wise results by passing the ply name
+to the function <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.ply_wise_data.get_ply_wise_data.html#ansys.dpf.composites.ply_wise_data.get_ply_wise_data" title="ansys.dpf.composites.ply_wise_data.get_ply_wise_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ply_wise_data()</span></code></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a><span class="p">)</span>
 
@@ -614,10 +615,10 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </section>
-<section id="material-wise-results">
-<h2>Material-wise results<a class="headerlink" href="#material-wise-results" title="Link to this heading">#</a></h2>
-<p>It is also possible to filter the results by material.
-In this example the element-wise maximum temperature
+<section id="get-material-results">
+<h2>Get material results<a class="headerlink" href="#get-material-results" title="Link to this heading">#</a></h2>
+<p>You can filter the results by material.
+In this example, the element-wise maximum temperature
 is extracted for the material <cite>Honeycomb Aluminum Alloy</cite>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">material_names</span><span class="p">)</span>
 <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">material_id</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">material_names</span><span class="p">[</span><span class="s2">&quot;Honeycomb Aluminum Alloy&quot;</span><span class="p">]</span>
@@ -658,7 +659,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;Honeycomb Aluminum Alloy&#39;: np.int32(1), &#39;UD Resin Epoxy/E-Glass&#39;: np.int32(2)}
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.589 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.333 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-013-thermal-example-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b1e39d6ebd1ae9f7b992469a76dd9264/013_thermal_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">013_thermal_example.ipynb</span></code></a></p>
@@ -698,9 +699,9 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-analysis">Set up analysis</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-model">Initialize the model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-results-temperatures">Get Results - Temperatures</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ply-wise-results">Ply-wise results</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-wise-results">Material-wise results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-temperature-results">Get temperature results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-ply-results">Get ply results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-material-results">Get material results</a></li>
 </ul>
   </nav></div>
 
