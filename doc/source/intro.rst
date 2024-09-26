@@ -20,7 +20,7 @@ To install the optional requirements used in the examples, add the ``[examples]`
 
     pip install ansys-dpf-composites[examples]
 
-Specific versions can be installed by specifying the version in the pip command. For example: Ansys 2023 R1 requires ansys-dpf-composites version 0.1.0:
+Specific versions can be installed by specifying the version in the pip command. For example, Ansys 2023 R1 requires ansys-dpf-composites version 0.1.0:
 
 .. code::
 
