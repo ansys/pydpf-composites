@@ -14,7 +14,7 @@ Install the ``ansys-dpf-composites`` package with ``pip``:
     pip install ansys-dpf-composites
 
 
-To install the optional requirements used in the examples, add the ``[examples]`` suffix when installing the package:
+To install the optional dependencies used in the examples, add the ``[examples]`` suffix when installing the package:
 
 .. code::
 
