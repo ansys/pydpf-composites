@@ -81,6 +81,7 @@ all = [
 ]
 docs = ["Sphinx", "ansys-sphinx-theme", "sphinx-copybutton", "numpydoc", "sphinx_gallery",
     "pypandoc", "sphinx-autodoc-typehints", "sphinx-design", "scipy", "pyvista", "fatpack"]
+examples = ["scipy", "pyvista", "fatpack"]
 test = ["pytest", "pytest-cov", "pytest-rerunfailures"]
 build = ["build", "twine"]
 pre-commit = ["pre-commit", "mypy", "mypy-extensions", "pylint"]
