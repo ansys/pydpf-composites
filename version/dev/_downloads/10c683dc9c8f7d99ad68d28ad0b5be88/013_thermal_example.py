@@ -101,8 +101,8 @@ nodal_values = get_ply_wise_data(
 composite_model.get_mesh().plot(nodal_values)
 
 # %%
-# Get material results
-# ~~~~~~~~~~~~~~~~~~~~
+# Get results by material
+# ~~~~~~~~~~~~~~~~~~~~~~~
 # You can filter the results by material.
 # In this example, the element-wise maximum temperature
 # is extracted for the material `Honeycomb Aluminum Alloy`.
