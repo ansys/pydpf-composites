@@ -166,6 +166,10 @@ class CompositeModel:
         """
         return self._implementation.get_mesh(composite_definition_label)
 
+    def get_rst_streams_provider(self) -> Operator:
+        """Get the streams provider of the loaded result file."""
+        return self._implementation.get_rst_streams_provider()
+
     def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
         """Get the lay-up operator.
 
