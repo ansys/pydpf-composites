@@ -37,6 +37,13 @@ using numpy functionality.
 The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see :ref:`select_indices`.
+
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.get_composite_files_from_workbench_result_folder`
+    method to obtain the input files.
+
 """
 
 # %%

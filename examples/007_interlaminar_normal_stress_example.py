@@ -46,6 +46,12 @@ curvature, and the lay-up.
     :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`
     shows how helper functions can be used to obtain composite result data.
 
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.get_composite_files_from_workbench_result_folder`
+    method to obtain the input files.
+
 """
 
 # %%

@@ -30,7 +30,6 @@ This example shows how to use the native DPF Python interface to configure
 and run the composite failure evaluator. It connects the different DPF
 operators that are needed to evaluate composite failure criteria.
 
-
 .. note::
 
     For simple use cases, using the composite failure operator or
@@ -39,6 +38,12 @@ operators that are needed to evaluate composite failure criteria.
     and :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py`.
     Additionally, :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`
     shows how helper functions can be used to obtain composite result data.
+
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
 
 """
 

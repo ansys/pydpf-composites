@@ -32,6 +32,13 @@ postprocessing and data filtering.
 
 To get the full layer information of an element, including results,
 consider using the :class:`SamplingPoint <.SamplingPoint>` class.
+
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.get_composite_files_from_workbench_result_folder`
+    method to obtain the input files.
+
 """
 # %%
 # Set up analysis
