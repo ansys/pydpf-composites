@@ -1,6 +1,6 @@
 # Contributors
 
-## Project Lead or Owner
+## Project Lead
 
 * [Jan von Rickenbach](https://github.com/janvonrickenbach)
 
