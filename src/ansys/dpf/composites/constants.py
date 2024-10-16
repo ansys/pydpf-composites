@@ -30,12 +30,10 @@ __all__ = (
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
     "TIME_LABEL",
-    "TEMPERATURE_COMPONENT",
 )
 
 FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
-TEMPERATURE_COMPONENT = 0
 REF_SURFACE_NAME = "Reference Surface"
 
 
