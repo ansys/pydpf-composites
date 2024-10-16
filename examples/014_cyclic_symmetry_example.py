@@ -33,6 +33,13 @@ running a failure analysis, extracting ply-wise stresses, and implementing
 a custom failure criterion.
 
 The postprocessing of expanded sectors is not yet supported.
+
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
+
 """
 
 # %%
