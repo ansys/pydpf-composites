@@ -533,6 +533,12 @@ to download the full example code.</p>
 The assembly consists of a shell and solid composite model. The
 <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Model</span></code></a> class is used to access
 the data of the different parts.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using a Workbench project,
+use the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis.html#ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis" title="ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite_files_from_workbench_harmonic_analysis()</span></code></a>
+method to obtain the input files.</p>
+</div>
 <section id="set-up-analysis">
 <h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of loading Ansys libraries, connecting to the
@@ -639,7 +645,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
         <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_infos</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.995 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.136 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-008-assembly-example-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/7c4a3fd561e2dcffe572d22b596f18e5/008_assembly_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">008_assembly_example.ipynb</span></code></a></p>

@@ -31,7 +31,13 @@ a custom failure criterion.
 
 The postprocessing of expanded sectors is not yet supported.
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-45
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
+
+.. GENERATED FROM PYTHON SOURCE LINES 46-52
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -40,7 +46,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries and helper functions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-57
+.. GENERATED FROM PYTHON SOURCE LINES 52-64
 
 .. code-block:: Python
 
@@ -63,11 +69,11 @@ Load Ansys libraries and helper functions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-59
+.. GENERATED FROM PYTHON SOURCE LINES 65-66
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-62
+.. GENERATED FROM PYTHON SOURCE LINES 66-69
 
 .. code-block:: Python
 
@@ -81,11 +87,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-64
+.. GENERATED FROM PYTHON SOURCE LINES 70-71
 
 Create a composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-66
+.. GENERATED FROM PYTHON SOURCE LINES 71-73
 
 .. code-block:: Python
 
@@ -98,11 +104,11 @@ Create a composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-68
+.. GENERATED FROM PYTHON SOURCE LINES 74-75
 
 Evaluate a combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-71
+.. GENERATED FROM PYTHON SOURCE LINES 75-78
 
 .. code-block:: Python
 
@@ -116,11 +122,11 @@ Evaluate a combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-73
+.. GENERATED FROM PYTHON SOURCE LINES 79-80
 
 Plot the failure results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-76
+.. GENERATED FROM PYTHON SOURCE LINES 80-83
 
 .. code-block:: Python
 
@@ -161,14 +167,14 @@ Plot the failure results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-81
+.. GENERATED FROM PYTHON SOURCE LINES 84-88
 
 Plot ply-wise stresses
 ~~~~~~~~~~~~~~~~~~~~~~
 All functions in PyDPF Composites can be used to
 postprocess the initial (original) sector.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-103
+.. GENERATED FROM PYTHON SOURCE LINES 88-110
 
 .. code-block:: Python
 
@@ -228,7 +234,7 @@ postprocess the initial (original) sector.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-109
+.. GENERATED FROM PYTHON SOURCE LINES 111-116
 
 Custom failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -236,7 +242,7 @@ The following code block shows how to implement a custom failure criterion.
 It computes the inverse reserve factor for each element with respect to
 fiber failure. The criterion distinguishes between tension and compression.
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-139
+.. GENERATED FROM PYTHON SOURCE LINES 116-146
 
 .. code-block:: Python
 
@@ -304,7 +310,7 @@ fiber failure. The criterion distinguishes between tension and compression.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-146
+.. GENERATED FROM PYTHON SOURCE LINES 147-153
 
 Plot deformations on the expanded model
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -313,7 +319,7 @@ The same expansion is possible for strains and stresses. For more information, s
 
 .. _Ansys DPF: https://dpf.docs.pyansys.com/version/stable/
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-160
+.. GENERATED FROM PYTHON SOURCE LINES 153-167
 
 .. code-block:: Python
 
@@ -368,7 +374,7 @@ The same expansion is possible for strains and stresses. For more information, s
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.170 seconds)
+   **Total running time of the script:** (0 minutes 6.970 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_014_cyclic_symmetry_example.py:

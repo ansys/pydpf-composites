@@ -547,6 +547,12 @@ to the UUIDs in Mechanical APDL (RST file).</p>
 <p>The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
 and later. A few advanced features are not supported with the RST only workflow.
 For more information, see <a class="reference internal" href="../../index.html#limitations"><span class="std std-ref">Limitations</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using a Workbench project,
+use the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis.html#ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis" title="ansys.dpf.composites.data_sources.composite_files_from_workbench_harmonic_analysis"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite_files_from_workbench_harmonic_analysis()</span></code></a>
+method to obtain the input files.</p>
+</div>
 <section id="set-up-analysis">
 <h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of loading Ansys libraries, connecting to the
@@ -575,7 +581,7 @@ DPF server, and retrieving the example files.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp139679970092800/c7bec175-cb59-4c10-84b2-6a7db6a4bb5e/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp139679970092800/b02399e2-239a-4cd1-8e14-4c0c28ffb8a4/material.engd&#39;, files_are_local=False)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp139821972449024/b6ae33d9-62ac-4e35-92f8-7feda34fa467/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp139821972449024/9380be29-7edc-4fa6-a997-f1f7a9813356/material.engd&#39;, files_are_local=False)
 </pre></div>
 </div>
 </section>
@@ -652,7 +658,7 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
 </ul>
 </dd>
 </dl>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 10.108 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.648 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-rst-workflow-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d13337ce8445f69a22967b872b601ca2/011_rst_workflow.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">011_rst_workflow.ipynb</span></code></a></p>

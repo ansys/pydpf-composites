@@ -27,16 +27,23 @@ This example shows how to access constant material properties and how to
 implement a custom failure criterion. The failure criterion is computed for
 all layers and integration points. Finally, the elemental maximum is computed and shown.
 
-Note: Only constant material properties are currently supported.
+.. note::
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-41
+    Only constant material properties are currently supported.
+
+.. note::
+    When using a Workbench project,
+    use the :func:`.get_composite_files_from_workbench_result_folder`
+    method to obtain the input files.
+
+.. GENERATED FROM PYTHON SOURCE LINES 45-49
 
 Script
 ~~~~~~
 
 Import dependencies
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-51
+.. GENERATED FROM PYTHON SOURCE LINES 49-59
 
 .. code-block:: Python
 
@@ -57,12 +64,12 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-54
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
 
 Start a server and get the examples files.
 This will copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-57
+.. GENERATED FROM PYTHON SOURCE LINES 62-65
 
 .. code-block:: Python
 
@@ -76,11 +83,11 @@ This will copy the example files into the current working directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-59
+.. GENERATED FROM PYTHON SOURCE LINES 66-67
 
 Set up the composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-61
+.. GENERATED FROM PYTHON SOURCE LINES 67-69
 
 .. code-block:: Python
 
@@ -93,7 +100,7 @@ Set up the composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-67
+.. GENERATED FROM PYTHON SOURCE LINES 70-75
 
 Get dictionary that maps dpf_material_id to properties
 The creation of the dictionary is currently quite slow and
@@ -101,7 +108,7 @@ should be done before using the properties in a loop.
 Currently only constant properties are supported.
 For variable material properties, the default value is returned.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-72
+.. GENERATED FROM PYTHON SOURCE LINES 75-80
 
 .. code-block:: Python
 
@@ -117,11 +124,11 @@ For variable material properties, the default value is returned.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-74
+.. GENERATED FROM PYTHON SOURCE LINES 81-82
 
 Get strain field
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-79
+.. GENERATED FROM PYTHON SOURCE LINES 82-87
 
 .. code-block:: Python
 
@@ -137,11 +144,11 @@ Get strain field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-81
+.. GENERATED FROM PYTHON SOURCE LINES 88-89
 
 Implement a custom failure criterion: basic max strain
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-104
+.. GENERATED FROM PYTHON SOURCE LINES 89-112
 
 .. code-block:: Python
 
@@ -205,7 +212,7 @@ Implement a custom failure criterion: basic max strain
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.066 seconds)
+   **Total running time of the script:** (0 minutes 3.327 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:

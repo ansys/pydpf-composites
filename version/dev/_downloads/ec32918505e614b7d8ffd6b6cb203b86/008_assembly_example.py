@@ -31,6 +31,12 @@ The assembly consists of a shell and solid composite model. The
 :class:`Composite Model <.CompositeModel>` class is used to access
 the data of the different parts.
 
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
+
 """
 # %%
 # Set up analysis
