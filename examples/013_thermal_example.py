@@ -56,7 +56,6 @@ import ansys.dpf.core as dpf
 import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import TEMPERATURE_COMPONENT
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
@@ -89,11 +88,11 @@ temperatures_fc = temp_op.outputs.fields_container()
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
 
+# The component of the temperature is 0 which is the default value.
 nodal_values = get_ply_wise_data(
     field=temperatures_fc,
     ply_name="P1L1__ModelingPly.8",
     mesh=composite_model.get_mesh(),
-    component=TEMPERATURE_COMPONENT,
     spot_reduction_strategy=SpotReductionStrategy.MAX,
     requested_location=dpf.locations.nodal,
 )
