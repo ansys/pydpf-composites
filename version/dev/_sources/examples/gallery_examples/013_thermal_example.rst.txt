@@ -49,7 +49,7 @@ Setting up the analysis consists of loading the required modules, connecting to 
 DPF server, and retrieving the example files.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-69
+.. GENERATED FROM PYTHON SOURCE LINES 55-68
 
 .. code-block:: Python
 
@@ -57,7 +57,6 @@ DPF server, and retrieving the example files.
     import numpy as np
 
     from ansys.dpf.composites.composite_model import CompositeModel
-    from ansys.dpf.composites.constants import TEMPERATURE_COMPONENT
     from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
     from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
     from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
@@ -74,14 +73,14 @@ DPF server, and retrieving the example files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-74
+.. GENERATED FROM PYTHON SOURCE LINES 69-73
 
 Initialize the model
 ~~~~~~~~~~~~~~~~~~~~
 Initialize the composite model with the composite files and server.
 The model provides access to the mesh, results, lay-up, and materials.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-76
+.. GENERATED FROM PYTHON SOURCE LINES 73-75
 
 .. code-block:: Python
 
@@ -94,13 +93,13 @@ The model provides access to the mesh, results, lay-up, and materials.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-80
+.. GENERATED FROM PYTHON SOURCE LINES 76-79
 
 Get temperature results
 ~~~~~~~~~~~~~~~~~~~~~~~
 The temperatures are stored under ``structural_temperature``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-83
+.. GENERATED FROM PYTHON SOURCE LINES 79-82
 
 .. code-block:: Python
 
@@ -114,14 +113,14 @@ The temperatures are stored under ``structural_temperature``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-88
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
 
 Get ply results
 ~~~~~~~~~~~~~~~
 Extract the ply-wise results by passing the ply name
 to the function :func:`.get_ply_wise_data`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-103
+.. GENERATED FROM PYTHON SOURCE LINES 87-102
 
 .. code-block:: Python
 
@@ -129,11 +128,11 @@ to the function :func:`.get_ply_wise_data`.
     all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
     print(all_ply_names)
 
+    # The component of the temperature is 0 which is the default value.
     nodal_values = get_ply_wise_data(
         field=temperatures_fc,
         ply_name="P1L1__ModelingPly.8",
         mesh=composite_model.get_mesh(),
-        component=TEMPERATURE_COMPONENT,
         spot_reduction_strategy=SpotReductionStrategy.MAX,
         requested_location=dpf.locations.nodal,
     )
@@ -180,7 +179,7 @@ to the function :func:`.get_ply_wise_data`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-109
+.. GENERATED FROM PYTHON SOURCE LINES 103-108
 
 Get results by material
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -188,7 +187,7 @@ You can filter the results by material.
 In this example, the element-wise maximum temperature
 is extracted for the material `Honeycomb Aluminum Alloy`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-131
+.. GENERATED FROM PYTHON SOURCE LINES 108-130
 
 .. code-block:: Python
 
@@ -257,7 +256,7 @@ is extracted for the material `Honeycomb Aluminum Alloy`.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.845 seconds)
+   **Total running time of the script:** (0 minutes 5.799 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_013_thermal_example.py:

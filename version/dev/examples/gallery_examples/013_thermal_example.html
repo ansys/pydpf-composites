@@ -552,7 +552,6 @@ DPF server, and retrieving the example files.</p>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">TEMPERATURE_COMPONENT</span></a>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info</span> <span class="kn">import</span> <span class="n">get_all_analysis_ply_names</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.ply_wise_data</span> <span class="kn">import</span> <span class="n">SpotReductionStrategy</span><span class="p">,</span> <span class="n">get_ply_wise_data</span>
@@ -587,11 +586,11 @@ to the function <a class="reference internal" href="../../api/_autosummary/ansys
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a><span class="p">)</span>
 
+<span class="c1"># The component of the temperature is 0 which is the default value.</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nodal_values</span></a> <span class="o">=</span> <span class="n">get_ply_wise_data</span><span class="p">(</span>
     <span class="n">field</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.fields_container.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_fc</span></a><span class="p">,</span>
     <span class="n">ply_name</span><span class="o">=</span><span class="s2">&quot;P1L1__ModelingPly.8&quot;</span><span class="p">,</span>
     <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span>
-    <span class="n">component</span><span class="o">=</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">TEMPERATURE_COMPONENT</span></a><span class="p">,</span>
     <span class="n">spot_reduction_strategy</span><span class="o">=</span><span class="n">SpotReductionStrategy</span><span class="o">.</span><span class="n">MAX</span><span class="p">,</span>
     <span class="n">requested_location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">nodal</span></a><span class="p">,</span>
 <span class="p">)</span>
@@ -659,7 +658,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;Honeycomb Aluminum Alloy&#39;: np.int32(1), &#39;UD Resin Epoxy/E-Glass&#39;: np.int32(2)}
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.845 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.799 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-013-thermal-example-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b1e39d6ebd1ae9f7b992469a76dd9264/013_thermal_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">013_thermal_example.ipynb</span></code></a></p>
