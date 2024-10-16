@@ -40,6 +40,7 @@ The scoping enables you to evaluate the minimum and maximum failures per element
 or select a list of materials or plies.
 
 .. note::
+    
     When using a Workbench project,
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
