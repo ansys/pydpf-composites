@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:59.100** total execution time for 15 files **from all galleries**:
+**03:14.294** total execution time for 15 files **from all galleries**:
 
 .. container::
 
@@ -33,47 +33,47 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py` (``../../examples/001_failure_operator_example.py``)
-     - 00:21.900
+     - 00:32.768
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_010_harmonic_example.py` (``../../examples/010_harmonic_example.py``)
-     - 00:14.281
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py` (``../../examples/002_sampling_point_example.py``)
-     - 00:09.246
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``../../examples/007_interlaminar_normal_stress_example.py``)
-     - 00:09.206
+     - 00:27.441
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_011_rst_workflow.py` (``../../examples/011_rst_workflow.py``)
-     - 00:08.825
+     - 00:17.695
      - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_099_dpf_composite_failure_workflow.py` (``../../examples/099_dpf_composite_failure_workflow.py``)
-     - 00:07.868
+   * - :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py` (``../../examples/002_sampling_point_example.py``)
+     - 00:16.273
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_014_cyclic_symmetry_example.py` (``../../examples/014_cyclic_symmetry_example.py``)
-     - 00:07.864
+     - 00:14.779
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_099_dpf_composite_failure_workflow.py` (``../../examples/099_dpf_composite_failure_workflow.py``)
+     - 00:13.897
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``../../examples/007_interlaminar_normal_stress_example.py``)
+     - 00:12.375
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``../../examples/008_assembly_example.py``)
-     - 00:07.352
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``../../examples/009_short_fiber_orientation_tensor.py``)
-     - 00:06.433
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_013_thermal_example.py` (``../../examples/013_thermal_example.py``)
-     - 00:05.796
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``../../examples/006_filter_composite_data_example.py``)
-     - 00:05.201
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_012_fatigue_example.py` (``../../examples/012_fatigue_example.py``)
-     - 00:04.372
+     - 00:11.293
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py` (``../../examples/004_get_material_properties_example.py``)
-     - 00:04.187
+     - 00:08.971
      - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_003_short_fiber_example.py` (``../../examples/003_short_fiber_example.py``)
-     - 00:04.125
+   * - :ref:`sphx_glr_examples_gallery_examples_013_thermal_example.py` (``../../examples/013_thermal_example.py``)
+     - 00:08.421
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``../../examples/006_filter_composite_data_example.py``)
+     - 00:07.918
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_012_fatigue_example.py` (``../../examples/012_fatigue_example.py``)
+     - 00:07.111
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``../../examples/009_short_fiber_orientation_tensor.py``)
+     - 00:06.045
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py` (``../../examples/005_get_layup_properties_example.py``)
-     - 00:02.443
+     - 00:04.735
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_003_short_fiber_example.py` (``../../examples/003_short_fiber_example.py``)
+     - 00:04.571
      - 0.0
