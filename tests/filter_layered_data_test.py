@@ -20,8 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from typing import Optional
-
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Field
 import numpy as np
@@ -45,11 +43,11 @@ from .helper import get_basic_shell_files, setup_operators
 def get_result_field(
     element_info_provider: ElementInfoProvider,
     input_field: Field,
-    layers: Optional[list[int]] = None,
-    corner_nodes: Optional[list[int]] = None,
-    spots: Optional[list[Spot]] = None,
-    element_ids: Optional[list[int]] = None,
-    dpf_material_id: Optional[np.int64] = None,
+    layers: list[int] | None = None,
+    corner_nodes: list[int] | None = None,
+    spots: list[Spot] | None = None,
+    element_ids: list[int] | None = None,
+    dpf_material_id: np.int64 | None = None,
 ):
     """
     Convenience function to get a filtered field. Getting the strain data is

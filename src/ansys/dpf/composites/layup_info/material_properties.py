@@ -24,7 +24,7 @@
 from collections.abc import Collection
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Union, cast
+from typing import cast
 
 from ansys.dpf.core import DataSources, MeshedRegion, Operator, types
 import numpy as np
@@ -149,7 +149,7 @@ def get_constant_property(
 
 
 def get_all_dpf_material_ids(
-    mesh: MeshedRegion, data_source_or_streams_provider: Union[DataSources, Operator]
+    mesh: MeshedRegion, data_source_or_streams_provider: DataSources | Operator
 ) -> Collection[np.int64]:
     """Get all DPF material IDs.
 
@@ -172,7 +172,7 @@ def get_all_dpf_material_ids(
 def get_constant_property_dict(
     material_properties: Collection[MaterialProperty],
     materials_provider: Operator,
-    data_source_or_streams_provider: Union[DataSources, Operator],
+    data_source_or_streams_provider: DataSources | Operator,
     mesh: MeshedRegion,
 ) -> dict[np.int64, dict[MaterialProperty, float]]:
     """Get a dictionary with constant properties.
@@ -236,5 +236,5 @@ class MaterialMetadata:
 
     dpf_material_id: int = 0
     material_name: str = ""
-    ply_type: Optional[str] = None
-    solver_material_id: Optional[int] = None
+    ply_type: str | None = None
+    solver_material_id: int | None = None

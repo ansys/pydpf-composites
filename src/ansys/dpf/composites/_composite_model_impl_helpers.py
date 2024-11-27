@@ -22,8 +22,8 @@
 
 """Composite Model Interface."""
 # New interface after 2023 R2
-from collections.abc import Sequence
-from typing import Any, Callable
+from collections.abc import Callable, Sequence
+from typing import Any
 from warnings import warn
 
 import ansys.dpf.core as dpf

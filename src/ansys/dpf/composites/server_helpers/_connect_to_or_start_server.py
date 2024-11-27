@@ -21,8 +21,9 @@
 # SOFTWARE.
 
 """Helpers to connect to or start a DPF server with the DPF Composites plugin."""
+from collections.abc import Callable
 import os
-from typing import Any, Callable, Optional, Union
+from typing import Any
 
 from ansys.dpf.core import connect_to_server
 from ansys.dpf.core import server as _dpf_server
@@ -61,7 +62,7 @@ def _wait_until_server_is_up(server: _dpf_server) -> Any:
 
 
 def connect_to_or_start_server(
-    port: Optional[int] = None, ip: Optional[str] = None, ansys_path: Optional[str] = None
+    port: int | None = None, ip: str | None = None, ansys_path: str | None = None
 ) -> Any:
     r"""Connect to or start a DPF server with the DPF Composites plugin loaded.
 
@@ -90,7 +91,7 @@ def connect_to_or_start_server(
     if port_in_env is not None:
         port = int(port_in_env)
 
-    connect_kwargs: dict[str, Union[int, str]] = {}
+    connect_kwargs: dict[str, int | str] = {}
     if port is not None:
         connect_kwargs["port"] = port
     if ip is not None:
