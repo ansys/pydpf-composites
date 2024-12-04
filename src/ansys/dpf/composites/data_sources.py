@@ -21,11 +21,11 @@
 # SOFTWARE.
 
 """Composite data sources."""
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Callable, Optional, Union, cast
+from typing import cast
 
 from ansys.dpf.core import DataSources
 
@@ -61,7 +61,7 @@ class CompositeDefinitionFiles:
     """Provides the container for composite definition file paths."""
 
     definition: _PATH
-    mapping: Optional[_PATH] = None
+    mapping: _PATH | None = None
 
 
 @dataclass
@@ -77,7 +77,7 @@ class ContinuousFiberCompositesFiles:
 
     def __init__(
         self,
-        rst: Union[list[_PATH], _PATH],
+        rst: list[_PATH] | _PATH,
         composite: dict[str, CompositeDefinitionFiles],
         engineering_data: _PATH,
         files_are_local: bool = True,
@@ -112,7 +112,7 @@ class ContinuousFiberCompositesFiles:
         super().__setattr__(prop, val)
 
     @staticmethod
-    def _get_rst_list(value: Union[list[_PATH], _PATH]) -> list[_PATH]:
+    def _get_rst_list(value: list[_PATH] | _PATH) -> list[_PATH]:
         if isinstance(value, (str, pathlib.Path)):
             value = [value]
         return value  # type: ignore
@@ -131,7 +131,7 @@ class ShortFiberCompositesFiles:
 
     def __init__(
         self,
-        rst: Union[list[_PATH], _PATH],
+        rst: list[_PATH] | _PATH,
         dsdat: _PATH,
         engineering_data: _PATH,
         files_are_local: bool = True,
@@ -165,7 +165,7 @@ class ShortFiberCompositesFiles:
         super().__setattr__(prop, val)
 
     @staticmethod
-    def _get_rst_list(value: Union[list[_PATH], _PATH]) -> list[_PATH]:
+    def _get_rst_list(value: list[_PATH] | _PATH) -> list[_PATH]:
         if isinstance(value, (str, pathlib.Path)):
             value = [value]
         return value  # type: ignore
@@ -198,7 +198,7 @@ class CompositeDataSources:
 
     rst: DataSources
     material_support: DataSources
-    composite: Optional[DataSources]
+    composite: DataSources | None
     engineering_data: DataSources
 
     old_composite_sources: dict[str, DataSources]
@@ -206,7 +206,7 @@ class CompositeDataSources:
 
 def _get_mapping_path_file_from_definitions_path_if_exists(
     definition_path: pathlib.Path,
-) -> Optional[pathlib.Path]:
+) -> pathlib.Path | None:
     mapping_path = definition_path.parent / (definition_path.stem + _MAPPING_SUFFIX)
     return mapping_path if mapping_path.is_file() else None
 
@@ -272,7 +272,7 @@ def _get_single_optional_file_path_with_predicate(
     predicate: Callable[[pathlib.Path], bool],
     folder: pathlib.Path,
     descriptive_name: str,
-) -> Optional[pathlib.Path]:
+) -> pathlib.Path | None:
     files = _get_file_paths_with_predicate(predicate, folder)
     if len(files) > 1:
         raise RuntimeError(f"Expected no more than one {descriptive_name} file. Found {files}.")

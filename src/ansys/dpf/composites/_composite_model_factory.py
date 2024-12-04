@@ -21,7 +21,8 @@
 # SOFTWARE.
 
 """Composite Model Interface Factory."""
-from typing import Callable, Optional, Union
+from collections.abc import Callable
+from typing import Optional, Union
 
 from ansys.dpf.core import UnitSystem
 from ansys.dpf.core.server_types import BaseServer

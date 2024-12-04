@@ -47,7 +47,7 @@ EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composite
 @dataclass
 class _ContinuousFiberCompositeFiles:
     definition: str
-    mapping: Optional[str] = None
+    mapping: str | None = None
 
 
 @dataclass

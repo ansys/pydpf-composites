@@ -23,7 +23,6 @@
 """Methods to get ply-wise data from a result field."""
 
 from enum import Enum, IntEnum
-from typing import Union
 
 from ansys.dpf.core import Field, MeshedRegion, Operator, operators
 from ansys.dpf.gate.common import locations
@@ -48,7 +47,7 @@ def get_ply_wise_data(
     mesh: MeshedRegion,
     spot_reduction_strategy: SpotReductionStrategy = SpotReductionStrategy.AVG,
     requested_location: str = locations.elemental_nodal,
-    component: Union[IntEnum, int] = 0,
+    component: IntEnum | int = 0,
 ) -> Field:
     """Get ply-wise data from a field.
 

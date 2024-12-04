@@ -12,7 +12,7 @@ on:
     inputs:
 
 env:
-  MAIN_PYTHON_VERSION: '3.12'
+  MAIN_PYTHON_VERSION: '3.13'
   CONTAINER_TAG: 'latest'
   PACKAGE_NAME: 'ansys-dpf-composites'
   DOCUMENTATION_CNAME: 'composites.dpf.docs.pyansys.com'
@@ -58,7 +58,7 @@ jobs:
         # docker images on the windows agents. See the issue
         # https://github.com/actions/runner-images/issues/1143
         os: [ubuntu-latest]
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
       fail-fast: false
     steps:
       - name: "Login in Github Container registry"
@@ -134,7 +134,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: '3.10'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox tox-gh-actions
@@ -223,7 +223,7 @@ jobs:
     strategy:
       matrix:
           os: [ubuntu-latest, windows-latest]
-          python-version: ['3.9', '3.10', '3.11', '3.12']
+          python-version: ['3.10', '3.11', '3.12', '3.13']
     steps:
       - name: "Build a wheelhouse of the Python library"
         uses: ansys/actions/build-wheelhouse@v8
