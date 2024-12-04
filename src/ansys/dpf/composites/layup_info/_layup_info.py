@@ -25,7 +25,7 @@
 from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -204,7 +204,7 @@ class AnalysisPlyInfoProvider:
         self.property_field = _get_analysis_ply(mesh, name)
         self._layer_indices = get_property_field_indexer(self.property_field, False)
 
-    def get_layer_index_by_element_id(self, element_id: int) -> Optional[np.int64]:
+    def get_layer_index_by_element_id(self, element_id: int) -> np.int64 | None:
         """Get the layer index for the analysis ply in a given element.
 
         Parameters
@@ -222,7 +222,7 @@ class AnalysisPlyInfoProvider:
 
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
-    data_source_or_streams_provider: Union[DataSources, Operator],
+    data_source_or_streams_provider: DataSources | Operator,
 ) -> dict[str, np.int64]:
     """Get Dict that maps analysis ply names to dpf_material_ids.
 
@@ -249,7 +249,7 @@ def get_dpf_material_id_by_analyis_ply_map(
 
 def get_dpf_material_id_by_analysis_ply_map(
     mesh: MeshedRegion,
-    data_source_or_streams_provider: Union[DataSources, Operator],
+    data_source_or_streams_provider: DataSources | Operator,
 ) -> dict[str, np.int64]:
     """Get the dictionary that maps analysis ply names to DPF material IDs.
 
@@ -386,7 +386,7 @@ class ElementInfoProvider:
         keyopt_8_values: PropertyField,
         keyopt_3_values: PropertyField,
         material_ids: PropertyField,
-        solver_material_ids: Optional[PropertyField] = None,
+        solver_material_ids: PropertyField | None = None,
         no_bounds_checks: bool = False,
     ):
         """Initialize ElementInfoProvider."""
@@ -419,7 +419,7 @@ class ElementInfoProvider:
                 for mapdl_mat_id in mapdl_mat_ids:
                     self.solver_material_to_dpf_id[mapdl_mat_id] = dpf_mat_id
 
-    def get_element_info(self, element_id: int) -> Optional[ElementInfo]:
+    def get_element_info(self, element_id: int) -> ElementInfo | None:
         """Get :class:`~ElementInfo` for a given element id.
 
         Parameters
@@ -496,8 +496,8 @@ class ElementInfoProvider:
 
 def get_element_info_provider(
     mesh: MeshedRegion,
-    stream_provider_or_data_source: Union[Operator, DataSources],
-    material_provider: Optional[Operator] = None,
+    stream_provider_or_data_source: Operator | DataSources,
+    material_provider: Operator | None = None,
     no_bounds_checks: bool = False,
 ) -> ElementInfoProvider:
     """Get :class:`~ElementInfoProvider` Object.
@@ -608,7 +608,7 @@ class LayupPropertiesProvider:
             mesh.property_field("layer_to_analysis_ply"), False
         )
 
-    def get_layer_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+    def get_layer_angles(self, element_id: int) -> NDArray[np.double] | None:
         """Get angles for all layers. Returns None if element is not layered.
 
         Parameters
@@ -618,7 +618,7 @@ class LayupPropertiesProvider:
         """
         return self._angle_indexer.by_id_as_array(element_id)
 
-    def get_layer_thicknesses(self, element_id: int) -> Optional[NDArray[np.double]]:
+    def get_layer_thicknesses(self, element_id: int) -> NDArray[np.double] | None:
         """Get thicknesses for all layers. Returns None if element is not layered.
 
         Parameters
@@ -629,7 +629,7 @@ class LayupPropertiesProvider:
         """
         return self._thickness_indexer.by_id_as_array(element_id)
 
-    def get_layer_shear_angles(self, element_id: int) -> Optional[NDArray[np.double]]:
+    def get_layer_shear_angles(self, element_id: int) -> NDArray[np.double] | None:
         """Get shear angle for all layers. Returns None if element is not layered.
 
         Parameters
@@ -639,7 +639,7 @@ class LayupPropertiesProvider:
         """
         return self._shear_angle_indexer.by_id_as_array(element_id)
 
-    def get_element_laminate_offset(self, element_id: int) -> Optional[np.double]:
+    def get_element_laminate_offset(self, element_id: int) -> np.double | None:
         """Get laminate offset of element. Returns None if element is not layered.
 
         Parameters
@@ -650,7 +650,7 @@ class LayupPropertiesProvider:
         """
         return self._offset_indexer.by_id(element_id)
 
-    def get_analysis_plies(self, element_id: int) -> Optional[Sequence[str]]:
+    def get_analysis_plies(self, element_id: int) -> Sequence[str] | None:
         """Get analysis ply names. Returns None if element is not layered.
 
         Parameters

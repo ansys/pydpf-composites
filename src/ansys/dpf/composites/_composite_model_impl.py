@@ -23,7 +23,7 @@
 """Composite Model Interface."""
 # New interface after 2023 R2
 from collections.abc import Collection, Sequence
-from typing import Optional, cast
+from typing import cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -102,7 +102,7 @@ class CompositeModelImpl:
         self,
         composite_files: ContinuousFiberCompositesFiles,
         server: BaseServer,
-        default_unit_system: Optional[UnitSystem] = None,
+        default_unit_system: UnitSystem | None = None,
     ):
         """Initialize data providers and add composite information to meshed region."""
         self._composite_files = upload_continuous_fiber_composite_files_to_server(
@@ -126,7 +126,7 @@ class CompositeModelImpl:
             data_sources=self.data_sources,
             material_operators=self.material_operators,
             unit_system=self._unit_system,
-            rst_stream_provider=self._get_rst_streams_provider(),
+            rst_stream_provider=self.get_rst_streams_provider(),
         )
 
         # self._layup_provider.outputs.layup_model_context_type.get_data() does not work because
@@ -154,7 +154,7 @@ class CompositeModelImpl:
 
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
-            stream_provider_or_data_source=self._get_rst_streams_provider(),
+            stream_provider_or_data_source=self.get_rst_streams_provider(),
             material_provider=self.material_operators.material_provider,
         )
         self._layup_properties_provider = LayupPropertiesProvider(
@@ -263,7 +263,7 @@ class CompositeModelImpl:
         return metadata
 
     @_deprecated_composite_definition_label
-    def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
+    def get_mesh(self, composite_definition_label: str | None = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
         The meshed region contains the lay-up information.
@@ -271,7 +271,7 @@ class CompositeModelImpl:
         return self._core_model.metadata.meshed_region
 
     @_deprecated_composite_definition_label
-    def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
+    def get_layup_operator(self, composite_definition_label: str | None = None) -> Operator:
         """Get the lay-up operator.
 
         Parameters
@@ -297,7 +297,7 @@ class CompositeModelImpl:
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
-        composite_scope: Optional[CompositeScope] = None,
+        composite_scope: CompositeScope | None = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
         max_chunk_size: int = 50000,
@@ -370,7 +370,7 @@ class CompositeModelImpl:
             chunking_data_tree.add({"named_selections": ns_in})
 
         chunking_generator = dpf.Operator("composite::scope_generator")
-        chunking_generator.inputs.stream_provider(self._get_rst_streams_provider())
+        chunking_generator.inputs.stream_provider(self.get_rst_streams_provider())
         chunking_generator.inputs.data_tree(chunking_data_tree)
         if self.data_sources.composite:
             chunking_generator.inputs.data_sources(self.data_sources.composite)
@@ -412,7 +412,7 @@ class CompositeModelImpl:
                 self.material_operators.material_provider.outputs
             )
             evaluate_failure_criterion_per_scope_op.inputs.stream_provider(
-                self._get_rst_streams_provider()
+                self.get_rst_streams_provider()
             )
             evaluate_failure_criterion_per_scope_op.inputs.mesh(self.get_mesh())
             if version_equal_or_later(self._server, "8.0"):
@@ -525,8 +525,8 @@ class CompositeModelImpl:
         self,
         combined_criterion: CombinedFailureCriterion,
         element_id: int,
-        time: Optional[float] = None,
-        composite_definition_label: Optional[str] = None,
+        time: float | None = None,
+        composite_definition_label: str | None = None,
     ) -> SamplingPointNew:
         """Get a sampling point for an element ID and failure criteria.
 
@@ -555,7 +555,7 @@ class CompositeModelImpl:
             self._material_operators,
             self.get_mesh(),
             self._layup_provider,
-            self._get_rst_streams_provider(),
+            self.get_rst_streams_provider(),
             self._data_sources.rst,
             self._unit_system,
             time_in,
@@ -563,8 +563,8 @@ class CompositeModelImpl:
 
     @_deprecated_composite_definition_label
     def get_element_info(
-        self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[ElementInfo]:
+        self, element_id: int, composite_definition_label: str | None = None
+    ) -> ElementInfo | None:
         """Get element information for an element ID.
 
         This method returns ``None`` if the element type is not supported.
@@ -586,8 +586,8 @@ class CompositeModelImpl:
         self,
         layup_property: LayerProperty,
         element_id: int,
-        composite_definition_label: Optional[str] = None,
-    ) -> Optional[NDArray[np.double]]:
+        composite_definition_label: str | None = None,
+    ) -> NDArray[np.double] | None:
         """Get a layer property for an element ID.
 
         This method returns a numpy array with the values of the property for all the layers.
@@ -617,8 +617,8 @@ class CompositeModelImpl:
 
     @_deprecated_composite_definition_label
     def get_analysis_plies(
-        self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[Sequence[str]]:
+        self, element_id: int, composite_definition_label: str | None = None
+    ) -> Sequence[str] | None:
         """Get analysis ply names.
 
         This method returns ``None`` if the element is not layered.
@@ -639,8 +639,8 @@ class CompositeModelImpl:
 
     @_deprecated_composite_definition_label
     def get_element_laminate_offset(
-        self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[np.double]:
+        self, element_id: int, composite_definition_label: str | None = None
+    ) -> np.double | None:
         """Get the laminate offset of an element.
 
         This method returns ``None`` if the element is not layered.
@@ -661,7 +661,7 @@ class CompositeModelImpl:
     def get_constant_property_dict(
         self,
         material_properties: Collection[MaterialProperty],
-        composite_definition_label: Optional[str] = None,
+        composite_definition_label: str | None = None,
     ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
@@ -688,7 +688,7 @@ class CompositeModelImpl:
         return get_constant_property_dict(
             material_properties=material_properties,
             materials_provider=self.material_operators.material_provider,
-            data_source_or_streams_provider=self._get_rst_streams_provider(),
+            data_source_or_streams_provider=self.get_rst_streams_provider(),
             mesh=self.get_mesh(),
         )
 
@@ -703,7 +703,7 @@ class CompositeModelImpl:
         self,
         stresses: FieldsContainer,
         strains: FieldsContainer,
-        composite_definition_label: Optional[str] = None,
+        composite_definition_label: str | None = None,
     ) -> None:
         """Add interlaminar normal stresses to the stresses fields container.
 
@@ -749,7 +749,7 @@ class CompositeModelImpl:
         )
 
     def get_all_layered_element_ids_for_composite_definition_label(
-        self, composite_definition_label: Optional[str] = None
+        self, composite_definition_label: str | None = None
     ) -> Sequence[int]:
         """Get all layered element IDs that belong to a composite definition label.
 
@@ -766,7 +766,8 @@ class CompositeModelImpl:
         )
         return self.get_all_layered_element_ids()
 
-    def _get_rst_streams_provider(self) -> Operator:
+    def get_rst_streams_provider(self) -> Operator:
+        """Get the streams provider of the loaded result file."""
         return self._core_model.metadata.streams_provider
 
     def _first_composite_definition_label_if_only_one(self) -> str:

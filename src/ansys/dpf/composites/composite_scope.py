@@ -23,7 +23,6 @@
 """Composite Scope."""
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass(frozen=True)
@@ -55,7 +54,7 @@ class CompositeScope:
 
     """
 
-    elements: Optional[Sequence[int]] = None
-    plies: Optional[Sequence[str]] = None
-    time: Optional[float] = None
-    named_selections: Optional[Sequence[str]] = None
+    elements: Sequence[int] | None = None
+    plies: Sequence[str] | None = None
+    time: float | None = None
+    named_selections: Sequence[str] | None = None

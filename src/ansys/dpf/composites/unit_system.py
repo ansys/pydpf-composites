@@ -23,7 +23,7 @@
 """Unit system helper."""
 __all__ = ("get_unit_system", "UnitSystemProvider")
 
-from typing import Optional, Union
+from typing import Union
 
 from ansys.dpf.core import DataSources, Operator, UnitSystem
 
@@ -35,8 +35,8 @@ UnitSystemProvider = Union[UnitSystem, Operator]
 
 
 def get_unit_system(
-    data_source_or_streams_provider: Union[DataSources, Operator],
-    default_unit_system: Optional[UnitSystem] = None,
+    data_source_or_streams_provider: DataSources | Operator,
+    default_unit_system: UnitSystem | None = None,
 ) -> UnitSystemProvider:
     """Get unit_system from rst DataSources.
 

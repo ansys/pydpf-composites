@@ -35,7 +35,6 @@ __all__ = (
 
 FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
-TEMPERATURE_COMPONENT = 0
 REF_SURFACE_NAME = "Reference Surface"
 
 

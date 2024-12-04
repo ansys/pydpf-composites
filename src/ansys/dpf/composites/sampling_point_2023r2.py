@@ -24,7 +24,7 @@
 from collections.abc import Collection, Sequence
 import hashlib
 import json
-from typing import Any, Optional, Union
+from typing import Any
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import UnitSystem
@@ -104,7 +104,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self,
         name: str,
         result_definition: ResultDefinition,
-        default_unit_system: Optional[UnitSystem] = None,
+        default_unit_system: UnitSystem | None = None,
         server: BaseServer = None,
     ):
         """Create a ``SamplingPoint`` object."""
@@ -155,7 +155,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._result_definition = value
 
     @property
-    def element_id(self) -> Union[int, None]:
+    def element_id(self) -> int | None:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.
