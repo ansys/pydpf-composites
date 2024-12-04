@@ -49,7 +49,7 @@ ansys-dpf-core = {git = "https://github.com/ansys/pydpf-core.git"}
 # Switch to released version when we release pydpf-composites!
 #ansys-dpf-core = ">=0.8"
 matplotlib = {version = ">=3.5.0"}
-pyvista = {version = ">=0.40.2", extras=["jupyter", "trame"], optional=true}
+pyvista = {version = ">=0.40.2,!=0.44.2", extras=["jupyter", "trame"], optional=true}
 pre-commit = {version = "*", optional = true}
 # Upper bound because there is a problem with examples in versions > 1.20.1
 sphinx-autodoc-typehints = {version = "^1.19,<1.20.2", optional = true}
