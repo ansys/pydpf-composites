@@ -21,7 +21,6 @@
 # SOFTWARE.
 
 """Helper function to get material-related operators."""
-from typing import Optional
 from warnings import warn
 
 from ansys.dpf.core import DataSources, Operator
@@ -108,7 +107,7 @@ class MaterialOperators:
 def get_material_operators(
     rst_data_source: DataSources,
     engineering_data_source: DataSources,
-    unit_system: Optional[UnitSystemProvider] = None,
+    unit_system: UnitSystemProvider | None = None,
 ) -> MaterialOperators:
     """Get material properties related to operators.
 

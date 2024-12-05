@@ -22,7 +22,7 @@
 
 """Composite Model Interface 2023R2."""
 from collections.abc import Collection, Sequence
-from typing import Optional, cast
+from typing import cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -138,7 +138,7 @@ class CompositeModelImpl2023R2:
         self,
         composite_files: ContinuousFiberCompositesFiles,
         server: BaseServer,
-        default_unit_system: Optional[UnitSystem] = None,
+        default_unit_system: UnitSystem | None = None,
     ):
         """Initialize data providers and add composite information to meshed region."""
         self._composite_files = upload_continuous_fiber_composite_files_to_server(
@@ -189,7 +189,7 @@ class CompositeModelImpl2023R2:
         """Get the composite file paths on the server."""
         return self._composite_files
 
-    def get_mesh(self, composite_definition_label: Optional[str] = None) -> MeshedRegion:
+    def get_mesh(self, composite_definition_label: str | None = None) -> MeshedRegion:
         """Get the underlying DPF meshed region.
 
         The meshed region contains the lay-up information.
@@ -239,7 +239,7 @@ class CompositeModelImpl2023R2:
             " or later should be used instead."
         )
 
-    def get_layup_operator(self, composite_definition_label: Optional[str] = None) -> Operator:
+    def get_layup_operator(self, composite_definition_label: str | None = None) -> Operator:
         """Get the lay-up operator.
 
         Parameters
@@ -267,7 +267,7 @@ class CompositeModelImpl2023R2:
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
-        composite_scope: Optional[CompositeScope] = None,
+        composite_scope: CompositeScope | None = None,
         measure: FailureMeasureEnum = FailureMeasureEnum.INVERSE_RESERVE_FACTOR,
         write_data_for_full_element_scope: bool = True,
         max_chunk_size: int = 50000,
@@ -355,8 +355,8 @@ class CompositeModelImpl2023R2:
         self,
         combined_criterion: CombinedFailureCriterion,
         element_id: int,
-        time: Optional[float] = None,
-        composite_definition_label: Optional[str] = None,
+        time: float | None = None,
+        composite_definition_label: str | None = None,
     ) -> SamplingPoint:
         """Get a sampling point for an element ID and failure criteria.
 
@@ -408,8 +408,8 @@ class CompositeModelImpl2023R2:
         return SamplingPoint2023R2("Sampling Point", rd, self._unit_system, server=self._server)
 
     def get_element_info(
-        self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[ElementInfo]:
+        self, element_id: int, composite_definition_label: str | None = None
+    ) -> ElementInfo | None:
         """Get element information for an element ID.
 
         This method returns ``None`` if the element type is not supported.
@@ -434,8 +434,8 @@ class CompositeModelImpl2023R2:
         self,
         layup_property: LayerProperty,
         element_id: int,
-        composite_definition_label: Optional[str] = None,
-    ) -> Optional[NDArray[np.double]]:
+        composite_definition_label: str | None = None,
+    ) -> NDArray[np.double] | None:
         """Get a layer property for an element ID.
 
         Returns a numpy array with the values of the property for all the layers.
@@ -469,8 +469,8 @@ class CompositeModelImpl2023R2:
         raise RuntimeError(f"Invalid property {layup_property}")
 
     def get_analysis_plies(
-        self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[Sequence[str]]:
+        self, element_id: int, composite_definition_label: str | None = None
+    ) -> Sequence[str] | None:
         """Get analysis ply names.
 
         This method returns ``None`` if the element is not layered.
@@ -495,8 +495,8 @@ class CompositeModelImpl2023R2:
         return layup_properties_provider.get_analysis_plies(element_id)
 
     def get_element_laminate_offset(
-        self, element_id: int, composite_definition_label: Optional[str] = None
-    ) -> Optional[np.double]:
+        self, element_id: int, composite_definition_label: str | None = None
+    ) -> np.double | None:
         """Get the laminate offset of an element.
 
         THis method returns ``None`` if the element is not layered.
@@ -521,7 +521,7 @@ class CompositeModelImpl2023R2:
     def get_constant_property_dict(
         self,
         material_properties: Collection[MaterialProperty],
-        composite_definition_label: Optional[str] = None,
+        composite_definition_label: str | None = None,
     ) -> dict[np.int64, dict[MaterialProperty, float]]:
         """Get a dictionary with constant properties.
 
@@ -564,7 +564,7 @@ class CompositeModelImpl2023R2:
         self,
         stresses: FieldsContainer,
         strains: FieldsContainer,
-        composite_definition_label: Optional[str] = None,
+        composite_definition_label: str | None = None,
     ) -> None:
         """Add interlaminar normal stresses to the stresses fields container.
 
@@ -612,7 +612,7 @@ class CompositeModelImpl2023R2:
         )
 
     def get_all_layered_element_ids_for_composite_definition_label(
-        self, composite_definition_label: Optional[str]
+        self, composite_definition_label: str | None
     ) -> Sequence[int]:
         """Get all layered element IDs that belong to a composite definition label.
 
@@ -644,3 +644,7 @@ class CompositeModelImpl2023R2:
                 f"Multiple composite definition keys exist: {self.composite_definition_labels}. "
                 f"Specify a key explicitly."
             )
+
+    def get_rst_streams_provider(self) -> Operator:
+        """Get the streams provider of the loaded result file."""
+        return self._core_model.metadata.streams_provider

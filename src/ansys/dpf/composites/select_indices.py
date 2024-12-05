@@ -22,7 +22,6 @@
 
 """Functions to get elementary indices based on filter input."""
 from collections.abc import Collection
-from typing import Optional
 
 import numpy as np
 from numpy.typing import NDArray
@@ -47,9 +46,9 @@ def _get_rst_spot_index(spot: Spot) -> int:
 
 def get_selected_indices(
     element_info: ElementInfo,
-    layers: Optional[Collection[int]] = None,
-    nodes: Optional[Collection[int]] = None,
-    spots: Optional[Collection[Spot]] = None,
+    layers: Collection[int] | None = None,
+    nodes: Collection[int] | None = None,
+    spots: Collection[Spot] | None = None,
     disable_checks: bool = False,
 ) -> NDArray[np.int64]:
     """Get elementary indices based on element information, layers, nodes, and spots.

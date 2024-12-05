@@ -23,7 +23,6 @@
 """Helper to load composites plugin."""
 import os
 import pathlib
-from typing import Optional
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core.misc import get_ansys_path
@@ -46,7 +45,7 @@ _PLUGINS = (
 def _load_plugins(
     server: BaseServer,
     awp_root_docker: str,
-    ansys_path: Optional[str] = None,
+    ansys_path: str | None = None,
 ) -> None:
     def get_lib_from_name(name: str) -> str:
         if server.os == "posix":
@@ -85,7 +84,7 @@ def _load_plugins(
         dpf.load_library(library, name, server=server)
 
 
-def load_composites_plugin(server: BaseServer, ansys_path: Optional[str] = None) -> None:
+def load_composites_plugin(server: BaseServer, ansys_path: str | None = None) -> None:
     r"""Load composites plugins and its dependencies.
 
     Parameters

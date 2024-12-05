@@ -45,6 +45,13 @@ material UUIDs in MAPDL.
 The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
 and later. A few advanced features are not supported with the RST only workflow.
 For more information, see :ref:`limitations`.
+
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
+
 """
 # %%
 # Set up analysis

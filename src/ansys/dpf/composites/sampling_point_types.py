@@ -23,7 +23,7 @@
 """Wrapper for the sampling point operator."""
 from collections.abc import Collection, Sequence
 import dataclasses
-from typing import Any, Protocol, Union
+from typing import Any, Protocol
 
 import numpy as np
 import numpy.typing as npt
@@ -117,7 +117,7 @@ class SamplingPoint(Protocol):
         """Setter of name."""
 
     @property
-    def element_id(self) -> Union[int, None]:
+    def element_id(self) -> int | None:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.

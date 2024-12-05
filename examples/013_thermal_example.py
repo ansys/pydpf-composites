@@ -26,15 +26,17 @@
 Thermal analysis
 ----------------
 
-PyDPF Composites can also be used to post-process thermal analyses.
-In this case, the simulation is a two-step analysis where the results of
-a thermal analysis are an input of the structural analysis. So, the RST
-contains temperature and structural results.
-The example mimics a PCB which was modeled with Ansys Composites PrePost (ACP).
-where the solid model feature of ACP is used to generate the volume mesh.
+This example shows how to evaluate a thermal analysis.
+The simulation's thermal analysis results are also
+the input of a structural analysis.
+Therefore, the RST file contains temperature and structural results.
 
-In detail, the example shows how to extract the temperatures for a specific ply,
-and a specific material.
+The example imitates a printed circuit board (PCB) that was
+modeled with Ansys Composites PrepPost (ACP), using the solid model feature to
+generate the volume mesh.
+
+Descriptions of how to extract temperatures for a specific ply
+and material are provided.
 
 .. note::
 
@@ -54,7 +56,6 @@ import ansys.dpf.core as dpf
 import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import TEMPERATURE_COMPONENT
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
@@ -67,31 +68,31 @@ composite_files = get_continuous_fiber_example_files(server, "thermal_solid")
 # %%
 # Initialize the model
 # ~~~~~~~~~~~~~~~~~~~~
-# The composite model is initialized with the composite files and the server.
-# It provides access to the mesh, results, lay-up and materials
+# Initialize the composite model with the composite files and server.
+# The model provides access to the mesh, results, lay-up, and materials.
 composite_model = CompositeModel(composite_files, server)
 
 # %%
-# Get Results - Temperatures
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~
-# The temperatures are stored under structural_temperature
+# Get temperature results
+# ~~~~~~~~~~~~~~~~~~~~~~~
+# The temperatures are stored under ``structural_temperature``.
 temp_op = composite_model.core_model.results.structural_temperature()
 temperatures_fc = temp_op.outputs.fields_container()
 
 # %%
-# Ply-wise results
-# ~~~~~~~~~~~~~~~~
-# Ply-wise results can be easily extracted using the function
-# :func:`.get_ply_wise_data` and by passing the ply name.
+# Get ply results
+# ~~~~~~~~~~~~~~~
+# Extract the ply-wise results by passing the ply name
+# to the function :func:`.get_ply_wise_data`.
 
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
 
+# The component of the temperature is 0 which is the default value.
 nodal_values = get_ply_wise_data(
     field=temperatures_fc,
     ply_name="P1L1__ModelingPly.8",
     mesh=composite_model.get_mesh(),
-    component=TEMPERATURE_COMPONENT,
     spot_reduction_strategy=SpotReductionStrategy.MAX,
     requested_location=dpf.locations.nodal,
 )
@@ -99,10 +100,10 @@ nodal_values = get_ply_wise_data(
 composite_model.get_mesh().plot(nodal_values)
 
 # %%
-# Material-wise results
-# ~~~~~~~~~~~~~~~~~~~~~
-# It is also possible to filter the results by material.
-# In this example the element-wise maximum temperature
+# Get results by material
+# ~~~~~~~~~~~~~~~~~~~~~~~
+# You can filter the results by material.
+# In this example, the element-wise maximum temperature
 # is extracted for the material `Honeycomb Aluminum Alloy`.
 print(composite_model.material_names)
 material_id = composite_model.material_names["Honeycomb Aluminum Alloy"]

@@ -30,7 +30,15 @@ This example shows how to access constant material properties and how to
 implement a custom failure criterion. The failure criterion is computed for
 all layers and integration points. Finally, the elemental maximum is computed and shown.
 
-Note: Only constant material properties are currently supported.
+.. note::
+
+    Only constant material properties are currently supported.
+
+.. note::
+    When using a Workbench project,
+    use the :func:`.get_composite_files_from_workbench_result_folder`
+    method to obtain the input files.
+
 """
 
 # %%

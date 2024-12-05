@@ -23,7 +23,7 @@
 """Wrapper for the sampling point operator."""
 from collections.abc import Collection, Sequence
 import json
-from typing import Any, Optional, Union
+from typing import Any
 
 from ansys.dpf.core import UnitSystem
 import numpy as np
@@ -110,8 +110,8 @@ class SamplingPointNew(SamplingPoint):
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
-        default_unit_system: Optional[UnitSystem] = None,
-        time: Optional[float] = None,
+        default_unit_system: UnitSystem | None = None,
+        time: float | None = None,
     ):
         """Create a ``SamplingPoint`` object."""
         self._name = name
@@ -142,7 +142,7 @@ class SamplingPointNew(SamplingPoint):
         self._name = value
 
     @property
-    def element_id(self) -> Union[int, None]:
+    def element_id(self) -> int | None:
         """Element label for sampling the laminate."""
         return self._element_id
 

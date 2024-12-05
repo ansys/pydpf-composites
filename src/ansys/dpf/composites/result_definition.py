@@ -26,7 +26,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field
 from enum import Enum
 import json
-from typing import Any, Optional, Union
+from typing import Any
 
 from ._typing_helper import PATH as _PATH
 from .failure_criteria import CombinedFailureCriterion
@@ -61,7 +61,7 @@ class ResultDefinitionScope:
     This attribute is needed if multiple parts are assembled in Workbench or
     Mechanical to map the local element and node labels to the global labels.
     """
-    mapping_file: Optional[_PATH] = None
+    mapping_file: _PATH | None = None
     """Path to the mapping file for all element labels in the element scope.
     """
 
@@ -94,7 +94,7 @@ class ResultDefinition:
         material_file: _PATH,
         measure: str = "inverse_reserve_factor",
         stress_strain_eval_mode: str = "rst_file",
-        time: Union[float, None] = None,
+        time: float | None = None,
         expression: str = "composite_failure",
         max_chunk_size: int = 50000,
     ):
@@ -212,7 +212,7 @@ class ResultDefinition:
             )
 
     @property
-    def time(self) -> Union[float, None]:
+    def time(self) -> float | None:
         """Time or solution step.
 
         DPF Composites automatically selects the last time step if time is not set.
@@ -223,7 +223,7 @@ class ResultDefinition:
         return self._time
 
     @time.setter
-    def time(self, value: Union[float, None]) -> None:
+    def time(self, value: float | None) -> None:
         self._time = value
 
     @property
