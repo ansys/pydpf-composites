@@ -36,6 +36,12 @@ the laminate.
 This example uses the :class:`Composite Model <.CompositeModel>` to scope a
 Sampling Point to a certain element and to visualize the laminate.
 
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.get_composite_files_from_workbench_result_folder`
+    method to obtain the input files.
+
 """
 
 # %%

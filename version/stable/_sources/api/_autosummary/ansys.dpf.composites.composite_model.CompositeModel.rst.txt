@@ -53,6 +53,9 @@ CompositeModel
       CompositeModel.get_result_times_or_frequencies
       
       
+      CompositeModel.get_rst_streams_provider
+      
+      
       CompositeModel.get_sampling_point
       
    

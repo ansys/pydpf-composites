@@ -43,7 +43,13 @@ The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8
 and later. A few advanced features are not supported with the RST only workflow.
 For more information, see :ref:`limitations`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-56
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
+
+.. GENERATED FROM PYTHON SOURCE LINES 57-63
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -52,7 +58,7 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-70
+.. GENERATED FROM PYTHON SOURCE LINES 63-77
 
 .. code-block:: Python
 
@@ -77,11 +83,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-72
+.. GENERATED FROM PYTHON SOURCE LINES 78-79
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-74
+.. GENERATED FROM PYTHON SOURCE LINES 79-81
 
 .. code-block:: Python
 
@@ -94,11 +100,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-76
+.. GENERATED FROM PYTHON SOURCE LINES 82-83
 
 Get input files (RST and material.engd but skip the ACP layup file).
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-79
+.. GENERATED FROM PYTHON SOURCE LINES 83-86
 
 .. code-block:: Python
 
@@ -113,18 +119,18 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140195349387008/c4885f21-a59a-460a-a9d0-e106d0005809/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140195349387008/2ae2d7cf-8c42-4cf7-98c8-ba7412eac6c4/material.engd', files_are_local=False)
+    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140057910433536/975df842-ce9d-45d5-ab65-b3103165531e/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140057910433536/213e935e-6ed7-467a-8214-1789a4e58578/material.engd', files_are_local=False)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-83
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
 
 Configure combined failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-95
+.. GENERATED FROM PYTHON SOURCE LINES 90-102
 
 .. code-block:: Python
 
@@ -147,13 +153,13 @@ Configure the combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-99
+.. GENERATED FROM PYTHON SOURCE LINES 103-106
 
 Set up model and evaluate failures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-102
+.. GENERATED FROM PYTHON SOURCE LINES 106-109
 
 .. code-block:: Python
 
@@ -167,11 +173,11 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 103-104
+.. GENERATED FROM PYTHON SOURCE LINES 110-111
 
 Evaluate failures for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-110
+.. GENERATED FROM PYTHON SOURCE LINES 111-117
 
 .. code-block:: Python
 
@@ -215,12 +221,12 @@ Evaluate failures for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-113
+.. GENERATED FROM PYTHON SOURCE LINES 118-120
 
 Create and plot a sampling point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-118
+.. GENERATED FROM PYTHON SOURCE LINES 120-125
 
 .. code-block:: Python
 
@@ -241,7 +247,7 @@ Create and plot a sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-137
+.. GENERATED FROM PYTHON SOURCE LINES 126-144
 
 Create Engineering Data file and set material UUIDs in MAPDL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -265,7 +271,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.261 seconds)
+   **Total running time of the script:** (0 minutes 6.426 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:

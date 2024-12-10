@@ -26,15 +26,15 @@
 Postprocess a harmonic analysis
 -------------------------------
 
+This example shows how to evaluate failure criteria for a harmonic simulation.
+It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
+space and shows how to identify the critical failure mode and the critical layer.
+
 .. note::
 
     When using a Workbench project,
     use the :func:`.composite_files_from_workbench_harmonic_analysis`
     method to obtain the input files.
-
-This example shows how to evaluate failure criteria for a harmonic simulation.
-It shows how to create a phase sweep to compute the maximum IRF in the frequency-phase
-space and shows how to identify the critical failure mode and the critical layer.
 
 """
 

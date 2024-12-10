@@ -74,6 +74,7 @@ Here are some key features of PyDPF Composites:
 Limitations
 '''''''''''
 - Only the Mechanical APDL solver is supported.
+- The post-processing of expanded cyclic symmetry models is not implemented.
 - The following operators and features are only supported if the model was
   preprocessed with ACP and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel` class.
 

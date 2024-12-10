@@ -40,6 +40,13 @@ Be aware that the fatpack package is not developed by Ansys, so it is the respon
 of the user to verify that it works as expected. For more information, see the
 `fatpack package <https://pypi.org/project/fatpack/>`_,
 
+.. note::
+
+    When using a Workbench project,
+    use the :func:`.composite_files_from_workbench_harmonic_analysis`
+    method to obtain the input files.
+
+
 """
 
 
