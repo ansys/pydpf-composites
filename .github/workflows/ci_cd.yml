@@ -32,7 +32,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          # TODO: switch back to using ${{ env.MAIN_PYTHON_VERSION }}
+          # once https://github.com/pylint-dev/pylint/issues/10000#issuecomment-2519899671
+          # is resolved.
+          python-version: "3.12"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox
