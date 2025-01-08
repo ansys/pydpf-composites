@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -83,7 +83,7 @@ irf_field.plot()
 # %%
 # Plot ply-wise stresses
 # ~~~~~~~~~~~~~~~~~~~~~~
-# All functions in PyDPF Composites can be used to
+# All functions in PyDPF - Composites can be used to
 # postprocess the initial (original) sector.
 
 rst_stream = composite_model.core_model.metadata.streams_provider
