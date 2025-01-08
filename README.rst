@@ -1,6 +1,6 @@
-****************
-PyDPF Composites
-****************
+******************
+PyDPF - Composites
+******************
 
 |pyansys| |python| |pypi| |GH-CI| |codecov| |MIT| |black|
 
@@ -33,13 +33,13 @@ PyDPF Composites
    :alt: Black
 
 
-PyDPF Composites enables the post-processing of composite structures based on
+PyDPF - Composites enables the post-processing of composite structures based on
 `Ansys DPF`_ and the DPF Composites plugin. So it is a Python wrapper which
 implements classes on top of DPF Composites operators and data accessors for
 short fiber and layered composites (layered shell and solid elements). This
 module can be used to postprocess fiber reinforced plastics and layered
 composites, and to implement custom failure criteria and computation. For
-information demonstrating the behavior and usage of PyDPF Composites,
+information demonstrating the behavior and usage of PyDPF - Composites,
 see `Examples`_ in the DPF Composite documentation.
 
 .. START_MARKER_FOR_SPHINX_DOCS
@@ -51,10 +51,10 @@ Contribute
 Install in development mode
 ===========================
 
-Installing PyDPF Composites in development mode allows
+Installing PyDPF - Composites in development mode allows
 you to modify the source and enhance it.
 
-Before attempting to contribute to PyDPF Composites, ensure that you are thoroughly
+Before attempting to contribute to PyDPF - Composites, ensure that you are thoroughly
 familiar with the `PyAnsys Developer's Guide`_.
 
 #.  Clone the repository:
@@ -77,7 +77,7 @@ familiar with the `PyAnsys Developer's Guide`_.
         pipx install tox
 
 
-    PyDPF Composites uses `Poetry <https://python-poetry.org>`_
+    PyDPF - Composites uses `Poetry <https://python-poetry.org>`_
     to manage the development environment.
 
 #.  Create a virtual environment and install the package with the
@@ -98,7 +98,7 @@ familiar with the `PyAnsys Developer's Guide`_.
 Test
 ====
 
-There are different ways to run the PyDPF Composites tests, depending on how the DPF
+There are different ways to run the PyDPF - Composites tests, depending on how the DPF
 server is started.
 
 #.  Run tests with a Docker container:
@@ -175,8 +175,8 @@ The style checks can also be configured to run automatically before each ``git c
 
 View documentation
 -------------------
-Documentation for the latest stable release of PyDPF Composites is hosted at
-`PyDPF Composites Documentation <https://composites.dpf.docs.pyansys.com/version/stable/>`_.
+Documentation for the latest stable release of PyDPF - Composites is hosted at
+`PyDPF - Composites Documentation <https://composites.dpf.docs.pyansys.com/version/stable/>`_.
 
 In the upper right corner of the documentation's title bar, there is an option
 for switching from viewing the documentation for the latest stable release

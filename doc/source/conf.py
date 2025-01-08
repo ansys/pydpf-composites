@@ -30,7 +30,7 @@ release = version = __version__
 # Select desired logo, theme, and declare the html title
 html_favicon = ansys_favicon
 html_theme = "ansys_sphinx_theme"
-html_short_title = html_title = "PyDPF Composites"
+html_short_title = html_title = "PyDPF - Composites"
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).

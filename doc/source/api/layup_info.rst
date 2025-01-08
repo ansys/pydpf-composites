@@ -25,7 +25,7 @@ General features to access information on the composite lay-up.
 
 Material properties
 '''''''''''''''''''
-A note on material ids: in the PyDPF Composites module,
+A note on material ids: in the PyDPF - Composites module,
 materials are reference by their ``dpf_material_id``. The ``dpf_material_id``
 is generated based on the materials present in the result file.
 The ``dpf_material_id`` can be different from the material id used in the solver.

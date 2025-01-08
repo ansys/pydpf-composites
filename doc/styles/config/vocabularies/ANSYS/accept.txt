@@ -1,7 +1,7 @@
 ANSYS
 Ansys
 ansys
-PyDPF Composites
+PyDPF - Composites
 accessor
 interlaminar
 postprocess
