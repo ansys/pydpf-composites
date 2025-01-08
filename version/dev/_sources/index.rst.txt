@@ -8,10 +8,10 @@
    examples/index
    contribute
 
-PyDPF Composites
-----------------
+PyDPF - Composites
+------------------
 
-PyDPF Composites enables the post-processing of composite structures based on
+PyDPF - Composites enables the post-processing of composite structures based on
 `Ansys DPF`_ and the DPF Composites plugin. It implements
 classes on top of DPF Composites operators and data accessors for short
 fiber and layered composites (layered shell and solid elements). This module
@@ -32,7 +32,7 @@ to implement custom failure criteria and computation.
         :link: examples/index
         :link-type: doc
 
-        Demonstrates the use of PyDPF Composites for various workflows.
+        Demonstrates the use of PyDPF - Composites for various workflows.
 
     .. grid-item-card:: :octicon:`file-code` API reference
         :link: api/index
@@ -54,7 +54,7 @@ Lay-up files from ACP are optional and only required for some advanced operation
 Key features
 ''''''''''''
 
-Here are some key features of PyDPF Composites:
+Here are some key features of PyDPF - Composites:
 
 * Postprocessing of layered shell and solid elements. MAPDL models as well as models preprocessed with ACP are supported.
 * Failure criteria evaluation as shown in :ref:`Composite failure analysis <sphx_glr_examples_gallery_examples_001_failure_operator_example.py>`.

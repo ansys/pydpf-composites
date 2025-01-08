@@ -4,7 +4,7 @@ Getting started
 Installation
 ^^^^^^^^^^^^
 
-PyDPF Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed. See
+PyDPF - Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed. See
 :ref:`Compatibility` to understand which ``ansys-dpf-composites`` version corresponds to which Ansys version.
 
 Install the ``ansys-dpf-composites`` package with ``pip``:

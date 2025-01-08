@@ -171,7 +171,7 @@ Plot the failure results.
 
 Plot ply-wise stresses
 ~~~~~~~~~~~~~~~~~~~~~~
-All functions in PyDPF Composites can be used to
+All functions in PyDPF - Composites can be used to
 postprocess the initial (original) sector.
 
 .. GENERATED FROM PYTHON SOURCE LINES 88-110
@@ -374,7 +374,7 @@ The same expansion is possible for strains and stresses. For more information, s
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.776 seconds)
+   **Total running time of the script:** (0 minutes 9.354 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_014_cyclic_symmetry_example.py:

@@ -1,7 +1,7 @@
 API reference
 =============
 
-This section describes the public classes, methods, and attributes of the PyDPF Composites API.
+This section describes the public classes, methods, and attributes of the PyDPF - Composites API.
 
 For in-depth documentation on the different failure criteria, refer to the ACP help.
 
