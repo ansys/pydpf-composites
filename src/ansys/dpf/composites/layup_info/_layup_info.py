@@ -23,9 +23,8 @@
 """Lay-up information provider."""
 
 from collections.abc import Collection, Sequence
-from dataclasses import dataclass
 from enum import Enum
-from typing import Any, cast
+from typing import cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -37,6 +36,7 @@ from numpy.typing import NDArray
 from .._indexer import get_field_indexer, get_property_field_indexer
 from ..server_helpers import version_equal_or_later, version_older_than
 from ._enums import LayupProperty
+from ._element_info import ElementInfoProvider, ElementInfoProviderLSDyna
 
 
 def _get_separator(server: BaseServer) -> str:
@@ -87,104 +87,6 @@ class LayupModelContextType(Enum):
     ACP = 1  # lay-up data was read from ACP
     RST = 2  # lay-up data was read from RST
     MIXED = 3  # lay-up data was read from RST and ACP
-
-
-@dataclass(frozen=True)
-class ElementInfo:
-    """Provides lay-up information for an element.
-
-    Use the :class:`~ElementInfoProvider` class to obtain the
-    :class:`~ElementInfo` class for an element.
-
-    Parameters
-    ----------
-    id
-        Element ID or label.
-    n_layers
-        Number of layers. For non-layered elements, the value is ``1``.
-    n_corner_nodes
-        Number of corner nodes (without midside nodes).
-    n_spots
-        Number of spots (through-the-thickness integration points) per layer.
-    element_type
-        APDL element type. For example, ``181`` for layered shells.
-    dpf_material_ids
-        List of DPF material IDs for all layers.
-    is_shell
-        Whether the element is a shell element.
-    number_of_nodes_per_spot_plane
-        Number of nodes per output plane. The value is equal
-        to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
-        divided by two for layered solid elements. The value is equal to ``-1``
-        for non-layered elements.
-    """
-
-    id: int
-    n_layers: int
-    n_corner_nodes: int
-    n_spots: int
-    is_layered: bool
-    element_type: int
-    dpf_material_ids: NDArray[np.int64]
-    is_shell: bool
-    number_of_nodes_per_spot_plane: int
-
-
-_supported_element_types = [181, 281, 185, 186, 187, 190]
-
-"""
-Map of keyopt_8 to number of spots.
-Example: Element 181 with keyopt8==1 has two spots
-"""
-_n_spots_by_element_type_and_keyopt_dict: dict[int, dict[int, int]] = {
-    181: {0: 0, 1: 2, 2: 3},
-    281: {0: 0, 1: 2, 2: 3},
-    185: {0: 0, 1: 2},
-    186: {0: 0, 1: 2},
-    187: {0: 0},
-    190: {0: 0, 1: 2},
-}
-
-
-def _is_shell(apdl_element_type: np.int64) -> bool:
-    return {181: True, 281: True, 185: False, 186: False, 187: False, 190: False}[
-        int(apdl_element_type)
-    ]
-
-
-def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.int64) -> int:
-    if keyopt_3 == 0:
-        if apdl_element_type == 185 or apdl_element_type == 186:
-            return 0
-
-    try:
-        return _n_spots_by_element_type_and_keyopt_dict[int(apdl_element_type)][int(keyopt_8)]
-    except KeyError as exc:
-        raise RuntimeError(
-            f"Unsupported element type keyopt8 combination "
-            f"Apdl Element Type: {apdl_element_type} "
-            f"keyopt8: {keyopt_8}."
-        ) from exc
-
-
-def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
-    # Precompute n_corner_nodes for all element types
-    # corner_nodes_by_element_type by can be indexed by element type to get the number of
-    # corner nodes. If negative value is returned number of corner nodes is not available.
-    all_element_types = [int(e.value) for e in dpf.element_types if e.value >= 0]
-    corner_nodes_by_element_type: NDArray[np.int64] = np.full(
-        np.amax(all_element_types) + 1, -1, dtype=np.int64
-    )
-
-    corner_nodes_by_element_type[all_element_types] = [
-        (
-            dpf.element_types.descriptor(element_type).n_corner_nodes
-            if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
-            else -1
-        )
-        for element_type in all_element_types
-    ]
-    return corner_nodes_by_element_type
 
 
 class AnalysisPlyInfoProvider:
@@ -348,150 +250,11 @@ def get_analysis_ply_index_to_name_map(
     return analysis_ply_name_to_index_map
 
 
-class ElementInfoProvider:
-    """Provider for :class:`~ElementInfo`.
-
-    Use :func:`~get_element_info_provider` to create :class:`~ElementInfoProvider`
-    objects.
-
-    Initialize the class before a loop and
-    call :func:`~get_element_info` for each element.
-
-    Note that the :class:`~ElementInfoProvider` class is not fully supported for
-    distributed RST files. The :func:`~get_element_info` method will raise an
-    exception if the DPF server version does not support reading the required
-    information.
-
-    Parameters
-    ----------
-    mesh
-    layer_indices
-    element_types_apdl
-    element_types_dpf
-    keyopt_8_values
-    keyopt_3_values
-    material_ids
-    no_bounds_checks
-        Disable bounds checks.
-        Results in better performance but potentially cryptic
-        error messages
-    """
-
-    def __init__(
-        self,
-        mesh: MeshedRegion,
-        layer_indices: PropertyField,
-        element_types_apdl: PropertyField,
-        element_types_dpf: PropertyField,
-        keyopt_8_values: PropertyField,
-        keyopt_3_values: PropertyField,
-        material_ids: PropertyField,
-        solver_material_ids: PropertyField | None = None,
-        no_bounds_checks: bool = False,
-    ):
-        """Initialize ElementInfoProvider."""
-        # Note: Every property we add to element info adds some performance
-        # overhead for all the calls to get_element info. We should keep it
-        # focused on the most important properties. We can add different providers
-        # for other properties (such as thickness and angles)
-
-        # Has to be always with bounds checks because it does not contain
-        # data for all the elements
-
-        self.layer_indices = get_property_field_indexer(layer_indices, no_bounds_checks)
-        self.layer_materials = get_property_field_indexer(material_ids, no_bounds_checks)
-
-        self.apdl_element_types = get_property_field_indexer(element_types_apdl, no_bounds_checks)
-        self.dpf_element_types = get_property_field_indexer(element_types_dpf, no_bounds_checks)
-        self.keyopt_8_values = get_property_field_indexer(keyopt_8_values, no_bounds_checks)
-        self.keyopt_3_values = get_property_field_indexer(keyopt_3_values, no_bounds_checks)
-
-        self.mesh = mesh
-        self.corner_nodes_by_element_type = _get_corner_nodes_by_element_type_array()
-        self.apdl_material_indexer = get_property_field_indexer(
-            self.mesh.elements.materials_field, no_bounds_checks
-        )
-
-        self.solver_material_to_dpf_id = {}
-        if solver_material_ids is not None:
-            for dpf_mat_id in solver_material_ids.scoping.ids:
-                mapdl_mat_ids = solver_material_ids.get_entity_data_by_id(dpf_mat_id)
-                for mapdl_mat_id in mapdl_mat_ids:
-                    self.solver_material_to_dpf_id[mapdl_mat_id] = dpf_mat_id
-
-    def get_element_info(self, element_id: int) -> ElementInfo | None:
-        """Get :class:`~ElementInfo` for a given element id.
-
-        Parameters
-        ----------
-        element_id:
-            Element Id/Label
-
-        Returns
-        -------
-        Optional[ElementInfo]:
-            Returns None if element type is not supported
-        """
-        is_layered = False
-        n_layers = 1
-
-        keyopt_8 = self.keyopt_8_values.by_id(element_id)
-        keyopt_3 = self.keyopt_3_values.by_id(element_id)
-        apdl_element_type = self.apdl_element_types.by_id(element_id)
-
-        if keyopt_3 is None or keyopt_8 is None or apdl_element_type is None:
-            raise RuntimeError(
-                "Could not determine element properties. Probably they were requested for an"
-                f" invalid element id. Element id: {element_id}\n"
-                "Note that creating ElementInfo is not fully supported for distributed RST files."
-            )
-
-        if int(apdl_element_type) not in _supported_element_types:
-            return None
-
-        n_spots = _get_n_spots(apdl_element_type, keyopt_8, keyopt_3)
-        dpf_material_ids: Any = []
-        element_type = self.dpf_element_types.by_id(element_id)
-        if element_type is None:
-            raise IndexError(f"No DPF element type for element with id {element_id}.")
-
-        layer_data = self.layer_indices.by_id_as_array(element_id)
-        if layer_data is not None:
-            # can be of type int for single layer elements or array for multilayer materials
-            dpf_material_ids = self.layer_materials.by_id_as_array(element_id)
-            assert dpf_material_ids is not None
-            assert layer_data[0] + 1 == len(layer_data), "Invalid size of layer data"
-            n_layers = layer_data[0]
-            is_layered = True
-        elif self.solver_material_to_dpf_id:
-            is_layered = False
-            n_layers = 1
-            mapdl_mat_id = self.apdl_material_indexer.by_id(element_id)
-            if mapdl_mat_id:
-                dpf_material_ids = np.array(
-                    [self.solver_material_to_dpf_id[mapdl_mat_id]], dtype=np.int64
-                )
-            else:
-                raise RuntimeError(f"Could not evaluate material of element {element_id}.")
-
-        corner_nodes_dpf = self.corner_nodes_by_element_type[element_type]
-        if corner_nodes_dpf < 0:
-            raise ValueError(f"Invalid number of corner nodes for element with type {element_type}")
-        is_shell = _is_shell(apdl_element_type)
-        number_of_nodes_per_spot_plane = -1
-        if is_layered:
-            number_of_nodes_per_spot_plane = corner_nodes_dpf if is_shell else corner_nodes_dpf // 2
-        return ElementInfo(
-            n_layers=n_layers,
-            n_corner_nodes=corner_nodes_dpf,
-            n_spots=n_spots,
-            is_layered=is_layered,
-            element_type=int(apdl_element_type),
-            dpf_material_ids=dpf_material_ids,
-            id=element_id,
-            is_shell=is_shell,
-            number_of_nodes_per_spot_plane=number_of_nodes_per_spot_plane,
-        )
+def result_key_is_d3plot(stream_provider_or_data_source: Operator | DataSources) -> bool:
+    if isinstance(stream_provider_or_data_source, Operator):
+        return stream_provider_or_data_source.outputs.streams_container.get_data().datasources.result_key == "d3plot"
+    else:
+        return stream_provider_or_data_source.result_key == "d3plot"
 
 
 def get_element_info_provider(
@@ -521,52 +284,84 @@ def get_element_info_provider(
     -----
         Either a data_source or a stream_provider is required
     """
+    if result_key_is_d3plot:
+        if version_older_than(mesh._server, "10.0"):  # pylint: disable=protected-access
+            raise RuntimeError("LSDyna support is only available in DPF 10.0 (2025 R2) and later.")
 
-    def get_keyopt_property_field(keyopt: int) -> PropertyField:
-        keyopt_provider = dpf.Operator("mesh_property_provider")
-        if isinstance(stream_provider_or_data_source, Operator):
-            keyopt_provider.inputs.streams_container(stream_provider_or_data_source)
-        else:
-            keyopt_provider.inputs.data_sources(stream_provider_or_data_source)
+        requested_property_fields = [
+            "element_layer_indices",
+            "element_layered_material_ids",
+            "eltype",
+        ]
 
-        keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
-        return keyopt_provider.outputs.property_as_property_field()
+        for property_field_name in requested_property_fields:
+            if property_field_name not in mesh.available_property_fields:
+                message = f"Missing property field in mesh: '{property_field_name}'."
+                if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
+                    message += (
+                        " Maybe you have to run the lay-up provider operator first. "
+                        "Please call add_layup_info_to_mesh "
+                    )
+                raise RuntimeError(message)
 
-    requested_property_fields = [
-        "apdl_element_type",
-        "element_layer_indices",
-        "element_layered_material_ids",
-    ]
-
-    for property_field_name in requested_property_fields:
-        if property_field_name not in mesh.available_property_fields:
-            message = f"Missing property field in mesh: '{property_field_name}'."
-            if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
-                message += (
-                    " Maybe you have to run the lay-up provider operator first. "
-                    "Please call add_layup_info_to_mesh "
-                )
-            raise RuntimeError(message)
-
-    # pylint: disable=protected-access
-    if material_provider and version_equal_or_later(mesh._server, "8.0"):
         helper_op = dpf.Operator("composite::materials_container_helper")
         helper_op.inputs.materials_container(material_provider.outputs)
         solver_material_ids = helper_op.outputs.solver_material_ids()
+
+        fields = {
+            "layer_indices": mesh.property_field("element_layer_indices"),
+            "element_types_dpf": mesh.elements.element_types_field,
+            "material_ids": mesh.property_field("element_layered_material_ids"),
+            "solver_material_ids": solver_material_ids,
+        }
+
+        return ElementInfoProviderLSDyna(mesh, **fields, no_bounds_checks=no_bounds_checks)
     else:
-        solver_material_ids = None
+        def get_keyopt_property_field(keyopt: int) -> PropertyField:
+            keyopt_provider = dpf.Operator("mesh_property_provider")
+            if isinstance(stream_provider_or_data_source, Operator):
+                keyopt_provider.inputs.streams_container(stream_provider_or_data_source)
+            else:
+                keyopt_provider.inputs.data_sources(stream_provider_or_data_source)
 
-    fields = {
-        "layer_indices": mesh.property_field("element_layer_indices"),
-        "element_types_apdl": mesh.property_field("apdl_element_type"),
-        "element_types_dpf": mesh.elements.element_types_field,
-        "keyopt_8_values": get_keyopt_property_field(8),
-        "keyopt_3_values": get_keyopt_property_field(3),
-        "material_ids": mesh.property_field("element_layered_material_ids"),
-        "solver_material_ids": solver_material_ids,
-    }
+            keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
+            return keyopt_provider.outputs.property_as_property_field()
 
-    return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
+        requested_property_fields = [
+            "apdl_element_type",
+            "element_layer_indices",
+            "element_layered_material_ids",
+        ]
+
+        for property_field_name in requested_property_fields:
+            if property_field_name not in mesh.available_property_fields:
+                message = f"Missing property field in mesh: '{property_field_name}'."
+                if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
+                    message += (
+                        " Maybe you have to run the lay-up provider operator first. "
+                        "Please call add_layup_info_to_mesh "
+                    )
+                raise RuntimeError(message)
+
+        # pylint: disable=protected-access
+        if material_provider and version_equal_or_later(mesh._server, "8.0"):
+            helper_op = dpf.Operator("composite::materials_container_helper")
+            helper_op.inputs.materials_container(material_provider.outputs)
+            solver_material_ids = helper_op.outputs.solver_material_ids()
+        else:
+            solver_material_ids = None
+
+        fields = {
+            "layer_indices": mesh.property_field("element_layer_indices"),
+            "element_types_mapdl": mesh.property_field("apdl_element_type"),
+            "element_types_dpf": mesh.elements.element_types_field,
+            "keyopt_8_values": get_keyopt_property_field(8),
+            "keyopt_3_values": get_keyopt_property_field(3),
+            "material_ids": mesh.property_field("element_layered_material_ids"),
+            "solver_material_ids": solver_material_ids,
+        }
+
+        return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
 
 
 class LayupPropertiesProvider:

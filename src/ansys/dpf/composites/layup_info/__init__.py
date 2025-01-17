@@ -27,8 +27,6 @@ from ._add_layup_info_to_mesh import add_layup_info_to_mesh
 from ._enums import LayerProperty, LayupProperty
 from ._layup_info import (
     AnalysisPlyInfoProvider,
-    ElementInfo,
-    ElementInfoProvider,
     LayupModelContextType,
     LayupPropertiesProvider,
     get_all_analysis_ply_names,
@@ -37,12 +35,18 @@ from ._layup_info import (
     get_dpf_material_id_by_analysis_ply_map,
     get_element_info_provider,
 )
+from ._element_info import (
+    ElementInfo,
+    ElementInfoProvider,
+    ElementInfoProviderLSDyna,
+)
 
 __all__ = (
     "add_layup_info_to_mesh",
     "AnalysisPlyInfoProvider",
     "ElementInfo",
     "ElementInfoProvider",
+    "ElementInfoProviderLSDyna",
     "LayerProperty",
     "LayupProperty",
     "LayupPropertiesProvider",

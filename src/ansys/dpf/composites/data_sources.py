@@ -71,6 +71,7 @@ class ContinuousFiberCompositesFiles:
     rst: list[_PATH]
     composite: dict[str, CompositeDefinitionFiles]
     engineering_data: _PATH
+    solver_input_file: _PATH | None = None
     # True if files are local and false if files
     # have already been uploaded to the server
     files_are_local: bool = True
@@ -80,6 +81,7 @@ class ContinuousFiberCompositesFiles:
         rst: list[_PATH] | _PATH,
         composite: dict[str, CompositeDefinitionFiles],
         engineering_data: _PATH,
+        solver_input_file: _PATH | None = None,
         files_are_local: bool = True,
     ) -> None:
         """Initialize the ContinuousFiberCompositesFiles container.
@@ -94,6 +96,8 @@ class ContinuousFiberCompositesFiles:
             freely.
         engineering_data :
             Path to the engineering data file.
+        solver_input_file :
+            Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
         files_are_local :
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server..
@@ -101,6 +105,7 @@ class ContinuousFiberCompositesFiles:
         self.rst = rst  # type: ignore
         self.composite = composite
         self.engineering_data = engineering_data
+        self.solver_input_file = solver_input_file
         self.files_are_local = files_are_local
 
     # The constructor pretends that rst can also be just a path
@@ -188,6 +193,8 @@ class CompositeDataSources:
         support for distributed RST is added.
     engineering_data:
         File with the material properties.
+    solver_input_file:
+        Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
 
     old_composite_sources :
         Member used to support assemblies in combination with the old
@@ -200,6 +207,7 @@ class CompositeDataSources:
     material_support: DataSources
     composite: DataSources | None
     engineering_data: DataSources
+    solver_input_file: DataSources | None
 
     old_composite_sources: dict[str, DataSources]
 
@@ -594,11 +602,19 @@ def get_composites_data_sources(
     if len(continuous_composite_files.composite) == 0:
         composite_data_source = None
 
+    solver_input_file_data_sources = None
+    if continuous_composite_files.solver_input_file is not None:
+        solver_input_file_data_sources = DataSources()
+        solver_input_file_data_sources.add_file_path(
+            continuous_composite_files.solver_input_file, "LSDYNAInputFile"
+        )
+
     return CompositeDataSources(
         rst=rst_data_source,
         material_support=material_support_data_source,
         composite=composite_data_source,
         engineering_data=engineering_data_source,
+        solver_input_file=solver_input_file_data_sources,
         old_composite_sources=old_composite_data_sources,
     )
 

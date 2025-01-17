@@ -107,6 +107,7 @@ class MaterialOperators:
 def get_material_operators(
     rst_data_source: DataSources,
     engineering_data_source: DataSources,
+    solver_input_data_source: DataSources | None = None,
     unit_system: UnitSystemProvider | None = None,
 ) -> MaterialOperators:
     """Get material properties related to operators.
@@ -118,14 +119,25 @@ def get_material_operators(
         RST files are not supported.
     engineering_data_source
         Data source that contains the Engineering Data file.
+    solver_input_data_source
+        Data source that contains the solver input file.
     unit_system:
         Unit System
     ----------
 
     """
-    material_support_provider = Operator("support_provider")
-    material_support_provider.inputs.property("mat")
-    material_support_provider.inputs.data_sources(rst_data_source)
+
+    if rst_data_source.result_key == "d3plot":
+        material_support_provider = Operator("composite::k_file_material_support_provider")
+        if solver_input_data_source is None:
+            raise RuntimeError("solver input file must be provided for the support of LSDyna (d3plot)")
+        material_support_provider.inputs.data_sources(solver_input_data_source)
+    elif rst_data_source.result_key == "rst":
+        material_support_provider = Operator("support_provider")
+        material_support_provider.inputs.property("mat")
+        material_support_provider.inputs.data_sources(rst_data_source)
+    else:
+        raise ValueError(f"Unsupported result key: {rst_data_source.result_key}")
 
     result_info_provider = Operator("ResultInfoProvider")
     result_info_provider.inputs.data_sources(rst_data_source)
