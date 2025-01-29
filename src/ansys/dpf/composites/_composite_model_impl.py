@@ -110,17 +110,22 @@ class CompositeModelImpl:
         )
         self._data_sources = get_composites_data_sources(self._composite_files)
 
+        print("========== initialize model ==========")
         self._core_model = dpf.Model(self._data_sources.rst, server=server)
         self._server = server
 
+        print("========== process unit system ==========")
         self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
 
+        print("========== get material operators ==========")
         self._material_operators = get_material_operators(
             rst_data_source=self._data_sources.material_support,
             unit_system=self._unit_system,
             engineering_data_source=self._data_sources.engineering_data,
+            solver_input_data_source=self._data_sources.solver_input_file,
         )
 
+        print("========== add layup info to mesh ==========")
         self._layup_provider = add_layup_info_to_mesh(
             mesh=self.get_mesh(),
             data_sources=self.data_sources,
@@ -141,7 +146,7 @@ class CompositeModelImpl:
                 if len(composite_files.composite) > 0
                 else LayupModelContextType.NOT_AVAILABLE
             )
-
+        print("========== reference surface operator ==========")
         if self._supports_reference_surface_operators():
             self._reference_surface_and_mapping_field = _get_reference_surface_and_mapping_field(
                 data_sources=self.data_sources.composite, unit_system=self._unit_system
@@ -152,14 +157,17 @@ class CompositeModelImpl:
                 element_layer_indices_field=self.get_mesh().property_field("element_layer_indices"),
             )
 
+        print("========== initialize element info provider ==========")
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self.get_rst_streams_provider(),
             material_provider=self.material_operators.material_provider,
         )
+        print("========== initialize layup properties provider ==========")
         self._layup_properties_provider = LayupPropertiesProvider(
             layup_provider=self._layup_provider, mesh=self.get_mesh()
         )
+        print("========== model initialization done ==========")
 
     @property
     def composite_definition_labels(self) -> Sequence[str]:

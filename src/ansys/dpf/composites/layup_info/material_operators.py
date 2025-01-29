@@ -128,7 +128,7 @@ def get_material_operators(
     """
 
     if rst_data_source.result_key == "d3plot":
-        material_support_provider = Operator("composite::k_file_material_support_provider")
+        material_support_provider = Operator("composite::ls_dyna_material_support_provider")
         if solver_input_data_source is None:
             raise RuntimeError("solver input file must be provided for the support of LSDyna (d3plot)")
         material_support_provider.inputs.data_sources(solver_input_data_source)

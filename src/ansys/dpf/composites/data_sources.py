@@ -606,7 +606,7 @@ def get_composites_data_sources(
     if continuous_composite_files.solver_input_file is not None:
         solver_input_file_data_sources = DataSources()
         solver_input_file_data_sources.add_file_path(
-            continuous_composite_files.solver_input_file, "LSDYNAInputFile"
+            continuous_composite_files.solver_input_file, "LsDynaInputFile"
         )
 
     return CompositeDataSources(
