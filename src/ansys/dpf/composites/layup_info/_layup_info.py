@@ -284,7 +284,7 @@ def get_element_info_provider(
     -----
         Either a data_source or a stream_provider is required
     """
-    if result_key_is_d3plot:
+    if result_key_is_d3plot(stream_provider_or_data_source):
         if version_older_than(mesh._server, "10.0"):  # pylint: disable=protected-access
             raise RuntimeError("LSDyna support is only available in DPF 10.0 (2025 R2) and later.")
 
