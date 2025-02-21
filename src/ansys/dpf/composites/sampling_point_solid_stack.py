@@ -440,19 +440,19 @@ class SamplingPointSolidStack(SamplingPoint):
           DONE 'polar_properties' -> n/a
         
         'results'
-            'failures'
-                'failure_modes' -> list of strings such as s12, cf ...
-                'inverse_reserve_factor'
-                'margin_of_safety'
-                'reserve_factor'
+            DONE 'failures'
+                DONE 'failure_modes' -> list of strings such as s12, cf ...
+                DONE 'inverse_reserve_factor'
+                DONE 'margin_of_safety'
+                DONE 'reserve_factor'
         
             'offsets' -> list of offsets (num layers * num spots)
-            'strains'
-                'e1', 'e12', 'e13', 'e2', 'e23', 'e3', 'eI', 'eII', 'eIII'
-            'stresses'
-                's1', 's12', 's13', 's2', 's23', 's3', 'sI', 'sII', 'sIII'
+            DONE 'strains'
+                DONE: 'e1', 'e12', 'e13', 'e2', 'e23', 'e3', 'eI', 'eII', 'eIII'
+            DONE 'stresses'
+                DONE: 's1', 's12', 's13', 's2', 's23', 's3', 'sI', 'sII', 'sIII'
                
-        'unit_system': e.g. 'MKS: m, kg, N, s, V, A, degC'
+        DONE 'unit_system': e.g. 'MKS: m, kg, N, s, V, A, degC'
         """
 
         """
@@ -484,11 +484,36 @@ class SamplingPointSolidStack(SamplingPoint):
         self._results = {
             'element_label': self._element_id,
             'layup': {
-                'analysis_plies': ...,
+                'analysis_plies': None  #todo go on here
                 'num_analysis_plies': len(solid_stack.number_of_analysis_plies),
                 'offset': 0.0,
                 'polar_properties': None
-            }
+            },
+            'results': {
+                'failures': {
+                    'failure_modes': [failure_res.mode for failure_res in failure_results],
+                    'inverse_reserve_factor': [failure_res.inverse_reserve_factor for failure_res in failure_results],
+                    'margin_of_safety': [failure_res.margin_of_safety for failure_res in failure_results],
+                    'reserve_factor': [failure_res.reserve_factor for failure_res in failure_results]
+                },
+                'strains': {
+                    'e1': basic_results['e1'],
+                    'e12': basic_results['e12'],
+                    'e13': basic_results['e13'],
+                    'e2': basic_results['e2'],
+                    'e23': basic_results['e23'],
+                    'e3': basic_results['e3'],
+                },
+                'stresses': {
+                    's1': basic_results['s1'],
+                    's12': basic_results['s12'],
+                    's13': basic_results['s13'],
+                    's2': basic_results['s2'],
+                    's23': basic_results['s23'],
+                    's3': basic_results['s3'],
+                }
+            },
+            'unit_system': self._unit_system.name
         }
 
         # update internal members
