@@ -30,11 +30,14 @@ __all__ = (
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
     "TIME_LABEL",
+    "strain_component_name",
+    "stress_component_name",
 )
 
 FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
 REF_SURFACE_NAME = "Reference Surface"
+SOLID_STACK_FIELD_NAME = "solid_stacks"
 
 
 class Spot(IntEnum):
@@ -54,6 +57,30 @@ class Sym3x3TensorComponent(IntEnum):
     TENSOR21 = 3
     TENSOR31 = 5
     TENSOR32 = 4
+
+
+def _component_name(component: Sym3x3TensorComponent) -> str:
+    if component == Sym3x3TensorComponent.TENSOR11:
+        return "1"
+    if component == Sym3x3TensorComponent.TENSOR22:
+        return "2"
+    if component == Sym3x3TensorComponent.TENSOR33:
+        return "3"
+    if component == Sym3x3TensorComponent.TENSOR21:
+        return "12"
+    if component == Sym3x3TensorComponent.TENSOR31:
+        return "13"
+    if component == Sym3x3TensorComponent.TENSOR32:
+        return "23"
+    raise ValueError(f"Unknown component: {component}")
+
+
+def strain_component_name(component: Sym3x3TensorComponent) -> str:
+    return f"e{_component_name(component)}"
+
+
+def stress_component_name(component: Sym3x3TensorComponent) -> str:
+    return f"s{_component_name(component)}"
 
 
 class FailureOutput(IntEnum):
