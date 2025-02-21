@@ -25,7 +25,7 @@ from typing import Dict
 
 from collections.abc import Sequence
 
-from _layup_info import ElementInfoProvider
+from ansys.dpf.composites.layup_info import ElementInfoProvider
 import ansys.dpf.core as dpf
 from ansys.dpf.core import MeshedRegion
 
@@ -68,6 +68,18 @@ class SolidStack:
     element_wise_analysis_plies: dict[int, list[str]]
     # z-coordinates bottom, mid and top for each ply
     # offsets: list[list[float]]
+
+    @property
+    def num_elements(self):
+        return len(self.element_ids)
+
+    @property
+    def analysis_plies(self):
+        return [ply for e_id in self.element_ids for ply in self.element_wise_analysis_plies[e_id]]
+
+    @property
+    def number_of_analysis_plies(self):
+        return len(self.analysis_plies)
 
     def get_through_the_thickness_failure_results(
         self,

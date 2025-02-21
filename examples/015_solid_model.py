@@ -282,12 +282,18 @@ class SolidStackProvider:
 # Compute failure criteria and modes
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Evaluates the failure criteria for each element, ply and integration point
-# and t he corresponding failure mode.
+# and the corresponding failure mode.
+stresses_op = composite_model.core_model.results.stress()
+stresses_op.inputs.bool_rotate_to_global(False)
+
+elastic_strain_op = composite_model.core_model.results.elastic_strain()
+elastic_strain_op.inputs.bool_rotate_to_global(False)
+
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
 failure_evaluator.inputs.configuration(combined_fc.to_json())
 failure_evaluator.inputs.materials_container(composite_model.material_operators.material_provider)
-failure_evaluator.inputs.stresses_container(composite_model.core_model.results.stress())
-failure_evaluator.inputs.strains_container(composite_model.core_model.results.elastic_strain())
+failure_evaluator.inputs.stresses_container(stresses_op)
+failure_evaluator.inputs.strains_container(elastic_strain_op)
 failure_evaluator.inputs.mesh(composite_model.get_mesh())
 
 
@@ -354,11 +360,10 @@ failure_model_field = elemental_nodal_failure_container.get_field(
     }
 )
 stress_field = (
-    composite_model.core_model.results.stress()
+    stresses_op
     .outputs.fields_container()
     .get_field(
         {
-            "failure_label": FailureOutput.FAILURE_MODE,
             "time": elemental_nodal_failure_container.get_time_scoping().ids[-1],
         }
     )

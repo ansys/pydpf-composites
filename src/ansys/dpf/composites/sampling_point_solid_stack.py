@@ -50,6 +50,7 @@ from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 from .server_helpers import version_equal_or_later
 from .unit_system import get_unit_system
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, SolidStackProvider
 
 
 class SamplingPointSolidStack(SamplingPoint):
@@ -66,6 +67,9 @@ class SamplingPointSolidStack(SamplingPoint):
     ----------
     name :
         Name of the object.
+    element_id :
+       Element label of a solid element. The sampling will automatically select to
+       full stack of solid elements where this element is located.
 
     Notes
     -----
@@ -110,10 +114,15 @@ class SamplingPointSolidStack(SamplingPoint):
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
+        analysis_ply_info_provider: AnalysisPlyInfoProvider,
+        element_info_provider: ElementInfoProvider,
+        solid_stack_provider: SolidStackProvider,
         default_unit_system: UnitSystem | None = None,
         time: float | None = None,
     ):
         """Create a ``SamplingPoint`` object."""
+
+        # todo: check which inputs are really needed
         self._name = name
         self._element_id = element_id
         self._time = time
@@ -124,6 +133,9 @@ class SamplingPointSolidStack(SamplingPoint):
         self._layup_provider = layup_provider
         self._rst_streams_provider = rst_streams_provider
         self._rst_data_source = rst_data_source
+        self._analysis_ply_info_provider = analysis_ply_info_provider
+        self._element_info_provider = element_info_provider
+        self._solid_stack_provider = solid_stack_provider
 
         self._spots_per_ply = 0
         self._interface_indices: dict[Spot, int] = {}
@@ -299,20 +311,17 @@ class SamplingPointSolidStack(SamplingPoint):
     @property
     def polar_properties_E1(self) -> npt.NDArray[np.float64]:
         """Polar property E1 of the laminate."""
-        self._update_and_check_results()
-        return get_data_from_sp_results("layup", "polar_properties", "E1", results=self.results)
+        raise NotImplementedError("Polar properties are not implemented for the sampling point for a solid elements.")
 
     @property
     def polar_properties_E2(self) -> npt.NDArray[np.float64]:
         """Polar property E2 of the laminate."""
-        self._update_and_check_results()
-        return get_data_from_sp_results("layup", "polar_properties", "E2", results=self.results)
+        raise NotImplementedError("Polar properties are not implemented for the sampling point for a solid elements.")
 
     @property
     def polar_properties_G12(self) -> npt.NDArray[np.float64]:
         """Polar property G12 of the laminate."""
-        self._update_and_check_results()
-        return get_data_from_sp_results("layup", "polar_properties", "G12", results=self.results)
+        raise NotImplementedError("Polar properties are not implemented for the sampling point for a solid elements.")
 
     @property
     def number_of_plies(self) -> int:
@@ -326,85 +335,161 @@ class SamplingPointSolidStack(SamplingPoint):
 
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
-        scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
-        scope_config = dpf.DataTree()
-        if self._time:
-            scope_config.add({"requested_times": [self._time]})
-        scope_config_reader_op.inputs.scope_configuration(scope_config)
 
-        evaluate_failure_criterion_per_scope_op = dpf.Operator(
-            "composite::evaluate_failure_criterion_per_scope"
+        # Get solid stack to select all the elements in the stack
+        solid_stack = self._solid_stack_provider.get_solid_stack(self.element_id)
+        if not solid_stack:
+            raise RuntimeError(f"Solid stack for element {self.element_id} not found.")
+
+        #todo: remove this debug output
+        print(f"Solid stacks: {solid_stack}")
+
+        element_scope = dpf.Scoping(location="elemental")
+        element_scope.ids = solid_stack.element_ids
+
+        stress_operator = dpf.operators.result.stress()
+        stress_operator.inputs.streams_container.connect(self._rst_streams_provider)
+        stress_operator.inputs.bool_rotate_to_global(False)
+
+        elastic_strain_operator = dpf.operators.result.elastic_strain()
+        elastic_strain_operator.inputs.streams_container.connect(self._rst_streams_provider)
+        elastic_strain_operator.inputs.bool_rotate_to_global(False)
+
+        failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
+        failure_evaluator.inputs.configuration(self.combined_criterion.to_json())
+        failure_evaluator.inputs.materials_container(self._material_operators.material_provider)
+        failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
+        failure_evaluator.inputs.strains_container(elastic_strain_operator.outputs.fields_container)
+        failure_evaluator.inputs.mesh(self._meshed_region)
+
+        elemental_nodal_failure_container = failure_evaluator.outputs.fields_container.get_data()
+        irf_field = elemental_nodal_failure_container.get_field(
+            {
+                "failure_label": FailureOutput.FAILURE_VALUE,
+                "time": self._time,
+            }
+        )
+        failure_model_field = elemental_nodal_failure_container.get_field(
+            {
+                "failure_label": FailureOutput.FAILURE_MODE,
+                "time": self._time,
+            }
         )
 
-        # Live evaluation is not yet supported
-        evaluate_failure_criterion_per_scope_op.inputs.criterion_configuration(
-            self.combined_criterion.to_json()
+        solid_stack.get_through_the_thickness_failure_results()
+
+        print(f"    Solid stacks: {solid_stack}")
+        failure_results = solid_stack.get_through_the_thickness_failure_results(
+            self._element_info_provider, irf_field, failure_model_field
         )
 
-        evaluate_failure_criterion_per_scope_op.inputs.scope_configuration(
-            scope_config_reader_op.outputs
-        )
-
-        scope = dpf.Scoping()
-        scope.ids = [self.element_id]
-        evaluate_failure_criterion_per_scope_op.inputs.element_scoping(scope)
-        evaluate_failure_criterion_per_scope_op.inputs.materials_container(
-            self._material_operators.material_provider.outputs
-        )
-        evaluate_failure_criterion_per_scope_op.inputs.stream_provider(self._rst_streams_provider)
-        evaluate_failure_criterion_per_scope_op.inputs.mesh(self._meshed_region)
-        # pylint: disable=protected-access
-        if version_equal_or_later(self._meshed_region._server, "8.0"):
-            layup_model_context = _get_layup_model_context(self._layup_provider)
-            evaluate_failure_criterion_per_scope_op.inputs.layup_model_context_type(
-                layup_model_context
+        stress_field = (
+            stress_operator
+            .outputs.fields_container()
+            .get_field(
+                {
+                    "time": self._time,
+                }
             )
-        else:
-            evaluate_failure_criterion_per_scope_op.inputs.has_layup_provider(True)
-        evaluate_failure_criterion_per_scope_op.inputs.section_data_container(
-            self._layup_provider.outputs.section_data_container
+        )
+        elastic_strain_field = (
+            stress_operator
+            .outputs.fields_container()
+            .get_field(
+                {
+                    "time": self._time,
+                }
+            )
         )
 
-        evaluate_failure_criterion_per_scope_op.inputs.material_fields(
-            self._layup_provider.outputs.material_fields
-        )
-        evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
-            self._layup_provider.outputs.mesh_properties_container
-        )
-        evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
-
-        sampling_point_evaluator = dpf.Operator("composite::evaluate_sampling_point")
-
-        sampling_point_evaluator.inputs.materials_container(
-            self._material_operators.material_provider.outputs
-        )
-        sampling_point_evaluator.inputs.material_support(
-            self._material_operators.material_support_provider.outputs
-        )
-        sampling_point_evaluator.inputs.mesh(self._meshed_region)
-        sampling_point_evaluator.inputs.stresses_container(
-            evaluate_failure_criterion_per_scope_op.outputs.stresses_container
-        )
-        sampling_point_evaluator.inputs.strains_container(
-            evaluate_failure_criterion_per_scope_op.outputs.strains_container
-        )
-        sampling_point_evaluator.inputs.element_scoping(scope)
-        sampling_point_evaluator.inputs.section_data_container(
-            self._layup_provider.outputs.section_data_container
+        basic_results = solid_stack.get_through_the_thickness_results(
+            self._element_info_provider,
+            stress_field,
+            elastic_strain_field
         )
 
-        sampling_point_evaluator.inputs.time_id(
-            evaluate_failure_criterion_per_scope_op.outputs.time_id
-        )
-        sampling_point_evaluator.inputs.unit_system(self._unit_system)
-        sampling_point_evaluator.inputs.failure_container(
-            evaluate_failure_criterion_per_scope_op.outputs.failure_container
-        )
-        sampling_point_evaluator.inputs.extract_max_failure_per_layer(False)
-        sampling_point_evaluator.inputs.check_mechanical_unit_system(False)
+        analysis_plies = []
+        for ply_id in solid_stack.analysis_plies:
+            analysis_plies.append(
+                self._analysis_ply_info_provider.
+                AnalysisPly(
+                    angle=0,
+                    global_ply_number=ply_id,
+                    id=f"P1L1__core",
+                    is_core=True,
+                    material="Honeycomb",
+                    thickness=0.005
+                )
+            )
 
-        sampling_point_to_json_converter = dpf.Operator("composite::convert_sampling_point_to_json")
-        sampling_point_to_json_converter.connect(0, sampling_point_evaluator, 0)
+
+        """
+        DONE 'element_label' -> n/a
+        'layup'
+          'analysis_plies' -> List of Analysis Plies
+               AnalysisPly{
+                   'angle': 0,
+                   'global_ply_number': 4000000000001,
+                   'id': 'P1L1__core',
+                   'is_core': True,
+                   'material': 'Honeycomb',
+                   'thickness': 0.005
+               }
+          DONE 'num_analysis_plies' -> int
+          DONE 'offset' -> 0.0
+          DONE 'polar_properties' -> n/a
+        
+        'results'
+            'failures'
+                'failure_modes' -> list of strings such as s12, cf ...
+                'inverse_reserve_factor'
+                'margin_of_safety'
+                'reserve_factor'
+        
+            'offsets' -> list of offsets (num layers * num spots)
+            'strains'
+                'e1', 'e12', 'e13', 'e2', 'e23', 'e3', 'eI', 'eII', 'eIII'
+            'stresses'
+                's1', 's12', 's13', 's2', 's23', 's3', 'sI', 'sII', 'sIII'
+               
+        'unit_system': e.g. 'MKS: m, kg, N, s, V, A, degC'
+        """
+
+        """
+        How to extract analysis ply info from property field
+        Todo: write operator to extract properties from a property field
+        
+        AnalysisPlyInfo get_ply_info_from_property_field(CPropertyField& analysis_ply_property_field_) {
+        auto get_property = [&](const std::string& const_key, auto& return_value)
+        {
+            auto key = const_key;
+            auto found = analysis_ply_property_field_.GetProperty(key, return_value);
+            if (!found) throw std::logic_error("Missing key: " + key);
+
+        };
+        
+        std::string global_ply_id_string;
+        get_property(global_ply_id_key, global_ply_id_string);
+        int analysis_ply_index;
+        get_property(analysis_ply_index_key, analysis_ply_index);
+        double analysis_ply_angle;
+        get_property(analysis_ply_design_angle_key, analysis_ply_angle);
+        double production_ply_angle;
+        get_property(production_ply_design_angle_key, production_ply_angle);
+        double modeling_ply_angle;
+        get_property(modeling_ply_design_angle_key, modeling_ply_angle);
+        int active_in_post;
+        get_property(active_in_post_key, active_in_post);
+        """
+        self._results = {
+            'element_label': self._element_id,
+            'layup': {
+                'analysis_plies': ...,
+                'num_analysis_plies': len(solid_stack.number_of_analysis_plies),
+                'offset': 0.0,
+                'polar_properties': None
+            }
+        }
 
         # update internal members
         self._results = json.loads(
