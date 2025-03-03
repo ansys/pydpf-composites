@@ -125,8 +125,9 @@ sampling_point = composite_model.get_sampling_point(combined_criterion=combined_
 sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
 sampling_plot.figure.show()
 
-# %% Layer-wise failure criteria
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# %%
+# Layer-wise failure criteria
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # The next lines show how to compute layer-wise failure criteria
 # and how to access the data of each layer.
 
