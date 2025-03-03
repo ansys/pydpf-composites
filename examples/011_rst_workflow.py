@@ -129,28 +129,26 @@ sampling_plot.figure.show()
 # Layer-wise failure criteria
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # The next lines show how to compute layer-wise failure criteria
-# and how to access the data of each layer.
+# data and how to access it. Ply-wise filtering
+# (by analysis ply name) is not supported in the RST workflow
+# because the plies are not available in the RST file.
+#
 
 # %%
-# Create a combined failure criterion
-combined_fc = CombinedFailureCriterion(
-    name="My Failure Criteria",
-    failure_criteria=[
-        MaxStrainCriterion(),
-        MaxStressCriterion(),
-    ],
-)
+# First, the inputs for the multiple failure criteria operator have to
+# be prepared.
 
-# %%
-# Prepare and configure inputs for the multiple failure criteria operator
-# Note: the output has the same format as the input
-# (strain and stress fields). So there is one failure value and mode for each
-# integration point, layer and element, for all time steps.
 strain_operator = composite_model.core_model.results.elastic_strain()
 strain_operator.inputs.bool_rotate_to_global(False)
 
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
+
+# %%
+# Then, the operator is initialized and the inputs are connected.
+# Note: the output of the multiple failure criteria operator has the same format
+# as the input (strain and stress fields). So there is one failure value
+# and mode for each integration point, layer and element, for all time steps.
 
 failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
 failure_evaluator.inputs.configuration(combined_fc.to_json())
@@ -160,6 +158,7 @@ failure_evaluator.inputs.materials_container(
 failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(composite_model.get_mesh())
+failure_evaluator.inputs.fields_container(composite_model.get_layup_operator().outputs.section_data_container)
 irf_field = failure_evaluator.outputs.fields_container.get_data().get_field(
     {"failure_label": FailureOutput.FAILURE_VALUE, "time": 1}
 )
