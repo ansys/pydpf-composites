@@ -169,7 +169,7 @@ failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_f
 # %%
 # Access the data of each layer. Details about how to store custom
 # data in a DPF field is shown at the end of
-# :ref:`Material properties and custom failure criterion <sphx_glr_examples_gallery_examples_004_get_material_properties_example.py>`.
+# :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`.
 
 for element_id in irf_field.scoping.ids:
     irf_data = irf_field.get_entity_data_by_id(element_id)
