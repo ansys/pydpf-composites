@@ -158,7 +158,9 @@ failure_evaluator.inputs.materials_container(
 failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
 failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
 failure_evaluator.inputs.mesh(composite_model.get_mesh())
-failure_evaluator.inputs.fields_container(composite_model.get_layup_operator().outputs.section_data_container)
+failure_evaluator.inputs.fields_container(
+    composite_model.get_layup_operator().outputs.section_data_container
+)
 irf_field = failure_evaluator.outputs.fields_container.get_data().get_field(
     {"failure_label": FailureOutput.FAILURE_VALUE, "time": 1}
 )
