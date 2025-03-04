@@ -99,7 +99,7 @@ information, see `Import of Legacy Mechanical APDL Composite Models`_ in the Ans
 
 API Changes
 '''''''''''
-These are the incompatible changes in the API of PyDPF and the underlying DPF operators:
+These are the incompatible changes in the API of PyDPF - Composites and the underlying DPF operators:
   - With DPF server 10.0 (2025 R2), the input pin ``fields_container`` of the ``composite::multiple_failure_criteria_operator`` is named ``section_data_container``.
 
 .. _Ansys Workbench: https://download.ansys.com/Current%20Release
