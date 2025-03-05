@@ -175,7 +175,7 @@ failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_f
 
 for element_id in irf_field.scoping.ids:
     irf_data = irf_field.get_entity_data_by_id(element_id)
-    model_data = failure_mode_field.get_entity_data_by_id(element_id)
+    mode_data = failure_mode_field.get_entity_data_by_id(element_id)
     element_info = composite_model.get_element_info(element_id)
     element_max = 0
     for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
