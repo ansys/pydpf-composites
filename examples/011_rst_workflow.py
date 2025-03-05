@@ -177,7 +177,9 @@ failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_f
 # Or in other words, it shows how uniform the laminate is loaded.
 # A high intensity means there is a big difference between the maxima failure
 # values of the layers.
-failure_intensity_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+failure_intensity_field = dpf.field.Field(
+    location=dpf.locations.elemental, nature=dpf.natures.scalar
+)
 
 with failure_intensity_field.as_local_field() as local_field:
     for element_id in irf_field.scoping.ids:
@@ -196,7 +198,7 @@ with failure_intensity_field.as_local_field() as local_field:
             if max_value < lowest_critical_layer_irf:
                 lowest_critical_layer_irf = max_value
 
-        local_field.append([most_critical_layer_irf-lowest_critical_layer_irf], element_id)
+        local_field.append([most_critical_layer_irf - lowest_critical_layer_irf], element_id)
 
 composite_model.get_mesh().plot(failure_intensity_field)
 
