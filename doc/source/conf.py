@@ -83,7 +83,7 @@ intersphinx_mapping = {
 nitpick_ignore = [
     ("py:class", "NDArray"),
     ("py:class", "int64"),
-    ("py:data", "typing.Union [ref.data]"),
+    ("py:data", "typing.Union[ref.data]"),
 ]
 nitpick_ignore_regex = [
     ("py:class", r"numpy\..*"),
