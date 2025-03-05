@@ -164,25 +164,41 @@ failure_evaluator.inputs.section_data_container(
 irf_field = failure_evaluator.outputs.fields_container.get_data().get_field(
     {"failure_label": FailureOutput.FAILURE_VALUE, "time": 1}
 )
+
+# %%
+# failure_mode_field is not used further, but it is demonstrated how to access it.
 failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_field(
     {"failure_label": FailureOutput.FAILURE_MODE, "time": 1}
 )
 
 # %%
-# Access the data of each layer. Details about how to store custom
-# data in a DPF field is shown at the end of
-# :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`.
+# This example computes a "failure intensity" which is here the difference
+# between the maxima of the most critical and the lowest critical layer.
+# Or in other words, it shows how uniform the laminate is loaded.
+# A high intensity means there is a big difference between the maxima failure
+# values of the layers.
+failure_intensity_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 
-for element_id in irf_field.scoping.ids:
-    irf_data = irf_field.get_entity_data_by_id(element_id)
-    mode_data = failure_mode_field.get_entity_data_by_id(element_id)
-    element_info = composite_model.get_element_info(element_id)
-    element_max = 0
-    for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
-        selected_indices = get_selected_indices(element_info, layers=[layer_index])
-        layer_irf_values = irf_data[selected_indices]
-        layer_mode_values = model_data[selected_indices]
-        # Do something with the layer data
+with failure_intensity_field.as_local_field() as local_field:
+    for element_id in irf_field.scoping.ids:
+        irf_data = irf_field.get_entity_data_by_id(element_id)
+        element_info = composite_model.get_element_info(element_id)
+
+        most_critical_layer_irf = 0.0
+        lowest_critical_layer_irf = 1e9
+
+        for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
+            selected_indices = get_selected_indices(element_info, layers=[layer_index])
+            layer_irf_values = irf_data[selected_indices]
+            max_value = layer_irf_values.max()
+            if max_value > most_critical_layer_irf:
+                most_critical_layer_irf = max_value
+            if max_value < lowest_critical_layer_irf:
+                lowest_critical_layer_irf = max_value
+
+        local_field.append([most_critical_layer_irf-lowest_critical_layer_irf], element_id)
+
+composite_model.get_mesh().plot(failure_intensity_field)
 
 # %%
 # Create Engineering Data file and set material UUIDs in MAPDL
