@@ -20,8 +20,8 @@
 
 .. _rst_workflow_example:
 
-Failure analysis of an MAPDL (RST) model
-----------------------------------------
+Failure analysis of a MAPDL (RST) model
+---------------------------------------
 
 This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
@@ -37,7 +37,8 @@ material UUIDs in MAPDL.
 
 .. important::
    The material UUIDs in the engineering data file must be identical
-   to the UUIDs in Mechanical APDL (RST file).
+   to the UUIDs in Mechanical APDL (RST file). A detailed explanation
+   can be found at the end of this example.
 
 The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
 and later. A few advanced features are not supported with the RST only workflow.
@@ -49,7 +50,7 @@ For more information, see :ref:`limitations`.
     use the :func:`.composite_files_from_workbench_harmonic_analysis`
     method to obtain the input files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-63
+.. GENERATED FROM PYTHON SOURCE LINES 58-64
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -58,10 +59,12 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-77
+.. GENERATED FROM PYTHON SOURCE LINES 64-81
 
 .. code-block:: Python
 
+
+    import ansys.dpf.core as dpf
 
     from ansys.dpf.composites.composite_model import CompositeModel
     from ansys.dpf.composites.constants import FailureOutput
@@ -74,6 +77,7 @@ Load Ansys libraries.
         MaxStressCriterion,
         VonMisesCriterion,
     )
+    from ansys.dpf.composites.select_indices import get_selected_indices
     from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 
@@ -83,11 +87,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-79
+.. GENERATED FROM PYTHON SOURCE LINES 82-83
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-81
+.. GENERATED FROM PYTHON SOURCE LINES 83-85
 
 .. code-block:: Python
 
@@ -100,11 +104,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-83
+.. GENERATED FROM PYTHON SOURCE LINES 86-87
 
 Get input files (RST and material.engd but skip the ACP layup file).
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-86
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
 
 .. code-block:: Python
 
@@ -119,18 +123,18 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140003613083392/169e4c2d-91ab-4569-be4d-1e4478d762d3/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140003613083392/eb8eede6-c9a9-4539-ac45-e696222239ed/material.engd', files_are_local=False)
+    ContinuousFiberCompositesFiles(rst=['/tmp/dataProcessingTemp140247774004992/716c7245-34e3-4f34-ae4d-ecab1420b419/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140247774004992/4252fcf9-ed70-4eea-bb8a-4d26c759e593/material.engd', files_are_local=False)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-90
+.. GENERATED FROM PYTHON SOURCE LINES 91-94
 
 Configure combined failure criterion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configure the combined failure criterion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-102
+.. GENERATED FROM PYTHON SOURCE LINES 94-106
 
 .. code-block:: Python
 
@@ -153,13 +157,13 @@ Configure the combined failure criterion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 103-106
+.. GENERATED FROM PYTHON SOURCE LINES 107-110
 
 Set up model and evaluate failures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-109
+.. GENERATED FROM PYTHON SOURCE LINES 110-113
 
 .. code-block:: Python
 
@@ -173,11 +177,11 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-111
+.. GENERATED FROM PYTHON SOURCE LINES 114-115
 
 Evaluate failures for the entire model
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-117
+.. GENERATED FROM PYTHON SOURCE LINES 115-121
 
 .. code-block:: Python
 
@@ -221,19 +225,18 @@ Evaluate failures for the entire model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-120
+.. GENERATED FROM PYTHON SOURCE LINES 122-124
 
 Create and plot a sampling point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 120-125
+.. GENERATED FROM PYTHON SOURCE LINES 124-128
 
 .. code-block:: Python
 
     sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=2)
     sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
     sampling_plot.figure.show()
-
 
 
 
@@ -247,7 +250,164 @@ Create and plot a sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-144
+.. GENERATED FROM PYTHON SOURCE LINES 129-136
+
+Layer-wise failure criteria
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The next lines show how to compute layer-wise failure criteria
+data and how to access it. Ply-wise filtering
+(by analysis ply name) is not supported in the RST workflow
+because the plies are not available in the RST file.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 138-140
+
+First, the inputs for the multiple failure criteria operator have to
+be prepared.
+
+.. GENERATED FROM PYTHON SOURCE LINES 140-147
+
+.. code-block:: Python
+
+
+    strain_operator = composite_model.core_model.results.elastic_strain()
+    strain_operator.inputs.bool_rotate_to_global(False)
+
+    stress_operator = composite_model.core_model.results.stress()
+    stress_operator.inputs.bool_rotate_to_global(False)
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 148-152
+
+Then, the operator is initialized and the inputs are connected.
+Note: the output of the multiple failure criteria operator has the same format
+as the input (strain and stress fields). So there is one failure value
+and mode for each integration point, layer and element, for all time steps.
+
+.. GENERATED FROM PYTHON SOURCE LINES 152-168
+
+.. code-block:: Python
+
+
+    failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
+    failure_evaluator.inputs.configuration(combined_fc.to_json())
+    failure_evaluator.inputs.materials_container(
+        composite_model.material_operators.material_provider.outputs
+    )
+    failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
+    failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
+    failure_evaluator.inputs.mesh(composite_model.get_mesh())
+    failure_evaluator.inputs.section_data_container(
+        composite_model.get_layup_operator().outputs.section_data_container
+    )
+    irf_field = failure_evaluator.outputs.fields_container.get_data().get_field(
+        {"failure_label": FailureOutput.FAILURE_VALUE, "time": 1}
+    )
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 169-170
+
+failure_mode_field is not used further, but it is demonstrated how to access it.
+
+.. GENERATED FROM PYTHON SOURCE LINES 170-174
+
+.. code-block:: Python
+
+    failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_field(
+        {"failure_label": FailureOutput.FAILURE_MODE, "time": 1}
+    )
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 175-180
+
+This example computes a "failure intensity" which is in this case the
+difference between the maxima of the most critical and the lowest
+critical layer. Or in other words, it shows how uniform the laminate is
+loaded. A high intensity means there is a big difference between the
+maxima failure values of the layers.
+
+.. GENERATED FROM PYTHON SOURCE LINES 180-205
+
+.. code-block:: Python
+
+    failure_intensity_field = dpf.field.Field(
+        location=dpf.locations.elemental, nature=dpf.natures.scalar
+    )
+
+    with failure_intensity_field.as_local_field() as local_field:
+        for element_id in irf_field.scoping.ids:
+            irf_data = irf_field.get_entity_data_by_id(element_id)
+            element_info = composite_model.get_element_info(element_id)
+
+            most_critical_layer_irf = 0.0
+            lowest_critical_layer_irf = 1e9
+
+            for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
+                selected_indices = get_selected_indices(element_info, layers=[layer_index])
+                layer_irf_values = irf_data[selected_indices]
+                max_value = layer_irf_values.max()
+                if max_value > most_critical_layer_irf:
+                    most_critical_layer_irf = max_value
+                if max_value < lowest_critical_layer_irf:
+                    lowest_critical_layer_irf = max_value
+
+            local_field.append([most_critical_layer_irf - lowest_critical_layer_irf], element_id)
+
+    composite_model.get_mesh().plot(failure_intensity_field)
+
+
+
+
+
+
+
+
+.. tab-set::
+
+
+
+   .. tab-item:: Static Scene
+
+
+
+            
+     .. image-sg:: /examples/gallery_examples/images/sphx_glr_011_rst_workflow_003.png
+        :alt: 011 rst workflow
+        :srcset: /examples/gallery_examples/images/sphx_glr_011_rst_workflow_003.png
+        :class: sphx-glr-single-img
+     
+
+
+   .. tab-item:: Interactive Scene
+
+
+
+       .. offlineviewer:: /home/runner/work/pydpf-composites/pydpf-composites/doc/source/examples/gallery_examples/images/sphx_glr_011_rst_workflow_003.vtksz
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 206-224
 
 Create Engineering Data file and set material UUIDs in MAPDL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -271,7 +431,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.261 seconds)
+   **Total running time of the script:** (0 minutes 7.794 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:

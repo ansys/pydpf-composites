@@ -574,6 +574,15 @@ temperature is considered for the evaluation of variable material properties.</p
 <p>Note: MAPDL models that have not been preprocessed with ACP can be converted. For more
 information, see <a class="reference external" href="https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v232/en/acp_ug/acp_import_legacy_APDL_comp.html">Import of Legacy Mechanical APDL Composite Models</a> in the Ansys Help.</p>
 </section>
+<section id="api-changes">
+<h2>API changes<a class="headerlink" href="#api-changes" title="Link to this heading">#</a></h2>
+<dl class="simple">
+<dt>These are the incompatible changes in the API of PyDPF - Composites and the underlying DPF operators:</dt><dd><ul class="simple">
+<li><p>With DPF server 10.0 (2025 R2), the input pin <code class="docutils literal notranslate"><span class="pre">fields_container</span></code> of the <code class="docutils literal notranslate"><span class="pre">composite::multiple_failure_criteria_operator</span></code> is renamed to <code class="docutils literal notranslate"><span class="pre">section_data_container</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
 </section>
 
 
@@ -601,6 +610,7 @@ information, see <a class="reference external" href="https://ansyshelp.ansys.com
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key features</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-changes">API changes</a></li>
 </ul>
   </nav></div>
 

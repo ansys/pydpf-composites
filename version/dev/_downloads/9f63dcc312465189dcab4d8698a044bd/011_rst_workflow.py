@@ -23,8 +23,8 @@
 """
 .. _rst_workflow_example:
 
-Failure analysis of an MAPDL (RST) model
-----------------------------------------
+Failure analysis of a MAPDL (RST) model
+---------------------------------------
 
 This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
@@ -40,7 +40,8 @@ material UUIDs in MAPDL.
 
 .. important::
    The material UUIDs in the engineering data file must be identical
-   to the UUIDs in Mechanical APDL (RST file).
+   to the UUIDs in Mechanical APDL (RST file). A detailed explanation
+   can be found at the end of this example.
 
 The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
 and later. A few advanced features are not supported with the RST only workflow.
@@ -61,6 +62,8 @@ For more information, see :ref:`limitations`.
 #
 # Load Ansys libraries.
 
+import ansys.dpf.core as dpf
+
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
@@ -72,6 +75,7 @@ from ansys.dpf.composites.failure_criteria import (
     MaxStressCriterion,
     VonMisesCriterion,
 )
+from ansys.dpf.composites.select_indices import get_selected_indices
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
@@ -121,6 +125,82 @@ sampling_point = composite_model.get_sampling_point(combined_criterion=combined_
 sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
 sampling_plot.figure.show()
 
+# %%
+# Layer-wise failure criteria
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# The next lines show how to compute layer-wise failure criteria
+# data and how to access it. Ply-wise filtering
+# (by analysis ply name) is not supported in the RST workflow
+# because the plies are not available in the RST file.
+#
+
+# %%
+# First, the inputs for the multiple failure criteria operator have to
+# be prepared.
+
+strain_operator = composite_model.core_model.results.elastic_strain()
+strain_operator.inputs.bool_rotate_to_global(False)
+
+stress_operator = composite_model.core_model.results.stress()
+stress_operator.inputs.bool_rotate_to_global(False)
+
+# %%
+# Then, the operator is initialized and the inputs are connected.
+# Note: the output of the multiple failure criteria operator has the same format
+# as the input (strain and stress fields). So there is one failure value
+# and mode for each integration point, layer and element, for all time steps.
+
+failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
+failure_evaluator.inputs.configuration(combined_fc.to_json())
+failure_evaluator.inputs.materials_container(
+    composite_model.material_operators.material_provider.outputs
+)
+failure_evaluator.inputs.strains_container(strain_operator.outputs.fields_container)
+failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
+failure_evaluator.inputs.mesh(composite_model.get_mesh())
+failure_evaluator.inputs.section_data_container(
+    composite_model.get_layup_operator().outputs.section_data_container
+)
+irf_field = failure_evaluator.outputs.fields_container.get_data().get_field(
+    {"failure_label": FailureOutput.FAILURE_VALUE, "time": 1}
+)
+
+# %%
+# failure_mode_field is not used further, but it is demonstrated how to access it.
+failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_field(
+    {"failure_label": FailureOutput.FAILURE_MODE, "time": 1}
+)
+
+# %%
+# This example computes a "failure intensity" which is in this case the
+# difference between the maxima of the most critical and the lowest
+# critical layer. Or in other words, it shows how uniform the laminate is
+# loaded. A high intensity means there is a big difference between the
+# maxima failure values of the layers.
+failure_intensity_field = dpf.field.Field(
+    location=dpf.locations.elemental, nature=dpf.natures.scalar
+)
+
+with failure_intensity_field.as_local_field() as local_field:
+    for element_id in irf_field.scoping.ids:
+        irf_data = irf_field.get_entity_data_by_id(element_id)
+        element_info = composite_model.get_element_info(element_id)
+
+        most_critical_layer_irf = 0.0
+        lowest_critical_layer_irf = 1e9
+
+        for layer_index, dpf_material_id in enumerate(element_info.dpf_material_ids):
+            selected_indices = get_selected_indices(element_info, layers=[layer_index])
+            layer_irf_values = irf_data[selected_indices]
+            max_value = layer_irf_values.max()
+            if max_value > most_critical_layer_irf:
+                most_critical_layer_irf = max_value
+            if max_value < lowest_critical_layer_irf:
+                lowest_critical_layer_irf = max_value
+
+        local_field.append([most_critical_layer_irf - lowest_critical_layer_irf], element_id)
+
+composite_model.get_mesh().plot(failure_intensity_field)
 
 # %%
 # Create Engineering Data file and set material UUIDs in MAPDL

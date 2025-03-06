@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Failure analysis of an MAPDL (RST) model &#8212; PyDPF - Composites</title>
+    <title>Failure analysis of a MAPDL (RST) model &#8212; PyDPF - Composites</title>
   
   
   
@@ -438,7 +438,7 @@
 <li class="toctree-l1"><a class="reference internal" href="008_assembly_example.html">Postprocess an assembly</a></li>
 <li class="toctree-l1"><a class="reference internal" href="009_short_fiber_orientation_tensor.html">Plot of the orientation tensor for short fiber composites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="010_harmonic_example.html">Postprocess a harmonic analysis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Failure analysis of an MAPDL (RST) model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Failure analysis of a MAPDL (RST) model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="012_fatigue_example.html">Evaluate fatigue for a composite plate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="013_thermal_example.html">Thermal analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="014_cyclic_symmetry_example.html">Cyclic symmetry</a></li>
@@ -490,7 +490,7 @@
       <a href="../index.html" class="nav-link">Examples</a>
     </li>
       
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Failure analysis of an MAPDL (RST) model</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Failure analysis of a MAPDL (RST) model</span></li>
     
   </ul>
 </nav>
@@ -513,8 +513,8 @@
 <p><a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-011-rst-workflow-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="failure-analysis-of-an-mapdl-rst-model">
-<span id="rst-workflow-example"></span><span id="sphx-glr-examples-gallery-examples-011-rst-workflow-py"></span><h1>Failure analysis of an MAPDL (RST) model<a class="headerlink" href="#failure-analysis-of-an-mapdl-rst-model" title="Link to this heading">#</a></h1>
+<section class="sphx-glr-example-title" id="failure-analysis-of-a-mapdl-rst-model">
+<span id="rst-workflow-example"></span><span id="sphx-glr-examples-gallery-examples-011-rst-workflow-py"></span><h1>Failure analysis of a MAPDL (RST) model<a class="headerlink" href="#failure-analysis-of-a-mapdl-rst-model" title="Link to this heading">#</a></h1>
 <p>This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
 the section data are loaded from the RST file instead of the ACP layup file.
@@ -528,7 +528,8 @@ material UUIDs in MAPDL.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The material UUIDs in the engineering data file must be identical
-to the UUIDs in Mechanical APDL (RST file).</p>
+to the UUIDs in Mechanical APDL (RST file). A detailed explanation
+can be found at the end of this example.</p>
 </div>
 <p>The postprocessing of MAPDL models is supported in 2024 R2 (DPF Server version 8.0)
 and later. A few advanced features are not supported with the RST only workflow.
@@ -544,7 +545,9 @@ method to obtain the input files.</p>
 <p>Setting up the analysis consists of loading Ansys libraries, connecting to the
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ansys.dpf.core</span> <span class="k">as</span> <span class="nn">dpf</span>
+
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
@@ -555,6 +558,7 @@ DPF server, and retrieving the example files.</p>
     <span class="n">MaxStressCriterion</span><span class="p">,</span>
     <span class="n">VonMisesCriterion</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ansys.dpf.composites.select_indices</span> <span class="kn">import</span> <span class="n">get_selected_indices</span>
 <span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
 </div>
@@ -567,7 +571,7 @@ DPF server, and retrieving the example files.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp140003613083392/169e4c2d-91ab-4569-be4d-1e4478d762d3/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140003613083392/eb8eede6-c9a9-4539-ac45-e696222239ed/material.engd&#39;, files_are_local=False)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp140247774004992/716c7245-34e3-4f34-ae4d-ecab1420b419/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140247774004992/4252fcf9-ed70-4eea-bb8a-4d26c759e593/material.engd&#39;, files_are_local=False)
 </pre></div>
 </div>
 </section>
@@ -616,12 +620,97 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </section>
 <section id="create-and-plot-a-sampling-point">
 <h2>Create and plot a sampling point<a class="headerlink" href="#create-and-plot-a-sampling-point" title="Link to this heading">#</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sampling_plot</span> <span class="o">=</span> <span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">(</span><span class="n">core_scale_factor</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.show.html#matplotlib.figure.Figure.show" title="matplotlib.figure.Figure.show" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">sampling_plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_011_rst_workflow_002.png" srcset="../../_images/sphx_glr_011_rst_workflow_002.png" alt="Strains, Stresses, Failures" class = "sphx-glr-single-img"/></section>
+<section id="layer-wise-failure-criteria">
+<h2>Layer-wise failure criteria<a class="headerlink" href="#layer-wise-failure-criteria" title="Link to this heading">#</a></h2>
+<p>The next lines show how to compute layer-wise failure criteria
+data and how to access it. Ply-wise filtering
+(by analysis ply name) is not supported in the RST workflow
+because the plies are not available in the RST file.</p>
+<p>First, the inputs for the multiple failure criteria operator have to
+be prepared.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.elastic_strain.html#module-ansys.dpf.core.operators.result.elastic_strain" title="ansys.dpf.core.operators.result.elastic_strain" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">strain_operator</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">elastic_strain</span><span class="p">()</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.elastic_strain.html#ansys.dpf.core.operators.result.elastic_strain.elastic_strain.inputs" title="ansys.dpf.core.operators.result.elastic_strain.elastic_strain.inputs" class="sphx-glr-backref-module-ansys-dpf-core-operators-result-elastic_strain sphx-glr-backref-type-py-property"><span class="n">strain_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span></a><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.stress.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.stress.html#ansys.dpf.core.operators.result.stress.stress.inputs" title="ansys.dpf.core.operators.result.stress.stress.inputs" class="sphx-glr-backref-module-ansys-dpf-core-operators-result-stress sphx-glr-backref-type-py-property"><span class="n">stress_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span></a><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, the operator is initialized and the inputs are connected.
+Note: the output of the multiple failure criteria operator has the same format
+as the input (strain and stress fields). So there is one failure value
+and mode for each integration point, layer and element, for all time steps.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_evaluator</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span></a><span class="p">(</span><span class="s2">&quot;composite::multiple_failure_criteria_operator&quot;</span><span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.inputs" title="ansys.dpf.core.dpf_operator.Operator.inputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">configuration</span></a><span class="p">(</span><span class="n">combined_fc</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.inputs" title="ansys.dpf.core.dpf_operator.Operator.inputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">materials_container</span></a><span class="p">(</span>
+    <span class="n">composite_model</span><span class="o">.</span><span class="n">material_operators</span><span class="o">.</span><span class="n">material_provider</span><span class="o">.</span><span class="n">outputs</span>
+<span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.inputs" title="ansys.dpf.core.dpf_operator.Operator.inputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">strains_container</span></a><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.elastic_strain.html#ansys.dpf.core.operators.result.elastic_strain.elastic_strain.outputs" title="ansys.dpf.core.operators.result.elastic_strain.elastic_strain.outputs" class="sphx-glr-backref-module-ansys-dpf-core-operators-result-elastic_strain sphx-glr-backref-type-py-property"><span class="n">strain_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span></a><span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.inputs" title="ansys.dpf.core.dpf_operator.Operator.inputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">stresses_container</span></a><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.operators.result.stress.html#ansys.dpf.core.operators.result.stress.stress.outputs" title="ansys.dpf.core.operators.result.stress.stress.outputs" class="sphx-glr-backref-module-ansys-dpf-core-operators-result-stress sphx-glr-backref-type-py-property"><span class="n">stress_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span></a><span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.inputs" title="ansys.dpf.core.dpf_operator.Operator.inputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span></a><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.inputs" title="ansys.dpf.core.dpf_operator.Operator.inputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">section_data_container</span></a><span class="p">(</span>
+    <span class="n">composite_model</span><span class="o">.</span><span class="n">get_layup_operator</span><span class="p">()</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">section_data_container</span>
+<span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">irf_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.outputs" title="ansys.dpf.core.dpf_operator.Operator.outputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">FAILURE_VALUE</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>failure_mode_field is not used further, but it is demonstrated how to access it.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_mode_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_operator.html#ansys.dpf.core.dpf_operator.Operator.outputs" title="ansys.dpf.core.dpf_operator.Operator.outputs" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-property"><span class="n">failure_evaluator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;failure_label&quot;</span><span class="p">:</span> <span class="n">FailureOutput</span><span class="o">.</span><span class="n">FAILURE_MODE</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This example computes a “failure intensity” which is in this case the
+difference between the maxima of the most critical and the lowest
+critical layer. Or in other words, it shows how uniform the laminate is
+loaded. A high intensity means there is a big difference between the
+maxima failure values of the layers.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_intensity_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span></a><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.common.html#ansys.dpf.core.common.natures" title="ansys.dpf.core.common.natures" class="sphx-glr-backref-module-ansys-dpf-core-common sphx-glr-backref-type-py-enum"><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span></a>
+<span class="p">)</span>
+
+<span class="k">with</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field.as_local_field" title="ansys.dpf.core.field.Field.as_local_field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-method"><span class="n">failure_intensity_field</span><span class="o">.</span><span class="n">as_local_field</span></a><span class="p">()</span> <span class="k">as</span> <span class="n">local_field</span><span class="p">:</span>
+    <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field.scoping" title="ansys.dpf.core.field.Field.scoping" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-property"><span class="n">irf_field</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span></a><span class="p">:</span>
+        <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">irf_data</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field.get_entity_data_by_id" title="ansys.dpf.core.field.Field.get_entity_data_by_id" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-method"><span class="n">irf_field</span><span class="o">.</span><span class="n">get_entity_data_by_id</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+        <span class="n">element_info</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+
+        <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">most_critical_layer_irf</span></a> <span class="o">=</span> <span class="mf">0.0</span>
+        <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lowest_critical_layer_irf</span></a> <span class="o">=</span> <span class="mf">1e9</span>
+
+        <span class="k">for</span> <a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">layer_index</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">dpf_material_id</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_info</span><span class="o">.</span><span class="n">dpf_material_ids</span></a><span class="p">):</span>
+            <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a> <span class="o">=</span> <span class="n">get_selected_indices</span><span class="p">(</span><span class="n">element_info</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><a href="https://docs.python.org/dev/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">layer_index</span></a><span class="p">])</span>
+            <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">layer_irf_values</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">irf_data</span></a><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a><span class="p">]</span>
+            <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_value</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">layer_irf_values</span></a><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="k">if</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_value</span></a> <span class="o">&gt;</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">most_critical_layer_irf</span></a><span class="p">:</span>
+                <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">most_critical_layer_irf</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_value</span></a>
+            <span class="k">if</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_value</span></a> <span class="o">&lt;</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lowest_critical_layer_irf</span></a><span class="p">:</span>
+                <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lowest_critical_layer_irf</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">max_value</span></a>
+
+        <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field.append" title="ansys.dpf.core.field.Field.append" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-method"><span class="n">local_field</span><span class="o">.</span><span class="n">append</span></a><span class="p">([</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">most_critical_layer_irf</span></a> <span class="o">-</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.dpf_array.html#ansys.dpf.core.dpf_array.DPFArray" title="ansys.dpf.gate.dpf_array.DPFArray" class="sphx-glr-backref-module-ansys-dpf-gate-dpf_array sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lowest_critical_layer_irf</span></a><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys.dpf.core.field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">failure_intensity_field</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_011_rst_workflow_003.png" srcset="../../_images/sphx_glr_011_rst_workflow_003.png" alt="011 rst workflow" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_011_rst_workflow_003.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
+</div>
+</section>
 <section id="create-engineering-data-file-and-set-material-uuids-in-mapdl">
 <h2>Create Engineering Data file and set material UUIDs in MAPDL<a class="headerlink" href="#create-engineering-data-file-and-set-material-uuids-in-mapdl" title="Link to this heading">#</a></h2>
 <p>Here are two workflows for setting up the engineering data file
@@ -644,7 +733,7 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
 </ul>
 </dd>
 </dl>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.261 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 7.794 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-rst-workflow-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d13337ce8445f69a22967b872b601ca2/011_rst_workflow.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">011_rst_workflow.ipynb</span></code></a></p>
@@ -687,6 +776,7 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-combined-failure-criterion">Configure combined failure criterion</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-model-and-evaluate-failures">Set up model and evaluate failures</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-plot-a-sampling-point">Create and plot a sampling point</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-wise-failure-criteria">Layer-wise failure criteria</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-engineering-data-file-and-set-material-uuids-in-mapdl">Create Engineering Data file and set material UUIDs in MAPDL</a></li>
 </ul>
   </nav></div>
