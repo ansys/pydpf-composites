@@ -23,8 +23,8 @@
 """
 .. _rst_workflow_example:
 
-Failure analysis of an MAPDL (RST) model
-----------------------------------------
+Failure analysis of a MAPDL (RST) model
+---------------------------------------
 
 This example shows the postprocessing of an MAPDL (RST) model with layered elements that was not
 preprocessed by ACP. The difference between the RST-only and ACP-based workflow is that
@@ -172,11 +172,11 @@ failure_mode_field = failure_evaluator.outputs.fields_container.get_data().get_f
 )
 
 # %%
-# This example computes a "failure intensity" which is here the difference
-# between the maxima of the most critical and the lowest critical layer.
-# Or in other words, it shows how uniform the laminate is loaded.
-# A high intensity means there is a big difference between the maxima failure
-# values of the layers.
+# This example computes a "failure intensity" which is in this case the
+# difference between the maxima of the most critical and the lowest
+# critical layer. Or in other words, it shows how uniform the laminate is
+# loaded. A high intensity means there is a big difference between the
+# maxima failure values of the layers.
 failure_intensity_field = dpf.field.Field(
     location=dpf.locations.elemental, nature=dpf.natures.scalar
 )
