@@ -63,10 +63,6 @@ def test_composite_model_element_scope(dpf_server, data_files):
 
 def test_composite_model_named_selection_scope(dpf_server, data_files, distributed_rst):
     """Ensure that the scoping by Named Selection is supported"""
-    if distributed_rst:
-        # TODO: remove once backend issue #856638 is resolved
-        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
-
     composite_model = CompositeModel(data_files, server=dpf_server)
 
     ns_name = "NS_ELEM"
@@ -172,10 +168,6 @@ def test_composite_model_ply_scope(dpf_server):
 
 def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, distributed_rst):
     """Verify scoping by Named Selection in combination with plies."""
-    if distributed_rst:
-        # TODO: remove once backend issue #856638 is resolved
-        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
-
     composite_model = CompositeModel(data_files, server=dpf_server)
 
     ns_name = "NS_ELEM"
