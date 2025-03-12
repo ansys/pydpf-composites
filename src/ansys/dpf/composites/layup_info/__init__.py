@@ -36,6 +36,7 @@ from ._layup_info import (
     get_dpf_material_id_by_analyis_ply_map,
     get_dpf_material_id_by_analysis_ply_map,
     get_element_info_provider,
+    get_material_names_to_dpf_material_index,
 )
 from ._solid_stack_info import (
     SolidStack,
@@ -56,6 +57,7 @@ __all__ = (
     "get_dpf_material_id_by_analyis_ply_map",
     "get_dpf_material_id_by_analysis_ply_map",
     "get_element_info_provider",
+    "get_material_names_to_dpf_material_index",
     "material_properties",
     "material_operators",
 )

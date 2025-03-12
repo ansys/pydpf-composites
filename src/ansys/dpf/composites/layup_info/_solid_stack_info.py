@@ -60,26 +60,32 @@ def _irf2mos(irf):
 SOLID_SPOTS = [Spot.BOTTOM, Spot.TOP]
 
 
+# todo: check what happens if the stack has drop-off elements (w/o analysis plies)
+
 @dataclass(frozen=True)
 class SolidStack:
     # list of solid element labels ordered from the bottom to the top
     element_ids: list[int]
     # list of analysis plies for each solid element in the stack
     element_wise_analysis_plies: dict[int, list[str]]
-    # z-coordinates bottom, mid and top for each ply
-    # offsets: list[list[float]]
+    element_ply_thicknesses: dict[int, list[float]]
 
     @property
     def num_elements(self):
         return len(self.element_ids)
 
     @property
-    def analysis_plies(self):
-        return [ply for e_id in self.element_ids for ply in self.element_wise_analysis_plies[e_id]]
+    def analysis_ply_ids_and_thicknesses(self):
+        res = []
+        for e_id in self.element_ids:
+            for index, ply_id in enumerate(self.element_wise_analysis_plies[e_id]):
+                res.append((ply_id, self.element_ply_thicknesses[e_id][index]))
+
+        return res
 
     @property
     def number_of_analysis_plies(self):
-        return len(self.analysis_plies)
+        return len(self.analysis_ply_ids_and_thicknesses)
 
     def get_through_the_thickness_failure_results(
         self,
@@ -198,8 +204,9 @@ class SolidStackProvider:
             elementary_data = self._solid_stacks_property_field.get_entity_data(index)
             element_ids = []
             element_wise_analysis_plies: dict[int, Sequence[str]] = {}
-            coords = []
-            current_offset = 0.0
+            element_ply_thicknesses: dict[int, Sequence[float]] = {}
+            # coords = []
+            # current_offset = 0.0
             for element_id, level in elementary_data:
                 ply_ids = self._layup_property_provider.get_analysis_plies(element_id)
                 if ply_ids:
@@ -216,12 +223,13 @@ class SolidStackProvider:
                     #    )
                     #    current_offset += th
                     self._element_id_to_solid_stack_index_map[element_id] = len(self.solid_stacks)
+                    element_ply_thicknesses[int(element_id)] = self._layup_property_provider.get_layer_thicknesses(element_id)
 
             self.solid_stacks.append(
                 SolidStack(
                     element_ids=element_ids,
                     element_wise_analysis_plies=element_wise_analysis_plies,
-                    # offsets=coords,
+                    element_ply_thicknesses=element_ply_thicknesses,
                 )
             )
 
@@ -249,3 +257,43 @@ class SolidStackProvider:
                     selected_stacks.append(stack)
                     processed_elements.extend(stack.element_ids)
         return selected_stacks
+
+
+"""
+'element_label' -> n/a
+'layup'
+  'analysis_plies' -> List of Analysis Plies
+       AnalysisPly{
+           'angle': 0,
+           'global_ply_number': 4000000000001,
+           'id': 'P1L1__core',
+           'is_core': True,
+           'material': 'Honeycomb',
+           'thickness': 0.005
+       }
+  'num_analysis_plies' -> int
+  'offset' -> 0.0
+  'polar_properties' -> n/a
+
+'results'
+    'failures'
+        'failure_modes' -> list of strings such as s12, cf ...
+        'inverse_reserve_factor'
+        'margin_of_safety'
+        'reserve_factor'
+
+    'offsets' -> list of offsets (num layers * num spots)
+    'strains'
+        'e1', 'e12', 'e13', 'e2', 'e23', 'e3', 'eI', 'eII', 'eIII'
+    'stresses'
+        's1', 's12', 's13', 's2', 's23', 's3', 'sI', 'sII', 'sIII'
+       
+'unit_system': e.g. 'MKS: m, kg, N, s, V, A, degC'
+
+
+
+
+SolidStackProvider: run on initializing the model
+
+SolidStack: run on query?
+"""

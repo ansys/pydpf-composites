@@ -187,6 +187,14 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
     return corner_nodes_by_element_type
 
 
+@dataclass(frozen=True)
+class AnalysisPlyInfo:
+    angle: float
+    global_ply_number: int
+    id: str
+    material_name: str
+
+
 class AnalysisPlyInfoProvider:
     """AnalysisPlyInfoProvider. Can be used to compute the layer indices of a given analysis ply.
 
@@ -219,6 +227,20 @@ class AnalysisPlyInfoProvider:
         """Return list of element labels of the analysis ply."""
         return cast(Sequence[np.int64], self.property_field.scoping.ids)
 
+    def basic_info(self) -> AnalysisPlyInfo:
+        # Extract information from property field
+        properties_op = dpf.Operator("composite::get_field_properties_operator")
+        properties_op.inputs.field(self.property_field)
+        # returns a DataTree object
+        properties = properties_op.outputs.properties()
+        as_dict = properties.to_dict()
+
+        return AnalysisPlyInfo(
+            float(as_dict['analysis_ply_design_angle']),
+            int(as_dict['global_ply_id']),
+            self.name,
+            as_dict['material_name'],
+        )
 
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
@@ -567,6 +589,24 @@ def get_element_info_provider(
     }
 
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
+
+
+def get_material_names_to_dpf_material_index(material_container_helper_op: dpf.Operator):
+        """Get a dictionary that maps material names to DPF material IDs."""
+        if material_container_helper_op is None:
+            raise RuntimeError(
+                "The used DPF server does not support the requested data. "
+                "Use version 2024 R1-pre0 or later."
+            )
+
+        string_field = material_container_helper_op.outputs.material_names()
+        material_ids = string_field.scoping.ids
+
+        names = {}
+        for dpf_mat_id in material_ids:
+            names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
+
+        return names
 
 
 class LayupPropertiesProvider:

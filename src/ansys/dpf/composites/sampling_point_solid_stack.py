@@ -22,7 +22,6 @@
 
 """Implements sampling point functionality for a stack of solid elements."""
 from collections.abc import Collection, Sequence
-import json
 from typing import Any
 
 from ansys.dpf.core import UnitSystem
@@ -44,14 +43,14 @@ from ._sampling_point_helpers import (
 )
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info._layup_info import _get_layup_model_context
+from .layup_info._layup_info import get_material_names_to_dpf_material_index
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
-from .server_helpers import version_equal_or_later
 from .unit_system import get_unit_system
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, SolidStackProvider
-
+from .layup_info.material_properties import get_material_metadata
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, LayupPropertiesProvider, SolidStackProvider
+from ansys.dpf.composites.constants import FailureOutput
 
 class SamplingPointSolidStack(SamplingPoint):
     """Implements the ``Sampling Point`` object for a stack of solid elements.
@@ -114,9 +113,10 @@ class SamplingPointSolidStack(SamplingPoint):
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
-        analysis_ply_info_provider: AnalysisPlyInfoProvider,
+        layup_properties_provider: LayupPropertiesProvider,
+        #analysis_ply_info_provider: AnalysisPlyInfoProvider,
         element_info_provider: ElementInfoProvider,
-        solid_stack_provider: SolidStackProvider,
+        # solid_stack_provider: SolidStackProvider,
         default_unit_system: UnitSystem | None = None,
         time: float | None = None,
     ):
@@ -133,9 +133,9 @@ class SamplingPointSolidStack(SamplingPoint):
         self._layup_provider = layup_provider
         self._rst_streams_provider = rst_streams_provider
         self._rst_data_source = rst_data_source
-        self._analysis_ply_info_provider = analysis_ply_info_provider
+        #self._analysis_ply_info_provider = analysis_ply_info_provider
         self._element_info_provider = element_info_provider
-        self._solid_stack_provider = solid_stack_provider
+        self._solid_stack_provider = SolidStackProvider(self._meshed_region, layup_properties_provider)
 
         self._spots_per_ply = 0
         self._interface_indices: dict[Spot, int] = {}
@@ -360,6 +360,9 @@ class SamplingPointSolidStack(SamplingPoint):
         failure_evaluator.inputs.materials_container(self._material_operators.material_provider)
         failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
         failure_evaluator.inputs.strains_container(elastic_strain_operator.outputs.fields_container)
+        failure_evaluator.inputs.section_data_container(
+            self._layup_provider.outputs.section_data_container
+        )
         failure_evaluator.inputs.mesh(self._meshed_region)
 
         elemental_nodal_failure_container = failure_evaluator.outputs.fields_container.get_data()
@@ -375,8 +378,6 @@ class SamplingPointSolidStack(SamplingPoint):
                 "time": self._time,
             }
         )
-
-        solid_stack.get_through_the_thickness_failure_results()
 
         print(f"    Solid stacks: {solid_stack}")
         failure_results = solid_stack.get_through_the_thickness_failure_results(
@@ -409,24 +410,36 @@ class SamplingPointSolidStack(SamplingPoint):
         )
 
         analysis_plies = []
-        for ply_id in solid_stack.analysis_plies:
+        offsets = []
+
+        material_ids_to_dpf_index = get_material_names_to_dpf_material_index(self._material_operators.material_container_helper_op)
+        material_meta_data = get_material_metadata(self._material_operators.material_container_helper_op)
+        for index, ply_id_and_th in enumerate(solid_stack.analysis_ply_ids_and_thicknesses):
+            ap_info_provider = AnalysisPlyInfoProvider(self._meshed_region, ply_id_and_th[0])
+            ap_inf = ap_info_provider.basic_info()
+
+            dpf_mat_index = material_ids_to_dpf_index[ap_inf.material_name]
             analysis_plies.append(
-                self._analysis_ply_info_provider.
-                AnalysisPly(
-                    angle=0,
-                    global_ply_number=ply_id,
-                    id=f"P1L1__core",
-                    is_core=True,
-                    material="Honeycomb",
-                    thickness=0.005
-                )
+                {
+                    "angle": ap_inf.angle,
+                    "global_ply_number": ap_inf.global_ply_number,
+                    "id": ply_id_and_th[0],
+                    "is_core": material_meta_data[dpf_mat_index].is_core,
+                    "material": ap_inf.material_name,
+                    "thickness": ply_id_and_th[1]
+                }
             )
 
+            if index == 0:
+                offsets.extend([0.0, ply_id_and_th[1]])
+            else:
+                offsets.append(offsets[-1])
+                offsets.append(offsets[-1] + ply_id_and_th[1])
 
         """
         DONE 'element_label' -> n/a
         'layup'
-          'analysis_plies' -> List of Analysis Plies
+          DONE 'analysis_plies' -> List of Analysis Plies
                AnalysisPly{
                    'angle': 0,
                    'global_ply_number': 4000000000001,
@@ -446,7 +459,7 @@ class SamplingPointSolidStack(SamplingPoint):
                 DONE 'margin_of_safety'
                 DONE 'reserve_factor'
         
-            'offsets' -> list of offsets (num layers * num spots)
+            DONE 'offsets' -> list of offsets (num layers * num spots)
             DONE 'strains'
                 DONE: 'e1', 'e12', 'e13', 'e2', 'e23', 'e3', 'eI', 'eII', 'eIII'
             DONE 'stresses'
@@ -455,71 +468,44 @@ class SamplingPointSolidStack(SamplingPoint):
         DONE 'unit_system': e.g. 'MKS: m, kg, N, s, V, A, degC'
         """
 
-        """
-        How to extract analysis ply info from property field
-        Todo: write operator to extract properties from a property field
-        
-        AnalysisPlyInfo get_ply_info_from_property_field(CPropertyField& analysis_ply_property_field_) {
-        auto get_property = [&](const std::string& const_key, auto& return_value)
-        {
-            auto key = const_key;
-            auto found = analysis_ply_property_field_.GetProperty(key, return_value);
-            if (!found) throw std::logic_error("Missing key: " + key);
-
-        };
-        
-        std::string global_ply_id_string;
-        get_property(global_ply_id_key, global_ply_id_string);
-        int analysis_ply_index;
-        get_property(analysis_ply_index_key, analysis_ply_index);
-        double analysis_ply_angle;
-        get_property(analysis_ply_design_angle_key, analysis_ply_angle);
-        double production_ply_angle;
-        get_property(production_ply_design_angle_key, production_ply_angle);
-        double modeling_ply_angle;
-        get_property(modeling_ply_design_angle_key, modeling_ply_angle);
-        int active_in_post;
-        get_property(active_in_post_key, active_in_post);
-        """
-        self._results = {
-            'element_label': self._element_id,
-            'layup': {
-                'analysis_plies': None  #todo go on here
-                'num_analysis_plies': len(solid_stack.number_of_analysis_plies),
-                'offset': 0.0,
-                'polar_properties': None
-            },
-            'results': {
-                'failures': {
-                    'failure_modes': [failure_res.mode for failure_res in failure_results],
-                    'inverse_reserve_factor': [failure_res.inverse_reserve_factor for failure_res in failure_results],
-                    'margin_of_safety': [failure_res.margin_of_safety for failure_res in failure_results],
-                    'reserve_factor': [failure_res.reserve_factor for failure_res in failure_results]
+        self._results = [
+            {
+                'element_label': self._element_id,
+                'layup': {
+                    'analysis_plies': analysis_plies,
+                    'num_analysis_plies': solid_stack.number_of_analysis_plies,
+                    'offset': 0.0,
+                    'polar_properties': None
                 },
-                'strains': {
-                    'e1': basic_results['e1'],
-                    'e12': basic_results['e12'],
-                    'e13': basic_results['e13'],
-                    'e2': basic_results['e2'],
-                    'e23': basic_results['e23'],
-                    'e3': basic_results['e3'],
+                'results': {
+                    'failures': {
+                        'failure_modes': [failure_res.mode for failure_res in failure_results],
+                        'inverse_reserve_factor': [failure_res.inverse_reserve_factor for failure_res in failure_results],
+                        'margin_of_safety': [failure_res.safety_margin for failure_res in failure_results],
+                        'reserve_factor': [failure_res.safety_factor for failure_res in failure_results]
+                    },
+                    'strains': {
+                        'e1': basic_results['e1'],
+                        'e12': basic_results['e12'],
+                        'e13': basic_results['e13'],
+                        'e2': basic_results['e2'],
+                        'e23': basic_results['e23'],
+                        'e3': basic_results['e3'],
+                    },
+                    'stresses': {
+                        's1': basic_results['s1'],
+                        's12': basic_results['s12'],
+                        's13': basic_results['s13'],
+                        's2': basic_results['s2'],
+                        's23': basic_results['s23'],
+                        's3': basic_results['s3'],
+                    },
+                    'offsets': offsets,
                 },
-                'stresses': {
-                    's1': basic_results['s1'],
-                    's12': basic_results['s12'],
-                    's13': basic_results['s13'],
-                    's2': basic_results['s2'],
-                    's23': basic_results['s23'],
-                    's3': basic_results['s3'],
-                }
-            },
-            'unit_system': self._unit_system.name
-        }
+                'unit_system': self._unit_system.name
+            }
+        ]
 
-        # update internal members
-        self._results = json.loads(
-            sampling_point_to_json_converter.get_output(pin=0, output_type=dpf.types.string)
-        )
         if not self._results or len(self._results) == 0:
             raise RuntimeError(f"Sampling point {self.name} has no results.")
         if self._results and len(self._results) > 1:
@@ -537,7 +523,7 @@ class SamplingPointSolidStack(SamplingPoint):
             )
 
         if self._spots_per_ply == 3:
-            self._interface_indices = {Spot.BOTTOM: 0, Spot.MIDDLE: 1, Spot.TOP: 2}
+            raise RuntimeError("Sampling Point for a solid stack can have only 2 spots per ply.")
         elif self._spots_per_ply == 2:
             self._interface_indices = {Spot.BOTTOM: 0, Spot.TOP: 1}
         elif self._spots_per_ply == 1:
@@ -548,7 +534,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._is_uptodate = True
 
     def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
+        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP)
     ) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
@@ -573,7 +559,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -679,7 +665,7 @@ class SamplingPointSolidStack(SamplingPoint):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP),
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 

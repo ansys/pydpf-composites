@@ -21,15 +21,14 @@
 # SOFTWARE.
 
 """
-.. _assembly_example:
+.. _solid_model_example:
 
-Postprocess an assembly
------------------------
+Postprocess a solid model
+-------------------------
 
-This example shows how to postprocess an assembly with multiple composite parts.
-The assembly consists of a shell and solid composite model. The
-:class:`Composite Model <.CompositeModel>` class is used to access
-the data of the different parts.
+This example shows some specific feature for the postprocessing of
+solid models. The model is an assembly with solid and shell elements.
+
 
 .. note::
 
@@ -56,33 +55,107 @@ from numpy.typing import NDArray
 
 from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
 from ansys.dpf.composites.constants import FailureOutput, Sym3x3TensorComponent
-from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
     FailureModeEnum,
     MaxStressCriterion,
+    CoreFailureCriterion,
+    FaceSheetWrinklingCriterion,
+    HashinCriterion
 )
 from ansys.dpf.composites.select_indices import get_selected_indices
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+from ansys.dpf.composites.constants import Spot
 
 # Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
 
-result_folder = r"D:\tmp\ge_blade_files\dp0\SYS\MECH"
-composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+#result_folder = r"D:\tmp\ge_blade_files\dp0\SYS\MECH"
+#composite_files = get_composite_files_from_workbench_result_folder(result_folder)
+composite_files_on_server = get_continuous_fiber_example_files(server, "assembly")
 
 # Configure combined failure criterion
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configure the combined failure criterion.
 combined_fc = CombinedFailureCriterion(
     name="failure of all materials",
-    failure_criteria=[MaxStressCriterion()],
+    failure_criteria=[
+        MaxStressCriterion(),
+        CoreFailureCriterion(),
+        # FaceSheetWrinklingCriterion(),
+        HashinCriterion(),
+    ],
 )
+
+# todo: check what happens if the solid stack has degenerated elements
 
 # Set up model
 # ~~~~~~~~~~~~
 # Set up the composite model.
-composite_model = CompositeModel(composite_files, server)
+composite_model = CompositeModel(composite_files_on_server, server)
+
+# Plot failure on reference surface
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# The first feature is to plot the failure results on the reference surface.
+# This feature projects the failure results from the solid elements to the shell elements
+# and the overall maximum failure (most critical value) is plotted on the reference surface.
+# This makes the critical areas of the solid elements visible on the reference surface.
+output_all_elements = composite_model.evaluate_failure_criteria(
+    combined_criterion=combined_fc,
+)
+
+irf_on_ref_surface_field = output_all_elements.get_field(
+    {"failure_label": FailureOutput.FAILURE_VALUE_REF_SURFACE}
+)
+irf_on_ref_surface_field.plot()
+
+
+# Sampling point for solids
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
+# The next feature is to create a sampling point for solid elements.
+# The user selects one solid element and the feature automatically selects
+# the entire stack of solid elements of the laminate to plot the
+# through-the-thickness results.
+
+# get result of the last time step
+irf_max_field = output_all_elements.get_field(
+    {
+        "failure_label": FailureOutput.FAILURE_VALUE,
+    }
+)
+
+irf_max_field.plot()
+
+# Extract critical solid element
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Find the critical solid elements with IRF > LIMIT
+# and the corresponding solid stack
+
+critical_solid_id = 0
+critical_irf = -1.0
+critical_solid_elements = {}
+for index, element_id in enumerate(irf_max_field.scoping.ids):
+    max_irf = max(irf_max_field.get_entity_data(index))
+    # only consider solid elements because the model is an assembly of shells and solids
+    if max_irf > critical_irf and not composite_model.get_element_info(element_id).is_shell:
+        critical_solid_id = element_id
+        critical_irf = max_irf
+
+
+sampling_point_solid_stack = composite_model.get_sampling_point(
+    combined_criterion=combined_fc, element_id=critical_solid_id, time=1
+)
+
+sampling_point_plot = sampling_point_solid_stack.get_result_plots(
+    strain_components=[],  # do not plot strains
+    #core_scale_factor=0.1,
+    #spots=[Spot.BOTTOM, Spot.TOP],
+    show_failure_modes=True,
+)
+sampling_point_plot.figure.set_figheight(8)
+sampling_point_plot.figure.set_figwidth(12)
+sampling_point_plot.figure.show()
 
 # %%
 # Solid Stack Information
@@ -330,7 +403,7 @@ for index, element_id in enumerate(irf_max_field.scoping.ids):
 
 print("num critical solid elements:", len(critical_solid_elements))
 PROCESS_NUM_CRITICAL_ELEMENTS = (
-    20 if len(critical_solid_elements) > 20 else len(critical_solid_elements)
+    50 if len(critical_solid_elements) > 50 else len(critical_solid_elements)
 )
 print("NUM_CRITICAL_ELEMENTS:", PROCESS_NUM_CRITICAL_ELEMENTS)
 # Get the NUM_CRITICAL_ELEMENTS most critical solid elements

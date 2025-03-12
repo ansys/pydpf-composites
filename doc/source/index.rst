@@ -94,6 +94,8 @@ Limitations
 
   - Plotting results on the reference surface of a laminate.
 
+  - Sampling Point for solid elements (solid models)
+
 Note: MAPDL models that have not been preprocessed with ACP can be converted. For more
 information, see `Import of Legacy Mechanical APDL Composite Models`_ in the Ansys Help.
 

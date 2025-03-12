@@ -356,16 +356,18 @@ def get_result_plots_from_sp(
                 failure_axis, internal_fc, spots, core_scale_factor, "Failures", "[-]"
             )
 
+            # todo: compute middle values
             if show_failure_modes:
-                middle_offsets = sampling_point.get_offsets_by_spots(
-                    spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
+                fm_offsets = sampling_point.get_offsets_by_spots(
+                    spots=[Spot.MIDDLE if Spot.MIDDLE in spots else spots[0]],
+                    core_scale_factor=core_scale_factor
                 )
                 critical_failures = sampling_point.get_ply_wise_critical_failures()
 
-                if len(critical_failures) != len(middle_offsets):
+                if len(critical_failures) != len(fm_offsets):
                     raise IndexError("Sizes of failures and offsets do not match.")
 
-                for index, offset in enumerate(middle_offsets):
+                for index, offset in enumerate(fm_offsets):
                     for fc in failure_components:
                         failure_axis.annotate(
                             getattr(critical_failures[index], "mode"),
