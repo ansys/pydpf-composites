@@ -21,10 +21,10 @@
 # SOFTWARE.
 
 import pathlib
+from collections.abc import Sequence
 
 import numpy as np
 import pytest
-from typing import Sequence
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
@@ -43,7 +43,9 @@ from .helper import get_basic_shell_files
 SEPARATOR = "::"
 
 
-def get_scope(composite_model: CompositeModel, distributed_rst: bool, ply_ids: Sequence[str] = None) -> CompositeScope:
+def get_scope(
+    composite_model: CompositeModel, distributed_rst: bool, ply_ids: Sequence[str] = None
+) -> CompositeScope:
     if distributed_rst:
         # Named selection is missing in the distributed result
         return CompositeScope(elements=[2, 3])
@@ -76,11 +78,17 @@ def test_composite_model_element_scope(dpf_server, data_files):
 
 def test_composite_model_named_selection_scope(dpf_server, data_files, distributed_rst):
     """Ensure that the scoping by Named Selection is supported"""
-    composite_model = CompositeModel(data_files, server=dpf_server)
 
+    if version_older_than(dpf_server, "8.0"):
+        # Due to issue #856638
+        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
+
+    composite_model = CompositeModel(data_files, server=dpf_server)
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
-    failure_container = composite_model.evaluate_failure_criteria(cfc, get_scope(composite_model, distributed_rst))
+    failure_container = composite_model.evaluate_failure_criteria(
+        cfc, get_scope(composite_model, distributed_rst)
+    )
     irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
     assert irfs.get_entity_data_by_id(2) == pytest.approx(1.4792790331384016, 1e-8)
@@ -176,6 +184,10 @@ def test_composite_model_ply_scope(dpf_server):
 def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, distributed_rst):
     """Verify scoping by Named Selection in combination with plies."""
     composite_model = CompositeModel(data_files, server=dpf_server)
+
+    if version_older_than(dpf_server, "8.0"):
+        # Due to issue #856638
+        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
 
     ply_ids = ["P1L1__woven_45.2", "P1L1__ud.2"]
     analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
