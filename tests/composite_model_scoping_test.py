@@ -24,6 +24,7 @@ import pathlib
 
 import numpy as np
 import pytest
+from typing import Sequence
 
 from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
 from ansys.dpf.composites.constants import FAILURE_LABEL, FailureOutput
@@ -40,6 +41,18 @@ from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
 from .helper import get_basic_shell_files
 
 SEPARATOR = "::"
+
+
+def get_scope(composite_model: CompositeModel, distributed_rst: bool, ply_ids: Sequence[str] = None) -> CompositeScope:
+    if distributed_rst:
+        # Named selection is missing in the distributed result
+        return CompositeScope(elements=[2, 3])
+    else:
+        ns_name = "NS_ELEM"
+        assert ns_name in composite_model.get_mesh().available_named_selections
+        ns_scope = composite_model.get_mesh().named_selection(ns_name)
+        assert list(ns_scope.ids) == [2, 3]
+        return CompositeScope(named_selections=[ns_name], plies=ply_ids)
 
 
 def test_composite_model_element_scope(dpf_server, data_files):
@@ -65,15 +78,9 @@ def test_composite_model_named_selection_scope(dpf_server, data_files, distribut
     """Ensure that the scoping by Named Selection is supported"""
     composite_model = CompositeModel(data_files, server=dpf_server)
 
-    ns_name = "NS_ELEM"
-    assert ns_name in composite_model.get_mesh().available_named_selections
-    ns_scope = composite_model.get_mesh().named_selection(ns_name)
-    assert list(ns_scope.ids) == [2, 3]
-
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
-    scope = CompositeScope(named_selections=[ns_name])
-    failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
+    failure_container = composite_model.evaluate_failure_criteria(cfc, get_scope(composite_model, distributed_rst))
     irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
     assert irfs.get_entity_data_by_id(2) == pytest.approx(1.4792790331384016, 1e-8)
@@ -170,21 +177,17 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
     """Verify scoping by Named Selection in combination with plies."""
     composite_model = CompositeModel(data_files, server=dpf_server)
 
-    ns_name = "NS_ELEM"
-    assert ns_name in composite_model.get_mesh().available_named_selections
-    ns_scope = composite_model.get_mesh().named_selection(ns_name)
-    assert list(ns_scope.ids) == [2, 3]
-
     ply_ids = ["P1L1__woven_45.2", "P1L1__ud.2"]
     analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
     for ply in ply_ids:
         assert ply in analysis_plies
 
+    scope = get_scope(composite_model, distributed_rst, ply_ids)
+
     cfc = CombinedFailureCriterion(
         "combined", failure_criteria=[HashinCriterion(), MaxStressCriterion()]
     )
 
-    scope = CompositeScope(named_selections=[ns_name], plies=ply_ids)
     failure_container = composite_model.evaluate_failure_criteria(cfc, scope)
     irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     modes = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_MODE})
