@@ -44,7 +44,7 @@ SEPARATOR = "::"
 
 
 def get_scope(
-    composite_model: CompositeModel, distributed_rst: bool, ply_ids: Sequence[str] = None
+    composite_model: CompositeModel, distributed_rst: bool, ply_ids: Sequence[str]
 ) -> CompositeScope:
     if distributed_rst:
         # Named selection is missing in the distributed result
@@ -87,7 +87,7 @@ def test_composite_model_named_selection_scope(dpf_server, data_files, distribut
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
 
     failure_container = composite_model.evaluate_failure_criteria(
-        cfc, get_scope(composite_model, distributed_rst)
+        cfc, get_scope(composite_model, distributed_rst, [])
     )
     irfs = failure_container.get_field({FAILURE_LABEL: FailureOutput.FAILURE_VALUE})
     assert len(irfs.data) == 2
