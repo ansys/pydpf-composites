@@ -81,7 +81,10 @@ def test_composite_model_named_selection_scope(dpf_server, data_files, distribut
 
     if version_older_than(dpf_server, "8.0"):
         # Due to issue #856638
-        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
+        pytest.xfail(
+            "The mesh property provider of DPF servers older than 8.0"
+            " does not support distributed RST."
+        )
 
     composite_model = CompositeModel(data_files, server=dpf_server)
     cfc = CombinedFailureCriterion("max stress", failure_criteria=[MaxStressCriterion()])
@@ -185,9 +188,6 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
     """Verify scoping by Named Selection in combination with plies."""
     composite_model = CompositeModel(data_files, server=dpf_server)
 
-    #  if distributed_rst:
-    #     # Due to issue #856638
-    #     pytest.xfail("This test still fails even issue 856638 is resolved.")
     if version_older_than(dpf_server, "8.0"):
         # Due to issue #856638
         pytest.xfail(
