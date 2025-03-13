@@ -185,9 +185,15 @@ def test_composite_model_named_selection_and_ply_scope(dpf_server, data_files, d
     """Verify scoping by Named Selection in combination with plies."""
     composite_model = CompositeModel(data_files, server=dpf_server)
 
-    if distributed_rst:
+    #  if distributed_rst:
+    #     # Due to issue #856638
+    #     pytest.xfail("This test still fails even issue 856638 is resolved.")
+    if version_older_than(dpf_server, "8.0"):
         # Due to issue #856638
-        pytest.xfail("This test still fails even issue 856638 is resolved.")
+        pytest.xfail(
+            "The mesh property provider of DPF servers older than 8.0"
+            " does not support distributed RST."
+        )
 
     ply_ids = ["P1L1__woven_45.2", "P1L1__ud.2"]
     analysis_plies = get_all_analysis_ply_names(composite_model.get_mesh())
