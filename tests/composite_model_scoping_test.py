@@ -48,7 +48,7 @@ def get_scope(
 ) -> CompositeScope:
     if distributed_rst:
         # Named selection is missing in the distributed result
-        return CompositeScope(elements=[2, 3])
+        return CompositeScope(elements=[2, 3], plies=ply_ids)
     else:
         ns_name = "NS_ELEM"
         assert ns_name in composite_model.get_mesh().available_named_selections
