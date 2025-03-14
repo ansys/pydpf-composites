@@ -357,15 +357,29 @@ def get_result_plots_from_sp(
             )
 
             if show_failure_modes:
-                middle_offsets = sampling_point.get_offsets_by_spots(
-                    spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
-                )
+                if Spot.MIDDLE in spots:
+                    fm_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.MIDDLE],
+                        core_scale_factor=core_scale_factor
+                    )
+                else:
+                    bot_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.BOTTOM],
+                        core_scale_factor=core_scale_factor
+                    )
+                    top_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.TOP],
+                        core_scale_factor=core_scale_factor
+                    )
+                    fm_offsets = np.array(bot_offsets + top_offsets) / 2.0
+
+
                 critical_failures = sampling_point.get_ply_wise_critical_failures()
 
-                if len(critical_failures) != len(middle_offsets):
+                if len(critical_failures) != len(fm_offsets):
                     raise IndexError("Sizes of failures and offsets do not match.")
 
-                for index, offset in enumerate(middle_offsets):
+                for index, offset in enumerate(fm_offsets):
                     for fc in failure_components:
                         failure_axis.annotate(
                             getattr(critical_failures[index], "mode"),
