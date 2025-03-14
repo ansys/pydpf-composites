@@ -344,6 +344,10 @@ class SamplingPointSolidStack(SamplingPoint):
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
 
+        if not self._time:
+            # TODO: check how the standard sampling point handles this
+            raise RuntimeError("Time must be set before running the sampling point operator.")
+
         # Get solid stack to select all the elements in the stack
         self._solid_stack = self._solid_stack_provider.get_solid_stack(self.element_id)
         if not self._solid_stack:
@@ -405,7 +409,7 @@ class SamplingPointSolidStack(SamplingPoint):
             )
         )
         elastic_strain_field = (
-            stress_operator
+            elastic_strain_operator
             .outputs.fields_container()
             .get_field(
                 {

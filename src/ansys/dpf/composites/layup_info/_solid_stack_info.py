@@ -21,8 +21,8 @@
 # SOFTWARE.
 
 from dataclasses import dataclass
-
 from collections.abc import Sequence
+import numpy as np
 
 from ansys.dpf.composites.layup_info import ElementInfoProvider
 import ansys.dpf.core as dpf
@@ -36,6 +36,7 @@ from ..sampling_point_types import FailureResult
 from ..select_indices import get_selected_indices
 
 MAX_RESERVE_FACTOR = 1000.0
+SOLID_SPOTS = [Spot.BOTTOM, Spot.TOP]
 
 def _irf2rf(irf):
     if irf == 0.0:
@@ -49,8 +50,6 @@ def _irf2mos(irf):
     rf = _irf2rf(irf)
     return rf - 1.0
 
-
-SOLID_SPOTS = [Spot.BOTTOM, Spot.TOP]
 
 # todo: check what happens if the stack has drop-off elements (w/o analysis plies)
 
@@ -245,7 +244,7 @@ def get_through_the_thickness_results(
                     element_info, layers=[ply_index], nodes=None, spots=[spot]
                 )
                 for component_index, component_name in enumerate(component_names):
-                    max_value = float(this_element_values[selected_indices][:, component_index].max())
-                    results[component_name].append(max_value)
+                    ave_value = np.average(this_element_values[selected_indices][:, component_index])
+                    results[component_name].append(float(ave_value))
 
     return results
