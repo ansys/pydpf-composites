@@ -27,6 +27,7 @@ from typing import Any
 from ansys.dpf.core import UnitSystem
 import numpy as np
 import numpy.typing as npt
+from matplotlib.patches import Rectangle
 
 from ansys.dpf import core as dpf
 
@@ -41,16 +42,24 @@ from ._sampling_point_helpers import (
     get_polar_plot_from_sp,
     get_result_plots_from_sp,
 )
-from .constants import Spot
+
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info._layup_info import get_material_names_to_dpf_material_index
+from .layup_info._layup_info import get_material_names_to_dpf_material_index, _get_layup_model_context
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 from .unit_system import get_unit_system
 from .layup_info.material_properties import get_material_metadata
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, LayupPropertiesProvider, SolidStackProvider
-from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, LayupPropertiesProvider, SolidStack, SolidStackProvider, get_through_the_thickness_results, get_through_the_thickness_failure_results
+from ansys.dpf.composites.constants import (
+    FailureOutput,
+    Spot,
+    Sym3x3TensorComponent,
+    strain_component_name,
+    stress_component_name,
+)
+
+from .server_helpers import version_older_than
 
 class SamplingPointSolidStack(SamplingPoint):
     """Implements the ``Sampling Point`` object for a stack of solid elements.
@@ -75,8 +84,9 @@ class SamplingPointSolidStack(SamplingPoint):
     The results of layered elements are stored per integration point. A layered shell element
     has a number of in-plane integration points (depending on the integration scheme) and
     typically three integration points through the thickness. The through-the-thickness
-    integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
+    integration points are called `spots`. They are typically at the ``BOTTOM``
     and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
+    Note that ``MIDDLE`` is not available for solid elements.
 
     The ``SamplingPoint`` class returns three results per layer (one for each spot) because
     the results of the in-plane integration points are interpolated to the centroid of the element.
@@ -86,16 +96,13 @@ class SamplingPointSolidStack(SamplingPoint):
     +------------+------------+------------------------+
     | Layer      | Index      | Spot                   |
     +============+============+========================+
-    |            | - 8        | - TOP of Layer 3       |
-    | Layer 3    | - 7        | - MIDDLE of Layer 3    |
-    |            | - 6        | - BOTTOM of Layer 3    |
+    | Layer 3    | - 5        | - TOP of Layer 3       |
+    |            | - 4        | - BOTTOM of Layer 3    |
     +------------+------------+------------------------+
-    |            | - 5        | - TOP of Layer 2       |
-    | Layer 2    | - 4        | - MIDDLE of Layer 2    |
-    |            | - 3        | - BOTTOM of Layer 2    |
+    | Layer 2    | - 3        | - TOP of Layer 2       |
+    |            | - 2        | - BOTTOM of Layer 2    |
     +------------+------------+------------------------+
-    |            | - 2        | - TOP of Layer 1       |
-    | Layer 1    | - 1        | - MIDDLE of Layer 1    |
+    | Layer 1    | - 1        | - TOP of Layer 1       |
     |            | - 0        | - BOTTOM of Layer 1    |
     +------------+------------+------------------------+
 
@@ -114,15 +121,16 @@ class SamplingPointSolidStack(SamplingPoint):
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
         layup_properties_provider: LayupPropertiesProvider,
-        #analysis_ply_info_provider: AnalysisPlyInfoProvider,
         element_info_provider: ElementInfoProvider,
-        # solid_stack_provider: SolidStackProvider,
         default_unit_system: UnitSystem | None = None,
         time: float | None = None,
     ):
         """Create a ``SamplingPoint`` object."""
 
-        # todo: check which inputs are really needed
+        if version_older_than(meshed_region._server, "10.0"):
+            raise RuntimeError("DPF server version 10.0 (2025 R2) or later is required"
+                               " for the support of sampling points for solids.")
+
         self._name = name
         self._element_id = element_id
         self._time = time
@@ -133,7 +141,6 @@ class SamplingPointSolidStack(SamplingPoint):
         self._layup_provider = layup_provider
         self._rst_streams_provider = rst_streams_provider
         self._rst_data_source = rst_data_source
-        #self._analysis_ply_info_provider = analysis_ply_info_provider
         self._element_info_provider = element_info_provider
         self._solid_stack_provider = SolidStackProvider(self._meshed_region, layup_properties_provider)
 
@@ -142,6 +149,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._results: Any = None
         self._is_uptodate = False
         self._unit_system = get_unit_system(self._rst_data_source, default_unit_system)
+        self._solid_stack: SolidStack | None = None
 
     @property
     def name(self) -> str:
@@ -337,15 +345,12 @@ class SamplingPointSolidStack(SamplingPoint):
         """Build and run the DPF operator network and cache the results."""
 
         # Get solid stack to select all the elements in the stack
-        solid_stack = self._solid_stack_provider.get_solid_stack(self.element_id)
-        if not solid_stack:
+        self._solid_stack = self._solid_stack_provider.get_solid_stack(self.element_id)
+        if not self._solid_stack:
             raise RuntimeError(f"Solid stack for element {self.element_id} not found.")
 
-        #todo: remove this debug output
-        print(f"Solid stacks: {solid_stack}")
-
         element_scope = dpf.Scoping(location="elemental")
-        element_scope.ids = solid_stack.element_ids
+        element_scope.ids = self._solid_stack.element_ids
 
         stress_operator = dpf.operators.result.stress()
         stress_operator.inputs.streams_container.connect(self._rst_streams_provider)
@@ -363,6 +368,12 @@ class SamplingPointSolidStack(SamplingPoint):
         failure_evaluator.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
+        failure_evaluator.inputs.mesh_properties_container(
+            self._layup_provider.outputs.mesh_properties_container
+        )
+        failure_evaluator.inputs.layup_model_context_type(
+            _get_layup_model_context(self._layup_provider)
+        )
         failure_evaluator.inputs.mesh(self._meshed_region)
 
         elemental_nodal_failure_container = failure_evaluator.outputs.fields_container.get_data()
@@ -379,8 +390,8 @@ class SamplingPointSolidStack(SamplingPoint):
             }
         )
 
-        print(f"    Solid stacks: {solid_stack}")
-        failure_results = solid_stack.get_through_the_thickness_failure_results(
+        failure_results = get_through_the_thickness_failure_results(
+            self._solid_stack,
             self._element_info_provider, irf_field, failure_model_field
         )
 
@@ -403,10 +414,17 @@ class SamplingPointSolidStack(SamplingPoint):
             )
         )
 
-        basic_results = solid_stack.get_through_the_thickness_results(
+        stress_results = get_through_the_thickness_results(
+            self._solid_stack,
             self._element_info_provider,
             stress_field,
-            elastic_strain_field
+            [stress_component_name(component) for component in Sym3x3TensorComponent]
+        )
+        strain_results = get_through_the_thickness_results(
+            self._solid_stack,
+            self._element_info_provider,
+            elastic_strain_field,
+            [strain_component_name(component) for component in Sym3x3TensorComponent]
         )
 
         analysis_plies = []
@@ -414,7 +432,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
         material_ids_to_dpf_index = get_material_names_to_dpf_material_index(self._material_operators.material_container_helper_op)
         material_meta_data = get_material_metadata(self._material_operators.material_container_helper_op)
-        for index, ply_id_and_th in enumerate(solid_stack.analysis_ply_ids_and_thicknesses):
+        for index, ply_id_and_th in enumerate(self._solid_stack.analysis_ply_ids_and_thicknesses):
             ap_info_provider = AnalysisPlyInfoProvider(self._meshed_region, ply_id_and_th[0])
             ap_inf = ap_info_provider.basic_info()
 
@@ -436,44 +454,12 @@ class SamplingPointSolidStack(SamplingPoint):
                 offsets.append(offsets[-1])
                 offsets.append(offsets[-1] + ply_id_and_th[1])
 
-        """
-        DONE 'element_label' -> n/a
-        'layup'
-          DONE 'analysis_plies' -> List of Analysis Plies
-               AnalysisPly{
-                   'angle': 0,
-                   'global_ply_number': 4000000000001,
-                   'id': 'P1L1__core',
-                   'is_core': True,
-                   'material': 'Honeycomb',
-                   'thickness': 0.005
-               }
-          DONE 'num_analysis_plies' -> int
-          DONE 'offset' -> 0.0
-          DONE 'polar_properties' -> n/a
-        
-        'results'
-            DONE 'failures'
-                DONE 'failure_modes' -> list of strings such as s12, cf ...
-                DONE 'inverse_reserve_factor'
-                DONE 'margin_of_safety'
-                DONE 'reserve_factor'
-        
-            DONE 'offsets' -> list of offsets (num layers * num spots)
-            DONE 'strains'
-                DONE: 'e1', 'e12', 'e13', 'e2', 'e23', 'e3', 'eI', 'eII', 'eIII'
-            DONE 'stresses'
-                DONE: 's1', 's12', 's13', 's2', 's23', 's3', 'sI', 'sII', 'sIII'
-               
-        DONE 'unit_system': e.g. 'MKS: m, kg, N, s, V, A, degC'
-        """
-
         self._results = [
             {
                 'element_label': self._element_id,
                 'layup': {
                     'analysis_plies': analysis_plies,
-                    'num_analysis_plies': solid_stack.number_of_analysis_plies,
+                    'num_analysis_plies': self._solid_stack.number_of_analysis_plies,
                     'offset': 0.0,
                     'polar_properties': None
                 },
@@ -485,20 +471,20 @@ class SamplingPointSolidStack(SamplingPoint):
                         'reserve_factor': [failure_res.safety_factor for failure_res in failure_results]
                     },
                     'strains': {
-                        'e1': basic_results['e1'],
-                        'e12': basic_results['e12'],
-                        'e13': basic_results['e13'],
-                        'e2': basic_results['e2'],
-                        'e23': basic_results['e23'],
-                        'e3': basic_results['e3'],
+                        'e1': strain_results['e1'],
+                        'e12': strain_results['e12'],
+                        'e13': strain_results['e13'],
+                        'e2': strain_results['e2'],
+                        'e23': strain_results['e23'],
+                        'e3': strain_results['e3'],
                     },
                     'stresses': {
-                        's1': basic_results['s1'],
-                        's12': basic_results['s12'],
-                        's13': basic_results['s13'],
-                        's2': basic_results['s2'],
-                        's23': basic_results['s23'],
-                        's3': basic_results['s3'],
+                        's1': stress_results['s1'],
+                        's12': stress_results['s12'],
+                        's13': stress_results['s13'],
+                        's2': stress_results['s2'],
+                        's23': stress_results['s23'],
+                        's3': stress_results['s3'],
                     },
                     'offsets': offsets,
                 },
@@ -530,6 +516,8 @@ class SamplingPointSolidStack(SamplingPoint):
             raise RuntimeError(
                 "Result files that only have results at the middle of the ply are not supported."
             )
+        else:
+            raise RuntimeError(f"Invalid number of spots ({self._spots_per_ply}) per ply.")
 
         self._is_uptodate = True
 
@@ -623,6 +611,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._update_and_check_results()
         add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
 
+    # todo: add element boundaries to the plot
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
 
@@ -698,7 +687,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
         """
         self._update_and_check_results()
-        return get_result_plots_from_sp(
+        sp_figure = get_result_plots_from_sp(
             self,
             strain_components,
             stress_components,
@@ -708,6 +697,63 @@ class SamplingPointSolidStack(SamplingPoint):
             core_scale_factor,
             spots,
         )
+        if create_laminate_plot:
+            self.add_element_boxes_to_plot(
+                sp_figure.axes[0],
+                core_scale_factor
+            )
+
+        return sp_figure
+
+    def add_element_boxes_to_plot(self,
+                                  axes: Any,
+                                  core_scale_factor: float = 1.0,
+                                  alpha=0.2) -> None:
+            """Add the element stack (boxes) to an axis or plot.
+
+            Parameters
+            ----------
+            axes :
+                Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+            core_scale_factor :
+                Factor for scaling the thickness of core plies.
+            alpha :
+                Transparency of the element boxes.
+            """
+            self._update_and_check_results()
+            plY_offsets = self.get_offsets_by_spots(
+                spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
+            )
+
+            element_offsets = []
+            ply_index = 0
+            for _, element_ply_ids in self._solid_stack.element_wise_analysis_plies.items():
+                element_offsets.append(plY_offsets[2*ply_index])
+                ply_index += len(element_ply_ids)
+                element_offsets.append(plY_offsets[2*ply_index -1])
+
+            if len(element_offsets) == 0:
+                return
+
+            num_spots = 2
+            axes.set_ybound(element_offsets[0], element_offsets[-1])
+            x_bound = axes.get_xbound()
+            width = x_bound[1] - x_bound[0]
+
+            colors = ('b', 'g', 'r', 'c', 'm', 'y')
+            for index, ply in enumerate(self._solid_stack.element_ids):
+                hatch = ""
+                axes.add_patch(
+                    Rectangle(
+                        xy=(float(x_bound[0]), float(element_offsets[index * num_spots])),
+                        width=width,
+                        height=float(element_offsets[(index + 1) * num_spots - 1] - element_offsets[index * num_spots]),
+                        fill=True,
+                        hatch=hatch,
+                        alpha=alpha,
+                        color=colors[index % len(colors)]
+                    )
+                )
 
     def _update_and_check_results(self) -> None:
         if not self._is_uptodate or not self._results:

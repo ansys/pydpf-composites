@@ -356,12 +356,24 @@ def get_result_plots_from_sp(
                 failure_axis, internal_fc, spots, core_scale_factor, "Failures", "[-]"
             )
 
-            # todo: compute middle values
             if show_failure_modes:
-                fm_offsets = sampling_point.get_offsets_by_spots(
-                    spots=[Spot.MIDDLE if Spot.MIDDLE in spots else spots[0]],
-                    core_scale_factor=core_scale_factor
-                )
+                if Spot.MIDDLE in spots:
+                    fm_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.MIDDLE],
+                        core_scale_factor=core_scale_factor
+                    )
+                else:
+                    bot_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.BOTTOM],
+                        core_scale_factor=core_scale_factor
+                    )
+                    top_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.TOP],
+                        core_scale_factor=core_scale_factor
+                    )
+                    fm_offsets = np.array(bot_offsets + top_offsets) / 2.0
+
+
                 critical_failures = sampling_point.get_ply_wise_critical_failures()
 
                 if len(critical_failures) != len(fm_offsets):
