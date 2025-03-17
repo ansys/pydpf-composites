@@ -235,6 +235,7 @@ class AnalysisPlyInfoProvider:
         properties = properties_op.outputs.properties()
         as_dict = properties.to_dict()
 
+        # todo: add nominal thickness
         return AnalysisPlyInfo(
             float(as_dict['analysis_ply_design_angle']),
             int(as_dict['global_ply_id']),

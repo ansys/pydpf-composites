@@ -30,7 +30,7 @@ from ansys.dpf.core import MeshedRegion
 
 from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.failure_criteria import FailureModeEnum
-from ansys.dpf.composites.layup_info import LayupPropertiesProvider
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, LayupPropertiesProvider, get_all_analysis_ply_names
 
 from ..sampling_point_types import FailureResult
 from ..select_indices import get_selected_indices
@@ -60,6 +60,7 @@ class SolidStack:
     # list of analysis plies for each solid element in the stack
     element_wise_analysis_plies: dict[int, Sequence[str]]
     element_ply_thicknesses: dict[int, Sequence[float]]
+    element_wise_levels: dict[int, Sequence[int]]
 
     @property
     def num_elements(self):
@@ -73,6 +74,15 @@ class SolidStack:
                 res.append((ply_id, self.element_ply_thicknesses[e_id][index]))
 
         return res
+
+    @property
+    def level_element_ids(self) -> dict[int, Sequence[int]]:
+        levels = set([l for e, levels in self.element_wise_levels for l in levels])
+        level_element_ids = {l: [] for l in levels}
+        for e, levels in self.element_wise_levels:
+            for l in levels:
+                level_element_ids[l].append(e)
+        return level_element_ids
 
     @property
     def number_of_analysis_plies(self):
@@ -96,6 +106,11 @@ class SolidStackProvider:
             self.SOLID_STACK_PROPERTY_FIELD_NAME
         )
 
+        # Collect all analysis ply fields to process the homogeneous
+        # elements (drop-offs and cut-offs) which are linked to an
+        # analysis ply but have no layers
+        self._analysis_ply_names = get_all_analysis_ply_names(self._mesh)
+
         self._element_id_to_solid_stack_index_map = {}
         self._solid_stacks: list[SolidStack] = []
         # prepare solid stack info
@@ -110,13 +125,28 @@ class SolidStackProvider:
         """All solid stacks in the mesh."""
         return self._solid_stacks
 
+
+    def _get_analysis_ply_info_for_homogeneous_element(self, element_id):
+        """Get the analysis ply info for homogeneous elements."""
+        analysis_ply_infos = {}
+        for ply_name in self._analysis_ply_names:
+            analysis_ply_info_provider = AnalysisPlyInfoProvider(self._mesh, ply_name)
+            if element_id in analysis_ply_info_provider.ply_element_ids():
+                basic_ap_info = analysis_ply_info_provider.basic_info()
+                analysis_ply_infos[ply_name] = 0.0001555  #todo: replace by nominal thickness
+
+        return analysis_ply_infos
+
+
     def _prepare_data(self):
         for index in range(0, self.number_of_stacks):
             elementary_data = self._solid_stacks_property_field.get_entity_data(index)
             element_ids = []
             element_wise_analysis_plies: dict[int, Sequence[str]] = {}
             element_ply_thicknesses: dict[int, Sequence[float]] = {}
+            element_wise_levels: dict[int, Sequence[int]] = {}
             for element_id, level in elementary_data:
+                element_wise_levels[int(element_id)] = level
                 ply_ids = self._layup_property_provider.get_analysis_plies(element_id)
                 if ply_ids:
                     # only proces elements with plies
@@ -127,11 +157,20 @@ class SolidStackProvider:
                         self._layup_property_provider.get_layer_thicknesses(element_id)
                     )
 
+                else:
+                    ply_infos = self._get_analysis_ply_info_for_homogeneous_element(element_id)
+                    if ply_infos:
+                        element_ids.append(int(element_id))
+                        element_wise_analysis_plies[element_id] = list(ply_infos.keys())
+                        self._element_id_to_solid_stack_index_map[element_id] = len(self._solid_stacks)
+                        element_ply_thicknesses[int(element_id)] = list(ply_infos.values())
+
             self._solid_stacks.append(
                 SolidStack(
                     element_ids=element_ids,
                     element_wise_analysis_plies=element_wise_analysis_plies,
                     element_ply_thicknesses=element_ply_thicknesses,
+                    element_wise_levels=element_wise_levels
                 )
             )
 
@@ -161,6 +200,7 @@ class SolidStackProvider:
         return selected_stacks
 
 
+#TODO: move to separate file
 def get_through_the_thickness_failure_results(
     solid_stack: SolidStack,
     element_info_provider: ElementInfoProvider,
@@ -188,24 +228,38 @@ def get_through_the_thickness_failure_results(
         element_info = element_info_provider.get_element_info(element_id)
         for ply_index, ply_id in enumerate(plies):
             # select all data points of the ply / layer for each spot separately
-            for spot in SOLID_SPOTS:
-
-                selected_indices = get_selected_indices(
-                    element_info, layers=[ply_index], nodes=None, spots=[spot]
-                )
-                spot_wise_irfs = this_element_irfs[selected_indices]
-                index_of_max = spot_wise_irfs.argmax()
-                spot_wise_modes = this_element_modes[selected_indices]
-
-                irf = float(spot_wise_irfs[index_of_max])
-                failure_results.append(
-                    FailureResult(
-                        FailureModeEnum(int(spot_wise_modes[index_of_max])).name,
-                        irf,
-                        _irf2rf(irf),
-                        _irf2mos(irf),
+            if element_info.is_layered:
+                for spot in SOLID_SPOTS:
+                    selected_indices = get_selected_indices(
+                        element_info, layers=[ply_index], nodes=None, spots=[spot]
                     )
+                    spot_wise_irfs = this_element_irfs[selected_indices]
+                    index_of_max = spot_wise_irfs.argmax()
+                    spot_wise_modes = this_element_modes[selected_indices]
+
+                    irf = float(spot_wise_irfs[index_of_max])
+                    failure_results.append(
+                        FailureResult(
+                            FailureModeEnum(int(spot_wise_modes[index_of_max])).name,
+                            irf,
+                            _irf2rf(irf),
+                            _irf2mos(irf),
+                        )
+                    )
+            else:
+                # homogeneous element: there is no spot and so the same value is stored for both spots
+                index_of_max = this_element_irfs.argmax()
+                irf = float(this_element_irfs[index_of_max])
+                f_res = FailureResult(
+                    FailureModeEnum(int(this_element_modes[index_of_max])).name,
+                    irf,
+                    _irf2rf(irf),
+                    _irf2mos(irf),
                 )
+                for _ in SOLID_SPOTS:
+                    failure_results.append(
+                        f_res
+                    )
 
     return failure_results
 
@@ -238,13 +292,20 @@ def get_through_the_thickness_results(
 
         plies = solid_stack.element_wise_analysis_plies[element_id]
         for ply_index, ply_id in enumerate(plies):
-            for spot in SOLID_SPOTS:
-                # select all data points of the ply / layers (all nodes and spots)
-                selected_indices = get_selected_indices(
-                    element_info, layers=[ply_index], nodes=None, spots=[spot]
-                )
+            if element_info.is_layered:
+                for spot in SOLID_SPOTS:
+                    # select all data points of the ply / layers (all nodes and spots)
+                    selected_indices = get_selected_indices(
+                        element_info, layers=[ply_index], nodes=None, spots=[spot]
+                    )
+                    for component_index, component_name in enumerate(component_names):
+                        ave_value = np.average(this_element_values[selected_indices][:, component_index])
+                        results[component_name].append(float(ave_value))
+            else:
+                # homogeneous element: there is no spot and so the same value is stored for both spots
                 for component_index, component_name in enumerate(component_names):
-                    ave_value = np.average(this_element_values[selected_indices][:, component_index])
-                    results[component_name].append(float(ave_value))
+                    ave_value = np.average(this_element_values[:, component_index])
+                    for _ in SOLID_SPOTS:
+                        results[component_name].append(float(ave_value))
 
     return results
