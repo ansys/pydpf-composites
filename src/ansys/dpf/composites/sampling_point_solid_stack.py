@@ -142,6 +142,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._rst_streams_provider = rst_streams_provider
         self._rst_data_source = rst_data_source
         self._element_info_provider = element_info_provider
+        # todo: use MeshPropertyFieldLabel to get the virtual thickness of homogeneous elements
         self._solid_stack_provider = SolidStackProvider(self._meshed_region, layup_properties_provider)
 
         self._spots_per_ply = 0
@@ -731,7 +732,8 @@ class SamplingPointSolidStack(SamplingPoint):
 
             element_offsets = []
             ply_index = 0
-            for _, element_ply_ids in self._solid_stack.element_wise_analysis_plies.items():
+            for level, element_ids in self._solid_stack.level_element_ids.items():
+                element_ply_ids = self._solid_stack.element_wise_analysis_plies[element_ids[0]]
                 element_offsets.append(plY_offsets[2*ply_index])
                 ply_index += len(element_ply_ids)
                 element_offsets.append(plY_offsets[2*ply_index -1])
@@ -745,7 +747,7 @@ class SamplingPointSolidStack(SamplingPoint):
             width = x_bound[1] - x_bound[0]
 
             colors = ('b', 'g', 'r', 'c', 'm', 'y')
-            for index, ply in enumerate(self._solid_stack.element_ids):
+            for index, _ in enumerate(self._solid_stack.level_element_ids):
                 hatch = ""
                 axes.add_patch(
                     Rectangle(

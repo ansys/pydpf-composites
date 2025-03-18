@@ -60,29 +60,31 @@ class SolidStack:
     # list of analysis plies for each solid element in the stack
     element_wise_analysis_plies: dict[int, Sequence[str]]
     element_ply_thicknesses: dict[int, Sequence[float]]
-    element_wise_levels: dict[int, Sequence[int]]
+    element_wise_levels: dict[int, int]
 
     @property
     def num_elements(self):
         return len(self.element_ids)
 
     @property
+    def level_element_ids(self) -> dict[int, Sequence[int]]:
+        levels = set([level for e, level in self.element_wise_levels.items()])
+        level_element_ids = {l: [] for l in levels}
+        for e, level in self.element_wise_levels.items():
+            level_element_ids[level].append(e)
+        return level_element_ids
+
+    @property
     def analysis_ply_ids_and_thicknesses(self):
         res = []
-        for e_id in self.element_ids:
+        for level, element_ids in self.level_element_ids.items():
+            # Only the first element is of interest since all elements
+            # on a level have the same plies
+            e_id = element_ids[0]
             for index, ply_id in enumerate(self.element_wise_analysis_plies[e_id]):
                 res.append((ply_id, self.element_ply_thicknesses[e_id][index]))
 
         return res
-
-    @property
-    def level_element_ids(self) -> dict[int, Sequence[int]]:
-        levels = set([l for e, levels in self.element_wise_levels for l in levels])
-        level_element_ids = {l: [] for l in levels}
-        for e, levels in self.element_wise_levels:
-            for l in levels:
-                level_element_ids[l].append(e)
-        return level_element_ids
 
     @property
     def number_of_analysis_plies(self):
@@ -144,7 +146,7 @@ class SolidStackProvider:
             element_ids = []
             element_wise_analysis_plies: dict[int, Sequence[str]] = {}
             element_ply_thicknesses: dict[int, Sequence[float]] = {}
-            element_wise_levels: dict[int, Sequence[int]] = {}
+            element_wise_levels: dict[int, int] = {}
             for element_id, level in elementary_data:
                 element_wise_levels[int(element_id)] = level
                 ply_ids = self._layup_property_provider.get_analysis_plies(element_id)
@@ -220,46 +222,61 @@ def get_through_the_thickness_failure_results(
     """
     failure_results = []
 
-    for element_index, element_id in enumerate(solid_stack.element_ids):
-        this_element_irfs = irf_field.get_entity_data_by_id(element_id)
-        this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
+    for level, element_ids in solid_stack.level_element_ids.items():
+        if len(element_ids) == 1:
+            for element_index, element_id in enumerate(element_ids):
+                this_element_irfs = irf_field.get_entity_data_by_id(element_id)
+                this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
-        plies = solid_stack.element_wise_analysis_plies[element_id]
-        element_info = element_info_provider.get_element_info(element_id)
-        for ply_index, ply_id in enumerate(plies):
-            # select all data points of the ply / layer for each spot separately
-            if element_info.is_layered:
-                for spot in SOLID_SPOTS:
-                    selected_indices = get_selected_indices(
-                        element_info, layers=[ply_index], nodes=None, spots=[spot]
-                    )
-                    spot_wise_irfs = this_element_irfs[selected_indices]
-                    index_of_max = spot_wise_irfs.argmax()
-                    spot_wise_modes = this_element_modes[selected_indices]
+                plies = solid_stack.element_wise_analysis_plies[element_id]
+                element_info = element_info_provider.get_element_info(element_id)
+                for ply_index, ply_id in enumerate(plies):
+                    # select all data points of the ply / layer for each spot separately
+                    if element_info.is_layered:
+                        for spot in SOLID_SPOTS:
+                            selected_indices = get_selected_indices(
+                                element_info, layers=[ply_index], nodes=None, spots=[spot]
+                            )
+                            spot_wise_irfs = this_element_irfs[selected_indices]
+                            index_of_max = spot_wise_irfs.argmax()
+                            spot_wise_modes = this_element_modes[selected_indices]
 
-                    irf = float(spot_wise_irfs[index_of_max])
-                    failure_results.append(
-                        FailureResult(
-                            FailureModeEnum(int(spot_wise_modes[index_of_max])).name,
-                            irf,
-                            _irf2rf(irf),
-                            _irf2mos(irf),
-                        )
-                    )
-            else:
+                            irf = float(spot_wise_irfs[index_of_max])
+                            failure_results.append(
+                                FailureResult(
+                                    FailureModeEnum(int(spot_wise_modes[index_of_max])).name,
+                                    irf,
+                                    _irf2rf(irf),
+                                    _irf2mos(irf),
+                                )
+                            )
+        else:
+            num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
+            for element_index, element_id in enumerate(element_ids):
+                if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
+                    raise RuntimeError("Number of plies mismatch!")
+
+            max_irf = -1.0
+            max_failure_mode = None
+            for element_index, element_id in enumerate(element_ids):
+                this_element_irfs = irf_field.get_entity_data_by_id(element_id)
+                this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
+
                 # homogeneous element: there is no spot and so the same value is stored for both spots
                 index_of_max = this_element_irfs.argmax()
                 irf = float(this_element_irfs[index_of_max])
-                f_res = FailureResult(
-                    FailureModeEnum(int(this_element_modes[index_of_max])).name,
-                    irf,
-                    _irf2rf(irf),
-                    _irf2mos(irf),
-                )
-                for _ in SOLID_SPOTS:
-                    failure_results.append(
-                        f_res
-                    )
+                if irf > max_irf:
+                    max_irf = irf
+                    max_failure_mode = this_element_modes[index_of_max]
+
+            f_res = FailureResult(
+                FailureModeEnum(int(max_failure_mode)).name,
+                max_irf,
+                _irf2rf(max_irf),
+                _irf2mos(max_irf),
+            )
+
+            failure_results.extend(num_plies*len(SOLID_SPOTS)*[f_res])
 
     return failure_results
 
@@ -286,26 +303,50 @@ def get_through_the_thickness_results(
 
     results = {k: [] for k in component_names}
 
-    for element_index, element_id in enumerate(solid_stack.element_ids):
-        element_info = element_info_provider.get_element_info(element_id)
-        this_element_values = result_field.get_entity_data_by_id(element_id)
+    for level, element_ids in solid_stack.level_element_ids.items():
+        if len(element_ids) == 1:
+            # standard layered element
+            for element_index, element_id in enumerate(element_ids):
+                element_info = element_info_provider.get_element_info(element_id)
+                this_element_values = result_field.get_entity_data_by_id(element_id)
 
-        plies = solid_stack.element_wise_analysis_plies[element_id]
-        for ply_index, ply_id in enumerate(plies):
-            if element_info.is_layered:
-                for spot in SOLID_SPOTS:
-                    # select all data points of the ply / layers (all nodes and spots)
-                    selected_indices = get_selected_indices(
-                        element_info, layers=[ply_index], nodes=None, spots=[spot]
-                    )
-                    for component_index, component_name in enumerate(component_names):
-                        ave_value = np.average(this_element_values[selected_indices][:, component_index])
-                        results[component_name].append(float(ave_value))
-            else:
+                plies = solid_stack.element_wise_analysis_plies[element_id]
+
+                if element_info.is_layered:
+                    for ply_index, ply_id in enumerate(plies):
+                        for spot in SOLID_SPOTS:
+                            # select all data points of the ply / layers (all nodes and spots)
+                            selected_indices = get_selected_indices(
+                                element_info, layers=[ply_index], nodes=None, spots=[spot]
+                            )
+                            for component_index, component_name in enumerate(component_names):
+                                ave_value = np.average(this_element_values[selected_indices][:, component_index])
+                                results[component_name].append(float(ave_value))
+
+        else:
+            # Multiple homogeneous elements. The results are averaged over all elements
+            # assumption: all elements have the same "artificial" plies
+            homogeneous_results = {k: [] for k in component_names}
+            num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
+            for element_index, element_id in enumerate(element_ids):
+                if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
+                   raise RuntimeError("Number of plies mismatch!")
+
+            for element_index, element_id in enumerate(element_ids):
+                this_element_values = result_field.get_entity_data_by_id(element_id)
+
                 # homogeneous element: there is no spot and so the same value is stored for both spots
                 for component_index, component_name in enumerate(component_names):
                     ave_value = np.average(this_element_values[:, component_index])
-                    for _ in SOLID_SPOTS:
-                        results[component_name].append(float(ave_value))
+                    #for _ in SOLID_SPOTS:
+                    homogeneous_results[component_name].append(float(ave_value))
+
+            # average the element-wise results since this level consist of
+            # multiple homogeneous elements
+            ave_results = {k: [] for k in component_names}
+            for component_name in component_names:
+                # num_plies*len(SOLID_SPOTS)*[float(ave_value)]
+                ave_value = np.average(homogeneous_results[component_name])
+                results[component_name].extend(num_plies*len(SOLID_SPOTS)*[float(ave_value)])
 
     return results
