@@ -182,7 +182,7 @@ sampling_point_plot.figure.show()
 # by using the SolidStackProvider. A basic example is shown below.
 solid_stack_provider = SolidStackProvider(
     composite_model.get_mesh(),
-    composite_model.get_layup_properties_provider()
+    composite_model.get_layup_operator()
 )
 print(f"Number of solid stacks: {solid_stack_provider.number_of_stacks}")
 stack_of_element_6 = solid_stack_provider.get_solid_stack(6)

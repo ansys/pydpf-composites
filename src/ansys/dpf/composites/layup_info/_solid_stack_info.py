@@ -26,7 +26,7 @@ import numpy as np
 
 from ansys.dpf.composites.layup_info import ElementInfoProvider
 import ansys.dpf.core as dpf
-from ansys.dpf.core import MeshedRegion
+from ansys.dpf.core import MeshedRegion, Operator
 
 from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.failure_criteria import FailureModeEnum
@@ -95,9 +95,14 @@ class SolidStackProvider:
 
     SOLID_STACK_PROPERTY_FIELD_NAME = "solid_stacks"
 
-    def __init__(self, mesh: MeshedRegion, layup_property_provider: LayupPropertiesProvider):
+    def __init__(self, mesh: MeshedRegion, layup_provider: Operator):
         self._mesh = mesh
-        self._layup_property_provider = layup_property_provider
+        self._layup_property_provider = LayupPropertiesProvider(layup_provider, mesh)
+        self._mesh_properties_container = layup_provider.outputs.mesh_properties_container.get_data()
+        if self._mesh_properties_container:
+            self._virtual_thicknesses_field = self._mesh_properties_container.get_field({'MeshPropertyFieldLabel': 2})
+        else:
+            self._virtual_thicknesses_field = None
         if self.SOLID_STACK_PROPERTY_FIELD_NAME not in self._mesh.available_property_fields:
             raise RuntimeError(
                 f"Property field '{self.SOLID_STACK_PROPERTY_FIELD_NAME}' not found in mesh."
@@ -130,15 +135,28 @@ class SolidStackProvider:
 
     def _get_analysis_ply_info_for_homogeneous_element(self, element_id):
         """Get the analysis ply info for homogeneous elements."""
+
+        virtual_thickness = None
+        if self._virtual_thicknesses_field and element_id in self._virtual_thicknesses_field.scoping.ids:
+            virtual_thicknesses_array = self._virtual_thicknesses_field.get_entity_data_by_id(element_id)
+            if len(virtual_thicknesses_array) > 0 and virtual_thicknesses_array[0] > 0.0    :
+                virtual_thickness = virtual_thicknesses_array[0]
+
         analysis_ply_infos = {}
         for ply_name in self._analysis_ply_names:
             analysis_ply_info_provider = AnalysisPlyInfoProvider(self._mesh, ply_name)
             if element_id in analysis_ply_info_provider.ply_element_ids():
-                basic_ap_info = analysis_ply_info_provider.basic_info()
-                analysis_ply_infos[ply_name] = 0.0001555  #todo: replace by nominal thickness
+                if virtual_thickness:
+                    analysis_ply_infos[ply_name] = virtual_thickness
+                else:
+                    basic_ap_info = analysis_ply_info_provider.basic_info()
+                    analysis_ply_infos[ply_name] = 0.00015  # todo: replace by nominal thickness
+
+        if virtual_thickness and len(analysis_ply_infos) > 1:
+            for k in analysis_ply_infos.keys():
+                analysis_ply_infos[k] = virtual_thickness / len(analysis_ply_infos)
 
         return analysis_ply_infos
-
 
     def _prepare_data(self):
         for index in range(0, self.number_of_stacks):
@@ -158,7 +176,6 @@ class SolidStackProvider:
                     element_ply_thicknesses[int(element_id)] = (
                         self._layup_property_provider.get_layer_thicknesses(element_id)
                     )
-
                 else:
                     ply_infos = self._get_analysis_ply_info_for_homogeneous_element(element_id)
                     if ply_infos:
@@ -223,13 +240,17 @@ def get_through_the_thickness_failure_results(
     failure_results = []
 
     for level, element_ids in solid_stack.level_element_ids.items():
+        is_layered = False
         if len(element_ids) == 1:
-            for element_index, element_id in enumerate(element_ids):
+            element_id = element_ids[0]
+            element_info = element_info_provider.get_element_info(element_id)
+            is_layered = element_info.is_layered
+            if is_layered:
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
                 this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
                 plies = solid_stack.element_wise_analysis_plies[element_id]
-                element_info = element_info_provider.get_element_info(element_id)
+
                 for ply_index, ply_id in enumerate(plies):
                     # select all data points of the ply / layer for each spot separately
                     if element_info.is_layered:
@@ -250,7 +271,7 @@ def get_through_the_thickness_failure_results(
                                     _irf2mos(irf),
                                 )
                             )
-        else:
+        if not is_layered:
             num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
             for element_index, element_id in enumerate(element_ids):
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
@@ -304,14 +325,14 @@ def get_through_the_thickness_results(
     results = {k: [] for k in component_names}
 
     for level, element_ids in solid_stack.level_element_ids.items():
+        is_layered = False
         if len(element_ids) == 1:
-            # standard layered element
-            for element_index, element_id in enumerate(element_ids):
-                element_info = element_info_provider.get_element_info(element_id)
+            element_id = element_ids[0]
+            element_info = element_info_provider.get_element_info(element_id)
+            is_layered = element_info.is_layered
+            if is_layered:
                 this_element_values = result_field.get_entity_data_by_id(element_id)
-
                 plies = solid_stack.element_wise_analysis_plies[element_id]
-
                 if element_info.is_layered:
                     for ply_index, ply_id in enumerate(plies):
                         for spot in SOLID_SPOTS:
@@ -323,7 +344,7 @@ def get_through_the_thickness_results(
                                 ave_value = np.average(this_element_values[selected_indices][:, component_index])
                                 results[component_name].append(float(ave_value))
 
-        else:
+        if not is_layered:
             # Multiple homogeneous elements. The results are averaged over all elements
             # assumption: all elements have the same "artificial" plies
             homogeneous_results = {k: [] for k in component_names}

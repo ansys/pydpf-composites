@@ -50,7 +50,11 @@ from .helper import get_basic_shell_files
 
 
 def test_sampling_point_solid_stack(dpf_server):
-    """Basic test with a running server"""
+    """
+    Test sampling point for solid model for a standard solid stack.
+
+    The solid stack contains only layered elements.
+    """
 
     TEST_DATA_ROOT_DIR = r"D:\tmp\small_solid_model_files\dp0\SYS\MECH"
     rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "file.rst")]
@@ -93,8 +97,11 @@ def test_sampling_point_solid_stack(dpf_server):
 
 
 def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
-    """Basic test with a running server"""
-    # todo: standard drop-off element is missing
+    """
+    Test sampling point for solid model for a solid stack with drop-off elements.
+
+    The drop-off elements need special handling to extract the results and layup information.
+    """
     TEST_DATA_ROOT_DIR = r"D:\tmp\small_solid_model_files\dp0\SYS\MECH"
     rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "file.rst")]
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "Setup", "ACPSolidModel_SolidModel.1.h5")
@@ -115,28 +122,31 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
     cfc.insert(FaceSheetWrinklingCriterion())
     cfc.insert(CoreFailureCriterion())
 
-    # Element with a standard solid stack (hex only)
-    sampling_point = composite_model.get_sampling_point(
-        combined_criterion=cfc,
-        element_id=154,
-        time=1
-    )
+    for element_id in [113, 154]:
+        sampling_point = composite_model.get_sampling_point(
+            combined_criterion=cfc,
+            element_id=element_id,
+            time=1
+        )
 
-    plot = sampling_point.get_result_plots(
-        strain_components=["e1", "e2", "e12"],
-        stress_components=["s1", "s2", "s12"],
-        failure_components=[FailureMeasureEnum.INVERSE_RESERVE_FACTOR],
-        core_scale_factor=0.2,
-        show_failure_modes=True,
-    )
-    plot.figure.show()
-    res = sampling_point.results
-    print(res[0]['results']['strains']['e12'])
+        plot = sampling_point.get_result_plots(
+            strain_components=["e1", "e2", "e12"],
+            stress_components=["s1", "s2", "s12"],
+            failure_components=[FailureMeasureEnum.INVERSE_RESERVE_FACTOR],
+            core_scale_factor=0.2,
+            show_failure_modes=True,
+        )
+        plot.figure.show()
+        res = sampling_point.results
+        print(res[0]['results']['strains']['e12'])
 
 
 def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
-    """Basic test with a running server"""
-    # todo: ...
+    """
+    Test sampling point for solid model for a solid stack with cut-off elements.
+
+    The cut-off elements need special handling to extract the results and layup information.
+    """
     TEST_DATA_ROOT_DIR = r"D:\tmp\small_solid_model_files\dp0\SYS\MECH"
     rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "file.rst")]
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "Setup", "ACPSolidModel_SolidModel.1.h5")
@@ -157,7 +167,7 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
     cfc.insert(FaceSheetWrinklingCriterion())
     cfc.insert(CoreFailureCriterion())
 
-    # Element with a standard solid stack (hex only)
+    # Element of a solid stack with cut-off elements
     sampling_point = composite_model.get_sampling_point(
         combined_criterion=cfc,
         element_id=219,

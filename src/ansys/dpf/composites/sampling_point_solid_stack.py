@@ -143,7 +143,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._rst_data_source = rst_data_source
         self._element_info_provider = element_info_provider
         # todo: use MeshPropertyFieldLabel to get the virtual thickness of homogeneous elements
-        self._solid_stack_provider = SolidStackProvider(self._meshed_region, layup_properties_provider)
+        self._solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
 
         self._spots_per_ply = 0
         self._interface_indices: dict[Spot, int] = {}
