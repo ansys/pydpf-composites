@@ -187,8 +187,10 @@ class SolidStackProvider:
 
     def _build_solid_stack(self, selected_solid_element: int) -> SolidStack | None:
         """
-        Create the solid stack by finding the right stack and extracting
-        the data from the meshed regions and some property fields.
+        Create the solid stack by finding the right stack.
+
+        Data of the stack is extracted from the meshed region and
+        some additional fields.
         """
         for index in range(0, self.number_of_stacks):
             elementary_data = self._solid_stacks_property_field.get_entity_data(index)
@@ -208,7 +210,7 @@ class SolidStackProvider:
                         layer_thicknesses = self._layup_property_provider.get_layer_thicknesses(
                             element_id
                         )
-                        if layer_thicknesses:
+                        if layer_thicknesses is not None:
                             element_ply_thicknesses[int(element_id)] = [
                                 float(v) for v in layer_thicknesses
                             ]

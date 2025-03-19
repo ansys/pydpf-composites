@@ -551,7 +551,6 @@ class CompositeModelImpl:
         """
         return self._element_info_provider.get_element_info(element_id)
 
-
     @_deprecated_composite_definition_label
     def get_property_for_all_layers(
         self,
