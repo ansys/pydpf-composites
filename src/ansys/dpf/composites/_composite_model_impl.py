@@ -502,12 +502,6 @@ class CompositeModelImpl:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         element_info = self.get_element_info(element_id)
-        if not element_info.is_layered:
-            raise RuntimeError(
-                "Sampling point is implemented for layered elements only. "
-                f"{element_id} is not layered."
-            )
-
         if element_info.is_shell:
             return SamplingPointNew(
                 f"Sampling Point - element {element_id}",
@@ -557,9 +551,6 @@ class CompositeModelImpl:
         """
         return self._element_info_provider.get_element_info(element_id)
 
-    # def get_layup_properties_provider(self) -> LayupPropertiesProvider:
-    #    """Layup properties provider can be used to get thicknesses, angles, etc."""
-    #    return self._layup_properties_provider
 
     @_deprecated_composite_definition_label
     def get_property_for_all_layers(

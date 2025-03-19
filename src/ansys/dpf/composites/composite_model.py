@@ -447,11 +447,3 @@ class CompositeModel:
         return self._implementation.get_all_layered_element_ids_for_composite_definition_label(
             composite_definition_label
         )
-
-    # def get_layup_properties_provider(self) -> LayupPropertiesProvider:
-    #    """
-    #    Get layup properties provider.
-    #
-    #    It can be used to get thicknesses, angles, etc.
-    #    """
-    #    return self._implementation.get_layup_properties_provider()

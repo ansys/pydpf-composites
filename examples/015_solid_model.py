@@ -26,14 +26,14 @@
 Postprocess a solid model
 -------------------------
 
-This example shows specific feature for the postprocessing of
-solid models which are:
+This example shows features which are tailored for the postprocessing of
+solid models. These are
 
   - Failure plot on the reference surface
   - Sampling point for solid elements
 
-The model is an assembly with solid and shell elements to show how to select one
-of the element types.
+The model is an assembly with solid and shell elements. So, the example also
+demonstrates how to distinguish between different element types.
 
 .. note::
 
@@ -91,11 +91,11 @@ combined_fc = CombinedFailureCriterion(
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
-# Plot failure on reference surface
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Plot failure results on reference surface
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # The first feature is to plot the failure results on the reference surface.
-# This feature projects the failure results from the solid elements to the shell elements
-# and the overall maximum failure (most critical value) is plotted on the reference surface.
+# This feature projects the overall maximum failure value and according failure model
+# from the solid elements to the shell elements.
 # This makes the critical areas of the solid elements visible on the reference surface.
 output_all_elements = composite_model.evaluate_failure_criteria(
     combined_criterion=combined_fc,
@@ -107,7 +107,7 @@ irf_on_ref_surface_field = output_all_elements.get_field(
 irf_on_ref_surface_field.plot()
 
 # The next plot shows the same failure analysis without the projection
-# to the reference surface.
+# to the reference surface for the sake of comparison.
 irf_max_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_max_field.plot()
 
@@ -153,7 +153,8 @@ sampling_point_plot.figure.show()
 
 # %%
 # Here is another sampling point plot with the in-plane strains only
-# and the solid elements are added to the plot as well.
+# and the colored boxes to indicate the solid elements are added
+# to the plot as well.
 sampling_point_plot = sampling_point_solid_stack.get_result_plots(
     strain_components=("e1", "e2", "e12"),  # show in-plane results only
     stress_components=(),  # show in-plane results only
