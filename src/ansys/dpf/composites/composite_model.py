@@ -33,7 +33,7 @@ from ._composite_model_factory import _composite_model_factory
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayerProperty, LayupModelContextType, LayupPropertiesProvider
+from .layup_info import ElementInfo, LayerProperty, LayupModelContextType
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialMetadata, MaterialProperty
 from .result_definition import FailureMeasureEnum
@@ -448,10 +448,10 @@ class CompositeModel:
             composite_definition_label
         )
 
-    def get_layup_properties_provider(self) -> LayupPropertiesProvider:
-        """
-        Get layup properties provider.
-
-        It can be used to get thicknesses, angles, etc.
-        """
-        return self._implementation.get_layup_properties_provider()
+    # def get_layup_properties_provider(self) -> LayupPropertiesProvider:
+    #    """
+    #    Get layup properties provider.
+    #
+    #    It can be used to get thicknesses, angles, etc.
+    #    """
+    #    return self._implementation.get_layup_properties_provider()

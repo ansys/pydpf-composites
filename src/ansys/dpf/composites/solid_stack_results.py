@@ -20,8 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Functions to retrieve through-the-thickness results of a stack of solid elements."""
-from collections.abc import Sequence
-
 import ansys.dpf.core as dpf
 import numpy as np
 

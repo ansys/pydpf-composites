@@ -364,6 +364,9 @@ class SamplingPointSolidStack(SamplingPoint):
             # TODO: check how the standard sampling point handles this
             raise RuntimeError("Time must be set before running the sampling point operator.")
 
+        if not self.element_id:
+            raise RuntimeError("Element ID must be set before running the sampling point.")
+
         # Get solid stack to select all the elements in the stack
         self._solid_stack = self._solid_stack_provider.get_solid_stack(self.element_id)
         if not self._solid_stack:

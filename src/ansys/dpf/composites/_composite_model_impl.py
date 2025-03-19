@@ -557,9 +557,9 @@ class CompositeModelImpl:
         """
         return self._element_info_provider.get_element_info(element_id)
 
-    def get_layup_properties_provider(self) -> LayupPropertiesProvider:
-        """Layup properties provider can be used to get thicknesses, angles, etc."""
-        return self._layup_properties_provider
+    # def get_layup_properties_provider(self) -> LayupPropertiesProvider:
+    #    """Layup properties provider can be used to get thicknesses, angles, etc."""
+    #    return self._layup_properties_provider
 
     @_deprecated_composite_definition_label
     def get_property_for_all_layers(
@@ -588,11 +588,11 @@ class CompositeModelImpl:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if layup_property == LayerProperty.ANGLES:
-            return self.get_layup_properties_provider().get_layer_angles(element_id)
+            return self._layup_properties_provider.get_layer_angles(element_id)
         if layup_property == LayerProperty.THICKNESSES:
-            return self.get_layup_properties_provider().get_layer_thicknesses(element_id)
+            return self._layup_properties_provider.get_layer_thicknesses(element_id)
         if layup_property == LayerProperty.SHEAR_ANGLES:
-            return self.get_layup_properties_provider().get_layer_shear_angles(element_id)
+            return self._layup_properties_provider.get_layer_shear_angles(element_id)
         raise RuntimeError(f"Invalid property {layup_property}")
 
     @_deprecated_composite_definition_label
@@ -615,7 +615,7 @@ class CompositeModelImpl:
             The dictionary only contains the analysis plies in the specified composite
             definition.
         """
-        return self.get_layup_properties_provider().get_analysis_plies(element_id)
+        return self._layup_properties_provider.get_analysis_plies(element_id)
 
     @_deprecated_composite_definition_label
     def get_element_laminate_offset(
@@ -635,7 +635,7 @@ class CompositeModelImpl:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        return self.get_layup_properties_provider().get_element_laminate_offset(element_id)
+        return self._layup_properties_provider.get_element_laminate_offset(element_id)
 
     @_deprecated_composite_definition_label
     def get_constant_property_dict(
