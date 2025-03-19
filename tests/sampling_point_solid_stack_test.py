@@ -44,12 +44,12 @@ TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "solid_model"
 
 
 def get_file_paths() -> ContinuousFiberCompositesFiles:
-    rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "file.rst")]
+    rst_path = os.path.join(TEST_DATA_ROOT_DIR, "file.rst")
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPSolidModel_SolidModel.1.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
     files = ContinuousFiberCompositesFiles(
-        rst=rst_paths,
+        rst=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )

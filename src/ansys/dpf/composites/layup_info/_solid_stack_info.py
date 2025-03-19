@@ -55,7 +55,7 @@ class SolidStack:
         return len(self.element_ids)
 
     @property
-    def element_ids_per_level(self) -> dict[int, Sequence[int]]:
+    def element_ids_per_level(self) -> dict[int, list[int]]:
         """
         Element labels for each level in the stack.
 
@@ -64,7 +64,7 @@ class SolidStack:
         special handling.
         """
         levels = {level for e, level in self.element_wise_levels.items()}
-        element_ids_per_level = {l: [] for l in levels}
+        element_ids_per_level: dict[int, list[int]] = {l: [] for l in levels}
         for e, level in self.element_wise_levels.items():
             element_ids_per_level[level].append(e)
         return element_ids_per_level
@@ -140,15 +140,15 @@ class SolidStackProvider:
         self._analysis_ply_names = get_all_analysis_ply_names(self._mesh)
 
         # cache to avoid reevaluation
-        self._element_id_to_solid_stack_index_map = {}
+        self._element_id_to_solid_stack_index_map: dict[int, int] = {}
         self._solid_stacks: list[SolidStack] = []
 
     @property
-    def number_of_stacks(self):
+    def number_of_stacks(self) -> int:
         """Number of solid stacks in the model."""
-        return self._solid_stacks_property_field.scoping.size
+        return int(self._solid_stacks_property_field.scoping.size)
 
-    def _get_analysis_ply_info_for_homogeneous_element(self, element_id):
+    def _get_analysis_ply_info_for_homogeneous_element(self, element_id: int) -> dict[str, float]:
         """
         Get the analysis ply info for homogeneous elements.
 
@@ -166,7 +166,7 @@ class SolidStackProvider:
             if len(virtual_thicknesses_array) > 0 and virtual_thicknesses_array[0] > 0.0:
                 virtual_thickness = virtual_thicknesses_array[0]
 
-        analysis_ply_infos = {}
+        analysis_ply_infos: dict[str, float] = {}
         for ply_name in self._analysis_ply_names:
             analysis_ply_info_provider = AnalysisPlyInfoProvider(self._mesh, ply_name)
             if element_id in analysis_ply_info_provider.ply_element_ids():
@@ -182,7 +182,7 @@ class SolidStackProvider:
 
         return analysis_ply_infos
 
-    def _read_solid_stack(self, selected_solid_element) -> SolidStack | None:
+    def _read_solid_stack(self, selected_solid_element: int) -> SolidStack | None:
         for index in range(0, self.number_of_stacks):
             elementary_data = self._solid_stacks_property_field.get_entity_data(index)
             element_ids = [v[0] for v in elementary_data]
@@ -198,9 +198,10 @@ class SolidStackProvider:
                         self._element_id_to_solid_stack_index_map[element_id] = len(
                             self._solid_stacks
                         )
-                        element_ply_thicknesses[int(element_id)] = (
-                            self._layup_property_provider.get_layer_thicknesses(element_id)
-                        )
+                        element_ply_thicknesses[int(element_id)] = [
+                            float(v)
+                            for v in self._layup_property_provider.get_layer_thicknesses(element_id)
+                        ]
                     else:
                         ply_infos = self._get_analysis_ply_info_for_homogeneous_element(element_id)
                         if ply_infos:
@@ -232,7 +233,7 @@ class SolidStackProvider:
         else:
             return self._read_solid_stack(element_id)
 
-    def get_solid_stacks(self, element_ids: any) -> list[SolidStack]:
+    def get_solid_stacks(self, element_ids: Sequence[int]) -> list[SolidStack]:
         """Get unique list of solid stacks for a list of element ids."""
         processed_elements: list[int] = []
         selected_stacks: list[SolidStack] = []

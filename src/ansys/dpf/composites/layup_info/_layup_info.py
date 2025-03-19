@@ -25,7 +25,7 @@
 from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, cast
+from typing import Any, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf

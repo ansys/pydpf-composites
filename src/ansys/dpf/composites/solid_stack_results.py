@@ -27,7 +27,7 @@ import numpy as np
 
 from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.failure_criteria import FailureModeEnum
-from ansys.dpf.composites.layup_info import ElementInfoProvider, SolidStack
+from ansys.dpf.composites.layup_info import ElementInfo, ElementInfoProvider, SolidStack
 
 from .sampling_point_types import FailureResult
 from .select_indices import get_selected_indices
@@ -41,7 +41,7 @@ MAX_RESERVE_FACTOR = 1000.0
 SOLID_SPOTS = [Spot.BOTTOM, Spot.TOP]
 
 
-def _irf2rf(irf):
+def _irf2rf(irf: float) -> float:
     if irf == 0.0:
         return MAX_RESERVE_FACTOR
 
@@ -49,9 +49,16 @@ def _irf2rf(irf):
     return min(rf, MAX_RESERVE_FACTOR)
 
 
-def _irf2mos(irf):
+def _irf2mos(irf: float) -> float:
     rf = _irf2rf(irf)
     return rf - 1.0
+
+
+def _get_element_info(element_info_provider: ElementInfoProvider, element_id: int) -> ElementInfo:
+    e_info = element_info_provider.get_element_info(element_id)
+    if not e_info:
+        raise RuntimeError(f"Could not retrieve element info for {element_id}")
+    return e_info
 
 
 def get_through_the_thickness_failure_results(
@@ -82,7 +89,7 @@ def get_through_the_thickness_failure_results(
         is_layered = False
         if len(element_ids) == 1:
             element_id = element_ids[0]
-            element_info = element_info_provider.get_element_info(element_id)
+            element_info = _get_element_info(element_info_provider, element_id)
             is_layered = element_info.is_layered
             if is_layered:
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
@@ -116,7 +123,7 @@ def get_through_the_thickness_failure_results(
 
             max_irf = -1.0
             max_failure_mode = None
-            for element_index, element_id in enumerate(element_ids):
+            for element_id in element_ids:
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
                 this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
@@ -170,12 +177,12 @@ def get_through_the_thickness_results(
         is_layered = False
         if len(element_ids) == 1:
             element_id = element_ids[0]
-            element_info = element_info_provider.get_element_info(element_id)
+            element_info = _get_element_info(element_info_provider, element_id)
             is_layered = element_info.is_layered
             if is_layered:
                 this_element_values = result_field.get_entity_data_by_id(element_id)
-                for ply_index, ply_id in enumerate(
-                    solid_stack.element_wise_analysis_plies[element_id]
+                for ply_index, _ in range(
+                    0, len(solid_stack.element_wise_analysis_plies[element_id])
                 ):
                     for spot in SOLID_SPOTS:
                         # select all data points of the ply / layers (all nodes and spots)
@@ -199,7 +206,7 @@ def get_through_the_thickness_results(
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
                     raise RuntimeError("Number of plies mismatch!")
 
-            for element_index, element_id in enumerate(element_ids):
+            for element_id in element_ids:
                 this_element_values = result_field.get_entity_data_by_id(element_id)
 
                 # homogeneous element: there is no spot and so the same value is

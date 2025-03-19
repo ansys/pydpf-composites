@@ -741,7 +741,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
         element_offsets = []
         ply_index = 0
-        for level, element_ids in self._solid_stack.element_ids_per_level.items():
+        for _, element_ids in self._solid_stack.element_ids_per_level.items():
             element_ply_ids = self._solid_stack.element_wise_analysis_plies[element_ids[0]]
             element_offsets.append(plY_offsets[2 * ply_index])
             ply_index += len(element_ply_ids)
