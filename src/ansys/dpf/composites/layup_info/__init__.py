@@ -41,8 +41,6 @@ from ._layup_info import (
 from ._solid_stack_info import (
     SolidStack,
     SolidStackProvider,
-    get_through_the_thickness_results,
-    get_through_the_thickness_failure_results,
 )
 
 __all__ = (
@@ -62,8 +60,6 @@ __all__ = (
     "get_dpf_material_id_by_analysis_ply_map",
     "get_element_info_provider",
     "get_material_names_to_dpf_material_index",
-    "get_through_the_thickness_results",
-    "get_through_the_thickness_failure_results",
     "material_properties",
     "material_operators",
 )

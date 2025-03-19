@@ -83,7 +83,6 @@ combined_fc = CombinedFailureCriterion(
     ],
 )
 
-# todo: check what happens if the solid stack has degenerated elements
 
 # %%
 # Set up model

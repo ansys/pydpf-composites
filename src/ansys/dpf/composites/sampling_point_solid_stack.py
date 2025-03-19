@@ -50,7 +50,8 @@ from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 from .unit_system import get_unit_system
 from .layup_info.material_properties import get_material_metadata
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, LayupPropertiesProvider, SolidStack, SolidStackProvider, get_through_the_thickness_results, get_through_the_thickness_failure_results
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, LayupPropertiesProvider, SolidStack, SolidStackProvider
+from ansys.dpf.composites.solid_stack_results import get_through_the_thickness_results, get_through_the_thickness_failure_results
 from ansys.dpf.composites.constants import (
     FailureOutput,
     Spot,
@@ -120,7 +121,6 @@ class SamplingPointSolidStack(SamplingPoint):
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
         rst_data_source: dpf.DataSources,
-        layup_properties_provider: LayupPropertiesProvider,
         element_info_provider: ElementInfoProvider,
         default_unit_system: UnitSystem | None = None,
         time: float | None = None,
@@ -142,7 +142,6 @@ class SamplingPointSolidStack(SamplingPoint):
         self._rst_streams_provider = rst_streams_provider
         self._rst_data_source = rst_data_source
         self._element_info_provider = element_info_provider
-        # todo: use MeshPropertyFieldLabel to get the virtual thickness of homogeneous elements
         self._solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
 
         self._spots_per_ply = 0
@@ -616,7 +615,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._update_and_check_results()
         add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
 
-    # todo: add element boundaries to the plot
+
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
 
@@ -732,7 +731,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
             element_offsets = []
             ply_index = 0
-            for level, element_ids in self._solid_stack.level_element_ids.items():
+            for level, element_ids in self._solid_stack.element_ids_per_level.items():
                 element_ply_ids = self._solid_stack.element_wise_analysis_plies[element_ids[0]]
                 element_offsets.append(plY_offsets[2*ply_index])
                 ply_index += len(element_ply_ids)
@@ -747,7 +746,7 @@ class SamplingPointSolidStack(SamplingPoint):
             width = x_bound[1] - x_bound[0]
 
             colors = ('b', 'g', 'r', 'c', 'm', 'y')
-            for index, _ in enumerate(self._solid_stack.level_element_ids):
+            for index, _ in enumerate(self._solid_stack.element_ids_per_level):
                 hatch = ""
                 axes.add_patch(
                     Rectangle(

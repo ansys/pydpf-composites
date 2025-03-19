@@ -193,6 +193,7 @@ class AnalysisPlyInfo:
     global_ply_number: int
     id: str
     material_name: str
+    nominal_thickness: float
 
 
 class AnalysisPlyInfoProvider:
@@ -235,12 +236,12 @@ class AnalysisPlyInfoProvider:
         properties = properties_op.outputs.properties()
         as_dict = properties.to_dict()
 
-        # todo: add nominal thickness
         return AnalysisPlyInfo(
             float(as_dict['analysis_ply_design_angle']),
             int(as_dict['global_ply_id']),
             self.name,
             as_dict['material_name'],
+            float(as_dict['nominal_thickness'])
         )
 
 def get_dpf_material_id_by_analyis_ply_map(
