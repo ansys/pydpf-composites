@@ -53,9 +53,12 @@ SEPARATOR = "::"
 
 
 def test_basic_functionality_of_composite_model(dpf_server, data_files, distributed_rst):
-    if distributed_rst:
-        # TODO: remove once backend issue #856638 is resolved
-        pytest.xfail("The mesh property provider operator does not yet support distributed RST.")
+    if version_older_than(dpf_server, "8.0"):
+        # Due to issue #856638
+        pytest.xfail(
+            "The mesh property provider of DPF servers older than 8.0"
+            " does not support distributed RST."
+        )
 
     timer = Timer()
 
