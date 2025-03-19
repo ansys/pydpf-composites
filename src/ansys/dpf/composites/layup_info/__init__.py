@@ -38,10 +38,7 @@ from ._layup_info import (
     get_element_info_provider,
     get_material_names_to_dpf_material_index,
 )
-from ._solid_stack_info import (
-    SolidStack,
-    SolidStackProvider,
-)
+from ._solid_stack_info import SolidStack, SolidStackProvider
 
 __all__ = (
     "add_layup_info_to_mesh",

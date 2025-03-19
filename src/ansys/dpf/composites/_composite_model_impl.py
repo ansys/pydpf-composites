@@ -201,7 +201,9 @@ class CompositeModelImpl:
         This property can be used to filter analysis plies
         or element layers by material name.
         """
-        return get_material_names_to_dpf_material_index(self._material_operators.material_container_helper_op)
+        return get_material_names_to_dpf_material_index(
+            self._material_operators.material_container_helper_op
+        )
 
     @property
     def material_metadata(self) -> dict[int, MaterialMetadata]:
@@ -502,8 +504,10 @@ class CompositeModelImpl:
 
         element_info = self.get_element_info(element_id)
         if not element_info.is_layered:
-            raise RuntimeError(f"Sampling point is implemented for layered elements only. "
-                               "{element_id} is not layered.")
+            raise RuntimeError(
+                f"Sampling point is implemented for layered elements only. "
+                "{element_id} is not layered."
+            )
 
         if element_info.is_shell:
             return SamplingPointNew(

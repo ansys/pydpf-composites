@@ -237,12 +237,13 @@ class AnalysisPlyInfoProvider:
         as_dict = properties.to_dict()
 
         return AnalysisPlyInfo(
-            float(as_dict['analysis_ply_design_angle']),
-            int(as_dict['global_ply_id']),
+            float(as_dict["analysis_ply_design_angle"]),
+            int(as_dict["global_ply_id"]),
             self.name,
-            as_dict['material_name'],
-            float(as_dict['nominal_thickness'])
+            as_dict["material_name"],
+            float(as_dict["nominal_thickness"]),
         )
+
 
 def get_dpf_material_id_by_analyis_ply_map(
     mesh: MeshedRegion,
@@ -594,21 +595,21 @@ def get_element_info_provider(
 
 
 def get_material_names_to_dpf_material_index(material_container_helper_op: dpf.Operator):
-        """Get a dictionary that maps material names to DPF material IDs."""
-        if material_container_helper_op is None:
-            raise RuntimeError(
-                "The used DPF server does not support the requested data. "
-                "Use version 2024 R1-pre0 or later."
-            )
+    """Get a dictionary that maps material names to DPF material IDs."""
+    if material_container_helper_op is None:
+        raise RuntimeError(
+            "The used DPF server does not support the requested data. "
+            "Use version 2024 R1-pre0 or later."
+        )
 
-        string_field = material_container_helper_op.outputs.material_names()
-        material_ids = string_field.scoping.ids
+    string_field = material_container_helper_op.outputs.material_names()
+    material_ids = string_field.scoping.ids
 
-        names = {}
-        for dpf_mat_id in material_ids:
-            names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
+    names = {}
+    for dpf_mat_id in material_ids:
+        names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
 
-        return names
+    return names
 
 
 class LayupPropertiesProvider:

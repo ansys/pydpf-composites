@@ -20,16 +20,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from dataclasses import dataclass
 from collections.abc import Sequence
-import numpy as np
+from dataclasses import dataclass
 
-from ansys.dpf.composites.layup_info import ElementInfoProvider
 import ansys.dpf.core as dpf
+import numpy as np
 
 from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.failure_criteria import FailureModeEnum
-from ansys.dpf.composites.layup_info import SolidStack
+from ansys.dpf.composites.layup_info import ElementInfoProvider, SolidStack
 
 from .sampling_point_types import FailureResult
 from .select_indices import get_selected_indices
@@ -41,6 +40,7 @@ __all__ = (
 
 MAX_RESERVE_FACTOR = 1000.0
 SOLID_SPOTS = [Spot.BOTTOM, Spot.TOP]
+
 
 def _irf2rf(irf):
     if irf == 0.0:
@@ -86,7 +86,9 @@ def get_through_the_thickness_failure_results(
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
                 this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
-                for ply_index, ply_id in enumerate(solid_stack.element_wise_analysis_plies[element_id]):
+                for ply_index, ply_id in enumerate(
+                    solid_stack.element_wise_analysis_plies[element_id]
+                ):
                     # select all data points of the ply / layer for each spot separately
                     for spot in SOLID_SPOTS:
                         selected_indices = get_selected_indices(
@@ -132,7 +134,7 @@ def get_through_the_thickness_failure_results(
                 _irf2mos(max_irf),
             )
 
-            failure_results.extend(num_plies*len(SOLID_SPOTS)*[f_res])
+            failure_results.extend(num_plies * len(SOLID_SPOTS) * [f_res])
 
     return failure_results
 
@@ -169,14 +171,18 @@ def get_through_the_thickness_results(
             is_layered = element_info.is_layered
             if is_layered:
                 this_element_values = result_field.get_entity_data_by_id(element_id)
-                for ply_index, ply_id in enumerate(solid_stack.element_wise_analysis_plies[element_id]):
+                for ply_index, ply_id in enumerate(
+                    solid_stack.element_wise_analysis_plies[element_id]
+                ):
                     for spot in SOLID_SPOTS:
                         # select all data points of the ply / layers (all nodes and spots)
                         selected_indices = get_selected_indices(
                             element_info, layers=[ply_index], nodes=None, spots=[spot]
                         )
                         for component_index, component_name in enumerate(component_names):
-                            ave_value = np.average(this_element_values[selected_indices][:, component_index])
+                            ave_value = np.average(
+                                this_element_values[selected_indices][:, component_index]
+                            )
                             results[component_name].append(float(ave_value))
 
         if not is_layered:
@@ -188,7 +194,7 @@ def get_through_the_thickness_results(
             num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
             for element_index, element_id in enumerate(element_ids):
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
-                   raise RuntimeError("Number of plies mismatch!")
+                    raise RuntimeError("Number of plies mismatch!")
 
             for element_index, element_id in enumerate(element_ids):
                 this_element_values = result_field.get_entity_data_by_id(element_id)
@@ -202,6 +208,6 @@ def get_through_the_thickness_results(
             # multiple homogeneous elements
             for component_name in component_names:
                 ave_value = np.average(homogeneous_results[component_name])
-                results[component_name].extend(num_plies*len(SOLID_SPOTS)*[float(ave_value)])
+                results[component_name].extend(num_plies * len(SOLID_SPOTS) * [float(ave_value)])
 
     return results

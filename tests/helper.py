@@ -25,11 +25,11 @@ import os
 import pathlib
 import time
 from typing import Any
-import pytest
-import numpy
 
 import ansys.dpf.core as dpf
 from ansys.dpf.core import DataSources, Field, MeshedRegion, Operator
+import numpy
+import pytest
 
 from ansys.dpf.composites._typing_helper import PATH as _PATH
 from ansys.dpf.composites.data_sources import CompositeDefinitionFiles, get_composites_data_sources
@@ -162,9 +162,7 @@ def get_dummy_data_files(distributed: bool = False):
 
 
 def compare_sampling_point_results(
-        sample: dict[Any, Any],
-        reference: dict[Any, Any],
-        with_polar_properties: bool
+    sample: dict[Any, Any], reference: dict[Any, Any], with_polar_properties: bool
 ) -> None:
     assert sample["element_label"] == reference["element_label"]
     assert sample["unit_system"] == reference["unit_system"]
@@ -186,21 +184,18 @@ def compare_sampling_point_results(
             else:
                 assert ap[key] == ref_ap[key]
 
-    result_keys = ['failures', 'strains', 'stresses', 'offsets']
-    reference_results = reference['results']
-    sample_results = sample['results']
+    result_keys = ["failures", "strains", "stresses", "offsets"]
+    reference_results = reference["results"]
+    sample_results = sample["results"]
     for key in result_keys:
         if key == "offsets":
             numpy.testing.assert_allclose(
-                sample_results[key],
-                reference_results[key],
-                rtol=1e-6,
-                atol=1e-8
+                sample_results[key], reference_results[key], rtol=1e-6, atol=1e-8
             )
         else:
             assert sample_results[key].keys() == reference_results[key].keys()
             for component in sample_results[key].keys():
-                if component == 'failure_modes':
+                if component == "failure_modes":
                     # compare list of strings
                     assert sample_results[key][component] == reference_results[key][component]
                 else:
@@ -208,5 +203,5 @@ def compare_sampling_point_results(
                         sample_results[key][component],
                         reference_results[key][component],
                         rtol=1e-6,
-                        atol=1e-8
+                        atol=1e-8,
                     )

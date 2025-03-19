@@ -35,7 +35,7 @@ __all__ = (
     "get_constant_property",
     "get_all_dpf_material_ids",
     "get_constant_property_dict",
-    "get_material_metadata"
+    "get_material_metadata",
 )
 from ..unit_system import UnitSystemProvider, get_unit_system
 from ._layup_info import get_element_info_provider
@@ -243,10 +243,16 @@ class MaterialMetadata:
     @property
     def is_core(self) -> bool:
         """Returns true if the material is of type core."""
-        return self.ply_type in ("honeycomb_core", "isotropic_homogeneous_core", "orthotropic_homogeneous_core")
+        return self.ply_type in (
+            "honeycomb_core",
+            "isotropic_homogeneous_core",
+            "orthotropic_homogeneous_core",
+        )
 
 
-def get_material_metadata(material_container_helper_op: Operator | None) -> dict[int, MaterialMetadata]:
+def get_material_metadata(
+    material_container_helper_op: Operator | None,
+) -> dict[int, MaterialMetadata]:
     """
     DPF material ID to metadata map of the materials.
 
@@ -275,9 +281,7 @@ def get_material_metadata(material_container_helper_op: Operator | None) -> dict
     for dpf_mat_id in material_ids:
         metadata[dpf_mat_id] = MaterialMetadata(
             dpf_material_id=dpf_mat_id,
-            material_name=material_name_field.data[
-                material_name_field.scoping.index(dpf_mat_id)
-            ],
+            material_name=material_name_field.data[material_name_field.scoping.index(dpf_mat_id)],
             ply_type=(
                 ply_type_field.data[ply_type_field.scoping.index(dpf_mat_id)]
                 if ply_type_field

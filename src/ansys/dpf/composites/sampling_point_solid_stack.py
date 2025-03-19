@@ -25,11 +25,29 @@ from collections.abc import Collection, Sequence
 from typing import Any
 
 from ansys.dpf.core import UnitSystem
+from matplotlib.patches import Rectangle
 import numpy as np
 import numpy.typing as npt
-from matplotlib.patches import Rectangle
 
 from ansys.dpf import core as dpf
+from ansys.dpf.composites.constants import (
+    FailureOutput,
+    Spot,
+    Sym3x3TensorComponent,
+    strain_component_name,
+    stress_component_name,
+)
+from ansys.dpf.composites.layup_info import (
+    AnalysisPlyInfoProvider,
+    ElementInfoProvider,
+    LayupPropertiesProvider,
+    SolidStack,
+    SolidStackProvider,
+)
+from ansys.dpf.composites.solid_stack_results import (
+    get_through_the_thickness_failure_results,
+    get_through_the_thickness_results,
+)
 
 from ._sampling_point_helpers import (
     add_ply_sequence_to_plot_to_sp,
@@ -42,25 +60,18 @@ from ._sampling_point_helpers import (
     get_polar_plot_from_sp,
     get_result_plots_from_sp,
 )
-
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info._layup_info import get_material_names_to_dpf_material_index, _get_layup_model_context
+from .layup_info._layup_info import (
+    _get_layup_model_context,
+    get_material_names_to_dpf_material_index,
+)
 from .layup_info.material_operators import MaterialOperators
+from .layup_info.material_properties import get_material_metadata
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
-from .unit_system import get_unit_system
-from .layup_info.material_properties import get_material_metadata
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, LayupPropertiesProvider, SolidStack, SolidStackProvider
-from ansys.dpf.composites.solid_stack_results import get_through_the_thickness_results, get_through_the_thickness_failure_results
-from ansys.dpf.composites.constants import (
-    FailureOutput,
-    Spot,
-    Sym3x3TensorComponent,
-    strain_component_name,
-    stress_component_name,
-)
-
 from .server_helpers import version_older_than
+from .unit_system import get_unit_system
+
 
 class SamplingPointSolidStack(SamplingPoint):
     """Implements the ``Sampling Point`` object for a stack of solid elements.
@@ -128,8 +139,10 @@ class SamplingPointSolidStack(SamplingPoint):
         """Create a ``SamplingPoint`` object."""
 
         if version_older_than(meshed_region._server, "10.0"):
-            raise RuntimeError("DPF server version 10.0 (2025 R2) or later is required"
-                               " for the support of sampling points for solids.")
+            raise RuntimeError(
+                "DPF server version 10.0 (2025 R2) or later is required"
+                " for the support of sampling points for solids."
+            )
 
         self._name = name
         self._element_id = element_id
@@ -319,17 +332,23 @@ class SamplingPointSolidStack(SamplingPoint):
     @property
     def polar_properties_E1(self) -> npt.NDArray[np.float64]:
         """Polar property E1 of the laminate."""
-        raise NotImplementedError("Polar properties are not implemented for the sampling point for a solid elements.")
+        raise NotImplementedError(
+            "Polar properties are not implemented for the sampling point for a solid elements."
+        )
 
     @property
     def polar_properties_E2(self) -> npt.NDArray[np.float64]:
         """Polar property E2 of the laminate."""
-        raise NotImplementedError("Polar properties are not implemented for the sampling point for a solid elements.")
+        raise NotImplementedError(
+            "Polar properties are not implemented for the sampling point for a solid elements."
+        )
 
     @property
     def polar_properties_G12(self) -> npt.NDArray[np.float64]:
         """Polar property G12 of the laminate."""
-        raise NotImplementedError("Polar properties are not implemented for the sampling point for a solid elements.")
+        raise NotImplementedError(
+            "Polar properties are not implemented for the sampling point for a solid elements."
+        )
 
     @property
     def number_of_plies(self) -> int:
@@ -395,47 +414,42 @@ class SamplingPointSolidStack(SamplingPoint):
         )
 
         failure_results = get_through_the_thickness_failure_results(
-            self._solid_stack,
-            self._element_info_provider, irf_field, failure_model_field
+            self._solid_stack, self._element_info_provider, irf_field, failure_model_field
         )
 
-        stress_field = (
-            stress_operator
-            .outputs.fields_container()
-            .get_field(
-                {
-                    "time": self._time,
-                }
-            )
+        stress_field = stress_operator.outputs.fields_container().get_field(
+            {
+                "time": self._time,
+            }
         )
-        elastic_strain_field = (
-            elastic_strain_operator
-            .outputs.fields_container()
-            .get_field(
-                {
-                    "time": self._time,
-                }
-            )
+        elastic_strain_field = elastic_strain_operator.outputs.fields_container().get_field(
+            {
+                "time": self._time,
+            }
         )
 
         stress_results = get_through_the_thickness_results(
             self._solid_stack,
             self._element_info_provider,
             stress_field,
-            [stress_component_name(component) for component in Sym3x3TensorComponent]
+            [stress_component_name(component) for component in Sym3x3TensorComponent],
         )
         strain_results = get_through_the_thickness_results(
             self._solid_stack,
             self._element_info_provider,
             elastic_strain_field,
-            [strain_component_name(component) for component in Sym3x3TensorComponent]
+            [strain_component_name(component) for component in Sym3x3TensorComponent],
         )
 
         analysis_plies = []
         offsets = []
 
-        material_ids_to_dpf_index = get_material_names_to_dpf_material_index(self._material_operators.material_container_helper_op)
-        material_meta_data = get_material_metadata(self._material_operators.material_container_helper_op)
+        material_ids_to_dpf_index = get_material_names_to_dpf_material_index(
+            self._material_operators.material_container_helper_op
+        )
+        material_meta_data = get_material_metadata(
+            self._material_operators.material_container_helper_op
+        )
         for index, ply_id_and_th in enumerate(self._solid_stack.analysis_ply_ids_and_thicknesses):
             ap_info_provider = AnalysisPlyInfoProvider(self._meshed_region, ply_id_and_th[0])
             ap_inf = ap_info_provider.basic_info()
@@ -448,7 +462,7 @@ class SamplingPointSolidStack(SamplingPoint):
                     "id": ply_id_and_th[0],
                     "is_core": material_meta_data[dpf_mat_index].is_core,
                     "material": ap_inf.material_name,
-                    "thickness": ply_id_and_th[1]
+                    "thickness": ply_id_and_th[1],
                 }
             )
 
@@ -460,39 +474,45 @@ class SamplingPointSolidStack(SamplingPoint):
 
         self._results = [
             {
-                'element_label': self._element_id,
-                'layup': {
-                    'analysis_plies': analysis_plies,
-                    'num_analysis_plies': self._solid_stack.number_of_analysis_plies,
-                    'offset': 0.0,
-                    'polar_properties': None
+                "element_label": self._element_id,
+                "layup": {
+                    "analysis_plies": analysis_plies,
+                    "num_analysis_plies": self._solid_stack.number_of_analysis_plies,
+                    "offset": 0.0,
+                    "polar_properties": None,
                 },
-                'results': {
-                    'failures': {
-                        'failure_modes': [failure_res.mode for failure_res in failure_results],
-                        'inverse_reserve_factor': [failure_res.inverse_reserve_factor for failure_res in failure_results],
-                        'margin_of_safety': [failure_res.safety_margin for failure_res in failure_results],
-                        'reserve_factor': [failure_res.safety_factor for failure_res in failure_results]
+                "results": {
+                    "failures": {
+                        "failure_modes": [failure_res.mode for failure_res in failure_results],
+                        "inverse_reserve_factor": [
+                            failure_res.inverse_reserve_factor for failure_res in failure_results
+                        ],
+                        "margin_of_safety": [
+                            failure_res.safety_margin for failure_res in failure_results
+                        ],
+                        "reserve_factor": [
+                            failure_res.safety_factor for failure_res in failure_results
+                        ],
                     },
-                    'strains': {
-                        'e1': strain_results['e1'],
-                        'e12': strain_results['e12'],
-                        'e13': strain_results['e13'],
-                        'e2': strain_results['e2'],
-                        'e23': strain_results['e23'],
-                        'e3': strain_results['e3'],
+                    "strains": {
+                        "e1": strain_results["e1"],
+                        "e12": strain_results["e12"],
+                        "e13": strain_results["e13"],
+                        "e2": strain_results["e2"],
+                        "e23": strain_results["e23"],
+                        "e3": strain_results["e3"],
                     },
-                    'stresses': {
-                        's1': stress_results['s1'],
-                        's12': stress_results['s12'],
-                        's13': stress_results['s13'],
-                        's2': stress_results['s2'],
-                        's23': stress_results['s23'],
-                        's3': stress_results['s3'],
+                    "stresses": {
+                        "s1": stress_results["s1"],
+                        "s12": stress_results["s12"],
+                        "s13": stress_results["s13"],
+                        "s2": stress_results["s2"],
+                        "s23": stress_results["s23"],
+                        "s3": stress_results["s3"],
                     },
-                    'offsets': offsets,
+                    "offsets": offsets,
                 },
-                'unit_system': self._unit_system.name
+                "unit_system": self._unit_system.name,
             }
         ]
 
@@ -525,9 +545,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
         self._is_uptodate = True
 
-    def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP)
-    ) -> Sequence[int]:
+    def get_indices(self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP)) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.
@@ -615,7 +633,6 @@ class SamplingPointSolidStack(SamplingPoint):
         self._update_and_check_results()
         add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
 
-
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
 
@@ -702,63 +719,62 @@ class SamplingPointSolidStack(SamplingPoint):
             spots,
         )
         if create_laminate_plot:
-            self.add_element_boxes_to_plot(
-                sp_figure.axes[0],
-                core_scale_factor
-            )
+            self.add_element_boxes_to_plot(sp_figure.axes[0], core_scale_factor)
 
         return sp_figure
 
-    def add_element_boxes_to_plot(self,
-                                  axes: Any,
-                                  core_scale_factor: float = 1.0,
-                                  alpha=0.2) -> None:
-            """Add the element stack (boxes) to an axis or plot.
+    def add_element_boxes_to_plot(
+        self, axes: Any, core_scale_factor: float = 1.0, alpha=0.2
+    ) -> None:
+        """Add the element stack (boxes) to an axis or plot.
 
-            Parameters
-            ----------
-            axes :
-                Matplotlib :py:class:`~matplotlib.axes.Axes` object.
-            core_scale_factor :
-                Factor for scaling the thickness of core plies.
-            alpha :
-                Transparency of the element boxes.
-            """
-            self._update_and_check_results()
-            plY_offsets = self.get_offsets_by_spots(
-                spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
-            )
+        Parameters
+        ----------
+        axes :
+            Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+        core_scale_factor :
+            Factor for scaling the thickness of core plies.
+        alpha :
+            Transparency of the element boxes.
+        """
+        self._update_and_check_results()
+        plY_offsets = self.get_offsets_by_spots(
+            spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
+        )
 
-            element_offsets = []
-            ply_index = 0
-            for level, element_ids in self._solid_stack.element_ids_per_level.items():
-                element_ply_ids = self._solid_stack.element_wise_analysis_plies[element_ids[0]]
-                element_offsets.append(plY_offsets[2*ply_index])
-                ply_index += len(element_ply_ids)
-                element_offsets.append(plY_offsets[2*ply_index -1])
+        element_offsets = []
+        ply_index = 0
+        for level, element_ids in self._solid_stack.element_ids_per_level.items():
+            element_ply_ids = self._solid_stack.element_wise_analysis_plies[element_ids[0]]
+            element_offsets.append(plY_offsets[2 * ply_index])
+            ply_index += len(element_ply_ids)
+            element_offsets.append(plY_offsets[2 * ply_index - 1])
 
-            if len(element_offsets) == 0:
-                return
+        if len(element_offsets) == 0:
+            return
 
-            num_spots = 2
-            axes.set_ybound(element_offsets[0], element_offsets[-1])
-            x_bound = axes.get_xbound()
-            width = x_bound[1] - x_bound[0]
+        num_spots = 2
+        axes.set_ybound(element_offsets[0], element_offsets[-1])
+        x_bound = axes.get_xbound()
+        width = x_bound[1] - x_bound[0]
 
-            colors = ('b', 'g', 'r', 'c', 'm', 'y')
-            for index, _ in enumerate(self._solid_stack.element_ids_per_level):
-                hatch = ""
-                axes.add_patch(
-                    Rectangle(
-                        xy=(float(x_bound[0]), float(element_offsets[index * num_spots])),
-                        width=width,
-                        height=float(element_offsets[(index + 1) * num_spots - 1] - element_offsets[index * num_spots]),
-                        fill=True,
-                        hatch=hatch,
-                        alpha=alpha,
-                        color=colors[index % len(colors)]
-                    )
+        colors = ("b", "g", "r", "c", "m", "y")
+        for index, _ in enumerate(self._solid_stack.element_ids_per_level):
+            hatch = ""
+            axes.add_patch(
+                Rectangle(
+                    xy=(float(x_bound[0]), float(element_offsets[index * num_spots])),
+                    width=width,
+                    height=float(
+                        element_offsets[(index + 1) * num_spots - 1]
+                        - element_offsets[index * num_spots]
+                    ),
+                    fill=True,
+                    hatch=hatch,
+                    alpha=alpha,
+                    color=colors[index % len(colors)],
                 )
+            )
 
     def _update_and_check_results(self) -> None:
         if not self._is_uptodate or not self._results:

@@ -37,11 +37,11 @@ from ansys.dpf.composites.data_sources import (
 )
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
+    CoreFailureCriterion,
+    FaceSheetWrinklingCriterion,
     MaxStrainCriterion,
     MaxStressCriterion,
     PuckCriterion,
-    FaceSheetWrinklingCriterion,
-    CoreFailureCriterion,
 )
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.sampling_point_types import FailureResult
@@ -49,6 +49,7 @@ from ansys.dpf.composites.sampling_point_types import FailureResult
 from .helper import compare_sampling_point_results
 
 TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "solid_model"
+
 
 def get_file_paths() -> ContinuousFiberCompositesFiles:
     rst_paths = [os.path.join(TEST_DATA_ROOT_DIR, "file.rst")]
@@ -62,13 +63,14 @@ def get_file_paths() -> ContinuousFiberCompositesFiles:
     )
     return files
 
+
 def get_fc() -> CombinedFailureCriterion:
     cfc = CombinedFailureCriterion("combined")
-    cfc.insert(MaxStrainCriterion(e3 = True, e13 = True, e23 = True))
-    cfc.insert(MaxStressCriterion(s3 = True, s13 = True, s23 = True))
-    cfc.insert(PuckCriterion(pd = True, dim = 3))
+    cfc.insert(MaxStrainCriterion(e3=True, e13=True, e23=True))
+    cfc.insert(MaxStressCriterion(s3=True, s13=True, s23=True))
+    cfc.insert(PuckCriterion(pd=True, dim=3))
     cfc.insert(FaceSheetWrinklingCriterion())
-    cfc.insert(CoreFailureCriterion(include_ins = True))
+    cfc.insert(CoreFailureCriterion(include_ins=True))
     return cfc
 
 
@@ -77,6 +79,7 @@ def compare_results(current, element_id) -> None:
         reference = json.loads(json.load(f))
 
     compare_sampling_point_results(reference, current, with_polar_properties=False)
+
 
 def test_sampling_point_solid_stack(dpf_server):
     """
@@ -88,9 +91,7 @@ def test_sampling_point_solid_stack(dpf_server):
 
     # Element with a standard solid stack (hex only)
     sampling_point = composite_model.get_sampling_point(
-        combined_criterion=get_fc(),
-        element_id=110,
-        time=1
+        combined_criterion=get_fc(), element_id=110, time=1
     )
 
     plot = sampling_point.get_result_plots(
@@ -102,6 +103,7 @@ def test_sampling_point_solid_stack(dpf_server):
     )
     # plot.figure.show()
     compare_results(sampling_point.results[0], 110)
+
 
 def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
     """
@@ -115,9 +117,7 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
     # one drop-off which is split into two tetra elements
     for element_id in [113, 154]:
         sampling_point = composite_model.get_sampling_point(
-            combined_criterion=get_fc(),
-            element_id=element_id,
-            time=1
+            combined_criterion=get_fc(), element_id=element_id, time=1
         )
 
         plot = sampling_point.get_result_plots(
@@ -141,9 +141,7 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
 
     # Element of a solid stack with cut-off elements
     sampling_point = composite_model.get_sampling_point(
-        combined_criterion=get_fc(),
-        element_id=219,
-        time=1
+        combined_criterion=get_fc(), element_id=219, time=1
     )
 
     plot = sampling_point.get_result_plots(

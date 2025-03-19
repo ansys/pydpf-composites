@@ -33,7 +33,7 @@ from ._composite_model_factory import _composite_model_factory
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayerProperty, LayupPropertiesProvider, LayupModelContextType
+from .layup_info import ElementInfo, LayerProperty, LayupModelContextType, LayupPropertiesProvider
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialMetadata, MaterialProperty
 from .result_definition import FailureMeasureEnum
@@ -447,7 +447,6 @@ class CompositeModel:
         return self._implementation.get_all_layered_element_ids_for_composite_definition_label(
             composite_definition_label
         )
-
 
     def get_layup_properties_provider(self) -> LayupPropertiesProvider:
         """

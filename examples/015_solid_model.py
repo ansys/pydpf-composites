@@ -55,14 +55,14 @@ from ansys.dpf.composites.constants import FailureOutput
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.failure_criteria import (
     CombinedFailureCriterion,
-    MaxStressCriterion,
     CoreFailureCriterion,
     FaceSheetWrinklingCriterion,
-    HashinCriterion
+    HashinCriterion,
+    MaxStressCriterion,
 )
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
-from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.layup_info import SolidStackProvider
+from ansys.dpf.composites.result_definition import FailureMeasureEnum
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
@@ -108,9 +108,7 @@ irf_on_ref_surface_field.plot()
 
 # The next plot shows the same failure analysis without the projection
 # to the reference surface.
-irf_max_field = output_all_elements.get_field(
-    {"failure_label": FailureOutput.FAILURE_VALUE}
-)
+irf_max_field = output_all_elements.get_field({"failure_label": FailureOutput.FAILURE_VALUE})
 irf_max_field.plot()
 
 # %%
@@ -180,8 +178,7 @@ sampling_point_plot.figure.show()
 # Information about the stack of solid elements can be retrieved
 # by using the SolidStackProvider. A basic example is shown below.
 solid_stack_provider = SolidStackProvider(
-    composite_model.get_mesh(),
-    composite_model.get_layup_operator()
+    composite_model.get_mesh(), composite_model.get_layup_operator()
 )
 print(f"Number of solid stacks: {solid_stack_provider.number_of_stacks}")
 stack_of_element_6 = solid_stack_provider.get_solid_stack(6)
