@@ -23,6 +23,8 @@ import json
 import os
 import pathlib
 
+import pytest
+
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
@@ -37,6 +39,8 @@ from ansys.dpf.composites.failure_criteria import (
     PuckCriterion,
 )
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
+from ansys.dpf.composites.sampling_point_types import SamplingPoint, SamplingPointFigure
+from ansys.dpf.composites.server_helpers import version_older_than
 
 from .helper import compare_sampling_point_results
 
@@ -73,12 +77,25 @@ def compare_results(current, element_id) -> None:
     compare_sampling_point_results(reference, current, with_polar_properties=False)
 
 
+def get_sampling_point_plot(sampling_point: SamplingPoint) -> SamplingPointFigure:
+    return sampling_point.get_result_plots(
+        strain_components=["e1", "e2", "e12"],
+        stress_components=["s1", "s2", "s12"],
+        failure_components=[FailureMeasureEnum.INVERSE_RESERVE_FACTOR],
+        core_scale_factor=0.2,
+        show_failure_modes=True,
+    )
+
+
 def test_sampling_point_solid_stack(dpf_server):
     """
     Test sampling point for solid model for a standard solid stack.
 
     The solid stack contains only layered elements.
     """
+    if version_older_than(dpf_server, "10.0"):
+        pytest.xfail("Sampling point for solids is supported since version 10.0 (2025 R2).")
+
     composite_model = CompositeModel(get_file_paths(), server=dpf_server)
 
     # Element with a standard solid stack (hex only)
@@ -86,13 +103,7 @@ def test_sampling_point_solid_stack(dpf_server):
         combined_criterion=get_fc(), element_id=110, time=1
     )
 
-    plot = sampling_point.get_result_plots(
-        strain_components=["e1", "e2", "e12"],
-        stress_components=["s1", "s2", "s12"],
-        failure_components=[FailureMeasureEnum.INVERSE_RESERVE_FACTOR],
-        core_scale_factor=0.2,
-        show_failure_modes=True,
-    )
+    plot = get_sampling_point_plot(sampling_point)
     # plot.figure.show()
     compare_results(sampling_point.results[0], 110)
 
@@ -103,6 +114,9 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
 
     The drop-off elements need special handling to extract the results and layup information.
     """
+    if version_older_than(dpf_server, "10.0"):
+        pytest.xfail("Sampling point for solids is supported since version 10.0 (2025 R2).")
+
     composite_model = CompositeModel(get_file_paths(), server=dpf_server)
 
     # one drop-off with one element only
@@ -112,13 +126,7 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
             combined_criterion=get_fc(), element_id=element_id, time=1
         )
 
-        plot = sampling_point.get_result_plots(
-            strain_components=["e1", "e2", "e12"],
-            stress_components=["s1", "s2", "s12"],
-            failure_components=[FailureMeasureEnum.INVERSE_RESERVE_FACTOR],
-            core_scale_factor=0.2,
-            show_failure_modes=True,
-        )
+        plot = get_sampling_point_plot(sampling_point)
         # plot.figure.show()
         compare_results(sampling_point.results[0], element_id)
 
@@ -129,6 +137,8 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
 
     The cut-off elements need special handling to extract the results and layup information.
     """
+    if version_older_than(dpf_server, "10.0"):
+        pytest.xfail("Sampling point for solids is supported since version 10.0 (2025 R2).")
     composite_model = CompositeModel(get_file_paths(), server=dpf_server)
 
     # Element of a solid stack with cut-off elements
@@ -136,12 +146,6 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
         combined_criterion=get_fc(), element_id=219, time=1
     )
 
-    plot = sampling_point.get_result_plots(
-        strain_components=["e1", "e2", "e12"],
-        stress_components=["s1", "s2", "s12"],
-        failure_components=[FailureMeasureEnum.INVERSE_RESERVE_FACTOR],
-        core_scale_factor=0.2,
-        show_failure_modes=True,
-    )
+    plot = get_sampling_point_plot(sampling_point)
     # plot.figure.show()
     compare_results(sampling_point.results[0], 219)
