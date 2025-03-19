@@ -198,10 +198,15 @@ class SolidStackProvider:
                         self._element_id_to_solid_stack_index_map[element_id] = len(
                             self._solid_stacks
                         )
-                        element_ply_thicknesses[int(element_id)] = [
-                            float(v)
-                            for v in self._layup_property_provider.get_layer_thicknesses(element_id)
-                        ]
+                        layer_thicknesses = self._layup_property_provider.get_layer_thicknesses(
+                            element_id
+                        )
+                        if layer_thicknesses:
+                            element_ply_thicknesses[int(element_id)] = [
+                                float(v) for v in layer_thicknesses
+                            ]
+                        else:
+                            raise RuntimeError("Could not extract the layer thicknesses!")
                     else:
                         ply_infos = self._get_analysis_ply_info_for_homogeneous_element(element_id)
                         if ply_infos:

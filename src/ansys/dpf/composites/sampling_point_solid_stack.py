@@ -721,7 +721,7 @@ class SamplingPointSolidStack(SamplingPoint):
         return sp_figure
 
     def add_element_boxes_to_plot(
-        self, axes: Any, core_scale_factor: float = 1.0, alpha=0.2
+        self, axes: Any, core_scale_factor: float = 1.0, alpha: float = 0.2
     ) -> None:
         """Add the element stack (boxes) to an axis or plot.
 
@@ -734,6 +734,9 @@ class SamplingPointSolidStack(SamplingPoint):
         alpha :
             Transparency of the element boxes.
         """
+        if not self._solid_stack:
+            raise RuntimeError("Solid stack is not available.")
+
         self._update_and_check_results()
         plY_offsets = self.get_offsets_by_spots(
             spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor

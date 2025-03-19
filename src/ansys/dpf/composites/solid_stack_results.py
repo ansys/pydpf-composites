@@ -133,10 +133,10 @@ def get_through_the_thickness_failure_results(
                 irf = float(this_element_irfs[index_of_max])
                 if irf > max_irf:
                     max_irf = irf
-                    max_failure_mode = this_element_modes[index_of_max]
+                    max_failure_mode = int(this_element_modes[index_of_max])
 
             f_res = FailureResult(
-                FailureModeEnum(int(max_failure_mode)).name,
+                FailureModeEnum(max_failure_mode).name,
                 max_irf,
                 _irf2rf(max_irf),
                 _irf2mos(max_irf),
@@ -152,7 +152,7 @@ def get_through_the_thickness_results(
     element_info_provider: ElementInfoProvider,
     result_field: dpf.Field,
     component_names: list[str],
-) -> dict[str, Sequence[float]]:
+) -> dict[str, list[float]]:
     """
     Get through-the-thickness results of the solid stack.
 
@@ -171,7 +171,7 @@ def get_through_the_thickness_results(
             solid_stack, element_info_provider, stress_field, ["s11", "s22"]
         )
     """
-    results = {k: [] for k in component_names}
+    results: dict[str, list[float]] = {k: [] for k in component_names}
 
     for _, element_ids in solid_stack.element_ids_per_level.items():
         is_layered = False
@@ -181,13 +181,11 @@ def get_through_the_thickness_results(
             is_layered = element_info.is_layered
             if is_layered:
                 this_element_values = result_field.get_entity_data_by_id(element_id)
-                for ply_index, _ in range(
-                    0, len(solid_stack.element_wise_analysis_plies[element_id])
-                ):
+                for ply_index in range(0, len(solid_stack.element_wise_analysis_plies[element_id])):
                     for spot in SOLID_SPOTS:
                         # select all data points of the ply / layers (all nodes and spots)
                         selected_indices = get_selected_indices(
-                            element_info, layers=[ply_index], nodes=None, spots=[spot]
+                            element_info, layers=[int(ply_index)], nodes=None, spots=[spot]
                         )
                         for component_index, component_name in enumerate(component_names):
                             ave_value = np.average(
@@ -200,7 +198,7 @@ def get_through_the_thickness_results(
             # Assumption: all elements origin from the same layered element, and so
             # they have the same "artificial" plies.
             # The ply information is needed to syn the lay-up plot with the result plot.
-            homogeneous_results = {k: [] for k in component_names}
+            homogeneous_results: dict[str, list[float]] = {k: [] for k in component_names}
             num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
             for element_id in element_ids:
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
