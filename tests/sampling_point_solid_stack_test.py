@@ -23,14 +23,7 @@ import json
 import os
 import pathlib
 
-from ansys.dpf.core import unit_systems
-import matplotlib.pyplot as plt
-import numpy as np
-import numpy.testing
-import pytest
-
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import FailureOutput, Spot
 from ansys.dpf.composites.data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
@@ -44,7 +37,6 @@ from ansys.dpf.composites.failure_criteria import (
     PuckCriterion,
 )
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
-from ansys.dpf.composites.sampling_point_types import FailureResult
 
 from .helper import compare_sampling_point_results
 

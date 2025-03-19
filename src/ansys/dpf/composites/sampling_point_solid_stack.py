@@ -40,7 +40,6 @@ from ansys.dpf.composites.constants import (
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfoProvider,
-    LayupPropertiesProvider,
     SolidStack,
     SolidStackProvider,
 )
@@ -137,7 +136,6 @@ class SamplingPointSolidStack(SamplingPoint):
         time: float | None = None,
     ):
         """Create a ``SamplingPoint`` object."""
-
         if version_older_than(meshed_region._server, "10.0"):
             raise RuntimeError(
                 "DPF server version 10.0 (2025 R2) or later is required"
@@ -362,7 +360,6 @@ class SamplingPointSolidStack(SamplingPoint):
 
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
-
         if not self._time:
             # TODO: check how the standard sampling point handles this
             raise RuntimeError("Time must be set before running the sampling point operator.")

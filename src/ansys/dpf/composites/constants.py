@@ -76,10 +76,12 @@ def _component_name(component: Sym3x3TensorComponent) -> str:
 
 
 def strain_component_name(component: Sym3x3TensorComponent) -> str:
+    """Return the strain component names."""
     return f"e{_component_name(component)}"
 
 
 def stress_component_name(component: Sym3x3TensorComponent) -> str:
+    """Return the stress component names."""
     return f"s{_component_name(component)}"
 
 

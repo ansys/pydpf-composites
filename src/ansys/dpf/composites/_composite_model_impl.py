@@ -501,12 +501,11 @@ class CompositeModelImpl:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-
         element_info = self.get_element_info(element_id)
         if not element_info.is_layered:
             raise RuntimeError(
-                f"Sampling point is implemented for layered elements only. "
-                "{element_id} is not layered."
+                "Sampling point is implemented for layered elements only. "
+                f"{element_id} is not layered."
             )
 
         if element_info.is_shell:

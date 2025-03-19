@@ -25,7 +25,7 @@
 from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, cast
+from typing import Any, Dict, cast
 from warnings import warn
 
 import ansys.dpf.core as dpf
@@ -189,6 +189,8 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
 
 @dataclass(frozen=True)
 class AnalysisPlyInfo:
+    """Data about an analysis ply."""
+
     angle: float
     global_ply_number: int
     id: str
@@ -229,6 +231,7 @@ class AnalysisPlyInfoProvider:
         return cast(Sequence[np.int64], self.property_field.scoping.ids)
 
     def basic_info(self) -> AnalysisPlyInfo:
+        """Get data such as material, angle etc. of the analysis ply."""
         # Extract information from property field
         properties_op = dpf.Operator("composite::get_field_properties_operator")
         properties_op.inputs.field(self.property_field)
@@ -594,7 +597,9 @@ def get_element_info_provider(
     return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
 
 
-def get_material_names_to_dpf_material_index(material_container_helper_op: dpf.Operator):
+def get_material_names_to_dpf_material_index(
+    material_container_helper_op: dpf.Operator,
+) -> dict[str, int]:
     """Get a dictionary that maps material names to DPF material IDs."""
     if material_container_helper_op is None:
         raise RuntimeError(

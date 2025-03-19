@@ -19,9 +19,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
+"""Functions to retrieve through-the-thickness results of a stack of solid elements."""
 from collections.abc import Sequence
-from dataclasses import dataclass
 
 import ansys.dpf.core as dpf
 import numpy as np
@@ -64,19 +63,22 @@ def get_through_the_thickness_failure_results(
     """
     Get through-the-thickness failure results of the solid stack.
 
-    The maximum IRF is extracted at the bottom and top of each ply for each element in the stack.
-    The result contains the failure mode, IRF, reserve factor and margin of safety for each spot and ply.
-    The inputs irf_field and failure_mode_field are expected to have location element_nodal
-    (no data reduction) with data at the bottom and top of each layer (ply).
+    The maximum IRF is extracted at the bottom and top of each ply for each element in
+    the stack. The result contains the failure mode, IRF, reserve factor and margin of
+    safety for each spot and ply. The inputs irf_field and failure_mode_field are
+    expected to have location element_nodal (no data reduction) with data at the
+    bottom and top of each layer (ply).
 
     In case of drop-off or cut-off elements, which are non-layered, the maximum IRF is extracted.
 
     Example:
-        failures = get_through_the_thickness_failure_results(stack, element_info_provider, irf_field, failure_mode_field)
+        failures = get_through_the_thickness_failure_results(
+            stack, element_info_provider, irf_field, failure_mode_field
+        )
     """
     failure_results = []
 
-    for level, element_ids in solid_stack.element_ids_per_level.items():
+    for _, element_ids in solid_stack.element_ids_per_level.items():
         is_layered = False
         if len(element_ids) == 1:
             element_id = element_ids[0]
@@ -86,9 +88,7 @@ def get_through_the_thickness_failure_results(
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
                 this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
-                for ply_index, ply_id in enumerate(
-                    solid_stack.element_wise_analysis_plies[element_id]
-                ):
+                for ply_index, _ in enumerate(solid_stack.element_wise_analysis_plies[element_id]):
                     # select all data points of the ply / layer for each spot separately
                     for spot in SOLID_SPOTS:
                         selected_indices = get_selected_indices(
@@ -110,7 +110,7 @@ def get_through_the_thickness_failure_results(
 
         if not is_layered:
             num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
-            for element_index, element_id in enumerate(element_ids):
+            for element_id in element_ids:
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
                     raise RuntimeError("Number of plies mismatch!")
 
@@ -120,7 +120,8 @@ def get_through_the_thickness_failure_results(
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
                 this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
-                # homogeneous element: there is no spot and so the same value is stored for both spots
+                # homogeneous element: there is no spot and so the same value is stored
+                # for both spots
                 index_of_max = this_element_irfs.argmax()
                 irf = float(this_element_irfs[index_of_max])
                 if irf > max_irf:
@@ -152,18 +153,20 @@ def get_through_the_thickness_results(
     each ply for each element in the stack. So, the result field must have location element_nodal
     and data at the bottom and top of each layer (ply).
 
-    The component names are to be provided as a list of strings, for instance ['s11', 's22', 's33']
-    and in the correct order so that the first entry (e.g. s11) is the first entry in the result vector.
+    The component names are to be provided as a list of strings, for instance
+    ['s11', 's22', 's33'] and in the correct order so that the first entry (e.g. s11)
+    is the first entry in the result vector.
 
     In case of drop-off or cut-off elements, which are non-layered, the average result is used.
 
     Example:
-        results = get_through_the_thickness_results(solid_stack, element_info_provider, stress_field, ["s11", "s22"])
+        results = get_through_the_thickness_results(
+            solid_stack, element_info_provider, stress_field, ["s11", "s22"]
+        )
     """
-
     results = {k: [] for k in component_names}
 
-    for level, element_ids in solid_stack.element_ids_per_level.items():
+    for _, element_ids in solid_stack.element_ids_per_level.items():
         is_layered = False
         if len(element_ids) == 1:
             element_id = element_ids[0]
@@ -192,14 +195,15 @@ def get_through_the_thickness_results(
             # The ply information is needed to syn the lay-up plot with the result plot.
             homogeneous_results = {k: [] for k in component_names}
             num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
-            for element_index, element_id in enumerate(element_ids):
+            for element_id in element_ids:
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
                     raise RuntimeError("Number of plies mismatch!")
 
             for element_index, element_id in enumerate(element_ids):
                 this_element_values = result_field.get_entity_data_by_id(element_id)
 
-                # homogeneous element: there is no spot and so the same value is stored for both spots
+                # homogeneous element: there is no spot and so the same value is
+                # stored for both spots
                 for component_index, component_name in enumerate(component_names):
                     ave_value = np.average(this_element_values[:, component_index])
                     homogeneous_results[component_name].append(float(ave_value))
