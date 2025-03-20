@@ -439,7 +439,7 @@ class SamplingPointSolidStack(SamplingPoint):
             self._solid_stack,
             self._element_info_provider,
             stress_field,
-            tuple([stress_component_name(component) for component in Sym3x3TensorComponent]),
+            tuple(stress_component_name(component) for component in Sym3x3TensorComponent),
         )
         strain_results = get_through_the_thickness_results(
             self._solid_stack,

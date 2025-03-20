@@ -20,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Functions to retrieve through-the-thickness results of a stack of solid elements."""
+from collections.abc import Sequence
+
 import ansys.dpf.core as dpf
 import numpy as np
 
@@ -149,7 +151,7 @@ def get_through_the_thickness_results(
     solid_stack: SolidStack,
     element_info_provider: ElementInfoProvider,
     result_field: dpf.Field,
-    component_names: tuple[str],
+    component_names: Sequence[str],
 ) -> dict[str, list[float]]:
     """
     Get through-the-thickness results of the solid stack.
