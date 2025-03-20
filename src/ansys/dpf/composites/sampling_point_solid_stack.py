@@ -37,7 +37,7 @@ from ansys.dpf.composites.constants import (
     strain_component_name,
     stress_component_name,
 )
-from ansys.dpf.composites.layup_info import (
+from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfoProvider,
     SolidStack,
