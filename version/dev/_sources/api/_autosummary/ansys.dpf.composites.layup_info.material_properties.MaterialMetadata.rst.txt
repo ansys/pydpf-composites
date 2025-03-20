@@ -16,6 +16,9 @@
         MaterialMetadata.dpf_material_id
       
       
+        MaterialMetadata.is_core
+      
+      
         MaterialMetadata.material_name
       
       

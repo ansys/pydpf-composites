@@ -1,0 +1,6 @@
+material\_name
+==============
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: AnalysisPlyInfo.material_name

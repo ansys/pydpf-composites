@@ -17,6 +17,9 @@ AnalysisPlyInfoProvider
    
       
       
+      AnalysisPlyInfoProvider.basic_info
+      
+      
       AnalysisPlyInfoProvider.get_layer_index_by_element_id
       
       

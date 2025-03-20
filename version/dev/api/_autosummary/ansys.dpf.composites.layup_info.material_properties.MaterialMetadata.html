@@ -436,6 +436,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.add_layup_info_to_mesh.html">add_layup_info_to_mesh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.get_element_info_provider.html">get_element_info_provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.get_dpf_material_id_by_analyis_ply_map.html">get_dpf_material_id_by_analyis_ply_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.AnalysisPlyInfo.html">AnalysisPlyInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html">AnalysisPlyInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.html">ElementInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfo.html">ElementInfo</a></li>
@@ -449,6 +450,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html">MaterialProperty</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">MaterialMetadata</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.dpf_material_id.html">dpf_material_id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.is_core.html">is_core</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name.html">material_name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type.html">ply_type</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id.html">solver_material_id</a></li>
@@ -558,13 +560,16 @@ None if DPF server older than 2024 R1 pre 0 (8.0).</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.dpf_material_id.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.dpf_material_id" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.dpf_material_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.dpf_material_id</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.material_name</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.is_core.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.is_core" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.is_core"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.is_core</span></code></a></p></td>
+<td><p>Returns true if the material is of type core.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.material_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.material_name</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.ply_type</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.ply_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.ply_type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.solver_material_id</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.solver_material_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata.solver_material_id</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>

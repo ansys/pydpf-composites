@@ -436,6 +436,7 @@
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.add_layup_info_to_mesh.html">add_layup_info_to_mesh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.get_element_info_provider.html">get_element_info_provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.get_dpf_material_id_by_analyis_ply_map.html">get_dpf_material_id_by_analyis_ply_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfo.html">AnalysisPlyInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html">AnalysisPlyInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProvider.html">ElementInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html">ElementInfo</a></li>
@@ -536,25 +537,28 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.get_dpf_material_id_by_analyis_ply_map.html#ansys.dpf.composites.layup_info.get_dpf_material_id_by_analyis_ply_map" title="ansys.dpf.composites.layup_info.get_dpf_material_id_by_analyis_ply_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dpf_material_id_by_analyis_ply_map</span></code></a>(mesh, ...)</p></td>
 <td><p>Get Dict that maps analysis ply names to dpf_material_ids.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html#ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider" title="ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnalysisPlyInfoProvider</span></code></a>(mesh, name)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfo.html#ansys.dpf.composites.layup_info.AnalysisPlyInfo" title="ansys.dpf.composites.layup_info.AnalysisPlyInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnalysisPlyInfo</span></code></a>(angle, global_ply_number, ...)</p></td>
+<td><p>Data about an analysis ply.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html#ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider" title="ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnalysisPlyInfoProvider</span></code></a>(mesh, name)</p></td>
 <td><p>AnalysisPlyInfoProvider.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProvider.html#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a>(mesh, layer_indices, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProvider.html#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a>(mesh, layer_indices, ...)</p></td>
 <td><p>Provider for <a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>(id, n_layers, n_corner_nodes, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>(id, n_layers, n_corner_nodes, ...)</p></td>
 <td><p>Provides lay-up information for an element.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupPropertiesProvider.html#ansys.dpf.composites.layup_info.LayupPropertiesProvider" title="ansys.dpf.composites.layup_info.LayupPropertiesProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupPropertiesProvider</span></code></a>(layup_provider, mesh)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupPropertiesProvider.html#ansys.dpf.composites.layup_info.LayupPropertiesProvider" title="ansys.dpf.composites.layup_info.LayupPropertiesProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupPropertiesProvider</span></code></a>(layup_provider, mesh)</p></td>
 <td><p>Provider for lay-up properties.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayerProperty.html#ansys.dpf.composites.layup_info.LayerProperty" title="ansys.dpf.composites.layup_info.LayerProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayerProperty</span></code></a>(value[, names, module, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayerProperty.html#ansys.dpf.composites.layup_info.LayerProperty" title="ansys.dpf.composites.layup_info.LayerProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayerProperty</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>Provides the layer properties available.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupProperty.html#ansys.dpf.composites.layup_info.LayupProperty" title="ansys.dpf.composites.layup_info.LayupProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupProperty</span></code></a>(value[, names, module, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupProperty.html#ansys.dpf.composites.layup_info.LayupProperty" title="ansys.dpf.composites.layup_info.LayupProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupProperty</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>Enum for lay-up properties.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupModelContextType.html#ansys.dpf.composites.layup_info.LayupModelContextType" title="ansys.dpf.composites.layup_info.LayupModelContextType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupModelContextType</span></code></a>(value[, names, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupModelContextType.html#ansys.dpf.composites.layup_info.LayupModelContextType" title="ansys.dpf.composites.layup_info.LayupModelContextType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupModelContextType</span></code></a>(value[, names, ...])</p></td>
 <td><p>Type of the lay-up information.</p></td>
 </tr>
 </tbody>

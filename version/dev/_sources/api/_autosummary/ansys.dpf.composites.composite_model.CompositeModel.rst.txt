@@ -38,6 +38,9 @@ CompositeModel
       CompositeModel.get_element_info
       
       
+      CompositeModel.get_element_info_provider
+      
+      
       CompositeModel.get_element_laminate_offset
       
       
