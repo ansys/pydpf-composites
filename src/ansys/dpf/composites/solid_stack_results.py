@@ -67,8 +67,7 @@ def get_through_the_thickness_failure_results(
     irf_field: dpf.Field,
     failure_mode_field: dpf.Field,
 ) -> list[FailureResult]:
-    """
-    Get through-the-thickness failure results of the solid stack.
+    """Get through-the-thickness failure results of the solid stack.
 
     The maximum IRF is extracted at the bottom and top of each ply for each element in
     the stack. The result contains the failure mode, IRF, reserve factor and margin of
@@ -78,10 +77,11 @@ def get_through_the_thickness_failure_results(
 
     In case of drop-off or cut-off elements, which are non-layered, the maximum IRF is extracted.
 
-    Example:
-        failures = get_through_the_thickness_failure_results(
-            stack, element_info_provider, irf_field, failure_mode_field
-        )
+    Example
+    -------
+    >>> failures = get_through_the_thickness_failure_results(
+    ...     stack, element_info_provider, irf_field, failure_mode_field
+    ... )
     """
     failure_results = []
 
@@ -153,8 +153,7 @@ def get_through_the_thickness_results(
     result_field: dpf.Field,
     component_names: Sequence[str],
 ) -> dict[str, list[float]]:
-    """
-    Get through-the-thickness results of the solid stack.
+    """Get through-the-thickness results of the solid stack.
 
     The results, for instance s1, s2, ..., and s23, are extracted at to bottom and top of
     each ply for each element in the stack. So, the result field must be available at the
@@ -166,10 +165,11 @@ def get_through_the_thickness_results(
 
     In case of drop-off or cut-off elements, which are non-layered, the average result is used.
 
-    Example:
-        results = get_through_the_thickness_results(
-            solid_stack, element_info_provider, stress_field, ("s11", "s22")
-        )
+    Example
+    -------
+    >>> results = get_through_the_thickness_results(
+    ...      solid_stack, element_info_provider, stress_field, ("s11", "s22")
+    ... )
     """
     results: dict[str, list[float]] = {k: [] for k in component_names}
 
