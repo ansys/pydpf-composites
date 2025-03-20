@@ -129,6 +129,6 @@ ignored-classes = [
 ]
 
 [tool.mypy]
-python_version = 3.10
+python_version = "3.10"
 mypy_path = "$MYPY_CONFIG_FILE_DIR/src:$MYPY_CONFIG_FILE_DIR/tests"
 ignore_missing_imports = true
