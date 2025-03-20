@@ -75,6 +75,7 @@ def _component_name(component: Sym3x3TensorComponent) -> str:
         return "23"
     raise ValueError(f"Unknown component: {component}")
 
+
 def component_index_from_name(component_name: str) -> Sym3x3TensorComponent:
     """Return the component index from the component name."""
     if component_name.endswith("23"):
@@ -90,6 +91,7 @@ def component_index_from_name(component_name: str) -> Sym3x3TensorComponent:
     if component_name.endswith("3"):
         return Sym3x3TensorComponent.TENSOR33
     raise ValueError(f"Unknown component: {component_name}")
+
 
 def strain_component_name(component: Sym3x3TensorComponent) -> str:
     """Return the strain component names."""

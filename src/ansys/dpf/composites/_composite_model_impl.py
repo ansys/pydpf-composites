@@ -63,8 +63,9 @@ from .layup_info.material_properties import (
     get_material_metadata,
 )
 from .result_definition import FailureMeasureEnum
-from .sampling_point_types import SamplingPoint
+from .sampling_point import SamplingPointNew
 from .sampling_point_solid_stack import SamplingPointSolidStack
+from .sampling_point_types import SamplingPoint
 from .server_helpers import (
     upload_continuous_fiber_composite_files_to_server,
     version_equal_or_later,

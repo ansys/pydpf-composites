@@ -155,18 +155,18 @@ def get_through_the_thickness_results(
     Get through-the-thickness results of the solid stack.
 
     The results, for instance s1, s2, ..., and s23, are extracted at to bottom and top of
-    each ply for each element in the stack. So, the result field must have location ``element_nodal``
-    and data at the bottom and top of each layer (ply). Finally, the average value per spot is
-    stored in the result vector.
+    each ply for each element in the stack. So, the result field must be available at the
+    location ``element_nodal`` and data at the bottom and top of each layer (ply).
+    Finally, the average value per spot is stored in the result vector.
 
-    The component names are to be provided as a list of strings, for instance
-    ['s11', 's22', 's33'].
+    The component names are to be provided as a tuple of strings, for instance
+    ('s11', 's22', 's33').
 
     In case of drop-off or cut-off elements, which are non-layered, the average result is used.
 
     Example:
         results = get_through_the_thickness_results(
-            solid_stack, element_info_provider, stress_field, ["s11", "s22"]
+            solid_stack, element_info_provider, stress_field, ("s11", "s22")
         )
     """
     results: dict[str, list[float]] = {k: [] for k in component_names}

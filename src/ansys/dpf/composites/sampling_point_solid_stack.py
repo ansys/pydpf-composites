@@ -360,7 +360,6 @@ class SamplingPointSolidStack(SamplingPoint):
 
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
-
         if not self.element_id:
             raise RuntimeError("Element ID must be set before running the sampling point.")
 
@@ -384,7 +383,10 @@ class SamplingPointSolidStack(SamplingPoint):
         elastic_strain_container = elastic_strain_operator.outputs.fields_container()
         if not self._time:
             last_time_step = stress_container.get_available_ids_for_label("time")[-1]
-            if not elastic_strain_container.get_available_ids_for_label("time")[-1] == last_time_step:
+            if (
+                not elastic_strain_container.get_available_ids_for_label("time")[-1]
+                == last_time_step
+            ):
                 raise RuntimeError("Time cannot be extracted. Please provide a time value.")
             self._time = last_time_step
 
@@ -437,13 +439,13 @@ class SamplingPointSolidStack(SamplingPoint):
             self._solid_stack,
             self._element_info_provider,
             stress_field,
-            [stress_component_name(component) for component in Sym3x3TensorComponent],
+            tuple([stress_component_name(component) for component in Sym3x3TensorComponent]),
         )
         strain_results = get_through_the_thickness_results(
             self._solid_stack,
             self._element_info_provider,
             elastic_strain_field,
-            [strain_component_name(component) for component in Sym3x3TensorComponent],
+            tuple([strain_component_name(component) for component in Sym3x3TensorComponent]),
         )
 
         analysis_plies = []
