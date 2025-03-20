@@ -48,6 +48,7 @@ from .layup_info import (
     LayupPropertiesProvider,
     add_layup_info_to_mesh,
     get_element_info_provider,
+    get_material_names_to_dpf_material_index,
 )
 from .layup_info._layup_info import _get_layup_model_context
 from .layup_info._reference_surface import (
@@ -59,9 +60,12 @@ from .layup_info.material_properties import (
     MaterialMetadata,
     MaterialProperty,
     get_constant_property_dict,
+    get_material_metadata,
 )
 from .result_definition import FailureMeasureEnum
 from .sampling_point import SamplingPointNew
+from .sampling_point_solid_stack import SamplingPointSolidStack
+from .sampling_point_types import SamplingPoint
 from .server_helpers import (
     upload_continuous_fiber_composite_files_to_server,
     version_equal_or_later,
@@ -198,21 +202,9 @@ class CompositeModelImpl:
         This property can be used to filter analysis plies
         or element layers by material name.
         """
-        helper_op = self._material_operators.material_container_helper_op
-        if helper_op is None:
-            raise RuntimeError(
-                "The used DPF server does not support the requested data. "
-                "Use version 2024 R1-pre0 or later."
-            )
-
-        string_field = helper_op.outputs.material_names()
-        material_ids = string_field.scoping.ids
-
-        names = {}
-        for dpf_mat_id in material_ids:
-            names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
-
-        return names
+        return get_material_names_to_dpf_material_index(
+            self._material_operators.material_container_helper_op
+        )
 
     @property
     def material_metadata(self) -> dict[int, MaterialMetadata]:
@@ -224,43 +216,7 @@ class CompositeModelImpl:
 
         Note: ply type is only available in DPF server version 9.0 (2025 R1 pre0) and later.
         """
-        helper_op = self._material_operators.material_container_helper_op
-        if helper_op is None:
-            raise RuntimeError(
-                "The used DPF server does not support the requested data. "
-                "Use version 2024 R1-pre0 or later."
-            )
-        material_name_field = helper_op.outputs.material_names()
-        if hasattr(helper_op.outputs, "solver_material_ids"):
-            solver_id_field = helper_op.outputs.solver_material_ids()
-        else:
-            solver_id_field = None
-        material_ids = material_name_field.scoping.ids
-        if hasattr(helper_op.outputs, "ply_types"):
-            ply_type_field = helper_op.outputs.ply_types()
-        else:
-            ply_type_field = None
-
-        metadata = {}
-        for dpf_mat_id in material_ids:
-            metadata[dpf_mat_id] = MaterialMetadata(
-                dpf_material_id=dpf_mat_id,
-                material_name=material_name_field.data[
-                    material_name_field.scoping.index(dpf_mat_id)
-                ],
-                ply_type=(
-                    ply_type_field.data[ply_type_field.scoping.index(dpf_mat_id)]
-                    if ply_type_field
-                    else None
-                ),
-                solver_material_id=(
-                    solver_id_field.data[solver_id_field.scoping.index(dpf_mat_id)]
-                    if solver_id_field
-                    else None
-                ),
-            )
-
-        return metadata
+        return get_material_metadata(self._material_operators.material_container_helper_op)
 
     @_deprecated_composite_definition_label
     def get_mesh(self, composite_definition_label: str | None = None) -> MeshedRegion:
@@ -527,7 +483,7 @@ class CompositeModelImpl:
         element_id: int,
         time: float | None = None,
         composite_definition_label: str | None = None,
-    ) -> SamplingPointNew:
+    ) -> SamplingPoint:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters
@@ -546,20 +502,33 @@ class CompositeModelImpl:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
-        time_in = time
-
-        return SamplingPointNew(
-            "Sampling Point",
-            element_id,
-            combined_criterion,
-            self._material_operators,
-            self.get_mesh(),
-            self._layup_provider,
-            self.get_rst_streams_provider(),
-            self._data_sources.rst,
-            self._unit_system,
-            time_in,
-        )
+        element_info = self.get_element_info(element_id)
+        if element_info.is_shell:
+            return SamplingPointNew(
+                name=f"Sampling Point - element {element_id}",
+                element_id=element_id,
+                combined_criterion=combined_criterion,
+                material_operators=self._material_operators,
+                meshed_region=self.get_mesh(),
+                layup_provider=self._layup_provider,
+                rst_streams_provider=self.get_rst_streams_provider(),
+                default_unit_system=self._unit_system,
+                time=time,
+            )
+        else:
+            # Version check of the server is implemented in SamplingPointSolidStack
+            return SamplingPointSolidStack(
+                name=f"Solid Stack - element {element_id}",
+                element_id=element_id,
+                combined_criterion=combined_criterion,
+                material_operators=self.material_operators,
+                meshed_region=self.get_mesh(),
+                layup_provider=self._layup_provider,
+                rst_streams_provider=self.get_rst_streams_provider(),
+                element_info_provider=self._element_info_provider,
+                default_unit_system=self._unit_system,
+                time=time,
+            )
 
     @_deprecated_composite_definition_label
     def get_element_info(

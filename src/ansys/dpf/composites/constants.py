@@ -30,11 +30,15 @@ __all__ = (
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
     "TIME_LABEL",
+    "component_index_from_name",
+    "strain_component_name",
+    "stress_component_name",
 )
 
 FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
 REF_SURFACE_NAME = "Reference Surface"
+SOLID_STACK_FIELD_NAME = "solid_stacks"
 
 
 class Spot(IntEnum):
@@ -54,6 +58,53 @@ class Sym3x3TensorComponent(IntEnum):
     TENSOR21 = 3
     TENSOR31 = 5
     TENSOR32 = 4
+
+
+def _component_name(component: Sym3x3TensorComponent) -> str:
+    if component == Sym3x3TensorComponent.TENSOR11:
+        return "1"
+    if component == Sym3x3TensorComponent.TENSOR22:
+        return "2"
+    if component == Sym3x3TensorComponent.TENSOR33:
+        return "3"
+    if component == Sym3x3TensorComponent.TENSOR21:
+        return "12"
+    if component == Sym3x3TensorComponent.TENSOR31:
+        return "13"
+    if component == Sym3x3TensorComponent.TENSOR32:
+        return "23"
+    raise ValueError(f"Unknown component: {component}")
+
+
+def component_index_from_name(component_name: str) -> Sym3x3TensorComponent:
+    """Return the component index from the component name."""
+    component = "".join(c for c in component_name if c.isdigit())
+    if component == "23":
+        return Sym3x3TensorComponent.TENSOR32
+    if component == "13":
+        return Sym3x3TensorComponent.TENSOR31
+    if component == "12":
+        return Sym3x3TensorComponent.TENSOR21
+    if component == "1":
+        return Sym3x3TensorComponent.TENSOR11
+    if component == "2":
+        return Sym3x3TensorComponent.TENSOR22
+    if component == "3":
+        return Sym3x3TensorComponent.TENSOR33
+    raise ValueError(
+        f"Unknown component: {component_name}. Supported are "
+        f"{', '.join(('1', '2', '3', '12', '13', '23'))}."
+    )
+
+
+def strain_component_name(component: Sym3x3TensorComponent) -> str:
+    """Return the strain component names."""
+    return f"e{_component_name(component)}"
+
+
+def stress_component_name(component: Sym3x3TensorComponent) -> str:
+    """Return the stress component names."""
+    return f"s{_component_name(component)}"
 
 
 class FailureOutput(IntEnum):
