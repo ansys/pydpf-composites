@@ -78,19 +78,23 @@ def _component_name(component: Sym3x3TensorComponent) -> str:
 
 def component_index_from_name(component_name: str) -> Sym3x3TensorComponent:
     """Return the component index from the component name."""
-    if component_name.endswith("23"):
+    component = "".join(c for c in component_name if c.isdigit())
+    if component == "23":
         return Sym3x3TensorComponent.TENSOR32
-    if component_name.endswith("13"):
+    if component == "13":
         return Sym3x3TensorComponent.TENSOR31
-    if component_name.endswith("12"):
+    if component == "12":
         return Sym3x3TensorComponent.TENSOR21
-    if component_name.endswith("1"):
+    if component == "1":
         return Sym3x3TensorComponent.TENSOR11
-    if component_name.endswith("2"):
+    if component == "2":
         return Sym3x3TensorComponent.TENSOR22
-    if component_name.endswith("3"):
+    if component == "3":
         return Sym3x3TensorComponent.TENSOR33
-    raise ValueError(f"Unknown component: {component_name}")
+    raise ValueError(
+        f"Unknown component: {component_name}. Supported are "
+        f"{', '.join(('1', '2', '3', '12', '13', '23'))}."
+    )
 
 
 def strain_component_name(component: Sym3x3TensorComponent) -> str:

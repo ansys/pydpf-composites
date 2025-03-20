@@ -92,17 +92,17 @@ class SamplingPointSolidStack(SamplingPoint):
 
     Notes
     -----
-    The results of layered elements are stored per integration point. A layered shell element
+    The results of layered elements are stored per integration point. A layered solid element
     has a number of in-plane integration points (depending on the integration scheme) and
-    typically three integration points through the thickness. The through-the-thickness
-    integration points are called `spots`. They are typically at the ``BOTTOM``
-    and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
-    Note that ``MIDDLE`` is not available for solid elements.
+    two integration points through the thickness for each layer.
+    The through-the-thickness integration points are called `spots`. They are typically
+    at the ``BOTTOM`` and ``TOP`` of the layer. This notation is used here to identify the
+    corresponding data. Note that ``MIDDLE`` is not available for solid elements.
 
-    The ``SamplingPoint`` class returns three results per layer (one for each spot) because
-    the results of the in-plane integration points are interpolated to the centroid of the element.
-    The following table shows an example of a laminate with three layers. So a result, such as
-    ``s1`` has nine values, three for each ply.
+    The ``SamplingPoint`` class for solid elements returns two results per layer (one for each spot)
+    because the results of the in-plane integration points are interpolated to the centroid of
+    the element. The following table shows an example of a laminate with three layers.
+    So a result, such as ``s1`` has six values, two for each ply.
 
     +------------+------------+------------------------+
     | Layer      | Index      | Spot                   |

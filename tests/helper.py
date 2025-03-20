@@ -204,4 +204,5 @@ def compare_sampling_point_results(
                         reference_results[key][component],
                         rtol=1e-6,
                         atol=1e-8,
+                        err_msg=f"Values '{key} - {component}' mismatch.",
                     )
