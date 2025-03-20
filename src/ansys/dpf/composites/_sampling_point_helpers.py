@@ -220,7 +220,15 @@ def add_ply_sequence_to_plot_to_sp(
 
         height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
         origin = (x_bound[0], offsets[index * num_spots])
-        axes.add_patch(Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch))
+        axes.add_patch(
+            Rectangle(
+                xy=origin,
+                width=width,
+                height=height,
+                fill=False,
+                hatch=hatch,
+            )
+        )
         mat = ply["material"]
         th = float(ply["thickness"])
         if "angle" in ply.keys():
@@ -326,9 +334,6 @@ def get_result_plots_from_sp(
             sampling_point.add_ply_sequence_to_plot(layup_axis, core_scale_factor)
             layup_axis.set_xticks([])
             axes_index += 1
-
-            plt.rcParams["hatch.linewidth"] = 1.0
-            plt.rcParams["hatch.color"] = "black"
 
         if len(strain_components) > 0:
             strain_axis = _get_subplot(axes, axes_index)

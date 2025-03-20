@@ -204,6 +204,6 @@ results = get_through_the_thickness_results(
     solid_stack=stack_of_element_6,
     element_info_provider=composite_model.get_element_info_provider(),
     result_field=stress_field,
-    component_names=("s11", "s22", "s12"),
+    component_names=("s1", "s2", "s12"),
 )
 print(results)

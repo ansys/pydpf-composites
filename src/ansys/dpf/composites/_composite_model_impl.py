@@ -505,31 +505,29 @@ class CompositeModelImpl:
         element_info = self.get_element_info(element_id)
         if element_info.is_shell:
             return SamplingPointNew(
-                f"Sampling Point - element {element_id}",
-                element_id,
-                combined_criterion,
-                self._material_operators,
-                self.get_mesh(),
-                self._layup_provider,
-                self.get_rst_streams_provider(),
-                self._data_sources.rst,
-                self._unit_system,
-                time,
+                name=f"Sampling Point - element {element_id}",
+                element_id=element_id,
+                combined_criterion=combined_criterion,
+                material_operators=self._material_operators,
+                meshed_region=self.get_mesh(),
+                layup_provider=self._layup_provider,
+                rst_streams_provider=self.get_rst_streams_provider(),
+                default_unit_system=self._unit_system,
+                time=time,
             )
         else:
             # Version check of the server is implemented in SamplingPointSolidStack
             return SamplingPointSolidStack(
-                f"Solid Stack - element {element_id}",
-                element_id,
-                combined_criterion,
-                self.material_operators,
-                self.get_mesh(),
-                self._layup_provider,
-                self.get_rst_streams_provider(),
-                self._data_sources.rst,
-                self._element_info_provider,
-                self._unit_system,
-                time,
+                name=f"Solid Stack - element {element_id}",
+                element_id=element_id,
+                combined_criterion=combined_criterion,
+                material_operators=self.material_operators,
+                meshed_region=self.get_mesh(),
+                layup_provider=self._layup_provider,
+                rst_streams_provider=self.get_rst_streams_provider(),
+                element_info_provider=self._element_info_provider,
+                default_unit_system=self._unit_system,
+                time=time,
             )
 
     @_deprecated_composite_definition_label

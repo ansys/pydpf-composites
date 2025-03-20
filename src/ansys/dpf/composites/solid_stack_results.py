@@ -167,7 +167,7 @@ def get_through_the_thickness_results(
     Example
     -------
     >>> results = get_through_the_thickness_results(
-    ...      solid_stack, element_info_provider, stress_field, ("s11", "s22")
+    ...      solid_stack, element_info_provider, stress_field, ("s1", "s2")
     ... )
     """
     results: dict[str, list[float]] = {k: [] for k in component_names}

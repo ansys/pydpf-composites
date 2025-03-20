@@ -102,6 +102,7 @@ class SamplingPointNew(SamplingPoint):
 
     def __init__(
         self,
+        *,
         name: str,
         element_id: int,
         combined_criterion: CombinedFailureCriterion,
@@ -109,7 +110,6 @@ class SamplingPointNew(SamplingPoint):
         meshed_region: dpf.MeshedRegion,
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
-        rst_data_source: dpf.DataSources,
         default_unit_system: UnitSystem | None = None,
         time: float | None = None,
     ):
@@ -123,13 +123,12 @@ class SamplingPointNew(SamplingPoint):
         self._meshed_region = meshed_region
         self._layup_provider = layup_provider
         self._rst_streams_provider = rst_streams_provider
-        self._rst_data_source = rst_data_source
 
         self._spots_per_ply = 0
         self._interface_indices: dict[Spot, int] = {}
         self._results: Any = None
         self._is_uptodate = False
-        self._unit_system = get_unit_system(self._rst_data_source, default_unit_system)
+        self._unit_system = get_unit_system(self._rst_streams_provider, default_unit_system)
 
     @property
     def name(self) -> str:
