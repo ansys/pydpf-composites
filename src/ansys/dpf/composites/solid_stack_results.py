@@ -25,7 +25,7 @@ from collections.abc import Sequence
 import ansys.dpf.core as dpf
 import numpy as np
 
-from ansys.dpf.composites.constants import Spot, component_index_from_name
+from .constants import Spot, component_index_from_name
 from .failure_criteria import FailureModeEnum
 from ansys.dpf.composites.layup_info import ElementInfo, ElementInfoProvider, SolidStack
 
