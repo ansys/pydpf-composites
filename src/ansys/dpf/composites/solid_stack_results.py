@@ -27,7 +27,7 @@ import numpy as np
 
 from .constants import Spot, component_index_from_name
 from .failure_criteria import FailureModeEnum
-from ansys.dpf.composites.layup_info import ElementInfo, ElementInfoProvider, SolidStack
+from .layup_info import ElementInfo, ElementInfoProvider, SolidStack
 
 from .sampling_point_types import FailureResult
 from .select_indices import get_selected_indices
