@@ -43,7 +43,7 @@ from .layup_info import (
     SolidStack,
     SolidStackProvider,
 )
-from ansys.dpf.composites.solid_stack_results import (
+from .solid_stack_results import (
     get_through_the_thickness_failure_results,
     get_through_the_thickness_results,
 )
