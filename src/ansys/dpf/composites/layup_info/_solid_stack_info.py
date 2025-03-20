@@ -76,7 +76,7 @@ class SolidStack:
 
     @property
     def analysis_ply_ids_and_thicknesses(self) -> Sequence[tuple[str, float]]:
-        """List of analysis plies and their thicknesses."""
+        """List of analysis plies and their thicknesses from the bottom to the top."""
         res = []
         for _, element_ids in self.element_ids_per_level.items():
             # Only the first element is of interest since all elements
@@ -113,11 +113,8 @@ class SolidStackProvider:
         """
         self._mesh = mesh
         self._layup_property_provider = LayupPropertiesProvider(layup_provider, mesh)
-        self._mesh_properties_container = (
-            layup_provider.outputs.mesh_properties_container.get_data()
-        )
+        self._mesh_properties_container = layup_provider.outputs.mesh_properties_container
 
-        # check the number of components. have to be 2
         if self._mesh_properties_container:
             self._virtual_thicknesses_field = self._mesh_properties_container.get_field(
                 {"MeshPropertyFieldLabel": 2}
@@ -134,6 +131,7 @@ class SolidStackProvider:
             self.SOLID_STACK_PROPERTY_FIELD_NAME
         )
 
+        # check the number of components. 2 because it is (element_id, level)
         if self._solid_stacks_property_field.ndim != 2:
             raise RuntimeError(
                 f"Property field '{self.SOLID_STACK_PROPERTY_FIELD_NAME}' must have 2 components "
@@ -193,7 +191,10 @@ class SolidStackProvider:
         Create the solid stack by finding the right stack.
 
         Data of the stack is extracted from the meshed region and
-        some additional fields.
+        some additional fields. This fills the cache (self._solid_stacks
+        and self._element_id_to_solid_stack_index_map for) later use.
+
+        Returns None if the element is not part of a solid stack.
         """
         for index in range(0, self.number_of_stacks):
             elementary_data = self._solid_stacks_property_field.get_entity_data(index)
