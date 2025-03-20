@@ -63,7 +63,7 @@ from .layup_info.material_properties import (
     get_material_metadata,
 )
 from .result_definition import FailureMeasureEnum
-from .sampling_point import SamplingPointNew
+from .sampling_point_types import SamplingPoint
 from .sampling_point_solid_stack import SamplingPointSolidStack
 from .server_helpers import (
     upload_continuous_fiber_composite_files_to_server,
@@ -482,7 +482,7 @@ class CompositeModelImpl:
         element_id: int,
         time: float | None = None,
         composite_definition_label: str | None = None,
-    ) -> SamplingPointNew | SamplingPointSolidStack:
+    ) -> SamplingPoint:
         """Get a sampling point for an element ID and failure criteria.
 
         Parameters

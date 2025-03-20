@@ -42,13 +42,16 @@ class SolidStack:
     specific failure analysis.
     """
 
-    # list of solid element labels ordered from the bottom to the top
+    # List of solid element labels ordered from the bottom to the top
     element_ids: Sequence[int]
-    # list of analysis plies for each solid element in the stack
+    # List of analysis plies for each solid element in the stack.
+    # Indexed by element ID (label)
     element_wise_analysis_plies: dict[int, Sequence[str]]
+    # Element-wise ply thicknesses. Indexed by element ID (label)
     element_ply_thicknesses: dict[int, Sequence[float]]
-    # the level defines the position of each element in the stack.
-    # multiple homogeneous elements can have the same level.
+    # The level defines the position of each element in the stack.
+    # Multiple homogeneous elements can have the same level.
+    # Indexed by element ID (label)
     element_wise_levels: dict[int, int]
 
     @property

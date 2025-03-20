@@ -30,6 +30,7 @@ __all__ = (
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
     "TIME_LABEL",
+    "component_index_from_name",
     "strain_component_name",
     "stress_component_name",
 )
@@ -74,6 +75,21 @@ def _component_name(component: Sym3x3TensorComponent) -> str:
         return "23"
     raise ValueError(f"Unknown component: {component}")
 
+def component_index_from_name(component_name: str) -> Sym3x3TensorComponent:
+    """Return the component index from the component name."""
+    if component_name.endswith("23"):
+        return Sym3x3TensorComponent.TENSOR32
+    if component_name.endswith("13"):
+        return Sym3x3TensorComponent.TENSOR31
+    if component_name.endswith("12"):
+        return Sym3x3TensorComponent.TENSOR21
+    if component_name.endswith("1"):
+        return Sym3x3TensorComponent.TENSOR11
+    if component_name.endswith("2"):
+        return Sym3x3TensorComponent.TENSOR22
+    if component_name.endswith("3"):
+        return Sym3x3TensorComponent.TENSOR33
+    raise ValueError(f"Unknown component: {component_name}")
 
 def strain_component_name(component: Sym3x3TensorComponent) -> str:
     """Return the strain component names."""

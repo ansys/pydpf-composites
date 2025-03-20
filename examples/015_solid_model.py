@@ -63,6 +63,7 @@ from ansys.dpf.composites.failure_criteria import (
 from ansys.dpf.composites.layup_info import SolidStackProvider
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+from ansys.dpf.composites.solid_stack_results import get_through_the_thickness_results
 
 # Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
@@ -124,15 +125,16 @@ critical_solid_id = 0
 critical_irf = -1.0
 critical_solid_elements = {}
 for index, element_id in enumerate(irf_max_field.scoping.ids):
-    max_irf = max(irf_max_field.get_entity_data(index))
     # only consider solid elements because the model is an assembly of shells and solids
-    if max_irf > critical_irf and not composite_model.get_element_info(element_id).is_shell:
-        critical_solid_id = element_id
-        critical_irf = max_irf
+    if not composite_model.get_element_info(element_id).is_shell:
+        irf = irf_max_field.get_entity_data(index)[0]
+        if irf > critical_irf:
+            critical_solid_id = element_id
+            critical_irf = irf
 
 
 sampling_point_solid_stack = composite_model.get_sampling_point(
-    combined_criterion=combined_fc, element_id=critical_solid_id, time=1
+    combined_criterion=combined_fc, element_id=critical_solid_id
 )
 
 # %%
@@ -142,7 +144,7 @@ sampling_point_solid_stack = composite_model.get_sampling_point(
 # and the third has 2 layers.
 core_scale_factor = 0.2
 sampling_point_plot = sampling_point_solid_stack.get_result_plots(
-    strain_components=(),  # do not plot strains
+    strain_components=(),  # Skip strains
     core_scale_factor=core_scale_factor,
     failure_components=(FailureMeasureEnum.INVERSE_RESERVE_FACTOR,),
     show_failure_modes=True,
@@ -156,8 +158,8 @@ sampling_point_plot.figure.show()
 # and the colored boxes to indicate the solid elements are added
 # to the plot as well.
 sampling_point_plot = sampling_point_solid_stack.get_result_plots(
-    strain_components=("e1", "e2", "e12"),  # show in-plane results only
-    stress_components=(),  # show in-plane results only
+    strain_components=("e1", "e2", "e12"),  # Show in-plane results only
+    stress_components=(),  # Don't show stresses
     failure_components=(),
     core_scale_factor=core_scale_factor,
     create_laminate_plot=False,
@@ -177,10 +179,31 @@ sampling_point_plot.figure.show()
 # Solid Stack Information
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # Information about the stack of solid elements can be retrieved
-# by using the SolidStackProvider. A basic example is shown below.
+# by using the SolidStackProvider. A basic example is shown below
+# where 6 is the element ID (label) and not an index.
 solid_stack_provider = SolidStackProvider(
     composite_model.get_mesh(), composite_model.get_layup_operator()
 )
 print(f"Number of solid stacks: {solid_stack_provider.number_of_stacks}")
 stack_of_element_6 = solid_stack_provider.get_solid_stack(6)
 print(f"Solid stack of element 6: {stack_of_element_6}")
+
+# %%
+# The solid stack can then be used for example to get the through-the-thickness results.
+# In this example, s11, s22 and s12 are retrieved for the last time step.
+stress_operator = composite_model.core_model.results.stress()
+stress_operator.inputs.bool_rotate_to_global(False)
+stress_container = stress_operator.outputs.fields_container()
+stress_field = stress_container.get_field(
+    {
+        "time": stress_container.get_available_ids_for_label("time")[-1],
+    }
+)
+
+results = get_through_the_thickness_results(
+    solid_stack=stack_of_element_6,
+    element_info_provider=composite_model.get_element_info_provider(),
+    result_field=stress_field,
+    component_names=("s11", "s22", "s12"),
+)
+print(results)

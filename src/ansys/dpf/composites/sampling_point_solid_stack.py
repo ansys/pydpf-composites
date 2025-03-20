@@ -360,9 +360,6 @@ class SamplingPointSolidStack(SamplingPoint):
 
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
-        if not self._time:
-            # TODO: check how the standard sampling point handles this
-            raise RuntimeError("Time must be set before running the sampling point operator.")
 
         if not self.element_id:
             raise RuntimeError("Element ID must be set before running the sampling point.")
@@ -383,11 +380,19 @@ class SamplingPointSolidStack(SamplingPoint):
         elastic_strain_operator.inputs.streams_container.connect(self._rst_streams_provider)
         elastic_strain_operator.inputs.bool_rotate_to_global(False)
 
+        stress_container = stress_operator.outputs.fields_container()
+        elastic_strain_container = elastic_strain_operator.outputs.fields_container()
+        if not self._time:
+            last_time_step = stress_container.get_available_ids_for_label("time")[-1]
+            if not elastic_strain_container.get_available_ids_for_label("time")[-1] == last_time_step:
+                raise RuntimeError("Time cannot be extracted. Please provide a time value.")
+            self._time = last_time_step
+
         failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
         failure_evaluator.inputs.configuration(self.combined_criterion.to_json())
         failure_evaluator.inputs.materials_container(self._material_operators.material_provider)
-        failure_evaluator.inputs.stresses_container(stress_operator.outputs.fields_container)
-        failure_evaluator.inputs.strains_container(elastic_strain_operator.outputs.fields_container)
+        failure_evaluator.inputs.stresses_container(stress_container)
+        failure_evaluator.inputs.strains_container(elastic_strain_container)
         failure_evaluator.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
@@ -417,12 +422,12 @@ class SamplingPointSolidStack(SamplingPoint):
             self._solid_stack, self._element_info_provider, irf_field, failure_model_field
         )
 
-        stress_field = stress_operator.outputs.fields_container().get_field(
+        stress_field = stress_container.get_field(
             {
                 "time": self._time,
             }
         )
-        elastic_strain_field = elastic_strain_operator.outputs.fields_container().get_field(
+        elastic_strain_field = elastic_strain_container.get_field(
             {
                 "time": self._time,
             }

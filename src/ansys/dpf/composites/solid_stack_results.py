@@ -23,7 +23,7 @@
 import ansys.dpf.core as dpf
 import numpy as np
 
-from ansys.dpf.composites.constants import Spot
+from ansys.dpf.composites.constants import Spot, component_index_from_name
 from ansys.dpf.composites.failure_criteria import FailureModeEnum
 from ansys.dpf.composites.layup_info import ElementInfo, ElementInfoProvider, SolidStack
 
@@ -83,10 +83,10 @@ def get_through_the_thickness_failure_results(
     """
     failure_results = []
 
-    for _, element_ids in solid_stack.element_ids_per_level.items():
+    for _, level_element_ids in solid_stack.element_ids_per_level.items():
         is_layered = False
-        if len(element_ids) == 1:
-            element_id = element_ids[0]
+        if len(level_element_ids) == 1:
+            element_id = level_element_ids[0]
             element_info = _get_element_info(element_info_provider, element_id)
             is_layered = element_info.is_layered
             if is_layered:
@@ -114,14 +114,14 @@ def get_through_the_thickness_failure_results(
                         )
 
         if not is_layered:
-            num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
-            for element_id in element_ids:
+            num_plies = len(solid_stack.element_wise_analysis_plies[level_element_ids[0]])
+            for element_id in level_element_ids:
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
                     raise RuntimeError("Number of plies mismatch!")
 
             max_irf = -1.0
             max_failure_mode = None
-            for element_id in element_ids:
+            for element_id in level_element_ids:
                 this_element_irfs = irf_field.get_entity_data_by_id(element_id)
                 this_element_modes = failure_mode_field.get_entity_data_by_id(element_id)
 
@@ -149,18 +149,18 @@ def get_through_the_thickness_results(
     solid_stack: SolidStack,
     element_info_provider: ElementInfoProvider,
     result_field: dpf.Field,
-    component_names: list[str],
+    component_names: tuple[str],
 ) -> dict[str, list[float]]:
     """
     Get through-the-thickness results of the solid stack.
 
     The results, for instance s1, s2, ..., and s23, are extracted at to bottom and top of
-    each ply for each element in the stack. So, the result field must have location element_nodal
-    and data at the bottom and top of each layer (ply).
+    each ply for each element in the stack. So, the result field must have location ``element_nodal``
+    and data at the bottom and top of each layer (ply). Finally, the average value per spot is
+    stored in the result vector.
 
     The component names are to be provided as a list of strings, for instance
-    ['s11', 's22', 's33'] and in the correct order so that the first entry (e.g. s11)
-    is the first entry in the result vector.
+    ['s11', 's22', 's33'].
 
     In case of drop-off or cut-off elements, which are non-layered, the average result is used.
 
@@ -171,10 +171,10 @@ def get_through_the_thickness_results(
     """
     results: dict[str, list[float]] = {k: [] for k in component_names}
 
-    for _, element_ids in solid_stack.element_ids_per_level.items():
+    for _, level_element_ids in solid_stack.element_ids_per_level.items():
         is_layered = False
-        if len(element_ids) == 1:
-            element_id = element_ids[0]
+        if len(level_element_ids) == 1:
+            element_id = level_element_ids[0]
             element_info = _get_element_info(element_info_provider, element_id)
             is_layered = element_info.is_layered
             if is_layered:
@@ -185,36 +185,38 @@ def get_through_the_thickness_results(
                         selected_indices = get_selected_indices(
                             element_info, layers=[int(ply_index)], nodes=None, spots=[spot]
                         )
-                        for component_index, component_name in enumerate(component_names):
+                        for comp_name in component_names:
+                            component_index = component_index_from_name(comp_name)
                             ave_value = np.average(
                                 this_element_values[selected_indices][:, component_index]
                             )
-                            results[component_name].append(float(ave_value))
+                            results[comp_name].append(float(ave_value))
 
         if not is_layered:
             # Multiple homogeneous elements. The results are averaged over all elements
             # Assumption: all elements origin from the same layered element, and so
             # they have the same "artificial" plies.
-            # The ply information is needed to syn the lay-up plot with the result plot.
+            # The ply information is needed to sync the lay-up plot with the results plot.
             homogeneous_results: dict[str, list[float]] = {k: [] for k in component_names}
-            num_plies = len(solid_stack.element_wise_analysis_plies[element_ids[0]])
-            for element_id in element_ids:
+            num_plies = len(solid_stack.element_wise_analysis_plies[level_element_ids[0]])
+            for element_id in level_element_ids:
                 if num_plies != len(solid_stack.element_wise_analysis_plies[element_id]):
                     raise RuntimeError("Number of plies mismatch!")
 
-            for element_id in element_ids:
+            for element_id in level_element_ids:
                 this_element_values = result_field.get_entity_data_by_id(element_id)
 
                 # homogeneous element: there is no spot and so the same value is
                 # stored for both spots
-                for component_index, component_name in enumerate(component_names):
+                for comp_name in component_names:
+                    component_index = component_index_from_name(comp_name)
                     ave_value = np.average(this_element_values[:, component_index])
-                    homogeneous_results[component_name].append(float(ave_value))
+                    homogeneous_results[comp_name].append(float(ave_value))
 
             # average the element-wise results since this level consist of
             # multiple homogeneous elements
-            for component_name in component_names:
-                ave_value = np.average(homogeneous_results[component_name])
-                results[component_name].extend(num_plies * len(SOLID_SPOTS) * [float(ave_value)])
+            for comp_name in component_names:
+                ave_value = np.average(homogeneous_results[comp_name])
+                results[comp_name].extend(num_plies * len(SOLID_SPOTS) * [float(ave_value)])
 
     return results
