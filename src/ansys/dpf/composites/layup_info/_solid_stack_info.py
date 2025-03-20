@@ -113,7 +113,9 @@ class SolidStackProvider:
         """
         self._mesh = mesh
         self._layup_property_provider = LayupPropertiesProvider(layup_provider, mesh)
-        self._mesh_properties_container = layup_provider.outputs.mesh_properties_container
+        self._mesh_properties_container = (
+            layup_provider.outputs.mesh_properties_container.get_data()
+        )
 
         if self._mesh_properties_container:
             self._virtual_thicknesses_field = self._mesh_properties_container.get_field(
