@@ -37,16 +37,6 @@ from ansys.dpf.composites.constants import (
     strain_component_name,
     stress_component_name,
 )
-from .layup_info import (
-    AnalysisPlyInfoProvider,
-    ElementInfoProvider,
-    SolidStack,
-    SolidStackProvider,
-)
-from .solid_stack_results import (
-    get_through_the_thickness_failure_results,
-    get_through_the_thickness_results,
-)
 
 from ._sampling_point_helpers import (
     add_ply_sequence_to_plot_to_sp,
@@ -60,6 +50,7 @@ from ._sampling_point_helpers import (
     get_result_plots_from_sp,
 )
 from .failure_criteria import CombinedFailureCriterion
+from .layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, SolidStack, SolidStackProvider
 from .layup_info._layup_info import (
     _get_layup_model_context,
     get_material_names_to_dpf_material_index,
@@ -69,6 +60,10 @@ from .layup_info.material_properties import get_material_metadata
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import FailureResult, SamplingPoint, SamplingPointFigure
 from .server_helpers import version_older_than
+from .solid_stack_results import (
+    get_through_the_thickness_failure_results,
+    get_through_the_thickness_results,
+)
 from .unit_system import get_unit_system
 
 
