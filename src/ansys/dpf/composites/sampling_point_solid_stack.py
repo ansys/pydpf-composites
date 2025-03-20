@@ -37,13 +37,13 @@ from ansys.dpf.composites.constants import (
     strain_component_name,
     stress_component_name,
 )
-from ansys.dpf.composites.layup_info import (
+from .layup_info import (
     AnalysisPlyInfoProvider,
     ElementInfoProvider,
     SolidStack,
     SolidStackProvider,
 )
-from ansys.dpf.composites.solid_stack_results import (
+from .solid_stack_results import (
     get_through_the_thickness_failure_results,
     get_through_the_thickness_results,
 )
