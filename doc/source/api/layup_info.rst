@@ -12,6 +12,7 @@ General features to access information on the composite lay-up.
     add_layup_info_to_mesh
     get_element_info_provider
     get_dpf_material_id_by_analyis_ply_map
+    AnalysisPlyInfo
     AnalysisPlyInfoProvider
     ElementInfoProvider
     ElementInfo

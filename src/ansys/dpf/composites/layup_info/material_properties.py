@@ -35,6 +35,7 @@ __all__ = (
     "get_constant_property",
     "get_all_dpf_material_ids",
     "get_constant_property_dict",
+    "get_material_metadata",
 )
 from ..unit_system import UnitSystemProvider, get_unit_system
 from ._layup_info import get_element_info_provider
@@ -236,3 +237,59 @@ class MaterialMetadata:
     material_name: str = ""
     ply_type: str | None = None
     solver_material_id: int | None = None
+
+    @property
+    def is_core(self) -> bool:
+        """Returns true if the material is of type core."""
+        return self.ply_type in (
+            "honeycomb_core",
+            "isotropic_homogeneous_core",
+            "orthotropic_homogeneous_core",
+        )
+
+
+def get_material_metadata(
+    material_container_helper_op: Operator | None,
+) -> dict[int, MaterialMetadata]:
+    """
+    DPF material ID to metadata map of the materials.
+
+    This data can be used to filter analysis plies
+    or element layers by ply type, material name etc.
+
+    Note: ply type is only available in DPF server version 9.0 (2025 R1 pre0) and later.
+    """
+    if material_container_helper_op is None:
+        raise RuntimeError(
+            "The used DPF server does not support the requested data. "
+            "Use version 2024 R1-pre0 or later."
+        )
+    material_name_field = material_container_helper_op.outputs.material_names()
+    if hasattr(material_container_helper_op.outputs, "solver_material_ids"):
+        solver_id_field = material_container_helper_op.outputs.solver_material_ids()
+    else:
+        solver_id_field = None
+    material_ids = material_name_field.scoping.ids
+    if hasattr(material_container_helper_op.outputs, "ply_types"):
+        ply_type_field = material_container_helper_op.outputs.ply_types()
+    else:
+        ply_type_field = None
+
+    metadata = {}
+    for dpf_mat_id in material_ids:
+        metadata[dpf_mat_id] = MaterialMetadata(
+            dpf_material_id=dpf_mat_id,
+            material_name=material_name_field.data[material_name_field.scoping.index(dpf_mat_id)],
+            ply_type=(
+                ply_type_field.data[ply_type_field.scoping.index(dpf_mat_id)]
+                if ply_type_field
+                else None
+            ),
+            solver_material_id=(
+                solver_id_field.data[solver_id_field.scoping.index(dpf_mat_id)]
+                if solver_id_field
+                else None
+            ),
+        )
+
+    return metadata

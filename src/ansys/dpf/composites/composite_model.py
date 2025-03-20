@@ -33,7 +33,7 @@ from ._composite_model_factory import _composite_model_factory
 from .composite_scope import CompositeScope
 from .data_sources import CompositeDataSources, ContinuousFiberCompositesFiles
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import ElementInfo, LayerProperty, LayupModelContextType
+from .layup_info import ElementInfo, ElementInfoProvider, LayerProperty, LayupModelContextType
 from .layup_info.material_operators import MaterialOperators
 from .layup_info.material_properties import MaterialMetadata, MaterialProperty
 from .result_definition import FailureMeasureEnum
@@ -182,6 +182,16 @@ class CompositeModel:
 
         """
         return self._implementation.get_layup_operator(composite_definition_label)
+
+    def get_element_info_provider(self) -> ElementInfoProvider:
+        """Get the info provider for the elements."""
+        if hasattr(self._implementation, "_element_info_provider"):
+            return self._implementation._element_info_provider  # pylint: disable=protected-access
+        else:
+            raise RuntimeError(
+                "Element info provider is not available for for old DPF versions. "
+                "Please update the installation."
+            )
 
     @property
     def layup_model_type(self) -> LayupModelContextType:

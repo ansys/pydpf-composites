@@ -220,7 +220,15 @@ def add_ply_sequence_to_plot_to_sp(
 
         height = offsets[(index + 1) * num_spots - 1] - offsets[index * num_spots]
         origin = (x_bound[0], offsets[index * num_spots])
-        axes.add_patch(Rectangle(xy=origin, width=width, height=height, fill=False, hatch=hatch))
+        axes.add_patch(
+            Rectangle(
+                xy=origin,
+                width=width,
+                height=height,
+                fill=False,
+                hatch=hatch,
+            )
+        )
         mat = ply["material"]
         th = float(ply["thickness"])
         if "angle" in ply.keys():
@@ -327,9 +335,6 @@ def get_result_plots_from_sp(
             layup_axis.set_xticks([])
             axes_index += 1
 
-            plt.rcParams["hatch.linewidth"] = 1.0
-            plt.rcParams["hatch.color"] = "black"
-
         if len(strain_components) > 0:
             strain_axis = _get_subplot(axes, axes_index)
             sampling_point.add_results_to_plot(
@@ -357,15 +362,25 @@ def get_result_plots_from_sp(
             )
 
             if show_failure_modes:
-                middle_offsets = sampling_point.get_offsets_by_spots(
-                    spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
-                )
+                if Spot.MIDDLE in spots:
+                    fm_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.MIDDLE], core_scale_factor=core_scale_factor
+                    )
+                else:
+                    bot_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.BOTTOM], core_scale_factor=core_scale_factor
+                    )
+                    top_offsets = sampling_point.get_offsets_by_spots(
+                        spots=[Spot.TOP], core_scale_factor=core_scale_factor
+                    )
+                    fm_offsets = np.array(bot_offsets + top_offsets) / 2.0
+
                 critical_failures = sampling_point.get_ply_wise_critical_failures()
 
-                if len(critical_failures) != len(middle_offsets):
+                if len(critical_failures) != len(fm_offsets):
                     raise IndexError("Sizes of failures and offsets do not match.")
 
-                for index, offset in enumerate(middle_offsets):
+                for index, offset in enumerate(fm_offsets):
                     for fc in failure_components:
                         failure_axis.annotate(
                             getattr(critical_failures[index], "mode"),

@@ -41,6 +41,7 @@ from . import (
     sampling_point,
     select_indices,
     server_helpers,
+    solid_stack_results,
 )
 
 __all__ = (
@@ -55,4 +56,5 @@ __all__ = (
     "sampling_point",
     "server_helpers",
     "select_indices",
+    "solid_stack_results",
 )

@@ -184,7 +184,7 @@ plotting = ["imageio (<2.28.1)", "imageio-ffmpeg", "matplotlib (>=3.2)", "pyvist
 type = "git"
 url = "https://github.com/ansys/pydpf-core.git"
 reference = "HEAD"
-resolved_reference = "b8e2e0cc833e0f2aa467aed5ab8bd38e00f9972b"
+resolved_reference = "1453403c76957981c84432cf67b43932ca9e99a5"
 
 [[package]]
 name = "ansys-sphinx-theme"
