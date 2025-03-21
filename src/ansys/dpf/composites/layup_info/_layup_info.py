@@ -89,6 +89,115 @@ class LayupModelContextType(Enum):
     MIXED = 3  # lay-up data was read from RST and ACP
 
 
+@dataclass(frozen=True)
+class ElementInfo:
+    """Provides lay-up information for an element.
+
+    Use the :class:`~ElementInfoProvider` class to obtain the
+    :class:`~ElementInfo` class for an element.
+
+    Parameters
+    ----------
+    id
+        Element ID or label.
+    n_layers
+        Number of layers. For non-layered elements, the value is ``1``.
+    n_corner_nodes
+        Number of corner nodes (without midside nodes).
+    n_spots
+        Number of spots (through-the-thickness integration points) per layer.
+    element_type
+        APDL element type. For example, ``181`` for layered shells.
+    dpf_material_ids
+        List of DPF material IDs for all layers.
+    is_shell
+        Whether the element is a shell element.
+    number_of_nodes_per_spot_plane
+        Number of nodes per output plane. The value is equal
+        to ``n_corner_nodes`` for shell elements and ``n_corner_nodes``
+        divided by two for layered solid elements. The value is equal to ``-1``
+        for non-layered elements.
+    """
+
+    id: int
+    n_layers: int
+    n_corner_nodes: int
+    n_spots: int
+    is_layered: bool
+    element_type: int
+    dpf_material_ids: NDArray[np.int64]
+    is_shell: bool
+    number_of_nodes_per_spot_plane: int
+
+
+_supported_element_types = [181, 281, 185, 186, 187, 190]
+
+"""
+Map of keyopt_8 to number of spots.
+Example: Element 181 with keyopt8==1 has two spots
+"""
+_n_spots_by_element_type_and_keyopt_dict: dict[int, dict[int, int]] = {
+    181: {0: 0, 1: 2, 2: 3},
+    281: {0: 0, 1: 2, 2: 3},
+    185: {0: 0, 1: 2},
+    186: {0: 0, 1: 2},
+    187: {0: 0},
+    190: {0: 0, 1: 2},
+}
+
+
+def _is_shell(apdl_element_type: np.int64) -> bool:
+    return {181: True, 281: True, 185: False, 186: False, 187: False, 190: False}[
+        int(apdl_element_type)
+    ]
+
+
+def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.int64) -> int:
+    if keyopt_3 == 0:
+        if apdl_element_type == 185 or apdl_element_type == 186:
+            return 0
+
+    try:
+        return _n_spots_by_element_type_and_keyopt_dict[int(apdl_element_type)][int(keyopt_8)]
+    except KeyError as exc:
+        raise RuntimeError(
+            f"Unsupported element type keyopt8 combination "
+            f"Apdl Element Type: {apdl_element_type} "
+            f"keyopt8: {keyopt_8}."
+        ) from exc
+
+
+def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
+    # Precompute n_corner_nodes for all element types
+    # corner_nodes_by_element_type by can be indexed by element type to get the number of
+    # corner nodes. If negative value is returned number of corner nodes is not available.
+    all_element_types = [int(e.value) for e in dpf.element_types if e.value >= 0]
+    corner_nodes_by_element_type: NDArray[np.int64] = np.full(
+        np.amax(all_element_types) + 1, -1, dtype=np.int64
+    )
+
+    corner_nodes_by_element_type[all_element_types] = [
+        (
+            dpf.element_types.descriptor(element_type).n_corner_nodes
+            if dpf.element_types.descriptor(element_type).n_corner_nodes is not None
+            else -1
+        )
+        for element_type in all_element_types
+    ]
+    return corner_nodes_by_element_type
+
+
+@dataclass(frozen=True)
+class AnalysisPlyInfo:
+    """Data about an analysis ply."""
+
+    angle: float
+    global_ply_number: int
+    id: str
+    material_name: str
+    nominal_thickness: float
+
+
 class AnalysisPlyInfoProvider:
     """AnalysisPlyInfoProvider. Can be used to compute the layer indices of a given analysis ply.
 
@@ -120,6 +229,23 @@ class AnalysisPlyInfoProvider:
     def ply_element_ids(self) -> Sequence[np.int64]:
         """Return list of element labels of the analysis ply."""
         return cast(Sequence[np.int64], self.property_field.scoping.ids)
+
+    def basic_info(self) -> AnalysisPlyInfo:
+        """Get data such as material, angle etc. of the analysis ply."""
+        # Extract information from property field
+        properties_op = dpf.Operator("composite::get_field_properties_operator")
+        properties_op.inputs.field(self.property_field)
+        # returns a DataTree object
+        properties = properties_op.outputs.properties()
+        as_dict = properties.to_dict()
+
+        return AnalysisPlyInfo(
+            float(as_dict["analysis_ply_design_angle"]),
+            int(as_dict["global_ply_id"]),
+            self.name,
+            as_dict["material_name"],
+            float(as_dict["nominal_thickness"]),
+        )
 
 
 def get_dpf_material_id_by_analyis_ply_map(
@@ -362,6 +488,26 @@ def get_element_info_provider(
         }
 
         return ElementInfoProvider(mesh, **fields, no_bounds_checks=no_bounds_checks)
+
+
+def get_material_names_to_dpf_material_index(
+    material_container_helper_op: dpf.Operator,
+) -> dict[str, int]:
+    """Get a dictionary that maps material names to DPF material IDs."""
+    if material_container_helper_op is None:
+        raise RuntimeError(
+            "The used DPF server does not support the requested data. "
+            "Use version 2024 R1-pre0 or later."
+        )
+
+    string_field = material_container_helper_op.outputs.material_names()
+    material_ids = string_field.scoping.ids
+
+    names = {}
+    for dpf_mat_id in material_ids:
+        names[string_field.data[string_field.scoping.index(dpf_mat_id)]] = dpf_mat_id
+
+    return names
 
 
 class LayupPropertiesProvider:

@@ -57,8 +57,8 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
     ),
     "10.0": _DpfVersionInfo(
         "10.0",
-        "2025 R2 pre 0",
-        "DPF Composites: support of LSDyna.",
+        "2025 R2",
+        "DPF Composites: basic support of LSDyna and sampling points for solids.",
     ),
 }
 
