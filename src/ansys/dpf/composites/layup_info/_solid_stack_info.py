@@ -194,7 +194,7 @@ class SolidStackProvider:
 
         Data of the stack is extracted from the meshed region and
         some additional fields. This fills the cache (self._solid_stacks
-        and self._element_id_to_solid_stack_index_map for) later use.
+        and self._element_id_to_solid_stack_index_map) for later use.
 
         Returns None if the element is not part of a solid stack.
         """
