@@ -164,6 +164,7 @@ class CompositeModelImpl:
         print("========== initialize element info provider ==========")
         self._element_info_provider = get_element_info_provider(
             mesh=self.get_mesh(),
+            # stream_provider_or_data_source=self._data_sources.rst,
             stream_provider_or_data_source=self.get_rst_streams_provider(),
             material_provider=self.material_operators.material_provider,
         )

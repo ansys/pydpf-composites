@@ -12,7 +12,9 @@ from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
 import os
 import json
 
-server = connect_to_or_start_server(ansys_path=r'D:\ANSYSDev\dpf_composites\fake_WB_installation')
+#server = connect_to_or_start_server(port=50055)
+#server = connect_to_or_start_server(ansys_path=r'D:\ANSYSDev\dpf_composites\fake_WB_installation')
+server = connect_to_or_start_server(ansys_path=r'C:\Program Files\ANSYS Inc\v252')
 
 solver_dir = r'D:\ANSYSDev\dpf_composites\test_data\lsdyna\shell_model_2'
 
@@ -65,7 +67,7 @@ strip_operator.inputs.mesh(composite_model.get_mesh())
 
 stripped_stress_field = strip_operator.get_output(
     pin=0, output_type=dpf.types.fields_container
-)[0]
+)[-1]
 
 # %%
 # Filter data by analysis ply
@@ -84,6 +86,43 @@ for ply_name in all_ply_names:
         mesh=composite_model.get_mesh(),
         component=Sym3x3TensorComponent.TENSOR11,
         spot_reduction_strategy=SpotReductionStrategy.AVG,
+        requested_location=dpf.locations.elemental,
+    )
+    # todo: enable again
+    # composite_model.get_mesh().plot(elemental_values)
+
+# %%
+# Plot history variables
+# ~~~~~~~~~~~~~~~~~~~~~~
+time_freq_support = composite_model.core_model.metadata.time_freq_support
+time_freq_support.time_frequencies.data
+
+
+hv_operator = dpf.Operator("lsdyna::d3plot::history_var")
+hv_operator.inputs.data_sources(composite_model.data_sources.rst)
+hv_operator.inputs.time_scoping(list(time_freq_support.time_frequencies.data))
+
+hv_container = hv_operator.outputs.history_var.get_data()
+print(hv_container.labels)
+
+strip_operator_hv = Operator("composite::ls_dyna_preparing_results")
+strip_operator_hv.inputs.maxint(int(keyword_options_as_json["maxint"]))
+strip_operator_hv.inputs.mesh(composite_model.get_mesh())
+strip_operator_hv.inputs.fields_container(hv_container)
+stripped_hv_container = strip_operator_hv.get_output(
+    pin=0, output_type=dpf.types.fields_container
+)
+
+stripped_hv_field = stripped_hv_container.get_field({"time":-1, "ihv":13})
+
+for ply_name in all_ply_names:
+    print(f"Plotting ply {ply_name}")
+    elemental_values = get_ply_wise_data(
+        field=stripped_hv_field,
+        ply_name=ply_name,
+        mesh=composite_model.get_mesh(),
+        component=0,
+        spot_reduction_strategy=SpotReductionStrategy.MAX,
         requested_location=dpf.locations.elemental,
     )
 

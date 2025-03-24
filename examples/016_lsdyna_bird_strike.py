@@ -12,9 +12,10 @@ from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
 import os
 import json
 
-server = connect_to_or_start_server(ansys_path=r'D:\ANSYSDev\dpf_composites\fake_WB_installation')
+#server = connect_to_or_start_server(ansys_path=r'D:\ANSYSDev\dpf_composites\fake_WB_installation')
+server = connect_to_or_start_server(ansys_path=r'C:\Program Files\ANSYS Inc\v252')
 
-solver_dir = r'D:\tmp\SPH_CompositeWing_22R2_files\dp0\SYS-4\MECH'
+solver_dir = r'D:\tmp\SPH_CompositeWing_25R2_files\dp0\SYS-4\MECH'
 
 composite_files = ContinuousFiberCompositesFiles(
     files_are_local=True,
@@ -34,9 +35,8 @@ composite_model = CompositeModel(
     default_unit_system=unit_systems.solver_nmm
 )
 
-element_info_1740 = composite_model.get_element_info(1740)
-print(element_info_1740)
-
+time_freq_support = composite_model.core_model.metadata.time_freq_support
+time_ids = [v for v in time_freq_support.time_frequencies.scoping.ids]
 
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
@@ -44,37 +44,33 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # %%
 # Prepare data
 # ~~~~~~~~~~~~
-# The LS Dyna results have to be pre-processed to support
+# The LS Dyna results have to be pre-processed to support ply-wise
 # filtering and in order make them consistent with the layup
-# model.
-
+# model. This requires the extraction of the number of maximum
+# integration points (MAXINT) from the DATABASE_EXTENT_BINARY keyword.
+# Parameters can be read from the input file using the keyword parser
+# operator.
 keyword_parser = Operator("composite::ls_dyna_keyword_parser")
 keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
 keyword_parser.inputs.keyword("DATABASE_EXTENT_BINARY")
 keyword_options_as_json = json.loads(keyword_parser.outputs[0].get_data())
 
-stress_container = stress_operator.get_output(
-    pin=0, output_type=dpf.types.fields_container
-)
+stress_container = stress_operator.outputs.fields_container.get_data()
 strip_operator = Operator("composite::ls_dyna_preparing_results")
 strip_operator.inputs.maxint(int(keyword_options_as_json["maxint"]))
 strip_operator.inputs.fields_container(stress_container)
 strip_operator.inputs.mesh(composite_model.get_mesh())
-
-stripped_stress_field = strip_operator.get_output(
-    pin=0, output_type=dpf.types.fields_container
-)[-1]
+stripped_stress_container = strip_operator.outputs.fields_container.get_data()
+stripped_stress_field = stripped_stress_container.get_field({"time":time_ids[-1]})
 
 # %%
 # Filter data by analysis ply
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# %%
-# List all available analysis plies.
+# Print stresses of a few plies at the last time step
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
-all_ply_names
+print(all_ply_names)
 
-for ply_name in all_ply_names:
+for ply_name in ["P2L1__ModelingPly.1", "P2L2__ModelingPly.1"]:
     print(f"Plotting ply {ply_name}")
     elemental_values = get_ply_wise_data(
         field=stripped_stress_field,
@@ -85,26 +81,40 @@ for ply_name in all_ply_names:
         requested_location=dpf.locations.elemental,
     )
 
-    #composite_model.get_mesh().plot(elemental_values)
+    composite_model.get_mesh().plot(elemental_values)
 
 
-history_var_op = Operator("lsdyna::d3plot::history_var")
-history_var_op.inputs.data_sources(composite_model.data_sources.rst)
-history_var_op.inputs.time_scoping(stress_container.get_time_scoping())
-history_var = history_var_op.outputs.history_var
-history_var_container = history_var.get_data()
-hv_ids = history_var_container.get_label_scoping("ihv").ids
-print(f"History variables: {hv_ids}")
-time_ids = history_var_container.get_time_scoping().ids
-print(f"Time IDs: {time_ids}")
-for hv_id in hv_ids:
-    label_space = {"ihv":hv_id, "time":time_ids[-1]}
-    field = history_var_container.get_field(label_space)
+# %%
+# Plot history variables
+# ~~~~~~~~~~~~~~~~~~~~~~
+# The same procedure can be applied to history variables.
+# In this example, the 2nd history variable (compressive fiber mode)
+# is plotted. 1 stands for elastic, 0 means failed.
+hv_operator = dpf.Operator("lsdyna::d3plot::history_var")
+hv_operator.inputs.data_sources(composite_model.data_sources.rst)
+hv_operator.inputs.time_scoping(time_ids)
 
-    composite_model.get_mesh().plot(field)
+hv_container = hv_operator.outputs.history_var.get_data()
+print(hv_container.labels)
+hv_field = hv_container.get_field({"time":time_ids[-1], "ihv":2})
 
+strip_operator_hv = Operator("composite::ls_dyna_preparing_results")
+strip_operator_hv.inputs.maxint(int(keyword_options_as_json["maxint"]))
+strip_operator_hv.inputs.mesh(composite_model.get_mesh())
+strip_operator_hv.inputs.fields_container(hv_container)
+stripped_hv_container = strip_operator_hv.outputs.fields_container.get_data()
 
-strip_operator.inputs.fields_container(history_var_container)
-prepared_ihv = strip_operator.get_output(
-    pin=0, output_type=dpf.types.fields_container
-)
+stripped_hv_field = stripped_hv_container.get_field({"time":time_ids[-1], "ihv":2})
+
+for ply_name in ["P2L1__ModelingPly.1", "P2L2__ModelingPly.1"]:
+    print(f"Plotting ply {ply_name}")
+    elemental_values = get_ply_wise_data(
+        field=stripped_hv_field,
+        ply_name=ply_name,
+        mesh=composite_model.get_mesh(),
+        component=0,
+        spot_reduction_strategy=SpotReductionStrategy.MAX,
+        requested_location=dpf.locations.elemental,
+    )
+
+    composite_model.get_mesh().plot(elemental_values)

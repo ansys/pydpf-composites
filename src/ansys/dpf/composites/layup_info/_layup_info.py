@@ -23,6 +23,7 @@
 """Lay-up information provider."""
 
 from collections.abc import Collection, Sequence
+from dataclasses import dataclass
 from enum import Enum
 from typing import cast
 from warnings import warn

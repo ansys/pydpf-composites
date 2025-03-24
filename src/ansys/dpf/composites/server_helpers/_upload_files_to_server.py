@@ -124,5 +124,6 @@ def upload_continuous_fiber_composite_files_to_server(
         rst=[upload(filename) for filename in data_files.rst],
         engineering_data=upload(data_files.engineering_data),
         composite=all_composite_files,
+        solver_input_file=upload(data_files.solver_input_file),
         files_are_local=False,
     )
