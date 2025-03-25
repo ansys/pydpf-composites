@@ -17,8 +17,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -28,26 +28,31 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=77703c5e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
 
   
     <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
@@ -57,15 +62,15 @@
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/js/table.js?v=b64f5182"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/015_solid_model';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
         </script>
     <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -451,9 +456,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -537,20 +547,20 @@ method to obtain the input files.</p>
 <p>Setting up the analysis consists of loading Ansys libraries, connecting to the
 DPF server, and retrieving the example files.</p>
 <p>Load Ansys libraries.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.dpf.composites.composite_model</span> <span class="kn">import</span> <span class="n">CompositeModel</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.constants</span> <span class="kn">import</span> <span class="n">FailureOutput</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.example_helper</span> <span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.failure_criteria</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.composite_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompositeModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">FailureOutput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.example_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.failure_criteria</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">CombinedFailureCriterion</span><span class="p">,</span>
     <span class="n">CoreFailureCriterion</span><span class="p">,</span>
     <span class="n">FaceSheetWrinklingCriterion</span><span class="p">,</span>
     <span class="n">HashinCriterion</span><span class="p">,</span>
     <span class="n">MaxStressCriterion</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.layup_info</span> <span class="kn">import</span> <span class="n">SolidStackProvider</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.result_definition</span> <span class="kn">import</span> <span class="n">FailureMeasureEnum</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.server_helpers</span> <span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
-<span class="kn">from</span> <span class="nn">ansys.dpf.composites.solid_stack_results</span> <span class="kn">import</span> <span class="n">get_through_the_thickness_results</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.layup_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">SolidStackProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.result_definition</span><span class="w"> </span><span class="kn">import</span> <span class="n">FailureMeasureEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.server_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.solid_stack_results</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_through_the_thickness_results</span>
 
 <span class="c1"># Start a DPF server and copy the example files into the current working directory.</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
@@ -729,7 +739,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;s1&#39;: [236009100.0, 82238220.0, 1655682496.0, 1097056512.0, 1097056512.0, 538430544.0, -2590.4479217529297, -2853.4053344726562, 196753936.0, -234099612.0, -2539490.375, -118968348.0], &#39;s2&#39;: [634072800.0, 448304904.0, -7902233.0, -18554689.5, -18554689.5, -29207148.25, -8803.749724388123, -3417.094207763672, 10060274.8125, 2203868.5, -61806631.0, -206908704.0], &#39;s12&#39;: [-81675167.0, -62011951.0, -30245672.5, -28130711.0, -28130711.0, -26015750.0, -0.005535265867365524, 0.0006386361201293766, 3001589.77734375, 4896852.3125, 9372089.75, 24551776.0]}
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 19.194 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 19.054 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-015-solid-model-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/debe3e53f1a4e5b816a06fac00740567/015_solid_model.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">015_solid_model.ipynb</span></code></a></p>
@@ -782,13 +792,12 @@ In this example, s11, s22 and s12 are retrieved for the last time step.</p>
 </div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../../_sources/examples/gallery_examples/015_solid_model.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/examples/gallery_examples/015_solid_model.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -802,14 +811,15 @@ In this example, s11, s22 and s12 are retrieved for the last time step.</p>
     </div>
   </div>
   
+  
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
-
-<link rel="stylesheet" href="../../_static/css/fuse-search.css">
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
 
 <script>
 // Passing the search options to the search.js file
@@ -819,6 +829,7 @@ const SEARCH_FILE = "../../_static/search.json";
 
 
 <script src="../../_static/js/search.js"></script>
+  
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
   
@@ -853,14 +864,14 @@ const SEARCH_FILE = "../../_static/search.json";
   <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
     >Ansys Sphinx Theme</a
   >
-  1.2.2. <br />Last updated on
-  <span id="date"></span>
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
 </p>
 <script>
   var options = { day: "numeric", month: "long", year: "numeric" };
-  var lastModifiedDate = new Date(document.lastModified);
-  var date = lastModifiedDate.toLocaleDateString("en-US", options);
-  document.getElementById("date").innerHTML = date;
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
 </script></div>
       
     </div>

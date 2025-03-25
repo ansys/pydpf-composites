@@ -17,8 +17,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -28,26 +28,31 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="_static/css/ansys_sphinx_theme.css?v=77703c5e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/pydpf_composite.css?v=68ab6f82" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
 
   
     <link href="_static/css/breadcrumbs.css" rel="stylesheet" />
@@ -57,15 +62,15 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/table.js?v=b64f5182"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sg_execution_times';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
         </script>
     <link rel="icon" href="_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -423,9 +428,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -479,7 +489,7 @@
                   
   <section id="computation-times">
 <span id="sphx-glr-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Link to this heading">#</a></h1>
-<p><strong>03:45.126</strong> total execution time for 16 files <strong>from all galleries</strong>:</p>
+<p><strong>03:43.279</strong> total execution time for 16 files <strong>from all galleries</strong>:</p>
 <div class="docutils container">
 <style scoped>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -501,67 +511,67 @@ $(document).ready( function () {
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/001_failure_operator_example.html#sphx-glr-examples-gallery-examples-001-failure-operator-example-py"><span class="std std-ref">Composite failure analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/001_failure_operator_example.py</span></code>)</p></td>
-<td><p>00:33.845</p></td>
+<td><p>00:34.183</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/010_harmonic_example.html#sphx-glr-examples-gallery-examples-010-harmonic-example-py"><span class="std std-ref">Postprocess a harmonic analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/010_harmonic_example.py</span></code>)</p></td>
-<td><p>00:28.701</p></td>
+<td><p>00:25.353</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/011_rst_workflow.html#sphx-glr-examples-gallery-examples-011-rst-workflow-py"><span class="std std-ref">Failure analysis of a MAPDL (RST) model</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/011_rst_workflow.py</span></code>)</p></td>
-<td><p>00:25.866</p></td>
+<td><p>00:24.080</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/015_solid_model.html#sphx-glr-examples-gallery-examples-015-solid-model-py"><span class="std std-ref">Postprocess a solid model</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/015_solid_model.py</span></code>)</p></td>
-<td><p>00:19.194</p></td>
+<td><p>00:19.054</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/002_sampling_point_example.html#sphx-glr-examples-gallery-examples-002-sampling-point-example-py"><span class="std std-ref">Sampling point</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/002_sampling_point_example.py</span></code>)</p></td>
-<td><p>00:16.682</p></td>
+<td><p>00:16.077</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/014_cyclic_symmetry_example.html#sphx-glr-examples-gallery-examples-014-cyclic-symmetry-example-py"><span class="std std-ref">Cyclic symmetry</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/014_cyclic_symmetry_example.py</span></code>)</p></td>
-<td><p>00:14.663</p></td>
+<td><p>00:14.872</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/099_dpf_composite_failure_workflow.html#sphx-glr-examples-gallery-examples-099-dpf-composite-failure-workflow-py"><span class="std std-ref">DPF composite failure workflow</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/099_dpf_composite_failure_workflow.py</span></code>)</p></td>
-<td><p>00:14.618</p></td>
+<td><p>00:13.782</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/007_interlaminar_normal_stress_example.html#sphx-glr-examples-gallery-examples-007-interlaminar-normal-stress-example-py"><span class="std std-ref">Interlaminar normal stresses</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/007_interlaminar_normal_stress_example.py</span></code>)</p></td>
-<td><p>00:11.432</p></td>
+<td><p>00:12.409</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/008_assembly_example.html#sphx-glr-examples-gallery-examples-008-assembly-example-py"><span class="std std-ref">Postprocess an assembly</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/008_assembly_example.py</span></code>)</p></td>
-<td><p>00:11.430</p></td>
+<td><p>00:11.801</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/004_get_material_properties_example.py</span></code>)</p></td>
-<td><p>00:09.359</p></td>
-<td><p>0.0</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/006_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/006_filter_composite_data_example.py</span></code>)</p></td>
-<td><p>00:07.783</p></td>
-<td><p>0.0</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/012_fatigue_example.html#sphx-glr-examples-gallery-examples-012-fatigue-example-py"><span class="std std-ref">Evaluate fatigue for a composite plate</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/012_fatigue_example.py</span></code>)</p></td>
-<td><p>00:07.287</p></td>
+<td><p>00:09.201</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/013_thermal_example.html#sphx-glr-examples-gallery-examples-013-thermal-example-py"><span class="std std-ref">Thermal analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/013_thermal_example.py</span></code>)</p></td>
-<td><p>00:07.252</p></td>
+<td><p>00:08.535</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/006_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/006_filter_composite_data_example.py</span></code>)</p></td>
+<td><p>00:07.878</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/012_fatigue_example.html#sphx-glr-examples-gallery-examples-012-fatigue-example-py"><span class="std std-ref">Evaluate fatigue for a composite plate</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/012_fatigue_example.py</span></code>)</p></td>
+<td><p>00:07.702</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/009_short_fiber_orientation_tensor.html#sphx-glr-examples-gallery-examples-009-short-fiber-orientation-tensor-py"><span class="std std-ref">Plot of the orientation tensor for short fiber composites</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/009_short_fiber_orientation_tensor.py</span></code>)</p></td>
-<td><p>00:06.560</p></td>
+<td><p>00:07.273</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="examples/gallery_examples/003_short_fiber_example.html#sphx-glr-examples-gallery-examples-003-short-fiber-example-py"><span class="std std-ref">Failure analysis for short fiber composites</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/003_short_fiber_example.py</span></code>)</p></td>
-<td><p>00:05.588</p></td>
+<td><p>00:05.760</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="examples/gallery_examples/005_get_layup_properties_example.html#sphx-glr-examples-gallery-examples-005-get-layup-properties-example-py"><span class="std std-ref">Lay-up properties</span></a> (<code class="docutils literal notranslate"><span class="pre">../../examples/005_get_layup_properties_example.py</span></code>)</p></td>
-<td><p>00:04.867</p></td>
+<td><p>00:05.320</p></td>
 <td><p>0.0</p></td>
 </tr>
 </tbody>
@@ -590,13 +600,12 @@ $(document).ready( function () {
 </div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="_sources/sg_execution_times.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="_sources/sg_execution_times.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -610,14 +619,15 @@ $(document).ready( function () {
     </div>
   </div>
   
+  
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
-
-<link rel="stylesheet" href="_static/css/fuse-search.css">
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
 
 <script>
 // Passing the search options to the search.js file
@@ -627,6 +637,7 @@ const SEARCH_FILE = "_static/search.json";
 
 
 <script src="_static/js/search.js"></script>
+  
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
   
@@ -661,14 +672,14 @@ const SEARCH_FILE = "_static/search.json";
   <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
     >Ansys Sphinx Theme</a
   >
-  1.2.2. <br />Last updated on
-  <span id="date"></span>
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
 </p>
 <script>
   var options = { day: "numeric", month: "long", year: "numeric" };
-  var lastModifiedDate = new Date(document.lastModified);
-  var date = lastModifiedDate.toLocaleDateString("en-US", options);
-  document.getElementById("date").innerHTML = date;
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
 </script></div>
       
     </div>
