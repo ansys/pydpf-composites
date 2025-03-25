@@ -70,7 +70,8 @@ class ElementInfo:
         Number of spots (through-the-thickness integration points) per layer.
     element_type
         Solver element type in case of MAPDL. For example, ``181`` for MAPDL's 4-node layered shell.
-        DPF element type in case of LS-Dyna. For example, ``dpf.element_types.TriShell3`` for LS-Dyna's 3-node shell.
+        DPF element type in case of LS-Dyna. For example, ``dpf.element_types.TriShell3``
+        for LS-Dyna's 3-node shell.
     dpf_material_ids
         List of DPF material IDs for all layers.
     is_shell
@@ -94,13 +95,14 @@ class ElementInfo:
 
 
 class ElementInfoProviderProtocol(Protocol):
-    def get_element_info(self, element_id: int) -> ElementInfo | None: ...
+    """Protocol definition for ElementInfoProvider."""
+
+    def get_element_info(self, element_id: int) -> ElementInfo | None:
+        """Get :class:`~ElementInfo`."""
 
 
-"""
-Map of keyopt_8 to number of spots.
-Example: Element 181 with keyopt8==1 has two spots
-"""
+# Map of keyopt_8 to number of spots.
+# Example: Element 181 with keyopt8==1 has two spots
 _n_spots_by_element_type_and_keyopt_dict: dict[int, dict[int, int]] = {
     181: {0: 0, 1: 2, 2: 3},
     281: {0: 0, 1: 2, 2: 3},
@@ -226,14 +228,14 @@ class ElementInfoProvider(ElementInfoProviderProtocol):
             self.mesh.elements.materials_field, no_bounds_checks
         )
 
-        self.solver_material_to_dpf_id = {}
+        self.solver_material_to_dpf_id: dict[int, int] = {}
         if solver_material_ids is not None:
             for dpf_mat_id in solver_material_ids.scoping.ids:
                 mapdl_mat_ids = solver_material_ids.get_entity_data_by_id(dpf_mat_id)
                 for mapdl_mat_id in mapdl_mat_ids:
-                    self.solver_material_to_dpf_id[mapdl_mat_id] = dpf_mat_id
+                    self.solver_material_to_dpf_id[int(mapdl_mat_id)] = int(dpf_mat_id)
 
-        self._element_info_cache = {}
+        self._element_info_cache: dict[int, ElementInfo] = {}
 
     def get_element_info(self, element_id: int) -> ElementInfo | None:
         """Get :class:`~ElementInfo` for a given element id.

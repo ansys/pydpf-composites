@@ -34,8 +34,9 @@ The additional steps are required to post-process LS-Dyna results
 if compared with a Mechanical APDL analysis.
 Pre-processing:
  - The input file must be generated with WB LS Dyna
- - In WB Mechanical, enable the beta options and ``Output Integration Points Results for All ACP Plies``
-   or manually set MAXINT of the keyword ``DATABASE_EXTENT_BINARY`` to the maximum number of plies.
+ - In WB Mechanical, enable the beta options and ``Output Integration
+   Points Results for All ACP Plies`` or manually set MAXINT of the keyword
+   ``DATABASE_EXTENT_BINARY`` to the maximum number of plies.
 Post-processing:
  - The solver input file (keyword file) has to be passed to the composite model
    and set the solver_type of ContinuousFiberCompositesFiles to ``LSDYNA``.
@@ -55,14 +56,10 @@ import json
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Operator, unit_systems
 
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
-from ansys.dpf.composites.data_sources import (
-    CompositeDefinitionFiles,
-    ContinuousFiberCompositesFiles,
-)
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.constants import Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
+from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 

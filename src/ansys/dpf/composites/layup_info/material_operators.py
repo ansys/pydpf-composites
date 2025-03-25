@@ -126,7 +126,6 @@ def get_material_operators(
     ----------
 
     """
-
     if rst_data_source.result_key == "d3plot":
         material_support_provider = Operator("composite::ls_dyna_material_support_provider")
         if solver_input_data_source is None:
