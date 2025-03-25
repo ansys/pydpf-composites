@@ -24,7 +24,12 @@
 
 from . import material_operators, material_properties
 from ._add_layup_info_to_mesh import add_layup_info_to_mesh
-from ._element_info import ElementInfo, ElementInfoProvider, ElementInfoProviderLSDyna
+from ._element_info import (
+    ElementInfo,
+    ElementInfoProvider,
+    ElementInfoProviderLSDyna,
+    ElementInfoProviderProtocol,
+)
 from ._enums import LayerProperty, LayupProperty
 from ._layup_info import (
     AnalysisPlyInfo,
@@ -47,6 +52,7 @@ __all__ = (
     "ElementInfo",
     "ElementInfoProvider",
     "ElementInfoProviderLSDyna",
+    "ElementInfoProviderProtocol",
     "LayerProperty",
     "LayupProperty",
     "LayupPropertiesProvider",

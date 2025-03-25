@@ -36,7 +36,11 @@ from numpy.typing import NDArray
 
 from .._indexer import get_field_indexer, get_property_field_indexer
 from ..server_helpers import version_equal_or_later, version_older_than
-from ._element_info import ElementInfoProvider, ElementInfoProviderLSDyna
+from ._element_info import (
+    ElementInfoProvider,
+    ElementInfoProviderLSDyna,
+    ElementInfoProviderProtocol,
+)
 from ._enums import LayupProperty
 
 
@@ -381,9 +385,9 @@ def result_key_is_d3plot(stream_provider_or_data_source: Operator | DataSources)
     """Check if the result file is a d3plot file (LSDyna)."""
     if isinstance(stream_provider_or_data_source, Operator):
         streams_container = stream_provider_or_data_source.outputs.streams_container
-        return streams_container.get_data().datasources.result_key == "d3plot"
+        return cast(bool, streams_container.get_data().datasources.result_key == "d3plot")
     else:
-        return stream_provider_or_data_source.result_key == "d3plot"
+        return cast(bool, stream_provider_or_data_source.result_key == "d3plot")
 
 
 def get_element_info_provider(
@@ -391,7 +395,7 @@ def get_element_info_provider(
     stream_provider_or_data_source: Operator | DataSources,
     material_provider: Operator | None = None,
     no_bounds_checks: bool = False,
-) -> ElementInfoProvider:
+) -> ElementInfoProviderProtocol:
     """Get :class:`~ElementInfoProvider` Object.
 
     Parameters
@@ -434,6 +438,8 @@ def get_element_info_provider(
                 raise RuntimeError(message)
 
         helper_op = dpf.Operator("composite::materials_container_helper")
+        if material_provider is None:
+            raise RuntimeError("Material provider is required for LSDyna data.")
         helper_op.inputs.materials_container(material_provider.outputs)
         solver_material_ids = helper_op.outputs.solver_material_ids()
 

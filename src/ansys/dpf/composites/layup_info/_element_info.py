@@ -235,7 +235,7 @@ class ElementInfoProvider(ElementInfoProviderProtocol):
                 for mapdl_mat_id in mapdl_mat_ids:
                     self.solver_material_to_dpf_id[int(mapdl_mat_id)] = int(dpf_mat_id)
 
-        self._element_info_cache: dict[int, ElementInfo] = {}
+        self._element_info_cache: dict[int, ElementInfo | None] = {}
 
     def get_element_info(self, element_id: int) -> ElementInfo | None:
         """Get :class:`~ElementInfo` for a given element id.
@@ -291,7 +291,7 @@ class ElementInfoProvider(ElementInfoProviderProtocol):
             mapdl_mat_id = self.apdl_material_indexer.by_id(element_id)
             if mapdl_mat_id:
                 dpf_material_ids = np.array(
-                    [self.solver_material_to_dpf_id[mapdl_mat_id]], dtype=np.int64
+                    [self.solver_material_to_dpf_id[int(mapdl_mat_id)]], dtype=np.int64
                 )
             else:
                 raise RuntimeError(f"Could not evaluate material of element {element_id}.")
@@ -382,7 +382,7 @@ class ElementInfoProviderLSDyna(ElementInfoProviderProtocol):
             for mapdl_mat_id in mapdl_mat_ids:
                 self.solver_material_to_dpf_id[mapdl_mat_id] = dpf_mat_id
 
-        self._element_info_cache = {}
+        self._element_info_cache: dict[int, ElementInfo | None] = {}
 
     def get_element_info(self, element_id: int) -> ElementInfo | None:
         """Get :class:`~ElementInfo` for a given element id.

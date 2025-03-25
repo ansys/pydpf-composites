@@ -27,7 +27,7 @@ import numpy as np
 
 from .constants import Spot, component_index_from_name
 from .failure_criteria import FailureModeEnum
-from .layup_info import ElementInfo, ElementInfoProvider, SolidStack
+from .layup_info import ElementInfo, ElementInfoProviderProtocol, SolidStack
 from .sampling_point_types import FailureResult
 from .select_indices import get_selected_indices
 
@@ -53,7 +53,9 @@ def _irf2mos(irf: float) -> float:
     return rf - 1.0
 
 
-def _get_element_info(element_info_provider: ElementInfoProvider, element_id: int) -> ElementInfo:
+def _get_element_info(
+    element_info_provider: ElementInfoProviderProtocol, element_id: int
+) -> ElementInfo:
     e_info = element_info_provider.get_element_info(element_id)
     if not e_info:
         raise RuntimeError(f"Could not retrieve element info for {element_id}")
@@ -62,7 +64,7 @@ def _get_element_info(element_info_provider: ElementInfoProvider, element_id: in
 
 def get_through_the_thickness_failure_results(
     solid_stack: SolidStack,
-    element_info_provider: ElementInfoProvider,
+    element_info_provider: ElementInfoProviderProtocol,
     irf_field: dpf.Field,
     failure_mode_field: dpf.Field,
 ) -> list[FailureResult]:
@@ -148,7 +150,7 @@ def get_through_the_thickness_failure_results(
 
 def get_through_the_thickness_results(
     solid_stack: SolidStack,
-    element_info_provider: ElementInfoProvider,
+    element_info_provider: ElementInfoProviderProtocol,
     result_field: dpf.Field,
     component_names: Sequence[str],
 ) -> dict[str, list[float]]:
