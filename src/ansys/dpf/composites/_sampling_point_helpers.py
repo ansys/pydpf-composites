@@ -373,7 +373,7 @@ def get_result_plots_from_sp(
                     top_offsets = sampling_point.get_offsets_by_spots(
                         spots=[Spot.TOP], core_scale_factor=core_scale_factor
                     )
-                    fm_offsets = np.array(bot_offsets + top_offsets) / 2.0
+                    fm_offsets = np.array(bot_offsets + top_offsets) / np.float64(2.0)
 
                 critical_failures = sampling_point.get_ply_wise_critical_failures()
 
