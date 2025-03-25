@@ -21,12 +21,13 @@
 # SOFTWARE.
 
 """Protocol of Element Info Provider class."""
-import ansys.dpf.core as dpf
+from dataclasses import dataclass
 from typing import Any, Protocol
+
+import ansys.dpf.core as dpf
+from ansys.dpf.core import MeshedRegion, PropertyField
 import numpy as np
 from numpy.typing import NDArray
-from dataclasses import dataclass
-from ansys.dpf.core import MeshedRegion, PropertyField
 
 from .._indexer import get_property_field_indexer
 
@@ -48,6 +49,7 @@ _supported_dpf_element_types = [
     dpf.element_types.TriShell6,
     dpf.element_types.QuadShell8,
 ]
+
 
 @dataclass(frozen=True)
 class ElementInfo:
@@ -92,8 +94,7 @@ class ElementInfo:
 
 
 class ElementInfoProviderProtocol(Protocol):
-    def get_element_info(self, element_id: int) -> ElementInfo | None:
-        ...
+    def get_element_info(self, element_id: int) -> ElementInfo | None: ...
 
 
 """
@@ -126,9 +127,7 @@ def _get_n_spots(apdl_element_type: np.int64, keyopt_8: np.int64, keyopt_3: np.i
 
 
 def _is_shell(apdl_et: np.int64) -> bool:
-    return {181: True, 281: True, 185: False, 186: False, 187: False, 190: False}[
-        int(apdl_et)
-    ]
+    return {181: True, 281: True, 185: False, 186: False, 187: False, 190: False}[int(apdl_et)]
 
 
 def _is_shell_dpf(dpf_et: dpf.element_types) -> bool:
@@ -214,7 +213,9 @@ class ElementInfoProvider(ElementInfoProviderProtocol):
         self.layer_indices = get_property_field_indexer(layer_indices, no_bounds_checks)
         self.layer_materials = get_property_field_indexer(material_ids, no_bounds_checks)
 
-        self.solver_element_types = get_property_field_indexer(element_types_mapdl, no_bounds_checks)
+        self.solver_element_types = get_property_field_indexer(
+            element_types_mapdl, no_bounds_checks
+        )
         self.dpf_element_types = get_property_field_indexer(element_types_dpf, no_bounds_checks)
         self.keyopt_8_values = get_property_field_indexer(keyopt_8_values, no_bounds_checks)
         self.keyopt_3_values = get_property_field_indexer(keyopt_3_values, no_bounds_checks)
@@ -437,7 +438,9 @@ class ElementInfoProviderLSDyna(ElementInfoProviderProtocol):
 
         corner_nodes_dpf = self.corner_nodes_by_element_type[dpf_element_type]
         if corner_nodes_dpf < 0:
-            raise ValueError(f"Invalid number of corner nodes for element with type {dpf_element_type}")
+            raise ValueError(
+                f"Invalid number of corner nodes for element with type {dpf_element_type}"
+            )
         is_shell = _is_shell_dpf(dpf.element_types(dpf_element_type))
         number_of_nodes_per_spot_plane = -1
         if is_layered:

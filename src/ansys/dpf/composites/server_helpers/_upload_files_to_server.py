@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
 import pathlib
 from typing import cast
 import uuid
@@ -32,6 +33,7 @@ from ..data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
+    SolverType,
 )
 
 
@@ -99,7 +101,9 @@ def upload_continuous_fiber_composite_files_to_server(
     Parameters
     ----------
     data_files
+        All input files such as result files, material file etc.
     server
+        A running DPF server (in process or remote).
     """
     # If files are not local, it means they have already been
     # uploaded to the server
@@ -114,11 +118,21 @@ def upload_continuous_fiber_composite_files_to_server(
         composite_definition_files = CompositeDefinitionFiles(
             definition=upload(composite_files_by_scope.definition),
         )
-
         if composite_files_by_scope.mapping is not None:
             composite_definition_files.mapping = upload(composite_files_by_scope.mapping)
-
         all_composite_files[key] = composite_definition_files
+
+    # Copy all d3plot files (d3plot01, d3plot02, ...) to the server
+    if data_files.solver_type == SolverType.LSDYNA:
+        if len(data_files.rst) != 1:
+            raise RuntimeError(
+                "Only the d3plot file has to be passed for LS-DYNA examples. "
+                "The other d3plot files are handled automatically."
+            )
+        for directory, _, files in os.walk(os.path.dirname(data_files.rst[0])):
+            for file_name in files:
+                if file_name.startswith("d3plot") and file_name != "d3plot":
+                    upload(os.path.join(directory, file_name))
 
     return ContinuousFiberCompositesFiles(
         rst=[upload(filename) for filename in data_files.rst],
@@ -126,4 +140,5 @@ def upload_continuous_fiber_composite_files_to_server(
         composite=all_composite_files,
         solver_input_file=upload(data_files.solver_input_file),
         files_are_local=False,
+        solver_type=data_files.solver_type,
     )

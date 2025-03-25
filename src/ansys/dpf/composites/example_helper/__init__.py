@@ -37,11 +37,11 @@ from ..data_sources import (
 )
 from ..server_helpers import upload_file_to_unique_tmp_folder
 
-EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
+# EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
 
 # Example URL to run the examples locally
-# EXAMPLE_REPO = "file:////D:/dev/pyansys-example-data/pydpf-composites/"
+EXAMPLE_REPO = r"file:////D:/ANSYSDev\pyansys-example-data/pydpf-composites/"
 
 
 @dataclass
@@ -55,6 +55,7 @@ class _ContinuousFiberCompositesExampleFilenames:
     rst: list[str]
     composite: dict[str, _ContinuousFiberCompositeFiles]
     engineering_data: str
+    solver_input_file: str | None = None
 
 
 @dataclass
@@ -74,10 +75,13 @@ class _ContinuousFiberExampleLocation:
         Directory in example_data/pydpf-composites
     files
         Example files in directory
+    is_dyna
+        Whether the example is for LS-DYNA to copy all the files
     """
 
     directory: str
     files: _ContinuousFiberCompositesExampleFilenames
+    is_dyna: bool = False
 
 
 @dataclass
@@ -175,6 +179,18 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             },
         ),
     ),
+    "lsdyna_bird_strike": _ContinuousFiberExampleLocation(
+        directory="lsdyna_bird_strike",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["d3plot"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+            solver_input_file="input.k",
+        ),
+        is_dyna=True,
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
@@ -267,9 +283,26 @@ def get_continuous_fiber_example_files(
 
                 all_composite_files[key] = composite_files
 
+        if example_files.is_dyna:
+            d3_plot_file_path = example_files.files.rst
+            if len(d3_plot_file_path) != 1:
+                raise RuntimeError(
+                    "Only one d3plot file has to be passed for LS-DYNA examples. "
+                    "The others are copied automatically."
+                )
+            for _, _, files in os.walk(example_files.directory):
+                for file_name in files:
+                    if file_name.startswith("d3plot") and file_name != "d3plot":
+                        get_server_path(file_name)
+
         return ContinuousFiberCompositesFiles(
             rst=[get_server_path(rst_path) for rst_path in example_files.files.rst],
             engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
+            solver_input_file=(
+                get_server_path(example_files.files.solver_input_file)
+                if example_files.files.solver_input_file
+                else None
+            ),
             files_are_local=False,
         )

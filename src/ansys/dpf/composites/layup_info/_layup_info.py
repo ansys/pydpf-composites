@@ -36,8 +36,8 @@ from numpy.typing import NDArray
 
 from .._indexer import get_field_indexer, get_property_field_indexer
 from ..server_helpers import version_equal_or_later, version_older_than
-from ._enums import LayupProperty
 from ._element_info import ElementInfoProvider, ElementInfoProviderLSDyna
+from ._enums import LayupProperty
 
 
 def _get_separator(server: BaseServer) -> str:
@@ -379,7 +379,10 @@ def get_analysis_ply_index_to_name_map(
 
 def result_key_is_d3plot(stream_provider_or_data_source: Operator | DataSources) -> bool:
     if isinstance(stream_provider_or_data_source, Operator):
-        return stream_provider_or_data_source.outputs.streams_container.get_data().datasources.result_key == "d3plot"
+        return (
+            stream_provider_or_data_source.outputs.streams_container.get_data().datasources.result_key
+            == "d3plot"
+        )
     else:
         return stream_provider_or_data_source.result_key == "d3plot"
 
@@ -444,6 +447,7 @@ def get_element_info_provider(
 
         return ElementInfoProviderLSDyna(mesh, **fields, no_bounds_checks=no_bounds_checks)
     else:
+
         def get_keyopt_property_field(keyopt: int) -> PropertyField:
             keyopt_provider = dpf.Operator("mesh_property_provider")
             if isinstance(stream_provider_or_data_source, Operator):

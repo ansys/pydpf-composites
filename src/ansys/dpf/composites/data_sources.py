@@ -23,6 +23,7 @@
 """Composite data sources."""
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from enum import Enum
 import os
 import pathlib
 from typing import cast
@@ -64,6 +65,11 @@ class CompositeDefinitionFiles:
     mapping: _PATH | None = None
 
 
+class SolverType(str, Enum):
+    MAPDL = "mapdl"
+    LSDYNA = "lsdyna"
+
+
 @dataclass
 class ContinuousFiberCompositesFiles:
     """Provides the container for continuous fiber composite file paths."""
@@ -75,6 +81,7 @@ class ContinuousFiberCompositesFiles:
     # True if files are local and false if files
     # have already been uploaded to the server
     files_are_local: bool = True
+    solver_type: SolverType = SolverType.MAPDL
 
     def __init__(
         self,
@@ -83,6 +90,7 @@ class ContinuousFiberCompositesFiles:
         engineering_data: _PATH,
         solver_input_file: _PATH | None = None,
         files_are_local: bool = True,
+        solver_type: SolverType = SolverType.MAPDL,
     ) -> None:
         """Initialize the ContinuousFiberCompositesFiles container.
 
@@ -90,7 +98,7 @@ class ContinuousFiberCompositesFiles:
         ----------
         rst :
             A single path to an RST file, or a list of paths to distributed
-            RST files.
+            RST files. For LSDyna, only the ``d3plot`` file has to be passed.
         composite :
             Dictionary of composite definition files. The key can be chosen
             freely.
@@ -100,13 +108,16 @@ class ContinuousFiberCompositesFiles:
             Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
         files_are_local :
             True if files are on the local machine, False if they have already
-            been uploaded to the DPF server..
+            been uploaded to the DPF server.
+        solver_type
+            Specify the type of the solver
         """
         self.rst = rst  # type: ignore
         self.composite = composite
         self.engineering_data = engineering_data
         self.solver_input_file = solver_input_file
         self.files_are_local = files_are_local
+        self.solver_type = solver_type
 
     # The constructor pretends that rst can also be just a path
     # but the property rst must be a list
