@@ -30,6 +30,7 @@ import urllib.request
 
 import ansys.dpf.core as dpf
 
+from .._typing_helper import PATH as _PATH
 from ..constants import SolverType
 from ..data_sources import (
     CompositeDefinitionFiles,
@@ -224,13 +225,13 @@ def _download_and_upload_file(
 
 def _download_and_upload_files(
     directory: str, filenames: list[str], tmpdir: str, server: dpf.server
-) -> list[str]:
+) -> list[_PATH]:
     """Download example files from example_data repo and upload it the dpf server.
 
     Files are uploaded to the same tmp folder on the remote dpf server. Upload
     is skipped in case of local server.
     """
-    file_paths_on_client = []
+    file_paths_on_client: list[_PATH] = []
     for filename in filenames:
         file_url = _get_file_url(directory, filename)
         local_path = os.path.join(tmpdir, filename)
@@ -311,7 +312,7 @@ def get_continuous_fiber_example_files(
             # because the LSDyna reader automatically picks up the additional ones.
             rst_file_paths = _download_and_upload_files(
                 example_files.directory, example_files.files.rst, tmpdir, server
-            )[0]
+            )[0:1]
         else:
             rst_file_paths = [get_server_path(rst_path) for rst_path in example_files.files.rst]
 

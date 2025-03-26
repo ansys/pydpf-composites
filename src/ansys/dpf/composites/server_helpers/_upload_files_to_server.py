@@ -41,12 +41,15 @@ def _get_all_files_in_folder(directory: _PATH, key: str = "") -> list[_PATH]:
     if not os.path.isdir(directory):
         raise FileNotFoundError(f"Directory {directory} not found.")
 
+    paths: list[_PATH] = []
     for root, _, files in os.walk(directory):
-        return [os.path.join(root, file_name) for file_name in files if key in file_name]
+        paths.extend([os.path.join(root, file_name) for file_name in files if key in file_name])
+
+    return paths
 
 
 def _get_path_on_server_from_tmpdir(
-    tmp_dir: _PATH, path_on_client: _PATH, server: BaseServer, my_uuid: str = None
+    tmp_dir: _PATH, path_on_client: _PATH, server: BaseServer, my_uuid: str | None = None
 ) -> str:
     path_on_client = pathlib.Path(path_on_client)
     if my_uuid is None:
@@ -90,7 +93,7 @@ def upload_file_to_unique_tmp_folder(path_on_client: _PATH, server: BaseServer) 
 
 def upload_files_to_unique_tmp_folder(
     paths_on_client: list[_PATH], server: BaseServer
-) -> list[str]:
+) -> list[_PATH]:
     """Upload files to the same unique temporary folder on the server.
 
     Parameters
@@ -100,7 +103,7 @@ def upload_files_to_unique_tmp_folder(
     server:
         DPF server.
     """
-    paths_on_server = []
+    paths_on_server: list[_PATH] = []
     tmp_dir = dpf.make_tmp_dir_server(server)
     my_uuid = str(uuid.uuid4())
     for file_path in paths_on_client:
@@ -173,6 +176,8 @@ def upload_continuous_fiber_composite_files_to_server(
             composite_definition_files.mapping = upload(composite_files_by_scope.mapping)
         all_composite_files[key] = composite_definition_files
 
+    rst_file_paths_on_server: list[_PATH] = []
+
     # Copy all d3plot files (d3plot01, d3plot02, ...) to the server
     if data_files.solver_type == SolverType.LSDYNA:
         # all d3plot files have to be uploaded to the folder. Currently, only the d3plot
@@ -182,7 +187,7 @@ def upload_continuous_fiber_composite_files_to_server(
         # one is passed to the DPF datasource.
         rst_file_paths_on_server = upload_files_to_unique_tmp_folder(
             all_d3plot_files, server=server
-        )[0]
+        )[0:1]
     else:
         rst_file_paths_on_server = [upload(filename) for filename in data_files.rst]
 

@@ -604,7 +604,7 @@ def get_composites_data_sources(
             material_support_data_source = rst_data_source
         else:
             material_support_data_source = _get_data_sources_from_rst_files(
-                [continuous_composite_files.rst[0]]
+                continuous_composite_files.rst[0:1]
             )
 
     engineering_data_source = DataSources()
