@@ -71,7 +71,6 @@ from ansys.dpf.core import Operator, unit_systems
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Sym3x3TensorComponent
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 

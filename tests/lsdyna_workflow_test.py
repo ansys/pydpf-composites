@@ -26,15 +26,21 @@ import pathlib
 import ansys.dpf.core as dpf
 from ansys.dpf.core import Operator, unit_systems
 import numpy as np
+import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import SolverType, Sym3x3TensorComponent
 from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
+from ansys.dpf.composites.server_helpers import version_older_than
 
 
 def test_composite_model_with_rst_only(dpf_server):
+
+    if version_older_than(dpf_server, "10.0"):
+        pytest.xfail("Post-processing of LSDyna solutions requires DPF server 10.0 or later.")
+
     test_data_dir = pathlib.Path(__file__).parent / "data" / "lsdyna" / "basic_shell_model"
 
     composite_files = get_composite_files_from_workbench_result_folder(
