@@ -25,7 +25,6 @@
 from dataclasses import dataclass
 import os
 import tempfile
-from typing import Optional, cast
 import urllib.request
 
 import ansys.dpf.core as dpf
@@ -39,11 +38,11 @@ from ..data_sources import (
 )
 from ..server_helpers import upload_file_to_unique_tmp_folder, upload_files_to_unique_tmp_folder
 
-# EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
+EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
 
 # Example URL to run the examples locally
-EXAMPLE_REPO = r"file:////D:/ANSYSDev\pyansys-example-data/pydpf-composites/"
+# EXAMPLE_REPO = r"file:////D:/ANSYSDev\pyansys-example-data/pydpf-composites/"
 
 
 @dataclass

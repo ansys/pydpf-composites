@@ -31,28 +31,32 @@ LSDyna analysis, how to post-process it and how to filter the results.
 The simulation uses SPH to mimic a bird strike on a leading edge
 of a composite wing.
 
-The additional steps are required to process LS-Dyna results
+Additional steps are required to process LS-Dyna results
 if compared with a Mechanical APDL analysis.
-On the pre-processing side, these are:
+
+On the **pre-processing side**, these are:
  - The input file must be generated with WB LS Dyna
  - In WB Mechanical, enable the beta options and ``Output Integration
    Points Results for All ACP Plies`` or manually set MAXINT of the keyword
    ``DATABASE_EXTENT_BINARY`` to the maximum number of plies.
 
-And this has to be considered on the post-processing side:
- - The solver input file (keyword file) has to be passed to the composite model
-   and set the solver_type of ContinuousFiberCompositesFiles to ``LSDYNA``.
+And these items must be considered on setting up the **post-processing**:
+ - On initializing the composite model, these properties of :class:`.ContinuousFiberCompositesFiles`
+   must be set:
+    - ``solver_type`` to ``LSDYNA``
+    - ``solver_input_file`` to the keyword file (for instance ``input.k``)
  - The number of maximum integration points (MAXINT) has to be extracted from
    the keyword file. See ``composite::ls_dyna_keyword_parser`` operator.
- - The results (stress, strain, history variable etc.) have to be
-   pre-processed to support ply-wise filtering and to make them consistent.
-   See ``composite::ls_dyna_preparing_results`` operator.
+ - The results (stress, strain, history variable etc.) must be
+   pre-processed to support ply-wise filtering and to make them consistent with
+   the layup model. See ``composite::ls_dyna_preparing_results`` operator.
 
 Note:
  - Use the :func:`.get_composite_files_from_workbench_result_folder` to get
    the composite files from a WB LS-Dyna result folder. Set ``solver_type``
    to ``LSDYNA``.
- - Only the first d3plot file must be passed to the composite model.
+ - Only the first d3plot file must be passed to the composite model. The LSDyna
+   reader will automatically pick up the other files.
 """
 
 # %%
@@ -83,12 +87,12 @@ composite_model = CompositeModel(
 )
 
 # %%
-# Get all the time ids and displacement at the final time step
+# Get all the time ids to read all time steps and to select the correct results.
 time_freq_support = composite_model.core_model.metadata.time_freq_support
 time_ids = [v for v in time_freq_support.time_frequencies.scoping.ids]
 
 # %%
-# Get displacement at the final time step
+# Get displacements at the final time step
 disp_result = composite_model.core_model.results.displacement()
 displacement = disp_result.eval().get_field({"time": time_ids[-1]})
 
@@ -101,11 +105,11 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # Prepare data
 # ~~~~~~~~~~~~
 # The LS Dyna results have to be pre-processed to support ply-wise
-# filtering. The data must be consistent with the layup
-# model. This requires the extraction of the number of maximum
+# filtering because the data must be consistent with the layup
+# model. This pre-processing is based on the maximum
 # integration points (MAXINT) from the DATABASE_EXTENT_BINARY keyword.
-# Parameters can be read from the input file using the keyword parser
-# operator as shown here.
+# This parameter can be extracted from the input file (``input.k``) with
+# the help of the ``composite::ls_dyna_keyword_parser`` operator.
 keyword_parser = Operator("composite::ls_dyna_keyword_parser")
 keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
 keyword_parser.inputs.keyword("DATABASE_EXTENT_BINARY")
@@ -123,11 +127,9 @@ stripped_stress_container = strip_operator.outputs.fields_container.get_data()
 # %%
 # Filter data by analysis ply
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Print stresses of a few plies at the last time step
+# Print stresses of a few plies at the last time step. You can
+# use ``get_all_analysis_ply_names`` to list all available plies.
 stripped_stress_field = stripped_stress_container.get_field({"time": time_ids[-1]})
-all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
-print(all_ply_names)
-
 camera = [
     (-1589.7832333411716, 1670.8197500164952, -328.2144469600579),
     (493.2896802711351, 0.2085447040423768, 763.1274012915459),
@@ -173,12 +175,6 @@ strip_operator_hv.inputs.fields_container(hv_container)
 stripped_hv_container = strip_operator_hv.outputs.fields_container.get_data()
 
 stripped_hv_field = stripped_hv_container.get_field({"time": time_ids[-1], "ihv": 2})
-
-camera = [
-    (-1589.7832333411716, 1670.8197500164952, -328.2144469600579),
-    (493.2896802711351, 0.2085447040423768, 763.1274012915459),
-    (0.5149806660541146, 0.8152207788520537, 0.26497168776741287),
-]
 
 for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
     print(f"Plotting history variable 2 of ply {ply_name}")

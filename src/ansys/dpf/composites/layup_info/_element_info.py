@@ -328,11 +328,6 @@ class ElementInfoProviderLSDyna(ElementInfoProviderProtocol):
     Initialize the class before a loop and
     call :func:`~get_element_info` for each element.
 
-    Note that the :class:`~ElementInfoProvider` class is not fully supported for
-    distributed RST files. The :func:`~get_element_info` method will raise an
-    exception if the DPF server version does not support reading the required
-    information.
-
     Parameters
     ----------
     mesh

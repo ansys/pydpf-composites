@@ -180,8 +180,8 @@ def upload_continuous_fiber_composite_files_to_server(
 
     # Copy all d3plot files (d3plot01, d3plot02, ...) to the server
     if data_files.solver_type == SolverType.LSDYNA:
-        # all d3plot files have to be uploaded to the folder. Currently, only the d3plot
-        # format is supported
+        # all d3plot files have to be uploaded to the same folder. Note, only the d3plot
+        # format of LSDyna is currently supported
         all_d3plot_files = _get_all_files_in_folder(os.path.dirname(data_files.rst[0]), "d3plot")
         # The LSDyna reader automatically picks up the additional d3plot files and so only the first
         # one is passed to the DPF datasource.
