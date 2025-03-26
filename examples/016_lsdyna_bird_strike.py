@@ -71,7 +71,7 @@ from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
-# sphinx_gallery_thumbnail_number = 3
+# sphinx_gallery_thumbnail_number = 4
 
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
@@ -128,7 +128,13 @@ stripped_stress_field = stripped_stress_container.get_field({"time": time_ids[-1
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
 
-for ply_name in ["P2L1__ModelingPly.1", "P2L1__ModelingPly.2"]:
+camera = [
+    (-1589.7832333411716, 1670.8197500164952, -328.2144469600579),
+    (493.2896802711351, 0.2085447040423768, 763.1274012915459),
+    (0.5149806660541146, 0.8152207788520537, 0.26497168776741287),
+]
+
+for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
     print(f"Plotting s1 of ply {ply_name}")
     elemental_values = get_ply_wise_data(
         field=stripped_stress_field,
@@ -140,7 +146,10 @@ for ply_name in ["P2L1__ModelingPly.1", "P2L1__ModelingPly.2"]:
     )
 
     composite_model.get_mesh().plot(
-        field_or_fields_container=elemental_values, deform_by=displacement
+        field_or_fields_container=elemental_values,
+        deform_by=displacement,
+        cpos=camera,
+        zoom="tight",
     )
 
 
@@ -165,7 +174,13 @@ stripped_hv_container = strip_operator_hv.outputs.fields_container.get_data()
 
 stripped_hv_field = stripped_hv_container.get_field({"time": time_ids[-1], "ihv": 2})
 
-for ply_name in ["P2L1__ModelingPly.1", "P2L1__ModelingPly.2"]:
+camera = [
+    (-1589.7832333411716, 1670.8197500164952, -328.2144469600579),
+    (493.2896802711351, 0.2085447040423768, 763.1274012915459),
+    (0.5149806660541146, 0.8152207788520537, 0.26497168776741287),
+]
+
+for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
     print(f"Plotting history variable 2 of ply {ply_name}")
     elemental_values = get_ply_wise_data(
         field=stripped_hv_field,
@@ -177,5 +192,8 @@ for ply_name in ["P2L1__ModelingPly.1", "P2L1__ModelingPly.2"]:
     )
 
     composite_model.get_mesh().plot(
-        field_or_fields_container=elemental_values, deform_by=displacement
+        field_or_fields_container=elemental_values,
+        deform_by=displacement,
+        cpos=camera,
+        zoom="tight",
     )

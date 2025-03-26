@@ -29,10 +29,9 @@ import pathlib
 from typing import cast
 
 from ansys.dpf.core import DataSources
-from .constants import SolverType
-
 
 from ._typing_helper import PATH as _PATH
+from .constants import SolverType
 
 __all__ = (
     "CompositeDefinitionFiles",
@@ -238,8 +237,13 @@ def _is_d3plot_file(path: pathlib.Path) -> bool:
     return path.name == _D3PLOT_FILE_NAME and path.is_file()
 
 
-def _is_lsdyna_input_file (path: pathlib.Path) -> bool:
-    return path.name.startswith(_LSDYNA_INPUT_FILE_PREFIX) and path.suffix == _LSDYNA_INPUT_FILE_SUFFIX and path.is_file()
+def _is_lsdyna_input_file(path: pathlib.Path) -> bool:
+    return (
+        path.name.startswith(_LSDYNA_INPUT_FILE_PREFIX)
+        and path.suffix == _LSDYNA_INPUT_FILE_SUFFIX
+        and path.is_file()
+    )
+
 
 def _is_matml_file(path: pathlib.Path) -> bool:
     return path.name == _MATML_FILENAME and path.is_file()
@@ -512,22 +516,14 @@ def get_composite_files_from_workbench_result_folder(
         solver_input_file = None
     elif solver_type == SolverType.LSDYNA:
         rst_paths = [
-            _get_single_file_path_with_predicate(
-                _is_d3plot_file,
-                result_folder_path,
-                "main d3plot"
-
-            )
+            _get_single_file_path_with_predicate(_is_d3plot_file, result_folder_path, "main d3plot")
         ]
         solver_input_file = _get_single_file_path_with_predicate(
-            _is_lsdyna_input_file,
-            result_folder_path,
-            "input.k"
+            _is_lsdyna_input_file, result_folder_path, "input.k"
         )
         assert solver_input_file is not None
     else:
         raise RuntimeError(f"Unsupported solver type: {solver_type}")
-
 
     if len(rst_paths) == 0:
         raise RuntimeError(
@@ -549,7 +545,7 @@ def get_composite_files_from_workbench_result_folder(
         composite={},
         engineering_data=matml_path.resolve(),
         solver_input_file=solver_input_file,
-        solver_type=solver_type
+        solver_type=solver_type,
     )
 
     for setup_folder in setup_folders:

@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 """Collection of constants used across PyDPF - Composites."""
-from enum import IntEnum, Enum
+from enum import Enum, IntEnum
 
 __all__ = (
     "Spot",

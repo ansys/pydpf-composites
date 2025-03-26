@@ -161,7 +161,11 @@ class CompositeModelImpl:
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self.get_rst_streams_provider(),
             material_provider=self.material_operators.material_provider,
-            solver_type=SolverType.LSDYNA if self._core_model.metadata.data_sources.result_key == "d3plot" else SolverType.MAPDL
+            solver_type=(
+                SolverType.LSDYNA
+                if self._core_model.metadata.data_sources.result_key == "d3plot"
+                else SolverType.MAPDL
+            ),
         )
 
         self._layup_properties_provider = LayupPropertiesProvider(
