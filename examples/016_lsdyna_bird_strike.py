@@ -26,18 +26,20 @@
 LS-Dyna Bird Strike
 -------------------
 
-This example shows how to post-process a LS-Dyna analysis.
-And how to access ply-wise results. The simulation mimics
-a bird strike on a leading edge of a composite wing.
+This example shows how to set up the composite model for a
+LSDyna analysis, how to post-process it and how to filter the results.
+The simulation uses SPH to mimic a bird strike on a leading edge
+of a composite wing.
 
-The additional steps are required to post-process LS-Dyna results
+The additional steps are required to process LS-Dyna results
 if compared with a Mechanical APDL analysis.
-Pre-processing:
+On the pre-processing side, these are:
  - The input file must be generated with WB LS Dyna
  - In WB Mechanical, enable the beta options and ``Output Integration
    Points Results for All ACP Plies`` or manually set MAXINT of the keyword
    ``DATABASE_EXTENT_BINARY`` to the maximum number of plies.
-Post-processing:
+
+And this has to be considered on the post-processing side:
  - The solver input file (keyword file) has to be passed to the composite model
    and set the solver_type of ContinuousFiberCompositesFiles to ``LSDYNA``.
  - The number of maximum integration points (MAXINT) has to be extracted from

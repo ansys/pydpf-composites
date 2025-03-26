@@ -9,4 +9,5 @@ Constants
 
       FailureOutput
       Spot
+      SolverType
       Sym3x3TensorComponent
