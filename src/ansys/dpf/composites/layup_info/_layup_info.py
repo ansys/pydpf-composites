@@ -35,6 +35,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from .._indexer import get_field_indexer, get_property_field_indexer
+from ..constants import SolverType
 from ..server_helpers import version_equal_or_later, version_older_than
 from ._element_info import (
     ElementInfoProvider,
@@ -395,6 +396,7 @@ def get_element_info_provider(
     stream_provider_or_data_source: Operator | DataSources,
     material_provider: Operator | None = None,
     no_bounds_checks: bool = False,
+    solver_type: SolverType = SolverType.MAPDL,
 ) -> ElementInfoProviderProtocol:
     """Get :class:`~ElementInfoProvider` Object.
 
@@ -408,6 +410,8 @@ def get_element_info_provider(
     no_bounds_checks
         Disable bounds checks. Improves
         performance but can result in cryptic error messages
+    solver_type
+        Specify the type of solver (MAPDL or LSDyna).
 
     Returns
     -------
@@ -417,7 +421,7 @@ def get_element_info_provider(
     -----
         Either a data_source or a stream_provider is required
     """
-    if result_key_is_d3plot(stream_provider_or_data_source):
+    if solver_type == SolverType.LSDYNA:
         if version_older_than(mesh._server, "10.0"):  # pylint: disable=protected-access
             raise RuntimeError("LSDyna support is only available in DPF 10.0 (2025 R2) and later.")
 

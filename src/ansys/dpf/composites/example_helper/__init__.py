@@ -30,12 +30,13 @@ import urllib.request
 
 import ansys.dpf.core as dpf
 
+from ..constants import SolverType
 from ..data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
 )
-from ..server_helpers import upload_file_to_unique_tmp_folder
+from ..server_helpers import upload_file_to_unique_tmp_folder, upload_files_to_unique_tmp_folder
 
 # EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
 
@@ -81,7 +82,7 @@ class _ContinuousFiberExampleLocation:
 
     directory: str
     files: _ContinuousFiberCompositesExampleFilenames
-    is_dyna: bool = False
+    solver_type: SolverType = SolverType.MAPDL
 
 
 @dataclass
@@ -182,14 +183,14 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
     "lsdyna_bird_strike": _ContinuousFiberExampleLocation(
         directory="lsdyna_bird_strike",
         files=_ContinuousFiberCompositesExampleFilenames(
-            rst=["d3plot"],
+            rst=["d3plot", "d3plot01", "d3plot02"],
             engineering_data="MatML.xml",
             composite={
                 "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
             },
             solver_input_file="input.k",
         ),
-        is_dyna=True,
+        solver_type=SolverType.LSDYNA,
     ),
 }
 
@@ -219,6 +220,29 @@ def _download_and_upload_file(
     if server.local_server:
         return local_path
     return upload_file_to_unique_tmp_folder(local_path, server=server)
+
+
+def _download_and_upload_files(
+    directory: str, filenames: list[str], tmpdir: str, server: dpf.server
+) -> list[str]:
+    """Download example files from example_data repo and upload it the dpf server.
+
+    Files are uploaded to the same tmp folder on the remote dpf server. Upload
+    is skipped in case of local server.
+    """
+    file_paths_on_client = []
+    for filename in filenames:
+        file_url = _get_file_url(directory, filename)
+        local_path = os.path.join(tmpdir, filename)
+        if server.local_server:
+            local_path = os.path.join(os.getcwd(), filename)
+        urllib.request.urlretrieve(file_url, local_path)
+        file_paths_on_client.append(local_path)
+
+    if server.local_server:
+        return file_paths_on_client
+    else:
+        return upload_files_to_unique_tmp_folder(file_paths_on_client, server=server)
 
 
 def get_short_fiber_example_files(
@@ -280,23 +304,19 @@ def get_continuous_fiber_example_files(
                     composite_files.mapping = get_server_path(
                         composite_examples_files_for_scope.mapping
                     )
-
                 all_composite_files[key] = composite_files
 
-        if example_files.is_dyna:
-            d3_plot_file_path = example_files.files.rst
-            if len(d3_plot_file_path) != 1:
-                raise RuntimeError(
-                    "Only one d3plot file has to be passed for LS-DYNA examples. "
-                    "The others are copied automatically."
-                )
-            for _, _, files in os.walk(example_files.directory):
-                for file_name in files:
-                    if file_name.startswith("d3plot") and file_name != "d3plot":
-                        get_server_path(file_name)
+        if example_files.solver_type == SolverType.LSDYNA:
+            # only the first d3plot file has to be passed to the datasource
+            # because the LSDyna reader automatically picks up the additional ones.
+            rst_file_paths = _download_and_upload_files(
+                example_files.directory, example_files.files.rst, tmpdir, server
+            )[0]
+        else:
+            rst_file_paths = [get_server_path(rst_path) for rst_path in example_files.files.rst]
 
         return ContinuousFiberCompositesFiles(
-            rst=[get_server_path(rst_path) for rst_path in example_files.files.rst],
+            rst=rst_file_paths,
             engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
             solver_input_file=(

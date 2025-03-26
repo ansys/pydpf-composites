@@ -29,6 +29,8 @@ import pathlib
 from typing import cast
 
 from ansys.dpf.core import DataSources
+from .constants import SolverType
+
 
 from ._typing_helper import PATH as _PATH
 
@@ -63,11 +65,6 @@ class CompositeDefinitionFiles:
 
     definition: _PATH
     mapping: _PATH | None = None
-
-
-class SolverType(str, Enum):
-    MAPDL = "mapdl"
-    LSDYNA = "lsdyna"
 
 
 @dataclass

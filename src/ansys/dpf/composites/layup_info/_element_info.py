@@ -20,6 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# todo: get_files_from_WB for LS-Dyna
+# todo: document get_files_from_WB for LS-Dyna
+# todo: interactive testing of get_files_from_WB for LS-Dyna
+
 """Protocol of Element Info Provider class."""
 from dataclasses import dataclass
 from typing import Any, Protocol
