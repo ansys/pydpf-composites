@@ -45,6 +45,12 @@ Post-processing:
  - The results (stress, strain, history variable etc.) have to be
    pre-processed to support ply-wise filtering and to make them consistent.
    See ``composite::ls_dyna_preparing_results`` operator.
+
+Note:
+ - Use the :func:`.get_composite_files_from_workbench_result_folder` to get
+   the composite files from a WB LS-Dyna result folder. Set ``solver_type``
+   to ``LSDYNA``.
+ - Only the first d3plot file must be passed to the composite model.
 """
 
 # %%
@@ -65,7 +71,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # sphinx_gallery_thumbnail_number = 3
 
-server = connect_to_or_start_server(ansys_path=r"C:\Program Files\ANSYS Inc\v252")
+server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
 
 composite_model = CompositeModel(
@@ -157,7 +163,6 @@ stripped_hv_container = strip_operator_hv.outputs.fields_container.get_data()
 
 stripped_hv_field = stripped_hv_container.get_field({"time": time_ids[-1], "ihv": 2})
 
-# todo: use 3 images as thumbnail
 for ply_name in ["P2L1__ModelingPly.1", "P2L1__ModelingPly.2"]:
     print(f"Plotting history variable 2 of ply {ply_name}")
     elemental_values = get_ply_wise_data(

@@ -53,6 +53,9 @@ _EXT_SUFFIX = "_ext"
 _MATML_FILENAME = "MatML.xml"
 _RST_SUFFIX = ".rst"
 _RST_PREFIX = "file"
+_D3PLOT_FILE_NAME = "d3plot"
+_LSDYNA_INPUT_FILE_PREFIX = "input"
+_LSDYNA_INPUT_FILE_SUFFIX = ".k"
 _MAPPING_SUFFIX = ".mapping"
 
 _LAYUPFILE_INDEX_KEY = "CompositeDefinitions"
@@ -231,6 +234,13 @@ def _is_rst_file(path: pathlib.Path) -> bool:
     return path.name.startswith(_RST_PREFIX) and path.suffix == _RST_SUFFIX and path.is_file()
 
 
+def _is_d3plot_file(path: pathlib.Path) -> bool:
+    return path.name == _D3PLOT_FILE_NAME and path.is_file()
+
+
+def _is_lsdyna_input_file (path: pathlib.Path) -> bool:
+    return path.name.startswith(_LSDYNA_INPUT_FILE_PREFIX) and path.suffix == _LSDYNA_INPUT_FILE_SUFFIX and path.is_file()
+
 def _is_matml_file(path: pathlib.Path) -> bool:
     return path.name == _MATML_FILENAME and path.is_file()
 
@@ -365,7 +375,7 @@ def composite_files_from_workbench_harmonic_analysis(
     ]
 
     rst_paths = _get_file_paths_with_predicate(
-        _is_rst_file,
+        _is_result_file,
         result_folder_path_harmonic,
     )
 
@@ -397,7 +407,9 @@ def composite_files_from_workbench_harmonic_analysis(
 
 
 def get_composite_files_from_workbench_result_folder(
-    result_folder: _PATH, ensure_composite_definitions_found: bool = True
+    result_folder: _PATH,
+    ensure_composite_definitions_found: bool = True,
+    solver_type: SolverType = SolverType.MAPDL,
 ) -> ContinuousFiberCompositesFiles:
     r"""Get a ``ContinuousFiberCompositesFiles`` object from a result folder.
 
@@ -434,7 +446,7 @@ def get_composite_files_from_workbench_result_folder(
 
     The files are located in these locations:
 
-    Result file:
+    Result file (MAPDL):
 
     - ``project_root_folder/dp0/SYS/MECH/file.rst``
 
@@ -469,6 +481,10 @@ def get_composite_files_from_workbench_result_folder(
             engineering_data="project_root_folder/dp0/SYS/MECH/MatML.xml"
         )
 
+    In case of LSDYNA, also set the solver input file and solver type,
+    for instance solver_input_file="project_root_folder/dp0/SYS/MECH/input.k" and
+    solver_type=SolverType.LSDYNA.
+
     Parameters
     ----------
     result_folder :
@@ -476,6 +492,8 @@ def get_composite_files_from_workbench_result_folder(
        and select **Open Solver Files Directory** to obtain the result folder.
     ensure_composite_definitions_found :
         Whether to check if at least one composite definition (shell or solid) has been found.
+    solver_type :
+        Specify the solver of the analysis. Default is MAPDL. Other values are LSDYNA
     """
     result_folder_path = pathlib.Path(result_folder)
 
@@ -485,14 +503,35 @@ def get_composite_files_from_workbench_result_folder(
         if folder_path.is_dir() and folder_path.name.startswith(_SETUP_FOLDER_PREFIX)
     ]
 
-    rst_paths = _get_file_paths_with_predicate(
-        _is_rst_file,
-        result_folder_path,
-    )
+    if solver_type == SolverType.MAPDL:
+        rst_paths = _get_file_paths_with_predicate(
+            _is_rst_file,
+            result_folder_path,
+        )
+        # Is not requried for MAPDL
+        solver_input_file = None
+    elif solver_type == SolverType.LSDYNA:
+        rst_paths = [
+            _get_single_file_path_with_predicate(
+                _is_d3plot_file,
+                result_folder_path,
+                "main d3plot"
+
+            )
+        ]
+        solver_input_file = _get_single_file_path_with_predicate(
+            _is_lsdyna_input_file,
+            result_folder_path,
+            "input.k"
+        )
+        assert solver_input_file is not None
+    else:
+        raise RuntimeError(f"Unsupported solver type: {solver_type}")
+
 
     if len(rst_paths) == 0:
         raise RuntimeError(
-            f"Expected at least one rst file. Found {rst_paths}."
+            f"Expected at least one result file."
             f" Available files in folder: {os.listdir(result_folder_path)}"
         )
 
@@ -509,6 +548,8 @@ def get_composite_files_from_workbench_result_folder(
         rst=[rst_path.resolve() for rst_path in rst_paths],
         composite={},
         engineering_data=matml_path.resolve(),
+        solver_input_file=solver_input_file,
+        solver_type=solver_type
     )
 
     for setup_folder in setup_folders:
