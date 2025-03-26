@@ -378,7 +378,7 @@ def composite_files_from_workbench_harmonic_analysis(
     ]
 
     rst_paths = _get_file_paths_with_predicate(
-        _is_result_file,
+        _is_rst_file,
         result_folder_path_harmonic,
     )
 
