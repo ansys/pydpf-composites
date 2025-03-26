@@ -382,15 +382,6 @@ def get_analysis_ply_index_to_name_map(
     return analysis_ply_name_to_index_map
 
 
-def result_key_is_d3plot(stream_provider_or_data_source: Operator | DataSources) -> bool:
-    """Check if the result file is a d3plot file (LSDyna)."""
-    if isinstance(stream_provider_or_data_source, Operator):
-        streams_container = stream_provider_or_data_source.outputs.streams_container
-        return cast(bool, streams_container.get_data().datasources.result_key == "d3plot")
-    else:
-        return cast(bool, stream_provider_or_data_source.result_key == "d3plot")
-
-
 def get_element_info_provider(
     mesh: MeshedRegion,
     stream_provider_or_data_source: Operator | DataSources,

@@ -1,14 +1,13 @@
 import ansys.dpf.core as dpf
 from ansys.dpf.composites.constants import SolverType
-from ansys.dpf.composites.composite_model import CompositeModel, CompositeScope
-from ansys.dpf.composites.server_helpers import connect_to_or_start_server
-from ansys.dpf.composites.data_sources import ContinuousFiberCompositesFiles, CompositeDefinitionFiles
-from ansys.dpf.core import DataSources, Operator, unit_systems
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.data_sources import ContinuousFiberCompositesFiles, CompositeDefinitionFiles, get_composite_files_from_workbench_result_folder
+from ansys.dpf.core import Operator, unit_systems
 
-from ansys.dpf.composites.layup_info import ElementInfo, get_all_analysis_ply_names
+from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 
-from ansys.dpf.composites.constants import Spot, Sym3x3TensorComponent
+from ansys.dpf.composites.constants import Sym3x3TensorComponent
 
 import os
 import json
@@ -19,18 +18,16 @@ import numpy as np
 def test_composite_model_with_rst_only(dpf_server):
     test_data_dir = pathlib.Path(__file__).parent / "data" / "lsdyna" / "basic_shell_model"
 
-    composite_files = ContinuousFiberCompositesFiles(
-        files_are_local=True,
-        rst=[os.path.join(test_data_dir, 'd3plot')],
-        composite={"shell": CompositeDefinitionFiles(
-            mapping=None,
-            definition=os.path.join(test_data_dir, 'ACPCompositeDefinitions.h5'),
-        )
-        },
-        engineering_data=os.path.join(test_data_dir, 'material.engd'),
-        solver_input_file=os.path.join(test_data_dir, 'input.k'),
-        solver_type=SolverType.LSDYNA,
+    composite_files = get_composite_files_from_workbench_result_folder(
+        result_folder=test_data_dir,
+        ensure_composite_definitions_found=True,
+        solver_type=SolverType.LSDYNA
     )
+
+    assert str(composite_files.solver_input_file).endswith("input.k")
+    assert len(composite_files.rst) == 1
+    assert str(composite_files.rst[0]).endswith("d3plot")
+    assert composite_files.solver_type == SolverType.LSDYNA
 
     composite_model = CompositeModel(
         composite_files=composite_files,
