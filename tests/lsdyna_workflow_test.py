@@ -21,7 +21,6 @@
 # SOFTWARE.
 
 import json
-import os
 import pathlib
 
 import ansys.dpf.core as dpf
@@ -30,11 +29,7 @@ import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import SolverType, Sym3x3TensorComponent
-from ansys.dpf.composites.data_sources import (
-    CompositeDefinitionFiles,
-    ContinuousFiberCompositesFiles,
-    get_composite_files_from_workbench_result_folder,
-)
+from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
 

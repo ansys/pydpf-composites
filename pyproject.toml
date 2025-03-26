@@ -106,7 +106,7 @@ source = ["ansys.dpf.composites"]
 show_missing = true
 
 [tool.codespell]
-skip = '*.dat,*.out'
+skip = '*.dat,*.out,*.k'
 ignore-words-list = 'ans,eyt'
 quiet-level = 3
 

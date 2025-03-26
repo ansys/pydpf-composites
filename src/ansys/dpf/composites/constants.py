@@ -62,6 +62,7 @@ class Sym3x3TensorComponent(IntEnum):
 
 
 class SolverType(str, Enum):
+    """Enum to specify the type of solver."""
     MAPDL = "mapdl"
     LSDYNA = "lsdyna"
 

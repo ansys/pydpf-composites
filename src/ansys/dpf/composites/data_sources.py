@@ -23,7 +23,6 @@
 """Composite data sources."""
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from enum import Enum
 import os
 import pathlib
 from typing import cast
@@ -512,7 +511,7 @@ def get_composite_files_from_workbench_result_folder(
             _is_rst_file,
             result_folder_path,
         )
-        # Is not requried for MAPDL
+        # Is not required for MAPDL
         solver_input_file = None
     elif solver_type == SolverType.LSDYNA:
         rst_paths = [
