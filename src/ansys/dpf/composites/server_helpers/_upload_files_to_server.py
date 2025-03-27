@@ -34,12 +34,11 @@ from ..data_sources import (
     CompositeDefinitionFiles,
     ContinuousFiberCompositesFiles,
     ShortFiberCompositesFiles,
+    get_d3plot_from_list_of_paths,
 )
 
 
 def _get_all_files_in_folder(directory: _PATH, key: str = "") -> list[_PATH]:
-    print("============ _get_all_files_in_folder ================")
-    print(f"directory: {directory}, key: {key}")
     if not os.path.isdir(directory):
         raise FileNotFoundError(f"Directory {directory} not found.")
 
@@ -47,9 +46,6 @@ def _get_all_files_in_folder(directory: _PATH, key: str = "") -> list[_PATH]:
     for root, _, files in os.walk(directory):
         paths.extend([os.path.join(root, file_name) for file_name in files if key in file_name])
 
-    print(f"all_d3plot_files: {paths}")
-    for path in paths:
-        print(f"{path} exists: {os.path.exists(path)}")
     return paths
 
 
@@ -75,12 +71,6 @@ def _get_path_on_server(path_on_client: _PATH, server: BaseServer) -> str:
         path_on_server = str(tmp_dir) + "\\" + str(uuid.uuid4()) + "\\" + path_on_client.name
     return path_on_server
 
-
-def _get_d3plot_from_list_of_paths(paths: list[_PATH]) -> _PATH:
-    for path in paths:
-        if os.path.basename(path) == "d3plot":
-            return path
-    raise ValueError(f"No d3plot file found in {paths}")
 
 def upload_file_to_unique_tmp_folder(path_on_client: _PATH, server: BaseServer) -> str:
     """Upload file to a unique temporary folder on the server.
@@ -127,7 +117,6 @@ def upload_files_to_unique_tmp_folder(
                 f"Attempted to upload to {path_on_server}."
             )
         paths_on_server.append(uploaded_path)
-    print(f"paths_on_server: {', '.join(paths_on_server)}")
     return paths_on_server
 
 
@@ -174,7 +163,6 @@ def upload_continuous_fiber_composite_files_to_server(
     # If files are not local, it means they have already been
     # uploaded to the server
     if server.local_server or not data_files.files_are_local:
-        print(f"local_server: {server.local_server}, files_are_local: {data_files.files_are_local}")
         return data_files
 
     def upload(filename: _PATH) -> _PATH:
@@ -201,7 +189,7 @@ def upload_continuous_fiber_composite_files_to_server(
         all_d3plot_paths_on_server = upload_files_to_unique_tmp_folder(
             all_d3plot_files, server=server
         )
-        rst_file_paths_on_server = [_get_d3plot_from_list_of_paths(all_d3plot_paths_on_server)]
+        rst_file_paths_on_server = [get_d3plot_from_list_of_paths(all_d3plot_paths_on_server)]
     else:
         rst_file_paths_on_server = [upload(filename) for filename in data_files.rst]
 

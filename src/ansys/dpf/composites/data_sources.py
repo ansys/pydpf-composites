@@ -40,6 +40,7 @@ __all__ = (
     "get_composite_files_from_workbench_result_folder",
     "composite_files_from_workbench_harmonic_analysis",
     "get_composites_data_sources",
+    "get_d3plot_from_list_of_paths",
     "get_short_fiber_composites_data_sources",
 )
 
@@ -694,3 +695,14 @@ def get_short_fiber_composites_data_sources(
     data_sources.add_file_path(short_fiber_composites_files.dsdat, "dat")
     data_sources.add_file_path(short_fiber_composites_files.engineering_data, "EngineeringData")
     return data_sources
+
+
+def get_d3plot_from_list_of_paths(paths: list[_PATH]) -> _PATH:
+    """Get the d3plot file path from a list of paths.
+
+    Throws a ValueError if no d3plot file is found.
+    """
+    for path in paths:
+        if os.path.basename(path) == _D3PLOT_FILE_NAME:
+            return path
+    raise ValueError(f"No {_D3PLOT_FILE_NAME} file found in {paths}.")

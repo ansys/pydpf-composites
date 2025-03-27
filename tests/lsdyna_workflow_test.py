@@ -36,8 +36,11 @@ from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wi
 from ansys.dpf.composites.server_helpers import version_older_than
 
 
-def test_composite_model_with_rst_only(dpf_server):
-
+def test_composite_model_and_ply_wise_filtering(dpf_server):
+    """
+    Verify that the composite model can be initialized and element info,
+    filtering by ply for stresses and history variables works as expected.
+    """
     if version_older_than(dpf_server, "10.0"):
         pytest.xfail("Post-processing of LSDyna solutions requires DPF server 10.0 or later.")
 
@@ -53,8 +56,6 @@ def test_composite_model_with_rst_only(dpf_server):
     assert len(composite_files.rst) == 1
     assert str(composite_files.rst[0]).endswith("d3plot")
     assert composite_files.solver_type == SolverType.LSDYNA
-
-    print(composite_files)
 
     composite_model = CompositeModel(
         composite_files=composite_files,
