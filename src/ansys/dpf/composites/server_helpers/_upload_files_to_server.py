@@ -116,6 +116,7 @@ def upload_files_to_unique_tmp_folder(
                 f"Attempted to upload to {path_on_server}."
             )
         paths_on_server.append(uploaded_path)
+    print(f"paths_on_server: {", ".join(paths_on_server)}")
     return paths_on_server
 
 
@@ -162,6 +163,7 @@ def upload_continuous_fiber_composite_files_to_server(
     # If files are not local, it means they have already been
     # uploaded to the server
     if server.local_server or not data_files.files_are_local:
+        print(f"local_server: {server.local_server}, files_are_local: {data_files.files_are_local}")
         return data_files
 
     def upload(filename: _PATH) -> _PATH:
@@ -183,6 +185,7 @@ def upload_continuous_fiber_composite_files_to_server(
         # all d3plot files have to be uploaded to the same folder. Note, only the d3plot
         # format of LSDyna is currently supported
         all_d3plot_files = _get_all_files_in_folder(os.path.dirname(data_files.rst[0]), "d3plot")
+        print(f"all_d3plot_files: {all_d3plot_files}")
         # The LSDyna reader automatically picks up the additional d3plot files and so only the first
         # one is passed to the DPF datasource.
         rst_file_paths_on_server = upload_files_to_unique_tmp_folder(

@@ -54,6 +54,8 @@ def test_composite_model_with_rst_only(dpf_server):
     assert str(composite_files.rst[0]).endswith("d3plot")
     assert composite_files.solver_type == SolverType.LSDYNA
 
+    print(composite_files)
+
     composite_model = CompositeModel(
         composite_files=composite_files,
         server=dpf_server,

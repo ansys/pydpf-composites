@@ -112,6 +112,7 @@ class CompositeModelImpl:
         self._composite_files = upload_continuous_fiber_composite_files_to_server(
             composite_files, server
         )
+        print(self._composite_files)
         self._data_sources = get_composites_data_sources(self._composite_files)
 
         self._core_model = dpf.Model(self._data_sources.rst, server=server)
