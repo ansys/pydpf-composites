@@ -116,7 +116,7 @@ def upload_files_to_unique_tmp_folder(
                 f"Attempted to upload to {path_on_server}."
             )
         paths_on_server.append(uploaded_path)
-    print(f"paths_on_server: {", ".join(paths_on_server)}")
+    print(f"paths_on_server: {', '.join(paths_on_server)}")
     return paths_on_server
 
 
