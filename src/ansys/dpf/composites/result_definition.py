@@ -38,9 +38,9 @@ class FailureMeasureEnum(str, Enum):
     """Provides available failure measures."""
 
     # TODO: Add descriptions for each property
-    INVERSE_RESERVE_FACTOR: str = "inverse_reserve_factor"
-    MARGIN_OF_SAFETY: str = "safety_margin"
-    RESERVE_FACTOR: str = "safety_factor"
+    INVERSE_RESERVE_FACTOR = "inverse_reserve_factor"
+    MARGIN_OF_SAFETY = "safety_margin"
+    RESERVE_FACTOR = "safety_factor"
 
 
 _SUPPORTED_EXPRESSIONS = ["composite_failure"]
