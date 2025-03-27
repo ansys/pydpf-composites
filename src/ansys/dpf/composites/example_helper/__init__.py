@@ -245,6 +245,13 @@ def _download_and_upload_files(
         return upload_files_to_unique_tmp_folder(file_paths_on_client, server=server)
 
 
+def _get_d3plot_from_list_of_paths(paths: list[_PATH]) -> _PATH:
+    for path in paths:
+        if os.path.basename(path) == "d3plot":
+            return path
+    raise ValueError(f"No d3plot file found in {paths}")
+
+
 def get_short_fiber_example_files(
     server: dpf.server,
     example_key: str,
@@ -311,7 +318,8 @@ def get_continuous_fiber_example_files(
             # because the LSDyna reader automatically picks up the additional ones.
             rst_file_paths = _download_and_upload_files(
                 example_files.directory, example_files.files.rst, tmpdir, server
-            )[0:1]
+            )
+            rst_file_paths = [_get_d3plot_from_list_of_paths(rst_file_paths)]
         else:
             rst_file_paths = [get_server_path(rst_path) for rst_path in example_files.files.rst]
 

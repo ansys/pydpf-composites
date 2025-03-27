@@ -76,6 +76,12 @@ def _get_path_on_server(path_on_client: _PATH, server: BaseServer) -> str:
     return path_on_server
 
 
+def _get_d3plot_from_list_of_paths(paths: list[_PATH]) -> _PATH:
+    for path in paths:
+        if os.path.basename(path) == "d3plot":
+            return path
+    raise ValueError(f"No d3plot file found in {paths}")
+
 def upload_file_to_unique_tmp_folder(path_on_client: _PATH, server: BaseServer) -> str:
     """Upload file to a unique temporary folder on the server.
 
@@ -192,9 +198,10 @@ def upload_continuous_fiber_composite_files_to_server(
         all_d3plot_files = _get_all_files_in_folder(os.path.dirname(data_files.rst[0]), "d3plot")
         # The LSDyna reader automatically picks up the additional d3plot files and so only the first
         # one is passed to the DPF datasource.
-        rst_file_paths_on_server = upload_files_to_unique_tmp_folder(
+        all_d3plot_paths_on_server = upload_files_to_unique_tmp_folder(
             all_d3plot_files, server=server
-        )[0:1]
+        )
+        rst_file_paths_on_server = [_get_d3plot_from_list_of_paths(all_d3plot_paths_on_server)]
     else:
         rst_file_paths_on_server = [upload(filename) for filename in data_files.rst]
 
