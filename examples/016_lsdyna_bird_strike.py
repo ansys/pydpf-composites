@@ -42,9 +42,8 @@ On the **pre-processing side**, these are:
 
 And these items must be considered on setting up the **post-processing**:
  - On initializing the composite model, these properties of :class:`.ContinuousFiberCompositesFiles`
-   must be set:
-    - ``solver_type`` to ``LSDYNA``
-    - ``solver_input_file`` to the keyword file (for instance ``input.k``)
+   must be set: ``solver_type`` to ``LSDYNA`` and ``solver_input_file`` must point to
+   the keyword file (for instance ``input.k``).
  - The number of maximum integration points (MAXINT) has to be extracted from
    the keyword file. See ``composite::ls_dyna_keyword_parser`` operator.
  - The results (stress, strain, history variable etc.) must be
@@ -76,7 +75,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # sphinx_gallery_thumbnail_number = 4
 
-server = connect_to_or_start_server()
+server = connect_to_or_start_server(port=50052)
 composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
 
 composite_model = CompositeModel(
@@ -152,7 +151,6 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         cpos=camera,
         zoom="tight",
     )
-
 
 # %%
 # Plot history variables
