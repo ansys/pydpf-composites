@@ -108,7 +108,7 @@ class ContinuousFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server.
         solver_type
-            Specify the type of the solver
+            Specify the type of the solver.
         """
         self.rst = rst  # type: ignore
         self.composite = composite
@@ -496,7 +496,7 @@ def get_composite_files_from_workbench_result_folder(
     ensure_composite_definitions_found :
         Whether to check if at least one composite definition (shell or solid) has been found.
     solver_type :
-        Specify the solver of the analysis. Default is MAPDL. Other values are LSDYNA
+        Specify the solver of the analysis. Default is MAPDL. Other values are LSDYNA.
     """
     result_folder_path = pathlib.Path(result_folder)
 
