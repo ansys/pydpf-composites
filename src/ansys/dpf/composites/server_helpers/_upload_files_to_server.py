@@ -38,6 +38,8 @@ from ..data_sources import (
 
 
 def _get_all_files_in_folder(directory: _PATH, key: str = "") -> list[_PATH]:
+    print("============ _get_all_files_in_folder ================")
+    print(f"directory: {directory}, key: {key}")
     if not os.path.isdir(directory):
         raise FileNotFoundError(f"Directory {directory} not found.")
 
@@ -45,6 +47,9 @@ def _get_all_files_in_folder(directory: _PATH, key: str = "") -> list[_PATH]:
     for root, _, files in os.walk(directory):
         paths.extend([os.path.join(root, file_name) for file_name in files if key in file_name])
 
+    print(f"all_d3plot_files: {paths}")
+    for path in paths:
+        print(f"{path} exists: {os.path.exists(path)}")
     return paths
 
 
@@ -185,7 +190,6 @@ def upload_continuous_fiber_composite_files_to_server(
         # all d3plot files have to be uploaded to the same folder. Note, only the d3plot
         # format of LSDyna is currently supported
         all_d3plot_files = _get_all_files_in_folder(os.path.dirname(data_files.rst[0]), "d3plot")
-        print(f"all_d3plot_files: {all_d3plot_files}")
         # The LSDyna reader automatically picks up the additional d3plot files and so only the first
         # one is passed to the DPF datasource.
         rst_file_paths_on_server = upload_files_to_unique_tmp_folder(
