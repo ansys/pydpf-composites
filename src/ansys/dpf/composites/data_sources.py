@@ -108,7 +108,7 @@ class ContinuousFiberCompositesFiles:
             True if files are on the local machine, False if they have already
             been uploaded to the DPF server.
         solver_type
-            Specify the type of the solver
+            Specify the type of the solver.
         """
         self.rst = rst  # type: ignore
         self.composite = composite
