@@ -75,7 +75,7 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # sphinx_gallery_thumbnail_number = 4
 
-server = connect_to_or_start_server(port=50052)
+server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
 
 composite_model = CompositeModel(
