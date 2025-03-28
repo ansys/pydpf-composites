@@ -111,7 +111,7 @@ stress_operator.inputs.bool_rotate_to_global(False)
 keyword_parser = Operator("composite::ls_dyna_keyword_parser")
 keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
 keyword_parser.inputs.keyword("DATABASE_EXTENT_BINARY")
-keyword_options_as_json = json.loads(keyword_parser.outputs[0].get_data())
+keyword_options_as_json = json.loads(keyword_parser.outputs.keyword_options.get_data())
 
 # %%
 # Strip the stress container (remove unneeded integration point results)

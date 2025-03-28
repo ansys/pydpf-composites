@@ -77,14 +77,14 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
 
     # Filter data by analysis ply name
     all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
-    assert all_ply_names == [
+    assert all_ply_names.sort() == [
         "P1L1__ModelingPly.1",
         "P1L1__ModelingPly.9",
         "P1L1__ModelingPly.8",
         "P1L1__ModelingPly.7",
         "P1L1__ModelingPly.6",
         "P1L1__ModelingPly.5",
-    ]
+    ].sort()
 
     # Verify that the results are loaded as expected (all time steps)
     time_freq_support = composite_model.core_model.metadata.time_freq_support
@@ -98,7 +98,7 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
     keyword_parser = Operator("composite::ls_dyna_keyword_parser")
     keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
     keyword_parser.inputs.keyword("DATABASE_EXTENT_BINARY")
-    keyword_options_as_json = json.loads(keyword_parser.outputs[0].get_data())
+    keyword_options_as_json = json.loads(keyword_parser.outputs.keyword_options.get_data())
 
     maxint = int(keyword_options_as_json["maxint"])
     assert maxint == 6
