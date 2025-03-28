@@ -49,7 +49,9 @@ def _get_all_files_in_folder(directory: _PATH, key: str = "") -> list[_PATH]:
     return paths
 
 
-def _construct_path_on_server(tmp_dir: _PATH, server: BaseServer, my_uuid: str, file_name: str):
+def _construct_path_on_server(
+    tmp_dir: _PATH, server: BaseServer, my_uuid: str, file_name: str
+) -> str:
     if server.os == "posix":
         path_on_server = str(tmp_dir) + "/" + my_uuid + "/" + file_name
     else:
@@ -183,7 +185,7 @@ def upload_continuous_fiber_composite_files_to_server(
         # all d3plot files have to be uploaded to the same folder. Note, only the d3plot
         # format of LSDyna is currently supported
         all_d3plot_files = _get_all_files_in_folder(
-            os.path.dirname(data_files.rst[0]), D3PLOT_KEY_AND_FILENAME
+            os.path.dirname(data_files.result_files[0]), D3PLOT_KEY_AND_FILENAME
         )
         # The LSDyna reader automatically picks up the additional d3plot files and so only the first
         # one is passed to the DPF datasource.
@@ -192,7 +194,7 @@ def upload_continuous_fiber_composite_files_to_server(
         )
         rst_file_paths_on_server = [get_d3plot_from_list_of_paths(all_d3plot_paths_on_server)]
     else:
-        rst_file_paths_on_server = [upload(filename) for filename in data_files.rst]
+        rst_file_paths_on_server = [upload(filename) for filename in data_files.result_files]
 
     return ContinuousFiberCompositesFiles(
         result_files=rst_file_paths_on_server,

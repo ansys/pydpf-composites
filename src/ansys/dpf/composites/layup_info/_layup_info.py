@@ -419,7 +419,7 @@ def get_element_info_provider(
         Either a data_source or a stream_provider is required
     """
 
-    def _check_existence_of_property_fields(requested_property_fields: list[str]):
+    def _check_existence_of_property_fields(requested_property_fields: list[str]) -> None:
         for property_field_name in requested_property_fields:
             if property_field_name not in mesh.available_property_fields:
                 message = f"Missing property field in mesh: '{property_field_name}'."

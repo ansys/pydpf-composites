@@ -25,7 +25,7 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 import os
 import pathlib
-from typing import Any, cast
+from typing import cast
 from warnings import warn
 
 from ansys.dpf.core import DataSources
@@ -125,7 +125,7 @@ class ContinuousFiberCompositesFiles:
         if result_files:
             self.result_files = result_files  # type: ignore
         if rst:
-            self.rst = rst  # type: ignore
+            self.rst = rst
 
         self.composite = composite
         self.engineering_data = engineering_data
@@ -157,7 +157,7 @@ class ContinuousFiberCompositesFiles:
         return self.result_files
 
     @rst.setter
-    def rst(self, value: list[_PATH] | _PATH):
+    def rst(self, value: list[_PATH] | _PATH) -> None:
         """Set the result files.
 
         Deprecated and will be removed in the future.
@@ -233,33 +233,7 @@ class ShortFiberCompositesFiles:
 
 @dataclass
 class CompositeDataSources:
-    """Provides data sources related to the composite lay-up.
-
-    Parameters
-    ----------
-    result_files:
-        DPF DatatSources of the result file(s). DataSources object can contain
-        one or multiple result files.
-    material_support:
-        NOTE: The ``material_support`` parameter is explicitly listed because it is currently not
-        supported (by the DPF Core) to use a distributed RST file as source for the
-        material support. Instead, we create a separate DataSources object for the
-        material support from the first RST file. This is a workaround until the
-        support for distributed RST is added.
-    engineering_data:
-        File with the material properties.
-    solver_input_file:
-        Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
-
-    rst:
-        Result file. Deprecated and will be removed in the future.
-        Use ``result_files`` instead. ``rst`` and ``result_files``
-        always have the same value.
-    old_composite_sources :
-        Member used to support assemblies in combination with the old
-        DPF server (<7.0). It should be removed once the support of this
-        server version is dropped.
-    """
+    """Provides data sources related to the composite lay-up."""
 
     material_support: DataSources
     composite: DataSources | None
@@ -269,16 +243,59 @@ class CompositeDataSources:
     # rst: DataSources | None = None  # April 25: remove in the future
     result_files: DataSources | None = None
 
-    def __init__(self, **kwargs: Sequence[Any]) -> None:
-        """Initialize the CompositeDataSources container."""
-        if "result_files" in kwargs.keys() and "rst" in kwargs.keys():
+    def __init__(
+        self,
+        *,
+        material_support: DataSources,
+        engineering_data: DataSources,
+        old_composite_sources: dict[str, DataSources],
+        result_files: DataSources | None = None,
+        solver_input_file: DataSources | None,
+        composite: DataSources | None,
+        rst: DataSources | None = None,
+    ) -> None:
+        """Store data sources related to the composite lay-up.
+
+        Parameters
+        ----------
+        result_files:
+            DPF DatatSources of the result file(s). DataSources object can contain
+            one or multiple result files.
+        material_support:
+            NOTE: The ``material_support`` parameter is explicitly listed because it is
+            currently not supported (by the DPF Core) to use a distributed RST file as source
+            for the material support. Instead, we create a separate DataSources object for the
+            material support from the first RST file. This is a workaround until the
+            support for distributed RST is added.
+        engineering_data:
+            File with the material properties.
+        solver_input_file:
+            Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
+
+        rst:
+            Result file. Deprecated and will be removed in the future.
+            Use ``result_files`` instead. ``rst`` and ``result_files``
+            always have the same value.
+        old_composite_sources :
+            Member used to support assemblies in combination with the old
+            DPF server (<7.0). It should be removed once the support of this
+            server version is dropped.
+        """
+        if result_files and rst:
             raise ValueError("CompositeDataSources: result_files and rst cannot be used together.")
 
-        if not "result_files" in kwargs.keys() and not "rst" in kwargs.keys():
+        if not result_files and not rst:
             raise ValueError("CompositeDataSources: either result_files and rst must be specified.")
 
-        for key, value in kwargs.items():
-            self.__setattr__(key, value)
+        self.material_support = material_support
+        self.engineering_data = engineering_data
+        self.old_composite_sources = old_composite_sources
+        if result_files:
+            self.result_files = result_files
+        if rst:
+            self.rst = rst
+        self.solver_input_file = solver_input_file
+        self.composite = composite
 
     @property
     def rst(self) -> DataSources | None:
@@ -704,7 +721,7 @@ def get_composites_data_sources(
 
     composite_data_source = DataSources()
     set_part_key = len(continuous_composite_files.composite) > 1
-    old_composite_data_sources = {}
+    old_composite_data_sources: dict[str, DataSources] = {}
 
     for key, composite_files in continuous_composite_files.composite.items():
         if set_part_key:
@@ -736,7 +753,7 @@ def get_composites_data_sources(
     if len(continuous_composite_files.composite) == 0:
         composite_data_source = None
 
-    solver_input_file_data_sources = None
+    solver_input_file_data_sources: DataSources = None
     if continuous_composite_files.solver_input_file is not None:
         solver_input_file_data_sources = DataSources()
         solver_input_file_data_sources.add_file_path(
@@ -780,18 +797,18 @@ def get_short_fiber_composites_data_sources(
     short_fiber_composite_files :
         Container for short fiber composite file paths.
     """
-    data_sources = _get_data_sources_from_rst_files(short_fiber_composites_files.result_files)
+    data_sources = _get_data_sources_from_rst_files(short_fiber_composites_files.rst)
     data_sources.add_file_path(short_fiber_composites_files.dsdat, "dat")
     data_sources.add_file_path(short_fiber_composites_files.engineering_data, "EngineeringData")
     return data_sources
 
 
 def get_d3plot_from_list_of_paths(paths: list[_PATH]) -> _PATH:
-    """Get the d3plot file path from a list of paths.
+    """Get the d3plot file path from a list of file paths.
 
     Throws a ValueError if no d3plot file is found.
     """
     for path in paths:
-        if os.path.basename(path) == _D3PLOT_FILE_NAME:
+        if os.path.basename(path) == D3PLOT_KEY_AND_FILENAME:
             return path
-    raise ValueError(f"No {_D3PLOT_FILE_NAME} file found in {paths}.")
+    raise ValueError(f"No {D3PLOT_KEY_AND_FILENAME} file found in {paths}.")
