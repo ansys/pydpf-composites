@@ -28,8 +28,8 @@ LS-Dyna Bird Strike
 
 This example shows how to set up the composite model for a
 LSDyna analysis, how to post-process it and how to filter the results.
-The simulation uses SPH to mimic a bird strike on a leading edge
-of a composite wing.
+The simulation uses SPH (Smooth Particle Hydrodynamics) to mimic a bird
+strike on a leading edge of a composite wing.
 
 Additional steps are required to process LS-Dyna results
 if compared with a Mechanical APDL analysis.
@@ -99,6 +99,7 @@ displacement = disp_result.eval().get_field({"time": time_ids[-1]})
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
 
+
 # %%
 # Prepare data
 # ~~~~~~~~~~~~
@@ -108,25 +109,35 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # integration points (MAXINT) from the DATABASE_EXTENT_BINARY keyword.
 # This parameter can be extracted from the input file (``input.k``) with
 # the help of the ``composite::ls_dyna_keyword_parser`` operator.
-keyword_parser = Operator("composite::ls_dyna_keyword_parser")
-keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
-keyword_parser.inputs.keyword("DATABASE_EXTENT_BINARY")
-keyword_options_as_json = json.loads(keyword_parser.outputs.keyword_options.get_data())
+def prepare_lsdyna_results(
+    my_results_container: dpf.core.fields_container.FieldsContainer,
+) -> dpf.core.fields_container.FieldsContainer:
+    keyword_parser = Operator("composite::ls_dyna_keyword_parser")
+    keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
+    keyword_parser.inputs.keyword("DATABASE_EXTENT_BINARY")
+    keyword_options_as_json = json.loads(keyword_parser.outputs.keyword_options.get_data())
 
-# %%
-# Strip the stress container (remove unneeded integration point results)
-stress_container = stress_operator.outputs.fields_container.get_data()
-strip_operator = Operator("composite::ls_dyna_preparing_results")
-strip_operator.inputs.maxint(int(keyword_options_as_json["maxint"]))
-strip_operator.inputs.fields_container(stress_container)
-strip_operator.inputs.mesh(composite_model.get_mesh())
-stripped_stress_container = strip_operator.outputs.fields_container.get_data()
+    # remove unneeded integration points for each element
+    strip_operator = Operator("composite::ls_dyna_preparing_results")
+    strip_operator.inputs.maxint(int(keyword_options_as_json["maxint"]))
+    strip_operator.inputs.fields_container(my_results_container)
+    strip_operator.inputs.mesh(composite_model.get_mesh())
+    stripped_results_container = strip_operator.outputs.fields_container.get_data()
+
+    return stripped_results_container
+
+
+stripped_stress_container = prepare_lsdyna_results(
+    stress_operator.outputs.fields_container.get_data()
+)
 
 # %%
 # Filter data by analysis ply
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Print stresses of a few plies at the last time step. You can
 # use ``get_all_analysis_ply_names`` to list all available plies.
+# Note that one integration point per layer and element is available if
+# MAXINT is equal or greater than the number of layers.
 stripped_stress_field = stripped_stress_container.get_field({"time": time_ids[-1]})
 camera = [
     (-1589.7832333411716, 1670.8197500164952, -328.2144469600579),
@@ -159,18 +170,10 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
 # In this example, the 2nd history variable (compressive fiber mode)
 # is plotted. 1 stands for elastic, 0 means failed.
 hv_operator = dpf.Operator("lsdyna::d3plot::history_var")
-hv_operator.inputs.data_sources(composite_model.data_sources.rst)
+hv_operator.inputs.data_sources(composite_model.data_sources.result_files)
 hv_operator.inputs.time_scoping(time_ids)
 
-hv_container = hv_operator.outputs.history_var.get_data()
-hv_field = hv_container.get_field({"time": time_ids[-1], "ihv": 2})
-
-strip_operator_hv = Operator("composite::ls_dyna_preparing_results")
-strip_operator_hv.inputs.maxint(int(keyword_options_as_json["maxint"]))
-strip_operator_hv.inputs.mesh(composite_model.get_mesh())
-strip_operator_hv.inputs.fields_container(hv_container)
-stripped_hv_container = strip_operator_hv.outputs.fields_container.get_data()
-
+stripped_hv_container = prepare_lsdyna_results(hv_operator.outputs.history_var.get_data())
 stripped_hv_field = stripped_hv_container.get_field({"time": time_ids[-1], "ihv": 2})
 
 for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:

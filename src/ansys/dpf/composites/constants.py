@@ -26,6 +26,7 @@ from enum import Enum, IntEnum
 __all__ = (
     "Spot",
     "Sym3x3TensorComponent",
+    "D3PLOT_KEY_AND_FILENAME",
     "FailureOutput",
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
@@ -40,6 +41,7 @@ FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
 REF_SURFACE_NAME = "Reference Surface"
 SOLID_STACK_FIELD_NAME = "solid_stacks"
+D3PLOT_KEY_AND_FILENAME = "d3plot"
 
 
 class Spot(IntEnum):

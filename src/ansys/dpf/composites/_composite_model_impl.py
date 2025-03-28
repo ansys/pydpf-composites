@@ -34,7 +34,7 @@ from numpy.typing import NDArray
 
 from ._composite_model_impl_helpers import _deprecated_composite_definition_label, _merge_containers
 from .composite_scope import CompositeScope
-from .constants import REF_SURFACE_NAME, SolverType
+from .constants import D3PLOT_KEY_AND_FILENAME, REF_SURFACE_NAME, SolverType
 from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
@@ -115,10 +115,10 @@ class CompositeModelImpl:
 
         self._data_sources = get_composites_data_sources(self._composite_files)
 
-        self._core_model = dpf.Model(self._data_sources.rst, server=server)
+        self._core_model = dpf.Model(self._data_sources.result_files, server=server)
         self._server = server
 
-        self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
+        self._unit_system = get_unit_system(self._data_sources.result_files, default_unit_system)
 
         self._material_operators = get_material_operators(
             rst_data_source=self._data_sources.material_support,
@@ -162,11 +162,7 @@ class CompositeModelImpl:
             mesh=self.get_mesh(),
             stream_provider_or_data_source=self.get_rst_streams_provider(),
             material_provider=self.material_operators.material_provider,
-            solver_type=(
-                SolverType.LSDYNA
-                if self._core_model.metadata.data_sources.result_key == "d3plot"
-                else SolverType.MAPDL
-            ),
+            solver_type=self.solver_type,
         )
 
         self._layup_properties_provider = LayupPropertiesProvider(
@@ -256,6 +252,14 @@ class CompositeModelImpl:
         Type can be one of the following values: ``NOT_AVAILABLE``, ``ACP``, ``RST``, ``MIXED``.
         """
         return self._layup_model_type
+
+    @property
+    def solver_type(self) -> SolverType:
+        """Get the solver type of the model."""
+        if self._core_model.metadata.data_sources.result_key == D3PLOT_KEY_AND_FILENAME:
+            return SolverType.LSDYNA
+
+        return SolverType.MAPDL
 
     @_deprecated_composite_definition_label
     def evaluate_failure_criteria(

@@ -97,7 +97,7 @@ composite_data_sources = get_composites_data_sources(composite_files_on_server)
 # Initialize DPF model and data sources
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Initialize the DPF model and the data sources.
-rst_data_source = composite_data_sources.rst
+rst_data_source = composite_data_sources.result_files
 material_support_data_source = composite_data_sources.material_support
 eng_data_source = composite_data_sources.engineering_data
 

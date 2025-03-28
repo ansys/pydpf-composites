@@ -281,9 +281,11 @@ def get_dpf_material_id_by_analyis_ply_map(
     return get_dpf_material_id_by_analysis_ply_map(mesh, data_source_or_streams_provider)
 
 
+# todo: pass solver type
 def get_dpf_material_id_by_analysis_ply_map(
     mesh: MeshedRegion,
     data_source_or_streams_provider: DataSources | Operator,
+    solver_type: SolverType = SolverType.MAPDL,
 ) -> dict[str, np.int64]:
     """Get the dictionary that maps analysis ply names to DPF material IDs.
 
@@ -295,6 +297,8 @@ def get_dpf_material_id_by_analysis_ply_map(
         DPF data source with RST file or streams provider. The streams provider is
         available from the :attr:`.CompositeModel.core_model` attribute
         (under ``metadata.streams_provider``).
+    solver_type:
+        Type of result file (model). The default is ``SolverType.MAPDL``.
 
     Note
     ----
@@ -306,7 +310,9 @@ def get_dpf_material_id_by_analysis_ply_map(
     # Maybe we could split the ElementInfoProvider
     analysis_ply_to_material_map = {}
     element_info_provider = get_element_info_provider(
-        mesh=mesh, stream_provider_or_data_source=data_source_or_streams_provider
+        mesh=mesh,
+        stream_provider_or_data_source=data_source_or_streams_provider,
+        solver_type=solver_type,
     )
     all_element_ids = mesh.elements.scoping.ids
 
@@ -412,16 +418,8 @@ def get_element_info_provider(
     -----
         Either a data_source or a stream_provider is required
     """
-    if solver_type == SolverType.LSDYNA:
-        if version_older_than(mesh._server, "10.0"):  # pylint: disable=protected-access
-            raise RuntimeError("LSDyna support is only available in DPF 10.0 (2025 R2) and later.")
 
-        requested_property_fields = [
-            "element_layer_indices",
-            "element_layered_material_ids",
-            "eltype",
-        ]
-
+    def _check_existence_of_property_fields(requested_property_fields: list[str]):
         for property_field_name in requested_property_fields:
             if property_field_name not in mesh.available_property_fields:
                 message = f"Missing property field in mesh: '{property_field_name}'."
@@ -431,6 +429,18 @@ def get_element_info_provider(
                         "Please call add_layup_info_to_mesh "
                     )
                 raise RuntimeError(message)
+
+    if solver_type == SolverType.LSDYNA:
+        if version_older_than(mesh._server, "10.0"):  # pylint: disable=protected-access
+            raise RuntimeError("LSDyna support is only available in DPF 10.0 (2025 R2) and later.")
+
+        _check_existence_of_property_fields(
+            [
+                "element_layer_indices",
+                "element_layered_material_ids",
+                "eltype",
+            ]
+        )
 
         helper_op = dpf.Operator("composite::materials_container_helper")
         if material_provider is None:
@@ -458,21 +468,13 @@ def get_element_info_provider(
             keyopt_provider.inputs.property_name(f"keyopt_{keyopt}")
             return keyopt_provider.outputs.property_as_property_field()
 
-        requested_property_fields = [
-            "apdl_element_type",
-            "element_layer_indices",
-            "element_layered_material_ids",
-        ]
-
-        for property_field_name in requested_property_fields:
-            if property_field_name not in mesh.available_property_fields:
-                message = f"Missing property field in mesh: '{property_field_name}'."
-                if property_field_name in ["element_layer_indices", "element_layer_material_ids"]:
-                    message += (
-                        " Maybe you have to run the lay-up provider operator first. "
-                        "Please call add_layup_info_to_mesh "
-                    )
-                raise RuntimeError(message)
+        _check_existence_of_property_fields(
+            [
+                "element_layer_indices",
+                "element_layered_material_ids",
+                "apdl_element_type",
+            ]
+        )
 
         # pylint: disable=protected-access
         if material_provider and version_equal_or_later(mesh._server, "8.0"):

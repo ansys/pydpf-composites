@@ -25,6 +25,7 @@ from warnings import warn
 
 from ansys.dpf.core import DataSources, Operator
 
+from ansys.dpf.composites.constants import D3PLOT_KEY_AND_FILENAME
 from ansys.dpf.composites.server_helpers import version_equal_or_later
 
 __all__ = ("MaterialOperators", "get_material_operators")
@@ -126,7 +127,7 @@ def get_material_operators(
     ----------
 
     """
-    if rst_data_source.result_key == "d3plot":
+    if rst_data_source.result_key == D3PLOT_KEY_AND_FILENAME:
         material_support_provider = Operator("composite::ls_dyna_material_support_provider")
         if solver_input_data_source is None:
             raise RuntimeError(

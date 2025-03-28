@@ -318,7 +318,7 @@ def get_continuous_fiber_example_files(
             rst_file_paths = [get_server_path(rst_path) for rst_path in example_files.files.rst]
 
         return ContinuousFiberCompositesFiles(
-            rst=rst_file_paths,
+            result_files=rst_file_paths,
             engineering_data=get_server_path(example_files.files.engineering_data),
             composite=all_composite_files,
             solver_input_file=(

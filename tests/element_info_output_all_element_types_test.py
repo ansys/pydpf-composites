@@ -381,7 +381,7 @@ def test_get_element_info_all_element_types(dpf_server):
     mat_xml_file = model_path / "model_with_all_element_types_all_output_1_layer_material.xml"
 
     composite_files = ContinuousFiberCompositesFiles(
-        rst=[rst_file],
+        result_files=[rst_file],
         composite={},
         engineering_data=mat_xml_file,
     )

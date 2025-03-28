@@ -29,7 +29,11 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.composite_model import CompositeModel
-from ansys.dpf.composites.constants import SolverType, Sym3x3TensorComponent
+from ansys.dpf.composites.constants import (
+    D3PLOT_KEY_AND_FILENAME,
+    SolverType,
+    Sym3x3TensorComponent,
+)
 from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
 from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
@@ -53,8 +57,8 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
     )
 
     assert str(composite_files.solver_input_file).endswith("input.k")
-    assert len(composite_files.rst) == 1
-    assert str(composite_files.rst[0]).endswith("d3plot")
+    assert len(composite_files.result_files) == 1
+    assert str(composite_files.result_files[0]).endswith(D3PLOT_KEY_AND_FILENAME)
     assert composite_files.solver_type == SolverType.LSDYNA
 
     composite_model = CompositeModel(
@@ -77,14 +81,17 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
 
     # Filter data by analysis ply name
     all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
-    assert all_ply_names.sort() == [
-        "P1L1__ModelingPly.1",
-        "P1L1__ModelingPly.9",
-        "P1L1__ModelingPly.8",
-        "P1L1__ModelingPly.7",
-        "P1L1__ModelingPly.6",
-        "P1L1__ModelingPly.5",
-    ].sort()
+    assert (
+        all_ply_names.sort()
+        == [
+            "P1L1__ModelingPly.1",
+            "P1L1__ModelingPly.9",
+            "P1L1__ModelingPly.8",
+            "P1L1__ModelingPly.7",
+            "P1L1__ModelingPly.6",
+            "P1L1__ModelingPly.5",
+        ].sort()
+    )
 
     # Verify that the results are loaded as expected (all time steps)
     time_freq_support = composite_model.core_model.metadata.time_freq_support
@@ -330,7 +337,7 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
 
     # verify that data extraction also works for history variables
     hv_operator = dpf.Operator("lsdyna::d3plot::history_var")
-    hv_operator.inputs.data_sources(composite_model.data_sources.rst)
+    hv_operator.inputs.data_sources(composite_model.data_sources.result_files)
     hv_operator.inputs.time_scoping(time_ids)
 
     hv_container = hv_operator.outputs.history_var.get_data()

@@ -92,7 +92,7 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles):
     data_sources = get_composites_data_sources(files)
 
     streams_provider = dpf.operators.metadata.streams_provider()
-    streams_provider.inputs.data_sources.connect(data_sources.rst)
+    streams_provider.inputs.data_sources.connect(data_sources.result_files)
 
     strain_operator = dpf.operators.result.elastic_strain()
     strain_operator.inputs.streams_container(streams_provider)
@@ -106,9 +106,9 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles):
     mesh = mesh_provider.outputs.mesh()
     timer.add("mesh")
 
-    unit_system = get_unit_system(data_sources.rst)
+    unit_system = get_unit_system(data_sources.result_files)
     material_operators = get_material_operators(
-        data_sources.rst, data_sources.engineering_data, unit_system=unit_system
+        data_sources.result_files, data_sources.engineering_data, unit_system=unit_system
     )
     layup_provider = add_layup_info_to_mesh(
         data_sources=data_sources,
@@ -120,7 +120,7 @@ def setup_operators(server, files: ContinuousFiberCompositesFiles):
     return SetupResult(
         field=fields_container[0],
         mesh=mesh,
-        rst_data_source=data_sources.rst,
+        rst_data_source=data_sources.result_files,
         material_provider=material_operators.material_provider,
         streams_provider=streams_provider,
         layup_provider=layup_provider,
@@ -137,7 +137,7 @@ def get_basic_shell_files(two_load_steps: bool = False):
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     return ContinuousFiberCompositesFiles(
-        rst=[rst_path],
+        result_files=[rst_path],
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
@@ -155,7 +155,7 @@ def get_dummy_data_files(distributed: bool = False):
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     return ContinuousFiberCompositesFiles(
-        rst=rst_path,
+        result_files=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
