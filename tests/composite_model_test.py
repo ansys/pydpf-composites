@@ -177,6 +177,7 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
                     assert (
                         value.solver_material_id == ref_data.solver_material_id
                     ), f"Solver material id mismatch for {mat_name}"
+                    found = True
             assert found
 
     timer.add("After getting properties")

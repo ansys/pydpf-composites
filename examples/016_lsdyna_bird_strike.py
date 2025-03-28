@@ -110,7 +110,7 @@ stress_operator.inputs.bool_rotate_to_global(False)
 # This parameter can be extracted from the input file (``input.k``) with
 # the help of the ``composite::ls_dyna_keyword_parser`` operator.
 def prepare_lsdyna_results(
-    my_results_container: dpf.core.fields_container.FieldsContainer,
+    my_results_container: dpf.fields_container.FieldsContainer,
 ) -> dpf.core.fields_container.FieldsContainer:
     keyword_parser = Operator("composite::ls_dyna_keyword_parser")
     keyword_parser.inputs.data_sources(composite_model.data_sources.solver_input_file)
