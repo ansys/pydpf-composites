@@ -58,7 +58,7 @@ def get_file_paths() -> ContinuousFiberCompositesFiles:
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
     files = ContinuousFiberCompositesFiles(
-        rst=rst_path,
+        result_files=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )

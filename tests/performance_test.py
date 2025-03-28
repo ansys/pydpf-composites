@@ -59,7 +59,7 @@ def get_dummy_data_files():
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     return ContinuousFiberCompositesFiles(
-        rst=rst_path,
+        result_files=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
@@ -79,7 +79,7 @@ def get_ger_data_files():
     h5_path = ger_path / "ACP-Pre" / "ACP" / "ACPCompositeDefinitions.h5"
     material_path = ger_path / "SYS-1" / "MECH" / "MatML.xml"
     return ContinuousFiberCompositesFiles(
-        rst=rst_path,
+        result_files=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
@@ -278,15 +278,15 @@ def test_performance_property_dict(dpf_server):
 
     data_sources = get_composites_data_sources(files)
     mesh_provider = dpf.Operator("MeshProvider")
-    mesh_provider.inputs.data_sources(data_sources.rst)
+    mesh_provider.inputs.data_sources(data_sources.result_files)
     mesh = mesh_provider.outputs.mesh()
     timer.add("mesh")
 
     timer.add("Load data")
 
-    unit_system = get_unit_system(data_sources.rst)
+    unit_system = get_unit_system(data_sources.result_files)
     material_operators = get_material_operators(
-        rst_data_source=data_sources.rst,
+        rst_data_source=data_sources.result_files,
         engineering_data_source=data_sources.engineering_data,
         unit_system=unit_system,
     )
@@ -301,7 +301,7 @@ def test_performance_property_dict(dpf_server):
     property_dict = get_constant_property_dict(
         material_properties=[MaterialProperty.Strain_Limits_eXt],
         materials_provider=material_operators.material_provider,
-        data_source_or_streams_provider=data_sources.rst,
+        data_source_or_streams_provider=data_sources.result_files,
         mesh=mesh,
     )
 

@@ -37,6 +37,8 @@ __all__ = (
     "get_constant_property_dict",
     "get_material_metadata",
 )
+
+from ..constants import SolverType
 from ..unit_system import UnitSystemProvider, get_unit_system
 from ._layup_info import get_element_info_provider
 
@@ -148,7 +150,9 @@ def get_constant_property(
 
 
 def get_all_dpf_material_ids(
-    mesh: MeshedRegion, data_source_or_streams_provider: DataSources | Operator
+    mesh: MeshedRegion,
+    data_source_or_streams_provider: DataSources | Operator,
+    solver_type: SolverType = SolverType.MAPDL,
 ) -> Collection[np.int64]:
     """Get all DPF material IDs.
 
@@ -158,8 +162,14 @@ def get_all_dpf_material_ids(
         DPF meshed region enriched with lay-up information.
     data_source_or_streams_provider:
         DPF data source or stream provider that contains the RST file.
+    solver_type:
+        Type of result file (model). The default is ``SolverType.MAPDL``.
     """
-    element_info_provider = get_element_info_provider(mesh, data_source_or_streams_provider)
+    element_info_provider = get_element_info_provider(
+        mesh=mesh,
+        stream_provider_or_data_source=data_source_or_streams_provider,
+        solver_type=solver_type,
+    )
     all_material_ids: set["np.int64"] = set()
     for element_id in mesh.elements.scoping.ids:
         element_info = element_info_provider.get_element_info(element_id)

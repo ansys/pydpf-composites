@@ -60,7 +60,7 @@ def test_sampling_point(dpf_server, distributed_rst):
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
 
     files = ContinuousFiberCompositesFiles(
-        rst=rst_paths,
+        result_files=rst_paths,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )
@@ -257,7 +257,7 @@ def test_sampling_point_with_default_unit_system(dpf_server):
     h5_path = os.path.join(TEST_DATA_ROOT_DIR, "ACPCompositeDefinitions.h5")
     material_path = os.path.join(TEST_DATA_ROOT_DIR, "material.engd")
     composite_files = ContinuousFiberCompositesFiles(
-        rst=rst_path,
+        result_files=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )

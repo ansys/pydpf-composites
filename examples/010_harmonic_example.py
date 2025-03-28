@@ -97,9 +97,9 @@ strain_operator.inputs.bool_rotate_to_global(False)
 # Get operators that provide material data
 #
 material_operators = get_material_operators(
-    composite_model.data_sources.rst,
+    composite_model.data_sources.result_files,
     composite_model.data_sources.engineering_data,
-    get_unit_system(composite_model.data_sources.rst),
+    get_unit_system(composite_model.data_sources.result_files),
 )
 
 # %%

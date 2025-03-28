@@ -55,7 +55,7 @@ def test_section_definitions_from_multiple_sources(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "shell_mixed_acp_rst_model"
 
     files = ContinuousFiberCompositesFiles(
-        rst=os.path.join(TEST_DATA_ROOT_DIR, "linear_shell_with_MAPDL_sections.rst"),
+        result_files=os.path.join(TEST_DATA_ROOT_DIR, "linear_shell_with_MAPDL_sections.rst"),
         composite={
             "shell": CompositeDefinitionFiles(
                 definition=os.path.join(TEST_DATA_ROOT_DIR, "linear_shell_with_MAPDL_sections.h5"),
@@ -112,7 +112,7 @@ def test_element_info_for_homogeneous_solids_and_beams(dpf_server):
     TEST_DATA_ROOT_DIR = pathlib.Path(__file__).parent / "data" / "model_with_beams_shells_solids"
     model_name = "model_with_beams_shells_solids"
     files = ContinuousFiberCompositesFiles(
-        rst=os.path.join(TEST_DATA_ROOT_DIR, f"{model_name}.rst"),
+        result_files=os.path.join(TEST_DATA_ROOT_DIR, f"{model_name}.rst"),
         composite={
             "shell": CompositeDefinitionFiles(
                 definition=os.path.join(TEST_DATA_ROOT_DIR, f"{model_name}.h5"), mapping=None

@@ -21,14 +21,16 @@
 # SOFTWARE.
 
 """Collection of constants used across PyDPF - Composites."""
-from enum import IntEnum
+from enum import Enum, IntEnum
 
 __all__ = (
     "Spot",
     "Sym3x3TensorComponent",
+    "D3PLOT_KEY_AND_FILENAME",
     "FailureOutput",
     "REF_SURFACE_NAME",
     "FAILURE_LABEL",
+    "SolverType",
     "TIME_LABEL",
     "component_index_from_name",
     "strain_component_name",
@@ -39,6 +41,7 @@ FAILURE_LABEL = "failure_label"
 TIME_LABEL = "time"
 REF_SURFACE_NAME = "Reference Surface"
 SOLID_STACK_FIELD_NAME = "solid_stacks"
+D3PLOT_KEY_AND_FILENAME = "d3plot"
 
 
 class Spot(IntEnum):
@@ -58,6 +61,13 @@ class Sym3x3TensorComponent(IntEnum):
     TENSOR21 = 3
     TENSOR31 = 5
     TENSOR32 = 4
+
+
+class SolverType(str, Enum):
+    """Enum to specify the type of solver."""
+
+    MAPDL = "mapdl"
+    LSDYNA = "lsdyna"
 
 
 def _component_name(component: Sym3x3TensorComponent) -> str:

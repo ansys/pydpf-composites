@@ -141,25 +141,25 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
             ply_types = ["honeycomb_core", "regular", "woven", "undefined"]
 
         ref_metadata = {
-            1: MaterialMetadata(
+            "Honeycomb": MaterialMetadata(
                 dpf_material_id=1,
                 material_name="Honeycomb",
                 ply_type=ply_types[0],
                 solver_material_id=solver_mat_ids[0],
             ),
-            2: MaterialMetadata(
+            "Epoxy Carbon UD (230 GPa) Prepreg": MaterialMetadata(
                 dpf_material_id=2,
                 material_name="Epoxy Carbon UD (230 GPa) Prepreg",
                 ply_type=ply_types[1],
                 solver_material_id=solver_mat_ids[1],
             ),
-            3: MaterialMetadata(
+            "Epoxy Carbon Woven (230 GPa) Wet": MaterialMetadata(
                 dpf_material_id=3,
                 material_name="Epoxy Carbon Woven (230 GPa) Wet",
                 ply_type=ply_types[2],
                 solver_material_id=solver_mat_ids[2],
             ),
-            4: MaterialMetadata(
+            "Structural Steel": MaterialMetadata(
                 dpf_material_id=4,
                 material_name="Structural Steel",
                 ply_type=ply_types[3],
@@ -168,8 +168,17 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
         }
 
         assert len(metadata) == len(ref_metadata)
-        for dpf_material_id, ref_data in ref_metadata.items():
-            assert metadata[dpf_material_id] == ref_data
+        for mat_name, ref_data in ref_metadata.items():
+            found = False
+            for key, value in metadata.items():
+                if value.material_name == mat_name:
+                    # dpf material id can vary and so is not compared
+                    assert value.ply_type == ref_data.ply_type, f"Ply type mismatch for {mat_name}"
+                    assert (
+                        value.solver_material_id == ref_data.solver_material_id
+                    ), f"Solver material id mismatch for {mat_name}"
+                    found = True
+            assert found
 
     timer.add("After getting properties")
     timer.summary()
@@ -533,7 +542,7 @@ def test_failure_criteria_evaluation_default_unit_system(dpf_server):
     h5_path = TEST_DATA_ROOT_DIR / "ACPCompositeDefinitions.h5"
     material_path = TEST_DATA_ROOT_DIR / "material.engd"
     files = ContinuousFiberCompositesFiles(
-        rst=rst_path,
+        result_files=rst_path,
         composite={"shell": CompositeDefinitionFiles(definition=h5_path)},
         engineering_data=material_path,
     )

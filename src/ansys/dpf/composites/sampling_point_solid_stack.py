@@ -50,7 +50,12 @@ from ._sampling_point_helpers import (
     get_result_plots_from_sp,
 )
 from .failure_criteria import CombinedFailureCriterion
-from .layup_info import AnalysisPlyInfoProvider, ElementInfoProvider, SolidStack, SolidStackProvider
+from .layup_info import (
+    AnalysisPlyInfoProvider,
+    ElementInfoProviderProtocol,
+    SolidStack,
+    SolidStackProvider,
+)
 from .layup_info._layup_info import (
     _get_layup_model_context,
     get_material_names_to_dpf_material_index,
@@ -126,7 +131,7 @@ class SamplingPointSolidStack(SamplingPoint):
         meshed_region: dpf.MeshedRegion,
         layup_provider: dpf.Operator,
         rst_streams_provider: dpf.Operator,
-        element_info_provider: ElementInfoProvider,
+        element_info_provider: ElementInfoProviderProtocol,
         default_unit_system: UnitSystem | None = None,
         time: float | None = None,
     ):
