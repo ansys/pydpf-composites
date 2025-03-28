@@ -71,7 +71,30 @@ class CompositeDefinitionFiles:
 
 @dataclass
 class ContinuousFiberCompositesFiles:
-    """Provides the container for continuous fiber composite file paths."""
+    """Provides the container for continuous fiber composite file paths.
+
+    Parameters
+    ----------
+    result_files :
+        A single path to an RST file, or a list of paths to distributed
+        RST files. For LSDyna, only the ``d3plot`` file has to be passed.
+    rst :
+        Deprecated and will be removed in the future. Use ``result_files``
+        instead. The value is kept in sync with ``result_files``.
+    composite :
+        Dictionary of composite definition files. The key can be chosen
+        freely.
+    engineering_data :
+        Path to the engineering data file.
+    solver_input_file :
+        Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
+        Currently only needed for LSDyna.
+    files_are_local :
+        True if files are on the local machine, False if they have already
+        been uploaded to the DPF server.
+    solver_type
+        Specify the type of the solver.
+    """
 
     # rst: list[_PATH]
     result_files: list[_PATH]
@@ -94,30 +117,7 @@ class ContinuousFiberCompositesFiles:
         rst: list[_PATH] | _PATH | None = None,
         result_files: list[_PATH] | _PATH | None = None,
     ) -> None:
-        """Initialize the ContinuousFiberCompositesFiles container.
-
-        Parameters
-        ----------
-        result_files :
-            A single path to an RST file, or a list of paths to distributed
-            RST files. For LSDyna, only the ``d3plot`` file has to be passed.
-        rst :
-            Deprecated and will be removed in the future. Use ``result_files``
-            instead. The value is kept in sync with ``result_files``.
-        composite :
-            Dictionary of composite definition files. The key can be chosen
-            freely.
-        engineering_data :
-            Path to the engineering data file.
-        solver_input_file :
-            Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
-            Currently only needed for LSDyna.
-        files_are_local :
-            True if files are on the local machine, False if they have already
-            been uploaded to the DPF server.
-        solver_type
-            Specify the type of the solver.
-        """
+        """Initialize the ContinuousFiberCompositesFiles container."""
         if result_files and rst:
             raise ValueError(
                 "ContinuousFiberCompositesFiles: result_files and rst cannot be used together."
@@ -180,7 +180,21 @@ class ContinuousFiberCompositesFiles:
 
 @dataclass
 class ShortFiberCompositesFiles:
-    """Provides the container for short fiber composite file paths."""
+    """Provides the container for short fiber composite file paths.
+
+    Parameters
+    ----------
+    rst :
+        A single path to an RST file, or a list of paths to distributed
+        RST files.
+    dsdat :
+        Path to the solver input file (``ds.dat``).
+    engineering_data :
+        Path to the engineering data file.
+    files_are_local :
+        True if files are on the local machine, False if they have already
+        been uploaded to the DPF server.
+    """
 
     rst: list[_PATH]
     dsdat: _PATH
@@ -196,21 +210,7 @@ class ShortFiberCompositesFiles:
         engineering_data: _PATH,
         files_are_local: bool = True,
     ) -> None:
-        """Initialize the ShortFiberCompositesFiles container.
-
-        Parameters
-        ----------
-        rst :
-            A single path to an RST file, or a list of paths to distributed
-            RST files.
-        dsdat :
-            Path to the solver input file (``ds.dat``).
-        engineering_data :
-            Path to the engineering data file.
-        files_are_local :
-            True if files are on the local machine, False if they have already
-            been uploaded to the DPF server..
-        """
+        """Initialize the ShortFiberCompositesFiles container."""
         self.rst = rst  # type: ignore
         self.dsdat = dsdat
         self.engineering_data = engineering_data
@@ -233,7 +233,33 @@ class ShortFiberCompositesFiles:
 
 @dataclass
 class CompositeDataSources:
-    """Provides data sources related to the composite lay-up."""
+    """Provides data sources related to the composite lay-up.
+
+    Parameters
+    ----------
+    result_files:
+        DPF DatatSources of the result file(s). DataSources object can contain
+        one or multiple result files.
+    material_support:
+        NOTE: The ``material_support`` parameter is explicitly listed because it is
+        currently not supported (by the DPF Core) to use a distributed RST file as source
+        for the material support. Instead, we create a separate DataSources object for the
+        material support from the first RST file. This is a workaround until the
+        support for distributed RST is added.
+    engineering_data:
+        File with the material properties.
+    solver_input_file:
+        Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
+
+    rst:
+        Result file. Deprecated and will be removed in the future.
+        Use ``result_files`` instead. ``rst`` and ``result_files``
+        always have the same value.
+    old_composite_sources :
+        Member used to support assemblies in combination with the old
+        DPF server (<7.0). It should be removed once the support of this
+        server version is dropped.
+    """
 
     material_support: DataSources
     composite: DataSources | None
@@ -254,33 +280,7 @@ class CompositeDataSources:
         composite: DataSources | None,
         rst: DataSources | None = None,
     ) -> None:
-        """Store data sources related to the composite lay-up.
-
-        Parameters
-        ----------
-        result_files:
-            DPF DatatSources of the result file(s). DataSources object can contain
-            one or multiple result files.
-        material_support:
-            NOTE: The ``material_support`` parameter is explicitly listed because it is
-            currently not supported (by the DPF Core) to use a distributed RST file as source
-            for the material support. Instead, we create a separate DataSources object for the
-            material support from the first RST file. This is a workaround until the
-            support for distributed RST is added.
-        engineering_data:
-            File with the material properties.
-        solver_input_file:
-            Input file for the solver (MAPDL:``*.dat | *.cdb``, LSDyna: ``*.k``).
-
-        rst:
-            Result file. Deprecated and will be removed in the future.
-            Use ``result_files`` instead. ``rst`` and ``result_files``
-            always have the same value.
-        old_composite_sources :
-            Member used to support assemblies in combination with the old
-            DPF server (<7.0). It should be removed once the support of this
-            server version is dropped.
-        """
+        """Initialize data sources related to the composite lay-up."""
         if result_files and rst:
             raise ValueError("CompositeDataSources: result_files and rst cannot be used together.")
 
