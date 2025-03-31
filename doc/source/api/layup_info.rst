@@ -15,7 +15,9 @@ General features to access information on the composite lay-up.
     AnalysisPlyInfo
     AnalysisPlyInfoProvider
     ElementInfoProvider
+    ElementInfoProviderLSDyna
     ElementInfo
+    ElementInfoProviderProtocol
     LayupPropertiesProvider
 
     :template: autosummary/no_methods_doc/base.rst.jinja2

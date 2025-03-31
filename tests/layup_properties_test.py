@@ -38,12 +38,14 @@ def test_layup_properties(dpf_server):
 
     composite_data_sources = get_composites_data_sources(files)
     mesh_provider = Operator("MeshProvider")
-    mesh_provider.inputs.data_sources(composite_data_sources.rst)
+    mesh_provider.inputs.data_sources(composite_data_sources.result_files)
     mesh = mesh_provider.outputs.mesh()
 
-    unit_system = get_unit_system(composite_data_sources.rst)
+    unit_system = get_unit_system(composite_data_sources.result_files)
     material_operators = get_material_operators(
-        composite_data_sources.rst, composite_data_sources.engineering_data, unit_system=unit_system
+        composite_data_sources.result_files,
+        composite_data_sources.engineering_data,
+        unit_system=unit_system,
     )
     layup_provider = add_layup_info_to_mesh(
         composite_data_sources,

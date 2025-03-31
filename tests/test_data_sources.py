@@ -51,7 +51,7 @@ def test_get_files_from_result_folder(dpf_server):
         == WORKFLOW_EXAMPLE_ROOT / "Setup 4" / "ACPCompositeDefinitions.mapping"
     )
 
-    assert files.rst == [WORKFLOW_EXAMPLE_ROOT / "file.rst"]
+    assert files.result_files == [WORKFLOW_EXAMPLE_ROOT / "file.rst"]
     assert files.engineering_data == WORKFLOW_EXAMPLE_ROOT / "MatML.xml"
 
 
@@ -77,9 +77,16 @@ def test_get_files_from_result_folder_harmonic(dpf_server):
         == WORKFLOW_EXAMPLE_ROOT_MODAL / "Setup" / "ACPCompositeDefinitions.h5"
     )
 
-    assert files.rst == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
+    assert files.result_files == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
     assert files.engineering_data == WORKFLOW_EXAMPLE_ROOT_HARMONIC / "MatML.xml"
 
     # ensure that the setter of RST converts the input into a list
-    files.rst = WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"
-    assert files.rst == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
+    files.result_files = WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"
+    assert files.result_files == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "file.rst"]
+
+    # Ensure that the deprecated property rst still works
+    # can be removed once .rst is no longer available
+    assert files.rst == files.result_files
+    files.rst = WORKFLOW_EXAMPLE_ROOT_HARMONIC / "my_new.rst"
+    assert files.result_files == [WORKFLOW_EXAMPLE_ROOT_HARMONIC / "my_new.rst"]
+    assert files.rst == files.result_files

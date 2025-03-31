@@ -130,17 +130,17 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
     data_sources = get_composites_data_sources(files)
 
     streams_provider = dpf.operators.metadata.streams_provider()
-    streams_provider.inputs.data_sources.connect(data_sources.rst)
+    streams_provider.inputs.data_sources.connect(data_sources.result_files)
 
     mesh_provider = dpf.Operator("MeshProvider")
     mesh_provider.inputs.streams_container(streams_provider)
     mesh = mesh_provider.outputs.mesh()
 
-    unit_system = get_unit_system(data_sources.rst)
+    unit_system = get_unit_system(data_sources.result_files)
 
     material_operators = get_material_operators(
-        rst_data_source=data_sources.rst,
-        engineering_data_source=data_sources.rst,
+        rst_data_source=data_sources.result_files,
+        engineering_data_source=data_sources.engineering_data,
         unit_system=unit_system,
     )
 
@@ -150,7 +150,7 @@ def test_material_properties_fails_with_error_mesh_has_no_layup_info(dpf_server)
         get_constant_property_dict(
             material_properties=[material_property],
             materials_provider=material_operators.material_provider,
-            data_source_or_streams_provider=data_sources.rst,
+            data_source_or_streams_provider=data_sources.result_files,
             mesh=mesh,
         )
     assert "Please call add_layup_info_to_mesh" in str(exc_info.value)

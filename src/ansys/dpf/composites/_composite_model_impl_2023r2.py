@@ -32,6 +32,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from .composite_scope import CompositeScope
+from .constants import SolverType
 from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
@@ -72,7 +73,7 @@ class CompositeInfo:
     ):
         """Initialize ``CompositeInfo`` class and add enriched mesh with composite information."""
         mesh_provider = dpf.Operator("MeshProvider")
-        mesh_provider.inputs.data_sources(data_sources.rst)
+        mesh_provider.inputs.data_sources(data_sources.result_files)
         self.mesh = mesh_provider.outputs.mesh()
 
         self.layup_provider = add_layup_info_to_mesh(
@@ -146,10 +147,10 @@ class CompositeModelImpl2023R2:
         )
         self._data_sources = get_composites_data_sources(self._composite_files)
 
-        self._core_model = dpf.Model(self._data_sources.rst, server=server)
+        self._core_model = dpf.Model(self._data_sources.result_files, server=server)
         self._server = server
 
-        self._unit_system = get_unit_system(self._data_sources.rst, default_unit_system)
+        self._unit_system = get_unit_system(self._data_sources.result_files, default_unit_system)
 
         self._material_operators = get_material_operators(
             rst_data_source=self._data_sources.material_support,
@@ -264,6 +265,15 @@ class CompositeModelImpl2023R2:
             " or later should be used instead."
         )
 
+    @property
+    def solver_type(self) -> SolverType:
+        """Get the type of solver used to generate the result file."""
+        raise NotImplementedError(
+            "solver_type is not implemented"
+            " for this version of DPF. DPF server 10.0 (2025 R2)"
+            " or later should be used instead."
+        )
+
     def evaluate_failure_criteria(
         self,
         combined_criterion: CombinedFailureCriterion,
@@ -337,7 +347,7 @@ class CompositeModelImpl2023R2:
 
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_files=self._composite_files.rst,
+            rst_files=self._composite_files.result_files,
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criterion,
             composite_scopes=scopes,
@@ -398,7 +408,7 @@ class CompositeModelImpl2023R2:
         )
         rd = ResultDefinition(
             name="combined failure criteria",
-            rst_files=self._composite_files.rst,
+            rst_files=self._composite_files.result_files,
             material_file=self._composite_files.engineering_data,
             combined_failure_criterion=combined_criterion,
             time=time_in,

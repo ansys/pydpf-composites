@@ -141,7 +141,7 @@ sphinx_gallery_conf = {
     "doc_module": "ansys-pydpf-composites",
     "image_scrapers": (DynamicScraper(), "matplotlib"),
     "ignore_pattern": r"__init__\.py",
-    "thumbnail_size": (350, 350),
+    "thumbnail_size": (320, 240),
 }
 
 exclude_patterns = [
