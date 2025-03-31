@@ -122,16 +122,16 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
 
     # load step 22 of 22
     ref_stresses = {
+
         "P1L1__ModelingPly.1": {
-            19: 7.66085446e-01,  # IP 1 (1-index)
-            48: 7.08469152e-01,  # IP 1 (1-index)
+            19: 7.66085446e-01,  # IP 1 (1-index) compared with LS PrepPost
+            48: 7.08469152e-01,  # IP 1 (1-index) compared with LS PrePost
         },
-        # integration point 1, s22
         "P1L1__ModelingPly.7": {
-            19: 56.47654724,  # IP 4 (1-index)
-            48: 39.02941895,  # IP 4 (1-index)
-            52: 200.83200073242188,  # IP 3 (1-index)
-            133: 232.65634155273438,  # IP 3 (1-index)
+            19: 56.47654724,  # IP 4 (1-index) compared with LS PrepPost
+            48: 39.02941895,  # IP 4 (1-index) compared with LS PrepPost
+            52: 200.83200073242188,  # IP 3 (1-index) compared with LS PrepPost
+            133: 232.65634155273438,  # IP 3 (1-index) compared with LS PrepPost
         },
     }
 
