@@ -122,7 +122,6 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
 
     # load step 22 of 22
     ref_stresses = {
-
         "P1L1__ModelingPly.1": {
             19: 7.66085446e-01,  # IP 1 (1-index) compared with LS PrepPost
             48: 7.08469152e-01,  # IP 1 (1-index) compared with LS PrePost
@@ -148,10 +147,14 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
         )
 
         for id, ref_value in ref_stresses[ply_name].items():
-            #print(f"Comparing elemental stress of id {id}")
+            # print(f"Comparing elemental stress of id {id}")
             current = elemental_values.get_entity_data_by_id(id)
-            #print(f"{id}: {ref_value} vs {current}")
-            np.testing.assert_almost_equal(current[0], ref_value, err_msg=f"Elemental stress of id {id} does not match. Ply {ply_name}")
+            # print(f"{id}: {ref_value} vs {current}")
+            np.testing.assert_almost_equal(
+                current[0],
+                ref_value,
+                err_msg=f"Elemental stress of id {id} does not match. Ply {ply_name}",
+            )
 
     # verify that data extraction also works for history variables
     hv_operator = dpf.Operator("lsdyna::d3plot::history_var")
@@ -171,13 +174,13 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
     ref_hv_values = {
         #  compared with LS PrePost
         "P1L1__ModelingPly.1": {
-            19: 57.83656692504883, # IP 1 (1-based)
-            48: 103.61775207519531, # IP 1 (1-based)
+            19: 57.83656692504883,  # IP 1 (1-based)
+            48: 103.61775207519531,  # IP 1 (1-based)
         },
         #  compared with LS PrePost
         "P1L1__ModelingPly.7": {
-            19: 627.0761108398438, # IP 4 (1-based)
-            48: 810.4426879882812, # IP 4 (1-based)
+            19: 627.0761108398438,  # IP 4 (1-based)
+            48: 810.4426879882812,  # IP 4 (1-based)
             52: 714.7772827148438,  # IP 3 (1-based)
             133: 671.97705078125,  # IP 3 (1-based)
         },
@@ -197,4 +200,8 @@ def test_composite_model_and_ply_wise_filtering(dpf_server):
             # print(f"Comparing elemental hv of id {id}")
             current = elemental_values.get_entity_data_by_id(id)
             # print(f"{id}: {ref_value} vs {current}")
-            np.testing.assert_almost_equal(current[0], ref_value, err_msg=f"Elemental hv of id {id} does not match. Ply {ply_name}")
+            np.testing.assert_almost_equal(
+                current[0],
+                ref_value,
+                err_msg=f"Elemental hv of id {id} does not match. Ply {ply_name}",
+            )
