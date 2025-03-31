@@ -3,4 +3,4 @@ rst
 
 .. currentmodule:: ansys.dpf.composites.data_sources
 
-.. autoattribute:: CompositeDataSources.rst
+.. autoproperty:: CompositeDataSources.rst

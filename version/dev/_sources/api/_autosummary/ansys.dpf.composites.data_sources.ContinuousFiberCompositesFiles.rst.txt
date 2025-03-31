@@ -28,6 +28,9 @@ ContinuousFiberCompositesFiles
    
       ContinuousFiberCompositesFiles.files_are_local
       ContinuousFiberCompositesFiles.rst
+      ContinuousFiberCompositesFiles.solver_input_file
+      ContinuousFiberCompositesFiles.solver_type
+      ContinuousFiberCompositesFiles.result_files
       ContinuousFiberCompositesFiles.composite
       ContinuousFiberCompositesFiles.engineering_data
    

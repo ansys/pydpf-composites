@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -448,6 +448,7 @@
 <li class="toctree-l1"><a class="reference internal" href="013_thermal_example.html">Thermal analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="014_cyclic_symmetry_example.html">Cyclic symmetry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="015_solid_model.html">Postprocess a solid model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="016_lsdyna_bird_strike.html">LS-Dyna Bird Strike</a></li>
 <li class="toctree-l1"><a class="reference internal" href="099_dpf_composite_failure_workflow.html">DPF composite failure workflow</a></li>
 </ul>
 </div>
@@ -582,7 +583,7 @@ DPF server, and retrieving the example files.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(rst=[&#39;/tmp/dataProcessingTemp140161874659072/d452060b-b7db-4326-8b18-ff5cb6d31213/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140161874659072/bc37f856-9a29-42b1-be8f-9b4aba0d72c9/material.engd&#39;, files_are_local=False)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(result_files=[&#39;/tmp/dataProcessingTemp140245894956800/485ff87c-5841-4098-9c22-d9297f3fda97/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140245894956800/7b741142-5a79-4798-95cc-1589d0d0715e/material.engd&#39;, solver_input_file=None, files_are_local=False, solver_type=&lt;SolverType.MAPDL: &#39;mapdl&#39;&gt;)
 </pre></div>
 </div>
 </section>
@@ -744,7 +745,7 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
 </ul>
 </dd>
 </dl>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 11.008 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 17.168 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-rst-workflow-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d13337ce8445f69a22967b872b601ca2/011_rst_workflow.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">011_rst_workflow.ipynb</span></code></a></p>

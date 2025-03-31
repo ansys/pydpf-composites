@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -444,7 +444,9 @@
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.AnalysisPlyInfo.html">AnalysisPlyInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html">AnalysisPlyInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.html">ElementInfoProvider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna.html">ElementInfoProviderLSDyna</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfo.html">ElementInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProviderProtocol.html">ElementInfoProviderProtocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupPropertiesProvider.html">LayupPropertiesProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayerProperty.html">LayerProperty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupProperty.html">LayupProperty</a></li>
@@ -541,7 +543,7 @@
 <h1>get_element_info_provider<a class="headerlink" href="#get-element-info-provider" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.layup_info.get_element_info_provider">
-<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.</span></span><span class="sig-name descname"><span class="pre">get_element_info_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_provider_or_data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_provider</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_bounds_checks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.get_element_info_provider" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.</span></span><span class="sig-name descname"><span class="pre">get_element_info_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_provider_or_data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_provider</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_bounds_checks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SolverType.MAPDL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.get_element_info_provider" title="Link to this definition">#</a></dt>
 <dd><p>Get <a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.html#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a> Object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -551,6 +553,7 @@
 <li><p><strong>material_provider</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – DPF operator that provides material information.</p></li>
 <li><p><strong>no_bounds_checks</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Disable bounds checks. Improves
 performance but can result in cryptic error messages</p></li>
+<li><p><strong>solver_type</strong> (<a class="reference internal" href="ansys.dpf.composites.constants.SolverType.html#ansys.dpf.composites.constants.SolverType" title="ansys.dpf.composites.constants.SolverType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverType</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">&lt;SolverType.MAPDL:</span> <span class="pre">'mapdl'&gt;</span></code>) – Specify the type of solver (MAPDL or LSDyna).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

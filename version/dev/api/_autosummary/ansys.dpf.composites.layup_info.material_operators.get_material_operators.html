@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -444,7 +444,9 @@
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.AnalysisPlyInfo.html">AnalysisPlyInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html">AnalysisPlyInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProvider.html">ElementInfoProvider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna.html">ElementInfoProviderLSDyna</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfo.html">ElementInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.ElementInfoProviderProtocol.html">ElementInfoProviderProtocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupPropertiesProvider.html">LayupPropertiesProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayerProperty.html">LayerProperty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.layup_info.LayupProperty.html">LayupProperty</a></li>
@@ -541,7 +543,7 @@
 <h1>get_material_operators<a class="headerlink" href="#get-material-operators" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.layup_info.material_operators.get_material_operators">
-<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.material_operators.</span></span><span class="sig-name descname"><span class="pre">get_material_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rst_data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engineering_data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.material_operators.get_material_operators" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.layup_info.material_operators.</span></span><span class="sig-name descname"><span class="pre">get_material_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rst_data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engineering_data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_input_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.layup_info.material_operators.get_material_operators" title="Link to this definition">#</a></dt>
 <dd><p>Get material properties related to operators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -549,6 +551,7 @@
 <li><p><strong>rst_data_source</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSources</span></code></a>) – Data source that contains a RST file. Note that multiple (distributed)
 RST files are not supported.</p></li>
 <li><p><strong>engineering_data_source</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSources</span></code></a>) – Data source that contains the Engineering Data file.</p></li>
+<li><p><strong>solver_input_data_source</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSources</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Data source that contains the solver input file.</p></li>
 <li><p><strong>unit_system</strong> (<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/unit_system/UnitSystem.html#ansys.dpf.core.unit_system.UnitSystem" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitSystem</span></code></a>, <a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Unit System</p></li>
 <li><p><strong>----------</strong></p></li>
 </ul>

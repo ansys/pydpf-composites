@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -530,7 +530,7 @@
 <h1>get_composite_files_from_workbench_result_folder<a class="headerlink" href="#get-composite-files-from-workbench-result-folder" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder">
-<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">get_composite_files_from_workbench_result_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_composite_definitions_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">get_composite_files_from_workbench_result_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_composite_definitions_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SolverType.MAPDL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="Link to this definition">#</a></dt>
 <dd><p>Get a <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code> object from a result folder.</p>
 <p>This function assumes a typical Workbench folder structure for a composite
 simulation. If this method is not able to build the <code class="docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code>
@@ -560,7 +560,7 @@ If they exist, they must be added as well.</p></li>
 The project in this example has two <strong>ACP Pre</strong> systems, one that exports
 shell information and one that exports solid information.</p>
 <p>The files are located in these locations:</p>
-<p>Result file:</p>
+<p>Result file (MAPDL):</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">project_root_folder/dp0/SYS/MECH/file.rst</span></code></p></li>
 </ul>
@@ -595,12 +595,16 @@ shell information and one that exports solid information.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>In case of LSDYNA, also set the solver input file and solver type,
+for instance solver_input_file=”project_root_folder/dp0/SYS/MECH/input.k” and
+solver_type=SolverType.LSDYNA.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>result_folder</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/os.html#os.PathLike" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – Result folder of the solution. Right-click the <strong>solution</strong> item in the Ansys Mechanical tree
 and select <strong>Open Solver Files Directory</strong> to obtain the result folder.</p></li>
 <li><p><strong>ensure_composite_definitions_found</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Whether to check if at least one composite definition (shell or solid) has been found.</p></li>
+<li><p><strong>solver_type</strong> (<a class="reference internal" href="ansys.dpf.composites.constants.SolverType.html#ansys.dpf.composites.constants.SolverType" title="ansys.dpf.composites.constants.SolverType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverType</span></code></a>, default: <code class="docutils literal notranslate"><span class="pre">&lt;SolverType.MAPDL:</span> <span class="pre">'mapdl'&gt;</span></code>) – Specify the solver of the analysis. Default is MAPDL. Other values are LSDYNA.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

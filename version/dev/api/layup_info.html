@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/pydpf_composite.css?v=68ab6f82" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -444,7 +444,9 @@
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfo.html">AnalysisPlyInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.AnalysisPlyInfoProvider.html">AnalysisPlyInfoProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProvider.html">ElementInfoProvider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna.html">ElementInfoProviderLSDyna</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html">ElementInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderProtocol.html">ElementInfoProviderProtocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupPropertiesProvider.html">LayupPropertiesProvider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayerProperty.html">LayerProperty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupProperty.html">LayupProperty</a></li>
@@ -554,10 +556,16 @@
 <td><p>AnalysisPlyInfoProvider.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProvider.html#ansys.dpf.composites.layup_info.ElementInfoProvider" title="ansys.dpf.composites.layup_info.ElementInfoProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfoProvider</span></code></a>(mesh, layer_indices, ...)</p></td>
-<td><p>Provider for <a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>.</p></td>
+<td><p>Provider for <a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a> for MAPDL models.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>(id, n_layers, n_corner_nodes, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna.html#ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna" title="ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfoProviderLSDyna</span></code></a>(mesh, ...[, ...])</p></td>
+<td><p>Provider for <a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementInfo</span></code></a> for LSDyna models.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfo.html#ansys.dpf.composites.layup_info.ElementInfo" title="ansys.dpf.composites.layup_info.ElementInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfo</span></code></a>(id, n_layers, n_corner_nodes, ...)</p></td>
 <td><p>Provides lay-up information for an element.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderProtocol.html#ansys.dpf.composites.layup_info.ElementInfoProviderProtocol" title="ansys.dpf.composites.layup_info.ElementInfoProviderProtocol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElementInfoProviderProtocol</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Protocol definition for ElementInfoProvider.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupPropertiesProvider.html#ansys.dpf.composites.layup_info.LayupPropertiesProvider" title="ansys.dpf.composites.layup_info.LayupPropertiesProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupPropertiesProvider</span></code></a>(layup_provider, mesh)</p></td>
 <td><p>Provider for lay-up properties.</p></td>
@@ -591,7 +599,7 @@ example shows how to evaluate material properties.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.get_constant_property.html#ansys.dpf.composites.layup_info.material_properties.get_constant_property" title="ansys.dpf.composites.layup_info.material_properties.get_constant_property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_constant_property</span></code></a>(material_property, ...)</p></td>
 <td><p>Get a constant material property.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids.html#ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids" title="ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_dpf_material_ids</span></code></a>(mesh, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids.html#ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids" title="ansys.dpf.composites.layup_info.material_properties.get_all_dpf_material_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_dpf_material_ids</span></code></a>(mesh, ...[, ...])</p></td>
 <td><p>Get all DPF material IDs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict.html#ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict" title="ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_constant_property_dict</span></code></a>(...)</p></td>

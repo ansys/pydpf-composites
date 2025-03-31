@@ -1,0 +1,897 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>LS-Dyna Bird Strike &#8212; PyDPF - Composites</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=1a867b6f" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../_static/documentation_options.js?v=8548ff19"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/gallery_examples/016_lsdyna_bird_strike';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="DPF composite failure workflow" href="099_dpf_composite_failure_workflow.html" />
+    <link rel="prev" title="Postprocess a solid model" href="015_solid_model.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.7.dev0" />
+  <link rel="canonical" href="https://composites.dpf.docs.pyansys.com/version/stable/examples/gallery_examples/016_lsdyna_bird_strike.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="https://docs.pyansys.com/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pyansys_logo_transparent_black.png" class="logo__image only-light" alt="PyDPF - Composites - Home"/>
+    <img src="../../_static/pyansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="PyDPF - Composites - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../index.html">
+    PyDPF - Composites
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../contribute.html">
+    Contribute
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../index.html">
+    PyDPF - Composites
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../contribute.html">
+    Contribute
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="001_failure_operator_example.html">Composite failure analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="002_sampling_point_example.html">Sampling point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="003_short_fiber_example.html">Failure analysis for short fiber composites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="004_get_material_properties_example.html">Material properties and custom failure criterion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="005_get_layup_properties_example.html">Lay-up properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="006_filter_composite_data_example.html">Filter result data by different criteria</a></li>
+<li class="toctree-l1"><a class="reference internal" href="007_interlaminar_normal_stress_example.html">Interlaminar normal stresses</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="008_assembly_example.html">Postprocess an assembly</a></li>
+<li class="toctree-l1"><a class="reference internal" href="009_short_fiber_orientation_tensor.html">Plot of the orientation tensor for short fiber composites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_harmonic_example.html">Postprocess a harmonic analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="011_rst_workflow.html">Failure analysis of a MAPDL (RST) model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="012_fatigue_example.html">Evaluate fatigue for a composite plate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="013_thermal_example.html">Thermal analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="014_cyclic_symmetry_example.html">Cyclic symmetry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="015_solid_model.html">Postprocess a solid model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">LS-Dyna Bird Strike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="099_dpf_composite_failure_workflow.html">DPF composite failure workflow</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://docs.pyansys.com/" class="nav-link">PyAnsys</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../index.html" class="nav-link">Examples</a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">LS-Dyna Bird Strike</span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-examples-gallery-examples-016-lsdyna-bird-strike-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="ls-dyna-bird-strike">
+<span id="lsdyna-bird-strike"></span><span id="sphx-glr-examples-gallery-examples-016-lsdyna-bird-strike-py"></span><h1>LS-Dyna Bird Strike<a class="headerlink" href="#ls-dyna-bird-strike" title="Link to this heading">#</a></h1>
+<p>This example shows how to set up the composite model for a
+LSDyna analysis, how to post-process it and how to filter the results.
+The simulation uses SPH (Smooth Particle Hydrodynamics) to mimic a bird
+strike on a leading edge of a composite wing.</p>
+<p>Additional steps are required to process LS-Dyna results
+if compared with a Mechanical APDL analysis.</p>
+<dl class="simple">
+<dt>On the <strong>pre-processing side</strong>, these are:</dt><dd><ul class="simple">
+<li><p>The input file must be generated with WB LS Dyna</p></li>
+<li><p>In WB Mechanical, enable the beta options and <code class="docutils literal notranslate"><span class="pre">Output</span> <span class="pre">Integration</span>
+<span class="pre">Points</span> <span class="pre">Results</span> <span class="pre">for</span> <span class="pre">All</span> <span class="pre">ACP</span> <span class="pre">Plies</span></code> or manually set MAXINT of the keyword
+<code class="docutils literal notranslate"><span class="pre">DATABASE_EXTENT_BINARY</span></code> to the maximum number of plies.</p></li>
+</ul>
+</dd>
+<dt>And these items must be considered on setting up the <strong>post-processing</strong>:</dt><dd><ul class="simple">
+<li><p>On initializing the composite model, these properties of <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles" title="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContinuousFiberCompositesFiles</span></code></a>
+must be set: <code class="docutils literal notranslate"><span class="pre">solver_type</span></code> to <code class="docutils literal notranslate"><span class="pre">LSDYNA</span></code> and <code class="docutils literal notranslate"><span class="pre">solver_input_file</span></code> must point to
+the keyword file (for instance <code class="docutils literal notranslate"><span class="pre">input.k</span></code>).</p></li>
+<li><p>The number of maximum integration points (MAXINT) has to be extracted from
+the keyword file. See <code class="docutils literal notranslate"><span class="pre">composite::ls_dyna_keyword_parser</span></code> operator.</p></li>
+<li><p>The results (stress, strain, history variable etc.) must be
+pre-processed to support ply-wise filtering and to make them consistent with
+the layup model. See <code class="docutils literal notranslate"><span class="pre">composite::ls_dyna_preparing_results</span></code> operator.</p></li>
+</ul>
+</dd>
+<dt>Note:</dt><dd><ul class="simple">
+<li><p>Use the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a> to get
+the composite files from a WB LS-Dyna result folder. Set <code class="docutils literal notranslate"><span class="pre">solver_type</span></code>
+to <code class="docutils literal notranslate"><span class="pre">LSDYNA</span></code>.</p></li>
+<li><p>Only the first d3plot file must be passed to the composite model. The LSDyna
+reader will automatically pick up the other files.</p></li>
+</ul>
+</dd>
+</dl>
+<section id="set-up-analysis">
+<h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
+<p>Setup of the analysis and initialize the composite model.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ansys.dpf.core</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dpf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.core</span><span class="w"> </span><span class="kn">import</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class"><span class="n">Operator</span></a><span class="p">,</span> <span class="n">unit_systems</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.composite_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompositeModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sym3x3TensorComponent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.example_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.ply_wise_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpotReductionStrategy</span><span class="p">,</span> <span class="n">get_ply_wise_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.server_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
+
+<span class="c1"># sphinx_gallery_thumbnail_number = 4</span>
+
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+<span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a><span class="p">,</span> <span class="s2">&quot;lsdyna_bird_strike&quot;</span><span class="p">)</span>
+
+<span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span>
+    <span class="n">composite_files</span><span class="o">=</span><span class="n">composite_files_on_server</span><span class="p">,</span>
+    <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a><span class="p">,</span>
+    <span class="n">default_unit_system</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/unit_system/UnitSystem.html#ansys.dpf.core.unit_system.UnitSystem" title="ansys.dpf.core.unit_system.UnitSystem" class="sphx-glr-backref-module-ansys-dpf-core-unit_system sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">unit_systems</span><span class="o">.</span><span class="n">solver_nmm</span></a><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Get all the time ids to read all time steps and to select the correct results.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/time_freq_support/TimeFreqSupport.html#ansys.dpf.core.time_freq_support.TimeFreqSupport" title="ansys.dpf.core.time_freq_support.TimeFreqSupport" class="sphx-glr-backref-module-ansys-dpf-core-time_freq_support sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_freq_support</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/time_freq_support/TimeFreqSupport.html#ansys.dpf.core.time_freq_support.TimeFreqSupport" title="ansys.dpf.core.time_freq_support.TimeFreqSupport" class="sphx-glr-backref-module-ansys-dpf-core-time_freq_support sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_freq_support</span></a>
+<a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_ids</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/time_freq_support/TimeFreqSupport.html#ansys.dpf.core.time_freq_support.TimeFreqSupport" title="ansys.dpf.core.time_freq_support.TimeFreqSupport" class="sphx-glr-backref-module-ansys-dpf-core-time_freq_support sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_freq_support</span></a><span class="o">.</span><span class="n">time_frequencies</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Get displacements at the final time step</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/displacement/index.html#module-ansys.dpf.core.operators.result.displacement" title="ansys.dpf.core.operators.result.displacement" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">disp_result</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">displacement</span></a><span class="p">()</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">displacement</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/displacement/index.html#module-ansys.dpf.core.operators.result.displacement" title="ansys.dpf.core.operators.result.displacement" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">disp_result</span></a><span class="o">.</span><span class="n">eval</span><span class="p">()</span><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_ids</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]})</span>
+</pre></div>
+</div>
+<p>Read stresses in the material coordinate system</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stress/index.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stress/index.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="prepare-data">
+<h2>Prepare data<a class="headerlink" href="#prepare-data" title="Link to this heading">#</a></h2>
+<p>The LS Dyna results have to be pre-processed to support ply-wise
+filtering because the data must be consistent with the layup
+model. This pre-processing is based on the maximum
+integration points (MAXINT) from the DATABASE_EXTENT_BINARY keyword.
+This parameter can be extracted from the input file (<code class="docutils literal notranslate"><span class="pre">input.k</span></code>) with
+the help of the <code class="docutils literal notranslate"><span class="pre">composite::ls_dyna_keyword_parser</span></code> operator.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prepare_lsdyna_results</span><span class="p">(</span>
+    <span class="n">my_results_container</span><span class="p">:</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">FieldsContainer</span></a><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">FieldsContainer</span></a><span class="p">:</span>
+    <span class="n">keyword_parser</span> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class"><span class="n">Operator</span></a><span class="p">(</span><span class="s2">&quot;composite::ls_dyna_keyword_parser&quot;</span><span class="p">)</span>
+    <span class="n">keyword_parser</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">solver_input_file</span><span class="p">)</span>
+    <span class="n">keyword_parser</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keyword</span><span class="p">(</span><span class="s2">&quot;DATABASE_EXTENT_BINARY&quot;</span><span class="p">)</span>
+    <span class="n">keyword_options_as_json</span> <span class="o">=</span> <a href="https://docs.python.org/dev/library/json.html#json.loads" title="json.loads" class="sphx-glr-backref-module-json sphx-glr-backref-type-py-function"><span class="n">json</span><span class="o">.</span><span class="n">loads</span></a><span class="p">(</span><span class="n">keyword_parser</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">keyword_options</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+
+    <span class="c1"># remove unneeded integration points for each element</span>
+    <span class="n">strip_operator</span> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class"><span class="n">Operator</span></a><span class="p">(</span><span class="s2">&quot;composite::ls_dyna_preparing_results&quot;</span><span class="p">)</span>
+    <span class="n">strip_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">maxint</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">keyword_options_as_json</span><span class="p">[</span><span class="s2">&quot;maxint&quot;</span><span class="p">]))</span>
+    <span class="n">strip_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">(</span><span class="n">my_results_container</span><span class="p">)</span>
+    <span class="n">strip_operator</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
+    <span class="n">stripped_results_container</span> <span class="o">=</span> <span class="n">strip_operator</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">stripped_results_container</span>
+
+
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_stress_container</span></a> <span class="o">=</span> <span class="n">prepare_lsdyna_results</span><span class="p">(</span>
+    <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stress/index.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="filter-data-by-analysis-ply">
+<h2>Filter data by analysis ply<a class="headerlink" href="#filter-data-by-analysis-ply" title="Link to this heading">#</a></h2>
+<p>Print stresses of a few plies at the last time step. You can
+use <code class="docutils literal notranslate"><span class="pre">get_all_analysis_ply_names</span></code> to list all available plies.
+Note that one integration point per layer and element is available if
+MAXINT is equal or greater than the number of layers.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_stress_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_stress_container</span></a><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_ids</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]})</span>
+<a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">camera</span></a> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">1589.7832333411716</span><span class="p">,</span> <span class="mf">1670.8197500164952</span><span class="p">,</span> <span class="o">-</span><span class="mf">328.2144469600579</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">493.2896802711351</span><span class="p">,</span> <span class="mf">0.2085447040423768</span><span class="p">,</span> <span class="mf">763.1274012915459</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.5149806660541146</span><span class="p">,</span> <span class="mf">0.8152207788520537</span><span class="p">,</span> <span class="mf">0.26497168776741287</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;P1L1__ModelingPly.1&quot;</span><span class="p">,</span> <span class="s2">&quot;P3L2__ModelingPly.1&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plotting s1 of ply </span><span class="si">{</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">elemental_values</span></a> <span class="o">=</span> <span class="n">get_ply_wise_data</span><span class="p">(</span>
+        <span class="n">field</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_stress_field</span></a><span class="p">,</span>
+        <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a><span class="p">,</span>
+        <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span>
+        <span class="n">component</span><span class="o">=</span><span class="n">Sym3x3TensorComponent</span><span class="o">.</span><span class="n">TENSOR11</span><span class="p">,</span>
+        <span class="n">spot_reduction_strategy</span><span class="o">=</span><span class="n">SpotReductionStrategy</span><span class="o">.</span><span class="n">MAX</span><span class="p">,</span>
+        <span class="n">requested_location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">field_or_fields_container</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">elemental_values</span></a><span class="p">,</span>
+        <span class="n">deform_by</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">displacement</span></a><span class="p">,</span>
+        <span class="n">cpos</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">camera</span></a><span class="p">,</span>
+        <span class="n">zoom</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_016_lsdyna_bird_strike_001.png" srcset="../../_images/sphx_glr_016_lsdyna_bird_strike_001.png" alt="016 lsdyna bird strike" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_016_lsdyna_bird_strike_001.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_016_lsdyna_bird_strike_002.png" srcset="../../_images/sphx_glr_016_lsdyna_bird_strike_002.png" alt="016 lsdyna bird strike" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_016_lsdyna_bird_strike_002.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Plotting s1 of ply P1L1__ModelingPly.1
+Plotting s1 of ply P3L2__ModelingPly.1
+</pre></div>
+</div>
+</section>
+<section id="plot-history-variables">
+<h2>Plot history variables<a class="headerlink" href="#plot-history-variables" title="Link to this heading">#</a></h2>
+<p>The same procedure can be applied to history variables.
+In this example, the 2nd history variable (compressive fiber mode)
+is plotted. 1 stands for elastic, 0 means failed.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hv_operator</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">Operator</span></a><span class="p">(</span><span class="s2">&quot;lsdyna::d3plot::history_var&quot;</span><span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hv_operator</span></a><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">result_files</span><span class="p">)</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hv_operator</span></a><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">time_scoping</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_ids</span></a><span class="p">)</span>
+
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_hv_container</span></a> <span class="o">=</span> <span class="n">prepare_lsdyna_results</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/dpf_operator/Operator.html#ansys.dpf.core.dpf_operator.Operator" title="ansys.dpf.core.dpf_operator.Operator" class="sphx-glr-backref-module-ansys-dpf-core-dpf_operator sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hv_operator</span></a><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">history_var</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_hv_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_hv_container</span></a><span class="o">.</span><span class="n">get_field</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">time_ids</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;ihv&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+
+<span class="k">for</span> <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;P1L1__ModelingPly.1&quot;</span><span class="p">,</span> <span class="s2">&quot;P3L2__ModelingPly.1&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plotting history variable 2 of ply </span><span class="si">{</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">elemental_values</span></a> <span class="o">=</span> <span class="n">get_ply_wise_data</span><span class="p">(</span>
+        <span class="n">field</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stripped_hv_field</span></a><span class="p">,</span>
+        <a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_name</span></a><span class="p">,</span>
+        <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span>
+        <span class="n">component</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">spot_reduction_strategy</span><span class="o">=</span><span class="n">SpotReductionStrategy</span><span class="o">.</span><span class="n">MAX</span><span class="p">,</span>
+        <span class="n">requested_location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">field_or_fields_container</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">elemental_values</span></a><span class="p">,</span>
+        <span class="n">deform_by</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">displacement</span></a><span class="p">,</span>
+        <span class="n">cpos</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">camera</span></a><span class="p">,</span>
+        <span class="n">zoom</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_016_lsdyna_bird_strike_003.png" srcset="../../_images/sphx_glr_016_lsdyna_bird_strike_003.png" alt="016 lsdyna bird strike" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_016_lsdyna_bird_strike_003.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_016_lsdyna_bird_strike_004.png" srcset="../../_images/sphx_glr_016_lsdyna_bird_strike_004.png" alt="016 lsdyna bird strike" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_016_lsdyna_bird_strike_004.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Plotting history variable 2 of ply P1L1__ModelingPly.1
+Plotting history variable 2 of ply P3L2__ModelingPly.1
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 10.661 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-016-lsdyna-bird-strike-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/31f849e3800b179717b605b51db0f76c/016_lsdyna_bird_strike.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">016_lsdyna_bird_strike.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/97378a30f41b4ab0fee67cd86a04f0ea/016_lsdyna_bird_strike.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">016_lsdyna_bird_strike.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/9509810c8e0f40d5499ff2d0c0a9b1ad/016_lsdyna_bird_strike.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">016_lsdyna_bird_strike.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-analysis">Set up analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data">Prepare data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-data-by-analysis-ply">Filter data by analysis ply</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-history-variables">Plot history variables</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+<!-- If there is no fix edit button function, use the PyData edit-this-button-->
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/examples/gallery_examples/016_lsdyna_bird_strike.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../_static/search.json";
+</script>
+
+
+<script src="../../_static/js/search.js"></script>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

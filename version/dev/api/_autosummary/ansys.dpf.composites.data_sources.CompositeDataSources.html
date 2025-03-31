@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=68ab6f82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -75,7 +75,7 @@
     <link rel="icon" href="../../_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="rst" href="ansys.dpf.composites.data_sources.CompositeDataSources.rst.html" />
+    <link rel="next" title="result_files" href="ansys.dpf.composites.data_sources.CompositeDataSources.result_files.html" />
     <link rel="prev" title="engineering_data" href="ansys.dpf.composites.data_sources.ShortFiberCompositesFiles.engineering_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -440,10 +440,12 @@
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.ContinuousFiberCompositesFiles.html">ContinuousFiberCompositesFiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ansys.dpf.composites.data_sources.ShortFiberCompositesFiles.html">ShortFiberCompositesFiles</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">CompositeDataSources</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.result_files.html">result_files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.rst.html">rst</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.material_support.html">material_support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.composite.html">composite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data.html">engineering_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.solver_input_file.html">solver_input_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources.html">old_composite_sources</a></li>
 </ul>
 </details></li>
@@ -537,18 +539,23 @@
 <h1>CompositeDataSources<a class="headerlink" href="#compositedatasources" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys.dpf.composites.data_sources.CompositeDataSources">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">CompositeDataSources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_support</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engineering_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_composite_sources</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.CompositeDataSources" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.dpf.composites.data_sources.</span></span><span class="sig-name descname"><span class="pre">CompositeDataSources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_support</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engineering_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_composite_sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">composite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rst</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.dpf.composites.data_sources.CompositeDataSources" title="Link to this definition">#</a></dt>
 <dd><p>Provides data sources related to the composite lay-up.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rst</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – Result file. Currently only RST (MAPDL) is supported.</p></li>
-<li><p><strong>material_support</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – NOTE: The <code class="docutils literal notranslate"><span class="pre">material_support</span></code> parameter is explicitly listed because it is currently not
-supported (by the DPF Core) to use a distributed RST file as source for the
-material support. Instead, we create a separate DataSources object for the
+<li><p><strong>result_files</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a><em> | </em><em>None</em>) – DPF DatatSources of the result file(s). DataSources object can contain
+one or multiple result files.</p></li>
+<li><p><strong>material_support</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – NOTE: The <code class="docutils literal notranslate"><span class="pre">material_support</span></code> parameter is explicitly listed because it is
+currently not supported (by the DPF Core) to use a distributed RST file as source
+for the material support. Instead, we create a separate DataSources object for the
 material support from the first RST file. This is a workaround until the
 support for distributed RST is added.</p></li>
 <li><p><strong>engineering_data</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a>) – File with the material properties.</p></li>
+<li><p><strong>solver_input_file</strong> (<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a><em> | </em><em>None</em>) – Input file for the solver (MAPDL:<code class="docutils literal notranslate"><span class="pre">*.dat</span> <span class="pre">|</span> <span class="pre">*.cdb</span></code>, LSDyna: <code class="docutils literal notranslate"><span class="pre">*.k</span></code>).</p></li>
+<li><p><strong>rst</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSources</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Result file. Deprecated and will be removed in the future.
+Use <code class="docutils literal notranslate"><span class="pre">result_files</span></code> instead. <code class="docutils literal notranslate"><span class="pre">rst</span></code> and <code class="docutils literal notranslate"><span class="pre">result_files</span></code>
+always have the same value.</p></li>
 <li><p><strong>old_composite_sources</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/data_sources/DataSources.html#ansys.dpf.core.data_sources.DataSources" title="(in PyDPF-Core v0.13.6)"><em>ansys.dpf.core.data_sources.DataSources</em></a><em>]</em>) – Member used to support assemblies in combination with the old
 DPF server (&lt;7.0). It should be removed once the support of this
 server version is dropped.</p></li>
@@ -564,16 +571,22 @@ server version is dropped.</p></li>
 <p class="rubric">Attributes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.rst.html#ansys.dpf.composites.data_sources.CompositeDataSources.rst" title="ansys.dpf.composites.data_sources.CompositeDataSources.rst"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.rst</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.result_files.html#ansys.dpf.composites.data_sources.CompositeDataSources.result_files" title="ansys.dpf.composites.data_sources.CompositeDataSources.result_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.result_files</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.material_support.html#ansys.dpf.composites.data_sources.CompositeDataSources.material_support" title="ansys.dpf.composites.data_sources.CompositeDataSources.material_support"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.material_support</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.rst.html#ansys.dpf.composites.data_sources.CompositeDataSources.rst" title="ansys.dpf.composites.data_sources.CompositeDataSources.rst"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.rst</span></code></a></p></td>
+<td><p>Get the result files.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.material_support.html#ansys.dpf.composites.data_sources.CompositeDataSources.material_support" title="ansys.dpf.composites.data_sources.CompositeDataSources.material_support"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.material_support</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.composite.html#ansys.dpf.composites.data_sources.CompositeDataSources.composite" title="ansys.dpf.composites.data_sources.CompositeDataSources.composite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.composite</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.composite.html#ansys.dpf.composites.data_sources.CompositeDataSources.composite" title="ansys.dpf.composites.data_sources.CompositeDataSources.composite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.composite</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data.html#ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data" title="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.engineering_data</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data.html#ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data" title="ansys.dpf.composites.data_sources.CompositeDataSources.engineering_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.engineering_data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.solver_input_file.html#ansys.dpf.composites.data_sources.CompositeDataSources.solver_input_file" title="ansys.dpf.composites.data_sources.CompositeDataSources.solver_input_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.solver_input_file</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources.html#ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources" title="ansys.dpf.composites.data_sources.CompositeDataSources.old_composite_sources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompositeDataSources.old_composite_sources</span></code></a></p></td>

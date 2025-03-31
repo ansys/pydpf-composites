@@ -3,4 +3,4 @@ rst
 
 .. currentmodule:: ansys.dpf.composites.data_sources
 
-.. autoattribute:: ContinuousFiberCompositesFiles.rst
+.. autoproperty:: ContinuousFiberCompositesFiles.rst

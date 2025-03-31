@@ -26,10 +26,12 @@ CompositeDataSources
    .. autosummary::
       :toctree:
    
+      CompositeDataSources.result_files
       CompositeDataSources.rst
       CompositeDataSources.material_support
       CompositeDataSources.composite
       CompositeDataSources.engineering_data
+      CompositeDataSources.solver_input_file
       CompositeDataSources.old_composite_sources
    
    
