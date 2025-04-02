@@ -75,9 +75,11 @@ Limitations
 '''''''''''
 - Only the Mechanical APDL solver is fully supported. LSDyna is partially supported
   as shwon in :ref:`LSDyna post-processing <sphx_glr_examples_gallery_examples_016_lsdyna_bird_strike.py>`.
-  The combined failure criterion, sampling point and computation of interlaminar normal stresses
+  The combined failure criterion (:meth:`.CompositeModel.evaluate_failure_criteria`), 
+  sampling point (:meth:`.CompositeModel.get_sampling_point`) and 
+  computation of interlaminar normal stresses (:meth:`.CompositeModel.add_interlaminar_normal_stresses`)
   features are not supported for LSDyna.
-- The post-processing of expanded cyclic symmetry models is not implemented.
+- The post-processing of expanded cyclic symmetry models is not implemented. Only the first sector is considered.
 - The following operators and features are only supported if the model was
   preprocessed with ACP and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel` class.
 
