@@ -315,9 +315,7 @@ class CompositeModelImpl2023R2:
 
         """
         if self.solver_type != SolverType.MAPDL:
-            raise RuntimeError(
-                f"evaluate_failure_criteria is implemented for MAPDL results only."
-            )
+            raise RuntimeError("evaluate_failure_criteria is implemented for MAPDL results only.")
 
         if composite_scope is None:
             composite_scope = CompositeScope()
@@ -391,9 +389,7 @@ class CompositeModelImpl2023R2:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if self.solver_type != SolverType.MAPDL:
-            raise RuntimeError(
-                f"get_sampling_point is implemented for MAPDL results only."
-            )
+            raise RuntimeError("get_sampling_point is implemented for MAPDL results only.")
 
         time_in = time
 
@@ -606,7 +602,7 @@ class CompositeModelImpl2023R2:
         """
         if self.solver_type != SolverType.MAPDL:
             raise RuntimeError(
-                f"add_interlaminar_normal_stresses is implemented for MAPDL results only."
+                "add_interlaminar_normal_stresses is implemented for MAPDL results only."
             )
 
         if composite_definition_label is None:

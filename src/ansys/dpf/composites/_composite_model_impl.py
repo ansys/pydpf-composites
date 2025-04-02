@@ -304,9 +304,7 @@ class CompositeModelImpl:
 
         """
         if self.solver_type != SolverType.MAPDL:
-            raise RuntimeError(
-                f"evaluate_failure_criteria is implemented for MAPDL results only."
-            )
+            raise RuntimeError("evaluate_failure_criteria is implemented for MAPDL results only.")
 
         if composite_scope is None:
             composite_scope = CompositeScope()
@@ -520,9 +518,7 @@ class CompositeModelImpl:
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
         if self.solver_type != SolverType.MAPDL:
-            raise RuntimeError(
-                f"get_sampling_point is implemented for MAPDL results only."
-            )
+            raise RuntimeError("get_sampling_point is implemented for MAPDL results only.")
 
         element_info = self.get_element_info(element_id)
         if element_info.is_shell:
@@ -719,7 +715,7 @@ class CompositeModelImpl:
         """
         if self.solver_type != SolverType.MAPDL:
             raise RuntimeError(
-                f"add_interlaminar_normal_stresses is implemented for MAPDL results only."
+                "add_interlaminar_normal_stresses is implemented for MAPDL results only."
             )
 
         ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
