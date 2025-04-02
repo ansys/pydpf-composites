@@ -32,7 +32,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from .composite_scope import CompositeScope
-from .constants import SolverType
+from .constants import D3PLOT_KEY_AND_FILENAME, SolverType
 from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
@@ -268,11 +268,10 @@ class CompositeModelImpl2023R2:
     @property
     def solver_type(self) -> SolverType:
         """Get the type of solver used to generate the result file."""
-        raise NotImplementedError(
-            "solver_type is not implemented"
-            " for this version of DPF. DPF server 10.0 (2025 R2)"
-            " or later should be used instead."
-        )
+        if self._core_model.metadata.data_sources.result_key == D3PLOT_KEY_AND_FILENAME:
+            return SolverType.LSDYNA
+
+        return SolverType.MAPDL
 
     def evaluate_failure_criteria(
         self,
@@ -314,6 +313,9 @@ class CompositeModelImpl2023R2:
                 ``write_data_for_full_element_scope=True`` is not supported.
 
         """
+        if self.solver_type != SolverType.MAPDL:
+            raise RuntimeError("evaluate_failure_criteria is implemented for MAPDL results only.")
+
         if composite_scope is None:
             composite_scope = CompositeScope()
 
@@ -385,6 +387,9 @@ class CompositeModelImpl2023R2:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
+        if self.solver_type != SolverType.MAPDL:
+            raise RuntimeError("get_sampling_point is implemented for MAPDL results only.")
+
         time_in = time
 
         if composite_definition_label is None:
@@ -594,6 +599,11 @@ class CompositeModelImpl2023R2:
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """
+        if self.solver_type != SolverType.MAPDL:
+            raise RuntimeError(
+                "add_interlaminar_normal_stresses is implemented for MAPDL results only."
+            )
+
         if composite_definition_label is None:
             composite_definition_label = self._first_composite_definition_label_if_only_one()
 
