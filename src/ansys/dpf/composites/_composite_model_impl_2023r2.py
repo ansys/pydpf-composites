@@ -32,7 +32,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from .composite_scope import CompositeScope
-from .constants import SolverType
+from .constants import D3PLOT_KEY_AND_FILENAME, SolverType
 from .data_sources import (
     CompositeDataSources,
     ContinuousFiberCompositesFiles,
@@ -268,11 +268,11 @@ class CompositeModelImpl2023R2:
     @property
     def solver_type(self) -> SolverType:
         """Get the type of solver used to generate the result file."""
-        raise NotImplementedError(
-            "solver_type is not implemented"
-            " for this version of DPF. DPF server 10.0 (2025 R2)"
-            " or later should be used instead."
-        )
+        """Get the solver type of the model."""
+        if self._core_model.metadata.data_sources.result_key == D3PLOT_KEY_AND_FILENAME:
+            return SolverType.LSDYNA
+
+        return SolverType.MAPDL
 
     def evaluate_failure_criteria(
         self,
