@@ -562,8 +562,13 @@ and <a class="reference internal" href="examples/gallery_examples/004_get_materi
 <section id="limitations">
 <span id="id1"></span><h2>Limitations<a class="headerlink" href="#limitations" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Only the Mechanical APDL solver is supported.</p></li>
-<li><p>The post-processing of expanded cyclic symmetry models is not implemented.</p></li>
+<li><p>Only the Mechanical APDL solver is fully supported. LSDYNA is partially supported
+as shown in <a class="reference internal" href="examples/gallery_examples/016_lsdyna_bird_strike.html#sphx-glr-examples-gallery-examples-016-lsdyna-bird-strike-py"><span class="std std-ref">LSDYNA post-processing</span></a>.
+The combined failure criterion (<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria.html#ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria" title="ansys.dpf.composites.composite_model.CompositeModel.evaluate_failure_criteria"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CompositeModel.evaluate_failure_criteria()</span></code></a>),
+sampling point (<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point.html#ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point" title="ansys.dpf.composites.composite_model.CompositeModel.get_sampling_point"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CompositeModel.get_sampling_point()</span></code></a>) and
+computation of interlaminar normal stresses (<a class="reference internal" href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses.html#ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses" title="ansys.dpf.composites.composite_model.CompositeModel.add_interlaminar_normal_stresses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CompositeModel.add_interlaminar_normal_stresses()</span></code></a>)
+features are not supported for LSDYNA.</p></li>
+<li><p>The post-processing of expanded cyclic symmetry models is not implemented. Only the first sector is considered.</p></li>
 <li><p>The following operators and features are only supported if the model was
 preprocessed with ACP and if the corresponding lay-up definition file is passed to the <a class="reference internal" href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.html#ansys.dpf.composites.composite_model.CompositeModel" title="ansys.dpf.composites.composite_model.CompositeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeModel</span></code></a> class.</p>
 <ul>
