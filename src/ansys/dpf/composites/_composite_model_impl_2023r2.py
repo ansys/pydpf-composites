@@ -268,7 +268,6 @@ class CompositeModelImpl2023R2:
     @property
     def solver_type(self) -> SolverType:
         """Get the type of solver used to generate the result file."""
-        """Get the solver type of the model."""
         if self._core_model.metadata.data_sources.result_key == D3PLOT_KEY_AND_FILENAME:
             return SolverType.LSDYNA
 
