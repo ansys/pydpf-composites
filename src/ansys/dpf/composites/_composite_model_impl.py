@@ -303,6 +303,11 @@ class CompositeModelImpl:
                 ``write_data_for_full_element_scope=True`` is not supported.
 
         """
+        if self.solver_type != SolverType.MAPDL:
+            raise RuntimeError(
+                f"evaluate_failure_criteria is implemented for MAPDL results only."
+            )
+
         if composite_scope is None:
             composite_scope = CompositeScope()
 
@@ -514,6 +519,11 @@ class CompositeModelImpl:
             attribute. This parameter is only required for assemblies.
             See the note about assemblies in the description for the :class:`CompositeModel` class.
         """
+        if self.solver_type != SolverType.MAPDL:
+            raise RuntimeError(
+                f"get_sampling_point is implemented for MAPDL results only."
+            )
+
         element_info = self.get_element_info(element_id)
         if element_info.is_shell:
             return SamplingPointNew(
@@ -707,6 +717,11 @@ class CompositeModelImpl:
             Interlaminar normal stresses are only added to the layered elements defined
             in the specified composite definition.
         """
+        if self.solver_type != SolverType.MAPDL:
+            raise RuntimeError(
+                f"add_interlaminar_normal_stresses is implemented for MAPDL results only."
+            )
+
         ins_operator = dpf.Operator("composite::interlaminar_normal_stress_operator")
         ins_operator.inputs.materials_container(self._material_operators.material_provider)
         ins_operator.inputs.mesh(self.get_mesh())

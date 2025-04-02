@@ -73,7 +73,10 @@ Here are some key features of PyDPF - Composites:
 
 Limitations
 '''''''''''
-- Only the Mechanical APDL solver is supported.
+- Only the Mechanical APDL solver is fully supported. LSDyna is partially supported
+  as shwon in :ref:`LSDyna post-processing <sphx_glr_examples_gallery_examples_016_lsdyna_bird_strike.py>`.
+  The combined failure criterion, sampling point and computation of interlaminar normal stresses
+  features are not supported for LSDyna.
 - The post-processing of expanded cyclic symmetry models is not implemented.
 - The following operators and features are only supported if the model was
   preprocessed with ACP and if the corresponding lay-up definition file is passed to the :class:`.CompositeModel` class.
