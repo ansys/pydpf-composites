@@ -51,7 +51,6 @@ Sampling Point to a certain element and to visualize the laminate.
 # DPF server, and retrieving the example files.
 #
 # Load Ansys libraries.
-
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
@@ -105,17 +104,17 @@ sampling_point_plot = sampling_point.get_result_plots(
 )
 sampling_point_plot.figure.set_figheight(8)
 sampling_point_plot.figure.set_figwidth(12)
+sampling_point_plot.figure.show()
 
 # %%
 # Plot polar properties.
 sampling_point_plot = sampling_point.get_polar_plot(["E1", "G12"])
-
+sampling_point_plot.figure.show()
 # %%
 # Generate custom plots. You can customize existing plots or build
 # them from scratch using a package like Matplot or Plotly. This code
 # uses Matplotlib to generate a custom plot of results ``s13`` and ``s23``.
 #
-
 import matplotlib.pyplot as plt
 
 fig, ax1 = plt.subplots()
@@ -133,6 +132,7 @@ ax1.legend()
 plt.rcParams["hatch.linewidth"] = 0.2
 plt.rcParams["hatch.color"] = "silver"
 sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
+fig.show()
 
 # %%
 # This code uses Matplotlib to generate a custom plot of results ``e12`` and ``e2``.
@@ -152,11 +152,13 @@ line = ax1.plot(e2, offsets, label="e2")
 ax1.set_yticks([])
 ax1.legend()
 ax1.set_title("e12 and e2")
+fig.show()
 
 # %%
 # This code plots the lay-up only.
 fig2, layup_axes = plt.subplots()
 sampling_point.add_ply_sequence_to_plot(layup_axes)
+fig2.show()
 
 # %%
 # Sample another element
@@ -172,3 +174,4 @@ sampling_point_plot = sampling_point.get_result_plots(
 )
 sampling_point_plot.figure.set_figheight(8)
 sampling_point_plot.figure.set_figwidth(12)
+sampling_point_plot.figure.show()

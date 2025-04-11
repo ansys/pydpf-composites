@@ -91,13 +91,12 @@ field_variable_provider.inputs.mesh(model.metadata.mesh_provider)
 
 field_variables = field_variable_provider.outputs.fields_container.get_data()
 
-a11 = field_variables[0]
-a11.plot()
-
 # %%
-
-a22 = field_variables[1]
-a22.plot()
+# Note that the order of the results can differ from the one shown here.
+for index in range(len(field_variables)):
+    field_variable = field_variables[index]
+    print(f"Field variable {field_variable.name}")
+    field_variable.plot()
 
 # %%
 # Configure and evaluate
