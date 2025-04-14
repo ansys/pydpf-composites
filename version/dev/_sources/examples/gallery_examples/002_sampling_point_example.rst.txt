@@ -48,10 +48,9 @@ DPF server, and retrieving the example files.
 
 Load Ansys libraries.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-67
+.. GENERATED FROM PYTHON SOURCE LINES 54-66
 
 .. code-block:: Python
-
 
     from ansys.dpf.composites.composite_model import CompositeModel
     from ansys.dpf.composites.constants import Spot
@@ -72,11 +71,11 @@ Load Ansys libraries.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-69
+.. GENERATED FROM PYTHON SOURCE LINES 67-68
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-72
+.. GENERATED FROM PYTHON SOURCE LINES 68-71
 
 .. code-block:: Python
 
@@ -90,11 +89,11 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-74
+.. GENERATED FROM PYTHON SOURCE LINES 72-73
 
 Configure the combined failure criterion
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-84
+.. GENERATED FROM PYTHON SOURCE LINES 73-83
 
 .. code-block:: Python
 
@@ -115,13 +114,13 @@ Configure the combined failure criterion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-88
+.. GENERATED FROM PYTHON SOURCE LINES 84-87
 
 Set up model and create sampling point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-90
+.. GENERATED FROM PYTHON SOURCE LINES 87-89
 
 .. code-block:: Python
 
@@ -134,11 +133,11 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-92
+.. GENERATED FROM PYTHON SOURCE LINES 90-91
 
 Create a sampling point
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-94
+.. GENERATED FROM PYTHON SOURCE LINES 91-93
 
 .. code-block:: Python
 
@@ -151,7 +150,7 @@ Create a sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-100
+.. GENERATED FROM PYTHON SOURCE LINES 94-99
 
 Plot results
 ~~~~~~~~~~~~
@@ -159,7 +158,7 @@ Plot results
 Plot results uing preconfigured plots. For more information, see the
 :meth:`.SamplingPoint.get_result_plots` method.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-109
+.. GENERATED FROM PYTHON SOURCE LINES 99-109
 
 .. code-block:: Python
 
@@ -171,6 +170,7 @@ Plot results uing preconfigured plots. For more information, see the
     )
     sampling_point_plot.figure.set_figheight(8)
     sampling_point_plot.figure.set_figwidth(12)
+    sampling_point_plot.figure.show()
 
 
 
@@ -193,7 +193,7 @@ Plot polar properties.
 .. code-block:: Python
 
     sampling_point_plot = sampling_point.get_polar_plot(["E1", "G12"])
-
+    sampling_point_plot.figure.show()
 
 
 
@@ -217,7 +217,6 @@ uses Matplotlib to generate a custom plot of results ``s13`` and ``s23``.
 
 .. code-block:: Python
 
-
     import matplotlib.pyplot as plt
 
     fig, ax1 = plt.subplots()
@@ -235,6 +234,7 @@ uses Matplotlib to generate a custom plot of results ``s13`` and ``s23``.
     plt.rcParams["hatch.linewidth"] = 0.2
     plt.rcParams["hatch.color"] = "silver"
     sampling_point.add_ply_sequence_to_plot(ax1, core_scale_factor)
+    fig.show()
 
 
 
@@ -252,7 +252,7 @@ uses Matplotlib to generate a custom plot of results ``s13`` and ``s23``.
 
 This code uses Matplotlib to generate a custom plot of results ``e12`` and ``e2``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-156
+.. GENERATED FROM PYTHON SOURCE LINES 139-157
 
 .. code-block:: Python
 
@@ -272,6 +272,7 @@ This code uses Matplotlib to generate a custom plot of results ``e12`` and ``e2`
     ax1.set_yticks([])
     ax1.legend()
     ax1.set_title("e12 and e2")
+    fig.show()
 
 
 
@@ -282,25 +283,20 @@ This code uses Matplotlib to generate a custom plot of results ``e12`` and ``e2`
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Text(0.5, 1.0, 'e12 and e2')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-158
+.. GENERATED FROM PYTHON SOURCE LINES 158-159
 
 This code plots the lay-up only.
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-161
+.. GENERATED FROM PYTHON SOURCE LINES 159-163
 
 .. code-block:: Python
 
     fig2, layup_axes = plt.subplots()
     sampling_point.add_ply_sequence_to_plot(layup_axes)
+    fig2.show()
 
 
 
@@ -314,14 +310,14 @@ This code plots the lay-up only.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-166
+.. GENERATED FROM PYTHON SOURCE LINES 164-168
 
 Sample another element
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can change the element ID of the sampling point to generate another plot.
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-175
+.. GENERATED FROM PYTHON SOURCE LINES 168-178
 
 .. code-block:: Python
 
@@ -334,6 +330,7 @@ You can change the element ID of the sampling point to generate another plot.
     )
     sampling_point_plot.figure.set_figheight(8)
     sampling_point_plot.figure.set_figwidth(12)
+    sampling_point_plot.figure.show()
 
 
 
@@ -349,7 +346,7 @@ You can change the element ID of the sampling point to generate another plot.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.907 seconds)
+   **Total running time of the script:** (0 minutes 9.019 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_002_sampling_point_example.py:

@@ -135,7 +135,7 @@ Plot results
 Plot the two largest eigenvalues (a11 and a22) of the fiber orientation tensor.
 Note that the plots reveal the presence of a weld line in the middle of the specimen.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-97
+.. GENERATED FROM PYTHON SOURCE LINES 88-94
 
 .. code-block:: Python
 
@@ -145,8 +145,25 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
     field_variables = field_variable_provider.outputs.fields_container.get_data()
 
-    a11 = field_variables[0]
-    a11.plot()
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 95-96
+
+Note that the order of the results can differ from the one shown here.
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-101
+
+.. code-block:: Python
+
+    for index in range(len(field_variables)):
+        field_variable = field_variables[index]
+        print(f"Field variable {field_variable.name}")
+        field_variable.plot()
 
 
 
@@ -182,21 +199,6 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-102
-
-.. code-block:: Python
-
-
-    a22 = field_variables[1]
-    a22.plot()
-
-
-
-
-
-
-
-
 .. tab-set::
 
 
@@ -221,17 +223,24 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Field variable Orientation Tensor A22
+    Field variable Orientation Tensor A11
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 103-107
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-106
 
 Configure and evaluate
 ~~~~~~~~~~~~~~~~~~~~~~
 Configure the short fiber failure criterion evaluator and evaluate.
 Note that you can specify optional time and mesh scoping inputs.
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-113
+.. GENERATED FROM PYTHON SOURCE LINES 106-112
 
 .. code-block:: Python
 
@@ -248,13 +257,13 @@ Note that you can specify optional time and mesh scoping inputs.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-117
+.. GENERATED FROM PYTHON SOURCE LINES 113-116
 
 Compute and plot results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Compute and plot the maximum failure value per element.
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-128
+.. GENERATED FROM PYTHON SOURCE LINES 116-127
 
 .. code-block:: Python
 
@@ -306,7 +315,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.105 seconds)
+   **Total running time of the script:** (0 minutes 4.337 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:
