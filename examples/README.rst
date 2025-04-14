@@ -14,3 +14,4 @@ installed with the following command:
 
 It is recommended to run the examples in a Jupyter notebook or an IPython console.
 Copy / pasting to a standard Python interactive shell can lead to formatting issues (e.g. IndentationError).
+This issue is resolved with Python 3.13 and later.
