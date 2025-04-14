@@ -262,7 +262,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.211 seconds)
+   **Total running time of the script:** (0 minutes 7.857 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:
