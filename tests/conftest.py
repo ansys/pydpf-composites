@@ -36,10 +36,6 @@ import uuid
 import ansys.dpf.core as dpf
 import pytest
 
-from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
-    _try_until_timeout,
-    _wait_until_server_is_up,
-)
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
 
@@ -311,21 +307,12 @@ def dpf_server(request: pytest.FixtureRequest):
             )
 
     with start_server_process() as server_process:
-        # Workaround for dpf bug. The timeout is not respected when connecting
-        # to a server:https://github.com/ansys/pydpf-core/issues/638
-        # We just try until connect_to_server succeeds
-        def start_server():
-            if server_process.port:
-                return dpf.server.connect_to_server(port=server_process.port)
-            else:
-                return server_process.server
-
-        server = _try_until_timeout(start_server, "Failed to start server.")
-
-        _wait_until_server_is_up(server)
+        if server_process.port:
+            server = dpf.server.connect_to_server(port=server_process.port)
+        else:
+            server = server_process.server
 
         load_composites_plugin(server, ansys_path=installer_path)
-
         yield server
 
 
