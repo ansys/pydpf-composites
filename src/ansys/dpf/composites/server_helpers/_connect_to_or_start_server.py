@@ -21,12 +21,10 @@
 # SOFTWARE.
 
 """Helpers to connect to or start a DPF server with the DPF Composites plugin."""
-from collections.abc import Callable
 import os
 from typing import Any
 
-from ansys.dpf.core import connect_to_server
-from ansys.dpf.core import start_local_server
+from ansys.dpf.core import connect_to_server, start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
