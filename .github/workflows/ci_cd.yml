@@ -33,7 +33,7 @@ jobs:
           python-version: ['3.10', '3.11', '3.12', '3.13']
     steps:
       - name: "Build a wheelhouse of the Python library"
-        uses: ansys/actions/build-wheelhouse@main
+        uses: ansys/actions/build-wheelhouse@fix/build-wheelhouse-poetry
         with:
           library-name: "ansys-dpf-composites"
           operating-system: ${{ matrix.os }}
