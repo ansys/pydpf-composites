@@ -1,0 +1,6 @@
+solver\_input\_file
+===================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: CompositeDataSources.solver_input_file

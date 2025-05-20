@@ -1,0 +1,6 @@
+center
+======
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: FailureMeasureEnum.center

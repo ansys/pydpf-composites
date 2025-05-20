@@ -1,0 +1,37 @@
+﻿.. vale off
+
+AnalysisPlyInfo
+===============
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: AnalysisPlyInfo
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      AnalysisPlyInfo.angle
+      AnalysisPlyInfo.global_ply_number
+      AnalysisPlyInfo.id
+      AnalysisPlyInfo.material_name
+      AnalysisPlyInfo.nominal_thickness
+   
+   
+
+.. vale on

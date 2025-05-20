@@ -1,0 +1,6 @@
+inverse\_reserve\_factor
+========================
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. autoattribute:: FailureResult.inverse_reserve_factor

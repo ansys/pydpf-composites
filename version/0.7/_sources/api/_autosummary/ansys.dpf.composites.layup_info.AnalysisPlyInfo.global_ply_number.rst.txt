@@ -1,0 +1,6 @@
+global\_ply\_number
+===================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: AnalysisPlyInfo.global_ply_number

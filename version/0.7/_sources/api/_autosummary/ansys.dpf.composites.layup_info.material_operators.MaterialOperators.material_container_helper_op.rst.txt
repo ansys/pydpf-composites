@@ -1,0 +1,6 @@
+material\_container\_helper\_op
+===============================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_operators
+
+.. autoproperty:: MaterialOperators.material_container_helper_op

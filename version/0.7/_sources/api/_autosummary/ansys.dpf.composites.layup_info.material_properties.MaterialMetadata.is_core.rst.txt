@@ -1,0 +1,6 @@
+is\_core
+========
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoproperty:: MaterialMetadata.is_core

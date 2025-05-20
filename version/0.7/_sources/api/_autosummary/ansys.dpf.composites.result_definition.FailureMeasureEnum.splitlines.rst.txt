@@ -1,0 +1,6 @@
+splitlines
+==========
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: FailureMeasureEnum.splitlines

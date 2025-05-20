@@ -1,0 +1,6 @@
+rst
+===
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: ShortFiberCompositesFiles.rst

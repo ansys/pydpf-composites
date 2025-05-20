@@ -1,0 +1,6 @@
+NOT\_AVAILABLE
+==============
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: LayupModelContextType.NOT_AVAILABLE

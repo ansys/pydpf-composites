@@ -1,0 +1,6 @@
+ply\_type
+=========
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialMetadata.ply_type

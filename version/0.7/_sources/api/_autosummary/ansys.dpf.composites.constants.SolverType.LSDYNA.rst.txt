@@ -1,0 +1,6 @@
+LSDYNA
+======
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: SolverType.LSDYNA
