@@ -38,3 +38,5 @@ jobs:
           library-name: "ansys-dpf-composites"
           operating-system: ${{ matrix.os }}
           python-version: ${{ matrix.python-version }}
+          generate-sbom: true
+          attest-provenance: true
