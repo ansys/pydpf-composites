@@ -42,7 +42,6 @@ jobs:
           library-name: "ansys-dpf-composites"
           operating-system: ${{ matrix.os }}
           python-version: ${{ matrix.python-version }}
-          attest-provenance: true
           smoke-test-module: 'ansys.dpf.composites'
           generate-sbom: true
           attest-provenance: true
