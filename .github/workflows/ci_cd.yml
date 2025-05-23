@@ -27,6 +27,10 @@ jobs:
   build-wheelhouse:
     name: "Build wheelhouse for latest Python versions"
     runs-on: ${{ matrix.os }}
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
     strategy:
       matrix:
           os: [ubuntu-latest, windows-latest]
