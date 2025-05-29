@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:46.888** total execution time for 17 files **from examples/gallery_examples**:
+**02:14.589** total execution time for 17 files **from examples/gallery_examples**:
 
 .. container::
 
@@ -33,53 +33,53 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_gallery_examples_001_failure_operator_example.py` (``001_failure_operator_example.py``)
-     - 00:14.952
+     - 00:21.092
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_010_harmonic_example.py` (``010_harmonic_example.py``)
-     - 00:11.127
+     - 00:13.469
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_011_rst_workflow.py` (``011_rst_workflow.py``)
-     - 00:08.561
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``007_interlaminar_normal_stress_example.py``)
-     - 00:07.977
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_014_cyclic_symmetry_example.py` (``014_cyclic_symmetry_example.py``)
-     - 00:07.343
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``009_short_fiber_orientation_tensor.py``)
-     - 00:06.987
+     - 00:11.822
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_015_solid_model.py` (``015_solid_model.py``)
-     - 00:06.807
+     - 00:09.773
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_007_interlaminar_normal_stress_example.py` (``007_interlaminar_normal_stress_example.py``)
+     - 00:08.744
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_016_lsdyna_bird_strike.py` (``016_lsdyna_bird_strike.py``)
-     - 00:06.604
+     - 00:08.656
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_014_cyclic_symmetry_example.py` (``014_cyclic_symmetry_example.py``)
+     - 00:07.762
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_002_sampling_point_example.py` (``002_sampling_point_example.py``)
-     - 00:05.490
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``008_assembly_example.py``)
-     - 00:05.282
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``006_filter_composite_data_example.py``)
-     - 00:04.654
+     - 00:07.740
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_099_dpf_composite_failure_workflow.py` (``099_dpf_composite_failure_workflow.py``)
-     - 00:04.473
+     - 00:07.271
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_009_short_fiber_orientation_tensor.py` (``009_short_fiber_orientation_tensor.py``)
+     - 00:07.184
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_008_assembly_example.py` (``008_assembly_example.py``)
+     - 00:06.148
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_013_thermal_example.py` (``013_thermal_example.py``)
-     - 00:04.459
-     - 0.0
-   * - :ref:`sphx_glr_examples_gallery_examples_012_fatigue_example.py` (``012_fatigue_example.py``)
-     - 00:03.901
+     - 00:05.731
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py` (``004_get_material_properties_example.py``)
-     - 00:03.553
+     - 00:05.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py` (``006_filter_composite_data_example.py``)
+     - 00:04.692
+     - 0.0
+   * - :ref:`sphx_glr_examples_gallery_examples_012_fatigue_example.py` (``012_fatigue_example.py``)
+     - 00:03.790
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_003_short_fiber_example.py` (``003_short_fiber_example.py``)
-     - 00:03.498
+     - 00:03.776
      - 0.0
    * - :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py` (``005_get_layup_properties_example.py``)
-     - 00:01.222
+     - 00:01.939
      - 0.0
