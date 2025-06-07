@@ -400,7 +400,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.769 seconds)
+   **Total running time of the script:** (0 minutes 6.202 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_015_solid_model.py:
