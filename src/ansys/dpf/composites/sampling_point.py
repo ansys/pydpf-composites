@@ -395,9 +395,10 @@ class SamplingPointNew(SamplingPoint):
         )
 
         if version_equal_or_later(self._meshed_region._server, "11.0"):
-            sampling_point_evaluator.inputs.mesh_properties_container(
-                self._layup_provider.outputs.mesh_properties_container
-            )
+            if hasattr(sampling_point_evaluator.inputs, "mesh_properties_container"):
+                sampling_point_evaluator.inputs.mesh_properties_container(
+                    self._layup_provider.outputs.mesh_properties_container
+                )
 
         sampling_point_evaluator.inputs.time_id(
             evaluate_failure_criterion_per_scope_op.outputs.time_id
