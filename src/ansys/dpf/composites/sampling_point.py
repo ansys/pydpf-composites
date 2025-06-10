@@ -367,9 +367,11 @@ class SamplingPointNew(SamplingPoint):
         evaluate_failure_criterion_per_scope_op.inputs.material_fields(
             self._layup_provider.outputs.material_fields
         )
+
         evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
             self._layup_provider.outputs.mesh_properties_container
         )
+
         evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
 
         sampling_point_evaluator = dpf.Operator("composite::evaluate_sampling_point")
@@ -391,9 +393,11 @@ class SamplingPointNew(SamplingPoint):
         sampling_point_evaluator.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
-        sampling_point_evaluator.inputs.mesh_properties_container(
-            self._layup_provider.outputs.mesh_properties_container
-        )
+
+        if version_equal_or_later(self._meshed_region._server, "11.0"):
+            sampling_point_evaluator.inputs.mesh_properties_container(
+                self._layup_provider.outputs.mesh_properties_container
+            )
 
         sampling_point_evaluator.inputs.time_id(
             evaluate_failure_criterion_per_scope_op.outputs.time_id
