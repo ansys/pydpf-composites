@@ -391,6 +391,9 @@ class SamplingPointNew(SamplingPoint):
         sampling_point_evaluator.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
+        sampling_point_evaluator.inputs.mesh_properties_container(
+            self._layup_provider.outputs.mesh_properties_container
+        )
 
         sampling_point_evaluator.inputs.time_id(
             evaluate_failure_criterion_per_scope_op.outputs.time_id
