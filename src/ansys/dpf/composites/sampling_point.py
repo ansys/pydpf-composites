@@ -44,6 +44,7 @@ from ._sampling_point_helpers import (
 )
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
+from .layup_info import ElementInfo, SolidStackProvider
 from .layup_info._layup_info import _get_layup_model_context
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
@@ -105,6 +106,7 @@ class SamplingPointNew(SamplingPoint):
         *,
         name: str,
         element_id: int,
+        element_info: ElementInfo,
         combined_criterion: CombinedFailureCriterion,
         material_operators: MaterialOperators,
         meshed_region: dpf.MeshedRegion,
@@ -116,6 +118,7 @@ class SamplingPointNew(SamplingPoint):
         """Create a ``SamplingPoint`` object."""
         self._name = name
         self._element_id = element_id
+        self._element_info = element_info
         self._time = time
         self._combined_criterion = combined_criterion
 
@@ -323,6 +326,26 @@ class SamplingPointNew(SamplingPoint):
         """True if the results are up-to-date."""
         return self._is_uptodate
 
+
+    def _get_full_scope(self) -> dpf.Scoping:
+        """Select all solid elements of stack if the selected element is a solid element."""
+        scope = dpf.Scoping()
+        if self._element_info.is_shell:
+            scope.ids = [self.element_id]
+        else:
+            solid_stack_provider = SolidStackProvider(
+                self._meshed_region, self._layup_provider
+            )
+            # the selected element must be the first element in the scope
+            element_ids = [self.element_id]
+            solid_stack = solid_stack_provider.get_solid_stack(self.element_id)
+            for el_id in solid_stack.element_ids:
+                if el_id != self.element_id:
+                    element_ids.append(el_id)
+            scope.ids = element_ids
+        return scope
+
+
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
@@ -344,8 +367,7 @@ class SamplingPointNew(SamplingPoint):
             scope_config_reader_op.outputs
         )
 
-        scope = dpf.Scoping()
-        scope.ids = [self.element_id]
+        scope = self._get_full_scope()
         evaluate_failure_criterion_per_scope_op.inputs.element_scoping(scope)
         evaluate_failure_criterion_per_scope_op.inputs.materials_container(
             self._material_operators.material_provider.outputs

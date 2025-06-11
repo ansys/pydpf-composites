@@ -525,6 +525,7 @@ class CompositeModelImpl:
             return SamplingPointNew(
                 name=f"Sampling Point - element {element_id}",
                 element_id=element_id,
+                element_info=element_info,
                 combined_criterion=combined_criterion,
                 material_operators=self._material_operators,
                 meshed_region=self.get_mesh(),
@@ -552,6 +553,7 @@ class CompositeModelImpl:
             return SamplingPointNew(
                 name=f"Sampling Point - solid element {element_id}",
                 element_id=element_id,
+                element_info=element_info,
                 combined_criterion=combined_criterion,
                 material_operators=self._material_operators,
                 meshed_region=self.get_mesh(),
