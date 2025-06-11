@@ -345,6 +345,11 @@ class SamplingPointNew(SamplingPoint):
             scope.ids = element_ids
         return scope
 
+    def _get_default_spots(self) -> Collection[Spot]:
+        if self._element_info.is_shell:
+            return Spot.BOTTOM, Spot.MIDDLE, Spot.TOP
+        else:
+            return Spot.BOTTOM, Spot.TOP
 
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
@@ -467,7 +472,7 @@ class SamplingPointNew(SamplingPoint):
         self._is_uptodate = True
 
     def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
+        self, spots: Collection[Spot] | None = None
     ) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
@@ -479,6 +484,7 @@ class SamplingPointNew(SamplingPoint):
         spots :
             Collection of spots. Only the indices of the bottom interfaces of plies
             are returned if ``[Spot.BOTTOM]`` is set.
+            All availabel spots are selected if ``None`` is passed.
 
         Examples
         --------
@@ -486,13 +492,15 @@ class SamplingPointNew(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            spots = self._get_default_spots()
         return get_indices_from_sp(
             self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
         )
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -506,6 +514,8 @@ class SamplingPointNew(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
+        if spots is None:
+            spots = self._get_default_spots()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
     def get_ply_wise_critical_failures(self) -> list[FailureResult]:
@@ -598,7 +608,7 @@ class SamplingPointNew(SamplingPoint):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -624,6 +634,7 @@ class SamplingPointNew(SamplingPoint):
             Factor for scaling the thickness of core plies.
         spots
             Spots (interfaces) to show results at.
+            All available spots are selected if ``None`` is passed.
 
         Examples
         --------
@@ -631,6 +642,8 @@ class SamplingPointNew(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            spots = self._get_default_spots()
         return get_result_plots_from_sp(
             self,
             strain_components,

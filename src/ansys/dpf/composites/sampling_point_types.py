@@ -234,7 +234,7 @@ class SamplingPoint(Protocol):
         """True if the Sampling Point is up-to-date."""
 
     def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
+        self, spots: Collection[Spot] | None = None
     ) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
@@ -246,6 +246,7 @@ class SamplingPoint(Protocol):
         spots :
             Collection of spots. Only the indices of the bottom interfaces of plies
             are returned if ``[Spot.BOTTOM]`` is set.
+            All available spots are selected if spots is None.
 
         Examples
         --------
@@ -255,7 +256,7 @@ class SamplingPoint(Protocol):
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -264,6 +265,7 @@ class SamplingPoint(Protocol):
         ----------
         spots :
             Collection of spots.
+            All available spots are selected if spots is None.
 
         core_scale_factor :
             Factor for scaling the thickness of core plies.
@@ -351,7 +353,7 @@ class SamplingPoint(Protocol):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -377,6 +379,7 @@ class SamplingPoint(Protocol):
             Factor for scaling the thickness of core plies.
         spots
             Spots (interfaces) to show results at.
+            All available spots are selected if spots is None.
 
         Examples
         --------

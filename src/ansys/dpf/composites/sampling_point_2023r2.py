@@ -382,7 +382,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._is_uptodate = True
 
     def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
+        self, spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
     ) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
@@ -401,13 +401,15 @@ class SamplingPoint2023R2(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("SamplingPoint: spots cannot be None.")
         return get_indices_from_sp(
             self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
         )
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -421,6 +423,8 @@ class SamplingPoint2023R2(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("SamplingPoint: spots cannot be None.")
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
     def get_ply_wise_critical_failures(self) -> list[FailureResult]:
@@ -512,7 +516,7 @@ class SamplingPoint2023R2(SamplingPoint):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -545,6 +549,8 @@ class SamplingPoint2023R2(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("SamplingPoint: spots cannot be None.")
         return get_result_plots_from_sp(
             self,
             strain_components,
