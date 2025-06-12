@@ -193,7 +193,7 @@ def compare_sampling_point_results(
                 sample_results[key], reference_results[key], rtol=1e-6, atol=1e-8
             )
         else:
-            assert sample_results[key].keys() == reference_results[key].keys()
+            assert sample_results[key].keys() == reference_results[key].keys(), f"Keys mismatch for {key}. Expected {reference_results[key].keys()} but got {sample_results[key].keys()}."
             for component in sample_results[key].keys():
                 if component == "failure_modes":
                     # compare list of strings

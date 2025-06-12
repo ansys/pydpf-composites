@@ -346,10 +346,12 @@ class SamplingPointNew(SamplingPoint):
         return scope
 
     def _get_default_spots(self) -> Collection[Spot]:
-        if self._element_info.is_shell:
+        if self._spots_per_ply == 3:
             return Spot.BOTTOM, Spot.MIDDLE, Spot.TOP
-        else:
+        elif self._spots_per_ply == 2:
             return Spot.BOTTOM, Spot.TOP
+        else:
+            raise RuntimeError(f"Unsupported number of spots per ply: {self._spots_per_ply}")
 
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""

@@ -560,7 +560,7 @@ class CompositeModelImpl:
                 layup_provider=self._layup_provider,
                 rst_streams_provider=self.get_rst_streams_provider(),
                 default_unit_system=self._unit_system,
-                    time=time,
+                time=time,
                 )
 
     @_deprecated_composite_definition_label
