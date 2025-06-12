@@ -32,8 +32,9 @@ import numpy.typing as npt
 from ansys.dpf import core as dpf
 
 from ._sampling_point_helpers import (
-    add_ply_sequence_to_plot_to_sp,
-    add_results_to_plot_to_sp,
+    add_element_boxes_to_axes,
+    add_ply_sequence_to_sampling_point_plot,
+    add_results_to_sampling_point_plot,
     get_analysis_plies_from_sp,
     get_data_from_sp_results,
     get_indices_from_sp,
@@ -566,7 +567,7 @@ class SamplingPointNew(SamplingPoint):
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
         self._update_and_check_results()
-        add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(self, axes, components, spots, core_scale_factor, title, xlabel)
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
@@ -579,7 +580,7 @@ class SamplingPointNew(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
-        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
+        add_ply_sequence_to_sampling_point_plot(self, axes, core_scale_factor)
 
     def get_polar_plot(
         self, components: Sequence[str] = ("E1", "E2", "G12")
@@ -646,7 +647,7 @@ class SamplingPointNew(SamplingPoint):
         self._update_and_check_results()
         if spots is None:
             spots = self._get_default_spots()
-        return get_result_plots_from_sp(
+        figure = get_result_plots_from_sp(
             self,
             strain_components,
             stress_components,
@@ -656,6 +657,18 @@ class SamplingPointNew(SamplingPoint):
             core_scale_factor,
             spots,
         )
+
+        if create_laminate_plot and self._element_info.is_shell == False:
+            solid_stack_provider = SolidStackProvider(
+                self._meshed_region, self._layup_provider
+            )
+            add_element_boxes_to_axes(
+                sampling_point=self,
+                solid_stack=solid_stack_provider.get_solid_stack(self._element_id),
+                axes = figure.axes[0],
+                core_scale_factor = core_scale_factor,
+            )
+        return figure
 
     def _update_and_check_results(self) -> None:
         if not self._is_uptodate or not self._results:

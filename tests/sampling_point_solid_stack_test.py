@@ -317,7 +317,7 @@ def test_sampling_point_solid_stack(dpf_server):
     )
 
     plot = get_sampling_point_plot(sampling_point)
-    # plot.figure.show()
+    plot.figure.show()
     compare_results(sampling_point.results[0], ELEMENT_OF_LAYERED_STACK, version_older_than(dpf_server, "11.0"))
 
 
@@ -340,7 +340,7 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
         )
 
         plot = get_sampling_point_plot(sampling_point)
-        # plot.figure.show()
+        plot.figure.show()
         compare_results(sampling_point.results[0], element_id, version_older_than(dpf_server, "11.0"))
 
 
@@ -360,5 +360,5 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
     )
 
     plot = get_sampling_point_plot(sampling_point)
-    # plot.figure.show()
+    plot.figure.show()
     compare_results(sampling_point.results[0], ELEMENT_OF_CUTOFF_STACK, version_older_than(dpf_server, "11.0"))

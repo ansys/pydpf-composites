@@ -25,7 +25,6 @@ from collections.abc import Collection, Sequence
 from typing import Any
 
 from ansys.dpf.core import UnitSystem
-from matplotlib.patches import Rectangle
 import numpy as np
 import numpy.typing as npt
 
@@ -39,8 +38,9 @@ from ansys.dpf.composites.constants import (
 )
 
 from ._sampling_point_helpers import (
-    add_ply_sequence_to_plot_to_sp,
-    add_results_to_plot_to_sp,
+    add_element_boxes_to_axes,
+    add_ply_sequence_to_sampling_point_plot,
+    add_results_to_sampling_point_plot,
     get_analysis_plies_from_sp,
     get_data_from_sp_results,
     get_indices_from_sp,
@@ -637,7 +637,7 @@ class SamplingPointSolidStack(SamplingPoint):
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
         self._update_and_check_results()
-        add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(self, axes, components, spots, core_scale_factor, title, xlabel)
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
@@ -650,7 +650,7 @@ class SamplingPointSolidStack(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
-        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
+        add_ply_sequence_to_sampling_point_plot(self, axes, core_scale_factor)
 
     def get_polar_plot(
         self, components: Sequence[str] = ("E1", "E2", "G12")
@@ -743,47 +743,7 @@ class SamplingPointSolidStack(SamplingPoint):
         alpha :
             Transparency of the element boxes.
         """
-        if not self._solid_stack:
-            raise RuntimeError("Solid stack is not available.")
-
-        self._update_and_check_results()
-        plY_offsets = self.get_offsets_by_spots(
-            spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
-        )
-
-        element_offsets = []
-        ply_index = 0
-        for _, element_ids in self._solid_stack.element_ids_per_level.items():
-            element_ply_ids = self._solid_stack.element_wise_analysis_plies[element_ids[0]]
-            element_offsets.append(plY_offsets[2 * ply_index])
-            ply_index += len(element_ply_ids)
-            element_offsets.append(plY_offsets[2 * ply_index - 1])
-
-        if len(element_offsets) == 0:
-            return
-
-        num_spots = 2
-        axes.set_ybound(element_offsets[0], element_offsets[-1])
-        x_bound = axes.get_xbound()
-        width = x_bound[1] - x_bound[0]
-
-        colors = ("b", "g", "r", "c", "m", "y")
-        for index, _ in enumerate(self._solid_stack.element_ids_per_level):
-            hatch = ""
-            axes.add_patch(
-                Rectangle(
-                    xy=(float(x_bound[0]), float(element_offsets[index * num_spots])),
-                    width=width,
-                    height=float(
-                        element_offsets[(index + 1) * num_spots - 1]
-                        - element_offsets[index * num_spots]
-                    ),
-                    fill=True,
-                    hatch=hatch,
-                    alpha=alpha,
-                    color=colors[index % len(colors)],
-                )
-            )
+        add_element_boxes_to_axes(self, self._solid_stack, axes, core_scale_factor, alpha)
 
     def _update_and_check_results(self) -> None:
         if not self._is_uptodate or not self._results:

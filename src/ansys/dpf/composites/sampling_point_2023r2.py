@@ -34,8 +34,8 @@ import numpy as np
 import numpy.typing as npt
 
 from ._sampling_point_helpers import (
-    add_ply_sequence_to_plot_to_sp,
-    add_results_to_plot_to_sp,
+    add_ply_sequence_to_sampling_point_plot,
+    add_results_to_sampling_point_plot,
     get_analysis_plies_from_sp,
     get_data_from_sp_results,
     get_indices_from_sp,
@@ -460,7 +460,7 @@ class SamplingPoint2023R2(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
-        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
+        add_ply_sequence_to_sampling_point_plot(self, axes, core_scale_factor)
 
     def add_results_to_plot(
         self,
@@ -502,7 +502,7 @@ class SamplingPoint2023R2(SamplingPoint):
                                                   [Spot.BOTTOM, Spot.TOP],
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
-        add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(self, axes, components, spots, core_scale_factor, title, xlabel)
 
     def get_result_plots(
         self,
