@@ -327,16 +327,13 @@ class SamplingPointNew(SamplingPoint):
         """True if the results are up-to-date."""
         return self._is_uptodate
 
-
     def _get_full_scope(self) -> dpf.Scoping:
         """Select all solid elements of stack if the selected element is a solid element."""
         scope = dpf.Scoping()
         if self._element_info.is_shell:
             scope.ids = [self.element_id]
         else:
-            solid_stack_provider = SolidStackProvider(
-                self._meshed_region, self._layup_provider
-            )
+            solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
             # the selected element must be the first element in the scope
             element_ids = [self.element_id]
             solid_stack = solid_stack_provider.get_solid_stack(self.element_id)
@@ -474,9 +471,7 @@ class SamplingPointNew(SamplingPoint):
 
         self._is_uptodate = True
 
-    def get_indices(
-        self, spots: Collection[Spot] | None = None
-    ) -> Sequence[int]:
+    def get_indices(self, spots: Collection[Spot] | None = None) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.
@@ -567,7 +562,9 @@ class SamplingPointNew(SamplingPoint):
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
         self._update_and_check_results()
-        add_results_to_sampling_point_plot(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(
+            self, axes, components, spots, core_scale_factor, title, xlabel
+        )
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
@@ -659,14 +656,12 @@ class SamplingPointNew(SamplingPoint):
         )
 
         if create_laminate_plot and self._element_info.is_shell == False:
-            solid_stack_provider = SolidStackProvider(
-                self._meshed_region, self._layup_provider
-            )
+            solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
             add_element_boxes_to_axes(
                 sampling_point=self,
                 solid_stack=solid_stack_provider.get_solid_stack(self._element_id),
-                axes = figure.axes[0],
-                core_scale_factor = core_scale_factor,
+                axes=figure.axes[0],
+                core_scale_factor=core_scale_factor,
             )
         return figure
 

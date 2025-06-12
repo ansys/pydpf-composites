@@ -72,6 +72,10 @@ from .solid_stack_results import (
 from .unit_system import get_unit_system
 
 
+# June 2025: this class is used for release 2025 R2 (dpf server 10) only
+# because the sampling point for solids was first implemented in Python.
+# This class can be removed once the support of DPF server 2025 R2 is
+# dropped.
 class SamplingPointSolidStack(SamplingPoint):
     """Implements the ``Sampling Point`` object for a stack of solid elements.
 
@@ -637,7 +641,9 @@ class SamplingPointSolidStack(SamplingPoint):
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
         self._update_and_check_results()
-        add_results_to_sampling_point_plot(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(
+            self, axes, components, spots, core_scale_factor, title, xlabel
+        )
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.

@@ -233,9 +233,7 @@ class SamplingPoint(Protocol):
     def is_uptodate(self) -> bool:
         """True if the Sampling Point is up-to-date."""
 
-    def get_indices(
-        self, spots: Collection[Spot] | None = None
-    ) -> Sequence[int]:
+    def get_indices(self, spots: Collection[Spot] | None = None) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.

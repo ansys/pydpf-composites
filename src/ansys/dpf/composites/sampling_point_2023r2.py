@@ -502,7 +502,9 @@ class SamplingPoint2023R2(SamplingPoint):
                                                   [Spot.BOTTOM, Spot.TOP],
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
-        add_results_to_sampling_point_plot(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(
+            self, axes, components, spots, core_scale_factor, title, xlabel
+        )
 
     def get_result_plots(
         self,
