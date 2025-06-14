@@ -32,8 +32,9 @@ import numpy.typing as npt
 from ansys.dpf import core as dpf
 
 from ._sampling_point_helpers import (
-    add_ply_sequence_to_plot_to_sp,
-    add_results_to_plot_to_sp,
+    add_element_boxes_to_axes,
+    add_ply_sequence_to_sampling_point_plot,
+    add_results_to_sampling_point_plot,
     get_analysis_plies_from_sp,
     get_data_from_sp_results,
     get_indices_from_sp,
@@ -44,6 +45,7 @@ from ._sampling_point_helpers import (
 )
 from .constants import Spot
 from .failure_criteria import CombinedFailureCriterion
+from .layup_info import ElementInfo, SolidStackProvider
 from .layup_info._layup_info import _get_layup_model_context
 from .layup_info.material_operators import MaterialOperators
 from .result_definition import FailureMeasureEnum
@@ -105,6 +107,7 @@ class SamplingPointNew(SamplingPoint):
         *,
         name: str,
         element_id: int,
+        element_info: ElementInfo,
         combined_criterion: CombinedFailureCriterion,
         material_operators: MaterialOperators,
         meshed_region: dpf.MeshedRegion,
@@ -116,6 +119,7 @@ class SamplingPointNew(SamplingPoint):
         """Create a ``SamplingPoint`` object."""
         self._name = name
         self._element_id = element_id
+        self._element_info = element_info
         self._time = time
         self._combined_criterion = combined_criterion
 
@@ -323,6 +327,30 @@ class SamplingPointNew(SamplingPoint):
         """True if the results are up-to-date."""
         return self._is_uptodate
 
+    def _get_full_scope(self) -> dpf.Scoping:
+        """Select all solid elements of stack if the selected element is a solid element."""
+        scope = dpf.Scoping()
+        if self._element_info.is_shell:
+            scope.ids = [self.element_id]
+        else:
+            solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
+            # the selected element must be the first element in the scope
+            element_ids = [self.element_id]
+            solid_stack = solid_stack_provider.get_solid_stack(self.element_id)
+            for el_id in solid_stack.element_ids:
+                if el_id != self.element_id:
+                    element_ids.append(el_id)
+            scope.ids = element_ids
+        return scope
+
+    def _get_default_spots(self) -> Collection[Spot]:
+        if self._spots_per_ply == 3:
+            return Spot.BOTTOM, Spot.MIDDLE, Spot.TOP
+        elif self._spots_per_ply == 2:
+            return Spot.BOTTOM, Spot.TOP
+        else:
+            raise RuntimeError(f"Unsupported number of spots per ply: {self._spots_per_ply}")
+
     def run(self) -> None:
         """Build and run the DPF operator network and cache the results."""
         scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
@@ -344,8 +372,7 @@ class SamplingPointNew(SamplingPoint):
             scope_config_reader_op.outputs
         )
 
-        scope = dpf.Scoping()
-        scope.ids = [self.element_id]
+        scope = self._get_full_scope()
         evaluate_failure_criterion_per_scope_op.inputs.element_scoping(scope)
         evaluate_failure_criterion_per_scope_op.inputs.materials_container(
             self._material_operators.material_provider.outputs
@@ -367,9 +394,11 @@ class SamplingPointNew(SamplingPoint):
         evaluate_failure_criterion_per_scope_op.inputs.material_fields(
             self._layup_provider.outputs.material_fields
         )
+
         evaluate_failure_criterion_per_scope_op.inputs.mesh_properties_container(
             self._layup_provider.outputs.mesh_properties_container
         )
+
         evaluate_failure_criterion_per_scope_op.inputs.request_sandwich_results(True)
 
         sampling_point_evaluator = dpf.Operator("composite::evaluate_sampling_point")
@@ -391,6 +420,12 @@ class SamplingPointNew(SamplingPoint):
         sampling_point_evaluator.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
+
+        if version_equal_or_later(self._meshed_region._server, "11.0"):
+            if hasattr(sampling_point_evaluator.inputs, "mesh_properties_container"):
+                sampling_point_evaluator.inputs.mesh_properties_container(
+                    self._layup_provider.outputs.mesh_properties_container
+                )
 
         sampling_point_evaluator.inputs.time_id(
             evaluate_failure_criterion_per_scope_op.outputs.time_id
@@ -436,9 +471,7 @@ class SamplingPointNew(SamplingPoint):
 
         self._is_uptodate = True
 
-    def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
-    ) -> Sequence[int]:
+    def get_indices(self, spots: Collection[Spot] | None = None) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.
@@ -449,6 +482,7 @@ class SamplingPointNew(SamplingPoint):
         spots :
             Collection of spots. Only the indices of the bottom interfaces of plies
             are returned if ``[Spot.BOTTOM]`` is set.
+            All availabel spots are selected if ``None`` is passed.
 
         Examples
         --------
@@ -456,13 +490,15 @@ class SamplingPointNew(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            spots = self._get_default_spots()
         return get_indices_from_sp(
             self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
         )
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -476,6 +512,8 @@ class SamplingPointNew(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
+        if spots is None:
+            spots = self._get_default_spots()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
     def get_ply_wise_critical_failures(self) -> list[FailureResult]:
@@ -524,7 +562,9 @@ class SamplingPointNew(SamplingPoint):
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
         self._update_and_check_results()
-        add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(
+            self, axes, components, spots, core_scale_factor, title, xlabel
+        )
 
     def add_ply_sequence_to_plot(self, axes: Any, core_scale_factor: float = 1.0) -> None:
         """Add the stacking (ply and text) to an axis or plot.
@@ -537,7 +577,7 @@ class SamplingPointNew(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
-        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
+        add_ply_sequence_to_sampling_point_plot(self, axes, core_scale_factor)
 
     def get_polar_plot(
         self, components: Sequence[str] = ("E1", "E2", "G12")
@@ -568,7 +608,7 @@ class SamplingPointNew(SamplingPoint):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -594,6 +634,7 @@ class SamplingPointNew(SamplingPoint):
             Factor for scaling the thickness of core plies.
         spots
             Spots (interfaces) to show results at.
+            All available spots are selected if ``None`` is passed.
 
         Examples
         --------
@@ -601,7 +642,9 @@ class SamplingPointNew(SamplingPoint):
 
         """
         self._update_and_check_results()
-        return get_result_plots_from_sp(
+        if spots is None:
+            spots = self._get_default_spots()
+        figure = get_result_plots_from_sp(
             self,
             strain_components,
             stress_components,
@@ -611,6 +654,16 @@ class SamplingPointNew(SamplingPoint):
             core_scale_factor,
             spots,
         )
+
+        if create_laminate_plot and self._element_info.is_shell == False:
+            solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
+            add_element_boxes_to_axes(
+                sampling_point=self,
+                solid_stack=solid_stack_provider.get_solid_stack(self._element_id),
+                axes=figure.axes[0],
+                core_scale_factor=core_scale_factor,
+            )
+        return figure
 
     def _update_and_check_results(self) -> None:
         if not self._is_uptodate or not self._results:
