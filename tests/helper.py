@@ -192,9 +192,9 @@ def compare_sampling_point_results(
             if key in ["angle", "thickness"]:
                 assert ap[key] == pytest.approx(
                     ref_ap[key], abs=1e-8, rel=1e-6
-                ), f"{key} mismatch. {ap[key]} != {ref_ap[key]}"
+                ), f"{key} mismatch. {ap} != {ref_ap}"
             else:
-                assert ap[key] == ref_ap[key], f"{key} mismatch. {ap[key]} != {ref_ap[key]}"
+                assert ap[key] == ref_ap[key], f"{key} mismatch. {ap} != {ref_ap}"
 
     result_keys = ["failures", "strains", "stresses", "offsets"]
     reference_results = reference["results"]
