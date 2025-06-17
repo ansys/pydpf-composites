@@ -76,6 +76,7 @@ class SamplingPointNew(SamplingPoint):
     typically three integration points through the thickness. The through-the-thickness
     integration points are called `spots`. They are typically at the ``BOTTOM``, ``MIDDLE``,
     and ``TOP`` of the layer. This notation is used here to identify the corresponding data.
+    Note that solid elements have only two spots (``BOTTOM`` and ``TOP``).
 
     The ``SamplingPoint`` class returns three results per layer (one for each spot) because
     the results of the in-plane integration points are interpolated to the centroid of the element.
@@ -103,14 +104,16 @@ class SamplingPointNew(SamplingPoint):
 
     Sampling Point for solids
     -------------------------
-    The sampling point for solid elements is identical if compared with the one for shell elements except these differences:
-    Due to the fact that the stack of solid elements can contain drop-off and / or cut-off elements,
-    these elements must be handled slightly differently. The layup information (ply name, angle, thickness etc.)
-    of these elements is extracted from the original analysis ply but the material is the one of the
-    homogeneous solid element which can differ from the material of the analysis ply.
-    If a drop-off or cut-off element is split into multiple homogeneous elements, then the sampling point
-    computes the average strain and stress over all these elements. The failure results are the maximum over
-    all. And finally, the sampling point for solids provides results at the bottom and top of each layer only
+    The sampling point for solid elements is identical if compared with the one for shell elements except a few differences:
+    - Due to the fact that the stack of solid elements can contain drop-off and / or cut-off elements, the
+    sampling point has to extract data from homogeneous solid elements without layer information. The layup
+    information (ply name, angle, thickness etc.) of these elements is extracted from the original analysis ply / plies
+    but the material name is the one of the homogeneous solid element which can differ from the material of the
+    analysis ply/plies.
+    - If a drop-off or cut-off element is split into multiple homogeneous elements, then the sampling point
+    returns the average strain and stress over all these elements. The failure value is the maximum over
+    all.
+    - And finally, the sampling point for solids provides results at the bottom and top of each layer only
     (middle is not available).
     """
 
@@ -118,7 +121,6 @@ class SamplingPointNew(SamplingPoint):
         self,
         *,
         name: str,
-        element_id: int,
         element_info: ElementInfo,
         combined_criterion: CombinedFailureCriterion,
         material_operators: MaterialOperators,
@@ -130,7 +132,7 @@ class SamplingPointNew(SamplingPoint):
     ):
         """Create a ``SamplingPoint`` object."""
         self._name = name
-        self._element_id = element_id
+        self._element_id = element_info.id
         self._element_info = element_info
         self._time = time
         self._combined_criterion = combined_criterion
