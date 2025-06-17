@@ -757,6 +757,8 @@ class SamplingPointSolidStack(SamplingPoint):
         alpha :
             Transparency of the element boxes.
         """
+        if self._solid_stack is None:
+            raise RuntimeError("Solid stack is not available")
         add_element_boxes_to_axes(self, self._solid_stack, axes, core_scale_factor, alpha)
 
     def _update_and_check_results(self) -> None:

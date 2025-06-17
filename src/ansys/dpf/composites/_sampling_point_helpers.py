@@ -97,7 +97,7 @@ def get_indices_from_sp(
     interface_indices: dict[Spot, int],
     number_of_plies: int,
     spots_per_ply: int,
-    spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+    spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
 ) -> Sequence[int]:
     """Get the indices of the selected spots (interfaces) for each ply."""
     ply_wise_indices = [interface_indices[v] for v in spots]
