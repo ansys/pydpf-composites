@@ -159,7 +159,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
 
         self._spots_per_ply = 0
-        self._interface_indices: dict[Spot, int] | None = None
+        self._interface_indices: dict[Spot, int] = {}
         self._results: Any = None
         self._is_uptodate = False
         self._unit_system = get_unit_system(self._rst_streams_provider, default_unit_system)
@@ -176,7 +176,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._name = value
 
     @property
-    def element_id(self) -> int | None:
+    def element_id(self) -> int:
         """Element label for sampling the laminate."""
         return self._element_id
 

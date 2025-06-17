@@ -117,7 +117,7 @@ class SamplingPoint(Protocol):
         """Setter of name."""
 
     @property
-    def element_id(self) -> int | None:
+    def element_id(self) -> int:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.

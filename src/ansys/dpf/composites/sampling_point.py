@@ -161,7 +161,7 @@ class SamplingPointNew(SamplingPoint):
         self._name = value
 
     @property
-    def element_id(self) -> int | None:
+    def element_id(self) -> int:
         """Element label for sampling the laminate."""
         return self._element_id
 

@@ -155,7 +155,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._result_definition = value
 
     @property
-    def element_id(self) -> int | None:
+    def element_id(self) -> int:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.
@@ -164,7 +164,7 @@ class SamplingPoint2023R2(SamplingPoint):
         if len(element_scope) > 1:
             raise RuntimeError("The scope of a sampling point can only be one element.")
         if len(element_scope) == 0:
-            return None
+            raise RuntimeError("The scope of a sampling point is not set.")
         return element_scope[0]
 
     @element_id.setter
