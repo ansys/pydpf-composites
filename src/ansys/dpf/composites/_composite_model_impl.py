@@ -521,7 +521,7 @@ class CompositeModelImpl:
             raise RuntimeError("get_sampling_point is implemented for MAPDL results only.")
 
         element_info = self.get_element_info(element_id)
-        if not element_info.is_shell and version_older_than(self.get_mesh()._server, "11.0"):
+        if not element_info.is_shell and version_older_than(self._server, "11.0"):
             # Version check of the server is implemented in SamplingPointSolidStack
             return SamplingPointSolidStack(
                 name=f"Solid Stack - element {element_id}",

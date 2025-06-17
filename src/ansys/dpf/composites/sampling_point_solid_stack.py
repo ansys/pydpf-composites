@@ -159,7 +159,7 @@ class SamplingPointSolidStack(SamplingPoint):
         self._solid_stack_provider = SolidStackProvider(self._meshed_region, self._layup_provider)
 
         self._spots_per_ply = 0
-        self._interface_indices: dict[Spot, int] = {}
+        self._interface_indices: dict[Spot, int] | None = None
         self._results: Any = None
         self._is_uptodate = False
         self._unit_system = get_unit_system(self._rst_streams_provider, default_unit_system)
@@ -575,6 +575,8 @@ class SamplingPointSolidStack(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("`spots` must be provided to get indices.")
         return get_indices_from_sp(
             self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
         )
@@ -594,6 +596,8 @@ class SamplingPointSolidStack(SamplingPoint):
         core_scale_factor :
             Factor for scaling the thickness of core plies.
         """
+        if spots is None:
+            raise RuntimeError("`spots` must be provided to get offsets.")
         self._update_and_check_results()
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
@@ -722,6 +726,8 @@ class SamplingPointSolidStack(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("`spots` must be provided to get the results plots.")
         sp_figure = get_result_plots_from_sp(
             self,
             strain_components,

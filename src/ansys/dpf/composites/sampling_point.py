@@ -498,7 +498,7 @@ class SamplingPointNew(SamplingPoint):
         spots :
             Collection of spots. Only the indices of the bottom interfaces of plies
             are returned if ``[Spot.BOTTOM]`` is set.
-            All availabel spots are selected if ``None`` is passed.
+            All available spots are selected if ``None`` is passed.
 
         Examples
         --------
