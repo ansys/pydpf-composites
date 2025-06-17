@@ -30,6 +30,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .constants import Spot
+from .layup_info import SolidStack
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import (
     FAILURE_MODE_NAMES_TO_ACP,
@@ -394,7 +395,11 @@ def get_result_plots_from_sp(
 
 
 def add_element_boxes_to_axes(
-    sampling_point, solid_stack, axes: Any, core_scale_factor: float = 1.0, alpha: float = 0.2
+    sampling_point: SamplingPoint,
+    solid_stack: SolidStack,
+    axes: Any,
+    core_scale_factor: float = 1.0,
+    alpha: float = 0.2,
 ) -> None:
     """Add the element stack (boxes) to an axis or plot.
 

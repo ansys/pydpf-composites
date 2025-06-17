@@ -555,7 +555,9 @@ class SamplingPointSolidStack(SamplingPoint):
 
         self._is_uptodate = True
 
-    def get_indices(self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP)) -> Sequence[int]:
+    def get_indices(
+        self, spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.TOP)
+    ) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.
@@ -579,7 +581,7 @@ class SamplingPointSolidStack(SamplingPoint):
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP),
+        spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.TOP),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -687,7 +689,7 @@ class SamplingPointSolidStack(SamplingPoint):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.TOP),
+        spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.TOP),
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
