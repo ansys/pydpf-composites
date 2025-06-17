@@ -171,10 +171,10 @@ def compare_sampling_point_results(
         sample["unit_system"] == reference["unit_system"]
     ), f"Unit system {sample['unit_system']} != {reference['unit_system']}"
 
-    assert (
-        sample["layup"]["num_analysis_plies"] == reference["layup"]["num_analysis_plies"]
-    ), f"Analysis Plies {sample['layup']['num_analysis_plies']} !=" \
+    assert sample["layup"]["num_analysis_plies"] == reference["layup"]["num_analysis_plies"], (
+        f"Analysis Plies {sample['layup']['num_analysis_plies']} !="
         " {reference['layup']['num_analysis_plies']}"
+    )
     assert (
         sample["layup"]["offset"] == reference["layup"]["offset"]
     ), f"Offset {sample['layup']['offset']} != {reference['layup']['offset']}"
@@ -210,17 +210,17 @@ def compare_sampling_point_results(
                 err_msg=f"Values '{key}' mismatch.",
             )
         else:
-            assert (
-                sample_results[key].keys() == reference_results[key].keys()
-            ), f"Keys mismatch for {key}. Expected {reference_results[key].keys()}" \
-               f" but got {sample_results[key].keys()}."
+            assert sample_results[key].keys() == reference_results[key].keys(), (
+                f"Keys mismatch for {key}. Expected {reference_results[key].keys()}"
+                f" but got {sample_results[key].keys()}."
+            )
             for component in sample_results[key].keys():
                 if component == "failure_modes":
                     # compare list of strings
-                    assert (
-                        sample_results[key][component] == reference_results[key][component]
-                    ), f"{key}/{component} mismatch: {sample_results[key][component]} " \
-                       f"!= {reference_results[key][component]}"
+                    assert sample_results[key][component] == reference_results[key][component], (
+                        f"{key}/{component} mismatch: {sample_results[key][component]} "
+                        f"!= {reference_results[key][component]}"
+                    )
                 else:
                     numpy.testing.assert_allclose(
                         sample_results[key][component],
