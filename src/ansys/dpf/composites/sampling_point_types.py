@@ -107,8 +107,6 @@ class SamplingPoint(Protocol):
     The :meth:`.SamplingPoint.get_indices` and :meth:`.SamplingPoint.get_offsets_by_spots`
     methods simplify the indexing and filtering of the data.
 
-    Notes
-    -----
     The sampling point for solid elements is identical if compared with the one for shell
     elements except a few differences:
     - Due to the fact that the stack of solid elements can contain drop-off and / or cut-off
