@@ -104,6 +104,7 @@ class SamplingPointNew(SamplingPoint):
 
     The sampling point for solid elements is identical if compared with the one for shell
     elements except a few differences:
+
     - Due to the fact that the stack of solid elements can contain drop-off and / or cut-off
       elements, the sampling point has to extract data from homogeneous solid elements without
       layer information. The layup information (ply name, angle, thickness etc.) of these
@@ -115,6 +116,7 @@ class SamplingPointNew(SamplingPoint):
       value is the maximum over all.
     - And finally, the sampling point for solids provides results at the bottom and top of
       each layer only (middle is not available).
+
     """
 
     def __init__(
