@@ -522,7 +522,7 @@ class CompositeModelImpl:
 
         element_info = self.get_element_info(element_id)
         if not element_info.is_shell and version_older_than(self._server, "11.0"):
-            # Version check of the server is implemented in SamplingPointSolidStack
+            # Additional version check if solids are supported is done in SamplingPointSolidStack
             return SamplingPointSolidStack(
                 name=f"Solid Stack - element {element_id}",
                 element_id=element_id,

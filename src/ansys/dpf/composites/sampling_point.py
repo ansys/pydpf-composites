@@ -440,10 +440,10 @@ class SamplingPointNew(SamplingPoint):
         )
 
         if version_equal_or_later(self._meshed_region._server, "11.0"):
-            if hasattr(sampling_point_evaluator.inputs, "mesh_properties_container"):
-                sampling_point_evaluator.inputs.mesh_properties_container(
-                    self._layup_provider.outputs.mesh_properties_container
-                )
+            # New input since 2026 R1 (11.0). It is required for the support of solid elements
+            sampling_point_evaluator.inputs.mesh_properties_container(
+                self._layup_provider.outputs.mesh_properties_container
+            )
 
         sampling_point_evaluator.inputs.time_id(
             evaluate_failure_criterion_per_scope_op.outputs.time_id
