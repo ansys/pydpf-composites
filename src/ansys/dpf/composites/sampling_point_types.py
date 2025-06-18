@@ -104,8 +104,24 @@ class SamplingPoint(Protocol):
     |            | - 0        | - BOTTOM of Layer 1    |
     +------------+------------+------------------------+
 
-    The get_indices and get_offsets_by_spots methods simplify the indexing and
-    filtering of the data.
+    The :meth:`.SamplingPoint.get_indices` and :meth:`.SamplingPoint.get_offsets_by_spots`
+    methods simplify the indexing and filtering of the data.
+
+    Sampling Point for solids
+    -------------------------
+    The sampling point for solid elements is identical if compared with the one for shell
+    elements except a few differences:
+    - Due to the fact that the stack of solid elements can contain drop-off and / or cut-off
+      elements, the sampling point has to extract data from homogeneous solid elements without
+      layer information. The layup information (ply name, angle, thickness etc.) of these
+      elements is extracted from the original analysis ply / plies but the material name is the
+      one of the homogeneous solid element which can differ from the material of the
+      analysis ply/plies.
+    - If a drop-off or cut-off element is split into multiple homogeneous elements, then the
+      sampling point returns the average strain and stress over all these elements. The failure
+      value is the maximum over all.
+    - And finally, the sampling point for solids provides results at the bottom and top of
+      each layer only (middle is not available).
     """
 
     @property
