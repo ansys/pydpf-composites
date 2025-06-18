@@ -78,8 +78,8 @@ def get_fc() -> CombinedFailureCriterion:
 def compare_results(current, element_id, old) -> None:
 
     # Use this block to compare the entire output with a diff tool
-    with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}_current.txt"), "w") as f:
-        json.dump(current, f, indent=4, sort_keys=True)
+    # with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}_current.txt"), "w") as f:
+    #    json.dump(current, f, indent=4, sort_keys=True)
 
     suffix = "_old" if old else ""
     with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}{suffix}.txt")) as f:
