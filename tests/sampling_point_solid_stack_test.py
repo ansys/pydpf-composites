@@ -75,11 +75,17 @@ def get_fc() -> CombinedFailureCriterion:
     return cfc
 
 
-def compare_results(current, element_id) -> None:
-    with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}.txt")) as f:
-        reference = json.loads(json.load(f))
+def compare_results(current, element_id, old) -> None:
 
-    compare_sampling_point_results(reference, current, with_polar_properties=False)
+    # Use this block to compare the entire output with a diff tool
+    # with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}_current.txt"), "w") as f:
+    #    json.dump(current, f, indent=4, sort_keys=True)
+
+    suffix = "_old" if old else ""
+    with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}{suffix}.txt")) as f:
+        reference = json.load(f)
+
+    compare_sampling_point_results(current, reference, with_polar_properties=False)
 
 
 def get_sampling_point_plot(sampling_point: SamplingPoint) -> SamplingPointFigure:
@@ -312,7 +318,9 @@ def test_sampling_point_solid_stack(dpf_server):
 
     plot = get_sampling_point_plot(sampling_point)
     # plot.figure.show()
-    compare_results(sampling_point.results[0], ELEMENT_OF_LAYERED_STACK)
+    compare_results(
+        sampling_point.results[0], ELEMENT_OF_LAYERED_STACK, version_older_than(dpf_server, "11.0")
+    )
 
 
 def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
@@ -335,7 +343,9 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
 
         plot = get_sampling_point_plot(sampling_point)
         # plot.figure.show()
-        compare_results(sampling_point.results[0], element_id)
+        compare_results(
+            sampling_point.results[0], element_id, version_older_than(dpf_server, "11.0")
+        )
 
 
 def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
@@ -350,9 +360,11 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
 
     # Element of a solid stack with cut-off elements
     sampling_point = composite_model.get_sampling_point(
-        combined_criterion=get_fc(), element_id=219, time=1
+        combined_criterion=get_fc(), element_id=ELEMENT_OF_CUTOFF_STACK, time=1
     )
 
     plot = get_sampling_point_plot(sampling_point)
     # plot.figure.show()
-    compare_results(sampling_point.results[0], 219)
+    compare_results(
+        sampling_point.results[0], ELEMENT_OF_CUTOFF_STACK, version_older_than(dpf_server, "11.0")
+    )

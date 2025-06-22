@@ -104,8 +104,26 @@ class SamplingPoint(Protocol):
     |            | - 0        | - BOTTOM of Layer 1    |
     +------------+------------+------------------------+
 
-    The get_indices and get_offsets_by_spots methods simplify the indexing and
-    filtering of the data.
+    The :meth:`.SamplingPoint.get_indices` and :meth:`.SamplingPoint.get_offsets_by_spots`
+    methods simplify the indexing and filtering of the data.
+
+    The sampling point for solid elements is identical if compared with the one for shell
+    elements except a few differences:
+
+    - Due to the fact that the stack of solid elements can contain drop-off and / or cut-off
+        elements, the sampling point has to extract data from homogeneous solid elements without
+        layer information. The layup information (ply name, angle, thickness etc.) of these
+        elements is extracted from the original analysis ply / plies but the material name is the
+        one of the homogeneous solid element which can differ from the material of the
+        analysis ply/plies.
+
+    - If a drop-off or cut-off element is split into multiple homogeneous elements, then the
+        sampling point returns the average strain and stress over all these elements. The failure
+        value is the maximum over all.
+
+    - And finally, the sampling point for solids provides results at the bottom and top of
+        each layer only (middle is not available).
+
     """
 
     @property
@@ -117,7 +135,7 @@ class SamplingPoint(Protocol):
         """Setter of name."""
 
     @property
-    def element_id(self) -> int | None:
+    def element_id(self) -> int:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.
@@ -233,9 +251,7 @@ class SamplingPoint(Protocol):
     def is_uptodate(self) -> bool:
         """True if the Sampling Point is up-to-date."""
 
-    def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
-    ) -> Sequence[int]:
+    def get_indices(self, spots: Collection[Spot] | None = None) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
         The indices are sorted from bottom to top.
@@ -246,6 +262,7 @@ class SamplingPoint(Protocol):
         spots :
             Collection of spots. Only the indices of the bottom interfaces of plies
             are returned if ``[Spot.BOTTOM]`` is set.
+            All available spots are selected if spots is None.
 
         Examples
         --------
@@ -255,7 +272,7 @@ class SamplingPoint(Protocol):
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -264,6 +281,7 @@ class SamplingPoint(Protocol):
         ----------
         spots :
             Collection of spots.
+            All available spots are selected if spots is None.
 
         core_scale_factor :
             Factor for scaling the thickness of core plies.
@@ -351,7 +369,7 @@ class SamplingPoint(Protocol):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = None,
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -377,6 +395,7 @@ class SamplingPoint(Protocol):
             Factor for scaling the thickness of core plies.
         spots
             Spots (interfaces) to show results at.
+            All available spots are selected if spots is None.
 
         Examples
         --------

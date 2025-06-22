@@ -164,25 +164,38 @@ def get_dummy_data_files(distributed: bool = False):
 def compare_sampling_point_results(
     sample: dict[Any, Any], reference: dict[Any, Any], with_polar_properties: bool
 ) -> None:
-    assert sample["element_label"] == reference["element_label"]
-    assert sample["unit_system"] == reference["unit_system"]
+    assert (
+        sample["element_label"] == reference["element_label"]
+    ), f"Label {sample['element_label']} != {reference['element_label']}"
+    assert (
+        sample["unit_system"] == reference["unit_system"]
+    ), f"Unit system {sample['unit_system']} != {reference['unit_system']}"
 
-    assert sample["layup"]["num_analysis_plies"] == reference["layup"]["num_analysis_plies"]
-    assert sample["layup"]["offset"] == reference["layup"]["offset"]
+    assert sample["layup"]["num_analysis_plies"] == reference["layup"]["num_analysis_plies"], (
+        f"Analysis Plies {sample['layup']['num_analysis_plies']} !="
+        " {reference['layup']['num_analysis_plies']}"
+    )
+    assert (
+        sample["layup"]["offset"] == reference["layup"]["offset"]
+    ), f"Offset {sample['layup']['offset']} != {reference['layup']['offset']}"
     if not with_polar_properties:
         assert sample["layup"]["polar_properties"] is None
     else:
         raise RuntimeError("Float comparison of polar properties is not implemented.")
 
-    assert len(sample["layup"]["analysis_plies"]) == len(reference["layup"]["analysis_plies"])
+    assert len(sample["layup"]["analysis_plies"]) == len(
+        reference["layup"]["analysis_plies"]
+    ), f"{len(sample['layup']['analysis_plies'])} != {len(reference['layup']['analysis_plies'])}"
     for ap_index, ap in enumerate(sample["layup"]["analysis_plies"]):
         ref_ap = reference["layup"]["analysis_plies"][ap_index]
         assert ap.keys() == ref_ap.keys()
         for key in ap.keys():
             if key in ["angle", "thickness"]:
-                assert ap[key] == pytest.approx(ref_ap[key], abs=1e-8, rel=1e-6)
+                assert ap[key] == pytest.approx(
+                    ref_ap[key], abs=1e-8, rel=1e-6
+                ), f"{key} mismatch. {ap} != {ref_ap}"
             else:
-                assert ap[key] == ref_ap[key]
+                assert ap[key] == ref_ap[key], f"{key} mismatch. {ap} != {ref_ap}"
 
     result_keys = ["failures", "strains", "stresses", "offsets"]
     reference_results = reference["results"]
@@ -190,14 +203,24 @@ def compare_sampling_point_results(
     for key in result_keys:
         if key == "offsets":
             numpy.testing.assert_allclose(
-                sample_results[key], reference_results[key], rtol=1e-6, atol=1e-8
+                sample_results[key],
+                reference_results[key],
+                rtol=1e-6,
+                atol=1e-8,
+                err_msg=f"Values '{key}' mismatch.",
             )
         else:
-            assert sample_results[key].keys() == reference_results[key].keys()
+            assert sample_results[key].keys() == reference_results[key].keys(), (
+                f"Keys mismatch for {key}. Expected {reference_results[key].keys()}"
+                f" but got {sample_results[key].keys()}."
+            )
             for component in sample_results[key].keys():
                 if component == "failure_modes":
                     # compare list of strings
-                    assert sample_results[key][component] == reference_results[key][component]
+                    assert sample_results[key][component] == reference_results[key][component], (
+                        f"{key}/{component} mismatch: {sample_results[key][component]} "
+                        f"!= {reference_results[key][component]}"
+                    )
                 else:
                     numpy.testing.assert_allclose(
                         sample_results[key][component],

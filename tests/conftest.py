@@ -69,7 +69,8 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         ANSYS_PATH_OPTION_KEY,
         action="store",
         help="If set, the dpf server is started from an Ansys location located at the given path."
-        r"Example: C:\\Program Files\\Ansys Inc\\v231",
+        r"Example: C:\\Program Files\\Ansys Inc\\v261",
+        # default="C:\\Program Files\\Ansys Inc\\v261",
     )
 
     parser.addoption(
