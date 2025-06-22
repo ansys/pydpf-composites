@@ -636,8 +636,32 @@ The following table shows an example of a laminate with three layers. So a resul
 </tbody>
 </table>
 </div>
-<p>The get_indices and get_offsets_by_spots methods simplify the indexing and
-filtering of the data.</p>
+<p>The <a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_indices" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_indices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SamplingPoint.get_indices()</span></code></a> and <a class="reference internal" href="ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots.html#ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots" title="ansys.dpf.composites.sampling_point.SamplingPoint.get_offsets_by_spots"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SamplingPoint.get_offsets_by_spots()</span></code></a>
+methods simplify the indexing and filtering of the data.</p>
+<p>The sampling point for solid elements is identical if compared with the one for shell
+elements except a few differences:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Due to the fact that the stack of solid elements can contain drop-off and / or cut-off</dt><dd><p>elements, the sampling point has to extract data from homogeneous solid elements without
+layer information. The layup information (ply name, angle, thickness etc.) of these
+elements is extracted from the original analysis ply / plies but the material name is the
+one of the homogeneous solid element which can differ from the material of the
+analysis ply/plies.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If a drop-off or cut-off element is split into multiple homogeneous elements, then the</dt><dd><p>sampling point returns the average strain and stress over all these elements. The failure
+value is the maximum over all.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>And finally, the sampling point for solids provides results at the bottom and top of</dt><dd><p>each layer only (middle is not available).</p>
+</dd>
+</dl>
+</li>
+</ul>
 <p class="rubric">Methods</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>

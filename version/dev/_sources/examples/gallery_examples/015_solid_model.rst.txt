@@ -286,13 +286,11 @@ and the third has 2 layers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-160
+.. GENERATED FROM PYTHON SOURCE LINES 157-158
 
-Here is another sampling point plot with the in-plane strains only
-and the colored boxes to indicate the solid elements are added
-to the plot as well.
+Here is another sampling point plot with the in-plane strains
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-178
+.. GENERATED FROM PYTHON SOURCE LINES 158-171
 
 .. code-block:: Python
 
@@ -303,11 +301,6 @@ to the plot as well.
         core_scale_factor=core_scale_factor,
         create_laminate_plot=False,
         show_failure_modes=True,
-    )
-    sampling_point_solid_stack.add_element_boxes_to_plot(
-        axes=sampling_point_plot.axes,
-        core_scale_factor=core_scale_factor,
-        alpha=0.15,
     )
     sampling_point_plot.figure.set_figheight(8)
     sampling_point_plot.figure.set_figwidth(12)
@@ -326,7 +319,7 @@ to the plot as well.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-184
+.. GENERATED FROM PYTHON SOURCE LINES 172-177
 
 Solid Stack Information
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -334,7 +327,7 @@ Information about the stack of solid elements can be retrieved
 by using the SolidStackProvider. A basic example is shown below
 where 6 is the element ID (label) and not an index.
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-191
+.. GENERATED FROM PYTHON SOURCE LINES 177-184
 
 .. code-block:: Python
 
@@ -359,12 +352,12 @@ where 6 is the element ID (label) and not an index.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 192-194
+.. GENERATED FROM PYTHON SOURCE LINES 185-187
 
 The solid stack can then be used for example to get the through-the-thickness results.
 In this example, s11, s22 and s12 are retrieved for the last time step.
 
-.. GENERATED FROM PYTHON SOURCE LINES 194-210
+.. GENERATED FROM PYTHON SOURCE LINES 187-203
 
 .. code-block:: Python
 
@@ -400,7 +393,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 19.401 seconds)
+   **Total running time of the script:** (0 minutes 18.801 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_015_solid_model.py:
