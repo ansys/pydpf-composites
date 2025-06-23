@@ -440,9 +440,6 @@ class SamplingPointNew(SamplingPoint):
         sampling_point_evaluator.inputs.section_data_container(
             self._layup_provider.outputs.section_data_container
         )
-        sampling_point_evaluator.inputs.mesh_properties_container(
-            self._layup_provider.outputs.mesh_properties_container
-        )
 
         if version_equal_or_later(self._meshed_region._server, "11.0"):
             # New input since 2026 R1 (11.0). It is required for the support of solid elements
