@@ -34,8 +34,8 @@ import numpy as np
 import numpy.typing as npt
 
 from ._sampling_point_helpers import (
-    add_ply_sequence_to_plot_to_sp,
-    add_results_to_plot_to_sp,
+    add_ply_sequence_to_sampling_point_plot,
+    add_results_to_sampling_point_plot,
     get_analysis_plies_from_sp,
     get_data_from_sp_results,
     get_indices_from_sp,
@@ -155,7 +155,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._result_definition = value
 
     @property
-    def element_id(self) -> int | None:
+    def element_id(self) -> int:
         """Element label for sampling the laminate.
 
         This attribute returns ``-1`` if the element ID is not set.
@@ -164,7 +164,7 @@ class SamplingPoint2023R2(SamplingPoint):
         if len(element_scope) > 1:
             raise RuntimeError("The scope of a sampling point can only be one element.")
         if len(element_scope) == 0:
-            return None
+            raise RuntimeError("The scope of a sampling point is not set.")
         return element_scope[0]
 
     @element_id.setter
@@ -382,7 +382,7 @@ class SamplingPoint2023R2(SamplingPoint):
         self._is_uptodate = True
 
     def get_indices(
-        self, spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
+        self, spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP)
     ) -> Sequence[int]:
         """Get the indices of the selected spots (interfaces) for each ply.
 
@@ -401,13 +401,15 @@ class SamplingPoint2023R2(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("SamplingPoint: spots cannot be None.")
         return get_indices_from_sp(
             self._interface_indices, self.number_of_plies, self.spots_per_ply, spots
         )
 
     def get_offsets_by_spots(
         self,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
         core_scale_factor: float = 1.0,
     ) -> npt.NDArray[np.float64]:
         """Access the y coordinates of the selected spots (interfaces) for each ply.
@@ -421,6 +423,8 @@ class SamplingPoint2023R2(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("SamplingPoint: spots cannot be None.")
         return get_offsets_by_spots_from_sp(self, spots, core_scale_factor)
 
     def get_ply_wise_critical_failures(self) -> list[FailureResult]:
@@ -456,7 +460,7 @@ class SamplingPoint2023R2(SamplingPoint):
             Factor for scaling the thickness of core plies.
         """
         self._update_and_check_results()
-        add_ply_sequence_to_plot_to_sp(self, axes, core_scale_factor)
+        add_ply_sequence_to_sampling_point_plot(self, axes, core_scale_factor)
 
     def add_results_to_plot(
         self,
@@ -498,7 +502,9 @@ class SamplingPoint2023R2(SamplingPoint):
                                                   [Spot.BOTTOM, Spot.TOP],
                                                   0.1, "Interlaminar Stresses", "[MPa]")
         """
-        add_results_to_plot_to_sp(self, axes, components, spots, core_scale_factor, title, xlabel)
+        add_results_to_sampling_point_plot(
+            self, axes, components, spots, core_scale_factor, title, xlabel
+        )
 
     def get_result_plots(
         self,
@@ -512,7 +518,7 @@ class SamplingPoint2023R2(SamplingPoint):
         show_failure_modes: bool = False,
         create_laminate_plot: bool = True,
         core_scale_factor: float = 1.0,
-        spots: Collection[Spot] = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
+        spots: Collection[Spot] | None = (Spot.BOTTOM, Spot.MIDDLE, Spot.TOP),
     ) -> SamplingPointFigure:
         """Generate a figure with a grid of axes (plot) for each selected result entity.
 
@@ -545,6 +551,8 @@ class SamplingPoint2023R2(SamplingPoint):
 
         """
         self._update_and_check_results()
+        if spots is None:
+            raise RuntimeError("SamplingPoint: spots cannot be None.")
         return get_result_plots_from_sp(
             self,
             strain_components,

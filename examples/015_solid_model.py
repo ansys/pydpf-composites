@@ -154,9 +154,7 @@ sampling_point_plot.figure.set_figwidth(12)
 sampling_point_plot.figure.show()
 
 # %%
-# Here is another sampling point plot with the in-plane strains only
-# and the colored boxes to indicate the solid elements are added
-# to the plot as well.
+# Here is another sampling point plot with the in-plane strains
 sampling_point_plot = sampling_point_solid_stack.get_result_plots(
     strain_components=("e1", "e2", "e12"),  # Show in-plane results only
     stress_components=(),  # Don't show stresses
@@ -164,11 +162,6 @@ sampling_point_plot = sampling_point_solid_stack.get_result_plots(
     core_scale_factor=core_scale_factor,
     create_laminate_plot=False,
     show_failure_modes=True,
-)
-sampling_point_solid_stack.add_element_boxes_to_plot(
-    axes=sampling_point_plot.axes,
-    core_scale_factor=core_scale_factor,
-    alpha=0.15,
 )
 sampling_point_plot.figure.set_figheight(8)
 sampling_point_plot.figure.set_figwidth(12)

@@ -188,7 +188,7 @@ class SolidStackProvider:
 
         return analysis_ply_infos
 
-    def _build_solid_stack(self, selected_solid_element: int) -> SolidStack | None:
+    def _build_solid_stack(self, selected_solid_element: int) -> SolidStack:
         """
         Create the solid stack by finding the right stack.
 
@@ -240,13 +240,10 @@ class SolidStackProvider:
                 self._solid_stacks.append(this_stack)
                 return this_stack
 
-        return None
+        raise RuntimeError(f"Cannot build solid stack for element {selected_solid_element}")
 
-    def get_solid_stack(self, element_id: int) -> SolidStack | None:
-        """Get the full solid stack for a given element.
-
-        Returns None if the element is not part of a solid stack.
-        """
+    def get_solid_stack(self, element_id: int) -> SolidStack:
+        """Get the full solid stack for a given element."""
         if element_id in self._element_id_to_solid_stack_index_map:
             solid_stack_index = self._element_id_to_solid_stack_index_map[element_id]
             return self._solid_stacks[solid_stack_index]

@@ -521,45 +521,32 @@ class CompositeModelImpl:
             raise RuntimeError("get_sampling_point is implemented for MAPDL results only.")
 
         element_info = self.get_element_info(element_id)
-        if element_info.is_shell:
-            return SamplingPointNew(
-                name=f"Sampling Point - element {element_id}",
+        if not element_info.is_shell and version_older_than(self._server, "11.0"):
+            # Additional version check if solids are supported is done in SamplingPointSolidStack
+            return SamplingPointSolidStack(
+                name=f"Solid Stack - element {element_id}",
                 element_id=element_id,
                 combined_criterion=combined_criterion,
-                material_operators=self._material_operators,
+                material_operators=self.material_operators,
+                meshed_region=self.get_mesh(),
+                layup_provider=self._layup_provider,
+                rst_streams_provider=self.get_rst_streams_provider(),
+                element_info_provider=self._element_info_provider,
+                default_unit_system=self._unit_system,
+                time=time,
+            )
+        else:
+            return SamplingPointNew(
+                name=f"Sampling Point - element {element_id}",
+                element_info=element_info,
+                combined_criterion=combined_criterion,
+                material_operators=self.material_operators,
                 meshed_region=self.get_mesh(),
                 layup_provider=self._layup_provider,
                 rst_streams_provider=self.get_rst_streams_provider(),
                 default_unit_system=self._unit_system,
                 time=time,
             )
-        else:
-            if version_older_than(self.get_mesh()._server, "11.0"):
-                # Version check of the server is implemented in SamplingPointSolidStack
-                return SamplingPointSolidStack(
-                    name=f"Solid Stack - element {element_id}",
-                    element_id=element_id,
-                    combined_criterion=combined_criterion,
-                    material_operators=self.material_operators,
-                    meshed_region=self.get_mesh(),
-                    layup_provider=self._layup_provider,
-                    rst_streams_provider=self.get_rst_streams_provider(),
-                    element_info_provider=self._element_info_provider,
-                    default_unit_system=self._unit_system,
-                    time=time,
-                )
-
-            return SamplingPointNew(
-                name=f"Sampling Point - solid element {element_id}",
-                element_id=element_id,
-                combined_criterion=combined_criterion,
-                material_operators=self._material_operators,
-                meshed_region=self.get_mesh(),
-                layup_provider=self._layup_provider,
-                rst_streams_provider=self.get_rst_streams_provider(),
-                default_unit_system=self._unit_system,
-                    time=time,
-                )
 
     @_deprecated_composite_definition_label
     def get_element_info(
