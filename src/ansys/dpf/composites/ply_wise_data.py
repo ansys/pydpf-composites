@@ -25,6 +25,7 @@
 from enum import Enum, IntEnum
 
 from ansys.dpf.core import Field, MeshedRegion, Operator, operators
+
 try:
     from ansys.dpf.core.common import locations
 except ImportError:

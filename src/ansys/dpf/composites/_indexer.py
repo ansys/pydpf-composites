@@ -242,14 +242,11 @@ class PropertyFieldIndexerWithDataPointer:
         idx = self._indices[entity_id]
         if idx < 0:
             return None
-        return cast(
-            NDArray[np.int64],
-            self._data[
-                self._data_pointer[idx]
-                // self._n_components : self._data_pointer[idx + 1]
-                // self._n_components
-            ],
-        )
+        return self._data[
+            self._data_pointer[idx]
+            // self._n_components : self._data_pointer[idx + 1]
+            // self._n_components
+        ]
 
 
 class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
@@ -294,14 +291,11 @@ class PropertyFieldIndexerWithDataPointerNoBoundsCheck:
         idx = self._indices[entity_id]
         if idx < 0:
             return None
-        return cast(
-            NDArray[np.int64],
-            self._data[
-                self._data_pointer[idx]
-                // self._n_components : self._data_pointer[idx + 1]
-                // self._n_components
-            ],
-        )
+        return self._data[
+            self._data_pointer[idx]
+            // self._n_components : self._data_pointer[idx + 1]
+            // self._n_components
+        ]
 
 
 # DPF does not set the data pointers if a field has just
@@ -424,11 +418,8 @@ class FieldIndexerWithDataPointer:
         idx = self._indices[entity_id]
         if idx < 0:
             return None
-        return cast(
-            NDArray[np.double],
-            self._data[
-                self._data_pointer[idx]
-                // self._n_components : self._data_pointer[idx + 1]
-                // self._n_components
-            ],
-        )
+        return self._data[
+            self._data_pointer[idx]
+            // self._n_components : self._data_pointer[idx + 1]
+            // self._n_components
+        ]
