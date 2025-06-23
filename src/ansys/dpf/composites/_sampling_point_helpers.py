@@ -119,7 +119,7 @@ def get_offsets_by_spots_from_sp(
     indices = sampling_point.get_indices(spots)
 
     if core_scale_factor == 1.0:
-        return cast(npt.NDArray[np.float64], offsets[indices])
+        return offsets[indices]
 
     spots_per_ply = sampling_point.spots_per_ply
 
@@ -143,7 +143,7 @@ def get_offsets_by_spots_from_sp(
         for i in range(0, spots_per_ply):
             offsets[index * spots_per_ply + i] = top_of_previous_ply + step * i
 
-    return cast(npt.NDArray[np.float64], offsets[indices])
+    return offsets[indices]
 
 
 def get_ply_wise_critical_failures_from_sp(

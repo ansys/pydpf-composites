@@ -87,7 +87,7 @@ composite_model = CompositeModel(
 # %%
 # Get all the time ids to read all time steps and to select the correct results.
 time_freq_support = composite_model.core_model.metadata.time_freq_support
-time_ids = [v for v in time_freq_support.time_frequencies.scoping.ids]
+time_ids = [int(v) for v in time_freq_support.time_frequencies.scoping.ids]
 
 # %%
 # Get displacements at the final time step

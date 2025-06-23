@@ -22,7 +22,11 @@
 
 from collections.abc import Sequence
 
-from ansys.dpf.gate.common import locations
+try:
+    from ansys.dpf.core.common import locations
+except ImportError:
+    # support ansys.dpf.core < 0.13
+    from ansys.dpf.gate.common import locations
 import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
