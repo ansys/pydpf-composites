@@ -168,6 +168,4 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # PyAnsys tags configuration
-html_context = {
-    "pyansys_tags": ['Structures']
-}
+html_context = {"pyansys_tags": ["Structures"]}
