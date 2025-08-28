@@ -166,3 +166,6 @@ source_suffix = ".rst"
 
 # The master toctree document.
 master_doc = "index"
+
+# PyAnsys tags configuration
+html_context = {"pyansys_tags": ["Structures"]}
