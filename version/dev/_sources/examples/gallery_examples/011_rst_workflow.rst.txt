@@ -123,7 +123,7 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(result_files=['/tmp/dataProcessingTemp140709352957696/8db0a043-1bf0-4367-a8dc-c0fbea5ff035/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140709352957696/9488b4d3-7c58-4531-b20e-2d6ab67c5c68/material.engd', solver_input_file=None, files_are_local=False, solver_type=<SolverType.MAPDL: 'mapdl'>)
+    ContinuousFiberCompositesFiles(result_files=['/tmp/dataProcessingTemp139809758635776/c683553e-2ea8-4bce-9ce8-94caa1db27b4/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp139809758635776/2113aee8-0f10-43cd-ac5d-279570cfee46/material.engd', solver_input_file=None, files_are_local=False, solver_type=<SolverType.MAPDL: 'mapdl'>)
 
 
 
@@ -431,7 +431,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 11.274 seconds)
+   **Total running time of the script:** (0 minutes 18.234 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:
