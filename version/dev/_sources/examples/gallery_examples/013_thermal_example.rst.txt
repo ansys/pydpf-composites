@@ -256,7 +256,7 @@ is extracted for the material `Honeycomb Aluminum Alloy`.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.965 seconds)
+   **Total running time of the script:** (0 minutes 6.738 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_013_thermal_example.py:
