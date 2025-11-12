@@ -154,9 +154,9 @@ class SolidStackProvider:
         """Number of solid stacks in the model."""
         return int(self._solid_stacks_property_field.scoping.size)
 
-    def _get_analysis_ply_info_for_homogeneous_element(self, element_id: int) -> dict[str, float]:
+    def _get_analysis_ply_thicknesses_for_homogeneous_element(self, element_id: int) -> dict[str, float]:
         """
-        Get the analysis ply info for homogeneous elements.
+        Get the analysis ply thicknesses for homogeneous elements.
 
         Drop-off and cut-off elements origin from layered elements and so the information
         is extracted from the lay-up provider (ACP composite definitions).
@@ -180,11 +180,11 @@ class SolidStackProvider:
                     analysis_ply_infos[ply_name] = virtual_thickness
                 else:
                     basic_ap_info = analysis_ply_info_provider.basic_info()
-                    analysis_ply_infos[ply_name] = basic_ap_info.nominal_thickness
+                    analysis_ply_infos[ply_name] = float(basic_ap_info.nominal_thickness)
 
         if virtual_thickness and len(analysis_ply_infos) > 1:
             for k in analysis_ply_infos.keys():
-                analysis_ply_infos[k] = virtual_thickness / len(analysis_ply_infos)
+                analysis_ply_infos[k] = float(virtual_thickness / len(analysis_ply_infos))
 
         return analysis_ply_infos
 
@@ -199,14 +199,14 @@ class SolidStackProvider:
         Returns None if the element is not part of a solid stack.
         """
         for index in range(0, self.number_of_stacks):
-            elementary_data = self._solid_stacks_property_field.get_entity_data(index)
+            elementary_data = [(int(v[0]), v[1]) for v in self._solid_stacks_property_field.get_entity_data(index)]
             element_ids = [v[0] for v in elementary_data]
             if selected_solid_element in element_ids:
                 element_wise_analysis_plies: dict[int, Sequence[str]] = {}
                 element_ply_thicknesses: dict[int, Sequence[float]] = {}
                 element_wise_levels: dict[int, int] = {}
                 for element_id, level in elementary_data:
-                    element_wise_levels[int(element_id)] = level
+                    element_wise_levels[element_id] = level
                     ply_ids = self._layup_property_provider.get_analysis_plies(element_id)
                     if ply_ids:
                         element_wise_analysis_plies[element_id] = ply_ids
@@ -217,19 +217,19 @@ class SolidStackProvider:
                             element_id
                         )
                         if layer_thicknesses is not None:
-                            element_ply_thicknesses[int(element_id)] = [
+                            element_ply_thicknesses[element_id] = [
                                 float(v) for v in layer_thicknesses
                             ]
                         else:
                             raise RuntimeError("Could not extract the layer thicknesses!")
                     else:
-                        ply_infos = self._get_analysis_ply_info_for_homogeneous_element(element_id)
+                        ply_infos = self._get_analysis_ply_thicknesses_for_homogeneous_element(element_id)
                         if ply_infos:
                             element_wise_analysis_plies[element_id] = list(ply_infos.keys())
                             self._element_id_to_solid_stack_index_map[element_id] = len(
                                 self._solid_stacks
                             )
-                            element_ply_thicknesses[int(element_id)] = list(ply_infos.values())
+                            element_ply_thicknesses[element_id] = list(ply_infos.values())
 
                 this_stack = SolidStack(
                     element_ids=element_ids,

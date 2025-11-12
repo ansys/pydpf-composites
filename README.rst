@@ -92,7 +92,7 @@ familiar with the `PyAnsys Developer's Guide`_.
 
     .. code:: bash
 
-        poetry shell
+        poetry env activate
 
 
 Test
