@@ -51,7 +51,6 @@ html_theme_options = {
         "json_url": f"https://{cname}/versions.json",
         "version_match": get_version_match(__version__),
     },
-    "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
 }
 
 # Sphinx extensions
@@ -167,3 +166,6 @@ source_suffix = ".rst"
 
 # The master toctree document.
 master_doc = "index"
+
+# PyAnsys tags configuration
+html_context = {"pyansys_tags": ["Structures"]}
