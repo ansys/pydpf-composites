@@ -162,7 +162,7 @@ class SolidStackProvider:
 
         Drop-off and cut-off elements origin from layered elements and so the information
         is extracted from the lay-up provider (ACP composite definitions).
-        The return is sorted by the global ply number (id).
+        The returned list is sorted by the global ply number (id).
         """
         virtual_thickness = None
         if (
@@ -241,16 +241,12 @@ class SolidStackProvider:
                         else:
                             raise RuntimeError("Could not extract the layer thicknesses!")
                     else:
-                        ap_basic_info = (
-                            self._get_basic_ap_info_for_homogeneous_element(element_id)
-                        )
+                        ap_basic_info = self._get_basic_ap_info_for_homogeneous_element(element_id)
                         if ap_basic_info:
                             element_wise_analysis_plies[element_id] = [
                                 name for name, _ in ap_basic_info
                             ]
-                            element_ply_thicknesses[element_id] = [
-                                th for _, th in ap_basic_info
-                            ]
+                            element_ply_thicknesses[element_id] = [th for _, th in ap_basic_info]
                             self._element_id_to_solid_stack_index_map[element_id] = len(
                                 self._solid_stacks
                             )
