@@ -52,14 +52,15 @@ and material are provided.
 # Setting up the analysis consists of loading the required modules, connecting to the
 # DPF server, and retrieving the example files.
 #
-import ansys.dpf.core as dpf
-import numpy as np
+# import ansys.dpf.core as dpf
+# import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
-from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
-from ansys.dpf.composites.select_indices import get_selected_indices_by_dpf_material_ids
+
+# from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
+# from ansys.dpf.composites.select_indices import get_selected_indices_by_dpf_material_ids
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 server = connect_to_or_start_server()
