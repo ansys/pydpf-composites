@@ -115,7 +115,9 @@ print(all_ply_names)
 # # get the last result field
 # temperatures_field = temperatures_fc[-1]
 #
-# material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+# material_result_field = dpf.field.Field(
+#     location=dpf.locations.elemental, nature=dpf.natures.scalar
+# )
 # # performance optimization: use a local field instead of a field which is pushed to the server
 # with material_result_field.as_local_field() as local_result_field:
 #     element_ids = temperatures_field.scoping.ids
