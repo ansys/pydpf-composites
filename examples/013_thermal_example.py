@@ -88,7 +88,6 @@ temperatures_fc = temp_op.outputs.fields_container()
 
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
-
 """
 Reactivate once issue https://github.com/ansys/pydpf-core/issues/2751
 is resolved.
