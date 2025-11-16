@@ -125,7 +125,9 @@ print(all_ply_names)
 #         assert element_info is not None
 #         if material_id in element_info.dpf_material_ids:
 #             temp_data = temperatures_field.get_entity_data_by_id(element_id)
-#             selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [material_id])
+#             selected_indices = get_selected_indices_by_dpf_material_ids(
+#                 element_info, [material_id]
+#             )
 #
 #             value = np.max(temp_data[selected_indices])
 #             local_result_field.append([value], element_id)
