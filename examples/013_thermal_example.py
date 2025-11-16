@@ -88,6 +88,10 @@ temperatures_fc = temp_op.outputs.fields_container()
 all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
 print(all_ply_names)
 
+"""
+Reactivate once issue https://github.com/ansys/pydpf-core/issues/2751
+is resolved.
+
 # The component of the temperature is 0 which is the default value.
 nodal_values = get_ply_wise_data(
     field=temperatures_fc,
@@ -127,3 +131,4 @@ with material_result_field.as_local_field() as local_result_field:
             local_result_field.append([value], element_id)
 
 composite_model.get_mesh().plot(material_result_field)
+"""
