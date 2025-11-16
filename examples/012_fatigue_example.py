@@ -109,7 +109,7 @@ component = Sym3x3TensorComponent.TENSOR11
 # No mean stress correction is applied.
 #
 number_of_times = 100
-np.random.seed(111) # make the random numbers predictable and the example reproducible
+np.random.seed(111)  # make the random numbers predictable and the example reproducible
 load_factor_time_series = np.random.normal(-1, 2.5, size=number_of_times)
 x = np.linspace(1, number_of_times, number_of_times)
 plt.xlabel("Load Index")
