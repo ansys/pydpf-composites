@@ -88,11 +88,11 @@ familiar with the `PyAnsys Developer's Guide`_.
         poetry install --all-extras
 
 
-#.  Activate the virtual environment:
+#.  Activate the virtual environment by executing the command printed by:
 
     .. code:: bash
 
-        poetry shell
+        poetry env activate
 
 
 Test
