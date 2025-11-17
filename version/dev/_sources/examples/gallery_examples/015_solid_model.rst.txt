@@ -347,7 +347,7 @@ where 6 is the element ID (label) and not an index.
  .. code-block:: none
 
     Number of solid stacks: 2
-    Solid stack of element 6: SolidStack(element_ids=[np.int32(6), np.int32(8), np.int32(10)], element_wise_analysis_plies={np.int32(6): ['solid::P1L1__woven_45', 'solid::P1L1__ud_patch ns1', 'solid::P1L1__ud'], np.int32(8): ['solid::P1L1__core'], np.int32(10): ['solid::P1L1__ud.2', 'solid::P1L1__woven_45.2']}, element_ply_thicknesses={6: [0.00025, 0.0002, 0.0002], 8: [0.005000000000000001], 10: [0.00019999999999999996, 0.00024999999999999995]}, element_wise_levels={6: np.int32(0), 8: np.int32(1), 10: np.int32(2)})
+    Solid stack of element 6: SolidStack(element_ids=[6, 8, 10], element_wise_analysis_plies={6: ['solid::P1L1__woven_45', 'solid::P1L1__ud_patch ns1', 'solid::P1L1__ud'], 8: ['solid::P1L1__core'], 10: ['solid::P1L1__ud.2', 'solid::P1L1__woven_45.2']}, element_ply_thicknesses={6: [0.00025, 0.0002, 0.0002], 8: [0.005000000000000001], 10: [0.00019999999999999996, 0.00024999999999999995]}, element_wise_levels={6: 0, 8: 1, 10: 2})
 
 
 
@@ -393,7 +393,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 30.016 seconds)
+   **Total running time of the script:** (0 minutes 35.000 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_015_solid_model.py:
