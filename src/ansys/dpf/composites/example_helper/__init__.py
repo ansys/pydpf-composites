@@ -213,14 +213,17 @@ def _download_and_upload_file(
     directory: str, filename: str, tmpdir: str, server: dpf.server
 ) -> str:
     """Download example file from example_data repo and upload it the dpf server."""
-    file_url = _get_file_url(directory, filename)
-    local_path = os.path.join(tmpdir, filename)
-    if server.local_server:
-        local_path = os.path.join(os.getcwd(), filename)
-    urllib.request.urlretrieve(file_url, local_path)
-    if server.local_server:
-        return local_path
-    return upload_file_to_unique_tmp_folder(local_path, server=server)
+    try:
+        file_url = _get_file_url(directory, filename)
+        local_path = os.path.join(tmpdir, filename)
+        if server.local_server:
+            local_path = os.path.join(os.getcwd(), filename)
+        urllib.request.urlretrieve(file_url, local_path)
+        if server.local_server:
+            return local_path
+        return upload_file_to_unique_tmp_folder(local_path, server=server)
+    except Exception as ex:
+        raise RuntimeError(f"Cannot download and upload example file from {filename}") from ex
 
 
 def _download_and_upload_files(
@@ -231,19 +234,25 @@ def _download_and_upload_files(
     Files are uploaded to the same tmp folder on the remote dpf server. Upload
     is skipped in case of local server.
     """
-    file_paths_on_client: list[_PATH] = []
-    for filename in filenames:
-        file_url = _get_file_url(directory, filename)
-        local_path = os.path.join(tmpdir, filename)
-        if server.local_server:
-            local_path = os.path.join(os.getcwd(), filename)
-        urllib.request.urlretrieve(file_url, local_path)
-        file_paths_on_client.append(local_path)
+    try:
+        file_paths_on_client: list[_PATH] = []
+        for filename in filenames:
+            file_url = _get_file_url(directory, filename)
+            local_path = os.path.join(tmpdir, filename)
+            if server.local_server:
+                local_path = os.path.join(os.getcwd(), filename)
+            urllib.request.urlretrieve(file_url, local_path)
+            file_paths_on_client.append(local_path)
 
-    if server.local_server:
-        return file_paths_on_client
-    else:
-        return upload_files_to_unique_tmp_folder(file_paths_on_client, server=server)
+        if server.local_server:
+            return file_paths_on_client
+        else:
+            return upload_files_to_unique_tmp_folder(file_paths_on_client, server=server)
+    except Exception as ex:
+        filenames_as_str = ", ".join(filenames)
+        raise RuntimeError(
+            f"Cannot download and upload example files from {filenames_as_str}"
+        ) from ex
 
 
 def get_short_fiber_example_files(
