@@ -528,12 +528,10 @@ to download the full example code.</p>
 <span id="solid-model-example"></span><span id="sphx-glr-examples-gallery-examples-015-solid-model-py"></span><h1>Postprocess a solid model<a class="headerlink" href="#postprocess-a-solid-model" title="Link to this heading">#</a></h1>
 <p>This example shows features which are tailored for the postprocessing of
 solid models. These are</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><p>Failure plot on the reference surface</p></li>
 <li><p>Sampling point for solid elements</p></li>
 </ul>
-</div></blockquote>
 <p>The model is an assembly with solid and shell elements. So, the example also
 demonstrates how to distinguish between different element types.</p>
 <div class="admonition note">
@@ -695,8 +693,9 @@ and the third has 2 layers.</p>
 <section id="solid-stack-information">
 <h2>Solid Stack Information<a class="headerlink" href="#solid-stack-information" title="Link to this heading">#</a></h2>
 <p>Information about the stack of solid elements can be retrieved
-by using the SolidStackProvider. A basic example is shown below
-where 6 is the element ID (label) and not an index.</p>
+by using the SolidStackProvider. A basic example is shown below:
+The element ID 6 (not index 6) refers to one of the solid elements
+in the stack.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">solid_stack_provider</span> <span class="o">=</span> <span class="n">SolidStackProvider</span><span class="p">(</span>
     <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_layup_operator</span><span class="p">()</span>
 <span class="p">)</span>
@@ -732,7 +731,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;s1&#39;: [236009100.0, 82238220.0, 1655682496.0, 1097056512.0, 1097056512.0, 538430544.0, -2590.4479217529297, -2853.4053344726562, 196753936.0, -234099612.0, -2539490.375, -118968348.0], &#39;s2&#39;: [634072800.0, 448304904.0, -7902233.0, -18554689.5, -18554689.5, -29207148.25, -8803.749724388123, -3417.094207763672, 10060274.8125, 2203868.5, -61806631.0, -206908704.0], &#39;s12&#39;: [-81675167.0, -62011951.0, -30245672.5, -28130711.0, -28130711.0, -26015750.0, -0.005535265867365524, 0.0006386361201293766, 3001589.77734375, 4896852.3125, 9372089.75, 24551776.0]}
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 30.199 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 34.687 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-015-solid-model-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/debe3e53f1a4e5b816a06fac00740567/015_solid_model.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">015_solid_model.ipynb</span></code></a></p>

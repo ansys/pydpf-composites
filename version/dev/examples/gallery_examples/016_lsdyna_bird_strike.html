@@ -573,10 +573,9 @@ reader will automatically pick up the other files.</p></li>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.example_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.ply_wise_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpotReductionStrategy</span><span class="p">,</span> <span class="n">get_ply_wise_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.server_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
-
-<span class="c1"># sphinx_gallery_thumbnail_number = 4</span>
-
-<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a><span class="p">,</span> <span class="s2">&quot;lsdyna_bird_strike&quot;</span><span class="p">)</span>
 
 <span class="n">composite_model</span> <span class="o">=</span> <span class="n">CompositeModel</span><span class="p">(</span>
@@ -662,7 +661,6 @@ MAXINT is equal or greater than the number of layers.</p>
         <span class="n">field_or_fields_container</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">elemental_values</span></a><span class="p">,</span>
         <span class="n">deform_by</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">displacement</span></a><span class="p">,</span>
         <span class="n">cpos</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">camera</span></a><span class="p">,</span>
-        <span class="n">zoom</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -722,7 +720,6 @@ is plotted. 1 stands for elastic, 0 means failed.</p>
         <span class="n">field_or_fields_container</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">elemental_values</span></a><span class="p">,</span>
         <span class="n">deform_by</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">displacement</span></a><span class="p">,</span>
         <span class="n">cpos</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">camera</span></a><span class="p">,</span>
-        <span class="n">zoom</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -754,7 +751,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 Plotting history variable 2 of ply P3L2__ModelingPly.1
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 13.399 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 14.434 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-016-lsdyna-bird-strike-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/31f849e3800b179717b605b51db0f76c/016_lsdyna_bird_strike.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">016_lsdyna_bird_strike.ipynb</span></code></a></p>

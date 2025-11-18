@@ -60,7 +60,7 @@ Set up analysis
 ~~~~~~~~~~~~~~~
 Setup of the analysis and initialize the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-87
+.. GENERATED FROM PYTHON SOURCE LINES 65-77
 
 .. code-block:: Python
 
@@ -75,7 +75,18 @@ Setup of the analysis and initialize the composite model.
     from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
     from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
-    # sphinx_gallery_thumbnail_number = 4
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-89
+
+.. code-block:: Python
+
 
     server = connect_to_or_start_server()
     composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
@@ -93,11 +104,11 @@ Setup of the analysis and initialize the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-89
+.. GENERATED FROM PYTHON SOURCE LINES 90-91
 
 Get all the time ids to read all time steps and to select the correct results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-92
+.. GENERATED FROM PYTHON SOURCE LINES 91-94
 
 .. code-block:: Python
 
@@ -111,11 +122,11 @@ Get all the time ids to read all time steps and to select the correct results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-94
+.. GENERATED FROM PYTHON SOURCE LINES 95-96
 
 Get displacements at the final time step
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-97
+.. GENERATED FROM PYTHON SOURCE LINES 96-99
 
 .. code-block:: Python
 
@@ -129,11 +140,11 @@ Get displacements at the final time step
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-99
+.. GENERATED FROM PYTHON SOURCE LINES 100-101
 
 Read stresses in the material coordinate system
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-103
+.. GENERATED FROM PYTHON SOURCE LINES 101-105
 
 .. code-block:: Python
 
@@ -148,7 +159,7 @@ Read stresses in the material coordinate system
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-112
+.. GENERATED FROM PYTHON SOURCE LINES 106-114
 
 Prepare data
 ~~~~~~~~~~~~
@@ -159,7 +170,7 @@ integration points (MAXINT) from the DATABASE_EXTENT_BINARY keyword.
 This parameter can be extracted from the input file (``input.k``) with
 the help of the ``composite::ls_dyna_keyword_parser`` operator.
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-134
+.. GENERATED FROM PYTHON SOURCE LINES 114-136
 
 .. code-block:: Python
 
@@ -192,7 +203,7 @@ the help of the ``composite::ls_dyna_keyword_parser`` operator.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-141
+.. GENERATED FROM PYTHON SOURCE LINES 137-143
 
 Filter data by analysis ply
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -201,7 +212,7 @@ use ``get_all_analysis_ply_names`` to list all available plies.
 Note that one integration point per layer and element is available if
 MAXINT is equal or greater than the number of layers.
 
-.. GENERATED FROM PYTHON SOURCE LINES 141-166
+.. GENERATED FROM PYTHON SOURCE LINES 143-167
 
 .. code-block:: Python
 
@@ -227,7 +238,6 @@ MAXINT is equal or greater than the number of layers.
             field_or_fields_container=elemental_values,
             deform_by=displacement,
             cpos=camera,
-            zoom="tight",
         )
 
 
@@ -298,7 +308,7 @@ MAXINT is equal or greater than the number of layers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 167-172
+.. GENERATED FROM PYTHON SOURCE LINES 168-173
 
 Plot history variables
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -306,7 +316,7 @@ The same procedure can be applied to history variables.
 In this example, the 2nd history variable (compressive fiber mode)
 is plotted. 1 stands for elastic, 0 means failed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-196
+.. GENERATED FROM PYTHON SOURCE LINES 173-196
 
 .. code-block:: Python
 
@@ -332,7 +342,6 @@ is plotted. 1 stands for elastic, 0 means failed.
             field_or_fields_container=elemental_values,
             deform_by=displacement,
             cpos=camera,
-            zoom="tight",
         )
 
 
@@ -405,7 +414,7 @@ is plotted. 1 stands for elastic, 0 means failed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 13.399 seconds)
+   **Total running time of the script:** (0 minutes 14.434 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_016_lsdyna_bird_strike.py:

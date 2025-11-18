@@ -152,17 +152,17 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-96
+.. GENERATED FROM PYTHON SOURCE LINES 95-97
 
-Note that the order of the results can differ from the one shown here.
+The order of field variables is not deterministic. For consistent output,
+they are sorted by name.
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-101
+.. GENERATED FROM PYTHON SOURCE LINES 97-101
 
 .. code-block:: Python
 
-    for index in range(len(field_variables)):
-        field_variable = field_variables[index]
-        print(f"Field variable {field_variable.name}")
+    for field_variable in sorted(field_variables, key=lambda fv: fv.name):
+        print(f"Field variable: {field_variable.name}")
         field_variable.plot()
 
 
@@ -227,8 +227,8 @@ Note that the order of the results can differ from the one shown here.
 
  .. code-block:: none
 
-    Field variable Orientation Tensor A22
-    Field variable Orientation Tensor A11
+    Field variable: Orientation Tensor A11
+    Field variable: Orientation Tensor A22
 
 
 
@@ -315,7 +315,7 @@ Compute and plot the maximum failure value per element.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.001 seconds)
+   **Total running time of the script:** (0 minutes 6.691 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:

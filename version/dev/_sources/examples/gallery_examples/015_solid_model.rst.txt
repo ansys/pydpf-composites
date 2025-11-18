@@ -26,8 +26,8 @@ Postprocess a solid model
 This example shows features which are tailored for the postprocessing of
 solid models. These are
 
-  - Failure plot on the reference surface
-  - Sampling point for solid elements
+- Failure plot on the reference surface
+- Sampling point for solid elements
 
 The model is an assembly with solid and shell elements. So, the example also
 demonstrates how to distinguish between different element types.
@@ -319,15 +319,16 @@ Here is another sampling point plot with the in-plane strains
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-177
+.. GENERATED FROM PYTHON SOURCE LINES 172-178
 
 Solid Stack Information
 ~~~~~~~~~~~~~~~~~~~~~~~
 Information about the stack of solid elements can be retrieved
-by using the SolidStackProvider. A basic example is shown below
-where 6 is the element ID (label) and not an index.
+by using the SolidStackProvider. A basic example is shown below:
+The element ID 6 (not index 6) refers to one of the solid elements
+in the stack.
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-184
+.. GENERATED FROM PYTHON SOURCE LINES 178-185
 
 .. code-block:: Python
 
@@ -352,12 +353,12 @@ where 6 is the element ID (label) and not an index.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-187
+.. GENERATED FROM PYTHON SOURCE LINES 186-188
 
 The solid stack can then be used for example to get the through-the-thickness results.
 In this example, s11, s22 and s12 are retrieved for the last time step.
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-203
+.. GENERATED FROM PYTHON SOURCE LINES 188-204
 
 .. code-block:: Python
 
@@ -393,7 +394,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 30.199 seconds)
+   **Total running time of the script:** (0 minutes 34.687 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_015_solid_model.py:
