@@ -29,8 +29,8 @@ Postprocess a solid model
 This example shows features which are tailored for the postprocessing of
 solid models. These are
 
-  - Failure plot on the reference surface
-  - Sampling point for solid elements
+- Failure plot on the reference surface
+- Sampling point for solid elements
 
 The model is an assembly with solid and shell elements. So, the example also
 demonstrates how to distinguish between different element types.
