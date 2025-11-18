@@ -172,8 +172,9 @@ sampling_point_plot.figure.show()
 # Solid Stack Information
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # Information about the stack of solid elements can be retrieved
-# by using the SolidStackProvider. A basic example is shown below
-# where 6 is the element ID (label) and not an index.
+# by using the SolidStackProvider. A basic example is shown below:
+# The element ID 6 (not index 6) refers to one of the solid elements
+# in the stack.
 solid_stack_provider = SolidStackProvider(
     composite_model.get_mesh(), composite_model.get_layup_operator()
 )
