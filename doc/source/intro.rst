@@ -7,6 +7,9 @@ Installation
 PyDPF - Composites supports Ansys version 2023 R1 and later. Make sure you have a licensed copy of Ansys installed. See
 :ref:`Compatibility` to understand which ``ansys-dpf-composites`` version corresponds to which Ansys version.
 
+You should use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
+because it keeps Python packages isolated from your system Python.
+
 Install the ``ansys-dpf-composites`` package with ``pip``:
 
 .. code::
@@ -25,10 +28,6 @@ Specific versions can be installed by specifying the version in the pip command.
 .. code::
 
     pip install ansys-dpf-composites==0.3.0
-
-
-You should use a `virtual environment <https://docs.python.org/3/library/venv.html>`_,
-because it keeps Python packages isolated from your system Python.
 
 
 Examples
