@@ -92,10 +92,10 @@ field_variable_provider.inputs.mesh(model.metadata.mesh_provider)
 field_variables = field_variable_provider.outputs.fields_container.get_data()
 
 # %%
-# Note that the order of the results can differ from the one shown here.
-for index in range(len(field_variables)):
-    field_variable = field_variables[index]
-    print(f"Field variable {field_variable.name}")
+# The order of field variables is not deterministic. For consistent output,
+# they are sorted by name.
+for field_variable in sorted(field_variables, key=lambda fv: fv.name):
+    print(f"Field variable: {field_variable.name}")
     field_variable.plot()
 
 # %%
