@@ -162,7 +162,6 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         field_or_fields_container=elemental_values,
         deform_by=displacement,
         cpos=camera,
-        zoom="tight",
     )
 
 # %%
@@ -193,5 +192,4 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         field_or_fields_container=elemental_values,
         deform_by=displacement,
         cpos=camera,
-        zoom="tight",
     )
