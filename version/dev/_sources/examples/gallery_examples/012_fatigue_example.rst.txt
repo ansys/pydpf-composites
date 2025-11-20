@@ -182,7 +182,7 @@ can be directly done on the load time series to get the load ranges.
 No mean stress correction is applied.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-120
+.. GENERATED FROM PYTHON SOURCE LINES 111-121
 
 .. code-block:: Python
 
@@ -193,6 +193,7 @@ No mean stress correction is applied.
     plt.xlabel("Load Index")
     plt.ylabel("Load Factor")
     plt.plot(x, load_factor_time_series, color="red")
+    plt.show()
 
 
 
@@ -204,20 +205,14 @@ No mean stress correction is applied.
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    [<matplotlib.lines.Line2D object at 0x7f2ab1104190>]
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-122
+.. GENERATED FROM PYTHON SOURCE LINES 122-123
 
 Fatpack package is used for doing the rainflow counting
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-125
+.. GENERATED FROM PYTHON SOURCE LINES 123-126
 
 .. code-block:: Python
 
@@ -231,7 +226,7 @@ Fatpack package is used for doing the rainflow counting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-132
+.. GENERATED FROM PYTHON SOURCE LINES 127-133
 
 S-N curve
 ~~~~~~~~~
@@ -240,7 +235,7 @@ experimental data. Sc is chosen to be twice the orthotropic stress limit in the 
 and Nc is set to 1.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-148
+.. GENERATED FROM PYTHON SOURCE LINES 133-150
 
 .. code-block:: Python
 
@@ -258,6 +253,7 @@ and Nc is set to 1.
     plt.title("Dummy Linear S-N curve")
     plt.xlabel("Cycles to failure")
     plt.ylabel("Stress range (MPa)")
+    plt.show()
 
 
 
@@ -269,16 +265,10 @@ and Nc is set to 1.
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Text(15.914246690538194, 0.5, 'Stress range (MPa)')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-154
+.. GENERATED FROM PYTHON SOURCE LINES 151-156
 
 Damage evaluation
 ~~~~~~~~~~~~~~~~~
@@ -286,7 +276,7 @@ Stress S11 at time 1 and layer P1L1__ModelingPly.2 are read
 for each load range. Its damage is evaluated using the dummy S-N curve.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-174
+.. GENERATED FROM PYTHON SOURCE LINES 156-176
 
 .. code-block:: Python
 
@@ -317,11 +307,11 @@ for each load range. Its damage is evaluated using the dummy S-N curve.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 175-176
+.. GENERATED FROM PYTHON SOURCE LINES 177-178
 
 Plot damage
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-179
+.. GENERATED FROM PYTHON SOURCE LINES 178-181
 
 .. code-block:: Python
 
@@ -362,13 +352,13 @@ Plot damage
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-183
+.. GENERATED FROM PYTHON SOURCE LINES 182-185
 
 Identify the element with the maximum damage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-187
+.. GENERATED FROM PYTHON SOURCE LINES 185-189
 
 .. code-block:: Python
 
@@ -393,7 +383,7 @@ Identify the element with the maximum damage
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 10.226 seconds)
+   **Total running time of the script:** (0 minutes 8.354 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_012_fatigue_example.py:

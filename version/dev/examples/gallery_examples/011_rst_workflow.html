@@ -582,7 +582,7 @@ DPF server, and retrieving the example files.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">composite_files_on_server</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(result_files=[&#39;/tmp/dataProcessingTemp140447175407360/4cb5bbf9-65dc-4ed8-8089-b228eab43fd1/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp140447175407360/46d307c4-db15-4af8-9e06-94acbfb34cc0/material.engd&#39;, solver_input_file=None, files_are_local=False, solver_type=&lt;SolverType.MAPDL: &#39;mapdl&#39;&gt;)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ContinuousFiberCompositesFiles(result_files=[&#39;/tmp/dataProcessingTemp139802762532608/5fde41b6-5413-47a5-861b-471c8e4a431c/shell.rst&#39;], composite={}, engineering_data=&#39;/tmp/dataProcessingTemp139802762532608/fd5dc973-af8f-446c-922f-2d16e1a260a2/material.engd&#39;, solver_input_file=None, files_are_local=False, solver_type=&lt;SolverType.MAPDL: &#39;mapdl&#39;&gt;)
 </pre></div>
 </div>
 </section>
@@ -631,9 +631,11 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </section>
 <section id="create-and-plot-a-sampling-point">
 <h2>Create and plot a sampling point<a class="headerlink" href="#create-and-plot-a-sampling-point" title="Link to this heading">#</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">sampling_point</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_sampling_point</span><span class="p">(</span><span class="n">combined_criterion</span><span class="o">=</span><span class="n">combined_fc</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sampling_plot</span> <span class="o">=</span> <span class="n">sampling_point</span><span class="o">.</span><span class="n">get_result_plots</span><span class="p">(</span><span class="n">core_scale_factor</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.show.html#matplotlib.figure.Figure.show" title="matplotlib.figure.Figure.show" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">sampling_plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_011_rst_workflow_002.png" srcset="../../_images/sphx_glr_011_rst_workflow_002.png" alt="Strains, Stresses, Failures" class = "sphx-glr-single-img"/></section>
@@ -744,7 +746,7 @@ UUID with the <code class="docutils literal notranslate"><span class="pre">MP,UV
 </ul>
 </dd>
 </dl>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 43.263 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 37.196 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-011-rst-workflow-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d13337ce8445f69a22967b872b601ca2/011_rst_workflow.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">011_rst_workflow.ipynb</span></code></a></p>

@@ -123,7 +123,7 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(result_files=['/tmp/dataProcessingTemp140447175407360/4cb5bbf9-65dc-4ed8-8089-b228eab43fd1/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140447175407360/46d307c4-db15-4af8-9e06-94acbfb34cc0/material.engd', solver_input_file=None, files_are_local=False, solver_type=<SolverType.MAPDL: 'mapdl'>)
+    ContinuousFiberCompositesFiles(result_files=['/tmp/dataProcessingTemp139802762532608/5fde41b6-5413-47a5-861b-471c8e4a431c/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp139802762532608/fd5dc973-af8f-446c-922f-2d16e1a260a2/material.engd', solver_input_file=None, files_are_local=False, solver_type=<SolverType.MAPDL: 'mapdl'>)
 
 
 
@@ -230,13 +230,15 @@ Evaluate failures for the entire model
 Create and plot a sampling point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-128
+.. GENERATED FROM PYTHON SOURCE LINES 124-130
 
 .. code-block:: Python
 
+    import matplotlib.pyplot as plt
+
     sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=2)
     sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
-    sampling_plot.figure.show()
+    plt.show()
 
 
 
@@ -250,7 +252,7 @@ Create and plot a sampling point
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-136
+.. GENERATED FROM PYTHON SOURCE LINES 131-138
 
 Layer-wise failure criteria
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -260,12 +262,12 @@ data and how to access it. Ply-wise filtering
 because the plies are not available in the RST file.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-140
+.. GENERATED FROM PYTHON SOURCE LINES 140-142
 
 First, the inputs for the multiple failure criteria operator have to
 be prepared.
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-147
+.. GENERATED FROM PYTHON SOURCE LINES 142-149
 
 .. code-block:: Python
 
@@ -283,14 +285,14 @@ be prepared.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-152
+.. GENERATED FROM PYTHON SOURCE LINES 150-154
 
 Then, the operator is initialized and the inputs are connected.
 Note: the output of the multiple failure criteria operator has the same format
 as the input (strain and stress fields). So there is one failure value
 and mode for each integration point, layer and element, for all time steps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-168
+.. GENERATED FROM PYTHON SOURCE LINES 154-170
 
 .. code-block:: Python
 
@@ -317,11 +319,11 @@ and mode for each integration point, layer and element, for all time steps.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-170
+.. GENERATED FROM PYTHON SOURCE LINES 171-172
 
 failure_mode_field is not used further, but it is demonstrated how to access it.
 
-.. GENERATED FROM PYTHON SOURCE LINES 170-174
+.. GENERATED FROM PYTHON SOURCE LINES 172-176
 
 .. code-block:: Python
 
@@ -336,7 +338,7 @@ failure_mode_field is not used further, but it is demonstrated how to access it.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 175-180
+.. GENERATED FROM PYTHON SOURCE LINES 177-182
 
 This example computes a "failure intensity" which is in this case the
 difference between the maxima of the most critical and the lowest
@@ -344,7 +346,7 @@ critical layer. Or in other words, it shows how uniform the laminate is
 loaded. A high intensity means there is a big difference between the
 maxima failure values of the layers.
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-205
+.. GENERATED FROM PYTHON SOURCE LINES 182-207
 
 .. code-block:: Python
 
@@ -407,7 +409,7 @@ maxima failure values of the layers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-224
+.. GENERATED FROM PYTHON SOURCE LINES 208-226
 
 Create Engineering Data file and set material UUIDs in MAPDL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -431,7 +433,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 43.263 seconds)
+   **Total running time of the script:** (0 minutes 37.196 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:
