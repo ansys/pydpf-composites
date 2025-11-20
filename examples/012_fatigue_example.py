@@ -115,6 +115,7 @@ x = np.linspace(1, number_of_times, number_of_times)
 plt.xlabel("Load Index")
 plt.ylabel("Load Factor")
 plt.plot(x, load_factor_time_series, color="red")
+plt.show()
 
 
 # %%
@@ -143,6 +144,7 @@ plt.grid(which="both")
 plt.title("Dummy Linear S-N curve")
 plt.xlabel("Cycles to failure")
 plt.ylabel("Stress range (MPa)")
+plt.show()
 
 
 # %%
