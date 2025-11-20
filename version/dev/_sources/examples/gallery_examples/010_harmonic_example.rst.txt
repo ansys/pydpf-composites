@@ -403,7 +403,7 @@ the critical element. Note: this can be different from maximum overall IRF
 at each frequency, because we look only at the element that has the highest IRF overall.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 221-234
+.. GENERATED FROM PYTHON SOURCE LINES 221-235
 
 .. code-block:: Python
 
@@ -418,6 +418,7 @@ at each frequency, because we look only at the element that has the highest IRF 
     axs.set_xlabel("Frequency (1/s)")
     axs.set_ylabel("Max IRF in critical element (-)")
     axs.plot(frequencies, max_value_for_each_freq_crit_element.data)
+    plt.show()
 
 
 
@@ -429,21 +430,15 @@ at each frequency, because we look only at the element that has the highest IRF 
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    [<matplotlib.lines.Line2D object at 0x7f60a1fad310>]
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 235-237
+.. GENERATED FROM PYTHON SOURCE LINES 236-238
 
 Compute the critical phase
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 237-244
+.. GENERATED FROM PYTHON SOURCE LINES 238-245
 
 .. code-block:: Python
 
@@ -467,12 +462,12 @@ Compute the critical phase
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 245-247
+.. GENERATED FROM PYTHON SOURCE LINES 246-248
 
 Compute critical layer and critical failure mode.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 247-262
+.. GENERATED FROM PYTHON SOURCE LINES 248-263
 
 .. code-block:: Python
 
@@ -509,7 +504,7 @@ Compute critical layer and critical failure mode.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 43.074 seconds)
+   **Total running time of the script:** (0 minutes 42.868 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_010_harmonic_example.py:
