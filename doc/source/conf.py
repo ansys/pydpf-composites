@@ -141,6 +141,7 @@ sphinx_gallery_conf = {
     "image_scrapers": (DynamicScraper(), "matplotlib"),
     "ignore_pattern": r"__init__\.py",
     "thumbnail_size": (320, 240),
+    "remove_config_comments": True,
 }
 
 exclude_patterns = [
