@@ -121,9 +121,11 @@ irf_field.plot()
 # %%
 # Create and plot a sampling point
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import matplotlib.pyplot as plt
+
 sampling_point = composite_model.get_sampling_point(combined_criterion=combined_fc, element_id=2)
 sampling_plot = sampling_point.get_result_plots(core_scale_factor=0.1)
-sampling_plot.figure.show()
+plt.show()
 
 # %%
 # Layer-wise failure criteria
