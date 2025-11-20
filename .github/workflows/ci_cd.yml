@@ -54,14 +54,25 @@ jobs:
 
   tests:
     name: "Tests and coverage"
-    runs-on: ${{ matrix.os }}
+    runs-on: "ubuntu-latest"
     strategy:
       matrix:
         # We can't test on windows because it is not possible to run linux
         # docker images on the windows agents. See the issue
         # https://github.com/actions/runner-images/issues/1143
-        os: [ubuntu-latest]
         python-version: ['3.10', '3.11', '3.12', '3.13']
+        container-tag: [ 'latest' ]
+        include:
+          - python-version: "3.13"
+            container-tag: "2025r2"
+          - python-version: "3.13"
+            container-tag: "2025r1"
+          - python-version: "3.13"
+            container-tag: "2024r2"
+          - python-version: "3.13"
+            container-tag: "2024r1"
+          - python-version: "3.13"
+            container-tag: "2023r2_pre1"
       fail-fast: false
     steps:
       - name: "Login in Github Container registry"
@@ -75,12 +86,7 @@ jobs:
         # 2023r2_pre1 is used to test backward compatibility. Also update testenv in tox.ini
         # if other containers must be tested.
         run:  |
-          docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-          docker pull ghcr.io/ansys/pydpf-composites:2025r2
-          docker pull ghcr.io/ansys/pydpf-composites:2025r1
-          docker pull ghcr.io/ansys/pydpf-composites:2024r2
-          docker pull ghcr.io/ansys/pydpf-composites:2024r1
-          docker pull ghcr.io/ansys/pydpf-composites:2023r2_pre1
+          docker pull ghcr.io/ansys/pydpf-composites:${{ matrix.container-tag }}
 
       - name: "Checkout the project"
         uses: actions/checkout@v5
@@ -101,6 +107,7 @@ jobs:
           tox
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          CONTAINER_TAG: ${{ matrix.container-tag }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
