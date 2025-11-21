@@ -106,7 +106,7 @@ Get lay-up properties
 ~~~~~~~~~~~~~~~~~~~~~
 Get lay-up properties for all elements and show the first one as an example.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-80
+.. GENERATED FROM PYTHON SOURCE LINES 72-81
 
 .. code-block:: Python
 
@@ -116,24 +116,33 @@ Get lay-up properties for all elements and show the first one as an example.
     shear_angles = composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id)
     offset = composite_model.get_element_laminate_offset(element_id)
     analysis_plies = composite_model.get_analysis_plies(element_id)
+    print(analysis_plies)
 
 
 
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    ['P1L1__woven_45', 'P1L1__ud_patch ns1', 'P1L1__ud', 'P1L1__core', 'P1L1__ud.2', 'P1L1__woven_45.2']
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-84
+
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
 
 Plot lay-up properties
 ~~~~~~~~~~~~~~~~~~~~~~
 Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-102
+.. GENERATED FROM PYTHON SOURCE LINES 85-107
 
 .. code-block:: Python
+
+    import matplotlib.pyplot as plt
 
     y_coordinates = offset + np.cumsum(thicknesses)
     y_centers = y_coordinates - thicknesses / 2
@@ -143,16 +152,18 @@ Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
     for y_coordinate in y_coordinates:
         ax1.axhline(y=y_coordinate, color="k")
 
-    for angle, shear_angle, y_coordinate, analysis_ply in zip(
+    for angle, shear_angle, y_center, analysis_ply in zip(
         angles, shear_angles, y_centers, analysis_plies
     ):
         ax1.annotate(
             f"Angle={angle}°, Shear Angle={shear_angle}°, {analysis_ply}",
-            xy=(0.1, y_coordinate),
-            xytext=(0.1, y_coordinate),
+            xy=(0.1, y_center),
+            xytext=(0.1, y_center),
+            va="center",
         )
+    ax1.set_ylim(offset, max(y_coordinates))
 
-    fig.show()
+    plt.show()
 
 
 
@@ -168,7 +179,7 @@ Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.702 seconds)
+   **Total running time of the script:** (0 minutes 6.799 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_005_get_layup_properties_example.py:
