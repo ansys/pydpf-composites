@@ -58,9 +58,8 @@ and material are provided.
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.layup_info import get_all_analysis_ply_names
-
-# from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
-# from ansys.dpf.composites.select_indices import get_selected_indices_by_dpf_material_ids
+from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data
+from ansys.dpf.composites.select_indices import get_selected_indices_by_dpf_material_ids
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 server = connect_to_or_start_server()
@@ -108,9 +107,7 @@ print(composite_model.material_names)
 material_id = composite_model.material_names["Honeycomb Aluminum Alloy"]
 # get the last result field
 temperatures_field = temperatures_fc[-1]
-material_result_field = dpf.field.Field(
-    location=dpf.locations.elemental, nature=dpf.natures.scalar
-)
+material_result_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 # performance optimization: use a local field instead of a field which is pushed to the server
 with material_result_field.as_local_field() as local_result_field:
     element_ids = temperatures_field.scoping.ids
@@ -119,9 +116,7 @@ with material_result_field.as_local_field() as local_result_field:
         assert element_info is not None
         if material_id in element_info.dpf_material_ids:
             temp_data = temperatures_field.get_entity_data_by_id(element_id)
-            selected_indices = get_selected_indices_by_dpf_material_ids(
-                element_info, [material_id]
-            )
+            selected_indices = get_selected_indices_by_dpf_material_ids(element_info, [material_id])
             value = np.max(temp_data[selected_indices])
             local_result_field.append([value], element_id)
 composite_model.get_mesh().plot(material_result_field)
