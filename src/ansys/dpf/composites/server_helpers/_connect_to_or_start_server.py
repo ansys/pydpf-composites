@@ -21,44 +21,12 @@
 # SOFTWARE.
 
 """Helpers to connect to or start a DPF server with the DPF Composites plugin."""
-from collections.abc import Callable
 import os
 from typing import Any
 
-from ansys.dpf.core import connect_to_server
-from ansys.dpf.core import server as _dpf_server
-from ansys.dpf.core import start_local_server
+from ansys.dpf.core import connect_to_server, start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
-
-
-def _try_until_timeout(fun: Callable[[], Any], error_message: str, timeout: int = 10) -> Any:
-    """Try to run a function until a timeout is reached.
-
-    Before the timeout is reached, all exceptions are ignored and a retry happens.
-    """
-    import time
-
-    tstart = time.time()
-    while (time.time() - tstart) < timeout:
-        time.sleep(0.001)
-        try:
-            return fun()
-        except Exception:  # pylint: disable=broad-except
-            pass
-    raise TimeoutError(f"Timeout is reached: {error_message}")
-
-
-def _wait_until_server_is_up(server: _dpf_server) -> Any:
-    # Small hack to check if the server is up.
-    # The DPF server should check this in the ``connect_to_server`` function, but
-    # that's currently not the case.
-    # https://github.com/ansys/pydpf-core/issues/414
-    # We use the fact that server.version throws an error if the server
-    # is not yet connected.
-    _try_until_timeout(
-        lambda: server.version, "Failed to connect to the DPF server before timing out."
-    )
 
 
 def connect_to_or_start_server(
@@ -113,7 +81,6 @@ def connect_to_or_start_server(
         f"(Ansys 2023 R2) or later. Your version is currently {server.version}.",
     )
 
-    _wait_until_server_is_up(server)
     # Note: server.ansys_path contains the computed Ansys path from
     # dpf.server.start_local_server. It is None if
     # a connection is made to an existing server.
