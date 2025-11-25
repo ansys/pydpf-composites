@@ -545,14 +545,14 @@ method to obtain the input files.</p>
 <h2>Set up analysis<a class="headerlink" href="#set-up-analysis" title="Link to this heading">#</a></h2>
 <p>Setting up the analysis consists of loading the required modules, connecting to the
 DPF server, and retrieving the example files.</p>
-<p>import ansys.dpf.core as dpf
-import numpy as np</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.composite_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompositeModel</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ansys.dpf.core</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dpf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.composite_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompositeModel</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.example_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_continuous_fiber_example_files</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.layup_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_all_analysis_ply_names</span>
-
-<span class="c1"># from ansys.dpf.composites.ply_wise_data import SpotReductionStrategy, get_ply_wise_data</span>
-<span class="c1"># from ansys.dpf.composites.select_indices import get_selected_indices_by_dpf_material_ids</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.ply_wise_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpotReductionStrategy</span><span class="p">,</span> <span class="n">get_ply_wise_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.select_indices</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_selected_indices_by_dpf_material_ids</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.server_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
@@ -583,58 +583,73 @@ to the function <a class="reference internal" href="../../api/_autosummary/ansys
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a><span class="p">)</span>
 
-<span class="c1"># Reactivate once issue https://github.com/ansys/pydpf-core/issues/2751</span>
-<span class="c1"># is resolved.</span>
-<span class="c1">#</span>
-<span class="c1"># # The component of the temperature is 0 which is the default value.</span>
-<span class="c1"># nodal_values = get_ply_wise_data(</span>
-<span class="c1">#     field=temperatures_fc,</span>
-<span class="c1">#     ply_name=&quot;P1L1__ModelingPly.8&quot;,</span>
-<span class="c1">#     mesh=composite_model.get_mesh(),</span>
-<span class="c1">#     spot_reduction_strategy=SpotReductionStrategy.MAX,</span>
-<span class="c1">#     requested_location=dpf.locations.nodal,</span>
-<span class="c1"># )</span>
-<span class="c1">#</span>
-<span class="c1"># composite_model.get_mesh().plot(nodal_values)</span>
-<span class="c1">#</span>
-<span class="c1"># # %%</span>
-<span class="c1"># # Get results by material</span>
-<span class="c1"># # ~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="c1"># # You can filter the results by material.</span>
-<span class="c1"># # In this example, the element-wise maximum temperature</span>
-<span class="c1"># # is extracted for the material `Honeycomb Aluminum Alloy`.</span>
-<span class="c1"># print(composite_model.material_names)</span>
-<span class="c1"># material_id = composite_model.material_names[&quot;Honeycomb Aluminum Alloy&quot;]</span>
-<span class="c1">#</span>
-<span class="c1"># # get the last result field</span>
-<span class="c1"># temperatures_field = temperatures_fc[-1]</span>
-<span class="c1">#</span>
-<span class="c1"># material_result_field = dpf.field.Field(</span>
-<span class="c1">#     location=dpf.locations.elemental, nature=dpf.natures.scalar</span>
-<span class="c1"># )</span>
-<span class="c1"># # performance optimization: use a local field instead of a field which is pushed to the server</span>
-<span class="c1"># with material_result_field.as_local_field() as local_result_field:</span>
-<span class="c1">#     element_ids = temperatures_field.scoping.ids</span>
-<span class="c1">#</span>
-<span class="c1">#     for element_id in element_ids:</span>
-<span class="c1">#         element_info = composite_model.get_element_info(element_id)</span>
-<span class="c1">#         assert element_info is not None</span>
-<span class="c1">#         if material_id in element_info.dpf_material_ids:</span>
-<span class="c1">#             temp_data = temperatures_field.get_entity_data_by_id(element_id)</span>
-<span class="c1">#             selected_indices = get_selected_indices_by_dpf_material_ids(</span>
-<span class="c1">#                 element_info, [material_id]</span>
-<span class="c1">#             )</span>
-<span class="c1">#</span>
-<span class="c1">#             value = np.max(temp_data[selected_indices])</span>
-<span class="c1">#             local_result_field.append([value], element_id)</span>
-<span class="c1">#</span>
-<span class="c1"># composite_model.get_mesh().plot(material_result_field)</span>
+<span class="c1"># The component of the temperature is 0 which is the default value.</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nodal_values</span></a> <span class="o">=</span> <span class="n">get_ply_wise_data</span><span class="p">(</span>
+    <span class="n">field</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_fc</span></a><span class="p">,</span>
+    <span class="n">ply_name</span><span class="o">=</span><span class="s2">&quot;P1L1__ModelingPly.8&quot;</span><span class="p">,</span>
+    <span class="n">mesh</span><span class="o">=</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(),</span>
+    <span class="n">spot_reduction_strategy</span><span class="o">=</span><span class="n">SpotReductionStrategy</span><span class="o">.</span><span class="n">MAX</span><span class="p">,</span>
+    <span class="n">requested_location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">nodal</span></a><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nodal_values</span></a><span class="p">)</span>
 </pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_013_thermal_example_001.png" srcset="../../_images/sphx_glr_013_thermal_example_001.png" alt="013 thermal example" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_013_thermal_example_001.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;P1L1__p1_2_4_6&#39;, &#39;P1L1__p5&#39;, &#39;P1L1__p3&#39;, &#39;P1L1__ModelingPly.8&#39;, &#39;P1L1__ModelingPly.4&#39;, &#39;P1L1__ModelingPly.3&#39;, &#39;P1L1__ModelingPly.1&#39;, &#39;P1L1__ModelingPly.2&#39;, &#39;P1L1__ModelingPly.5&#39;, &#39;P1L1__ModelingPly.6&#39;, &#39;P1L1__ModelingPly.7&#39;]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.202 seconds)</p>
+</section>
+<section id="get-results-by-material">
+<h2>Get results by material<a class="headerlink" href="#get-results-by-material" title="Link to this heading">#</a></h2>
+<p>You can filter the results by material.
+In this example, the element-wise maximum temperature
+is extracted for the material <cite>Honeycomb Aluminum Alloy</cite>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">material_names</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">material_id</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">material_names</span><span class="p">[</span><span class="s2">&quot;Honeycomb Aluminum Alloy&quot;</span><span class="p">]</span>
+<span class="c1"># get the last result field</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_fc</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_result_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span></a><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/common/natures.html#ansys.dpf.core.common.natures" title="ansys.dpf.core.common.natures" class="sphx-glr-backref-module-ansys-dpf-core-common sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span></a><span class="p">)</span>
+<span class="c1"># performance optimization: use a local field instead of a field which is pushed to the server</span>
+<span class="k">with</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_result_field</span></a><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
+    <span class="n">element_ids</span> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_field</span></a><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span>
+    <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">element_ids</span><span class="p">:</span>
+        <span class="n">element_info</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">element_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">material_id</span></a> <span class="ow">in</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element_info</span><span class="o">.</span><span class="n">dpf_material_ids</span></a><span class="p">:</span>
+            <span class="n">temp_data</span> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temperatures_field</span></a><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+            <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a> <span class="o">=</span> <span class="n">get_selected_indices_by_dpf_material_ids</span><span class="p">(</span><span class="n">element_info</span><span class="p">,</span> <span class="p">[</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">material_id</span></a><span class="p">])</span>
+            <span class="n">value</span> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.max.html#numpy.max" title="numpy.max" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">max</span></a><span class="p">(</span><span class="n">temp_data</span><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">selected_indices</span></a><span class="p">])</span>
+            <span class="n">local_result_field</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
+<span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">material_result_field</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Static Scene</label><div class="sd-tab-content docutils">
+<img src="../../_images/sphx_glr_013_thermal_example_002.png" srcset="../../_images/sphx_glr_013_thermal_example_002.png" alt="013 thermal example" class = "sphx-glr-single-img"/></div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Interactive Scene</label><div class="sd-tab-content docutils">
+
+    <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_013_thermal_example_002.vtksz' width='100%%' height='400px' frameborder='0'></iframe>
+</div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;Honeycomb Aluminum Alloy&#39;: np.int32(1), &#39;UD Resin Epoxy/E-Glass&#39;: np.int32(2)}
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 10.267 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-013-thermal-example-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b1e39d6ebd1ae9f7b992469a76dd9264/013_thermal_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">013_thermal_example.ipynb</span></code></a></p>
@@ -677,6 +692,7 @@ to the function <a class="reference internal" href="../../api/_autosummary/ansys
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-model">Initialize the model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-temperature-results">Get temperature results</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-ply-results">Get ply results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-results-by-material">Get results by material</a></li>
 </ul>
   </nav></div>
 
