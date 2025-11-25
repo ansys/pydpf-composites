@@ -52,8 +52,8 @@ and material are provided.
 # Setting up the analysis consists of loading the required modules, connecting to the
 # DPF server, and retrieving the example files.
 #
-# import ansys.dpf.core as dpf
-# import numpy as np
+import ansys.dpf.core as dpf
+import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
