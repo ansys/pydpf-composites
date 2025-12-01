@@ -28,7 +28,7 @@ jobs:
     name: "Code style"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -89,7 +89,7 @@ jobs:
           docker pull ghcr.io/ansys/pydpf-composites:${{ matrix.container-tag }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: "Set up Python ${{ matrix.python-version }}"
         uses: actions/setup-python@v6
@@ -139,7 +139,7 @@ jobs:
       - name: "Pull and start DPF container"
         run: |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -177,7 +177,7 @@ jobs:
           docker run -d --restart always -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
         uses: actions/setup-python@v6
