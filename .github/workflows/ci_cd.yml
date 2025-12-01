@@ -28,7 +28,7 @@ jobs:
     name: "Code style"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox
-          python -m pip install --upgrade 'poetry<2'
+          python -m pip install --upgrade poetry
 
       - name: Test with tox
         run: tox -e style
@@ -54,14 +54,25 @@ jobs:
 
   tests:
     name: "Tests and coverage"
-    runs-on: ${{ matrix.os }}
+    runs-on: "ubuntu-latest"
     strategy:
       matrix:
         # We can't test on windows because it is not possible to run linux
         # docker images on the windows agents. See the issue
         # https://github.com/actions/runner-images/issues/1143
-        os: [ubuntu-latest]
         python-version: ['3.10', '3.11', '3.12', '3.13']
+        container-tag: [ 'latest' ]
+        include:
+          - python-version: "3.13"
+            container-tag: "2025r2"
+          - python-version: "3.13"
+            container-tag: "2025r1"
+          - python-version: "3.13"
+            container-tag: "2024r2"
+          - python-version: "3.13"
+            container-tag: "2024r1"
+          - python-version: "3.13"
+            container-tag: "2023r2_pre1"
       fail-fast: false
     steps:
       - name: "Login in Github Container registry"
@@ -75,15 +86,10 @@ jobs:
         # 2023r2_pre1 is used to test backward compatibility. Also update testenv in tox.ini
         # if other containers must be tested.
         run:  |
-          docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-          docker pull ghcr.io/ansys/pydpf-composites:2025r2
-          docker pull ghcr.io/ansys/pydpf-composites:2025r1
-          docker pull ghcr.io/ansys/pydpf-composites:2024r2
-          docker pull ghcr.io/ansys/pydpf-composites:2024r1
-          docker pull ghcr.io/ansys/pydpf-composites:2023r2_pre1
+          docker pull ghcr.io/ansys/pydpf-composites:${{ matrix.container-tag }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: "Set up Python ${{ matrix.python-version }}"
         uses: actions/setup-python@v6
@@ -93,7 +99,7 @@ jobs:
       - name: "Install Python dependencies"
         run: |
           python -m pip install --upgrade pip tox tox-gh-actions
-          python -m pip install --upgrade 'poetry<2'
+          python -m pip install --upgrade poetry
 
       - name: "Test with tox"
         # Only the tox environment specified in the tox.ini gh-actions is run
@@ -101,6 +107,7 @@ jobs:
           tox
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          CONTAINER_TAG: ${{ matrix.container-tag }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
@@ -112,7 +119,7 @@ jobs:
       # pipeline secrets.
       # - name: "Upload server output"
       #  if: always()
-      #  uses: actions/upload-artifact@v4
+      #  uses: actions/upload-artifact@v5
       #  with:
       #    name: server_output
       #    path: tests/logs/*_log_*.txt
@@ -132,7 +139,7 @@ jobs:
       - name: "Pull and start DPF container"
         run: |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -140,7 +147,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox tox-gh-actions
-          python -m pip install --upgrade 'poetry<2'
+          python -m pip install --upgrade poetry
 
       - name: Test with tox
         run: |
@@ -170,7 +177,7 @@ jobs:
           docker run -d --restart always -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
         uses: actions/setup-python@v6
@@ -180,14 +187,14 @@ jobs:
       - name: "Install Python dependencies"
         run: |
           python -m pip install --upgrade pip tox
-          python -m pip install --upgrade 'poetry<2'
+          python -m pip install --upgrade poetry
 
       - name: "Generate the documentation with tox"
         run: |
           tox -e doc-linux
 
       - name: "Upload HTML Documentation"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: documentation-html
           path: .tox/doc_out/html
@@ -202,7 +209,7 @@ jobs:
           tox -e doc-linux-pdf
 
       - name: "Upload PDF Documentation"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: documentation-pdf
           path: .tox/doc_out/latex/ansys-dpf-composites.pdf

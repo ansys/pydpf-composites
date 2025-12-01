@@ -75,12 +75,15 @@ angles = composite_model.get_property_for_all_layers(LayerProperty.ANGLES, eleme
 shear_angles = composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id)
 offset = composite_model.get_element_laminate_offset(element_id)
 analysis_plies = composite_model.get_analysis_plies(element_id)
+print(analysis_plies)
 
 
 # %%
 # Plot lay-up properties
 # ~~~~~~~~~~~~~~~~~~~~~~
 # Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
+import matplotlib.pyplot as plt
+
 y_coordinates = offset + np.cumsum(thicknesses)
 y_centers = y_coordinates - thicknesses / 2
 
@@ -89,13 +92,15 @@ fig, ax1 = f, ax = plt.subplots(figsize=(6, 10))
 for y_coordinate in y_coordinates:
     ax1.axhline(y=y_coordinate, color="k")
 
-for angle, shear_angle, y_coordinate, analysis_ply in zip(
+for angle, shear_angle, y_center, analysis_ply in zip(
     angles, shear_angles, y_centers, analysis_plies
 ):
     ax1.annotate(
         f"Angle={angle}°, Shear Angle={shear_angle}°, {analysis_ply}",
-        xy=(0.1, y_coordinate),
-        xytext=(0.1, y_coordinate),
+        xy=(0.1, y_center),
+        xytext=(0.1, y_center),
+        va="center",
     )
+ax1.set_ylim(offset, max(y_coordinates))
 
-fig.show()
+plt.show()

@@ -75,6 +75,8 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # sphinx_gallery_thumbnail_number = 4
 
+# %%
+
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
 
@@ -160,7 +162,6 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         field_or_fields_container=elemental_values,
         deform_by=displacement,
         cpos=camera,
-        zoom="tight",
     )
 
 # %%
@@ -191,5 +192,4 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         field_or_fields_container=elemental_values,
         deform_by=displacement,
         cpos=camera,
-        zoom="tight",
     )

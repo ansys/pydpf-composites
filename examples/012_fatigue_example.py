@@ -109,11 +109,13 @@ component = Sym3x3TensorComponent.TENSOR11
 # No mean stress correction is applied.
 #
 number_of_times = 100
+np.random.seed(111)  # make the random numbers predictable and the example reproducible
 load_factor_time_series = np.random.normal(-1, 2.5, size=number_of_times)
 x = np.linspace(1, number_of_times, number_of_times)
 plt.xlabel("Load Index")
 plt.ylabel("Load Factor")
 plt.plot(x, load_factor_time_series, color="red")
+plt.show()
 
 
 # %%
@@ -142,6 +144,7 @@ plt.grid(which="both")
 plt.title("Dummy Linear S-N curve")
 plt.xlabel("Cycles to failure")
 plt.ylabel("Stress range (MPa)")
+plt.show()
 
 
 # %%
