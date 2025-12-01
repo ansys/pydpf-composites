@@ -300,6 +300,11 @@ def get_result_plots_from_sp(
     fig = plt.figure()
     gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
     axes = gs.subplots(sharex="col", sharey="row")
+    if hasattr(axes, "flat"):  # numpy array of Axes
+        for ax in axes.flat:
+            ax.set_ymargin(0)
+    else:  # single Axes
+        axes.set_ymargin(0)
 
     def _get_subplot(axes_obj: Any, current_index: int) -> Any:
         try:
