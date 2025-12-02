@@ -8,7 +8,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="og:site_name" content="PyAnsys" />
     <title>Lay-up information &#8212; PyDPF - Composites</title>
   
   
@@ -33,13 +32,13 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/ansys-sphinx-theme.css?v=ce7f2556" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/ansys-sphinx-theme.css?v=9e79609d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/ansys-sphinx-theme.css?v=ce7f2556" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/ansys-sphinx-theme.css?v=9e79609d" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -79,9 +78,12 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="add_layup_info_to_mesh" href="_autosummary/ansys.dpf.composites.layup_info.add_layup_info_to_mesh.html" />
     <link rel="prev" title="na" href="_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.na.html" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.8.dev0" />
+  <meta property="og:site_name" content="PyAnsys" />
+  <meta name="physics" content="Structures" />
   <link rel="canonical" href="https://composites.dpf.docs.pyansys.com/version/stable/api/layup_info.html" />
   </head>
   
@@ -161,9 +163,15 @@
     <div class="me-auto navbar-header-items__center">
       
         <div class="navbar-item">
+
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../index.html" title="PyDPF - Composites home">Home</a>
+</li>
+
+
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     PyDPF - Composites
@@ -191,15 +199,26 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../contribute.html">
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../contribute.html">
     Contribute
   </a>
 </li>
 
+                </ul>
+            </li>
+            
   </ul>
-</nav></div>
+</nav>
+</div>
       
     </div>
     
@@ -316,9 +335,15 @@
           
           
             <div class="navbar-item">
+
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../index.html" title="PyDPF - Composites home">Home</a>
+</li>
+
+
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     PyDPF - Composites
@@ -354,7 +379,8 @@
 </li>
 
   </ul>
-</nav></div>
+</nav>
+</div>
           
         
       </div>
@@ -537,7 +563,7 @@
   <section id="lay-up-information">
 <span id="layup-information-classes"></span><h1>Lay-up information<a class="headerlink" href="#lay-up-information" title="Link to this heading">#</a></h1>
 <p>General features to access information on the composite lay-up.</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.add_layup_info_to_mesh.html#ansys.dpf.composites.layup_info.add_layup_info_to_mesh" title="ansys.dpf.composites.layup_info.add_layup_info_to_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_layup_info_to_mesh</span></code></a>(data_sources, ...[, ...])</p></td>
 <td><p>Add lay-up information to the mesh.</p></td>
@@ -569,13 +595,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupPropertiesProvider.html#ansys.dpf.composites.layup_info.LayupPropertiesProvider" title="ansys.dpf.composites.layup_info.LayupPropertiesProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupPropertiesProvider</span></code></a>(layup_provider, mesh)</p></td>
 <td><p>Provider for lay-up properties.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayerProperty.html#ansys.dpf.composites.layup_info.LayerProperty" title="ansys.dpf.composites.layup_info.LayerProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayerProperty</span></code></a>(*values)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayerProperty.html#ansys.dpf.composites.layup_info.LayerProperty" title="ansys.dpf.composites.layup_info.LayerProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayerProperty</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>Provides the layer properties available.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupProperty.html#ansys.dpf.composites.layup_info.LayupProperty" title="ansys.dpf.composites.layup_info.LayupProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupProperty</span></code></a>(*values)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupProperty.html#ansys.dpf.composites.layup_info.LayupProperty" title="ansys.dpf.composites.layup_info.LayupProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupProperty</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>Enum for lay-up properties.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupModelContextType.html#ansys.dpf.composites.layup_info.LayupModelContextType" title="ansys.dpf.composites.layup_info.LayupModelContextType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupModelContextType</span></code></a>(*values)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.LayupModelContextType.html#ansys.dpf.composites.layup_info.LayupModelContextType" title="ansys.dpf.composites.layup_info.LayupModelContextType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayupModelContextType</span></code></a>(value[, names, ...])</p></td>
 <td><p>Type of the lay-up information.</p></td>
 </tr>
 </tbody>
@@ -593,7 +619,7 @@ by calling <a class="reference internal" href="_autosummary/ansys.dpf.composites
 material name is currently not available.
 The <a class="reference internal" href="../examples/gallery_examples/004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a>
 example shows how to evaluate material properties.</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.get_constant_property.html#ansys.dpf.composites.layup_info.material_properties.get_constant_property" title="ansys.dpf.composites.layup_info.material_properties.get_constant_property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_constant_property</span></code></a>(material_property, ...)</p></td>
 <td><p>Get a constant material property.</p></td>
@@ -604,7 +630,7 @@ example shows how to evaluate material properties.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict.html#ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict" title="ansys.dpf.composites.layup_info.material_properties.get_constant_property_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_constant_property_dict</span></code></a>(...)</p></td>
 <td><p>Get a dictionary with constant properties.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty" title="ansys.dpf.composites.layup_info.material_properties.MaterialProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>(*values)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty" title="ansys.dpf.composites.layup_info.material_properties.MaterialProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialProperty</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>Provides the material properties that are available.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialMetadata.html#ansys.dpf.composites.layup_info.material_properties.MaterialMetadata" title="ansys.dpf.composites.layup_info.material_properties.MaterialMetadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialMetadata</span></code></a>([dpf_material_id, ...])</p></td>
@@ -616,7 +642,7 @@ example shows how to evaluate material properties.</p>
 </section>
 <section id="module-ansys.dpf.composites.layup_info.material_operators">
 <span id="material-operators"></span><h2>Material operators<a class="headerlink" href="#module-ansys.dpf.composites.layup_info.material_operators" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/ansys.dpf.composites.layup_info.material_operators.MaterialOperators.html#ansys.dpf.composites.layup_info.material_operators.MaterialOperators" title="ansys.dpf.composites.layup_info.material_operators.MaterialOperators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialOperators</span></code></a>(material_provider, ...)</p></td>
 <td><p>Provides the container for material-related operators.</p></td>
@@ -722,7 +748,7 @@ const EXTRA_SOURCES = JSON.parse('""');
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     <br/>
   </p>
 </div>
@@ -738,7 +764,7 @@ const EXTRA_SOURCES = JSON.parse('""');
   <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
     >Ansys Sphinx Theme</a
   >
-  1.5.2. <br />Last updated on
+  1.6.3. <br />Last updated on
   <span id="ast_build_date"></span>
 </p>
 <script>
