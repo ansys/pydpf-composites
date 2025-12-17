@@ -84,8 +84,9 @@ def connect_to_or_start_server(
     **kwargs:
         Additional keyword arguments are passed to either `ansys.dpf.core.start_local_server`
         or `ansys.dpf.core.connect_to_server` to set a timeout, config and context.
-        For instance, the transport mode must be set via the ``config.grpc_mode`` parameter in ``kwargs`` to
-        connect to a gRPC server. See https://dpf.docs.pyansys.com/version/stable/ for more information.
+        For instance, the transport mode must be set via the ``config.grpc_mode`` parameter in
+        ``kwargs`` to connect to a gRPC server. See https://dpf.docs.pyansys.com/version/stable/
+        for more information.
 
 
     Returns
