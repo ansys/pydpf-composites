@@ -62,7 +62,7 @@ def _wait_until_server_is_up(server: _dpf_server) -> Any:
 
 
 def connect_to_or_start_server(
-    port: int | None = None, ip: str | None = None, ansys_path: str | None = None, **kwargs
+    port: int | None = None, ip: str | None = None, ansys_path: str | None = None, **kwargs: Any
 ) -> Any:
     r"""Connect to or start a DPF server with the DPF Composites plugin loaded.
 
