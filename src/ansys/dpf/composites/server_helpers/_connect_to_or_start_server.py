@@ -25,9 +25,8 @@ from collections.abc import Callable
 import os
 from typing import Any
 
-from ansys.dpf.core import connect_to_server
+from ansys.dpf.core import start_local_server, connect_to_server
 from ansys.dpf.core import server as _dpf_server
-from ansys.dpf.core import start_local_server
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
@@ -62,7 +61,7 @@ def _wait_until_server_is_up(server: _dpf_server) -> Any:
 
 
 def connect_to_or_start_server(
-    port: int | None = None, ip: str | None = None, ansys_path: str | None = None
+    port: int | None = None, ip: str | None = None, ansys_path: str | None = None, **kwargs
 ) -> Any:
     r"""Connect to or start a DPF server with the DPF Composites plugin loaded.
 
@@ -81,6 +80,12 @@ def connect_to_or_start_server(
     ansys_path :
         Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v232``.
         This parameter is ignored if either the port or IP address is set.
+    **kwargs:
+        Additional keyword arguments are passed to either :func:`ansys.dpf.core.start_local_server`
+        or :func:`ansys.dpf.core.connect_to_server` to set a timeout, config and context.
+        For instance, the transport mode must be set via the ``config.grpc_mode`` parameter in ``kwargs`` to
+        connect to a gRPC server. See the documentation of these methods for more information.
+
 
     Returns
     -------
@@ -100,10 +105,12 @@ def connect_to_or_start_server(
     if len(list(connect_kwargs.keys())) > 0:
         server = connect_to_server(
             **connect_kwargs,
+            **kwargs
         )
     else:
         server = start_local_server(
             ansys_path=ansys_path,
+            **kwargs
         )
 
     required_version = "6.0"
