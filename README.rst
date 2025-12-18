@@ -151,7 +151,7 @@ Ansys internal only: Build the docs with the latest container from Github:
 .. code:: bash
 
     docker pull ghcr.io/ansys/pydpf-composites:latest
-    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:latest
+    docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y -e DPF_DEFAULT_GRPC_MODE=insecure ghcr.io/ansys/pydpf-composites:latest
     tox -e doc-windows
 
 

@@ -53,6 +53,7 @@ LICENSE_SERVER_OPTION_KEY = "--license-server"
 ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
 DOCKER_IMAGE_TAG_KEY = "--container-tag"
 DEFAULT_DOCKER_IMAGE_TAG = "latest"
+DPF_DEFAULT_GRPC_MODE = "insecure"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -114,6 +115,8 @@ class DockerProcess:
             "ANSYS_DPF_ACCEPT_LA=Y",
             "-e",
             f"{ANSYSLMD_LICENSE_FILE_KEY}={self.license_server}",
+            "-e",
+            f"DPF_DEFAULT_GRPC_MODE={DPF_DEFAULT_GRPC_MODE}"
             "--name",
             self.name,
             self.image_name,
