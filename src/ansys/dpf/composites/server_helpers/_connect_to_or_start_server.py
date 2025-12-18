@@ -28,6 +28,7 @@ from typing import Any
 from ansys.dpf.core import connect_to_server
 from ansys.dpf.core import server as _dpf_server
 from ansys.dpf.core import start_local_server
+from ansys.dpf.core.server_factory import AvailableServerConfigs
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
@@ -62,7 +63,7 @@ def _wait_until_server_is_up(server: _dpf_server) -> Any:
 
 
 def connect_to_or_start_server(
-    port: int | None = None, ip: str | None = None, ansys_path: str | None = None
+    port: int | None = None, ip: str | None = None, ansys_path: str | None = None, **kwargs: Any
 ) -> Any:
     r"""Connect to or start a DPF server with the DPF Composites plugin loaded.
 
@@ -81,6 +82,13 @@ def connect_to_or_start_server(
     ansys_path :
         Root path for the Ansys installation. For example, ``C:\\Program Files\\ANSYS Inc\\v232``.
         This parameter is ignored if either the port or IP address is set.
+    **kwargs:
+        Additional keyword arguments are passed to either `ansys.dpf.core.start_local_server`
+        or `ansys.dpf.core.connect_to_server` to set a timeout, config and context.
+        For instance, the transport mode must be set via the ``config`` parameter in
+        ``kwargs`` to connect to a running gRPC server. See
+        https://dpf.docs.pyansys.com/version/stable/ for more information.
+
 
     Returns
     -------
@@ -91,6 +99,17 @@ def connect_to_or_start_server(
     if port_in_env is not None:
         port = int(port_in_env)
 
+    # used to run the tests and build the documentation in gRPC mode
+    default_grpc_mode = os.environ.get("DPF_DEFAULT_GRPC_MODE")
+    if default_grpc_mode is not None:
+        # manually pass config and set certificates_dir for mTLS
+        if "config" in kwargs:
+            kwargs["config"].grpc_mode = default_grpc_mode
+        else:
+            config = AvailableServerConfigs.GrpcServer
+            config.grpc_mode = default_grpc_mode
+            kwargs["config"] = config
+
     connect_kwargs: dict[str, int | str] = {}
     if port is not None:
         connect_kwargs["port"] = port
@@ -98,13 +117,9 @@ def connect_to_or_start_server(
         connect_kwargs["ip"] = ip
 
     if len(list(connect_kwargs.keys())) > 0:
-        server = connect_to_server(
-            **connect_kwargs,
-        )
+        server = connect_to_server(**connect_kwargs, **kwargs)
     else:
-        server = start_local_server(
-            ansys_path=ansys_path,
-        )
+        server = start_local_server(ansys_path=ansys_path, **kwargs)
 
     required_version = "6.0"
     server.check_version(
