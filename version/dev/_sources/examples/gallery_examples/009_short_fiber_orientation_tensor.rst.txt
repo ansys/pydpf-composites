@@ -205,6 +205,12 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb8889a07d0>)
 
 
 
@@ -247,6 +253,12 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb8889a0910>)
 
 
 
@@ -272,7 +284,7 @@ Reconstruct the fiber orientation tensor in the global coordinate system.
     )
 
     ele_orientation_op = dpf.operators.result.element_orientations(
-        data_sources=data_sources, requested_location="Elemental", bool_rotate_to_global=False
+        data_sources=data_sources, requested_location="Elemental"
     )
 
     euler_angles_field = ele_orientation_op.outputs.fields_container()[0]
@@ -347,6 +359,12 @@ Plot some components of the fiber orientation tensor.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb8889a07d0>)
 
 
 
@@ -387,6 +405,12 @@ Plot some components of the fiber orientation tensor.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb8bb903750>)
 
 
 
@@ -426,13 +450,19 @@ Plot some components of the fiber orientation tensor.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb8bb903ed0>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.551 seconds)
+   **Total running time of the script:** (0 minutes 6.935 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:
