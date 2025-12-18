@@ -102,14 +102,13 @@ def connect_to_or_start_server(
     # used to run the tests and build the documentation in gRPC mode
     default_grpc_mode = os.environ.get("DPF_DEFAULT_GRPC_MODE")
     if default_grpc_mode is not None:
-        if default_grpc_mode != "insecure":
-            raise RuntimeError(
-                "Other gRPC modes than 'insecure' are not supported yet."
-                f"grpc_mode='{default_grpc_mode}' was given."
-            )
-        config = AvailableServerConfigs.GrpcServer
-        config.grpc_mode = default_grpc_mode
-        kwargs["config"] = config
+        # manually pass config and set certificates_dir for mTLS
+        if "config" in kwargs:
+            kwargs["config"].grpc_mode = default_grpc_mode
+        else:
+            config = AvailableServerConfigs.GrpcServer
+            config.grpc_mode = default_grpc_mode
+            kwargs["config"] = config
 
     connect_kwargs: dict[str, int | str] = {}
     if port is not None:
