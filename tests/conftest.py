@@ -34,6 +34,7 @@ from types import MappingProxyType
 import uuid
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core.server_factory import AvailableServerConfigs
 import pytest
 
 from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
@@ -42,7 +43,6 @@ from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
 )
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
-from ansys.dpf.core.server_factory import AvailableServerConfigs
 
 from .helper import get_dummy_data_files
 
