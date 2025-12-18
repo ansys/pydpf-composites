@@ -42,6 +42,7 @@ from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
 )
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 from ansys.dpf.composites.server_helpers._versions import version_equal_or_later
+from ansys.dpf.core.server_factory import AvailableServerConfigs
 
 from .helper import get_dummy_data_files
 
@@ -320,7 +321,9 @@ def dpf_server(request: pytest.FixtureRequest):
         # We just try until connect_to_server succeeds
         def start_server():
             if server_process.port:
-                return dpf.server.connect_to_server(port=server_process.port)
+                config = AvailableServerConfigs.GrpcServer
+                config.grpc_mode = DPF_DEFAULT_GRPC_MODE
+                return dpf.server.connect_to_server(port=server_process.port, config=config)
             else:
                 return server_process.server
 

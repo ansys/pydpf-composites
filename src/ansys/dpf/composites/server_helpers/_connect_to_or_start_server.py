@@ -28,6 +28,7 @@ from typing import Any
 from ansys.dpf.core import connect_to_server
 from ansys.dpf.core import server as _dpf_server
 from ansys.dpf.core import start_local_server
+from ansys.dpf.core.server_factory import AvailableServerConfigs
 
 from ansys.dpf.composites.server_helpers._load_plugin import load_composites_plugin
 
@@ -84,9 +85,9 @@ def connect_to_or_start_server(
     **kwargs:
         Additional keyword arguments are passed to either `ansys.dpf.core.start_local_server`
         or `ansys.dpf.core.connect_to_server` to set a timeout, config and context.
-        For instance, the transport mode must be set via the ``config.grpc_mode`` parameter in
-        ``kwargs`` to connect to a gRPC server. See https://dpf.docs.pyansys.com/version/stable/
-        for more information.
+        For instance, the transport mode must be set via the ``config`` parameter in
+        ``kwargs`` to connect to a running gRPC server. See
+        https://dpf.docs.pyansys.com/version/stable/ for more information.
 
 
     Returns
@@ -97,6 +98,18 @@ def connect_to_or_start_server(
     port_in_env = os.environ.get("PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT")
     if port_in_env is not None:
         port = int(port_in_env)
+
+    # used to run the tests and build the documentation in gRPC mode
+    default_grpc_mode = os.environ.get("DPF_DEFAULT_GRPC_MODE")
+    if default_grpc_mode is not None:
+        if default_grpc_mode != "insecure":
+            raise RuntimeError(
+                "Other gRPC modes than 'insecure' are not supported yet."
+                f"grpc_mode='{default_grpc_mode}' was given."
+            )
+        config = AvailableServerConfigs.GrpcServer
+        config.grpc_mode = default_grpc_mode
+        kwargs["config"] = config
 
     connect_kwargs: dict[str, int | str] = {}
     if port is not None:

@@ -128,7 +128,7 @@ fiber_orientation_tensor = dpf.fields_factory.create_tensor_field(
 )
 
 ele_orientation_op = dpf.operators.result.element_orientations(
-    data_sources=data_sources, requested_location="Elemental", bool_rotate_to_global=False
+    data_sources=data_sources, requested_location="Elemental"
 )
 
 euler_angles_field = ele_orientation_op.outputs.fields_container()[0]
