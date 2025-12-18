@@ -97,13 +97,11 @@ def connect_to_or_start_server(
     """
     port_in_env = os.environ.get("PYDPF_COMPOSITES_DOCKER_CONTAINER_PORT")
     if port_in_env is not None:
-        print(f"- Connect to server running on port {port_in_env}")
         port = int(port_in_env)
 
     # used to run the tests and build the documentation in gRPC mode
     default_grpc_mode = os.environ.get("DPF_DEFAULT_GRPC_MODE")
     if default_grpc_mode is not None:
-        print(f"- Connect to gRPC server with mode {default_grpc_mode}")
         if default_grpc_mode != "insecure":
             raise RuntimeError(
                 "Other gRPC modes than 'insecure' are not supported yet."
@@ -120,10 +118,8 @@ def connect_to_or_start_server(
         connect_kwargs["ip"] = ip
 
     if len(list(connect_kwargs.keys())) > 0:
-        print(f"- Connect to server")
         server = connect_to_server(**connect_kwargs, **kwargs)
     else:
-        print(f"- Start local server")
         server = start_local_server(ansys_path=ansys_path, **kwargs)
 
     required_version = "6.0"
