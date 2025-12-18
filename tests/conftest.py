@@ -117,7 +117,7 @@ class DockerProcess:
             "-e",
             f"{ANSYSLMD_LICENSE_FILE_KEY}={self.license_server}",
             "-e",
-            f"DPF_DEFAULT_GRPC_MODE={DPF_DEFAULT_GRPC_MODE}"
+            f"DPF_DEFAULT_GRPC_MODE={DPF_DEFAULT_GRPC_MODE}",
             "--name",
             self.name,
             self.image_name,
