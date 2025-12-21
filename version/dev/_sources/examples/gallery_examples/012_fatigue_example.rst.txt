@@ -354,7 +354,7 @@ Plot damage
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb06ffa3110>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fe0e5983110>)
 
 
 
@@ -389,7 +389,7 @@ Identify the element with the maximum damage
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.498 seconds)
+   **Total running time of the script:** (0 minutes 6.754 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_012_fatigue_example.py:
