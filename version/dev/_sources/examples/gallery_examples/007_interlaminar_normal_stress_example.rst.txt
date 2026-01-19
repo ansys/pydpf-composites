@@ -246,7 +246,7 @@ Plot the maximum s3 of each element.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f1e9d14b9d0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f14950ba5d0>)
 
 
 
@@ -318,14 +318,14 @@ Plot s3 at the mid-plane of a certain ply.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f1e9d149bd0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f14950b9bd0>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.557 seconds)
+   **Total running time of the script:** (0 minutes 16.083 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_007_interlaminar_normal_stress_example.py:
