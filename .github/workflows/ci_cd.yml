@@ -65,6 +65,8 @@ jobs:
         container-tag: [ 'latest' ]
         include:
           - python-version: "3.13"
+            container-tag: "2026r1"
+          - python-version: "3.13"
             container-tag: "2025r2"
           - python-version: "3.13"
             container-tag: "2025r1"
