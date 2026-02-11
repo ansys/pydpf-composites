@@ -56,8 +56,8 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "non_laye
 # %%
 # Configure the failure criterion
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Define the failure criterion to evaluate. In this case, only Tsai-Wu is selected
-# but it is possible to combine multiple criteria using the CombinedFailureCriterion
+# Define the failure criterion to evaluate. In this example, only Tsai–Wu is selected, 
+# but you can combine multiple criteria by using CombinedFailureCriterion.
 combined_fc = CombinedFailureCriterion(
     name="failure of all materials",
     failure_criteria=[
