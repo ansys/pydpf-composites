@@ -88,9 +88,9 @@ result_info_provider = dpf.Operator("ResultInfoProvider")
 result_info_provider.inputs.data_sources(rst_data_source)
 
 # %%
-# Load the materials from the XML file. Important. The Transfer IDs (VUID)
-# in the XML file and RST file must match for the material properties to be correctly assigned
-# to the elements.
+# Load the materials from the XML file. It is important to ensure that
+# the Transfer IDs (VUID) in both the XML and RST files match so the 
+# material properties map correctly to the elements.
 material_support_provider = dpf.Operator("support_provider")
 material_support_provider.inputs.property("mat")
 material_support_provider.inputs.data_sources(material_support_data_source)
