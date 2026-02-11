@@ -133,7 +133,7 @@ evaluate_failure_criterion_op.inputs.layup_model_context_type(LayupModelContextT
 evaluate_failure_criterion_op.inputs.request_sandwich_results(False)
 
 # %%
-# Extract the maximum failure value per element
+# Extract the maximum failure value per element.
 minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
 minmax_per_element.inputs.fields_container(evaluate_failure_criterion_op.outputs.failure_container)
 minmax_per_element.inputs.mesh(mesh_provider.outputs.mesh)
