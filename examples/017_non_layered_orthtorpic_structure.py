@@ -82,7 +82,7 @@ server = connect_to_or_start_server()
 model = dpf.Model(data_sources=rst_data_source, server=server)
 
 # %%
-# Prepare inputs for the composite operators
+# Prepare inputs for the composite operators.
 mesh_provider = model.metadata.mesh_provider
 result_info_provider = dpf.Operator("ResultInfoProvider")
 result_info_provider.inputs.data_sources(rst_data_source)
