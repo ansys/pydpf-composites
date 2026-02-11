@@ -26,12 +26,7 @@
 Non-layered structure
 ---------------------
 
-This example shows how to use the composite failure operators
-for non-layered structures but with orthotropic materials. So,
-this example was not pre-processed with ACP, but has one orthotropic material
-with defined element orientations and temperature dependent material properties.
-The temperature dependency is automatically handled by the failure criterion operator
-if the temperatures are stored in the result file.
+This example demonstrates how to use composite failure operators for non-layered structures with orthotropic materials. It is not preprocessed with ACP. Instead, the example uses a single orthotropic material with defined element orientations and temperature-dependent material properties. The failure criterion operation automatically accounts for temperature dependency when the result file includes temperature data.
 
 The example can be easily adapted for other failure criteria than Tsai-Wu,
 for instance Hashin, Puck, etc. Or a combined criterion can be used as well.
