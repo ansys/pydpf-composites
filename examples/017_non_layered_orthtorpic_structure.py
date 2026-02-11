@@ -119,8 +119,8 @@ evaluate_failure_criterion_op = dpf.Operator("composite::evaluate_failure_criter
 evaluate_failure_criterion_op.inputs.scope_configuration(scope_config_reader_op.outputs)
 evaluate_failure_criterion_op.inputs.criterion_configuration(combined_fc.to_json())
 
-# Set the element scope: in this case, the entire meshed region, but
-# it is possible to set an element scoping to only process a subset of elements
+# Set the element scope. This example uses the entire meshed region, 
+# but you can scope specific elements to process only a subset.
 evaluate_failure_criterion_op.inputs.element_scoping(model.metadata.meshed_region.elements.scoping)
 evaluate_failure_criterion_op.inputs.materials_container(material_provider.outputs)
 evaluate_failure_criterion_op.inputs.stream_provider(model.metadata.streams_provider)
