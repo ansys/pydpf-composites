@@ -174,7 +174,7 @@ to the function :func:`.get_ply_wise_data`.
 
     ['P1L1__p1_2_4_6', 'P1L1__p5', 'P1L1__p3', 'P1L1__ModelingPly.8', 'P1L1__ModelingPly.4', 'P1L1__ModelingPly.3', 'P1L1__ModelingPly.1', 'P1L1__ModelingPly.2', 'P1L1__ModelingPly.5', 'P1L1__ModelingPly.6', 'P1L1__ModelingPly.7']
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f29419eb890>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f4de60dfed0>)
 
 
 
@@ -244,14 +244,14 @@ is extracted for the material `Honeycomb Aluminum Alloy`.
 
     {'Honeycomb Aluminum Alloy': np.int32(1), 'UD Resin Epoxy/E-Glass': np.int32(2)}
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f290c281a90>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f4daad9a710>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.949 seconds)
+   **Total running time of the script:** (0 minutes 10.423 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_013_thermal_example.py:
