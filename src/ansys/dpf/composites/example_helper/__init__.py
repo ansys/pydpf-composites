@@ -193,6 +193,15 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
         ),
         solver_type=SolverType.LSDYNA,
     ),
+    "non_layered_structure": _ContinuousFiberExampleLocation(
+        directory="non_layered_structure",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={},
+        ),
+        solver_type=SolverType.MAPDL,
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
