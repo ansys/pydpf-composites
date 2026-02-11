@@ -129,7 +129,7 @@ evaluate_failure_criterion_op.inputs.mesh(mesh_provider.outputs.mesh)
 # The operator requires the layup model context to interpret the inputs correctly. 
 # In this example, no ply information is provided because all elements are homogeneous.
 evaluate_failure_criterion_op.inputs.layup_model_context_type(LayupModelContextType.NOT_AVAILABLE)
-# Sandwich failure criteria are not supported in this workflow
+# This workflow does not support sandwich failure criteria.
 evaluate_failure_criterion_op.inputs.request_sandwich_results(False)
 
 # %%
