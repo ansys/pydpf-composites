@@ -32,7 +32,9 @@ orthotropic material with defined element orientations and temperature-dependent
 properties. The failure criterion operator automatically accounts for temperature dependency
 when the result file includes temperature data.
 
-You can easily adapt this example to use failure criteria other than Tsai_wu, such as Hashin or Puck, or to apply a combined criterion. You can also use element and time-step scoping to postprocess only specific elements and load cases.
+You can easily adapt this example to use failure criteria other than Tsai_wu, such as Hashin or
+Puck, or to apply a combined criterion. You can also use element and time-step scoping to
+postprocess only specific elements and load cases.
 """
 
 # %%
@@ -56,7 +58,7 @@ composite_files_on_server = get_continuous_fiber_example_files(server, "non_laye
 # %%
 # Configure the failure criterion
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Define the failure criterion to evaluate. In this example, only Tsai–Wu is selected, 
+# Define the failure criterion to evaluate. In this example, only Tsai–Wu is selected,
 # but you can combine multiple criteria by using CombinedFailureCriterion.
 combined_fc = CombinedFailureCriterion(
     name="failure of all materials",
@@ -89,7 +91,7 @@ result_info_provider.inputs.data_sources(rst_data_source)
 
 # %%
 # Load the materials from the XML file. It is important to ensure that
-# the Transfer IDs (VUID) in both the XML and RST files match so the 
+# the Transfer IDs (VUID) in both the XML and RST files match so the
 # material properties map correctly to the elements.
 material_support_provider = dpf.Operator("support_provider")
 material_support_provider.inputs.property("mat")
@@ -112,21 +114,21 @@ scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
 scope_config_reader_op.inputs.scope_configuration(scope_config)
 
 # %%
-# The `evaluate_failure_criterion_per_scope` operator handles all background details. 
+# The `evaluate_failure_criterion_per_scope` operator handles all background details.
 # For example, it accounts for temperature‑dependent material properties
 # if the result file includes temperature data.
 evaluate_failure_criterion_op = dpf.Operator("composite::evaluate_failure_criterion_per_scope")
 evaluate_failure_criterion_op.inputs.scope_configuration(scope_config_reader_op.outputs)
 evaluate_failure_criterion_op.inputs.criterion_configuration(combined_fc.to_json())
 
-# Set the element scope. This example uses the entire meshed region, 
+# Set the element scope. This example uses the entire meshed region,
 # but you can scope specific elements to process only a subset.
 evaluate_failure_criterion_op.inputs.element_scoping(model.metadata.meshed_region.elements.scoping)
 evaluate_failure_criterion_op.inputs.materials_container(material_provider.outputs)
 evaluate_failure_criterion_op.inputs.stream_provider(model.metadata.streams_provider)
 evaluate_failure_criterion_op.inputs.mesh(mesh_provider.outputs.mesh)
 
-# The operator requires the layup model context to interpret the inputs correctly. 
+# The operator requires the layup model context to interpret the inputs correctly.
 # In this example, no ply information is provided because all elements are homogeneous.
 evaluate_failure_criterion_op.inputs.layup_model_context_type(LayupModelContextType.NOT_AVAILABLE)
 # This workflow does not support sandwich failure criteria.
