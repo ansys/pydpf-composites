@@ -15,8 +15,7 @@ PyDPF - Composites enables the post-processing of composite structures based on
 `Ansys DPF`_ and the DPF Composites plugin. It implements
 classes on top of DPF Composites operators and data accessors for short
 fiber and layered composites (layered shell and solid elements).
-This module can be used to postprocess fiber reinforced plastics, layered composites,
-non-layered composite structures and to implement custom failure criteria and computation.
+You can use this module to postprocess fiber reinforced plastics and both layered and non-layered composites, as well as implement custom failure criteria and computations.
 
 .. grid:: 1 1 2 2
     :gutter: 2
