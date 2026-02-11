@@ -142,8 +142,8 @@ minmax_per_element.inputs.material_support(material_support_provider.outputs.abs
 # %%
 # Plot the results
 # ~~~~~~~~~~~~~~~~
-# The range of the scalar bar is set to [0, 1] because a failure value of 1 means that
-# the failure criterion is exactly met and values larger than 1 indicate failure.
+# Set the scalar bar range to [0, 1]. A failure value of 1 means the criterion
+# is satisfied exactly; values greater than 1 indicate that failure has occurred.
 output = minmax_per_element.outputs.field_max()
 plot = model.metadata.meshed_region.plot(output[FailureOutput.FAILURE_VALUE], clim=[0, 1])
 
