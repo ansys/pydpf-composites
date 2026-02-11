@@ -11,7 +11,7 @@
 PyDPF - Composites
 ------------------
 
-PyDPF - Composites enables the post-processing of composite structures based on
+PyDPF Composites enables the postprocessing of composite structures based on
 `Ansys DPF`_ and the DPF Composites plugin. It implements
 classes on top of DPF Composites operators and data accessors for short
 fiber and layered composites (layered shell and solid elements).
