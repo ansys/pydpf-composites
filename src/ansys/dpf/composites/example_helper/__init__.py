@@ -39,7 +39,7 @@ from ..data_sources import (
 )
 from ..server_helpers import upload_file_to_unique_tmp_folder, upload_files_to_unique_tmp_folder
 
-EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/master/pydpf-composites/"
+EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/main/pydpf-composites/"
 
 
 # Example URL to run the examples locally
