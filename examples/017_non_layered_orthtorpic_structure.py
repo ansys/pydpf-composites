@@ -105,7 +105,7 @@ material_provider.inputs.abstract_field_support(
 material_provider.inputs.Engineering_data_file(eng_data_source)
 
 # %%
-# Select the time step by setting a time scope
+# Select the time step by setting a time scope.
 scope_config = dpf.DataTree()
 scope_config.add({"requested_times": 1})
 scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
