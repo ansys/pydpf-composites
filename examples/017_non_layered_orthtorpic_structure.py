@@ -76,7 +76,7 @@ eng_data_source = composite_data_sources.engineering_data
 # %%
 # Load the model and configure the operators
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Use launch server of DPF Composites which also loads all required plugins
+# Use the DPF Composites launch server, which automatically loads all required plugins.
 server = connect_to_or_start_server()
 # Load the native DPF model (rst)
 model = dpf.Model(data_sources=rst_data_source, server=server)
