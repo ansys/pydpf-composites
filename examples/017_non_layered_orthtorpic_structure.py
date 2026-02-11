@@ -38,7 +38,7 @@ You can easily adapt this example to use failure criteria other than Tsai_wu, su
 # %%
 # Set up the environment
 # ~~~~~~~~~~~~~~~~~~~~~~
-# Setup of the analysis and initialize the composite model.
+# Setup the analysis and initialize the composite model.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.composite_model import LayupModelContextType
