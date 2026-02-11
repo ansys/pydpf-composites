@@ -36,7 +36,7 @@ You can easily adapt this example to use failure criteria other than Tsai_wu, su
 """
 
 # %%
-# Set up the environment
+# Setup the environment
 # ~~~~~~~~~~~~~~~~~~~~~~
 # Setup the analysis and initialize the composite model.
 import ansys.dpf.core as dpf
