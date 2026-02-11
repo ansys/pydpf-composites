@@ -112,9 +112,9 @@ scope_config_reader_op = dpf.Operator("composite::scope_config_reader")
 scope_config_reader_op.inputs.scope_configuration(scope_config)
 
 # %%
-# The `evaluate_failure_criterion_per_scope` operator handles all the details in the background.
-# For instance, temperature dependency of the material properties is automatically considered if
-# temperatures are stored in the result file.
+# The `evaluate_failure_criterion_per_scope` operator handles all background details. 
+# For example, it accounts for temperature‑dependent material properties
+# if the result file includes temperature data.
 evaluate_failure_criterion_op = dpf.Operator("composite::evaluate_failure_criterion_per_scope")
 evaluate_failure_criterion_op.inputs.scope_configuration(scope_config_reader_op.outputs)
 evaluate_failure_criterion_op.inputs.criterion_configuration(combined_fc.to_json())
