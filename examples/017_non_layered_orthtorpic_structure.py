@@ -32,7 +32,7 @@ orthotropic material with defined element orientations and temperature-dependent
 properties. The failure criterion operator automatically accounts for temperature dependency
 when the result file includes temperature data.
 
-You can easily adapt this example to use failure criteria other than Tsai_wu, such as Hashin or
+You can easily adapt this example to use failure criteria other than Tsai-Wu, such as Hashin or
 Puck, or to apply a combined criterion. You can also use element and time-step scoping to
 postprocess only specific elements and load cases.
 """
