@@ -387,7 +387,7 @@ Get filtered data
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f676098b610>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9708782850>)
 
 
 
@@ -460,7 +460,7 @@ for all plies that have a specific UD material.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f676098b4d0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9708783610>)
 
 
 
@@ -534,14 +534,14 @@ in the material direction in this ply.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f676098bd90>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9708783ed0>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.362 seconds)
+   **Total running time of the script:** (0 minutes 12.332 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:
