@@ -192,7 +192,7 @@ Evaluate failures for the entire model
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9761ef1d30>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f620aad5d30>)
 
 
 
@@ -247,7 +247,7 @@ Scope failure evaluation to a certain element scope.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9708782210>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f61d8772210>)
 
 
 
@@ -301,14 +301,14 @@ Scope failure evaluation by plies.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9708781f90>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f61d8771f90>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 56.917 seconds)
+   **Total running time of the script:** (0 minutes 57.526 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_001_failure_operator_example.py:
