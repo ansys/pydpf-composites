@@ -174,7 +174,7 @@ Plot the maximum IRF per (solid) element.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f3f03a56d50>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f599c25fd90>)
 
 
 
@@ -268,7 +268,7 @@ For DPF Server versions 7.0 and later, element information can be retrieved dire
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 16.680 seconds)
+   **Total running time of the script:** (0 minutes 11.204 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_008_assembly_example.py:
