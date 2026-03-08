@@ -123,7 +123,7 @@ Get input files (RST and material.engd but skip the ACP layup file).
 
  .. code-block:: none
 
-    ContinuousFiberCompositesFiles(result_files=['/tmp/dataProcessingTemp140713866032896/b3d24132-8866-41c5-a13f-a6d1f1003ace/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140713866032896/2b901a31-0a37-41da-b9ed-bb786ef5adb5/material.engd', solver_input_file=None, files_are_local=False, solver_type=<SolverType.MAPDL: 'mapdl'>)
+    ContinuousFiberCompositesFiles(result_files=['/tmp/dataProcessingTemp140665933522688/7dbfd96f-817d-4a7c-856f-7a7cf40a412d/shell.rst'], composite={}, engineering_data='/tmp/dataProcessingTemp140665933522688/f8832308-56bf-4492-9f69-07f3976e8a8d/material.engd', solver_input_file=None, files_are_local=False, solver_type=<SolverType.MAPDL: 'mapdl'>)
 
 
 
@@ -227,7 +227,7 @@ Evaluate failures for the entire model
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f9863aeb890>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fed66a67890>)
 
 
 
@@ -417,7 +417,7 @@ maxima failure values of the layers.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f98638b8410>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fed67a7c550>)
 
 
 
@@ -445,7 +445,7 @@ With ACP Standalone (for constant material properties only):
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 36.878 seconds)
+   **Total running time of the script:** (0 minutes 35.255 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_011_rst_workflow.py:
