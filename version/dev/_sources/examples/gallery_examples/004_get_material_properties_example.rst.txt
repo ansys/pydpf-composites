@@ -211,14 +211,14 @@ Implement a custom failure criterion: basic max strain
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fac08dc9810>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f397c7c74d0>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 13.831 seconds)
+   **Total running time of the script:** (0 minutes 16.010 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:
