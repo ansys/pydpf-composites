@@ -394,14 +394,14 @@ Plot the maximum and minimum values.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f0eff7cbb10>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fe7dfa64050>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 26.426 seconds)
+   **Total running time of the script:** (0 minutes 27.186 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_099_dpf_composite_failure_workflow.py:

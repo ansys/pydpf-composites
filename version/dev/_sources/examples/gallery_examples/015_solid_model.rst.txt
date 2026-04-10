@@ -216,7 +216,7 @@ This makes the critical areas of the solid elements visible on the reference sur
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f0f04512990>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fe7dff4b4d0>)
 
 
 
@@ -400,7 +400,7 @@ In this example, s11, s22 and s12 are retrieved for the last time step.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 34.495 seconds)
+   **Total running time of the script:** (0 minutes 35.476 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_015_solid_model.py:
