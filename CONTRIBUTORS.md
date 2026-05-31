@@ -14,3 +14,4 @@
 * [René Roos](https://github.com/roosre)
 * [Revathy Venugopal](https://github.com/Revathyvenugopal162)
 * [Roberto Pastor Muela](https://github.com/RobPasMue)
+* [Zack Shum](https://github.com/zshum4)
