@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -24,4 +24,4 @@ from ansys.dpf.composites import __version__
 
 
 def test_pkg_version():
-    assert __version__ == "0.7.dev0"
+    assert __version__ == "0.8.dev0"

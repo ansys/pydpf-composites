@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -59,6 +59,11 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
         "10.0",
         "2025 R2",
         "DPF Composites: basic support of LSDyna and sampling points for solids.",
+    ),
+    "11.0": _DpfVersionInfo(
+        "11.0",
+        "2026 R1",
+        "DPF Composites: server-side sampling points for solids.",
     ),
 }
 

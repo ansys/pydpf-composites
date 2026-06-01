@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -25,7 +25,12 @@
 from enum import Enum, IntEnum
 
 from ansys.dpf.core import Field, MeshedRegion, Operator, operators
-from ansys.dpf.gate.common import locations
+
+try:
+    from ansys.dpf.core.common import locations
+except ImportError:
+    # support ansys.dpf.core < 0.13
+    from ansys.dpf.gate.common import locations
 
 __all__ = ("SpotReductionStrategy", "get_ply_wise_data")
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -75,6 +75,8 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # sphinx_gallery_thumbnail_number = 4
 
+# %%
+
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "lsdyna_bird_strike")
 
@@ -87,7 +89,7 @@ composite_model = CompositeModel(
 # %%
 # Get all the time ids to read all time steps and to select the correct results.
 time_freq_support = composite_model.core_model.metadata.time_freq_support
-time_ids = [v for v in time_freq_support.time_frequencies.scoping.ids]
+time_ids = [int(v) for v in time_freq_support.time_frequencies.scoping.ids]
 
 # %%
 # Get displacements at the final time step
@@ -160,7 +162,6 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         field_or_fields_container=elemental_values,
         deform_by=displacement,
         cpos=camera,
-        zoom="tight",
     )
 
 # %%
@@ -191,5 +192,4 @@ for ply_name in ["P1L1__ModelingPly.1", "P3L2__ModelingPly.1"]:
         field_or_fields_container=elemental_values,
         deform_by=displacement,
         cpos=camera,
-        zoom="tight",
     )

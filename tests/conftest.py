@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -34,6 +34,7 @@ from types import MappingProxyType
 import uuid
 
 import ansys.dpf.core as dpf
+from ansys.dpf.core.server_factory import AvailableServerConfigs
 import pytest
 
 from ansys.dpf.composites.server_helpers._connect_to_or_start_server import (
@@ -51,8 +52,9 @@ PORT_OPTION_KEY = "--port"
 ANSYS_PATH_OPTION_KEY = "--ansys-path"
 LICENSE_SERVER_OPTION_KEY = "--license-server"
 ANSYSLMD_LICENSE_FILE_KEY = "ANSYSLMD_LICENSE_FILE"
-DOCKER_IMAGE_TAG_KEY = "--image-tag"
+DOCKER_IMAGE_TAG_KEY = "--container-tag"
 DEFAULT_DOCKER_IMAGE_TAG = "latest"
+DPF_DEFAULT_GRPC_MODE = "insecure"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -69,7 +71,8 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         ANSYS_PATH_OPTION_KEY,
         action="store",
         help="If set, the dpf server is started from an Ansys location located at the given path."
-        r"Example: C:\\Program Files\\Ansys Inc\\v231",
+        r"Example: C:\\Program Files\\Ansys Inc\\v261",
+        # default="C:\\Program Files\\Ansys Inc\\v261",
     )
 
     parser.addoption(
@@ -113,6 +116,8 @@ class DockerProcess:
             "ANSYS_DPF_ACCEPT_LA=Y",
             "-e",
             f"{ANSYSLMD_LICENSE_FILE_KEY}={self.license_server}",
+            "-e",
+            f"DPF_DEFAULT_GRPC_MODE={DPF_DEFAULT_GRPC_MODE}",
             "--name",
             self.name,
             self.image_name,
@@ -316,7 +321,9 @@ def dpf_server(request: pytest.FixtureRequest):
         # We just try until connect_to_server succeeds
         def start_server():
             if server_process.port:
-                return dpf.server.connect_to_server(port=server_process.port)
+                config = AvailableServerConfigs.GrpcServer
+                config.grpc_mode = DPF_DEFAULT_GRPC_MODE
+                return dpf.server.connect_to_server(port=server_process.port, config=config)
             else:
                 return server_process.server
 

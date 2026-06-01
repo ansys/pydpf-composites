@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -30,6 +30,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .constants import Spot
+from .layup_info import SolidStack
 from .result_definition import FailureMeasureEnum
 from .sampling_point_types import (
     FAILURE_MODE_NAMES_TO_ACP,
@@ -118,7 +119,7 @@ def get_offsets_by_spots_from_sp(
     indices = sampling_point.get_indices(spots)
 
     if core_scale_factor == 1.0:
-        return cast(npt.NDArray[np.float64], offsets[indices])
+        return offsets[indices]
 
     spots_per_ply = sampling_point.spots_per_ply
 
@@ -142,7 +143,7 @@ def get_offsets_by_spots_from_sp(
         for i in range(0, spots_per_ply):
             offsets[index * spots_per_ply + i] = top_of_previous_ply + step * i
 
-    return cast(npt.NDArray[np.float64], offsets[indices])
+    return offsets[indices]
 
 
 def get_ply_wise_critical_failures_from_sp(
@@ -199,7 +200,7 @@ def get_polar_plot_from_sp(
     return SamplingPointFigure(fig, ax)
 
 
-def add_ply_sequence_to_plot_to_sp(
+def add_ply_sequence_to_sampling_point_plot(
     sampling_point: SamplingPoint, axes: Any, core_scale_factor: float = 1.0
 ) -> None:
     """Add the stacking (ply and text) to an axis or plot."""
@@ -245,7 +246,7 @@ def add_ply_sequence_to_plot_to_sp(
         )
 
 
-def add_results_to_plot_to_sp(
+def add_results_to_sampling_point_plot(
     sampling_point: SamplingPoint,
     axes: Any,
     components: Sequence[str],
@@ -299,6 +300,11 @@ def get_result_plots_from_sp(
     fig = plt.figure()
     gs = fig.add_gridspec(1, num_active_plots, hspace=0, wspace=0)
     axes = gs.subplots(sharex="col", sharey="row")
+    if hasattr(axes, "flat"):  # numpy array of Axes
+        for ax in axes.flat:
+            ax.set_ymargin(0)
+    else:  # single Axes
+        axes.set_ymargin(0)
 
     def _get_subplot(axes_obj: Any, current_index: int) -> Any:
         try:
@@ -391,3 +397,64 @@ def get_result_plots_from_sp(
             axes_index += 1
 
     return SamplingPointFigure(fig, axes)
+
+
+def add_element_boxes_to_axes(
+    sampling_point: SamplingPoint,
+    solid_stack: SolidStack,
+    axes: Any,
+    core_scale_factor: float = 1.0,
+    alpha: float = 0.2,
+) -> None:
+    """Add the element stack (boxes) to an axis or plot.
+
+    Parameters
+    ----------
+    sampling_point :
+        SamplingPoint object containing the all the data
+    solid_stack :
+        SolidStack object containing ordered list of elements
+    axes :
+        Matplotlib :py:class:`~matplotlib.axes.Axes` object.
+    core_scale_factor :
+        Factor for scaling the thickness of core plies.
+    alpha :
+        Transparency of the element boxes.
+    """
+    plY_offsets = sampling_point.get_offsets_by_spots(
+        spots=[Spot.BOTTOM, Spot.TOP], core_scale_factor=core_scale_factor
+    )
+
+    element_offsets = []
+    ply_index = 0
+    for _, element_ids in solid_stack.element_ids_per_level.items():
+        element_ply_ids = solid_stack.element_wise_analysis_plies[element_ids[0]]
+        element_offsets.append(plY_offsets[2 * ply_index])
+        ply_index += len(element_ply_ids)
+        element_offsets.append(plY_offsets[2 * ply_index - 1])
+
+    if len(element_offsets) == 0:
+        return
+
+    num_spots = 2
+    axes.set_ybound(element_offsets[0], element_offsets[-1])
+    x_bound = axes.get_xbound()
+    width = x_bound[1] - x_bound[0]
+
+    colors = ("b", "g", "r", "c", "m", "y")
+    for index, _ in enumerate(solid_stack.element_ids_per_level):
+        hatch = ""
+        axes.add_patch(
+            Rectangle(
+                xy=(float(x_bound[0]), float(element_offsets[index * num_spots])),
+                width=width,
+                height=float(
+                    element_offsets[(index + 1) * num_spots - 1]
+                    - element_offsets[index * num_spots]
+                ),
+                fill=True,
+                hatch=hatch,
+                alpha=alpha,
+                color=colors[index % len(colors)],
+            )
+        )

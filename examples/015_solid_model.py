@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -29,8 +29,8 @@ Postprocess a solid model
 This example shows features which are tailored for the postprocessing of
 solid models. These are
 
-  - Failure plot on the reference surface
-  - Sampling point for solid elements
+- Failure plot on the reference surface
+- Sampling point for solid elements
 
 The model is an assembly with solid and shell elements. So, the example also
 demonstrates how to distinguish between different element types.
@@ -154,9 +154,7 @@ sampling_point_plot.figure.set_figwidth(12)
 sampling_point_plot.figure.show()
 
 # %%
-# Here is another sampling point plot with the in-plane strains only
-# and the colored boxes to indicate the solid elements are added
-# to the plot as well.
+# Here is another sampling point plot with the in-plane strains
 sampling_point_plot = sampling_point_solid_stack.get_result_plots(
     strain_components=("e1", "e2", "e12"),  # Show in-plane results only
     stress_components=(),  # Don't show stresses
@@ -164,11 +162,6 @@ sampling_point_plot = sampling_point_solid_stack.get_result_plots(
     core_scale_factor=core_scale_factor,
     create_laminate_plot=False,
     show_failure_modes=True,
-)
-sampling_point_solid_stack.add_element_boxes_to_plot(
-    axes=sampling_point_plot.axes,
-    core_scale_factor=core_scale_factor,
-    alpha=0.15,
 )
 sampling_point_plot.figure.set_figheight(8)
 sampling_point_plot.figure.set_figwidth(12)
@@ -179,8 +172,9 @@ sampling_point_plot.figure.show()
 # Solid Stack Information
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # Information about the stack of solid elements can be retrieved
-# by using the SolidStackProvider. A basic example is shown below
-# where 6 is the element ID (label) and not an index.
+# by using the SolidStackProvider. A basic example is shown below:
+# The element ID 6 (not index 6) refers to one of the solid elements
+# in the stack.
 solid_stack_provider = SolidStackProvider(
     composite_model.get_mesh(), composite_model.get_layup_operator()
 )

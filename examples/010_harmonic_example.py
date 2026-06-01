@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -229,6 +229,7 @@ frequencies = composite_model.core_model.metadata.time_freq_support.time_frequen
 axs.set_xlabel("Frequency (1/s)")
 axs.set_ylabel("Max IRF in critical element (-)")
 axs.plot(frequencies, max_value_for_each_freq_crit_element.data)
+plt.show()
 
 
 # %%

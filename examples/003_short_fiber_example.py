@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -91,13 +91,12 @@ field_variable_provider.inputs.mesh(model.metadata.mesh_provider)
 
 field_variables = field_variable_provider.outputs.fields_container.get_data()
 
-a11 = field_variables[0]
-a11.plot()
-
 # %%
-
-a22 = field_variables[1]
-a22.plot()
+# The order of field variables is not deterministic. For consistent output,
+# they are sorted by name.
+for field_variable in sorted(field_variables, key=lambda fv: fv.name):
+    print(f"Field variable: {field_variable.name}")
+    field_variable.plot()
 
 # %%
 # Configure and evaluate
