@@ -629,14 +629,15 @@
 <dd><p>Replace each character in the string using the given translation table.</p>
 <blockquote>
 <div><dl class="simple">
-<dt>table</dt><dd><p>Translation table, which must be a mapping of Unicode ordinals to
-Unicode ordinals, strings, or None.</p>
+<dt>table</dt><dd><p>Translation table, which must be a mapping of Unicode ordinals
+to Unicode ordinals, strings, or None.</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>The table must implement lookup/indexing via __getitem__, for instance a
-dictionary or list.  If this operation raises LookupError, the character is
-left untouched.  Characters mapped to None are deleted.</p>
+<p>The table must implement lookup/indexing via __getitem__, for
+instance a dictionary or list.  If this operation raises
+LookupError, the character is left untouched.  Characters mapped to
+None are deleted.</p>
 </dd></dl>
 
 </section>
