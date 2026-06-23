@@ -29,7 +29,7 @@ jobs:
     name: "Code style"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -92,7 +92,7 @@ jobs:
           docker pull ghcr.io/ansys/pydpf-composites:${{ matrix.container-tag }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: "Set up Python ${{ matrix.python-version }}"
         uses: actions/setup-python@v6
@@ -113,7 +113,7 @@ jobs:
           CONTAINER_TAG: ${{ matrix.container-tag }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.xml
@@ -142,7 +142,7 @@ jobs:
       - name: "Pull and start DPF container"
         run: |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -180,7 +180,7 @@ jobs:
           docker run -d --restart always -p 50052:50052 -e DPF_DEFAULT_GRPC_MODE=insecure -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
         uses: actions/setup-python@v6
