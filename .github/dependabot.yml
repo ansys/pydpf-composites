@@ -17,6 +17,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Update all packages together
     cooldown:
       include:
         - '*'
