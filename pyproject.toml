@@ -107,7 +107,7 @@ show_missing = true
 
 [tool.codespell]
 skip = '*.dat,*.out,*.k'
-ignore-words-list = 'ans,eyt'
+ignore-words-list = 'ans,eyt,synopsys'
 quiet-level = 3
 
 [tool.pylint.messages_control]
