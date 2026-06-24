@@ -29,9 +29,9 @@ jobs:
     name: "Code style"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@v7.0.0
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6.2.0
         with:
           # TODO: switch back to using ${{ env.MAIN_PYTHON_VERSION }}
           # once https://github.com/pylint-dev/pylint/issues/10000#issuecomment-2519899671
@@ -92,10 +92,10 @@ jobs:
           docker pull ghcr.io/ansys/pydpf-composites:${{ matrix.container-tag }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6.2.0
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -142,9 +142,9 @@ jobs:
       - name: "Pull and start DPF container"
         run: |
           docker pull ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@v7.0.0
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6.2.0
         with:
           python-version: '3.10'
       - name: Install dependencies
@@ -180,10 +180,10 @@ jobs:
           docker run -d --restart always -p 50052:50052 -e DPF_DEFAULT_GRPC_MODE=insecure -e ANSYSLMD_LICENSE_FILE=1055@${{ secrets.LICENSE_SERVER }} -e ANSYS_DPF_ACCEPT_LA=Y ghcr.io/ansys/pydpf-composites:${{ env.CONTAINER_TAG }}
 
       - name: "Checkout the project"
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: "Set up Python ${{ env.MAIN_PYTHON_VERSION }}"
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6.2.0
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
