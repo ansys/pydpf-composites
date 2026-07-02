@@ -1,6 +1,7 @@
 # Contains minimum requirements that we support
 numpy == 1.25.0
 matplotlib == 3.8.0
-# result info for LSDyna is supported since Dec 23
-ansys-dpf-core == 0.10.1
+# older versions of ansys-dpf-core incorrectly rely on pkg_resources
+# without declaring the dependency
+ansys-dpf-core == 0.13.4
 pyvista == 0.36.1

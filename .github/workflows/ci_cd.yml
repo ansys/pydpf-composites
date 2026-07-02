@@ -33,10 +33,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.3.0
         with:
-          # TODO: switch back to using ${{ env.MAIN_PYTHON_VERSION }}
-          # once https://github.com/pylint-dev/pylint/issues/10000#issuecomment-2519899671
-          # is resolved.
-          python-version: "3.12"
+          # Use the lowest Python version in case some dependencies
+          # resolve differently depending on the Python version, and
+          # use invalid Syntax for 3.11 on the newer version.
+          # The mypy checks would fail on newer Python versions since
+          # it detects this invalid syntax.
+          python-version: "3.11"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip tox
