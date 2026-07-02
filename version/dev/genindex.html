@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/ansys-sphinx-theme.css?v=5ffe81b6" />
@@ -44,10 +44,10 @@
     <link rel="stylesheet" type="text/css" href="_static/pydpf_composite.css?v=1a867b6f" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
 
 
   <!-- Include desired assets -->
@@ -58,8 +58,8 @@
     <link href="_static/css/breadcrumbs.css" rel="stylesheet" />
   
     <script src="_static/documentation_options.js?v=9cceaa3c"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/sg-tags.js?v=d80f6fa4"></script>
@@ -67,12 +67,13 @@
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_version = '0.18.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://composites.dpf.docs.pyansys.com/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="_static/ansys-favicon.png"/>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
@@ -80,24 +81,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.8.dev0" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
   <meta property="og:site_name" content="PyAnsys" />
   <meta name="physics" content="Structures" />
   <link rel="canonical" href="https://composites.dpf.docs.pyansys.com/version/stable/genindex.html" />
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -124,7 +131,7 @@
 
   
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -197,23 +204,13 @@
   </a>
 </li>
 
-            <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-controls="pst-nav-more-links">
-                    More
-                </button>
-                <ul id="pst-nav-more-links" class="dropdown-menu">
-                    
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="contribute.html">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contribute.html">
     Contribute
   </a>
 </li>
 
-                </ul>
-            </li>
-            
   </ul>
 </nav>
 </div>
@@ -262,11 +259,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -279,8 +283,7 @@
           
           
           
-          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -439,11 +442,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -456,8 +466,7 @@
           
           
           
-          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/ansys/pydpf-composites" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -552,7 +561,6 @@
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
- | <a href="#Z"><strong>Z</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -744,12 +752,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.c.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.c">c (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.capitalize.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.capitalize">capitalize() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.casefold.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.casefold">casefold() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.center.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.center">center() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.cf.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.cf">cf (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.cfc.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.cfc">cfc (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
@@ -780,10 +782,10 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.cmC.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.cmC">cmC (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.combined_failure_criterion.html#ansys.dpf.composites.result_definition.ResultDefinition.combined_failure_criterion">combined_failure_criterion (ansys.dpf.composites.result_definition.ResultDefinition property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion">CombinedFailureCriterion (class in ansys.dpf.composites.failure_criteria)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.data_sources.CompositeDataSources.composite.html#ansys.dpf.composites.data_sources.CompositeDataSources.composite">composite (ansys.dpf.composites.data_sources.CompositeDataSources attribute)</a>
@@ -815,8 +817,6 @@
       <li><a href="api/_autosummary/ansys.dpf.composites.composite_model.CompositeModel.core_model.html#ansys.dpf.composites.composite_model.CompositeModel.core_model">core_model (ansys.dpf.composites.composite_model.CompositeModel property)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion">CoreFailureCriterion (class in ansys.dpf.composites.failure_criteria)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.count.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.count">count() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion">CuntzeCriterion (class in ansys.dpf.composites.failure_criteria)</a>
 </li>
@@ -932,17 +932,13 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna.html#ansys.dpf.composites.layup_info.ElementInfoProviderLSDyna">ElementInfoProviderLSDyna (class in ansys.dpf.composites.layup_info)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderProtocol.html#ansys.dpf.composites.layup_info.ElementInfoProviderProtocol">ElementInfoProviderProtocol (class in ansys.dpf.composites.layup_info)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.ElementInfoProviderProtocol.html#ansys.dpf.composites.layup_info.ElementInfoProviderProtocol">ElementInfoProviderProtocol (class in ansys.dpf.composites.layup_info)</a>
+</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.composite_scope.CompositeScope.elements.html#ansys.dpf.composites.composite_scope.CompositeScope.elements">elements (ansys.dpf.composites.composite_scope.CompositeScope attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.emax.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.emax">emax (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.encode.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.encode">encode() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.endswith.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.endswith">endswith() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Engineering_Constants_E.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Engineering_Constants_E">Engineering_Constants_E (ansys.dpf.composites.layup_info.material_properties.MaterialProperty attribute)</a>
 </li>
@@ -988,8 +984,6 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXc.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXc">eXc (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.expandtabs.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.expandtabs">expandtabs() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.expression.html#ansys.dpf.composites.result_definition.ResultDefinition.expression">expression (ansys.dpf.composites.result_definition.ResultDefinition property)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXt.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.eXt">eXt (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
@@ -1026,10 +1020,10 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.html#ansys.dpf.composites.result_definition.FailureMeasureEnum">FailureMeasureEnum (class in ansys.dpf.composites.result_definition)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.html#ansys.dpf.composites.failure_criteria.FailureModeEnum">FailureModeEnum (class in ansys.dpf.composites.failure_criteria)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.html#ansys.dpf.composites.failure_criteria.FailureModeEnum">FailureModeEnum (class in ansys.dpf.composites.failure_criteria)</a>
+</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.constants.FailureOutput.html#ansys.dpf.composites.constants.FailureOutput">FailureOutput (class in ansys.dpf.composites.constants)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.sampling_point.FailureResult.html#ansys.dpf.composites.sampling_point.FailureResult">FailureResult (class in ansys.dpf.composites.sampling_point)</a>
@@ -1042,15 +1036,9 @@
         <li><a href="api/_autosummary/ansys.dpf.composites.data_sources.ShortFiberCompositesFiles.files_are_local.html#ansys.dpf.composites.data_sources.ShortFiberCompositesFiles.files_are_local">(ansys.dpf.composites.data_sources.ShortFiberCompositesFiles attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.find.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.find">find() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.force_global_constants.html#ansys.dpf.composites.failure_criteria.PuckCriterion.force_global_constants">force_global_constants (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.MaxStrainCriterion.force_global_strain_limits.html#ansys.dpf.composites.failure_criteria.MaxStrainCriterion.force_global_strain_limits">force_global_strain_limits (ansys.dpf.composites.failure_criteria.MaxStrainCriterion property)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.format.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.format">format() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.format_map.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.format_map">format_map() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle.html#ansys.dpf.composites.failure_criteria.CuntzeCriterion.fracture_plane_angle">fracture_plane_angle (ansys.dpf.composites.failure_criteria.CuntzeCriterion property)</a>
 </li>
@@ -1216,14 +1204,14 @@
       </ul></li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CoreFailureCriterion.include_ins.html#ansys.dpf.composites.failure_criteria.CoreFailureCriterion.include_ins">include_ins (ansys.dpf.composites.failure_criteria.CoreFailureCriterion property)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.index.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.index">index() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.insert">insert() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.interface_weakening_factor.html#ansys.dpf.composites.failure_criteria.PuckCriterion.interface_weakening_factor">interface_weakening_factor (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.INVERSE_RESERVE_FACTOR.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.INVERSE_RESERVE_FACTOR">INVERSE_RESERVE_FACTOR (ansys.dpf.composites.result_definition.FailureMeasureEnum attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.sampling_point.FailureResult.inverse_reserve_factor.html#ansys.dpf.composites.sampling_point.FailureResult.inverse_reserve_factor">inverse_reserve_factor (ansys.dpf.composites.sampling_point.FailureResult attribute)</a>
 
       <ul>
@@ -1236,43 +1224,13 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.ElementInfo.is_shell.html#ansys.dpf.composites.layup_info.ElementInfo.is_shell">is_shell (ansys.dpf.composites.layup_info.ElementInfo attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate.html#ansys.dpf.composites.sampling_point.SamplingPoint.is_uptodate">is_uptodate (ansys.dpf.composites.sampling_point.SamplingPoint property)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isalnum.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isalnum">isalnum() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isalpha.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isalpha">isalpha() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isascii.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isascii">isascii() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isdecimal.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isdecimal">isdecimal() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isdigit.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isdigit">isdigit() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isidentifier.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isidentifier">isidentifier() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.islower.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.islower">islower() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isnumeric.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isnumeric">isnumeric() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isprintable.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isprintable">isprintable() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isspace.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isspace">isspace() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.istitle.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.istitle">istitle() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.isupper.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.isupper">isupper() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
   </ul></td>
 </tr></table>
 
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.join.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.join">join() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.JSON_DICT_KEY.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.JSON_DICT_KEY">JSON_DICT_KEY (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion attribute)</a>
 </li>
@@ -1318,10 +1276,10 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.LayupProperty.html#ansys.dpf.composites.layup_info.LayupProperty">LayupProperty (class in ansys.dpf.composites.layup_info)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc">lfc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lfc">lfc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
+</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.lfc4.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.lfc4">lfc4 (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.lfc6.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.lfc6">lfc6 (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
@@ -1329,8 +1287,6 @@
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lft.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lft">lft (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.lft3.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.lft3">lft3 (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.ljust.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.ljust">ljust() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.LaRCCriterion.lmc.html#ansys.dpf.composites.failure_criteria.LaRCCriterion.lmc">lmc (ansys.dpf.composites.failure_criteria.LaRCCriterion property)</a>
 </li>
@@ -1344,11 +1300,7 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.server_helpers.load_composites_plugin.html#ansys.dpf.composites.server_helpers.load_composites_plugin">load_composites_plugin() (in module ansys.dpf.composites.server_helpers)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.lower.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.lower">lower() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.constants.SolverType.LSDYNA.html#ansys.dpf.composites.constants.SolverType.LSDYNA">LSDYNA (ansys.dpf.composites.constants.SolverType attribute)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.lstrip.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.lstrip">lstrip() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1357,8 +1309,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.M.html#ansys.dpf.composites.failure_criteria.PuckCriterion.M">M (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.maketrans.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.maketrans">maketrans() (ansys.dpf.composites.result_definition.FailureMeasureEnum static method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.constants.SolverType.MAPDL.html#ansys.dpf.composites.constants.SolverType.MAPDL">MAPDL (ansys.dpf.composites.constants.SolverType attribute)</a>
 </li>
@@ -1555,8 +1505,6 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.p22_pos.html#ansys.dpf.composites.failure_criteria.PuckCriterion.p22_pos">p22_pos (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.partition.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.partition">partition() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.pd.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.pd">pd (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 
       <ul>
@@ -1579,10 +1527,10 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.pmA.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.pmA">pmA (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pma.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pma">pma (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.pmB.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.pmB">pmB (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.PuckCriterion.pmb.html#ansys.dpf.composites.failure_criteria.PuckCriterion.pmb">pmb (ansys.dpf.composites.failure_criteria.PuckCriterion property)</a>
@@ -1621,12 +1569,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.remove">remove() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.removeprefix.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.removeprefix">removeprefix() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.removesuffix.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.removesuffix">removesuffix() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.replace.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.replace">replace() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.RESERVE_FACTOR.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.RESERVE_FACTOR">RESERVE_FACTOR (ansys.dpf.composites.result_definition.FailureMeasureEnum attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor.html#ansys.dpf.composites.sampling_point.SamplingPoint.reserve_factor">reserve_factor (ansys.dpf.composites.sampling_point.SamplingPoint property)</a>
@@ -1641,21 +1583,11 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.html#ansys.dpf.composites.result_definition.ResultDefinition">ResultDefinition (class in ansys.dpf.composites.result_definition)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinitionScope.html#ansys.dpf.composites.result_definition.ResultDefinitionScope">ResultDefinitionScope (class in ansys.dpf.composites.result_definition)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinitionScope.html#ansys.dpf.composites.result_definition.ResultDefinitionScope">ResultDefinitionScope (class in ansys.dpf.composites.result_definition)</a>
+</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.results.html#ansys.dpf.composites.sampling_point.SamplingPoint.results">results (ansys.dpf.composites.sampling_point.SamplingPoint property)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.rfind.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.rfind">rfind() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.rindex.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.rindex">rindex() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.rjust.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.rjust">rjust() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.rpartition.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.rpartition">rpartition() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.rsplit.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.rsplit">rsplit() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.data_sources.CompositeDataSources.rst.html#ansys.dpf.composites.data_sources.CompositeDataSources.rst">rst (ansys.dpf.composites.data_sources.CompositeDataSources property)</a>
 
@@ -1668,8 +1600,6 @@
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.LayupModelContextType.RST.html#ansys.dpf.composites.layup_info.LayupModelContextType.RST">RST (ansys.dpf.composites.layup_info.LayupModelContextType attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.rst_files.html#ansys.dpf.composites.result_definition.ResultDefinition.rst_files">rst_files (ansys.dpf.composites.result_definition.ResultDefinition property)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.rstrip.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.rstrip">rstrip() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1755,14 +1685,14 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.LayerProperty.SHEAR_ANGLES.html#ansys.dpf.composites.layup_info.LayerProperty.SHEAR_ANGLES">SHEAR_ANGLES (ansys.dpf.composites.layup_info.LayerProperty attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion.html#ansys.dpf.composites.failure_criteria.ShearCrimpingCriterion">ShearCrimpingCriterion (class in ansys.dpf.composites.failure_criteria)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.data_sources.ShortFiberCompositesFiles.html#ansys.dpf.composites.data_sources.ShortFiberCompositesFiles">ShortFiberCompositesFiles (class in ansys.dpf.composites.data_sources)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.smax.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.smax">smax (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.data_sources.CompositeDataSources.solver_input_file.html#ansys.dpf.composites.data_sources.CompositeDataSources.solver_input_file">solver_input_file (ansys.dpf.composites.data_sources.CompositeDataSources attribute)</a>
 
       <ul>
@@ -1777,17 +1707,11 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Specific_Heat_cp.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Specific_Heat_cp">Specific_Heat_cp (ansys.dpf.composites.layup_info.material_properties.MaterialProperty attribute)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.split.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.split">split() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.splitlines.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.splitlines">splitlines() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.constants.Spot.html#ansys.dpf.composites.constants.Spot">Spot (class in ansys.dpf.composites.constants)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.ply_wise_data.SpotReductionStrategy.html#ansys.dpf.composites.ply_wise_data.SpotReductionStrategy">SpotReductionStrategy (class in ansys.dpf.composites.ply_wise_data)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply.html#ansys.dpf.composites.sampling_point.SamplingPoint.spots_per_ply">spots_per_ply (ansys.dpf.composites.sampling_point.SamplingPoint property)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.startswith.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.startswith">startswith() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Strain_Limits_effective_strain.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Strain_Limits_effective_strain">Strain_Limits_effective_strain (ansys.dpf.composites.layup_info.material_properties.MaterialProperty attribute)</a>
 </li>
@@ -1829,11 +1753,7 @@
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.stress_strain_eval_mode.html#ansys.dpf.composites.result_definition.ResultDefinition.stress_strain_eval_mode">stress_strain_eval_mode (ansys.dpf.composites.result_definition.ResultDefinition property)</a>
 </li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.strip.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.strip">strip() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.FailureModeEnum.svm.html#ansys.dpf.composites.failure_criteria.FailureModeEnum.svm">svm (ansys.dpf.composites.failure_criteria.FailureModeEnum attribute)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.swapcase.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.swapcase">swapcase() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.constants.Sym3x3TensorComponent.html#ansys.dpf.composites.constants.Sym3x3TensorComponent">Sym3x3TensorComponent (class in ansys.dpf.composites.constants)</a>
 </li>
@@ -1885,8 +1805,6 @@
         <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.ResultDefinition.time.html#ansys.dpf.composites.result_definition.ResultDefinition.time">(ansys.dpf.composites.result_definition.ResultDefinition property)</a>
 </li>
       </ul></li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.title.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.title">title() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict.html#ansys.dpf.composites.failure_criteria.CombinedFailureCriterion.to_dict">to_dict() (ansys.dpf.composites.failure_criteria.CombinedFailureCriterion method)</a>
 
       <ul>
@@ -1959,8 +1877,6 @@
         <li><a href="api/_autosummary/ansys.dpf.composites.ply_wise_data.SpotReductionStrategy.TOP.html#ansys.dpf.composites.ply_wise_data.SpotReductionStrategy.TOP">(ansys.dpf.composites.ply_wise_data.SpotReductionStrategy attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.translate.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.translate">translate() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Tsai_Wu_Constant_xy.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Tsai_Wu_Constant_xy">Tsai_Wu_Constant_xy (ansys.dpf.composites.layup_info.material_properties.MaterialProperty attribute)</a>
 </li>
       <li><a href="api/_autosummary/ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Tsai_Wu_Constant_xz.html#ansys.dpf.composites.layup_info.material_properties.MaterialProperty.Tsai_Wu_Constant_xz">Tsai_Wu_Constant_xz (ansys.dpf.composites.layup_info.material_properties.MaterialProperty attribute)</a>
@@ -1984,8 +1900,6 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/_autosummary/ansys.dpf.composites.server_helpers.upload_short_fiber_composite_files_to_server.html#ansys.dpf.composites.server_helpers.upload_short_fiber_composite_files_to_server">upload_short_fiber_composite_files_to_server() (in module ansys.dpf.composites.server_helpers)</a>
-</li>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.upper.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.upper">upper() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2100,14 +2014,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="Z">Z</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/_autosummary/ansys.dpf.composites.result_definition.FailureMeasureEnum.zfill.html#ansys.dpf.composites.result_definition.FailureMeasureEnum.zfill">zfill() (ansys.dpf.composites.result_definition.FailureMeasureEnum method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 
 
                 </article>
@@ -2132,8 +2038,8 @@
   
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
 
 
   <!-- Include desired assets -->
@@ -2170,7 +2076,7 @@ const EXTRA_SOURCES = JSON.parse('""');
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>
