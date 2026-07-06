@@ -8,4 +8,6 @@ Result definition
 
     ResultDefinition
     ResultDefinitionScope
+
+    :template: autosummary/no_methods_doc/base.rst.jinja2
     FailureMeasureEnum

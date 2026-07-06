@@ -9,7 +9,19 @@ updates:
       dependencies:
         patterns:
           - "*" # Update all packages together
+    cooldown:
+      include:
+        - '*'
+      default-days: 7
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Update all packages together
+    cooldown:
+      include:
+        - '*'
+      default-days: 7
