@@ -314,14 +314,14 @@ Compute and plot the maximum failure value per element.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f68961651d0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fce8bbb51d0>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.876 seconds)
+   **Total running time of the script:** (0 minutes 6.069 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_003_short_fiber_example.py:

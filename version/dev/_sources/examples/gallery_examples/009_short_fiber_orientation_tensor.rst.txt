@@ -210,7 +210,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f6894597110>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fce8862b110>)
 
 
 
@@ -258,7 +258,7 @@ Note that the plots reveal the presence of a weld line in the middle of the spec
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f6894596fd0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fce8862afd0>)
 
 
 
@@ -364,7 +364,7 @@ Plot some components of the fiber orientation tensor.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f6894597110>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fce8862b110>)
 
 
 
@@ -410,7 +410,7 @@ Plot some components of the fiber orientation tensor.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f68ca94b9d0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fcec42639d0>)
 
 
 
@@ -455,14 +455,14 @@ Plot some components of the fiber orientation tensor.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f68ca94ad50>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fcec4262d50>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.473 seconds)
+   **Total running time of the script:** (0 minutes 6.130 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_009_short_fiber_orientation_tensor.py:
