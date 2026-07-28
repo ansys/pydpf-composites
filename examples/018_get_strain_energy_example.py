@@ -53,10 +53,8 @@ import ansys.dpf.core as dpf
 import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
-from ansys.dpf.composites.constants import Sym3x3TensorComponent
 from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.layup_info.material_properties import MaterialProperty
 from ansys.dpf.composites.select_indices import get_selected_indices
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 from ansys.dpf.composites.data_sources import get_composite_files_from_workbench_result_folder
@@ -94,10 +92,13 @@ strain_operator.inputs.bool_rotate_to_global(False)
 strain_fc = strain_operator.get_output(pin=0, output_type=dpf.types.fields_container)
 strain_field = strain_fc.get_field_by_time_id(1)
 
-elemental_volume_field = composite_model.core_model.results.elemental_volume.eval()[0]
+area_operator = dpf.operators.geo.elements_volume(
+    mesh=composite_model.get_mesh(),
+    mesh_scoping=None,
+)
+area_field = area_operator.outputs.field()
 
 ply_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
-
 with ply_energy_field.as_local_field() as local_result_field:
     element_ids = analysis_ply_info_provider.property_field.scoping.ids
     for element_id in element_ids:
@@ -108,7 +109,7 @@ with ply_energy_field.as_local_field() as local_result_field:
         layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_id)
         selected_indices = get_selected_indices(element_info, layers=[layer_index])
 
-        area = elemental_volume_field.get_entity_data_by_id(element_id)
+        area = area_field.get_entity_data_by_id(element_id)
 
         # ply thickness
         thickness = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)[layer_index]
@@ -121,46 +122,33 @@ with ply_energy_field.as_local_field() as local_result_field:
             elemental_strain_energy += np.dot(strain_value, layer_stress_values[index])
 
         elemental_strain_energy = elemental_strain_energy / num_int_points * thickness * area
-        local_result_field.append([elemental_strain_energy[0]], element_id)
+        local_result_field.append([elemental_strain_energy[0] / 2.], element_id)
 
 composite_model.get_mesh().plot(ply_energy_field)
 
 # %%
-# Get lay-up properties
-# ~~~~~~~~~~~~~~~~~~~~~
-# Get lay-up properties for all elements and show the first one as an example.
-element_id = 1
-thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
-angles = composite_model.get_property_for_all_layers(LayerProperty.ANGLES, element_id)
-shear_angles = composite_model.get_property_for_all_layers(LayerProperty.SHEAR_ANGLES, element_id)
-offset = composite_model.get_element_laminate_offset(element_id)
-analysis_plies = composite_model.get_analysis_plies(element_id)
-print(analysis_plies)
+# Compute the total elemental strain energy
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+total_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+with total_energy_field.as_local_field() as local_result_field:
+    for element_id in composite_model.get_mesh().elements.scoping.ids:
+        stress_data = stress_field.get_entity_data_by_id(element_id)
+        strain_data = strain_field.get_entity_data_by_id(element_id)
+        element_info = composite_model.get_element_info(element_id)
+        thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
 
+        elemental_strain_energy = 0
+        for layer_index in range(element_info.n_layers):
+            selected_indices = get_selected_indices(element_info, layers=[layer_index])
+            layer_strain_values = strain_data[selected_indices]
+            layer_stress_values = stress_data[selected_indices]
+            num_int_points = len(layer_strain_values)
+            ply_strain_energy = 0
+            for index, strain_value in enumerate(layer_strain_values):
+                ply_strain_energy += np.dot(strain_value, layer_stress_values[index])
 
-# %%
-# Plot lay-up properties
-# ~~~~~~~~~~~~~~~~~~~~~~
-# Plot basic layer properties (layer thicknesses, angles, and analysis ply names).
-import matplotlib.pyplot as plt
+            elemental_strain_energy += ply_strain_energy / num_int_points * thicknesses[layer_index] * area
 
-y_coordinates = offset + np.cumsum(thicknesses)
-y_centers = y_coordinates - thicknesses / 2
+        local_result_field.append([elemental_strain_energy[0] / 2.], element_id)
 
-fig, ax1 = f, ax = plt.subplots(figsize=(6, 10))
-
-for y_coordinate in y_coordinates:
-    ax1.axhline(y=y_coordinate, color="k")
-
-for angle, shear_angle, y_center, analysis_ply in zip(
-    angles, shear_angles, y_centers, analysis_plies
-):
-    ax1.annotate(
-        f"Angle={angle}°, Shear Angle={shear_angle}°, {analysis_ply}",
-        xy=(0.1, y_center),
-        xytext=(0.1, y_center),
-        va="center",
-    )
-ax1.set_ylim(offset, max(y_coordinates))
-
-plt.show()
+composite_model.get_mesh().plot(total_energy_field)
