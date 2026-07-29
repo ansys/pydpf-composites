@@ -23,24 +23,24 @@
 """
 .. _ply_wise_strain_energy:
 
-Ply-wise results: strain energy
--------------------------------
+Custom results: strain energy
+-----------------------------
 
-Querying and computing ply-wise results is shown in this example using
-strain energy :math:`U=\frac{1}{2}*V*\sigma*\epsilon`.
-There are other examples which show how to get ply-wise material properties,
-strains, and stresses. See
-:ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
-:ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
-:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`,
-
-This example shows how to combine raw results (strains and stresses) with layup and model data
-such as area and ply-wise thicknesses.
+The implementation of a custom result is shown in this example using
+strain energy :math:`U=\frac{1}{2}*V*\sigma*\epsilon`. The first part shows
+the computation of the total elemental strain energy, the second part does the
+same evaluation but of a specific ply (ply-wise result).
 
 .. note::
     When using a Workbench project,
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
+
+There are other examples which show how to get ply-wise material properties,
+strains, and stresses. See
+:ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
+:ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
+:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`,
 
 """
 
@@ -53,7 +53,7 @@ import ansys.dpf.core as dpf
 import numpy as np
 
 from ansys.dpf.composites.composite_model import CompositeModel, LayerProperty
-from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names
+from ansys.dpf.composites.layup_info import AnalysisPlyInfoProvider, get_all_analysis_ply_names, ElementInfo
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
 from ansys.dpf.composites.select_indices import get_selected_indices
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
@@ -73,14 +73,13 @@ composite_files_on_server = get_composite_files_from_workbench_result_folder(r'D
 composite_model = CompositeModel(composite_files_on_server, server)
 
 # %%
-# Pick one analysis ply
-all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
-all_ply_names
-
-ply_name = "P1L1__UD.2"
-
-# prepare the data to compute the strain energy
-analysis_ply_info_provider = AnalysisPlyInfoProvider(mesh=composite_model.get_mesh(), name=ply_name)
+# Get Inputs
+# ~~~~~~~~~~
+# The strains, stresses and volumes (area * thickness) are needed
+# for the strain energy computation. These quantities are provided
+# by the DPF composites model and the DPF core model.
+# Note: the `elements_volume` operator of DPF returns the area instead
+# of the volume if the element is a (layered) shell.
 
 stress_operator = composite_model.core_model.results.stress()
 stress_operator.inputs.bool_rotate_to_global(False)
@@ -98,57 +97,110 @@ area_operator = dpf.operators.geo.elements_volume(
 )
 area_field = area_operator.outputs.field()
 
-ply_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
-with ply_energy_field.as_local_field() as local_result_field:
-    element_ids = analysis_ply_info_provider.property_field.scoping.ids
-    for element_id in element_ids:
-        stress_data = stress_field.get_entity_data_by_id(element_id)
-        strain_data = strain_field.get_entity_data_by_id(element_id)
-        element_info = composite_model.get_element_info(element_id)
-        assert element_info is not None
-        layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_id)
-        selected_indices = get_selected_indices(element_info, layers=[layer_index])
+def weighting_factor(
+        my_element_info: ElementInfo,
+        my_ip_index: int,
+        gauss_integration: bool
+) -> float:
+    if my_element_info.n_spots == 1:
+        return 1.
+    if my_element_info.n_spots == 3:
+        normalization_factor = 2. if gauss_integration else 1.
+        if my_ip_index < my_element_info.number_of_nodes_per_spot_plane or \
+            my_ip_index > my_element_info.number_of_nodes_per_spot_plane * 2 - 1:
+            # bottom and top
+            if gauss_integration:
+                return 5. / 9. / normalization_factor
+            else:
+                return 1. / 6. / normalization_factor
+        else:
+            # mid-surface
+            if gauss_integration:
+                return 8./ 9. / normalization_factor
+            else:
+                return 2. / 3. / normalization_factor
 
-        area = area_field.get_entity_data_by_id(element_id)
-
-        # ply thickness
-        thickness = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)[layer_index]
-
-        layer_strain_values = strain_data[selected_indices]
-        layer_stress_values = stress_data[selected_indices]
-        elemental_strain_energy = 0
-        num_int_points = len(layer_strain_values)
-        for index, strain_value in enumerate(layer_strain_values):
-            elemental_strain_energy += np.dot(strain_value, layer_stress_values[index])
-
-        elemental_strain_energy = elemental_strain_energy / num_int_points * thickness * area
-        local_result_field.append([elemental_strain_energy[0] / 2.], element_id)
-
-composite_model.get_mesh().plot(ply_energy_field)
+    raise RuntimeError(f"Weighting factor for {element_info.n_spots} spots is not implemented.")
 
 # %%
 # Compute the total elemental strain energy
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 total_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
 with total_energy_field.as_local_field() as local_result_field:
+    # Iterator over all elements of the mesh
+    # The model has only layered shell elements and so no filtering is needed here.
+    total_strain_energy = 0
     for element_id in composite_model.get_mesh().elements.scoping.ids:
+        # Get elemental data
+        element_info = composite_model.get_element_info(element_id)
+        if element_info is None:
+            continue
+        thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
+        area = area_field.get_entity_data_by_id(element_id)[0]
         stress_data = stress_field.get_entity_data_by_id(element_id)
         strain_data = strain_field.get_entity_data_by_id(element_id)
-        element_info = composite_model.get_element_info(element_id)
-        thicknesses = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)
 
+        # Iterator over the plies, filter data and compute the strain
+        # energy per element
         elemental_strain_energy = 0
         for layer_index in range(element_info.n_layers):
             selected_indices = get_selected_indices(element_info, layers=[layer_index])
+            # ply-wise results at all integration points
             layer_strain_values = strain_data[selected_indices]
             layer_stress_values = stress_data[selected_indices]
-            num_int_points = len(layer_strain_values)
-            ply_strain_energy = 0
-            for index, strain_value in enumerate(layer_strain_values):
-                ply_strain_energy += np.dot(strain_value, layer_stress_values[index])
+            # num_int_points = len(layer_strain_values)
+            ply_strain_energy_density = 0
+            for ip_index, strain_value in enumerate(layer_strain_values):
+                wf = weighting_factor(element_info, ip_index, True)
+                print(f"weighting factor at ip {ip_index}: {wf}")
+                ply_strain_energy_density += np.dot(strain_value, layer_stress_values[ip_index]) * wf
+            elemental_strain_energy += ply_strain_energy_density / element_info.number_of_nodes_per_spot_plane * thicknesses[layer_index] * area / 2.
 
-            elemental_strain_energy += ply_strain_energy / num_int_points * thicknesses[layer_index] * area
+        total_strain_energy += elemental_strain_energy
+        print(f"Energy of element {element_id}: {elemental_strain_energy}")
+        local_result_field.append([elemental_strain_energy], element_id)
 
-        local_result_field.append([elemental_strain_energy[0] / 2.], element_id)
-
+print(f"Total strain energy: {total_strain_energy} [mJ]")
 composite_model.get_mesh().plot(total_energy_field)
+
+# %%
+# Compute the ply-wise strain energy
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# First, select a ply by name and initialize the AnalysisPlyInfoProvider
+# which provides all information of the selected ply
+
+"""
+all_ply_names = get_all_analysis_ply_names(composite_model.get_mesh())
+all_ply_names
+
+ply_name = "P1L1__UD"
+analysis_ply_info_provider = AnalysisPlyInfoProvider(mesh=composite_model.get_mesh(), name=ply_name)
+
+ply_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
+with ply_energy_field.as_local_field() as local_result_field:
+    # Loop over all elements of the analysis ply
+    for element_id in analysis_ply_info_provider.property_field.scoping.ids:
+        # Get elemental data
+        element_info = composite_model.get_element_info(element_id)
+        assert element_info is not None
+        area = area_field.get_entity_data_by_id(element_id)[0]
+        layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_id)
+        thickness = composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)[layer_index]
+        selected_indices = get_selected_indices(element_info, layers=[layer_index])
+
+        stress_data = stress_field.get_entity_data_by_id(element_id)
+        strain_data = strain_field.get_entity_data_by_id(element_id)
+
+        # ply-wise results
+        layer_strain_values = strain_data[selected_indices]
+        layer_stress_values = stress_data[selected_indices]
+        strain_density = 0
+        num_int_points = len(layer_strain_values)
+        for ip_index, strain_value in enumerate(layer_strain_values):
+            strain_density += np.dot(strain_value, layer_stress_values[ip_index])
+
+        elemental_strain_energy = strain_density / num_int_points * thickness * area
+        local_result_field.append([elemental_strain_energy / 2.], element_id)
+
+composite_model.get_mesh().plot(ply_energy_field)
+"""
