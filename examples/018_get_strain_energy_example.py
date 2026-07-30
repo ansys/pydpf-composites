@@ -94,7 +94,7 @@ composite_model = CompositeModel(composite_files_on_server, server)
 # The strains, stresses and volumes (area * thickness) are needed
 # for the strain energy computation. These quantities are provided
 # by the DPF composites model and the DPF core model.
-# The `elements_volume` operator of DPF returns the area instead
+# Note: the `elements_volume` operator of DPF returns the area instead
 # of the volume for (layered) shells.
 
 stress_operator = composite_model.core_model.results.stress()
@@ -117,10 +117,8 @@ area_field = area_operator.outputs.field()
 # Weighting factors
 # ~~~~~~~~~~~~~~~~~
 #
-# Helper to compute the through-the-thickness weighting factor of the integration points.
-# MAPDL uses the Simpson integration rule for layered shells.
-
-
+# This is a helper function to compute the through-the-thickness weighting factor
+# of the integration points. Note: MAPDL uses the Simpson integration rule for layered shells.
 def weighting_factor(my_element_info: ElementInfo, my_ip_index: int) -> float:
 
     if not my_element_info.is_shell:
@@ -239,7 +237,7 @@ composite_model.get_mesh().plot(ply_energy_field)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # The native DPF operator for strain energy is used to compare the results with
-# the above custom implementation. The results differ because the assumptions mentioned at
+# the above custom implementation. The results differ because of the assumptions mentioned at
 # the beginning of the example.
 op = dpf.operators.result.stiffness_matrix_energy()  # operator instantiation
 op.inputs.data_sources(composite_model.data_sources.result_files)
