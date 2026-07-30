@@ -307,4 +307,6 @@ def test_get_spot_from_integration_point_index():
         number_of_nodes_per_spot_plane=4,
     )
     with pytest.raises(RuntimeError) as exc_info:
+        # The element has only 4 integration points. So, the max
+        # IP index is 3.
         get_spot_from_integration_point_index(element_info, 4)
