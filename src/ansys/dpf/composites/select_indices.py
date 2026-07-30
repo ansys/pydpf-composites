@@ -234,5 +234,6 @@ def get_spot_from_integration_point_index(element_info: ElementInfo, index) -> S
             return spot
 
     raise RuntimeError(
-        f"Computation of the spot plane is not supported for element {element_info} and index {index}."
+        f"Computation of the spot plane is not supported for element {element_info} "
+        "and index {index}."
     )
