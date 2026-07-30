@@ -218,11 +218,17 @@ def get_selected_indices_by_analysis_ply(
         return get_selected_indices(element_info, layers=[int(layer_index)])
 
 
-def get_spot_from_integration_point_index(element_info: ElementInfo, index) -> Spot:
+def get_spot_from_integration_point_index(element_info: ElementInfo, index: int) -> Spot:
     """Get the spot plane (bottom, top, middle) for a given element and integration point index."""
     if not element_info.is_layered:
         raise RuntimeError(
             "Computation of the spot plane is not supported for non-layered elements."
+        )
+
+    num_ips = element_info.n_spots * element_info.number_of_nodes_per_spot_plane
+    if not num_ips > index:
+        raise RuntimeError(
+            f"Integration point index {index} exceeds limit of {num_ips} for element {element_info.id}."
         )
 
     mapdl_order = {_get_rst_spot_index(spot): spot for spot in Spot}

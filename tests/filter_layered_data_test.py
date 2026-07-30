@@ -223,8 +223,7 @@ def test_access_to_invalid_analysis_ply(dpf_server):
 
 def test_get_spot_from_integration_point_index():
     # test shell elements
-    for num_nodes in [3, 4, 6, 8]:
-        num_nodes_per_spot_plane = num_nodes if num_nodes in [3, 4] else int(num_nodes / 2)
+    for num_nodes, num_nodes_per_spot_plane in [(3, 3), (4, 4), (6, 3), (8, 4)]:
         for num_spots in [1, 3]:
             element_info = ElementInfo(
                 id=5,
@@ -240,24 +239,30 @@ def test_get_spot_from_integration_point_index():
             indices = range(0, element_info.number_of_nodes_per_spot_plane * element_info.n_spots)
             spot_indices = {
                 indices[0 : element_info.number_of_nodes_per_spot_plane]: Spot.BOTTOM,
-                indices[
-                    element_info.number_of_nodes_per_spot_plane : 2
-                    * element_info.number_of_nodes_per_spot_plane
-                ]: Spot.TOP,
-                indices[
-                    2
-                    * element_info.number_of_nodes_per_spot_plane : 3
-                    * element_info.number_of_nodes_per_spot_plane
-                ]: Spot.MIDDLE,
             }
+            if num_spots == 3:
+                spot_indices[
+                    indices[
+                        element_info.number_of_nodes_per_spot_plane : 2
+                        * element_info.number_of_nodes_per_spot_plane
+                    ]
+                ] = Spot.TOP
+                spot_indices[
+                    indices[
+                        2
+                        * element_info.number_of_nodes_per_spot_plane : 3
+                        * element_info.number_of_nodes_per_spot_plane
+                    ]
+                ] = Spot.MIDDLE
+
             for ip_plane, expected_spot in spot_indices.items():
                 for ip_index in ip_plane:
-                    result = get_spot_from_integration_point_index()
+                    result = get_spot_from_integration_point_index(element_info, ip_index)
                     assert (
                         result == expected_spot
                     ), f"Index {ip_index}: expected spot is {expected_spot} but got {result}"
 
-    # test solid element
+    # test solid elements
     for num_nodes, nodes_per_spot_plane in [(6, 3), (8, 4), (15, 3), (20, 4)]:
         for num_spots in [1, 2]:
             element_info = ElementInfo(
@@ -274,14 +279,32 @@ def test_get_spot_from_integration_point_index():
             indices = range(0, element_info.number_of_nodes_per_spot_plane * element_info.n_spots)
             spot_indices = {
                 indices[0 : element_info.number_of_nodes_per_spot_plane]: Spot.BOTTOM,
-                indices[
-                    element_info.number_of_nodes_per_spot_plane : 2
-                    * element_info.number_of_nodes_per_spot_plane
-                ]: Spot.TOP,
             }
+            if num_spots == 2:
+                spot_indices[
+                    indices[
+                        element_info.number_of_nodes_per_spot_plane : 2
+                        * element_info.number_of_nodes_per_spot_plane
+                    ]
+                ] = Spot.TOP
+
             for ip_plane, expected_spot in spot_indices.items():
                 for ip_index in ip_plane:
-                    result = get_spot_from_integration_point_index()
+                    result = get_spot_from_integration_point_index(element_info, ip_index)
                     assert (
                         result == expected_spot
                     ), f"Index {ip_index}: expected spot is {expected_spot} but got {result}"
+
+    element_info = ElementInfo(
+        id=44,
+        n_layers=5,
+        n_corner_nodes=8,
+        n_spots=1,
+        is_layered=True,
+        element_type=777,  # number does not matter
+        dpf_material_ids=np.array([1, 2, 2, 7, 9]),
+        is_shell=True,
+        number_of_nodes_per_spot_plane=4,
+    )
+    with pytest.raises(RuntimeError) as exc_info:
+        get_spot_from_integration_point_index(element_info, 4)
