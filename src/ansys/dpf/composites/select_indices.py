@@ -219,7 +219,11 @@ def get_selected_indices_by_analysis_ply(
 
 
 def get_spot_from_integration_point_index(element_info: ElementInfo, index: int) -> Spot:
-    """Get the spot plane (bottom, top, middle) for a given element and integration point index."""
+    """Get the spot plane (bottom, top, middle) for a given element and integration point index.
+
+    This function can be used when iterating of the integration points of a layered element to
+    figure out if the result is at the bottom, top or middle of the layer.
+    """
     if not element_info.is_layered:
         raise RuntimeError(
             "Computation of the spot plane is not supported for non-layered elements."
@@ -228,7 +232,8 @@ def get_spot_from_integration_point_index(element_info: ElementInfo, index: int)
     num_ips = element_info.n_spots * element_info.number_of_nodes_per_spot_plane
     if not num_ips > index:
         raise RuntimeError(
-            f"Integration point index {index} exceeds limit of {num_ips} for element {element_info.id}."
+            f"Integration point index {index} exceeds limit of {num_ips} for "
+            f"element {element_info.id}."
         )
 
     mapdl_order = {_get_rst_spot_index(spot): spot for spot in Spot}
