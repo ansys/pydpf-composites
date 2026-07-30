@@ -63,8 +63,8 @@ from ansys.dpf.composites.data_sources import get_composite_files_from_workbench
 # Start a server and get the examples files.
 # This will copy the example files into the current working directory.
 server = connect_to_or_start_server()
-#composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
-composite_files_on_server = get_composite_files_from_workbench_result_folder(r'D:\tmp\WB Projects\critical_layer_index_files\dp0\SYS\MECH')
+composite_files_on_server = get_continuous_fiber_example_files(server, "shell")
+# composite_files_on_server = get_composite_files_from_workbench_result_folder(r'D:\tmp\WB Projects\critical_layer_index_files\dp0\SYS\MECH')
 
 # %%
 # Set up model
@@ -104,10 +104,10 @@ def weighting_factor(
 ) -> float:
     if my_element_info.n_spots == 1:
         return 1.
+    # order of integration points: bottom, top,  mid
     if my_element_info.n_spots == 3:
         normalization_factor = 2. if gauss_integration else 1.
-        if my_ip_index < my_element_info.number_of_nodes_per_spot_plane or \
-            my_ip_index > my_element_info.number_of_nodes_per_spot_plane * 2 - 1:
+        if my_ip_index < my_element_info.number_of_nodes_per_spot_plane * 2:
             # bottom and top
             if gauss_integration:
                 return 5. / 9. / normalization_factor
@@ -150,18 +150,19 @@ with total_energy_field.as_local_field() as local_result_field:
             layer_stress_values = stress_data[selected_indices]
             # num_int_points = len(layer_strain_values)
             ply_strain_energy_density = 0
-            for ip_index, strain_value in enumerate(layer_strain_values):
-                wf = weighting_factor(element_info, ip_index, True)
-                print(f"weighting factor at ip {ip_index}: {wf}")
-                ply_strain_energy_density += np.dot(strain_value, layer_stress_values[ip_index]) * wf
-            elemental_strain_energy += ply_strain_energy_density / element_info.number_of_nodes_per_spot_plane * thicknesses[layer_index] * area / 2.
+            for ip_index, _ in enumerate(layer_strain_values):
+                wf = weighting_factor(element_info, ip_index, False)
+                ply_strain_energy_density += np.dot(layer_strain_values[ip_index], layer_stress_values[ip_index]) * wf
+            elemental_strain_energy += ply_strain_energy_density / element_info.number_of_nodes_per_spot_plane * thicknesses[layer_index]
 
+        elemental_strain_energy *= area / 2.
         total_strain_energy += elemental_strain_energy
         print(f"Energy of element {element_id}: {elemental_strain_energy}")
         local_result_field.append([elemental_strain_energy], element_id)
 
 print(f"Total strain energy: {total_strain_energy} [mJ]")
 composite_model.get_mesh().plot(total_energy_field)
+
 
 # %%
 # Compute the ply-wise strain energy
@@ -204,3 +205,17 @@ with ply_energy_field.as_local_field() as local_result_field:
 
 composite_model.get_mesh().plot(ply_energy_field)
 """
+
+# %%
+# Native DPF operator for strain energy
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# The native DPF operator for strain energy is used to compute the total elemental strain energy
+# to compare the results with the above custom implementation. The results
+# differ because the custom implementation does not consider out-of-plane
+# shear terms.
+op = dpf.operators.result.stiffness_matrix_energy() # operator instantiation
+
+op.inputs.data_sources(composite_model.data_sources.result_files)
+dpf_strain_energy = op.outputs.fields_container()
+composite_model.get_mesh().plot(dpf_strain_energy[0])
