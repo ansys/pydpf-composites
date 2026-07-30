@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 """Functions to get elementary indices based on filter input."""
+from collections import OrderedDict
 from collections.abc import Collection
 
 import numpy as np
@@ -33,6 +34,7 @@ __all__ = (
     "get_selected_indices",
     "get_selected_indices_by_dpf_material_ids",
     "get_selected_indices_by_analysis_ply",
+    "get_spot_from_integration_point_index",
 )
 
 
@@ -214,3 +216,23 @@ def get_selected_indices_by_analysis_ply(
         )
     else:
         return get_selected_indices(element_info, layers=[int(layer_index)])
+
+
+def get_spot_from_integration_point_index(element_info: ElementInfo, index) -> Spot:
+    """Get the spot plane (bottom, top, middle) for a given element and integration point index."""
+    if not element_info.is_layered:
+        raise RuntimeError(
+            "Computation of the spot plane is not supported for non-layered elements."
+        )
+
+    mapdl_order = {_get_rst_spot_index(spot): spot for spot in Spot}
+    sorted_order = OrderedDict(sorted(mapdl_order.items(), key=lambda item: item[0]))
+    for mapdl_index, spot in sorted_order.items():
+        if index < element_info.number_of_nodes_per_spot_plane * (mapdl_index + 1):
+            if not element_info.is_shell and spot == Spot.MIDDLE:
+                raise RuntimeError("Middle spot is not supported for solid elements.")
+            return spot
+
+    raise RuntimeError(
+        f"Computation of the spot plane is not supported for element {element_info} and index {index}."
+    )
