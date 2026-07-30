@@ -113,6 +113,7 @@ area_operator = dpf.operators.geo.elements_volume(
 )
 area_field = area_operator.outputs.field()
 
+
 # %%
 # Weighting factors
 # ~~~~~~~~~~~~~~~~~
