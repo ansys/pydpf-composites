@@ -70,10 +70,7 @@ from ansys.dpf.composites.layup_info import (
     ElementInfo,
     get_all_analysis_ply_names,
 )
-from ansys.dpf.composites.select_indices import (
-    get_selected_indices,
-    get_spot_from_integration_point_index,
-)
+from ansys.dpf.composites.select_indices import get_selected_indices, get_spots_from_element_info
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
@@ -109,7 +106,6 @@ strain_field = strain_fc.get_field_by_time_id(1)
 
 area_operator = dpf.operators.geo.elements_volume(
     mesh=composite_model.get_mesh(),
-    mesh_scoping=None,
 )
 area_field = area_operator.outputs.field()
 
@@ -119,18 +115,54 @@ area_field = area_operator.outputs.field()
 # ~~~~~~~~~~~~~~~~~
 #
 # This is a helper function to compute the through-the-thickness weighting factor
-# of the integration points. Note: MAPDL uses the Simpson integration rule for layered shells.
-def weighting_factor(my_element_info: ElementInfo, my_ip_index: int) -> float:
+# of the integration points. Note: MAPDL uses the Simpson integration rule for layered shells
+# which weighting factors through-the-thickness are 1/6 for the IP at the bottom and top,
+# and 2/3 for the IPs in the middle of the layer.
+def weighting_factor(my_element_info: ElementInfo, my_spot: Spot) -> float:
 
     if not my_element_info.is_shell:
         raise RuntimeError("Weighting factor is only implemented for layered shell elements.")
 
     if my_element_info.n_spots == 1:
         return 1.0
-    if get_spot_from_integration_point_index(my_element_info, my_ip_index) == Spot.MIDDLE:
+    if my_spot == Spot.MIDDLE:
         return 2.0 / 3.0
     else:
         return 1.0 / 6.0
+
+
+# %%
+# Strain energy per layer
+# ~~~~~~~~~~~~~~~~~~~~~~~
+#
+# This function returns the strain energy of a single layer.
+def layer_wise_strain_energy(
+    my_element_info: ElementInfo,
+    my_layer_index: int,
+    my_element_strains: NPArray,
+    my_element_stresses: NPArray,
+    my_thickness: float,
+    my_area: float,
+) -> float:
+    my_strain_energy_density = 0.0
+    for spot in get_spots_from_element_info(my_element_info):
+        selected_indices = get_selected_indices(
+            my_element_info, layers=[my_layer_index], spots=[spot]
+        )
+        spot_strain_values = my_element_strains[selected_indices]
+        spot_stress_values = my_element_stresses[selected_indices]
+        wf = weighting_factor(my_element_info, spot)
+        for strain_values, stress_values in zip(spot_strain_values, spot_stress_values):
+            my_strain_energy_density += np.dot(strain_values, stress_values) * wf
+
+    ply_strain_energy = (
+        my_strain_energy_density
+        / element_info.number_of_nodes_per_spot_plane
+        * my_thickness
+        * my_area
+        / 2.0
+    )
+    return ply_strain_energy
 
 
 # %%
@@ -160,23 +192,14 @@ with total_energy_field.as_local_field() as local_result_field:
         # energy per element
         elemental_strain_energy = 0
         for layer_index in range(element_info.n_layers):
-            selected_indices = get_selected_indices(element_info, layers=[layer_index])
-            # ply-wise results at all integration points
-            layer_strain_values = strain_data[selected_indices]
-            layer_stress_values = stress_data[selected_indices]
-            ply_strain_energy_density = 0
-            for ip_index, strain_values in enumerate(layer_strain_values):
-                wf = weighting_factor(element_info, ip_index)
-                ply_strain_energy_density += (
-                    np.dot(strain_values, layer_stress_values[ip_index]) * wf
-                )
-            elemental_strain_energy += (
-                ply_strain_energy_density
-                / element_info.number_of_nodes_per_spot_plane
-                * thicknesses[layer_index]
+            elemental_strain_energy += layer_wise_strain_energy(
+                element_info,
+                layer_index,
+                strain_data,
+                stress_data,
+                thicknesses[layer_index],
+                area,
             )
-
-        elemental_strain_energy *= area / 2.0
         total_strain_energy += elemental_strain_energy
         local_result_field.append([elemental_strain_energy], element_id)
 
@@ -203,31 +226,17 @@ with ply_energy_field.as_local_field() as local_result_field:
         # Get elemental data
         element_info = composite_model.get_element_info(element_id)
         assert element_info is not None
-        area = area_field.get_entity_data_by_id(element_id)[0]
         layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_id)
-        thickness = composite_model.get_property_for_all_layers(
-            LayerProperty.THICKNESSES, element_id
-        )[layer_index]
-        selected_indices = get_selected_indices(element_info, layers=[layer_index])
 
-        stress_data = stress_field.get_entity_data_by_id(element_id)
-        strain_data = strain_field.get_entity_data_by_id(element_id)
-
-        # ply-wise results
-        layer_strain_values = strain_data[selected_indices]
-        layer_stress_values = stress_data[selected_indices]
-        ply_strain_energy_density = 0
-        num_int_points = len(layer_strain_values)
-        for ip_index, strain_value in enumerate(layer_strain_values):
-            wf = weighting_factor(element_info, ip_index)
-            ply_strain_energy_density += np.dot(strain_value, layer_stress_values[ip_index]) * wf
-
-        elemental_strain_energy = (
-            ply_strain_energy_density
-            * area
-            / element_info.number_of_nodes_per_spot_plane
-            * thickness
-            / 2.0
+        elemental_strain_energy = layer_wise_strain_energy(
+            element_info,
+            layer_index,
+            strain_field.get_entity_data_by_id(element_id),
+            stress_field.get_entity_data_by_id(element_id),
+            composite_model.get_property_for_all_layers(LayerProperty.THICKNESSES, element_id)[
+                layer_index
+            ],
+            area_field.get_entity_data_by_id(element_id)[0],
         )
         local_result_field.append([elemental_strain_energy], element_id)
 

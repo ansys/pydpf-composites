@@ -37,6 +37,7 @@ from ansys.dpf.composites.select_indices import (
     get_selected_indices_by_analysis_ply,
     get_selected_indices_by_dpf_material_ids,
     get_spot_from_integration_point_index,
+    get_spots_from_element_info,
 )
 
 from .helper import get_basic_shell_files, setup_operators
@@ -219,6 +220,27 @@ def test_access_to_invalid_analysis_ply(dpf_server):
         )
 
     assert str(exc_info.value) == "Analysis Ply 'P1L1__ud_patch ns1' is not part of element 4"
+
+
+def test_get_spot_from_element_info():
+    for num_spots, reference in [
+        (1, (Spot.MIDDLE,)),
+        (2, (Spot.BOTTOM, Spot.TOP)),
+        (3, (Spot.BOTTOM, Spot.TOP, Spot.MIDDLE)),
+    ]:
+        element_info = ElementInfo(
+            id=5,
+            n_layers=1,
+            n_corner_nodes=4,
+            n_spots=num_spots,
+            is_layered=True,
+            element_type=777,  # number does not matter
+            dpf_material_ids=np.array([1]),
+            is_shell=True,
+            number_of_nodes_per_spot_plane=4,
+        )
+        res = get_spots_from_element_info(element_info)
+        assert res == reference, f"Spots mismatch: {res} != {reference}"
 
 
 def test_get_spot_from_integration_point_index():

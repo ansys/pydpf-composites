@@ -35,6 +35,7 @@ __all__ = (
     "get_selected_indices_by_dpf_material_ids",
     "get_selected_indices_by_analysis_ply",
     "get_spot_from_integration_point_index",
+    "get_spots_from_element_info",
 )
 
 
@@ -216,6 +217,20 @@ def get_selected_indices_by_analysis_ply(
         )
     else:
         return get_selected_indices(element_info, layers=[int(layer_index)])
+
+
+def get_spots_from_element_info(element_info: ElementInfo) -> Collection[Spot]:
+    """Return the list of spots for a layered element."""
+    if not element_info.is_layered:
+        raise RuntimeError(f"Spots are only supports for layered elements.")
+    if element_info.n_spots == 1:
+        return tuple([Spot.MIDDLE])
+    if element_info.n_spots == 2:
+        return tuple([Spot.BOTTOM, Spot.TOP])
+    if element_info.n_spots == 3:
+        return tuple([Spot.BOTTOM, Spot.TOP, Spot.MIDDLE])
+
+    raise RuntimeError(f"Number of spots {element_info.n_spots} is not supported.")
 
 
 def get_spot_from_integration_point_index(element_info: ElementInfo, index: int) -> Spot:
