@@ -222,7 +222,7 @@ def get_selected_indices_by_analysis_ply(
 def get_spots_from_element_info(element_info: ElementInfo) -> Collection[Spot]:
     """Return the list of spots for a layered element."""
     if not element_info.is_layered:
-        raise RuntimeError("Spots are only supports for layered elements.")
+        raise RuntimeError("Spots are only supported for layered elements.")
     if element_info.n_spots == 1:
         return tuple([Spot.MIDDLE])
     if element_info.n_spots == 2:
@@ -245,7 +245,7 @@ def get_spot_from_integration_point_index(element_info: ElementInfo, index: int)
         )
 
     num_ips = element_info.n_spots * element_info.number_of_nodes_per_spot_plane
-    if not num_ips > index:
+    if index < 0 or index >= num_ips:
         raise RuntimeError(
             f"Integration point index {index} exceeds limit of {num_ips} for "
             f"element {element_info.id}."
@@ -261,5 +261,5 @@ def get_spot_from_integration_point_index(element_info: ElementInfo, index: int)
 
     raise RuntimeError(
         f"Computation of the spot plane is not supported for element {element_info} "
-        "and index {index}."
+        f"and index {index}."
     )

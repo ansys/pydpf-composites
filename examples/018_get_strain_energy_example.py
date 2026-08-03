@@ -139,8 +139,8 @@ def weighting_factor(my_element_info: ElementInfo, my_spot: Spot) -> float:
 def layer_wise_strain_energy(
     my_element_info: ElementInfo,
     my_layer_index: int,
-    my_element_strains: NPArray,
-    my_element_stresses: NPArray,
+    my_element_strains: np.ndarray,
+    my_element_stresses: np.ndarray,
     my_thickness: float,
     my_area: float,
 ) -> float:

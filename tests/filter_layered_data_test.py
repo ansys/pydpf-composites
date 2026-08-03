@@ -285,7 +285,7 @@ def test_get_spot_from_integration_point_index():
                     ), f"Index {ip_index}: expected spot is {expected_spot} but got {result}"
 
     # test solid elements
-    for num_nodes, nodes_per_spot_plane in [(6, 3), (8, 4), (15, 3), (20, 4)]:
+    for num_nodes, num_nodes_per_spot_plane in [(6, 3), (8, 4), (15, 3), (20, 4)]:
         for num_spots in [1, 2]:
             element_info = ElementInfo(
                 id=44,
