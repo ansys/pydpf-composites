@@ -222,7 +222,7 @@ def get_selected_indices_by_analysis_ply(
 def get_spots_from_element_info(element_info: ElementInfo) -> Collection[Spot]:
     """Return the list of spots for a layered element."""
     if not element_info.is_layered:
-        raise RuntimeError(f"Spots are only supports for layered elements.")
+        raise RuntimeError("Spots are only supports for layered elements.")
     if element_info.n_spots == 1:
         return tuple([Spot.MIDDLE])
     if element_info.n_spots == 2:
