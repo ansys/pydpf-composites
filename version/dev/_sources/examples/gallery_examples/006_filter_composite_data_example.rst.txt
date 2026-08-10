@@ -35,13 +35,19 @@ The examples show filtering data by layer, spot, and node, as well as material
 or analysis ply ID. To learn more about how layered result data is organized,
 see :ref:`select_indices`.
 
+For additional examples that show how to obtain ply-wise material properties,
+strains, and stresses, see
+:ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
+:ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
+:ref:`sphx_glr_examples_gallery_examples_018_get_strain_energy_example.py`.
+
 .. note::
 
     When using a Workbench project,
     use the :func:`.composite_files_from_workbench_harmonic_analysis`
     method to obtain the input files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-56
+.. GENERATED FROM PYTHON SOURCE LINES 56-62
 
 Set up analysis
 ~~~~~~~~~~~~~~~
@@ -50,7 +56,7 @@ DPF server, and retrieving the example files.
 
 Import dependencies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-71
+.. GENERATED FROM PYTHON SOURCE LINES 62-77
 
 .. code-block:: Python
 
@@ -76,11 +82,11 @@ Import dependencies.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-73
+.. GENERATED FROM PYTHON SOURCE LINES 78-79
 
 Start a DPF server and copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-76
+.. GENERATED FROM PYTHON SOURCE LINES 79-82
 
 .. code-block:: Python
 
@@ -94,13 +100,13 @@ Start a DPF server and copy the example files into the current working directory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-80
+.. GENERATED FROM PYTHON SOURCE LINES 83-86
 
 Set up model
 ~~~~~~~~~~~~
 Set up the composite model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-82
+.. GENERATED FROM PYTHON SOURCE LINES 86-88
 
 .. code-block:: Python
 
@@ -113,7 +119,7 @@ Set up the composite model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-88
+.. GENERATED FROM PYTHON SOURCE LINES 89-94
 
 Get result data
 ~~~~~~~~~~~~~~~
@@ -121,7 +127,7 @@ Get the stress field. By default, the stress operator returns the stresses in gl
 To get the stresses in the material coordinate system, the ``bool_rotate_to_global``
 input is set to ``False``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-94
+.. GENERATED FROM PYTHON SOURCE LINES 94-100
 
 .. code-block:: Python
 
@@ -138,16 +144,16 @@ input is set to ``False``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-97
+.. GENERATED FROM PYTHON SOURCE LINES 101-103
 
 Filter data by analysis ply
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-100
+.. GENERATED FROM PYTHON SOURCE LINES 105-106
 
 List all available analysis plies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-103
+.. GENERATED FROM PYTHON SOURCE LINES 106-109
 
 .. code-block:: Python
 
@@ -167,7 +173,7 @@ List all available analysis plies.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-112
+.. GENERATED FROM PYTHON SOURCE LINES 110-118
 
 The easiest way to filter data by analysis ply is to use the :func:`.get_ply_wise_data` function.
 This function supports different reduction strategies such as computing the average,
@@ -178,7 +184,7 @@ the elemental location, which implies averaging over all nodes in an element.
 Using the :func:`.get_ply_wise_data` function has the advantage that all the averaging
 and filtering is done on the server side.
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-124
+.. GENERATED FROM PYTHON SOURCE LINES 118-130
 
 .. code-block:: Python
 
@@ -228,13 +234,13 @@ and filtering is done on the server side.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-128
+.. GENERATED FROM PYTHON SOURCE LINES 131-134
 
 The results can also be requested in global coordinates. This example gets the stress values in
 the global coordinate system, selects the top spot of a selected ply, and averages the values
 over neighbouring nodes to get nodal results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-146
+.. GENERATED FROM PYTHON SOURCE LINES 134-152
 
 .. code-block:: Python
 
@@ -290,7 +296,7 @@ over neighbouring nodes to get nodal results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-152
+.. GENERATED FROM PYTHON SOURCE LINES 153-158
 
 Generic client-side filtering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -298,11 +304,11 @@ This example shows how to filter data by layer, spot, and node using the generic
 the client side.
 This code plots stress values in the material direction for the first node and top spot.
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-155
+.. GENERATED FROM PYTHON SOURCE LINES 160-161
 
 Get element information for all elements and show the first one as an example.
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-159
+.. GENERATED FROM PYTHON SOURCE LINES 161-165
 
 .. code-block:: Python
 
@@ -323,11 +329,11 @@ Get element information for all elements and show the first one as an example.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-161
+.. GENERATED FROM PYTHON SOURCE LINES 166-167
 
 Get filtered data
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-181
+.. GENERATED FROM PYTHON SOURCE LINES 167-187
 
 .. code-block:: Python
 
@@ -387,18 +393,18 @@ Get filtered data
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fade8d91bd0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f77786ae350>)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-186
+.. GENERATED FROM PYTHON SOURCE LINES 188-192
 
 Filter by material
 ~~~~~~~~~~~~~~~~~~~~~
 Loop over all elements and get the maximum stress in the material direction
 for all plies that have a specific UD material.
 
-.. GENERATED FROM PYTHON SOURCE LINES 186-208
+.. GENERATED FROM PYTHON SOURCE LINES 192-214
 
 .. code-block:: Python
 
@@ -460,18 +466,18 @@ for all plies that have a specific UD material.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fade8d92210>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f77786ae0d0>)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-213
+.. GENERATED FROM PYTHON SOURCE LINES 215-219
 
 Filter by analysis ply on the client side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Loop over all elements that contain a given ply and plot the maximum stress value
 in the material direction in this ply.
 
-.. GENERATED FROM PYTHON SOURCE LINES 213-236
+.. GENERATED FROM PYTHON SOURCE LINES 219-242
 
 .. code-block:: Python
 
@@ -534,14 +540,14 @@ in the material direction in this ply.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fade8d91bd0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f77786ae350>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.958 seconds)
+   **Total running time of the script:** (0 minutes 8.498 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_006_filter_composite_data_example.py:

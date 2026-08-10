@@ -36,14 +36,20 @@ all layers and integration points. Finally, the elemental maximum is computed an
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-49
+For additional examples that show how to obtain ply-wise results such as layup
+properties, strains, and stresses, see
+:ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`,
+:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`, and
+:ref:`sphx_glr_examples_gallery_examples_018_get_strain_energy_example.py`.
+
+.. GENERATED FROM PYTHON SOURCE LINES 51-55
 
 Script
 ~~~~~~
 
 Import dependencies
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-59
+.. GENERATED FROM PYTHON SOURCE LINES 55-65
 
 .. code-block:: Python
 
@@ -64,12 +70,12 @@ Import dependencies
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-62
+.. GENERATED FROM PYTHON SOURCE LINES 66-68
 
 Start a server and get the examples files.
 This will copy the example files into the current working directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-65
+.. GENERATED FROM PYTHON SOURCE LINES 68-71
 
 .. code-block:: Python
 
@@ -83,11 +89,11 @@ This will copy the example files into the current working directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-67
+.. GENERATED FROM PYTHON SOURCE LINES 72-73
 
 Set up the composite model
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-69
+.. GENERATED FROM PYTHON SOURCE LINES 73-75
 
 .. code-block:: Python
 
@@ -100,7 +106,7 @@ Set up the composite model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-75
+.. GENERATED FROM PYTHON SOURCE LINES 76-81
 
 Get dictionary that maps dpf_material_id to properties
 The creation of the dictionary is currently quite slow and
@@ -108,7 +114,7 @@ should be done before using the properties in a loop.
 Currently only constant properties are supported.
 For variable material properties, the default value is returned.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-80
+.. GENERATED FROM PYTHON SOURCE LINES 81-86
 
 .. code-block:: Python
 
@@ -124,11 +130,11 @@ For variable material properties, the default value is returned.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-82
+.. GENERATED FROM PYTHON SOURCE LINES 87-88
 
 Get strain field
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-87
+.. GENERATED FROM PYTHON SOURCE LINES 88-93
 
 .. code-block:: Python
 
@@ -144,11 +150,11 @@ Get strain field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-89
+.. GENERATED FROM PYTHON SOURCE LINES 94-95
 
 Implement a custom failure criterion: basic max strain
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-112
+.. GENERATED FROM PYTHON SOURCE LINES 95-118
 
 .. code-block:: Python
 
@@ -211,14 +217,14 @@ Implement a custom failure criterion: basic max strain
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fae17667b10>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f779bf53c50>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.093 seconds)
+   **Total running time of the script:** (0 minutes 14.152 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:

@@ -608,9 +608,10 @@ and run the DPF docker image. Run the tests with the following command</p>
 </pre></div>
 </div>
 </li>
-<li><p>Run tests with a DPF server started from the Ansys installer. The Ansys version must
-be 2023 R2 or later.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--ansys-path<span class="w"> </span><span class="s2">&quot;C:\Program Files\Ansys Inc\v232&quot;</span>
+<li><p>Run tests with a DPF server from an Ansys installation.
+Using a DPF server with this package requires Ansys Release 2023 R2 or later.
+The following example uses Ansys Release 2027 R1.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>.<span class="w"> </span>--ansys-path<span class="w"> </span><span class="s2">&quot;C:\Program Files\Ansys Inc\v271&quot;</span>
 </pre></div>
 </div>
 </li>
