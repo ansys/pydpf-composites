@@ -42,7 +42,7 @@ For additional examples that show how to obtain ply-wise material properties,
 strains, and stresses, see
 :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
 :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
-:ref:`sphx_glr_examples_gallery_examples_018_get_strain_energy_example.py`,
+:ref:`sphx_glr_examples_gallery_examples_018_get_strain_energy_example.py`.
 
 .. note::
 
