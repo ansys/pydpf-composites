@@ -50,7 +50,7 @@ There are other examples which show how to get ply-wise material properties,
 strains, and stresses. See
 :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
 :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
-:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`,
+:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`.
 
 """
 
