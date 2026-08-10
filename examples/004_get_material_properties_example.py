@@ -39,6 +39,12 @@ all layers and integration points. Finally, the elemental maximum is computed an
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
+For additional examples that show how to obtain ply-wise results such as layup
+properties, strains, and stresses, see
+:ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`,
+:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`, and
+:ref:`sphx_glr_examples_gallery_examples_018_get_strain_energy_example.py`.
+
 """
 
 # %%
