@@ -46,7 +46,8 @@ same evaluation for a specific ply.
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
-For additional examples that show how to obtain ply-wise material properties, strains, and stresses, see
+For additional examples that show how to obtain ply-wise material properties, strains, and stresses,
+see
 :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
 :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
 :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`,
@@ -113,8 +114,8 @@ area_field = area_operator.outputs.field()
 # Weighting factors
 # ~~~~~~~~~~~~~~~~~
 #
-# Computes the through-the-thickness weighting factor
-# of the integration points. Note: The Mechanical APDL application uses the Simpson integration rule for layered shells.
+# Computes the through-the-thickness weighting factor of the integration points.
+# Note: The Mechanical APDL application uses the Simpson integration rule for layered shells.
 # The through-the-thickness weighting factors are 1/6 for the integration points at the bottom
 # and top, and 2/3 for the integration points in the middle of the layer.
 def weighting_factor(my_element_info: ElementInfo, my_spot: Spot) -> float:
