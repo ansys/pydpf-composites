@@ -28,6 +28,7 @@ import pytest
 from ansys.dpf.composites.constants import Spot
 from ansys.dpf.composites.layup_info import (
     AnalysisPlyInfoProvider,
+    ElementInfo,
     ElementInfoProvider,
     get_element_info_provider,
 )
@@ -35,6 +36,8 @@ from ansys.dpf.composites.select_indices import (
     get_selected_indices,
     get_selected_indices_by_analysis_ply,
     get_selected_indices_by_dpf_material_ids,
+    get_spot_from_integration_point_index,
+    get_spots_from_element_info,
 )
 
 from .helper import get_basic_shell_files, setup_operators
@@ -217,3 +220,115 @@ def test_access_to_invalid_analysis_ply(dpf_server):
         )
 
     assert str(exc_info.value) == "Analysis Ply 'P1L1__ud_patch ns1' is not part of element 4"
+
+
+def test_get_spot_from_element_info():
+    for num_spots, reference in [
+        (1, (Spot.MIDDLE,)),
+        (2, (Spot.BOTTOM, Spot.TOP)),
+        (3, (Spot.BOTTOM, Spot.TOP, Spot.MIDDLE)),
+    ]:
+        element_info = ElementInfo(
+            id=5,
+            n_layers=1,
+            n_corner_nodes=4,
+            n_spots=num_spots,
+            is_layered=True,
+            element_type=777,  # number does not matter
+            dpf_material_ids=np.array([1]),
+            is_shell=True,
+            number_of_nodes_per_spot_plane=4,
+        )
+        res = get_spots_from_element_info(element_info)
+        assert res == reference, f"Spots mismatch: {res} != {reference}"
+
+
+def test_get_spot_from_integration_point_index():
+    # test shell elements
+    for num_nodes, num_nodes_per_spot_plane in [(3, 3), (4, 4), (6, 3), (8, 4)]:
+        for num_spots in [1, 3]:
+            element_info = ElementInfo(
+                id=5,
+                n_layers=4,
+                n_corner_nodes=num_nodes,
+                n_spots=num_spots,
+                is_layered=True,
+                element_type=777,  # number does not matter
+                dpf_material_ids=np.array([1, 2, 2, 7]),
+                is_shell=True,
+                number_of_nodes_per_spot_plane=num_nodes_per_spot_plane,
+            )
+            indices = range(0, element_info.number_of_nodes_per_spot_plane * element_info.n_spots)
+            spot_indices = {
+                indices[0 : element_info.number_of_nodes_per_spot_plane]: Spot.BOTTOM,
+            }
+            if num_spots == 3:
+                spot_indices[
+                    indices[
+                        element_info.number_of_nodes_per_spot_plane : 2
+                        * element_info.number_of_nodes_per_spot_plane
+                    ]
+                ] = Spot.TOP
+                spot_indices[
+                    indices[
+                        2
+                        * element_info.number_of_nodes_per_spot_plane : 3
+                        * element_info.number_of_nodes_per_spot_plane
+                    ]
+                ] = Spot.MIDDLE
+
+            for ip_plane, expected_spot in spot_indices.items():
+                for ip_index in ip_plane:
+                    result = get_spot_from_integration_point_index(element_info, ip_index)
+                    assert (
+                        result == expected_spot
+                    ), f"Index {ip_index}: expected spot is {expected_spot} but got {result}"
+
+    # test solid elements
+    for num_nodes, num_nodes_per_spot_plane in [(6, 3), (8, 4), (15, 3), (20, 4)]:
+        for num_spots in [1, 2]:
+            element_info = ElementInfo(
+                id=44,
+                n_layers=5,
+                n_corner_nodes=num_nodes,
+                n_spots=num_spots,
+                is_layered=True,
+                element_type=777,  # number does not matter
+                dpf_material_ids=np.array([1, 2, 2, 7, 9]),
+                is_shell=False,
+                number_of_nodes_per_spot_plane=num_nodes_per_spot_plane,
+            )
+            indices = range(0, element_info.number_of_nodes_per_spot_plane * element_info.n_spots)
+            spot_indices = {
+                indices[0 : element_info.number_of_nodes_per_spot_plane]: Spot.BOTTOM,
+            }
+            if num_spots == 2:
+                spot_indices[
+                    indices[
+                        element_info.number_of_nodes_per_spot_plane : 2
+                        * element_info.number_of_nodes_per_spot_plane
+                    ]
+                ] = Spot.TOP
+
+            for ip_plane, expected_spot in spot_indices.items():
+                for ip_index in ip_plane:
+                    result = get_spot_from_integration_point_index(element_info, ip_index)
+                    assert (
+                        result == expected_spot
+                    ), f"Index {ip_index}: expected spot is {expected_spot} but got {result}"
+
+    element_info = ElementInfo(
+        id=44,
+        n_layers=5,
+        n_corner_nodes=8,
+        n_spots=1,
+        is_layered=True,
+        element_type=777,  # number does not matter
+        dpf_material_ids=np.array([1, 2, 2, 7, 9]),
+        is_shell=True,
+        number_of_nodes_per_spot_plane=4,
+    )
+    with pytest.raises(RuntimeError) as exc_info:
+        # The element has only 4 integration points. So, the max
+        # IP index is 3.
+        get_spot_from_integration_point_index(element_info, 4)
