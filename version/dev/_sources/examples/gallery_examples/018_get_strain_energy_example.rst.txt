@@ -23,19 +23,19 @@
 Ply-wise strain energy
 ----------------------
 
-The implementation of a custom result is shown in this example using
-strain energy :math:`U=\frac{1}{2} \cdot V \cdot \sigma \cdot \epsilon`. The first part shows
-the computation of the total elemental strain energy, the second part does the
-same evaluation but for a specific ply only.
+This example shows how to implement a custom result using
+strain energy :math:`U=\frac{1}{2} \cdot V \cdot \sigma \cdot \epsilon`. The first part
+computes the total elemental strain energy. The second part performs the
+same evaluation for a specific ply.
 
 .. note::
-    The presented custom implementation is for layered shell elements
+    This custom implementation targets layered shell elements
     and has been tested only with 4-node shell elements.
-    There are a few simplifications in the implementation which may lead to differences
-    if compared with the native DPF implementation or Mechanical.
-    First, out-of-plane shear forces are ignored. In addition, it is assumed that
+    A few simplifications may lead to differences
+    when compared with the native DPF implementation or the Mechanical application.
+    The implementation ignores out-of-plane shear forces and assumes that
     the area weighting factor is the same for each integration point. For irregular elements,
-    one would have to compute the Jacobian determinant for each integration point
+    compute the Jacobian determinant for each integration point
     to get the exact area weighting factor.
 
 .. note::
@@ -43,18 +43,18 @@ same evaluation but for a specific ply only.
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
-For additional examples that show how to obtain ply-wise material properties,
-strains, and stresses, see
+For additional examples that show how to obtain ply-wise material properties, strains, and stresses,
+see
 :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`,
 :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`, and
-:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`.
+:ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`,
 
 .. GENERATED FROM PYTHON SOURCE LINES 58-62
 
 Script
 ~~~~~~
 
-Import dependencies
+Import dependencies.
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-76
 
@@ -83,7 +83,7 @@ Import dependencies
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-79
 
-Start a server and get the examples files.
+Start a server and get the example files.
 This will copy the example files into the current working directory.
 
 .. GENERATED FROM PYTHON SOURCE LINES 79-82
@@ -121,13 +121,13 @@ Set up the composite model.
 
 .. GENERATED FROM PYTHON SOURCE LINES 89-96
 
-Get Inputs
+Get inputs
 ~~~~~~~~~~
-The strains, stresses and volumes (area * thickness) are needed
+The strains, stresses, and volumes (area * thickness) are needed
 for the strain energy computation. These quantities are provided
 by the DPF composites model and the DPF core model.
-Note: the `elements_volume` operator of DPF returns the area instead
-of the volume for (layered) shells.
+Note: The `elements_volume` operator of DPF returns the area instead
+of the volume for layered shells.
 
 .. GENERATED FROM PYTHON SOURCE LINES 96-113
 
@@ -162,10 +162,10 @@ of the volume for (layered) shells.
 Weighting factors
 ~~~~~~~~~~~~~~~~~
 
-This is a helper function to compute the through-the-thickness weighting factor
-of the integration points. Note: MAPDL uses the Simpson integration rule for layered shells
-which weighting factors through-the-thickness are 1/6 for the IP at the bottom and top,
-and 2/3 for the IPs in the middle of the layer.
+Computes the through-the-thickness weighting factor of the integration points.
+Note: The Mechanical APDL application uses the Simpson integration rule for layered shells.
+The through-the-thickness weighting factors are 1/6 for the integration points at the bottom
+and top, and 2/3 for the integration points in the middle of the layer.
 
 .. GENERATED FROM PYTHON SOURCE LINES 121-134
 
@@ -196,7 +196,7 @@ and 2/3 for the IPs in the middle of the layer.
 Strain energy per layer
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-This function returns the strain energy of a single layer.
+Returns the strain energy of a single layer.
 
 .. GENERATED FROM PYTHON SOURCE LINES 139-168
 
@@ -243,7 +243,7 @@ This function returns the strain energy of a single layer.
 Compute the total elemental strain energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Iterator over each element and layer, and build the sum of the strain energy
+Iterates over each element and layer and builds the sum of the strain energy
 over the integration points.
 
 .. GENERATED FROM PYTHON SOURCE LINES 174-209
@@ -252,11 +252,11 @@ over the integration points.
 
     total_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
     with total_energy_field.as_local_field() as local_result_field:
-        # Iterator over all elements of the mesh
-        # The model has only layered shell elements and so no filtering is needed here.
+        # Iterate over all elements of the mesh.
+        # The model has only layered shell elements, so no filtering is needed.
         total_strain_energy = 0
         for element_id in composite_model.get_mesh().elements.scoping.ids:
-            # Get elemental data
+            # Get elemental data.
             element_info = composite_model.get_element_info(element_id)
             if element_info is None:
                 continue
@@ -267,8 +267,8 @@ over the integration points.
             stress_data = stress_field.get_entity_data_by_id(element_id)
             strain_data = strain_field.get_entity_data_by_id(element_id)
 
-            # Iterator over the plies, filter data and compute the strain
-            # energy per element
+            # Iterate over the plies, filter data, and compute the strain
+            # energy per element.
             elemental_strain_energy = 0
             for layer_index in range(element_info.n_layers):
                 elemental_strain_energy += layer_wise_strain_energy(
@@ -329,9 +329,9 @@ over the integration points.
 
 Compute the ply-wise strain energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Select a ply by name and initialize the AnalysisPlyInfoProvider
-which provides all information of the selected ply. The computation
-of the strain energy is the same as above, just for a single ply.
+Select a ply by name and initialize the AnalysisPlyInfoProvider,
+which provides all information of the selected ply. The strain energy computation
+is the same as above, just for a single ply.
 
 .. GENERATED FROM PYTHON SOURCE LINES 215-245
 
@@ -346,9 +346,9 @@ of the strain energy is the same as above, just for a single ply.
 
     ply_energy_field = dpf.field.Field(location=dpf.locations.elemental, nature=dpf.natures.scalar)
     with ply_energy_field.as_local_field() as local_result_field:
-        # Loop over all elements of the analysis ply
+        # Loop over all elements of the analysis ply.
         for element_id in analysis_ply_info_provider.property_field.scoping.ids:
-            # Get elemental data
+            # Get elemental data.
             element_info = composite_model.get_element_info(element_id)
             assert element_info is not None
             layer_index = analysis_ply_info_provider.get_layer_index_by_element_id(element_id)
@@ -403,7 +403,7 @@ of the strain energy is the same as above, just for a single ply.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb9384a8550>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f610fccdbd0>)
 
 
 
@@ -412,9 +412,9 @@ of the strain energy is the same as above, just for a single ply.
 Native DPF operator for strain energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The native DPF operator for strain energy is used to compare the results with
-the above custom implementation. The results differ because of the assumptions mentioned at
-the beginning of the example.
+Use the native DPF operator for strain energy to compare the results with
+the custom implementation above. The results differ due to the assumptions
+described above.
 
 .. GENERATED FROM PYTHON SOURCE LINES 252-256
 
@@ -460,14 +460,14 @@ the beginning of the example.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb9384ab610>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f610fccccd0>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 11.606 seconds)
+   **Total running time of the script:** (0 minutes 9.006 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_018_get_strain_energy_example.py:

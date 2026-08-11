@@ -36,8 +36,8 @@ all layers and integration points. Finally, the elemental maximum is computed an
     use the :func:`.get_composite_files_from_workbench_result_folder`
     method to obtain the input files.
 
-For additional examples that show how to obtain ply-wise results such as layup
-properties, strains, and stresses, see
+There are other examples which show how to get ply-wise results such as lay-up properties,
+strains, and stresses. See
 :ref:`sphx_glr_examples_gallery_examples_005_get_layup_properties_example.py`,
 :ref:`sphx_glr_examples_gallery_examples_006_filter_composite_data_example.py`, and
 :ref:`sphx_glr_examples_gallery_examples_018_get_strain_energy_example.py`.
@@ -217,14 +217,14 @@ Implement a custom failure criterion: basic max strain
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb943123ed0>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f612a317d90>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 15.192 seconds)
+   **Total running time of the script:** (0 minutes 13.090 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_004_get_material_properties_example.py:

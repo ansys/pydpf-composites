@@ -591,19 +591,19 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="ply-wise-strain-energy">
 <span id="sphx-glr-examples-gallery-examples-018-get-strain-energy-example-py"></span><span id="id1"></span><h1>Ply-wise strain energy<a class="headerlink" href="#ply-wise-strain-energy" title="Link to this heading">#</a></h1>
-<p>The implementation of a custom result is shown in this example using
-strain energy <span class="math notranslate nohighlight">\(U=\frac{1}{2} \cdot V \cdot \sigma \cdot \epsilon\)</span>. The first part shows
-the computation of the total elemental strain energy, the second part does the
-same evaluation but for a specific ply only.</p>
+<p>This example shows how to implement a custom result using
+strain energy <span class="math notranslate nohighlight">\(U=\frac{1}{2} \cdot V \cdot \sigma \cdot \epsilon\)</span>. The first part
+computes the total elemental strain energy. The second part performs the
+same evaluation for a specific ply.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The presented custom implementation is for layered shell elements
+<p>This custom implementation targets layered shell elements
 and has been tested only with 4-node shell elements.
-There are a few simplifications in the implementation which may lead to differences
-if compared with the native DPF implementation or Mechanical.
-First, out-of-plane shear forces are ignored. In addition, it is assumed that
+A few simplifications may lead to differences
+when compared with the native DPF implementation or the Mechanical application.
+The implementation ignores out-of-plane shear forces and assumes that
 the area weighting factor is the same for each integration point. For irregular elements,
-one would have to compute the Jacobian determinant for each integration point
+compute the Jacobian determinant for each integration point
 to get the exact area weighting factor.</p>
 </div>
 <div class="admonition note">
@@ -612,14 +612,14 @@ to get the exact area weighting factor.</p>
 use the <a class="reference internal" href="../../api/_autosummary/ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder.html#ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder" title="ansys.dpf.composites.data_sources.get_composite_files_from_workbench_result_folder"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_composite_files_from_workbench_result_folder()</span></code></a>
 method to obtain the input files.</p>
 </div>
-<p>For additional examples that show how to obtain ply-wise material properties,
-strains, and stresses, see
+<p>For additional examples that show how to obtain ply-wise material properties, strains, and stresses,
+see
 <a class="reference internal" href="004_get_material_properties_example.html#sphx-glr-examples-gallery-examples-004-get-material-properties-example-py"><span class="std std-ref">Material properties and custom failure criterion</span></a>,
 <a class="reference internal" href="005_get_layup_properties_example.html#sphx-glr-examples-gallery-examples-005-get-layup-properties-example-py"><span class="std std-ref">Lay-up properties</span></a>, and
-<a class="reference internal" href="006_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a>.</p>
+<a class="reference internal" href="006_filter_composite_data_example.html#sphx-glr-examples-gallery-examples-006-filter-composite-data-example-py"><span class="std std-ref">Filter result data by different criteria</span></a>,</p>
 <section id="script">
 <h2>Script<a class="headerlink" href="#script" title="Link to this heading">#</a></h2>
-<p>Import dependencies</p>
+<p>Import dependencies.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ansys.dpf.core</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dpf</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -635,7 +635,7 @@ strains, and stresses, see
 <span class="kn">from</span><span class="w"> </span><span class="nn">ansys.dpf.composites.server_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">connect_to_or_start_server</span>
 </pre></div>
 </div>
-<p>Start a server and get the examples files.
+<p>Start a server and get the example files.
 This will copy the example files into the current working directory.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a> <span class="o">=</span> <span class="n">connect_to_or_start_server</span><span class="p">()</span>
 <span class="n">composite_files_on_server</span> <span class="o">=</span> <span class="n">get_continuous_fiber_example_files</span><span class="p">(</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/server_types/GrpcServer.html#ansys.dpf.core.server_types.GrpcServer" title="ansys.dpf.core.server_types.GrpcServer" class="sphx-glr-backref-module-ansys-dpf-core-server_types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">server</span></a><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">)</span>
@@ -650,12 +650,12 @@ This will copy the example files into the current working directory.</p>
 </div>
 </section>
 <section id="get-inputs">
-<h2>Get Inputs<a class="headerlink" href="#get-inputs" title="Link to this heading">#</a></h2>
-<p>The strains, stresses and volumes (area * thickness) are needed
+<h2>Get inputs<a class="headerlink" href="#get-inputs" title="Link to this heading">#</a></h2>
+<p>The strains, stresses, and volumes (area * thickness) are needed
 for the strain energy computation. These quantities are provided
 by the DPF composites model and the DPF core model.
-Note: the <cite>elements_volume</cite> operator of DPF returns the area instead
-of the volume for (layered) shells.</p>
+Note: The <cite>elements_volume</cite> operator of DPF returns the area instead
+of the volume for layered shells.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stress/index.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">core_model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">stress</span><span class="p">()</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stress/index.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bool_rotate_to_global</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stress_fc</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stress/index.html#module-ansys.dpf.core.operators.result.stress" title="ansys.dpf.core.operators.result.stress" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">stress_operator</span></a><span class="o">.</span><span class="n">get_output</span><span class="p">(</span><span class="n">pin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/common/types.html#ansys.dpf.core.common.types" title="ansys.dpf.core.common.types" class="sphx-glr-backref-module-ansys-dpf-core-common sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">fields_container</span></a><span class="p">)</span>
@@ -675,10 +675,10 @@ of the volume for (layered) shells.</p>
 </section>
 <section id="weighting-factors">
 <h2>Weighting factors<a class="headerlink" href="#weighting-factors" title="Link to this heading">#</a></h2>
-<p>This is a helper function to compute the through-the-thickness weighting factor
-of the integration points. Note: MAPDL uses the Simpson integration rule for layered shells
-which weighting factors through-the-thickness are 1/6 for the IP at the bottom and top,
-and 2/3 for the IPs in the middle of the layer.</p>
+<p>Computes the through-the-thickness weighting factor of the integration points.
+Note: The Mechanical APDL application uses the Simpson integration rule for layered shells.
+The through-the-thickness weighting factors are 1/6 for the integration points at the bottom
+and top, and 2/3 for the integration points in the middle of the layer.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">weighting_factor</span><span class="p">(</span><span class="n">my_element_info</span><span class="p">:</span> <span class="n">ElementInfo</span><span class="p">,</span> <span class="n">my_spot</span><span class="p">:</span> <a href="https://docs.python.org/dev/library/enum.html#enum.IntEnum" title="enum.IntEnum" class="sphx-glr-backref-module-enum sphx-glr-backref-type-py-class"><span class="n">Spot</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">my_element_info</span><span class="o">.</span><span class="n">is_shell</span><span class="p">:</span>
@@ -695,7 +695,7 @@ and 2/3 for the IPs in the middle of the layer.</p>
 </section>
 <section id="strain-energy-per-layer">
 <h2>Strain energy per layer<a class="headerlink" href="#strain-energy-per-layer" title="Link to this heading">#</a></h2>
-<p>This function returns the strain energy of a single layer.</p>
+<p>Returns the strain energy of a single layer.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">layer_wise_strain_energy</span><span class="p">(</span>
     <span class="n">my_element_info</span><span class="p">:</span> <span class="n">ElementInfo</span><span class="p">,</span>
     <span class="n">my_layer_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -728,15 +728,15 @@ and 2/3 for the IPs in the middle of the layer.</p>
 </section>
 <section id="compute-the-total-elemental-strain-energy">
 <h2>Compute the total elemental strain energy<a class="headerlink" href="#compute-the-total-elemental-strain-energy" title="Link to this heading">#</a></h2>
-<p>Iterator over each element and layer, and build the sum of the strain energy
+<p>Iterates over each element and layer and builds the sum of the strain energy
 over the integration points.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">total_energy_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span></a><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/common/natures.html#ansys.dpf.core.common.natures" title="ansys.dpf.core.common.natures" class="sphx-glr-backref-module-ansys-dpf-core-common sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span></a><span class="p">)</span>
 <span class="k">with</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">total_energy_field</span></a><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
-    <span class="c1"># Iterator over all elements of the mesh</span>
-    <span class="c1"># The model has only layered shell elements and so no filtering is needed here.</span>
+    <span class="c1"># Iterate over all elements of the mesh.</span>
+    <span class="c1"># The model has only layered shell elements, so no filtering is needed.</span>
     <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">total_strain_energy</span></a> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span><span class="p">:</span>
-        <span class="c1"># Get elemental data</span>
+        <span class="c1"># Get elemental data.</span>
         <span class="n">element_info</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
         <span class="k">if</span> <span class="n">element_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
@@ -747,8 +747,8 @@ over the integration points.</p>
         <span class="n">stress_data</span> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stress_field</span></a><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
         <span class="n">strain_data</span> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">strain_field</span></a><span class="o">.</span><span class="n">get_entity_data_by_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
 
-        <span class="c1"># Iterator over the plies, filter data and compute the strain</span>
-        <span class="c1"># energy per element</span>
+        <span class="c1"># Iterate over the plies, filter data, and compute the strain</span>
+        <span class="c1"># energy per element.</span>
         <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">elemental_strain_energy</span></a> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">layer_index</span></a> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_info</span><span class="o">.</span><span class="n">n_layers</span></a><span class="p">):</span>
             <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">elemental_strain_energy</span></a> <span class="o">+=</span> <span class="n">layer_wise_strain_energy</span><span class="p">(</span>
@@ -782,9 +782,9 @@ Interactive Scene</label><div class="sd-tab-content docutils">
 </section>
 <section id="compute-the-ply-wise-strain-energy">
 <h2>Compute the ply-wise strain energy<a class="headerlink" href="#compute-the-ply-wise-strain-energy" title="Link to this heading">#</a></h2>
-<p>Select a ply by name and initialize the AnalysisPlyInfoProvider
-which provides all information of the selected ply. The computation
-of the strain energy is the same as above, just for a single ply.</p>
+<p>Select a ply by name and initialize the AnalysisPlyInfoProvider,
+which provides all information of the selected ply. The strain energy computation
+is the same as above, just for a single ply.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a> <span class="o">=</span> <span class="n">get_all_analysis_ply_names</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">())</span>
 <a href="https://docs.python.org/dev/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">all_ply_names</span></a>
 
@@ -793,9 +793,9 @@ of the strain energy is the same as above, just for a single ply.</p>
 
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_energy_field</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class"><span class="n">dpf</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">Field</span></a><span class="p">(</span><span class="n">location</span><span class="o">=</span><a href="https://docs.python.org/dev/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">elemental</span></a><span class="p">,</span> <span class="n">nature</span><span class="o">=</span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/common/natures.html#ansys.dpf.core.common.natures" title="ansys.dpf.core.common.natures" class="sphx-glr-backref-module-ansys-dpf-core-common sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf</span><span class="o">.</span><span class="n">natures</span><span class="o">.</span><span class="n">scalar</span></a><span class="p">)</span>
 <span class="k">with</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/field/Field.html#ansys.dpf.core.field.Field" title="ansys.dpf.core.field.Field" class="sphx-glr-backref-module-ansys-dpf-core-field sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ply_energy_field</span></a><span class="o">.</span><span class="n">as_local_field</span><span class="p">()</span> <span class="k">as</span> <span class="n">local_result_field</span><span class="p">:</span>
-    <span class="c1"># Loop over all elements of the analysis ply</span>
+    <span class="c1"># Loop over all elements of the analysis ply.</span>
     <span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a> <span class="ow">in</span> <span class="n">analysis_ply_info_provider</span><span class="o">.</span><span class="n">property_field</span><span class="o">.</span><span class="n">scoping</span><span class="o">.</span><span class="n">ids</span><span class="p">:</span>
-        <span class="c1"># Get elemental data</span>
+        <span class="c1"># Get elemental data.</span>
         <span class="n">element_info</span> <span class="o">=</span> <span class="n">composite_model</span><span class="o">.</span><span class="n">get_element_info</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
         <span class="k">assert</span> <span class="n">element_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int64" title="numpy.int64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">layer_index</span></a> <span class="o">=</span> <span class="n">analysis_ply_info_provider</span><span class="o">.</span><span class="n">get_layer_index_by_element_id</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int32" title="numpy.int32" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">element_id</span></a><span class="p">)</span>
@@ -825,15 +825,15 @@ Static Scene</label><div class="sd-tab-content docutils">
 Interactive Scene</label><div class="sd-tab-content docutils">
 <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_018_get_strain_energy_example_002.vtksz' width='100%%' height='400px' frameborder='0'></iframe></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>(None, &lt;pyvista.plotting.plotter.Plotter object at 0x7fb9384a8550&gt;)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>(None, &lt;pyvista.plotting.plotter.Plotter object at 0x7f610fccdbd0&gt;)
 </pre></div>
 </div>
 </section>
 <section id="native-dpf-operator-for-strain-energy">
 <h2>Native DPF operator for strain energy<a class="headerlink" href="#native-dpf-operator-for-strain-energy" title="Link to this heading">#</a></h2>
-<p>The native DPF operator for strain energy is used to compare the results with
-the above custom implementation. The results differ because of the assumptions mentioned at
-the beginning of the example.</p>
+<p>Use the native DPF operator for strain energy to compare the results with
+the custom implementation above. The results differ due to the assumptions
+described above.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stiffness_matrix_energy/index.html#module-ansys.dpf.core.operators.result.stiffness_matrix_energy" title="ansys.dpf.core.operators.result.stiffness_matrix_energy" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">op</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stiffness_matrix_energy/index.html#module-ansys.dpf.core.operators.result.stiffness_matrix_energy" title="ansys.dpf.core.operators.result.stiffness_matrix_energy" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">dpf</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">stiffness_matrix_energy</span></a><span class="p">()</span>  <span class="c1"># operator instantiation</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stiffness_matrix_energy/index.html#module-ansys.dpf.core.operators.result.stiffness_matrix_energy" title="ansys.dpf.core.operators.result.stiffness_matrix_energy" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">op</span></a><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">data_sources</span><span class="p">(</span><span class="n">composite_model</span><span class="o">.</span><span class="n">data_sources</span><span class="o">.</span><span class="n">result_files</span><span class="p">)</span>
 <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/fields_container/FieldsContainer.html#ansys.dpf.core.fields_container.FieldsContainer" title="ansys.dpf.core.fields_container.FieldsContainer" class="sphx-glr-backref-module-ansys-dpf-core-fields_container sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dpf_strain_energy</span></a> <span class="o">=</span> <a href="https://dpf.docs.pyansys.com/version/stable/api/ansys/dpf/core/operators/result/stiffness_matrix_energy/index.html#module-ansys.dpf.core.operators.result.stiffness_matrix_energy" title="ansys.dpf.core.operators.result.stiffness_matrix_energy" class="sphx-glr-backref-module-ansys-dpf-core-operators-result sphx-glr-backref-type-py-module"><span class="n">op</span></a><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">fields_container</span><span class="p">()</span>
@@ -850,10 +850,10 @@ Static Scene</label><div class="sd-tab-content docutils">
 Interactive Scene</label><div class="sd-tab-content docutils">
 <iframe src='../../_static/static_viewer.html?fileURL=../_images/examples/gallery_examples/images/sphx_glr_018_get_strain_energy_example_003.vtksz' width='100%%' height='400px' frameborder='0'></iframe></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>(None, &lt;pyvista.plotting.plotter.Plotter object at 0x7fb9384ab610&gt;)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>(None, &lt;pyvista.plotting.plotter.Plotter object at 0x7f610fccccd0&gt;)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 11.606 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.006 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gallery-examples-018-get-strain-energy-example-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/aca85d635522b43c8df97ccacca1c97d/018_get_strain_energy_example.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">018_get_strain_energy_example.ipynb</span></code></a></p>
@@ -894,7 +894,7 @@ Interactive Scene</label><div class="sd-tab-content docutils">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script">Script</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-model">Set up model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-inputs">Get Inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-inputs">Get inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weighting-factors">Weighting factors</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strain-energy-per-layer">Strain energy per layer</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-total-elemental-strain-energy">Compute the total elemental strain energy</a></li>
