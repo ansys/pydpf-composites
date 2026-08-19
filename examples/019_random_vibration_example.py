@@ -27,7 +27,8 @@ Random vibration analysis
 -------------------------
 
 This example shows how to run a failure analysis for a random vibration analysis using the Max
-Stress criterion. The failure factors are computed with respect to the one and three sigma values.
+Stress criterion. The failure factors are computed with respect to the one sigma and three sigma 
+values.
 
 The theory manual states that the directional results from a Power Spectral Density (PSD) analysis
 are statistical in nature, and so they cannot be combined in the usual way. For example the X, Y,
