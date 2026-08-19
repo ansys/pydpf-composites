@@ -29,8 +29,9 @@ Random vibration analysis
 This example shows how to run a failure analysis for a random vibration analysis using the Max
 Stress criterion. The failure factors are computed with respect to the one and three sigma values.
 
-The theory manual states that the directional results from a Power Spectral Density (PSD) analysis
-are statistical in nature, and so they cannot be combined in the usual way. For example the X, Y,
+The documentation of Mechanical about random vibration analysis states that the directional
+results from a Power Spectral Density (PSD) analysis are statistical in nature, and so they
+cannot be combined in the usual way. For example the X, Y,
 and Z displacements cannot be combined to get the magnitude of the total displacement.
 The same holds for other derived quantities such as strains and stresses.
 This means that most of the failure criteria, such as Puck and Hashin, are not applicable since they
@@ -79,16 +80,8 @@ import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.composite_model import CompositeModel
 from ansys.dpf.composites.constants import FailureOutput
-from ansys.dpf.composites.data_sources import (
-    CompositeDefinitionFiles,
-    ContinuousFiberCompositesFiles,
-)
 from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
-from ansys.dpf.composites.failure_criteria import (
-    CombinedFailureCriterion,
-    MaxStrainCriterion,
-    MaxStressCriterion,
-)
+from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
@@ -96,32 +89,11 @@ from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Start a DPF server and copy the example files into the current working directory.
 server = connect_to_or_start_server()
-# composite_files_on_server = get_continuous_fiber_example_files(server, "random_vibration")
-mech_results_folder = (
-    r"D:\tmp\WB Projects\Random_Vibration_Basic_Sandwich_Panel_25R1_files\dp0\SYS-4\MECH"
-)
-rst_file = os.path.join(mech_results_folder, "file.rst")
-engd_file = os.path.join(mech_results_folder, "MatML.xml")
-acp_h5_file = os.path.join(
-    mech_results_folder, "..", "..", "SYS-2", "MECH", "Setup", "ACPCompositeDefinitions.h5"
-)
-
-composite_files = ContinuousFiberCompositesFiles(
-    files_are_local=True,
-    rst=[rst_file],
-    composite={
-        "shell": CompositeDefinitionFiles(
-            mapping=None,
-            definition=acp_h5_file,
-        )
-    },
-    engineering_data=engd_file,
-)
-# composite_files_on_server = get_composite_files_from_workbench_result_folder(mech_results_folder, server)
+composite_files_on_server = get_continuous_fiber_example_files(server, "random_vibration")
 
 # %%
 # Create a composite model
-composite_model = CompositeModel(composite_files, server)
+composite_model = CompositeModel(composite_files_on_server, server)
 
 
 # %%
@@ -132,26 +104,26 @@ composite_model = CompositeModel(composite_files, server)
 # criteria for the scaled results, and the minmax_per_element_operator to extract the
 # minimum and maximum over all failure criteria, layers and integration points.
 def run_custom_failure_evaluation(
-    my_failure_criterion: CombinedFailureCriterion,
-    my_composite_model: CompositeModel,
-    my_stain_fields_container: dpf.FieldsContainer,
-    my_stress_fields_container: dpf.FieldsContainer,
+    failure_criterion_: CombinedFailureCriterion,
+    composite_model_: CompositeModel,
+    stain_fields_container_: dpf.FieldsContainer,
+    stress_fields_container_: dpf.FieldsContainer,
 ):
 
     failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
-    failure_evaluator.inputs.configuration(my_failure_criterion.to_json())
+    failure_evaluator.inputs.configuration(failure_criterion_.to_json())
     failure_evaluator.inputs.materials_container(
-        my_composite_model.material_operators.material_provider.outputs
+        composite_model_.material_operators.material_provider.outputs
     )
-    failure_evaluator.inputs.strains_container(my_stain_fields_container)
-    failure_evaluator.inputs.stresses_container(my_stress_fields_container)
-    failure_evaluator.inputs.mesh(my_composite_model.get_mesh())
+    failure_evaluator.inputs.strains_container(stain_fields_container_)
+    failure_evaluator.inputs.stresses_container(stress_fields_container_)
+    failure_evaluator.inputs.mesh(composite_model_.get_mesh())
 
     minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
     minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
-    minmax_per_element.inputs.mesh(my_composite_model.get_mesh())
+    minmax_per_element.inputs.mesh(composite_model_.get_mesh())
     minmax_per_element.inputs.material_support(
-        my_composite_model.material_operators.material_support_provider.outputs.abstract_field_support
+        composite_model_.material_operators.material_support_provider.outputs.abstract_field_support
     )
 
     # Only the maximum is of interest here
@@ -161,10 +133,10 @@ def run_custom_failure_evaluation(
 # %%
 # Helper function to compute the scaled results
 def get_scaled_field(
-    my_fields_container: dpf.FieldsContainer, my_factor: float
+    fields_container_: dpf.FieldsContainer, my_factor: float
 ) -> dpf.FieldsContainer:
     scaled_fc_op = dpf.operators.math.scale_fc(
-        fields_container=my_fields_container, ponderation=my_factor
+        fields_container=fields_container_, ponderation=my_factor
     )
     return scaled_fc_op.outputs.fields_container()
 

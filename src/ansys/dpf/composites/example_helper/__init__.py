@@ -39,7 +39,9 @@ from ..data_sources import (
 )
 from ..server_helpers import upload_file_to_unique_tmp_folder, upload_files_to_unique_tmp_folder
 
-EXAMPLE_REPO = "https://github.com/ansys/example-data/raw/main/pydpf-composites/"
+EXAMPLE_REPO = (
+    "https://github.com/ansys/example-data/raw/doc/random_vibration_example/pydpf-composites/"
+)
 # Example URL to run the examples locally
 # EXAMPLE_REPO = r"file:///D:/ANSYSDev/example-data/pydpf-composites/"
 
@@ -199,6 +201,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
             composite={},
         ),
         solver_type=SolverType.MAPDL,
+    ),
+    "random_vibration": _ContinuousFiberExampleLocation(
+        directory="random_vibration",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
     ),
 }
 
