@@ -27,7 +27,8 @@ Random vibration analysis
 -------------------------
 
 This example shows how to run a failure analysis for a random vibration analysis using the Max
-Stress criterion. The failure factors are computed with respect to the one and three sigma values.
+Stress criterion. The failure factors are computed with respect to the one sigma and three sigma 
+values.
 
 The documentation of Mechanical about random vibration analysis states that the directional
 results from a Power Spectral Density (PSD) analysis are statistical in nature, and so they
@@ -62,7 +63,7 @@ by just scaling the one sigma results.
     of the random vibration analysis.
     The composite definitions file(s) can be found in the first Mechanical analysis
     system of the simulation workflow (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
-    Important, also pass the mapping files to ContinuousFiberCompositesFiles
+    Importantly, also pass the mapping files to ContinuousFiberCompositesFiles
     if the model is an assembly of several Mechanical models. The mapping files (*.mapping)
     can be found in the folder where the ACPCompositeDefinitions.h5 file is located.
 
