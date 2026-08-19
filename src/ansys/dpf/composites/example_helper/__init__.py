@@ -200,6 +200,16 @@ _continuous_fiber_examples: dict[str, _ContinuousFiberExampleLocation] = {
         ),
         solver_type=SolverType.MAPDL,
     ),
+    "random_vibration": _ContinuousFiberExampleLocation(
+        directory="random_vibration",
+        files=_ContinuousFiberCompositesExampleFilenames(
+            rst=["file.rst"],
+            engineering_data="MatML.xml",
+            composite={
+                "shell": _ContinuousFiberCompositeFiles(definition="ACPCompositeDefinitions.h5"),
+            },
+        ),
+    ),
 }
 
 _short_fiber_examples: dict[str, _ShortFiberExampleLocation] = {
