@@ -27,7 +27,7 @@ Random vibration analysis
 -------------------------
 
 This example shows how to run a failure analysis for a random vibration analysis using the Max
-Stress criterion. The failure factors are computed with respect to the one sigma and three sigma 
+Stress criterion. The failure factors are computed with respect to the one sigma and three sigma
 values.
 
 The documentation of Mechanical about random vibration analysis states that the directional
@@ -35,25 +35,26 @@ results from a Power Spectral Density (PSD) analysis are statistical in nature, 
 cannot be combined in the usual way. For example the X, Y,
 and Z displacements cannot be combined to get the magnitude of the total displacement.
 The same holds for other derived quantities such as strains and stresses.
-This means that most of the failure criteria, such as Puck and Hashin, are not applicable since they
-combine stress components to compute the failure factors.
+This means that most of the failure criteria, such as Puck and Hashin, are not applicable since
+they combine stress components to compute the failure factors.
 For the same reason, it is also important to highlight that the strain and stress tensors should
-not be rotated. Luckily, the results of a random vibration analysis are given in the layer (material)
-coordinate system.
+not be rotated. Luckily, the results of a random vibration analysis are given in the layer
+(material) coordinate system.
 
-Taking that into account, the max strain and stress can be used because the failure values are computed
-for each component (e1, e2, s1, etc.) separately.
+Taking that into account, the max strain and stress can be used because the failure values are
+computed for each component (e1, e2, s1, etc.) separately.
 
 Another point to consider is that the solution provided by Mechanical is always positive and
-corresponds to the one sigma values. But the results could be positive or negative, and the strength values
-of orthotropic materials are typically different for tension and compression. So, failure factors with respect to
-the negative scaled results must be computed as well. The results for two and three sigma can be computed
-by just scaling the one sigma results.
+corresponds to the one sigma values. But the results could be positive or negative, and the
+strength values of orthotropic materials are typically different for tension and compression.
+So, failure factors with respect to the negative scaled results must be computed as well.
+The results for two and three sigma can be computed by just scaling the one sigma results.
 
 .. note::
 
-    The interpretation of the one sigma is that 68.3% of the time the response will be less than these values.
-    The response will be less than the two sigma values 95.45% of the time and three sigma values 99.73% of the time.
+    The interpretation of the one sigma is that 68.3% of the time the response will be less
+    than these values. The response will be less than the two sigma values 95.45% of the
+    time and three sigma values 99.73% of the time.
 
 .. note::
 
@@ -62,7 +63,8 @@ by just scaling the one sigma results.
     The RST and material file (MatML.XML) can be found in the solver files directory
     of the random vibration analysis.
     The composite definitions file(s) can be found in the first Mechanical analysis
-    system of the simulation workflow (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
+    system of the simulation workflow
+    (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
     Importantly, also pass the mapping files to ContinuousFiberCompositesFiles
     if the model is an assembly of several Mechanical models. The mapping files (*.mapping)
     can be found in the folder where the ACPCompositeDefinitions.h5 file is located.
