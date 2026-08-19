@@ -66,7 +66,7 @@ The results for two and three sigma can be computed by just scaling the one sigm
     system of the simulation workflow
     (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
     Importantly, also pass the mapping files to ContinuousFiberCompositesFiles
-    if the model is an assembly of several Mechanical models. The mapping files (*.mapping)
+    if the model is an assembly of several Mechanical models. The mapping files (\*.mapping)
     can be found in the folder where the ACPCompositeDefinitions.h5 file is located.
 
 """
@@ -77,8 +77,6 @@ The results for two and three sigma can be computed by just scaling the one sigm
 # ~~~~~~~~~~~~~~~
 # Setting up the analysis consists of loading the required modules, connecting to the
 # DPF server, and retrieving the example files.
-import os
-
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.composite_model import CompositeModel
