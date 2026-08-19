@@ -26,40 +26,42 @@ r"""
 Random vibration analysis
 -------------------------
 
-This example shows the post-processing of a random vibration analysis.
+This example shows how to run a failure analysis for a random vibration analysis using the Max
+Stress criterion. The failure factors are computed with respect to the one and three sigma values.
 
 The theory manual states that the directional results from a Power Spectral Density (PSD) analysis
 are statistical in nature, and so they cannot be combined in the usual way. For example the X, Y,
 and Z displacements cannot be combined to get the magnitude of the total displacement.
-The same holds true for other derived quantities such as principal stresses.
-This means that most of the failure criteria, such as Puck and Hashin, are not applicable since the
-stress components are combined.
+The same holds for other derived quantities such as strains and stresses.
+This means that most of the failure criteria, such as Puck and Hashin, are not applicable since they
+combine stress components to compute the failure factors.
 For the same reason, it is also important to highlight that the strain and stress tensors should
 not be rotated. Luckily, the results of a random vibration analysis are given in the layer (material)
 coordinate system.
 
-Taking that into account, the max strain and stress can be used because the strength is computed
+Taking that into account, the max strain and stress can be used because the failure values are computed
 for each component (e1, e2, s1, etc.) separately.
 
 Another point to consider is that the solution provided by Mechanical is always positive and
-corresponds to the one sigma values (the response will be less by 68.3% of the time).
-But the results could be positive or negative, and the strength values
-of orthotropic materials are typically different for tension and compression. So, strength with respect to
-the negative scaled results must be computed as well.
-The results for two and three sigma can be computed by just scaling the one sigma results.
-
-This example shows how to use the Max Stress criterion for a random vibration analysis, and how
-to compute the strength with respect to the one and three sigma values.
+corresponds to the one sigma values. But the results could be positive or negative, and the strength values
+of orthotropic materials are typically different for tension and compression. So, failure factors with respect to
+the negative scaled results must be computed as well. The results for two and three sigma can be computed
+by just scaling the one sigma results.
 
 .. note::
 
-    When using a Workbench project, the user has to manually extract
+    The interpretation of the one sigma is that 68.3% of the time the response will be less than these values.
+    The response will be less than the two sigma values 95.45% of the time and three sigma values 99.73% of the time.
+
+.. note::
+
+    When using Ansys Workbench, the user has to manually extract
     the paths of the input files since it is a nested analysis.
     The RST and material file (MatML.XML) can be found in the solver files directory
     of the random vibration analysis.
-    The composite definitions files can be found in the first Mechanical analysis
-    system of the simulation workflow (e.g., ..\..\SYS-2\MECH\Setup\ACPCompositeDefinitions.h5").
-    Important, also add the mapping files to the definition of the ContinuousFiberCompositesFiles
+    The composite definitions file(s) can be found in the first Mechanical analysis
+    system of the simulation workflow (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
+    Important, also pass the mapping files to ContinuousFiberCompositesFiles
     if the model is an assembly of several Mechanical models. The mapping files (*.mapping)
     can be found in the folder where the ACPCompositeDefinitions.h5 file is located.
 
@@ -125,8 +127,8 @@ composite_model = CompositeModel(composite_files, server)
 # %%
 # Failure Evaluation
 # ~~~~~~~~~~~~~~~~~~
-# Implements a customer failure evaluation workflow since strains and stresses
-# are scaled. It uses the multiple_failure_criteria_operator to compute all failure
+# Implements a custom failure evaluation workflow since strains and stresses
+# must be scaled. It uses the multiple_failure_criteria_operator to compute all failure
 # criteria for the scaled results, and the minmax_per_element_operator to extract the
 # minimum and maximum over all failure criteria, layers and integration points.
 def run_custom_failure_evaluation(
@@ -188,8 +190,8 @@ raw_strain_fc = raw_strain_op.eval()
 
 # %%
 # Run the failure analysis and plot the results for one sigma,
-# three sigma for positive and negative.
-for factor, title in [(1.0, "sigma +1"), (-1.0, "sigma -1"), (3.0, "sigma +3"), (-3.0, "sigma -3")]:
+# three sigma, using both positive and negative signs.
+for factor, title in [(1.0, "1 sigma"), (-1.0, "-1 sigma"), (3.0, "3 sigma"), (-3.0, "-3 sigma")]:
 
     max_failure_field = run_custom_failure_evaluation(
         combined_fc,
@@ -198,7 +200,9 @@ for factor, title in [(1.0, "sigma +1"), (-1.0, "sigma -1"), (3.0, "sigma +3"), 
         get_scaled_field(raw_stress_fc, factor),
     )
     print(f"Inverse reserve factor for {title}")
-    composite_model.get_mesh().plot(max_failure_field[FailureOutput.FAILURE_VALUE])
+    irf_field = max_failure_field[FailureOutput.FAILURE_VALUE]
+    irf_field.name = f"{title}: {irf_field.name}"
+    composite_model.get_mesh().plot(irf_field)
 
 # %%
 # Custom criteria
