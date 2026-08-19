@@ -1,0 +1,210 @@
+# Copyright (C) 2022 - 2026 Synopsys, Inc. and ANSYS, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+r"""
+.. _random_vibration_example:
+
+Random vibration analysis
+-------------------------
+
+This example shows the post-processing of a random vibration analysis.
+
+The theory manual states that the directional results from a Power Spectral Density (PSD) analysis
+are statistical in nature, and so they cannot be combined in the usual way. For example the X, Y,
+and Z displacements cannot be combined to get the magnitude of the total displacement.
+The same holds true for other derived quantities such as principal stresses.
+This means that most of the failure criteria, such as Puck and Hashin, are not applicable since the
+stress components are combined.
+For the same reason, it is also important to highlight that the strain and stress tensors should
+not be rotated. Luckily, the results of a random vibration analysis are given in the layer (material)
+coordinate system.
+
+Taking that into account, the max strain and stress can be used because the strength is computed
+for each component (e1, e2, s1, etc.) separately.
+
+Another point to consider is that the solution provided by Mechanical is always positive and
+corresponds to the one sigma values (the response will be less by 68.3% of the time).
+But the results could be positive or negative, and the strength values
+of orthotropic materials are typically different for tension and compression. So, strength with respect to
+the negative scaled results must be computed as well.
+The results for two and three sigma can be computed by just scaling the one sigma results.
+
+This example shows how to use the Max Stress criterion for a random vibration analysis, and how
+to compute the strength with respect to the one and three sigma values.
+
+.. note::
+
+    When using a Workbench project, the user has to manually extract
+    the paths of the input files since it is a nested analysis.
+    The RST and material file (MatML.XML) can be found in the solver files directory
+    of the random vibration analysis.
+    The composite definitions files can be found in the first Mechanical analysis
+    system of the simulation workflow (e.g., ..\..\SYS-2\MECH\Setup\ACPCompositeDefinitions.h5").
+    Important, also add the mapping files to the definition of the ContinuousFiberCompositesFiles
+    if the model is an assembly of several Mechanical models. The mapping files (*.mapping)
+    can be found in the folder where the ACPCompositeDefinitions.h5 file is located.
+
+"""
+
+
+# %%
+# Set up analysis
+# ~~~~~~~~~~~~~~~
+# Setting up the analysis consists of loading the required modules, connecting to the
+# DPF server, and retrieving the example files.
+import os
+
+import ansys.dpf.core as dpf
+
+from ansys.dpf.composites.composite_model import CompositeModel
+from ansys.dpf.composites.constants import FailureOutput
+from ansys.dpf.composites.data_sources import (
+    CompositeDefinitionFiles,
+    ContinuousFiberCompositesFiles,
+)
+from ansys.dpf.composites.example_helper import get_continuous_fiber_example_files
+from ansys.dpf.composites.failure_criteria import (
+    CombinedFailureCriterion,
+    MaxStrainCriterion,
+    MaxStressCriterion,
+)
+from ansys.dpf.composites.server_helpers import connect_to_or_start_server
+
+# %%
+# Launch DPF server and get input files
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Start a DPF server and copy the example files into the current working directory.
+server = connect_to_or_start_server()
+# composite_files_on_server = get_continuous_fiber_example_files(server, "random_vibration")
+mech_results_folder = (
+    r"D:\tmp\WB Projects\Random_Vibration_Basic_Sandwich_Panel_25R1_files\dp0\SYS-4\MECH"
+)
+rst_file = os.path.join(mech_results_folder, "file.rst")
+engd_file = os.path.join(mech_results_folder, "MatML.xml")
+acp_h5_file = os.path.join(
+    mech_results_folder, "..", "..", "SYS-2", "MECH", "Setup", "ACPCompositeDefinitions.h5"
+)
+
+composite_files = ContinuousFiberCompositesFiles(
+    files_are_local=True,
+    rst=[rst_file],
+    composite={
+        "shell": CompositeDefinitionFiles(
+            mapping=None,
+            definition=acp_h5_file,
+        )
+    },
+    engineering_data=engd_file,
+)
+# composite_files_on_server = get_composite_files_from_workbench_result_folder(mech_results_folder, server)
+
+# %%
+# Create a composite model
+composite_model = CompositeModel(composite_files, server)
+
+
+# %%
+# Failure Evaluation
+# ~~~~~~~~~~~~~~~~~~
+# Implements a customer failure evaluation workflow since strains and stresses
+# are scaled. It uses the multiple_failure_criteria_operator to compute all failure
+# criteria for the scaled results, and the minmax_per_element_operator to extract the
+# minimum and maximum over all failure criteria, layers and integration points.
+def run_custom_failure_evaluation(
+    my_failure_criterion: CombinedFailureCriterion,
+    my_composite_model: CompositeModel,
+    my_stain_fields_container: dpf.FieldsContainer,
+    my_stress_fields_container: dpf.FieldsContainer,
+):
+
+    failure_evaluator = dpf.Operator("composite::multiple_failure_criteria_operator")
+    failure_evaluator.inputs.configuration(my_failure_criterion.to_json())
+    failure_evaluator.inputs.materials_container(
+        my_composite_model.material_operators.material_provider.outputs
+    )
+    failure_evaluator.inputs.strains_container(my_stain_fields_container)
+    failure_evaluator.inputs.stresses_container(my_stress_fields_container)
+    failure_evaluator.inputs.mesh(my_composite_model.get_mesh())
+
+    minmax_per_element = dpf.Operator("composite::minmax_per_element_operator")
+    minmax_per_element.inputs.fields_container(failure_evaluator.outputs.fields_container)
+    minmax_per_element.inputs.mesh(my_composite_model.get_mesh())
+    minmax_per_element.inputs.material_support(
+        my_composite_model.material_operators.material_support_provider.outputs.abstract_field_support
+    )
+
+    # Only the maximum is of interest here
+    return minmax_per_element.outputs.field_max()
+
+
+# %%
+# Helper function to compute the scaled results
+def get_scaled_field(
+    my_fields_container: dpf.FieldsContainer, my_factor: float
+) -> dpf.FieldsContainer:
+    scaled_fc_op = dpf.operators.math.scale_fc(
+        fields_container=my_fields_container, ponderation=my_factor
+    )
+    return scaled_fc_op.outputs.fields_container()
+
+
+# %%
+# Definition of the failure criterion
+combined_fc = CombinedFailureCriterion(
+    name="Max Stress",
+    failure_criteria=[
+        MaxStressCriterion(),
+    ],
+)
+
+# %%
+# Get the results (one sigma) in the layer coordinate system
+raw_stress_op = composite_model.core_model.results.stress()
+raw_stress_op.inputs.bool_rotate_to_global(False)
+raw_stress_fc = raw_stress_op.eval()
+raw_strain_op = composite_model.core_model.results.elastic_strain()
+raw_strain_op.inputs.bool_rotate_to_global(False)
+raw_strain_fc = raw_strain_op.eval()
+
+
+# %%
+# Run the failure analysis and plot the results for one sigma,
+# three sigma for positive and negative.
+for factor, title in [(1.0, "sigma +1"), (-1.0, "sigma -1"), (3.0, "sigma +3"), (-3.0, "sigma -3")]:
+
+    max_failure_field = run_custom_failure_evaluation(
+        combined_fc,
+        composite_model,
+        get_scaled_field(raw_strain_fc, factor),
+        get_scaled_field(raw_stress_fc, factor),
+    )
+    print(f"Inverse reserve factor for {title}")
+    composite_model.get_mesh().plot(max_failure_field[FailureOutput.FAILURE_VALUE])
+
+# %%
+# Custom criteria
+# ~~~~~~~~~~~~~~~
+# Custom failure criteria can be implemented for random vibration analysis
+# as well. In this case the scaled strain and stress results have to be passed
+# to the according DPF operators and methods.
+# An example of an implementation of a custom failure criterion is shown in
+# :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`.
