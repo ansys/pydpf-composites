@@ -20,14 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-r"""
+"""
 .. _random_vibration_example:
 
 Random vibration analysis
 -------------------------
 
-This example shows how to run a failure analysis for a random vibration analysis using the Max
-Stress criterion. The failure factors are computed with respect to the one sigma and three sigma
+This example demonstrates a failure analysis for a random vibration analysis using the Max
+Stress criterion. It calculates the failure factors for the one-sigma and three-sigma
 values.
 
 The documentation of Mechanical about random vibration analysis states that the directional
@@ -44,11 +44,11 @@ not be rotated. Luckily, the results of a random vibration analysis are given in
 Taking that into account, the max strain and stress can be used because the failure values are
 computed for each component (e1, e2, s1, etc.) separately.
 
-Another point to consider is that the solution provided by Mechanical is always positive and
-corresponds to the one sigma values. But the results could be positive or negative, and the
-strength values of orthotropic materials are typically different for tension and compression.
-So, failure factors with respect to the negative scaled results must be computed as well.
-The results for two and three sigma can be computed by just scaling the one sigma results.
+Note that the solution that Mechanical provides is always positive and corresponds to the one
+sigma values. However, the results could be positive or negative, and the strength values of
+orthotropic materials are typically different for tension and compression. So, compute failure
+factors with respect to the negative scaled results as well. You can compute the results for
+two and three sigma by scaling the one sigma results.
 
 .. note::
 
@@ -58,16 +58,14 @@ The results for two and three sigma can be computed by just scaling the one sigm
 
 .. note::
 
-    When using Ansys Workbench, the user has to manually extract
-    the paths of the input files since it is a nested analysis.
-    The RST and material file (MatML.XML) can be found in the solver files directory
-    of the random vibration analysis.
-    The composite definitions file(s) can be found in the first Mechanical analysis
-    system of the simulation workflow
+    When using Ansys Workbench, you must manually extract the paths of the input files
+    since it is a nested analysis. You can find the RST and material file (MatML.XML) in
+    the solver files directory of the random vibration analysis. You can find the composite
+    definitions file(s) in the first Mechanical analysis system of the simulation workflow
     (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
-    Importantly, also pass the mapping files to ContinuousFiberCompositesFiles
-    if the model is an assembly of several Mechanical models. The mapping files (\*.mapping)
-    can be found in the folder where the ACPCompositeDefinitions.h5 file is located.
+    Also pass the mapping files to ContinuousFiberCompositesFiles if the model is an
+    assembly of several Mechanical models. You can find the mapping files (\*.mapping) in
+    the folder where the ACPCompositeDefinitions.h5 file is located.
 
 """
 
