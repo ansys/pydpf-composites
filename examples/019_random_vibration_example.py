@@ -27,54 +27,60 @@ Random vibration analysis
 -------------------------
 
 This example demonstrates a failure analysis for a random vibration analysis using the Max
-Stress criterion. It calculates the failure factors for the one-sigma and three-sigma
-values.
+Stress criterion. The example calculates failure factors for both one-sigma and three-sigma values.
 
-The documentation of Mechanical about random vibration analysis states that the directional
-results from a Power Spectral Density (PSD) analysis are statistical in nature, and so they
-cannot be combined in the usual way. For example the X, Y,
-and Z displacements cannot be combined to get the magnitude of the total displacement.
-The same holds for other derived quantities such as strains and stresses.
-This means that most of the failure criteria, such as Puck and Hashin, are not applicable since
-they combine stress components to compute the failure factors.
-For the same reason, it is also important to highlight that the strain and stress tensors should
-not be rotated. Luckily, the results of a random vibration analysis are given in the layer
-(material) coordinate system.
+The directional results from a Power Spectral Density (PSD) analysis are statistical quantities.
+Consequently, directional components such as X, Y, and Z displacements, strains, and stresses
+cannot be combined using the standard vector or tensor operations that are applicable to 
+deterministic results. As a result, failure criteria that combine multiple stress or strain
+components, such as Puck and Hashin, are not applicable to PSD results.
 
-Taking that into account, the max strain and stress can be used because the failure values are
-computed for each component (e1, e2, s1, etc.) separately.
+For the same reason, stress and strain tensors should not be rotated because tensor 
+rotation requires combining component values. PSD results are reported in the layer (material)
+coordinate system, so no additional coordinate transformation is required.
 
-Note that the solution that Mechanical provides is always positive and corresponds to the one
-sigma values. However, the results could be positive or negative, and the strength values of
-orthotropic materials are typically different for tension and compression. So, compute failure
-factors with respect to the negative scaled results as well. You can compute the results for
-two and three sigma by scaling the one sigma results.
+The Maximum Stress and Maximum Strain criteria remain applicable because they evaluate each
+stress or strain component independently.
 
-.. note::
+The Mechanical application reports PSD-derived stress and strain results as positive one-sigma 
+values. However, the actual response may occur in either the positive or negative direction, 
+and orthotropic materials typically have different tensile and compressive strengths.
+Therefore, evaluate the failure factors using both the positive and negative scaled results.
 
-    The interpretation of the one sigma is that 68.3% of the time the response will be less
-    than these values. The response will be less than the two sigma values 95.45% of the
-    time and three sigma values 99.73% of the time.
+You can obtain failure factors for two-sigma and three-sigma values by scaling the one-sigma 
+results.
 
 .. note::
 
-    When using Ansys Workbench, you must manually extract the paths of the input files
-    since it is a nested analysis. You can find the RST and material file (MatML.XML) in
-    the solver files directory of the random vibration analysis. You can find the composite
-    definitions file(s) in the first Mechanical analysis system of the simulation workflow
-    (e.g., ..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5").
-    Also pass the mapping files to ContinuousFiberCompositesFiles if the model is an
-    assembly of several Mechanical models. You can find the mapping files (\*.mapping) in
-    the folder where the ACPCompositeDefinitions.h5 file is located.
+    A one-sigma value indicates that the response is expected to be below that value with a 
+    probability of 68.3%. Similarly, the response is expected to be below the two-sigma
+    and three-sigma values with probabilities of 95.45% and 99.73%, respectively.
 
 """
 
+# %%
+# Required input files
+# ~~~~~~~~~~~~~~~~~~~~
+# When running this workflow from the Ansys Workbench application, you must manually
+# identify the required input files because the random vibration analysis is a nested
+# analysis.
+#
+# * The result file (``.rst``) and material file (MatML.xml) are located in the solver files
+#   directory of the random vibration analysis.
+#
+# * The composite definitions file (``ACPCompositeDefinitions.h5``) is located in the first
+#   Mechanical analysis system of the workflow (for example,
+#   ``..\\..\\SYS-2\\MECH\\Setup\\ACPCompositeDefinitions.h5``).
+#
+# * For assemblies that contain multiple Mechanical models, also provide the mapping files
+#   (``.mapping``). These files are located in the same directory as the
+#   ``ACPCompositeDefinitions.h5`` file.
 
 # %%
-# Set up analysis
-# ~~~~~~~~~~~~~~~
-# Setting up the analysis consists of loading the required modules, connecting to the
-# DPF server, and retrieving the example files.
+# Set up the analysis
+# ~~~~~~~~~~~~~~~~~~~~
+# To set up the analysis, load the required modules, connect to the DPF server, and
+# retrieve the example files.
 import ansys.dpf.core as dpf
 
 from ansys.dpf.composites.composite_model import CompositeModel
@@ -84,24 +90,24 @@ from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxS
 from ansys.dpf.composites.server_helpers import connect_to_or_start_server
 
 # %%
-# Launch DPF server and get input files
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Start a DPF server and copy the example files into the current working directory.
+# Launch the DPF server and obtain the input files
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Start a DPF server and copy the example files to the current working directory.
 server = connect_to_or_start_server()
 composite_files_on_server = get_continuous_fiber_example_files(server, "random_vibration")
 
-# %%
-# Create a composite model
+# Create a composite model.
 composite_model = CompositeModel(composite_files_on_server, server)
 
 
 # %%
-# Failure Evaluation
-# ~~~~~~~~~~~~~~~~~~
-# Implements a custom failure evaluation workflow since strains and stresses
-# must be scaled. It uses the multiple_failure_criteria_operator to compute all failure
-# criteria for the scaled results, and the minmax_per_element_operator to extract the
-# minimum and maximum over all failure criteria, layers and integration points.
+# Evaluate failure
+# ~~~~~~~~~~~~~~~~
+# Evaluate failure for the scaled stress and strain results. This example uses a
+# custom workflow to compute failure criteria for the one-sigma and three-sigma
+# values. The ``multiple_failure_criteria_operator`` evaluates all failure criteria,
+# and the ``minmax_per_element_operator`` extracts the minimum and maximum values
+# across all failure criteria, layers, and integration points.
 def run_custom_failure_evaluation(
     failure_criterion_: CombinedFailureCriterion,
     composite_model_: CompositeModel,
@@ -129,8 +135,7 @@ def run_custom_failure_evaluation(
     return minmax_per_element.outputs.field_max()
 
 
-# %%
-# Helper function to compute the scaled results
+# Scale all fields in the container by a scalar factor.
 def get_scaled_field(
     fields_container_: dpf.FieldsContainer, my_factor: float
 ) -> dpf.FieldsContainer:
@@ -140,8 +145,7 @@ def get_scaled_field(
     return scaled_fc_op.outputs.fields_container()
 
 
-# %%
-# Definition of the failure criterion
+# Define the failure criterion.
 combined_fc = CombinedFailureCriterion(
     name="Max Stress",
     failure_criteria=[
@@ -149,8 +153,7 @@ combined_fc = CombinedFailureCriterion(
     ],
 )
 
-# %%
-# Get the results (one sigma) in the layer coordinate system
+# Get the one-sigma results in the layer coordinate system.
 raw_stress_op = composite_model.core_model.results.stress()
 raw_stress_op.inputs.bool_rotate_to_global(False)
 raw_stress_fc = raw_stress_op.eval()
@@ -158,8 +161,6 @@ raw_strain_op = composite_model.core_model.results.elastic_strain()
 raw_strain_op.inputs.bool_rotate_to_global(False)
 raw_strain_fc = raw_strain_op.eval()
 
-
-# %%
 # Run the failure analysis and plot the results for one sigma,
 # three sigma, using both positive and negative signs.
 for factor, title in [(1.0, "1 sigma"), (-1.0, "-1 sigma"), (3.0, "3 sigma"), (-3.0, "-3 sigma")]:
@@ -178,8 +179,9 @@ for factor, title in [(1.0, "1 sigma"), (-1.0, "-1 sigma"), (3.0, "3 sigma"), (-
 # %%
 # Custom criteria
 # ~~~~~~~~~~~~~~~
-# Custom failure criteria can be implemented for random vibration analysis
-# as well. In this case the scaled strain and stress results have to be passed
-# to the according DPF operators and methods.
-# An example of an implementation of a custom failure criterion is shown in
+# You can also implement custom failure criteria for random vibration analysis.
+# To do so, pass the scaled stress and strain 
+# results to the appropriate DPF operators and methods.
+#
+# For an example of the custom failure criterion implementation, see
 # :ref:`sphx_glr_examples_gallery_examples_004_get_material_properties_example.py`.
