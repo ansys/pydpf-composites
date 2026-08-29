@@ -180,7 +180,7 @@ for factor, title in [(1.0, "1 sigma"), (-1.0, "-1 sigma"), (3.0, "3 sigma"), (-
 # Custom criteria
 # ~~~~~~~~~~~~~~~
 # You can also implement custom failure criteria for random vibration analysis.
-# To do so, pass the scaled stress and strain 
+# To do so, pass the scaled stress and strain
 # results to the appropriate DPF operators and methods.
 #
 # For an example of the custom failure criterion implementation, see
