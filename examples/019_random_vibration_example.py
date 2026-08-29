@@ -31,28 +31,28 @@ Stress criterion. The example calculates failure factors for both one-sigma and 
 
 The directional results from a Power Spectral Density (PSD) analysis are statistical quantities.
 Consequently, directional components such as X, Y, and Z displacements, strains, and stresses
-cannot be combined using the standard vector or tensor operations that are applicable to 
+cannot be combined using the standard vector or tensor operations that are applicable to
 deterministic results. As a result, failure criteria that combine multiple stress or strain
 components, such as Puck and Hashin, are not applicable to PSD results.
 
-For the same reason, stress and strain tensors should not be rotated because tensor 
+For the same reason, stress and strain tensors should not be rotated because tensor
 rotation requires combining component values. PSD results are reported in the layer (material)
 coordinate system, so no additional coordinate transformation is required.
 
 The Maximum Stress and Maximum Strain criteria remain applicable because they evaluate each
 stress or strain component independently.
 
-The Mechanical application reports PSD-derived stress and strain results as positive one-sigma 
-values. However, the actual response may occur in either the positive or negative direction, 
+The Mechanical application reports PSD-derived stress and strain results as positive one-sigma
+values. However, the actual response may occur in either the positive or negative direction,
 and orthotropic materials typically have different tensile and compressive strengths.
 Therefore, evaluate the failure factors using both the positive and negative scaled results.
 
-You can obtain failure factors for two-sigma and three-sigma values by scaling the one-sigma 
+You can obtain failure factors for two-sigma and three-sigma values by scaling the one-sigma
 results.
 
 .. note::
 
-    A one-sigma value indicates that the response is expected to be below that value with a 
+    A one-sigma value indicates that the response is expected to be below that value with a
     probability of 68.3%. Similarly, the response is expected to be below the two-sigma
     and three-sigma values with probabilities of 95.45% and 99.73%, respectively.
 
