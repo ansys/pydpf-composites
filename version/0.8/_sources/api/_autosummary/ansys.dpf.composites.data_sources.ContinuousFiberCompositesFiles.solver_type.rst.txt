@@ -1,0 +1,6 @@
+solver\_type
+============
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: ContinuousFiberCompositesFiles.solver_type

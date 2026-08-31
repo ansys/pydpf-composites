@@ -1,0 +1,6 @@
+﻿get\_element\_info\_provider
+============================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autofunction:: get_element_info_provider

@@ -1,0 +1,6 @@
+material\_metadata
+==================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoproperty:: CompositeModel.material_metadata

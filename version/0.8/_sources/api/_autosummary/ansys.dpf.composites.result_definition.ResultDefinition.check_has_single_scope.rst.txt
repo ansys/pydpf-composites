@@ -1,0 +1,6 @@
+check\_has\_single\_scope
+=========================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. automethod:: ResultDefinition.check_has_single_scope

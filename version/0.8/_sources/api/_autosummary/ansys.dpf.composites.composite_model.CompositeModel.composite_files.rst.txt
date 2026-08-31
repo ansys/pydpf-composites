@@ -1,0 +1,6 @@
+composite\_files
+================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoproperty:: CompositeModel.composite_files

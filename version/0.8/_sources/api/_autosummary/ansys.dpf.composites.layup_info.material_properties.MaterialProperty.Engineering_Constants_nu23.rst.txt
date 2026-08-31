@@ -1,0 +1,6 @@
+Engineering\_Constants\_nu23
+============================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.Engineering_Constants_nu23

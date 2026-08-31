@@ -1,0 +1,6 @@
+﻿get\_selected\_indices\_by\_dpf\_material\_ids
+==============================================
+
+.. currentmodule:: ansys.dpf.composites.select_indices
+
+.. autofunction:: get_selected_indices_by_dpf_material_ids

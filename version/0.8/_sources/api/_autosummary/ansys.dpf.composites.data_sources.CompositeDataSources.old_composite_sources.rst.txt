@@ -1,0 +1,6 @@
+old\_composite\_sources
+=======================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: CompositeDataSources.old_composite_sources

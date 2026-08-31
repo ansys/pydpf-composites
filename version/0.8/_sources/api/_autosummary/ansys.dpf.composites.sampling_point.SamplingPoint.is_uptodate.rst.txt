@@ -1,0 +1,6 @@
+is\_uptodate
+============
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. autoproperty:: SamplingPoint.is_uptodate

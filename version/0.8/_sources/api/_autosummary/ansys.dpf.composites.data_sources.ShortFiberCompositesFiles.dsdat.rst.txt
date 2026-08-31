@@ -1,0 +1,6 @@
+dsdat
+=====
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: ShortFiberCompositesFiles.dsdat

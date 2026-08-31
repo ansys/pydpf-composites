@@ -1,0 +1,36 @@
+﻿.. vale off
+
+ShortFiberCompositesFiles
+=========================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoclass:: ShortFiberCompositesFiles
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ShortFiberCompositesFiles.files_are_local
+      ShortFiberCompositesFiles.rst
+      ShortFiberCompositesFiles.dsdat
+      ShortFiberCompositesFiles.engineering_data
+   
+   
+
+.. vale on

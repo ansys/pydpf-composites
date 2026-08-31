@@ -1,0 +1,6 @@
+named\_selection\_scope
+=======================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoattribute:: ResultDefinitionScope.named_selection_scope

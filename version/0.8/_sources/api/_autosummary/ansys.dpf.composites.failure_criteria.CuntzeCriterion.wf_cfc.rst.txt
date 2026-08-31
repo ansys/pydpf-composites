@@ -1,0 +1,6 @@
+wf\_cfc
+=======
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: CuntzeCriterion.wf_cfc

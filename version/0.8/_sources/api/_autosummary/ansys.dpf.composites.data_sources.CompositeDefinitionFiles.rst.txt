@@ -1,0 +1,34 @@
+﻿.. vale off
+
+CompositeDefinitionFiles
+========================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoclass:: CompositeDefinitionFiles
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      CompositeDefinitionFiles.mapping
+      CompositeDefinitionFiles.definition
+   
+   
+
+.. vale on

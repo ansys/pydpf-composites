@@ -1,0 +1,29 @@
+﻿.. vale off
+
+ElementInfoProviderLSDyna
+=========================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: ElementInfoProviderLSDyna
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      ElementInfoProviderLSDyna.get_element_info
+      
+   
+   
+
+   
+   
+   
+
+.. vale on

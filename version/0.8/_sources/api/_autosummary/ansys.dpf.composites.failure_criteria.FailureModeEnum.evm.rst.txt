@@ -1,0 +1,6 @@
+evm
+===
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoattribute:: FailureModeEnum.evm

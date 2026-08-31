@@ -1,0 +1,6 @@
+get\_ply\_wise\_critical\_failures
+==================================
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. automethod:: SamplingPoint.get_ply_wise_critical_failures

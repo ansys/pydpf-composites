@@ -1,0 +1,6 @@
+﻿upload\_continuous\_fiber\_composite\_files\_to\_server
+=======================================================
+
+.. currentmodule:: ansys.dpf.composites.server_helpers
+
+.. autofunction:: upload_continuous_fiber_composite_files_to_server

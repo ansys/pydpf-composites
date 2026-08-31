@@ -1,0 +1,6 @@
+safety\_margin
+==============
+
+.. currentmodule:: ansys.dpf.composites.sampling_point
+
+.. autoattribute:: FailureResult.safety_margin

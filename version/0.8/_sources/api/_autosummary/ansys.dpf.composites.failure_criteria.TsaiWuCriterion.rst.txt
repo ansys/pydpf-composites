@@ -1,0 +1,42 @@
+﻿.. vale off
+
+TsaiWuCriterion
+===============
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoclass:: TsaiWuCriterion
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      TsaiWuCriterion.to_dict
+      
+      
+      TsaiWuCriterion.to_json
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      TsaiWuCriterion.active
+      TsaiWuCriterion.dim
+      TsaiWuCriterion.name
+      TsaiWuCriterion.wf
+   
+   
+
+.. vale on

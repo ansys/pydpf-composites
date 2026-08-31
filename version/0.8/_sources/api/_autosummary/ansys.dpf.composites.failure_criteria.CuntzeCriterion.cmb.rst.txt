@@ -1,0 +1,6 @@
+cmb
+===
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: CuntzeCriterion.cmb

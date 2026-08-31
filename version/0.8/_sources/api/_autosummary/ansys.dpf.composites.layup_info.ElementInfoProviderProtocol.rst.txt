@@ -1,0 +1,29 @@
+﻿.. vale off
+
+ElementInfoProviderProtocol
+===========================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: ElementInfoProviderProtocol
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      ElementInfoProviderProtocol.get_element_info
+      
+   
+   
+
+   
+   
+   
+
+.. vale on

@@ -1,0 +1,6 @@
+Puck\_Constants\_s
+==================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.Puck_Constants_s

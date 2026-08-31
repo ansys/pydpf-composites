@@ -1,0 +1,6 @@
+AVG
+===
+
+.. currentmodule:: ansys.dpf.composites.ply_wise_data
+
+.. autoattribute:: SpotReductionStrategy.AVG

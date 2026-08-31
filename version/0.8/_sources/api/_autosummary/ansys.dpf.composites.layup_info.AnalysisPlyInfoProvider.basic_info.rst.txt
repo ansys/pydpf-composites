@@ -1,0 +1,6 @@
+basic\_info
+===========
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. automethod:: AnalysisPlyInfoProvider.basic_info

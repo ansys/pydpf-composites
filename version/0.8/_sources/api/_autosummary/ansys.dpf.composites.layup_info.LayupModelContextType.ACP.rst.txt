@@ -1,0 +1,6 @@
+ACP
+===
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: LayupModelContextType.ACP

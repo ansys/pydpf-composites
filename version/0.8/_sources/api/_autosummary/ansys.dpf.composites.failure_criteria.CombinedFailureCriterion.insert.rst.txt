@@ -1,0 +1,6 @@
+insert
+======
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. automethod:: CombinedFailureCriterion.insert

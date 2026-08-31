@@ -1,0 +1,6 @@
+lmc5
+====
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoattribute:: FailureModeEnum.lmc5

@@ -1,0 +1,26 @@
+@import "../ansys-sphinx-theme.css";
+
+@media (min-width:1200px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1200px
+    }
+}
+
+@media (min-width:1600px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1600px
+    }
+}
+
+.sphx-glr-thumbcontainer img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+}

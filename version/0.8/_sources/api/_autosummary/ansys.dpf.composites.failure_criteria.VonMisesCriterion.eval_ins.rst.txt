@@ -1,0 +1,6 @@
+eval\_ins
+=========
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: VonMisesCriterion.eval_ins

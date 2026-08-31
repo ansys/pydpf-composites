@@ -1,0 +1,6 @@
+honeycomb\_core\_coeff
+======================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: FaceSheetWrinklingCriterion.honeycomb_core_coeff

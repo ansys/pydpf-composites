@@ -1,0 +1,6 @@
+get\_rst\_streams\_provider
+===========================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. automethod:: CompositeModel.get_rst_streams_provider

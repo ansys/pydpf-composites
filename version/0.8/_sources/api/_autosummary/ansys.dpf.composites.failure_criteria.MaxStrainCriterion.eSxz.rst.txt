@@ -1,0 +1,6 @@
+eSxz
+====
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: MaxStrainCriterion.eSxz

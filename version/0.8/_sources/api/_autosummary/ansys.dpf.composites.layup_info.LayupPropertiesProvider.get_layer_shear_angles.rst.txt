@@ -1,0 +1,6 @@
+get\_layer\_shear\_angles
+=========================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. automethod:: LayupPropertiesProvider.get_layer_shear_angles

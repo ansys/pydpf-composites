@@ -1,0 +1,6 @@
+MAX\_GLOBAL\_LAYER\_IN\_STACK
+=============================
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: FailureOutput.MAX_GLOBAL_LAYER_IN_STACK

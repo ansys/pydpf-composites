@@ -1,0 +1,6 @@
+get\_mesh
+=========
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. automethod:: CompositeModel.get_mesh

@@ -1,0 +1,6 @@
+﻿get\_all\_dpf\_material\_ids
+============================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autofunction:: get_all_dpf_material_ids

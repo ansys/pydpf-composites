@@ -1,0 +1,32 @@
+﻿LayupProperty
+=============
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: LayupProperty
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      
+      
+      
+        LayupProperty.ANGLE
+      
+      
+        LayupProperty.SHEAR_ANGLE
+      
+      
+        LayupProperty.THICKNESS
+      
+      
+        LayupProperty.LAMINATE_OFFSET
+      
+   
+   

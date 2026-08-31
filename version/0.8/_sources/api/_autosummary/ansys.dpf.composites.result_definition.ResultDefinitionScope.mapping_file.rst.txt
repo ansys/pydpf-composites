@@ -1,0 +1,6 @@
+mapping\_file
+=============
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoattribute:: ResultDefinitionScope.mapping_file

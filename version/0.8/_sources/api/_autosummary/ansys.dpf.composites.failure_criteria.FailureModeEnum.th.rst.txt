@@ -1,0 +1,6 @@
+th
+==
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoattribute:: FailureModeEnum.th

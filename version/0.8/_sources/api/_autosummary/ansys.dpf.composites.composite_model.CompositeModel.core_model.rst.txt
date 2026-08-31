@@ -1,0 +1,6 @@
+core\_model
+===========
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoproperty:: CompositeModel.core_model

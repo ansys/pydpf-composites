@@ -1,0 +1,31 @@
+﻿.. vale off
+
+SpotReductionStrategy
+=====================
+
+.. currentmodule:: ansys.dpf.composites.ply_wise_data
+
+.. autoclass:: SpotReductionStrategy
+
+   
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      SpotReductionStrategy.MIN
+      SpotReductionStrategy.MAX
+      SpotReductionStrategy.AVG
+      SpotReductionStrategy.BOT
+      SpotReductionStrategy.MID
+      SpotReductionStrategy.TOP
+   
+   
+
+.. vale on

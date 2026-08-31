@@ -1,0 +1,6 @@
+Tensile\_Yield\_Strength\_effective\_stress
+===========================================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_properties
+
+.. autoattribute:: MaterialProperty.Tensile_Yield_Strength_effective_stress

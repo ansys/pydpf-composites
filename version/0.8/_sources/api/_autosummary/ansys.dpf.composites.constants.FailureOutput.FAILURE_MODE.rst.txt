@@ -1,0 +1,6 @@
+FAILURE\_MODE
+=============
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: FailureOutput.FAILURE_MODE

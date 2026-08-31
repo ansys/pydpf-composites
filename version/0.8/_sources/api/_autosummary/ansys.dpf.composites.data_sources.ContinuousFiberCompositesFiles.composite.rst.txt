@@ -1,0 +1,6 @@
+composite
+=========
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: ContinuousFiberCompositesFiles.composite

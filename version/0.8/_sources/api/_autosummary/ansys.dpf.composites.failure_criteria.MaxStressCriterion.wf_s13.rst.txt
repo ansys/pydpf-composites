@@ -1,0 +1,6 @@
+wf\_s13
+=======
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: MaxStressCriterion.wf_s13

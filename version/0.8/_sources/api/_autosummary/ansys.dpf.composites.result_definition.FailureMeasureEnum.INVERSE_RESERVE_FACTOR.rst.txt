@@ -1,0 +1,6 @@
+INVERSE\_RESERVE\_FACTOR
+========================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoattribute:: FailureMeasureEnum.INVERSE_RESERVE_FACTOR

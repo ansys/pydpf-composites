@@ -1,0 +1,6 @@
+material\_support
+=================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: CompositeDataSources.material_support

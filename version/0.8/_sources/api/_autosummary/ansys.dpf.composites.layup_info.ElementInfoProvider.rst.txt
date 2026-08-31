@@ -1,0 +1,29 @@
+﻿.. vale off
+
+ElementInfoProvider
+===================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoclass:: ElementInfoProvider
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+      
+      ElementInfoProvider.get_element_info
+      
+   
+   
+
+   
+   
+   
+
+.. vale on

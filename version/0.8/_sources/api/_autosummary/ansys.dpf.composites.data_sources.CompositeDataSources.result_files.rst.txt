@@ -1,0 +1,6 @@
+result\_files
+=============
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoattribute:: CompositeDataSources.result_files

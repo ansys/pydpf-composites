@@ -1,0 +1,6 @@
+interface\_weakening\_factor
+============================
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: PuckCriterion.interface_weakening_factor

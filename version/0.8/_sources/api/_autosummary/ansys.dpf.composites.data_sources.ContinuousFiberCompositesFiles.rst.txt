@@ -1,0 +1,39 @@
+﻿.. vale off
+
+ContinuousFiberCompositesFiles
+==============================
+
+.. currentmodule:: ansys.dpf.composites.data_sources
+
+.. autoclass:: ContinuousFiberCompositesFiles
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+   
+      
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ContinuousFiberCompositesFiles.files_are_local
+      ContinuousFiberCompositesFiles.rst
+      ContinuousFiberCompositesFiles.solver_input_file
+      ContinuousFiberCompositesFiles.solver_type
+      ContinuousFiberCompositesFiles.result_files
+      ContinuousFiberCompositesFiles.composite
+      ContinuousFiberCompositesFiles.engineering_data
+   
+   
+
+.. vale on

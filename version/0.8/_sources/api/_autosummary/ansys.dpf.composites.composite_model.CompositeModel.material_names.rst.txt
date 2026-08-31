@@ -1,0 +1,6 @@
+material\_names
+===============
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. autoproperty:: CompositeModel.material_names

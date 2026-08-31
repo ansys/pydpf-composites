@@ -1,0 +1,6 @@
+FAILURE\_MODE\_REF\_SURFACE
+===========================
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoattribute:: FailureOutput.FAILURE_MODE_REF_SURFACE

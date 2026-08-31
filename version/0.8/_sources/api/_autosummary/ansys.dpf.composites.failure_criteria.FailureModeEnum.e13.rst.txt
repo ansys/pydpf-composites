@@ -1,0 +1,6 @@
+e13
+===
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoattribute:: FailureModeEnum.e13

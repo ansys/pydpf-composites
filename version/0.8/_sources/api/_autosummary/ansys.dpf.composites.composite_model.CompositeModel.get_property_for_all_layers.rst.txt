@@ -1,0 +1,6 @@
+get\_property\_for\_all\_layers
+===============================
+
+.. currentmodule:: ansys.dpf.composites.composite_model
+
+.. automethod:: CompositeModel.get_property_for_all_layers

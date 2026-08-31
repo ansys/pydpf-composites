@@ -1,0 +1,6 @@
+nominal\_thickness
+==================
+
+.. currentmodule:: ansys.dpf.composites.layup_info
+
+.. autoattribute:: AnalysisPlyInfo.nominal_thickness

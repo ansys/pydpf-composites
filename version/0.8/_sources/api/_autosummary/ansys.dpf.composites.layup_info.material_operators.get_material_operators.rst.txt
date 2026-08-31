@@ -1,0 +1,6 @@
+﻿get\_material\_operators
+========================
+
+.. currentmodule:: ansys.dpf.composites.layup_info.material_operators
+
+.. autofunction:: get_material_operators

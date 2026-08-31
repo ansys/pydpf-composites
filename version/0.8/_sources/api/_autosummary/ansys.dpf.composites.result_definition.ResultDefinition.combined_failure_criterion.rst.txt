@@ -1,0 +1,6 @@
+combined\_failure\_criterion
+============================
+
+.. currentmodule:: ansys.dpf.composites.result_definition
+
+.. autoproperty:: ResultDefinition.combined_failure_criterion

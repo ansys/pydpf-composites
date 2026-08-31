@@ -1,0 +1,6 @@
+p22\_neg
+========
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoproperty:: PuckCriterion.p22_neg

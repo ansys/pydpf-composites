@@ -1,0 +1,6 @@
+lmt1
+====
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoattribute:: FailureModeEnum.lmt1

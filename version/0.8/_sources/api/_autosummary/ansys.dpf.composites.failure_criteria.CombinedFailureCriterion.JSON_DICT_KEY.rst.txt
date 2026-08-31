@@ -1,0 +1,6 @@
+JSON\_DICT\_KEY
+===============
+
+.. currentmodule:: ansys.dpf.composites.failure_criteria
+
+.. autoattribute:: CombinedFailureCriterion.JSON_DICT_KEY

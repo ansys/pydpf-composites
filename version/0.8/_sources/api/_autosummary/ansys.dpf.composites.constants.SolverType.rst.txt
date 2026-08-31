@@ -1,0 +1,22 @@
+﻿SolverType
+==========
+
+.. currentmodule:: ansys.dpf.composites.constants
+
+.. autoclass:: SolverType
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      
+        SolverType.MAPDL
+      
+      
+        SolverType.LSDYNA
+      
+   
+   
