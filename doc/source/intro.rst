@@ -118,25 +118,11 @@ By default the DPF server is started from the latest Ansys installer. To choose 
 
    * - Server version
      - ansys.dpf.composites Python module version
-   * - 11.0 (Ansys 2026 R1)
+   * - 2027.1 (Ansys 2027 R1)
      - 0.3.0 and later
-   * - 10.0 (Ansys 2025 R2)
+   * - 7.0 (Ansys 2024 R1 pre0) until 11.0 (Ansys 2026 R1)
      - 0.3.0 and later
-   * - 9.1 (Ansys 2025 R1)
-     - 0.3.0 and later
-   * - 8.2 (Ansys 2024 R2)
-     - 0.3.0 and later
-   * - 8.1 (Ansys 2024 R2 pre1)
-     - 0.3.0 and later
-   * - 8.0 (Ansys 2024 R2 pre0)
-     - 0.3.0 and later
-   * - 7.1 (Ansys 2024 R1)
-     - 0.3.0 and later
-   * - 7.0 (Ansys 2024 R1 pre0)
-     - 0.3.0 and later
-   * - 6.2 (Ansys 2023 R2)
-     - 0.2.0 and 0.3
-   * - 6.1 (Ansys 2023 R2 pre1)
+   * - 6.1 (Ansys 2023 R2 pre1) and 6.2 (Ansys 2023 R2)
      - 0.2.0 and 0.3
    * - 6.0 (Ansys 2023 R2 pre0)
      - Not available. The composites plugin is not part of the Ansys 2023 R2 pre0 release.
