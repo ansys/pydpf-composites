@@ -169,7 +169,7 @@ Plot the failure results.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f7990f35a90>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb9c8bc1a90>)
 
 
 
@@ -242,7 +242,7 @@ postprocess the initial (original) sector.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f7990f36850>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb9c8bc2850>)
 
 
 
@@ -324,7 +324,7 @@ fiber failure. The criterion distinguishes between tension and compression.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f7990f35090>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb9c8bc1090>)
 
 
 
@@ -391,14 +391,14 @@ The same expansion is possible for strains and stresses. For more information, s
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f7990f34f50>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7fb9c8bc0f50>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 14.500 seconds)
+   **Total running time of the script:** (0 minutes 14.145 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_014_cyclic_symmetry_example.py:
