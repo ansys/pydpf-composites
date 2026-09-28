@@ -403,7 +403,7 @@ is the same as above, just for a single ply.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f76b0e94190>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f8359591d10>)
 
 
 
@@ -460,14 +460,14 @@ described above.
  .. code-block:: none
 
 
-    (None, <pyvista.plotting.plotter.Plotter object at 0x7f76b0e95d10>)
+    (None, <pyvista.plotting.plotter.Plotter object at 0x7f8359592710>)
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.098 seconds)
+   **Total running time of the script:** (0 minutes 11.274 seconds)
 
 
 .. _sphx_glr_download_examples_gallery_examples_018_get_strain_energy_example.py:
