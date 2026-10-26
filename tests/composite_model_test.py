@@ -175,10 +175,12 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
             for _, value in metadata.items():
                 if value.material_name == ref_data.material_name:
                     # dpf material id can vary and so is not compared
-                    assert value.ply_type == ref_data.ply_type, f"Ply type mismatch for {ref_data.material_name}"
                     assert (
-                        [int(v) for v in value.solver_material_id] == ref_data.solver_material_id
-                    ), f"Solver material id mismatch for {ref_data.material_name}: {value.solver_material_id} vs {ref_data.solver_material_id}"
+                        value.ply_type == ref_data.ply_type
+                    ), f"Ply type mismatch for {ref_data.material_name}"
+                    assert [
+                        int(v) for v in value.solver_material_id
+                    ] == ref_data.solver_material_id, f"Solver material id mismatch for {ref_data.material_name}: {value.solver_material_id} vs {ref_data.solver_material_id}"
                     found = True
             assert found, f"Material {ref_data} not found in metadata"
 

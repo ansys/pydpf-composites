@@ -274,15 +274,15 @@ def get_material_metadata(
             "The used DPF server does not support the requested data. "
             "Use version 2024 R1-pre0 or later."
         )
-    
+
     material_name_field = material_container_helper_op.outputs.material_names()
     material_ids = material_name_field.scoping.ids
-    
+
     if hasattr(material_container_helper_op.outputs, "solver_material_ids"):
         solver_id_field = material_container_helper_op.outputs.solver_material_ids()
     else:
         solver_id_field = None
-    
+
     if hasattr(material_container_helper_op.outputs, "ply_types"):
         ply_type_field = material_container_helper_op.outputs.ply_types()
     else:
@@ -299,9 +299,7 @@ def get_material_metadata(
                 else None
             ),
             solver_material_id=(
-                sorted(solver_id_field.get_entity_data_by_id(dpf_mat_id))
-                if solver_id_field
-                else []
+                sorted(solver_id_field.get_entity_data_by_id(dpf_mat_id)) if solver_id_field else []
             ),
         )
 
