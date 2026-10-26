@@ -146,7 +146,7 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
                 dpf_material_id=1,
                 material_name="Honeycomb",
                 ply_type=ply_types[0],
-                solver_material_id=solver_mat_ids[0],
+                solver_material_id=[solver_mat_ids[0]],
             ),
             MaterialMetadata(
                 dpf_material_id=2,
@@ -177,7 +177,7 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
                     # dpf material id can vary and so is not compared
                     assert value.ply_type == ref_data.ply_type, f"Ply type mismatch for {ref_data.material_name}"
                     assert (
-                        (value.solver_material_id == ref_data.solver_material_id).all()
+                        [int(v) for v in value.solver_material_id] == ref_data.solver_material_id
                     ), f"Solver material id mismatch for {ref_data.material_name}: {value.solver_material_id} vs {ref_data.solver_material_id}"
                     found = True
             assert found, f"Material {ref_data} not found in metadata"

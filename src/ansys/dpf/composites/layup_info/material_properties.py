@@ -22,7 +22,7 @@
 
 """Helpers to get material properties."""
 from collections.abc import Collection
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import cast
 
@@ -240,13 +240,13 @@ class MaterialMetadata:
         None if the DPF server older than 2025 R1 pre 0 (9.0).
     solver_material_id:
         Material index of the solver. A material may have multiple solver material IDs.
-        None if DPF server older than 2024 R1 pre 0 (8.0).
+        Empty list if DPF server older than 2024 R1 pre 0 (8.0).
     """
 
     dpf_material_id: int = 0
     material_name: str = ""
     ply_type: str | None = None
-    solver_material_id: list[int] | None = None
+    solver_material_id: list[int] = field(default_factory=list)
 
     @property
     def is_core(self) -> bool:
@@ -301,7 +301,7 @@ def get_material_metadata(
             solver_material_id=(
                 sorted(solver_id_field.get_entity_data_by_id(dpf_mat_id))
                 if solver_id_field
-                else None
+                else []
             ),
         )
 
