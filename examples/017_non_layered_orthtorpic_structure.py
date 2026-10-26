@@ -154,7 +154,7 @@ plot = model.metadata.meshed_region.plot(output[FailureOutput.FAILURE_VALUE], cl
 # Element scoping
 # ~~~~~~~~~~~~~~~
 # Postprocess only a subset of elements (1 to 500).
-scoping = dpf.Scoping()
+scoping = dpf.Scoping(location=dpf.locations.elemental)
 scoping.ids = [label for label in range(1, 500)]
 evaluate_failure_criterion_op.inputs.element_scoping(scoping)
 output = minmax_per_element.outputs.field_max()

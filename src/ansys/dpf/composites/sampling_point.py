@@ -347,7 +347,7 @@ class SamplingPointNew(SamplingPoint):
 
     def _get_full_scope(self) -> dpf.Scoping:
         """Select all solid elements of stack if the selected element is a solid element."""
-        scope = dpf.Scoping()
+        scope = dpf.Scoping(location=dpf.locations.elemental)
         if self._element_info.is_shell:
             scope.ids = [self.element_id]
         else:
