@@ -299,7 +299,7 @@ def get_material_metadata(
                 else None
             ),
             solver_material_id=(
-                solver_id_field.get_entity_data_by_id(dpf_mat_id)
+                sorted(solver_id_field.get_entity_data_by_id(dpf_mat_id))
                 if solver_id_field
                 else None
             ),
