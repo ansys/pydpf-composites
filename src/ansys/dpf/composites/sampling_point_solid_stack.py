@@ -371,7 +371,7 @@ class SamplingPointSolidStack(SamplingPoint):
         if not self._solid_stack:
             raise RuntimeError(f"Solid stack for element {self.element_id} not found.")
 
-        element_scope = dpf.Scoping(location="elemental")
+        element_scope = dpf.Scoping(location=dpf.locations.elemental)
         element_scope.ids = self._solid_stack.element_ids
 
         stress_operator = dpf.operators.result.stress()

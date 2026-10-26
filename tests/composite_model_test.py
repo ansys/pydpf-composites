@@ -133,52 +133,59 @@ def test_basic_functionality_of_composite_model(dpf_server, data_files, distribu
 
         metadata = composite_model.material_metadata
 
-        solver_mat_ids = 4 * [None]
-        ply_types = 4 * [None]
+        num_materials = 5
+        solver_mat_ids = num_materials * [None]
+        ply_types = num_materials * [None]
         if version_equal_or_later(dpf_server, "8.0"):
-            solver_mat_ids = [5, 4, 3, 2]
+            solver_mat_ids = [5, 4, 3, 2, 1]
         if version_equal_or_later(dpf_server, "9.0"):
             ply_types = ["honeycomb_core", "regular", "woven", "undefined"]
 
-        ref_metadata = {
-            "Honeycomb": MaterialMetadata(
+        ref_metadata = (
+            MaterialMetadata(
                 dpf_material_id=1,
                 material_name="Honeycomb",
                 ply_type=ply_types[0],
-                solver_material_id=solver_mat_ids[0],
+                solver_material_id=[solver_mat_ids[0]],
             ),
-            "Epoxy Carbon UD (230 GPa) Prepreg": MaterialMetadata(
+            MaterialMetadata(
                 dpf_material_id=2,
                 material_name="Epoxy Carbon UD (230 GPa) Prepreg",
                 ply_type=ply_types[1],
-                solver_material_id=solver_mat_ids[1],
+                solver_material_id=[solver_mat_ids[1]],
             ),
-            "Epoxy Carbon Woven (230 GPa) Wet": MaterialMetadata(
+            MaterialMetadata(
                 dpf_material_id=3,
                 material_name="Epoxy Carbon Woven (230 GPa) Wet",
                 ply_type=ply_types[2],
-                solver_material_id=solver_mat_ids[2],
+                solver_material_id=[solver_mat_ids[2]],
             ),
-            "Structural Steel": MaterialMetadata(
+            # Structural Steel appears multiple times with different solver material ids.
+            MaterialMetadata(
                 dpf_material_id=4,
                 material_name="Structural Steel",
                 ply_type=ply_types[3],
-                solver_material_id=solver_mat_ids[3],
+                solver_material_id=[solver_mat_ids[4], solver_mat_ids[3]],
             ),
-        }
+        )
 
         assert len(metadata) == len(ref_metadata)
-        for mat_name, ref_data in ref_metadata.items():
+        for ref_data in ref_metadata:
             found = False
-            for key, value in metadata.items():
-                if value.material_name == mat_name:
+            for _, value in metadata.items():
+                if value.material_name == ref_data.material_name:
                     # dpf material id can vary and so is not compared
-                    assert value.ply_type == ref_data.ply_type, f"Ply type mismatch for {mat_name}"
                     assert (
-                        value.solver_material_id == ref_data.solver_material_id
-                    ), f"Solver material id mismatch for {mat_name}"
+                        value.ply_type == ref_data.ply_type
+                    ), f"Ply type mismatch for {ref_data.material_name}"
+                    assert [
+                        int(v) for v in value.solver_material_id
+                    ] == ref_data.solver_material_id, (
+                        f"Solver material id mismatch for {ref_data.material_name}: "
+                        f"{value.solver_material_id} vs {ref_data.solver_material_id}"
+                    )
                     found = True
-            assert found
+            assert found, f"Material {ref_data} not found in metadata"
 
     timer.add("After getting properties")
     timer.summary()

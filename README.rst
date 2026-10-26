@@ -111,12 +111,13 @@ server is started.
         pytest . --port 50052
 
 
-#.  Run tests with a DPF server started from the Ansys installer. The Ansys version must
-    be 2023 R2 or later.
+#.  Run tests with a DPF server from an Ansys installation.
+    Using a DPF server with this package requires Ansys Release 2023 R2 or later.
+    The following example uses Ansys Release 2027 R1.
 
     .. code:: bash
 
-        pytest . --ansys-path "C:\Program Files\Ansys Inc\v232"
+        pytest . --ansys-path "C:\Program Files\Ansys Inc\v271"
 
 
 #.  Run tests with a Docker container from Github (Ansys Internal only):

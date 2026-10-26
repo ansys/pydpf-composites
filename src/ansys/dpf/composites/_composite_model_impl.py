@@ -347,7 +347,7 @@ class CompositeModelImpl:
             chunking_generator.inputs.data_sources(self.data_sources.composite)
 
         if element_scope_in:
-            element_scope = dpf.Scoping(location="elemental")
+            element_scope = dpf.Scoping(location=dpf.locations.elemental)
             element_scope.ids = element_scope_in
             chunking_generator.inputs.element_scoping(element_scope)
 
