@@ -4,6 +4,7 @@
 
    self
    intro
+  optimization
    api/index
    examples/index
    contribute
