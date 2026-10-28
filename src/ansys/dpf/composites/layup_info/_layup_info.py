@@ -22,9 +22,13 @@
 
 """Lay-up information provider."""
 
+from __future__ import annotations
+
 from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from enum import Enum
+from math import isfinite
+from numbers import Integral
 from typing import cast
 from warnings import warn
 
@@ -195,13 +199,71 @@ def _get_corner_nodes_by_element_type_array() -> NDArray[np.int64]:
 
 @dataclass(frozen=True)
 class AnalysisPlyInfo:
-    """Data about an analysis ply."""
+    """Data about an analysis ply and, optionally, one local occurrence.
+
+    ``nominal_thickness`` is the source analysis-ply nominal thickness.
+    ``local_thickness`` is the actual thickness sampled for a specific element;
+    it is kept separate because draping or spatial variation can make it differ
+    from the nominal value. Existing layup-provider results leave it unset.
+    """
 
     angle: float
-    global_ply_number: int
+    global_ply_number: int | None
     id: str
     material_name: str
-    nominal_thickness: float
+    nominal_thickness: float | None = None
+    local_thickness: float | None = None
+
+    @classmethod
+    def from_local_ply(
+        cls,
+        *,
+        id: str,
+        material_name: str,
+        angle: float,
+        thickness: float,
+        global_ply_number: int | None = None,
+        nominal_thickness: float | None = None,
+    ) -> AnalysisPlyInfo:
+        """Build analysis-ply metadata for one element-local occurrence."""
+        return cls(
+            angle=angle,
+            global_ply_number=global_ply_number,
+            id=id,
+            material_name=material_name,
+            nominal_thickness=nominal_thickness,
+            local_thickness=thickness,
+        )
+
+    def __post_init__(self) -> None:
+        if not self.id or not self.material_name:
+            raise ValueError("Analysis ply ID and material name must not be empty.")
+        if not isfinite(self.angle):
+            raise ValueError("Analysis ply angle must be finite.")
+        if self.global_ply_number is not None and (
+            isinstance(self.global_ply_number, bool)
+            or not isinstance(self.global_ply_number, Integral)
+            or self.global_ply_number < 0
+        ):
+            raise ValueError("global_ply_number must be a nonnegative integer or None.")
+        for label, thickness in (
+            ("nominal_thickness", self.nominal_thickness),
+            ("local_thickness", self.local_thickness),
+        ):
+            if thickness is not None and (not isfinite(thickness) or thickness <= 0):
+                raise ValueError(f"{label} must be finite and positive.")
+        if self.global_ply_number is not None:
+            object.__setattr__(self, "global_ply_number", int(self.global_ply_number))
+
+    @property
+    def thickness(self) -> float:
+        """Actual local thickness, falling back to nominal thickness if needed."""
+        thickness = self.local_thickness
+        if thickness is None:
+            thickness = self.nominal_thickness
+        if thickness is None:
+            raise ValueError(f"Thickness is unavailable for analysis ply {self.id!r}.")
+        return thickness
 
 
 class AnalysisPlyInfoProvider:

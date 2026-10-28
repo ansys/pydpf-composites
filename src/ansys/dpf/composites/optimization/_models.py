@@ -27,9 +27,10 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from math import isclose, isfinite
-from numbers import Integral
 from types import MappingProxyType
 from typing import Any
+
+from ..layup_info import AnalysisPlyInfo
 
 
 def _finite(value: float, name: str, *, positive: bool = False) -> None:
@@ -93,37 +94,6 @@ class Material:
 
 
 @dataclass(frozen=True)
-class Ply:
-    """One local ply occurrence with preserved ACP/DPF source identifiers.
-
-    ``global_ply_number`` retains the source analysis-ply number, including after
-    reordering. The tuple position defines the candidate's actual local order.
-    None is permitted for manually defined plies without source metadata.
-    New optimization plies receive provisional numbers, not final ACP ranks.
-    """
-
-    id: str
-    material: str
-    angle: float
-    thickness: float
-    global_ply_number: int | None = None
-
-    def __post_init__(self) -> None:
-        if not self.id or not self.material:
-            raise ValueError("Ply ID and material must not be empty.")
-        _finite(self.angle, "angle")
-        _finite(self.thickness, "thickness", positive=True)
-        if self.global_ply_number is not None:
-            if (
-                isinstance(self.global_ply_number, bool)
-                or not isinstance(self.global_ply_number, Integral)
-                or self.global_ply_number < 0
-            ):
-                raise ValueError("global_ply_number must be a nonnegative integer or None.")
-            object.__setattr__(self, "global_ply_number", int(self.global_ply_number))
-
-
-@dataclass(frozen=True)
 class LaminateForces:
     """Resultants in the fixed local frame: force/length and moment/length.
 
@@ -165,7 +135,7 @@ class Laminate:
     """
 
     name: str
-    plies: tuple[Ply, ...]
+    plies: tuple[AnalysisPlyInfo, ...]
     materials: tuple[Material, ...]
     load_cases: tuple[LoadCase, ...]
     unit_system: str
@@ -185,8 +155,10 @@ class Laminate:
         ):
             if len(values) != len(set(values)):
                 raise ValueError(f"Duplicate {label} in {self.name!r}.")
-        if {p.material for p in self.plies} - {m.name for m in self.materials}:
+        if {p.material_name for p in self.plies} - {m.name for m in self.materials}:
             raise ValueError(f"Unresolved ply material in {self.name!r}.")
+        for ply in self.plies:
+            _finite(ply.thickness, f"thickness for analysis ply {ply.id!r}", positive=True)
         _finite(self.offset, "offset")
         _finite(self.weight, "weight", positive=True)
 
@@ -200,7 +172,7 @@ class Laminate:
         for bottom, top in zip(self.plies, reversed(self.plies)):
             angle_difference = (bottom.angle - top.angle + 90) % 180 - 90
             if (
-                bottom.material != top.material
+                bottom.material_name != top.material_name
                 or not isclose(bottom.thickness, top.thickness, rel_tol=tolerance, abs_tol=0)
                 or abs(angle_difference) > tolerance
             ):
@@ -236,9 +208,12 @@ class Laminate:
                 "num_analysis_plies": len(self.plies),
                 "analysis_plies": [
                     {
-                        **asdict(p),
+                        "id": p.id,
+                        "material": p.material_name,
+                        "angle": p.angle,
+                        "thickness": p.thickness,
                         "global_ply_number": global_numbers[p.id],
-                        "is_core": catalog[p.material].is_core,
+                        "is_core": catalog[p.material_name].is_core,
                     }
                     for p in self.plies
                 ],
@@ -278,11 +253,11 @@ class Laminate:
             )
             material_names = {m["id"]: m["name"] for m in definitions}
             plies = tuple(
-                Ply(
-                    p["id"],
-                    material_names[p["material"]],
-                    p["angle"],
-                    p["thickness"],
+                AnalysisPlyInfo.from_local_ply(
+                    id=p["id"],
+                    material_name=material_names[p["material"]],
+                    angle=p["angle"],
+                    thickness=p["thickness"],
                     global_ply_number=p.get("global_ply_number"),
                 )
                 for p in document["layup"]["analysis_plies"]

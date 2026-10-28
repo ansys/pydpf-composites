@@ -29,7 +29,8 @@ from dataclasses import dataclass, replace
 from math import isclose, isfinite
 from typing import Literal
 
-from ._models import Laminate, Material, Ply, _finite
+from ..layup_info import AnalysisPlyInfo
+from ._models import Laminate, Material, _finite
 
 
 class InvalidDesign(ValueError):
@@ -310,10 +311,12 @@ class LaminateDesignSpace:
                     abs((p.angle - first[key].angle + 90) % 180 - 90) > 1e-8 for p in occurrences
                 ):
                     raise ValueError("Different local baseline angles require angle_mode='offset'.")
-            if rule.materials and any(p.material != first[key].material for p in occurrences):
+            if rule.materials and any(
+                p.material_name != first[key].material_name for p in occurrences
+            ):
                 raise ValueError("A shared material variable requires one initial material.")
             if rule.use_material_thickness and rule.materials:
-                nominal = self.materials[first[key].material].nominal_thickness
+                nominal = self.materials[first[key].material_name].nominal_thickness
                 if nominal is None or any(
                     not isclose(p.thickness, nominal, rel_tol=1e-8) for p in occurrences
                 ):
@@ -326,14 +329,14 @@ class LaminateDesignSpace:
                 key, rule.angles, 0 if rule.angle_mode == "offset" else first[key].angle
             )
             if rule.materials:
-                if any(first[p].material not in rule.materials for p in group):
+                if any(first[p].material_name not in rule.materials for p in group):
                     raise ValueError("Replacement group must include each initial material.")
                 self._add(
                     key,
                     "material",
                     0,
                     len(rule.materials) - 1,
-                    rule.materials.index(first[key].material),
+                    rule.materials.index(first[key].material_name),
                     True,
                 )
             if allow_reordering:
@@ -358,7 +361,7 @@ class LaminateDesignSpace:
 
     def _project_global_gap(
         self,
-        plies: Sequence[Ply],
+        plies: Sequence[AnalysisPlyInfo],
         global_gap: int,
         candidate_order: Sequence[str] | None = None,
     ) -> int:
@@ -389,9 +392,19 @@ class LaminateDesignSpace:
                 for i, value in enumerate(domain.values)
                 if abs((value - initial + 90) % 180 - 90) < 1e-8
             ]
-            if not matches:
-                raise ValueError(f"Initial angle of {key!r} is outside the discrete domain.")
-            self._add(key, "angle", 0, len(domain.values) - 1, matches[0], True)
+            if matches:
+                initial_index = matches[0]
+            else:
+                # The input layup need not use the requested candidate set.
+                # Seed the search with the closest periodic allowed angle.
+                initial_index = min(
+                    range(len(domain.values)),
+                    key=lambda index: (
+                        abs((domain.values[index] - initial + 90) % 180 - 90),
+                        abs(domain.values[index] - initial),
+                    ),
+                )
+            self._add(key, "angle", 0, len(domain.values) - 1, initial_index, True)
         elif isinstance(domain, AngleBounds):
             if not domain.lower <= initial <= domain.upper:
                 raise ValueError(f"Initial angle of {key!r} is outside its bounds.")
@@ -442,7 +455,7 @@ class LaminateDesignSpace:
         group_by_id = {p: g for g in self._groups for p in g}
         catalog = tuple(self.materials.values())
         for point in self.laminates:
-            edited: dict[str, Ply] = {}
+            edited: dict[str, AnalysisPlyInfo] = {}
             for ply in point.plies:
                 key = group_by_id[ply.id][0] if ply.id in group_by_id else ply.id
                 rule = self.ply_rules.get(ply.id, PlyRule())
@@ -454,7 +467,9 @@ class LaminateDesignSpace:
                     if rule.angle_mode == "offset":
                         new_angle += ply.angle
                 material = (
-                    rule.materials[int(value(key, "material"))] if rule.materials else ply.material
+                    rule.materials[int(value(key, "material"))]
+                    if rule.materials
+                    else ply.material_name
                 )
                 thickness = ply.thickness
                 if rule.use_material_thickness and rule.materials:
@@ -462,7 +477,15 @@ class LaminateDesignSpace:
                     assert nominal is not None
                     thickness = nominal
                 edited[ply.id] = replace(
-                    ply, angle=new_angle, material=material, thickness=thickness
+                    ply,
+                    angle=new_angle,
+                    material_name=material,
+                    local_thickness=thickness,
+                    nominal_thickness=(
+                        self.materials[material].nominal_thickness
+                        if material != ply.material_name
+                        else ply.nominal_thickness
+                    ),
                 )
             ordered_ids = [p.id for p in point.plies]
             if self.allow_reordering:
@@ -476,8 +499,8 @@ class LaminateDesignSpace:
                     ordered_ids = [g[0] for g in groups]
             plies = [edited[p] for p in ordered_ids if p in edited]
             # Gaps are keyed by stable IDs; protected anchors survive removal.
-            gaps: dict[int, list[Ply]] = {}
-            mirror_gaps: dict[int, list[Ply]] = {}
+            gaps: dict[int, list[AnalysisPlyInfo]] = {}
+            mirror_gaps: dict[int, list[AnalysisPlyInfo]] = {}
             for addition in self.additions:
                 for slot in range(addition.max_count):
                     key = f"added:{addition.name}:{slot}"
@@ -491,11 +514,11 @@ class LaminateDesignSpace:
                         ordered_ids if self.allow_reordering else None,
                     )
                     material = addition.materials[int(value(key, "material"))]
-                    new_ply = Ply(
-                        key,
-                        material,
-                        angle(key, addition.angles),
-                        addition.thickness,
+                    new_ply = AnalysisPlyInfo.from_local_ply(
+                        id=key,
+                        material_name=material,
+                        angle=angle(key, addition.angles),
+                        thickness=addition.thickness,
                         global_ply_number=self._added_ply_numbers[key],
                     )
                     gaps.setdefault(gap, []).append(new_ply)
@@ -508,7 +531,7 @@ class LaminateDesignSpace:
                                 global_ply_number=self._added_ply_numbers[key + ":mirror"],
                             ),
                         )
-            result: list[Ply] = []
+            result: list[AnalysisPlyInfo] = []
             for i in range(len(plies) + 1):
                 result.extend(gaps.get(i, ()))
                 result.extend(mirror_gaps.get(i, ()))

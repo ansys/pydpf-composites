@@ -121,7 +121,7 @@ class ClassicalLaminateEvaluator:
         unidirectional = general | {"hashin", "puck", "larc", "cuntze"}
         catalog = {m.name: m for m in laminate.materials}
         for ply in laminate.plies:
-            material = catalog[ply.material]
+            material = catalog[ply.material_name]
             covered = (
                 (material.ply_type == "regular" and bool(active & unidirectional))
                 or (material.ply_type == "woven" and bool(active & general))

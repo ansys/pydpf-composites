@@ -181,13 +181,15 @@ class SolidStackProvider:
             analysis_ply_info_provider = AnalysisPlyInfoProvider(self._mesh, ply_name)
             if element_id in analysis_ply_info_provider.ply_element_ids():
                 global_ply_number = analysis_ply_info_provider.basic_info().global_ply_number
+                if global_ply_number is None:
+                    raise ValueError(f"Global ply number is missing for analysis ply {ply_name!r}.")
                 if virtual_thickness:
                     analysis_ply_infos[global_ply_number] = (ply_name, virtual_thickness)
                 else:
-                    analysis_ply_infos[global_ply_number] = (
-                        ply_name,
-                        float(analysis_ply_info_provider.basic_info().nominal_thickness),
-                    )
+                    nominal_thickness = analysis_ply_info_provider.basic_info().nominal_thickness
+                    if nominal_thickness is None:
+                        raise ValueError(f"Nominal thickness is missing for analysis ply {ply_name!r}.")
+                    analysis_ply_infos[global_ply_number] = (ply_name, nominal_thickness)
 
         # scale the total thickness to match the total height
         if virtual_thickness and len(analysis_ply_infos) > 1:

@@ -202,17 +202,17 @@ class PyACPAdapter:
                 operation = "edit"
             after = first.after
             if any(
-                c.after.material != after.material
+                c.after.material_name != after.material_name
                 or not isclose(c.after.thickness, after.thickness, rel_tol=1e-8)
                 for c in changes
             ):
                 raise ValueError("Local material/thickness edits need a custom ACP adapter.")
-            fabric = self.fabrics.get(after.material)
+            fabric = self.fabrics.get(after.material_name)
             if (
                 fabric is None
                 and operation == "edit"
                 and all(
-                    c.before.material == c.after.material
+                    c.before.material_name == c.after.material_name
                     and c.before.thickness == c.after.thickness
                     for c in changes
                 )
@@ -220,10 +220,10 @@ class PyACPAdapter:
                 fabric = self.bindings[key].ply_material
             if fabric is None or not isclose(fabric.thickness, after.thickness, rel_tol=1e-8):
                 raise ValueError(
-                    f"Material {after.material!r} needs a fabric with matching thickness."
+                    f"Material {after.material_name!r} needs a fabric with matching thickness."
                 )
             target_fabrics[key] = fabric
-            actions.append(ACPChange(key, operation, angle, after.material, order.get(key)))
+            actions.append(ACPChange(key, operation, angle, after.material_name, order.get(key)))
         if not dry_run:
             for action in actions:
                 if action.operation == "add":

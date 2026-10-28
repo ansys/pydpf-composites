@@ -27,6 +27,7 @@ displacements, load redistribution, buckling and out-of-plane failures require
 subsequent FE verification. No ACP model is changed during optimization.
 """
 
+from ..layup_info import AnalysisPlyInfo
 from ._design_space import (
     AdditionRule,
     AngleBounds,
@@ -37,7 +38,7 @@ from ._design_space import (
     PlyRule,
 )
 from ._evaluator import ClassicalLaminateEvaluator, LaminateEvaluator
-from ._models import Laminate, LaminateForces, LaminateResponse, LoadCase, Material, Ply
+from ._models import Laminate, LaminateForces, LaminateResponse, LoadCase, Material
 from ._problem import (
     CandidateEvaluation,
     LaminateChangeSet,
@@ -55,6 +56,7 @@ __all__ = (
     "ACPChange",
     "PyACPAdapter",
     "AdditionRule",
+    "AnalysisPlyInfo",
     "AngleBounds",
     "CandidateEvaluation",
     "ClassicalLaminateEvaluator",
@@ -71,7 +73,6 @@ __all__ = (
     "LaminateResponse",
     "LoadCase",
     "Material",
-    "Ply",
     "PlyChange",
     "PlyRule",
     "PointResult",

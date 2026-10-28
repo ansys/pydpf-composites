@@ -29,9 +29,10 @@ from dataclasses import asdict, dataclass
 from math import inf, isfinite
 from typing import Any, Protocol
 
+from ..layup_info import AnalysisPlyInfo
 from ._design_space import InvalidDesign, LaminateDesignSpace
 from ._evaluator import LaminateEvaluator
-from ._models import Laminate, LaminateResponse, Ply, _finite
+from ._models import Laminate, LaminateResponse, _finite
 
 
 @dataclass(frozen=True)
@@ -69,8 +70,8 @@ class PlyChange:
 
     point: str
     ply_id: str
-    before: Ply | None
-    after: Ply | None
+    before: AnalysisPlyInfo | None
+    after: AnalysisPlyInfo | None
 
 
 @dataclass(frozen=True)

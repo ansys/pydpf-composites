@@ -109,7 +109,7 @@ contribute stiffness, mass and failure constraints. Qualify ply IDs yourself
 when combining different ACP models or composite definitions; names alone are
 not globally unique. Each sampling-point name must also be unique.
 
-Both ``Ply.id`` and the source ``Ply.global_ply_number`` are retained on import
+Both ``AnalysisPlyInfo.id`` and the source ``AnalysisPlyInfo.global_ply_number`` are retained on import
 and through angle/material edits, removals, reordering, CLT JSON export, and
 change-set export. Global numbers are not replaced by local stack indices;
 sparse numbers and large integers remain exact. Shared occurrences of the same
@@ -144,8 +144,11 @@ one local angle to all occurrences and require consistent initial local angles.
 For differing rosette orientations, ``PlyRule(..., angle_mode="offset")`` applies
 the same angle change to the existing local angle at every point. Its domain is
 then a domain of **angle changes** and must include zero. Arbitrary draping
-changes are not predicted. The initial angles must lie in their configured
-domains; no silent snapping or expansion of allowed values occurs.
+changes are not predicted. If a discrete angle domain does not contain an
+initial angle, the initial numerical seed is projected to the nearest allowed
+angle modulo 180 degrees (ties use the closest unwrapped value). The source
+laminate is not mutated, and all decoded candidates use only the configured
+allowed values. Continuous bounds still require the initial value to be in range.
 
 Angles and order alone cannot reduce mass at fixed materials and thicknesses.
 They can improve feasibility, allowing subsequent material substitution or ply

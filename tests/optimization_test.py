@@ -30,6 +30,7 @@ import numpy as np
 import pytest
 
 from ansys.dpf.composites.failure_criteria import CombinedFailureCriterion, MaxStressCriterion
+from ansys.dpf.composites.layup_info import AnalysisPlyInfo
 from ansys.dpf.composites.optimization import (
     ACPAdditionTemplate,
     AdditionRule,
@@ -45,7 +46,6 @@ from ansys.dpf.composites.optimization import (
     LaminateResponse,
     LoadCase,
     Material,
-    Ply,
     PlyRule,
     PyACPAdapter,
     SpatialPlyExtentOptimizer,
@@ -78,7 +78,11 @@ def laminate(name="one", angles=(0, 45, 45, 0), **kwargs):
     return Laminate(
         name=name,
         plies=tuple(
-            Ply(f"p{i}", "A", a, 1.0, global_ply_number=i + 1) for i, a in enumerate(angles)
+            AnalysisPlyInfo.from_local_ply(
+                id=f"p{i}", material_name="A", angle=a, thickness=1.0,
+                global_ply_number=i + 1,
+            )
+            for i, a in enumerate(angles)
         ),
         materials=(material(), material("B")),
         load_cases=kwargs.pop("load_cases", (LoadCase("load", LaminateForces(Nx=1)),)),
@@ -96,7 +100,7 @@ def candidate(space, **updates):
 
 
 def evaluate(point, case):
-    mass = sum(p.thickness * (2 if p.material == "A" else 1) for p in point.plies)
+    mass = sum(p.thickness * (2 if p.material_name == "A" else 1) for p in point.plies)
     irf = abs(case.forces.Nx) / point.thickness
     return LaminateResponse(mass, (irf,) * len(point.plies))
 
@@ -110,12 +114,28 @@ def test_sampling_point_snapshot_and_clt_round_trip():
     before = json.dumps(document)
     copied = Laminate.from_sampling_point(SimpleNamespace(results=[document]), name="snapshot")
     assert copied.name == "snapshot"
+    assert isinstance(copied.plies[0], AnalysisPlyInfo)
     assert copied.plies == original.plies
     assert copied.load_cases[0].forces.Nx == 1
     assert json.dumps(document) == before
     assert copied.to_clt_dict(copied.load_cases[0])["layup"]["num_analysis_plies"] == 4
     with pytest.raises(TypeError):
         copied.materials[0].properties["E1"] = 200
+
+
+def test_analysis_ply_info_keeps_nominal_and_local_thickness_distinct():
+    info = AnalysisPlyInfo.from_local_ply(
+        id="draped-ply",
+        material_name="A",
+        angle=12,
+        thickness=0.8,
+        nominal_thickness=1.0,
+        global_ply_number=17,
+    )
+    assert info.nominal_thickness == 1.0
+    assert info.local_thickness == 0.8
+    assert info.thickness == 0.8
+    assert info.global_ply_number == 17
 
 
 @pytest.mark.parametrize("missing", ["materials", "laminate_forces", "unit_system"])
@@ -159,8 +179,18 @@ def test_mirrored_angle_and_material_variables():
     assert len(space.variables) == 4
     decoded = space.decode(candidate(space, **{"p0.angle": 2, "p0.material": 1}))[0]
     assert decoded.plies[0].angle == decoded.plies[-1].angle == 90
-    assert decoded.plies[0].material == decoded.plies[-1].material == "B"
+    assert decoded.plies[0].material_name == decoded.plies[-1].material_name == "B"
     assert decoded.is_symmetric()
+
+
+def test_discrete_angle_domain_projects_out_of_domain_initial_angles():
+    point = laminate(angles=(135, 180))
+    space = LaminateDesignSpace(
+        [point], default_rule=PlyRule(angles=DiscreteAngles((0, 15, 30, 45, 60, 75, 90)))
+    )
+    projected = space.decode(space.initial)[0]
+    assert [ply.angle for ply in projected.plies] == [90, 0]
+    assert [ply.angle for ply in point.plies] == [135, 180]
 
 
 def test_symmetric_pair_removal_and_center_removal():
@@ -264,7 +294,10 @@ def test_symmetry_checks_fixed_local_plies_and_rules():
                 "p3": PlyRule(),
             },
         )
-    asymmetric = replace(first, plies=first.plies[:-1] + (replace(first.plies[-1], thickness=2),))
+    asymmetric = replace(
+        first,
+        plies=first.plies[:-1] + (replace(first.plies[-1], local_thickness=2),),
+    )
     with pytest.raises(ValueError, match="not symmetric"):
         LaminateDesignSpace([asymmetric], symmetric=True)
 
@@ -369,7 +402,7 @@ def test_scipy_mixed_integer_driver():
     )
     assert result.feasible
     assert result.best.objective == 4
-    assert all(p.material == "B" for p in result.best.laminates[0].plies)
+    assert all(p.material_name == "B" for p in result.best.laminates[0].plies)
     with pytest.raises(ValueError, match="continuous"):
         scipy_minimize(problem)
 
@@ -566,8 +599,12 @@ def test_additions_only_with_no_common_plies():
     second = replace(
         laminate("two", angles=(0, 0)),
         plies=(
-            Ply("other0", "A", 0, 1),
-            Ply("other1", "A", 0, 1),
+            AnalysisPlyInfo.from_local_ply(
+                id="other0", material_name="A", angle=0, thickness=1
+            ),
+            AnalysisPlyInfo.from_local_ply(
+                id="other1", material_name="A", angle=0, thickness=1
+            ),
         ),
     )
     with pytest.raises(ValueError, match="No common"):
@@ -594,7 +631,7 @@ def test_symmetry_removal_of_every_ply_is_invalid():
 @pytest.mark.parametrize("value", [float("nan"), float("inf"), -1, 0])
 def test_nonpositive_or_nonfinite_thickness_rejected(value):
     with pytest.raises(ValueError):
-        Ply("p", "A", 0, value)
+        AnalysisPlyInfo.from_local_ply(id="p", material_name="A", angle=0, thickness=value)
 
 
 def test_global_addition_gap_projects_into_local_stacks():
@@ -939,7 +976,10 @@ def test_added_global_ply_numbers_are_stable_and_shared():
 @pytest.mark.parametrize("number", [-1, True, 1.5, "12"])
 def test_invalid_global_ply_number_rejected(number):
     with pytest.raises(ValueError, match="global_ply_number"):
-        Ply("p", "A", 0, 1, global_ply_number=number)
+        AnalysisPlyInfo.from_local_ply(
+            id="p", material_name="A", angle=0, thickness=1,
+            global_ply_number=number,
+        )
 
 
 def test_export_missing_ply_numbers_does_not_collide_with_preserved_numbers():

@@ -56,7 +56,9 @@ def test_clt_mass_and_multiple_load_cases(dpf_server):
     )
     point = Laminate.from_sampling_point(sample, load_cases=cases)
     materials = {m.name: m for m in point.materials}
-    plies = tuple(p for p in point.plies if materials[p.material].ply_type in ("regular", "woven"))
+    plies = tuple(
+        p for p in point.plies if materials[p.material_name].ply_type in ("regular", "woven")
+    )
     # This test evaluates a fiber-only CLT laminate, not the core's unsupported
     # max-stress failure. The original sample itself is never modified.
     point = replace(point, plies=plies, offset=-sum(p.thickness for p in plies) / 2)

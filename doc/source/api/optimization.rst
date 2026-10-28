@@ -10,7 +10,7 @@ and PyACP write-back limitations.
     :toctree: _autosummary
 
     Material
-    Ply
+    AnalysisPlyInfo
     LaminateForces
     LoadCase
     Laminate
