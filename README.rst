@@ -69,30 +69,19 @@ familiar with the `PyAnsys Developer's Guide`_.
 
     .. code:: bash
 
-        python -m pip install pipx
-        pipx ensurepath
-        # Minimum required poetry version is 1.2.0
-        pipx install poetry
-        pipx install pip
-        pipx install tox
+        # Install uv using the instructions at https://docs.astral.sh/uv/getting-started/installation/
+        uv sync --all-extras --group dev
 
 
-    PyDPF - Composites uses `Poetry <https://python-poetry.org>`_
-    to manage the development environment.
+    PyDPF - Composites uses `uv <https://docs.astral.sh/uv/>`_ to manage
+    dependencies and environments, and `tox <https://tox.wiki/>`_ to run
+    project checks across supported Python versions.
 
-#.  Create a virtual environment and install the package with the
-    development dependencies:
+#.  Run commands in the project environment with:
 
     .. code:: bash
 
-        poetry install --all-extras
-
-
-#.  Activate the virtual environment by executing the command printed by:
-
-    .. code:: bash
-
-        poetry env activate
+        uv run --group dev tox -e py3.11
 
 
 Test
@@ -108,7 +97,7 @@ server is started.
 
     .. code:: bash
 
-        pytest . --port 50052
+        uv run --all-extras pytest . --port 50052
 
 
 #.  Run tests with a DPF server from an Ansys installation.
@@ -117,7 +106,7 @@ server is started.
 
     .. code:: bash
 
-        pytest . --ansys-path "C:\Program Files\Ansys Inc\v271"
+        uv run --all-extras pytest . --ansys-path "C:\Program Files\AnsysDev\Ansys Inc\v271"
 
 
 #.  Run tests with a Docker container from Github (Ansys Internal only):
@@ -125,7 +114,7 @@ server is started.
     .. code:: bash
 
         docker pull ghcr.io/ansys/pydpf-composites:latest
-        pytest .
+        uv run --all-extras pytest .
 
 
 Build documentation
@@ -138,14 +127,14 @@ On Windows, build the documentation with:
 
 .. code:: bash
 
-    tox -e doc-windows
+    uv run --group dev tox -e doc-windows
 
 
 On Linux, build the documentation with:
 
 .. code:: bash
 
-    tox -e doc-linux
+    uv run --group dev tox -e doc-linux
 
 Ansys internal only: Build the docs with the latest container from Github:
 
@@ -153,7 +142,7 @@ Ansys internal only: Build the docs with the latest container from Github:
 
     docker pull ghcr.io/ansys/pydpf-composites:latest
     docker run -d -p 50052:50052 -e ANSYSLMD_LICENSE_FILE=1055@mylicserver -e ANSYS_DPF_ACCEPT_LA=Y -e DPF_DEFAULT_GRPC_MODE=insecure ghcr.io/ansys/pydpf-composites:latest
-    tox -e doc-windows
+    uv run --group dev tox -e doc-windows
 
 
 
@@ -164,7 +153,7 @@ The style checks use `pre-commit`_ and can be run through `tox`_:
 
 .. code:: bash
 
-    tox -e style
+    uv run --group dev tox -e style
 
 
 The style checks can also be configured to run automatically before each ``git commit``:

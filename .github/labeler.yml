@@ -6,4 +6,4 @@ maintenance:
   - any-glob-to-any-file: [".github/**/*", ".flake8", "pyproject.toml"]
 dependencies:
 - changed-files:
-  - any-glob-to-any-file: ["poetry.lock"]
+  - any-glob-to-any-file: ["uv.lock"]
