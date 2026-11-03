@@ -188,7 +188,9 @@ def compare_sampling_point_results(
     ), f"{len(sample['layup']['analysis_plies'])} != {len(reference['layup']['analysis_plies'])}"
     for ap_index, ap in enumerate(sample["layup"]["analysis_plies"]):
         ref_ap = reference["layup"]["analysis_plies"][ap_index]
-        assert ap.keys() == ref_ap.keys()
+        assert (
+            ap.keys() == ref_ap.keys()
+        ), f"Keys mismatch for analysis ply {ap_index}. {ap.keys()} != {ref_ap.keys()}"
         for key in ap.keys():
             if key in ["angle", "thickness"]:
                 assert ap[key] == pytest.approx(
