@@ -76,16 +76,13 @@ def get_fc() -> CombinedFailureCriterion:
     return cfc
 
 
-def compare_results(current, element_id, old) -> None:
+def compare_results(current, element_id, suffix) -> None:
 
     # Use this block to compare the entire output with a diff tool
     # with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}_current.txt"), "w") as f:
     #    json.dump(current, f, indent=4, sort_keys=True)
-
-    suffix = "_old" if old else ""
     with open(os.path.join(TEST_DATA_ROOT_DIR, f"ref_{element_id}{suffix}.txt")) as f:
         reference = json.load(f)
-
     compare_sampling_point_results(current, reference, with_polar_properties=False)
 
 
@@ -301,6 +298,17 @@ def test_solid_stack_with_cutoffs(dpf_server):
         np.testing.assert_allclose(thicknesses, ref_ply_thicknesses[element], rtol=1e-6, atol=1e-8)
 
 
+def suffix_for_version(dpf_server) -> str:
+    suffix = "_initial"
+    if version_older_than(dpf_server, "11.0"):
+        suffix = "_initial"
+    elif version_older_than(dpf_server, "2027.2.0"):
+        suffix = "_2026r1"
+    else:
+        suffix = "_2027r2"
+    return suffix
+
+
 def test_sampling_point_solid_stack(dpf_server):
     """
     Test sampling point for solid model for a standard solid stack.
@@ -320,7 +328,7 @@ def test_sampling_point_solid_stack(dpf_server):
     plot = get_sampling_point_plot(sampling_point)
     # plot.figure.show()
     compare_results(
-        sampling_point.results[0], ELEMENT_OF_LAYERED_STACK, version_older_than(dpf_server, "11.0")
+        sampling_point.results[0], ELEMENT_OF_LAYERED_STACK, suffix_for_version(dpf_server)
     )
 
 
@@ -344,9 +352,7 @@ def test_sampling_point_solid_stack_with_dropoffs(dpf_server):
 
         plot = get_sampling_point_plot(sampling_point)
         # plot.figure.show()
-        compare_results(
-            sampling_point.results[0], element_id, version_older_than(dpf_server, "11.0")
-        )
+        compare_results(sampling_point.results[0], element_id, suffix_for_version(dpf_server))
 
 
 def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
@@ -367,5 +373,5 @@ def test_sampling_point_solid_stack_with_cutoffs(dpf_server):
     plot = get_sampling_point_plot(sampling_point)
     # plot.figure.show()
     compare_results(
-        sampling_point.results[0], ELEMENT_OF_CUTOFF_STACK, version_older_than(dpf_server, "11.0")
+        sampling_point.results[0], ELEMENT_OF_CUTOFF_STACK, suffix_for_version(dpf_server)
     )

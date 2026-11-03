@@ -54,12 +54,15 @@ def get_analysis_plies_from_sp(results: Any) -> Sequence[Any]:
         raise RuntimeError("No plies are found for the selected element.")
 
     types = {
+        # design angle
         "angle": float,
         "global_ply_number": int,
         "id": str,
         "is_core": bool,
         "material": str,
         "thickness": float,
+        # angle between the element coordinate system and the matetrial 1 direction
+        "layer_angle": float,
     }
 
     plies = []
