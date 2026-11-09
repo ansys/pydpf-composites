@@ -60,6 +60,7 @@ def get_analysis_plies_from_sp(results: Any) -> Sequence[Any]:
         "is_core": bool,
         "material": str,
         "thickness": float,
+        "layer_angle": float,
     }
 
     plies = []
