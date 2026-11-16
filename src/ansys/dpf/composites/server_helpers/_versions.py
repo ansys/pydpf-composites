@@ -65,6 +65,11 @@ _DPF_VERSIONS: dict[str, _DpfVersionInfo] = {
         "2026 R1",
         "DPF Composites: server-side sampling points for solids.",
     ),
+    "2027.2.0": _DpfVersionInfo(
+        "2027.2.0pre",
+        "2027 R2",
+        "DPF Composites: support for CLT analysis.",
+    ),
 }
 
 

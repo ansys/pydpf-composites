@@ -42,6 +42,7 @@ from ansys.dpf.composites.failure_criteria import (
 )
 from ansys.dpf.composites.result_definition import FailureMeasureEnum
 from ansys.dpf.composites.sampling_point_types import FailureResult
+from ansys.dpf.composites.server_helpers import version_older_than
 
 from .helper import get_basic_shell_files
 
@@ -73,38 +74,24 @@ def test_sampling_point(dpf_server, distributed_rst):
 
     sampling_point = composite_model.get_sampling_point(cfc, 3)
 
-    indices = sampling_point.get_indices([Spot.BOTTOM, Spot.TOP])
-    ref_indices = [0, 2, 3, 5, 6, 8, 9, 11, 12, 14]
-    offsets = sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 1.0)
-    scaled_offsets = sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 0.2)
-    ref_offsets = [
-        -0.00295,
-        -0.0027,
-        -0.0027,
-        -0.0025,
-        -0.0025,
-        0.0025,
-        0.0025,
-        0.0027,
-        0.0027,
-        0.00295,
-    ]
-    ref_scaled_offsets = [
-        -0.00295,
-        -0.0027,
-        -0.0027,
-        -0.0025,
-        -0.0025,
-        -0.0015,
-        -0.0015,
-        -0.0013,
-        -0.0013,
-        -0.00105,
-    ]
+    # The offset was wrong before 2027.2. It was shifted by minus half of the laminate thickness.
+    shift = -0.00295 if version_older_than(dpf_server, "2027.2.0") else 0.0
 
-    assert indices == ref_indices
-    numpy.testing.assert_allclose(offsets, ref_offsets)
-    numpy.testing.assert_allclose(scaled_offsets, ref_scaled_offsets)
+    ref_offsets = numpy.array(
+        [0.0, 0.00025, 0.00025, 0.00045, 0.00045, 0.00545, 0.00545, 0.00565, 0.00565, 0.0059]
+    )
+    ref_scaled_offsets = numpy.array(
+        [0.0, 0.00025, 0.00025, 0.00045, 0.00045, 0.00145, 0.00145, 0.00165, 0.00165, 0.0019]
+    )
+
+    numpy.testing.assert_allclose(
+        sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 1.0), ref_offsets + shift
+    )
+    numpy.testing.assert_allclose(
+        sampling_point.get_offsets_by_spots([Spot.BOTTOM, Spot.TOP], 0.2),
+        ref_scaled_offsets + shift,
+    )
+    assert sampling_point.get_indices([Spot.BOTTOM, Spot.TOP]) == [0, 2, 3, 5, 6, 8, 9, 11, 12, 14]
 
     """ply-wise max failures"""
     critical_failures = sampling_point.get_ply_wise_critical_failures()
